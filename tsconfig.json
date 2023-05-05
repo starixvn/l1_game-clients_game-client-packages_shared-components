@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "strict": false,
+        "outDir": "dist",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+        "isolatedModules": false,
+        "paths": {
+            "cc": ["./shared-components/tests/mocks/cc"]
+        }
+    }
+}
