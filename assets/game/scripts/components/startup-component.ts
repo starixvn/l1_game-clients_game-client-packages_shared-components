@@ -13,9 +13,9 @@ export default class StartupComponent extends Component {
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
     connectToService() {}
 
-    @render(gc.Auth.AuthStore, (store) => store.isSessionTimeout)
-    loadSessionTimeoutScene(isSessionTimeout: boolean) {
-        isSessionTimeout && director.loadScene("session-timeout");
+    @render(gc.App.AppStore, (store) => store.isUM)
+    loadUMScene(isUM: boolean) {
+        isUM && director.loadScene("under-maintenance");
     }
 
     @render(LogStore, (store) => store.message)

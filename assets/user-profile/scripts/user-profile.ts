@@ -2,7 +2,7 @@ import { _decorator, Component, Label, log, Sprite, SpriteFrame } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
 
-import { bundleManager } from "../bundle-magager/bundle-manager";
+import { bundleManager } from "../../bundle-magager/bundle-manager";
 
 const { Player } = gc;
 const { PlayerStore } = Player;

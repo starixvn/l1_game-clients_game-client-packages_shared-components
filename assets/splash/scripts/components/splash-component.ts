@@ -4,7 +4,7 @@ import Observer from "observer";
 
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, Shared } = gc;
+const { Auth, Shared, App, Chips } = gc;
 
 export const AppTypes = {
     Club: 1,
@@ -18,7 +18,6 @@ export default class Splash extends Component {
     progressBar: ProgressBar = null;
 
     onLoad() {
-        console.log("splash loading...");
         this.updateProgressBar(0);
         this.sso();
     }
@@ -32,14 +31,15 @@ export default class Splash extends Component {
     @render(Auth.AuthStore, (store) => store.isAuthorized)
     openGame(isAuthorized: boolean) {
         if (isAuthorized) {
+            this.loadChipSetting();
             this.triggerRecheckIn();
             this.loadSceneGame();
         }
     }
 
-    @render(Auth.AuthStore, (store) => store.isSessionTimeout)
-    openSessionTimeoutScreen(isSessionTimeout: boolean) {
-        isSessionTimeout && director.loadScene("session-timeout");
+    @render(App.AppStore, (store) => store.isUM)
+    openUnderMaintenanceScreen(isUM: boolean) {
+        isUM && director.loadScene("under-maintenance");
     }
 
     updateProgressBar(progress: number) {
@@ -51,7 +51,6 @@ export default class Splash extends Component {
         director.preloadScene(
             screenName,
             (completedCount: number, totalCount: number) => {
-                console.log(completedCount, totalCount);
                 this.updateProgressBar(completedCount / totalCount);
             },
             (error) => {
@@ -66,4 +65,7 @@ export default class Splash extends Component {
 
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
     triggerRecheckIn() {}
+
+    @handle(Chips.ChipSettingHandler)
+    loadChipSetting() {}
 }
