@@ -12,7 +12,7 @@ describe(StartupComponent.name, () => {
         describe("when called", () => {
             it("should execute connectToService method", () => {
                 // Arrange
-                component.connectToService = jest.fn();
+                jest.spyOn(component, "connectToService");
 
                 // Act
                 component.onLoad();
@@ -23,24 +23,24 @@ describe(StartupComponent.name, () => {
         });
     });
 
-    describe("loadSessionTimeoutScene", () => {
-        describe("when the session is not timeout", () => {
+    describe("loadUMScene", () => {
+        describe("when the param isUM is false", () => {
             it("should do nothing", () => {
                 // Act
-                component.loadSessionTimeoutScene(false);
+                component.loadUMScene(false);
 
                 // Assert
                 expect(director.loadScene).toBeCalledTimes(0);
             });
         });
 
-        describe("when the session is timeout", () => {
-            it("should load scene session-timeout", () => {
+        describe("when the param isUM is true", () => {
+            it("should load scene under-maintenance", () => {
                 // Act
-                component.loadSessionTimeoutScene(true);
+                component.loadUMScene(true);
 
                 // Assert
-                expect(director.loadScene).toBeCalledWith("session-timeout");
+                expect(director.loadScene).toBeCalledWith("under-maintenance");
             });
         });
     });
