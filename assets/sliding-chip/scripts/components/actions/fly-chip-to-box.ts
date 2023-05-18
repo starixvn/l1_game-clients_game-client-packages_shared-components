@@ -1,22 +1,29 @@
 import { Node, UITransform, Vec3, tween, v3 } from "cc";
 import { random } from "lodash-es";
+import { IOwnChip, IOwnChips } from "../../../../bets/scripts/stores/bet-item-store";
+import { NumberUtils } from "../../../../utils";
 import SlidingChip from "../sliding-chip";
+
+type TChips = {
+    [value: number]: number;
+};
 
 const loginUserChipFlyingTime = 0.5;
 const chipFlyingTime = 0.8;
 
-export const placeChipToChipBox = (slidingChip: SlidingChip, bet: number, destNode: Node, startNode: Node, onComplete: () => void) => {
+export const placeChipToChipBox = (ownerChip: IOwnChip, startNode: Node, onComplete: () => void) => {
     // Audio Chip Fly
-    if (slidingChip) {
+    const { chipBox, chipBet, slidingChip } = ownerChip;
+    if (slidingChip && chipBet > 0) {
         const isLoginUserPlaceBet = startNode == null;
         const flyingDuration = isLoginUserPlaceBet ? loginUserChipFlyingTime : chipFlyingTime;
-        const chipPosition = destNode
+        const chipPosition = chipBox
             ?.getComponent(UITransform)
-            ?.convertToNodeSpaceAR(slidingChip.createStartNodeInfo(startNode, bet).worldPos);
-        const chipNode = slidingChip.createSmallChip(bet);
+            ?.convertToNodeSpaceAR(slidingChip.createStartNodeInfo(startNode, chipBet).worldPos);
+        const chipNode = slidingChip.createSmallChip(chipBet);
         chipNode.position = chipPosition;
-        const randomPosition = getRandomPositionChip(chipNode, destNode);
-        destNode?.addChild(chipNode);
+        const randomPosition = getRandomPositionChip(chipNode, chipBox);
+        chipBox?.addChild(chipNode);
 
         if (!chipNode.activeInHierarchy) {
             chipNode.position = randomPosition;
@@ -50,4 +57,56 @@ export const moveChipTo = (chipNode: Node, randomPosition: Vec3, flyingDuration:
             onComplete && onComplete();
         })
         .start();
+};
+
+export const addChipsToChipBoxWhenJoinRoom = (rate: number, ownChip: IOwnChips) => {
+    const { slidingChip, chipBox, totalChipBet } = ownChip;
+    if (!totalChipBet) {
+        return;
+    }
+
+    const chipValues = Object.keys(totalChipBet);
+    chipValues.forEach((originalChipValue) => {
+        const chipCountOfBet = totalChipBet[originalChipValue];
+        const convertChip = NumberUtils.getChipValueByCurrency(+originalChipValue, rate);
+        const convertValues = getChipQuantity(convertChip, slidingChip.chipValues);
+        for (let i = 0; i < chipCountOfBet; i++) {
+            addChipsByChipsData(slidingChip, convertValues, chipBox);
+        }
+    });
+};
+
+export const getChipQuantity = (bet: number, options: number[]): TChips => {
+    const list = [...options].reverse();
+    const chipValue = calculateChipValue(list, bet);
+    const chips = chipValue.chips;
+
+    if (chipValue.chipTotal > 0) {
+        chips[0] = 1;
+    }
+
+    return chips;
+};
+
+const calculateChipValue = (list: number[], total: number) => {
+    const chips = {};
+    let chipTotal = total;
+    list.forEach((value) => {
+        const count = Math.floor(chipTotal / value);
+        chips[value] = count;
+        chipTotal = chipTotal % value;
+    });
+
+    return { chips, chipTotal };
+};
+
+const addChipsByChipsData = (slidingChip: SlidingChip, chips: TChips, chipsBox: Node) => {
+    Object.keys(chips).forEach((chipValue) => {
+        const count = chips[chipValue];
+        for (let i = 0; i < count; i++) {
+            const chip = slidingChip.createSmallChip(+chipValue);
+            chip.position = getRandomPositionChip(chip, chipsBox);
+            chipsBox.addChild(chip);
+        }
+    });
 };

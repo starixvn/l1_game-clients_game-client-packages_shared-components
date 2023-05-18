@@ -1,11 +1,11 @@
 import { _decorator, Component, Label, Node } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
-import { SlidingChipHandler } from "../sliding-chip/scripts/handlers/sliding-chip-handler";
+import { BetItemHandlers } from "../handlers/bet-item-handler";
 
 const { render, handle } = Observer;
 
-const { Rounds, Chips } = gc;
+const { Rounds } = gc;
 
 const { property } = _decorator;
 
@@ -26,6 +26,12 @@ export default class BetItem extends Component {
         this.lblOwnBet.string = "";
         this.lblTotalBet.string = "";
         this.lblOdds.string = "";
+        this && this.setBetItem();
+    }
+
+    @handle(BetItemHandlers.SetBetItems)
+    setBetItem() {
+        return this;
     }
 
     @handle(gc.Bet.BetHandler, (handler, payload: string) => handler.handle(payload))
@@ -54,26 +60,21 @@ export default class BetItem extends Component {
         this.lblTotalBet.string = `${totalBets[choice] ? totalBets[choice] : ""}`;
     }
 
-    @render(Chips.ChipStore, (store) => store.ownChip)
-    placeOwnChip(ownChip: gc.GameServiceMessage.OwnChip) {
-        const { betChoice, amount } = ownChip;
-        const choice = this.node.name;
-        betChoice === choice && this.flyChip(this.chipBox, amount);
+    @render(Rounds.RoundTimeStore, (store) => store.isStartGenerateResult)
+    startGenerateResult(isStartGenerateResult: boolean) {
+        if (isStartGenerateResult) {
+            this.clearChips();
+        }
     }
 
-    @handle(SlidingChipHandler.FlyChip)
-    flyChip(chipBox: Node, amount: number) {
-        return { chipBox, amount };
-    }
-
-    @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
-    public clearBet(isStartingRound: boolean) {
-        if (isStartingRound && this.chipBox) {
+    @render(Rounds.RoundTimeStore, (store) => store.isStopGame)
+    public handleStopGame(isStopGame: boolean) {
+        if (isStopGame) {
             this.clearChips();
         }
     }
 
     protected clearChips() {
-        this.chipBox.destroyAllChildren();
+        this.chipBox && this.chipBox.destroyAllChildren();
     }
 }

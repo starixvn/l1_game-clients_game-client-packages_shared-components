@@ -3,15 +3,16 @@ import gc from "game-client-base";
 import Observer from "observer";
 
 import { bundleManager } from "../../bundle-magager/bundle-manager";
+import { ChipFlyingHandlers } from "../../chip-flying/scripts/handlers/chip-flying-handler";
+import { FunctionUtils } from "../../utils";
 
 const { Player } = gc;
 const { PlayerStore } = Player;
 
-const { ccclass, property, menu } = _decorator;
-const { observer, render, handle } = Observer;
+const { ccclass, property } = _decorator;
+const { useObserver, render, handle } = Observer;
 
 @ccclass
-@observer
 export default class UserProfile extends Component {
     @property(Label)
     lblName: Label = null;
@@ -21,6 +22,21 @@ export default class UserProfile extends Component {
 
     @property(Sprite)
     sprAvatar: Sprite = null;
+    private dispose: Function;
+
+    onLoad() {
+        this.dispose = useObserver(this, FunctionUtils.getNamespace());
+        this.setOwnerUsers();
+    }
+
+    @handle(ChipFlyingHandlers.SetOwnerUser)
+    setOwnerUsers() {
+        return this.node;
+    }
+
+    protected onDestroy(): void {
+        this.dispose();
+    }
 
     @render(PlayerStore, (store) => store.name)
     setName(text: string) {

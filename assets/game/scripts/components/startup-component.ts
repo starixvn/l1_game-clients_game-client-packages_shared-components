@@ -1,11 +1,15 @@
-import { Component, director } from "cc";
+import { Component, _decorator, director } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
 import { LogStore } from "../stores/log-store";
 
 const { handle, render } = Observer;
+const { property } = _decorator;
 
 export default class StartupComponent extends Component {
+    @property
+    namespace = "game";
+
     onLoad() {
         this.connectToService();
     }

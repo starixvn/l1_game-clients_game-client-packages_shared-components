@@ -1,5 +1,6 @@
 import gc from "game-client-base";
 import inversify from "inversify";
+import SlidingChip from "../components/sliding-chip";
 import { SlidingChipStore } from "../stores/sliding-chip-store";
 
 const { injectable, inject } = inversify;
@@ -47,12 +48,13 @@ export namespace SlidingChipHandler {
     }
 
     @injectable()
-    export class SetChipValues implements gc.Shared.IHandler<void> {
+    export class SetChipValues {
         @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
 
-        async handle() {
+        async handle(slidingChip: SlidingChip) {
             this.slidingChipStore.resetBet();
             this.slidingChipStore.setChipValuesByStakeLevel();
+            this.slidingChipStore.slidingChip = slidingChip;
         }
     }
 
@@ -82,15 +84,6 @@ export namespace SlidingChipHandler {
         async handle({ bet }) {
             this.slidingChipStore.currentChip = bet;
             this.betStore.amount = +bet;
-        }
-    }
-
-    @injectable()
-    export class FlyChip implements gc.Shared.IHandler<{ chipBox: Node; amount: number }> {
-        @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
-
-        async handle({ chipBox, amount }) {
-            this.slidingChipStore.betItem = { chipBox, bet: amount };
         }
     }
 }

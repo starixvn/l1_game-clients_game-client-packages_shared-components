@@ -16,10 +16,11 @@ import {
     v3,
 } from "cc";
 import gc from "game-client-base";
-import { random, round } from "lodash-es";
+import { forEach, random, round } from "lodash-es";
 import Observer from "observer";
+import { FunctionUtils } from "../../../utils";
 import { SlidingChipHandler } from "../handlers/sliding-chip-handler";
-import { SlidingChipStore, TBetItem } from "../stores/sliding-chip-store";
+import { SlidingChipStore } from "../stores/sliding-chip-store";
 import * as actions from "./actions";
 import Chip, { ChipDisplayType } from "./chip";
 import { SnapScrollView } from "./snap-scroll-view";
@@ -32,7 +33,7 @@ const { ccclass, property } = _decorator;
 @ccclass
 export default class SlidingChip extends Component {
     @property
-    namespace = "game";
+    namespace = "";
 
     @property(Node)
     chips: Node = null;
@@ -69,13 +70,14 @@ export default class SlidingChip extends Component {
     private disabledBetChips = false;
     protected chipSetting: gc.Chips.TChipSetting;
     dispose: Function;
+    chipFlyingTime: number = 0.8;
 
     setDisabledBetChips(status: boolean) {
         this.disabledBetChips = status;
     }
 
     onLoad() {
-        this.dispose = useObserver(this, this.namespace);
+        this.dispose = useObserver(this, FunctionUtils.getNamespace(this.namespace));
         this.handleFirstLoad();
     }
 
@@ -279,7 +281,9 @@ export default class SlidingChip extends Component {
     }
 
     @handle(SlidingChipHandler.SetChipValues)
-    setChipValues() {}
+    setChipValues() {
+        return this;
+    }
 
     @render(SlidingChipStore, (store) => store.isResetScrollViewOffset)
     needResetScrollViewOffset() {
@@ -296,12 +300,6 @@ export default class SlidingChip extends Component {
     @handle(SlidingChipHandler.UpdateChips)
     updateChips() {
         this.snappedScrollView.initCalculatedPercent();
-    }
-
-    @render(SlidingChipStore, (store) => store.betItem)
-    flyChip(betItem: TBetItem) {
-        const { chipBox, bet } = betItem;
-        bet > 0 && actions.placeChipToChipBox(this, bet, chipBox, null, null);
     }
 
     public createSmallChip(bet: number, scale = 0.29, showValue = false): Node {
@@ -395,5 +393,13 @@ export default class SlidingChip extends Component {
                 .call(() => chip.destroy())
                 .start();
     }
-    //
+
+    moveChips = (chipsBox: Node, destBox: Node) => {
+        const destBoxPosition = destBox.parent.getComponent(UITransform).convertToWorldSpaceAR(destBox.position);
+        const destBoxInChipBoxSpacePosition = chipsBox.getComponent(UITransform).convertToNodeSpaceAR(destBoxPosition);
+
+        forEach(chipsBox.children, (chip) => {
+            this.moveChipThenDestroy(chip, destBoxInChipBoxSpacePosition, this.chipFlyingTime);
+        });
+    };
 }

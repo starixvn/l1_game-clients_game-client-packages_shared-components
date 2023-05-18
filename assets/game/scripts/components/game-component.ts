@@ -1,8 +1,10 @@
 import { Component, Game, Label, _decorator, game } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
+import * as actions from "../../.././sliding-chip/scripts/components/actions";
 import { UpdatingBalanceContainer } from "../../../balance-effect/scripts/updating-balance-container";
 import { WinningEffectContainer } from "../../../balance-effect/scripts/winning-effect-container";
+import { BetItemStore, IOwnChip, IOwnChips } from "../../../bets/scripts/stores/bet-item-store";
 import UserProfile from "../../../user-profile/scripts/user-profile";
 
 const { Auth, Rounds, Connection, HideGame, JoinGame, Settlements, FormatUtils, RoundHistories } = gc;
@@ -38,6 +40,7 @@ export default class GameComponent extends Component {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
         game.on(Game.EVENT_SHOW, this.onJoinGame, this);
     }
+
     protected onDestroy(): void {
         game.off(Game.EVENT_HIDE, this.onHideGame, this);
         game.off(Game.EVENT_SHOW, this.onJoinGame, this);
@@ -157,4 +160,16 @@ export default class GameComponent extends Component {
 
     @handle(Rounds.RoundUIHandlers.ResetRoundStore)
     resetForNewRound() {}
+
+    @render(BetItemStore, (store) => store.ownChips)
+    flyChipJoinGame(ownChips: IOwnChips[]) {
+        ownChips.forEach((ownChip) => {
+            actions.addChipsToChipBoxWhenJoinRoom(1, ownChip);
+        });
+    }
+
+    @render(BetItemStore, (store) => store.ownChip)
+    flyChip(ownChip: IOwnChip) {
+        actions.placeChipToChipBox(ownChip, null, null);
+    }
 }
