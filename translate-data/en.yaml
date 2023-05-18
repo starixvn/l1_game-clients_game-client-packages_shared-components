@@ -1,0 +1,22 @@
+locale: en
+items:
+  f773c1ab-20bb-4e29-99cc-c27dd65abf19:
+    key: f773c1ab-20bb-4e29-99cc-c27dd65abf19
+    value: f773c1ab-20bb-4e29-99cc-c27dd65abf19
+    type: 1
+    isVariant: false
+    associations: []
+    _variants: []
+  18e41e64-36b8-44d4-a0d5-040b4ab9742b:
+    key: 18e41e64-36b8-44d4-a0d5-040b4ab9742b
+    value: 18e41e64-36b8-44d4-a0d5-040b4ab9742b
+    type: 1
+    isVariant: false
+    associations: []
+    _variants: []
+languageConfig:
+  bcp47Tag: en
+  translateFinished: 327
+  translateTotal: 327
+  compileFinished: 0
+  compileTotal: 153

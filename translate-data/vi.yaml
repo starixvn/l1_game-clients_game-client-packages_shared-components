@@ -1,0 +1,22 @@
+locale: vi
+items:
+  f773c1ab-20bb-4e29-99cc-c27dd65abf19:
+    key: f773c1ab-20bb-4e29-99cc-c27dd65abf19
+    value: 09046465-7b15-433d-b3be-66474c3cff54
+    type: 1
+    isVariant: false
+    associations: []
+    _variants: []
+  18e41e64-36b8-44d4-a0d5-040b4ab9742b:
+    key: 18e41e64-36b8-44d4-a0d5-040b4ab9742b
+    value: 54ce5388-d995-45f8-8d67-336d5ecf697c
+    type: 1
+    isVariant: false
+    associations: []
+    _variants: []
+languageConfig:
+  bcp47Tag: vi
+  translateFinished: 5
+  translateTotal: 5
+  compileFinished: 0
+  compileTotal: 5
