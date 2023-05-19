@@ -16,25 +16,22 @@ import {
     v3,
 } from "cc";
 import gc from "game-client-base";
-import { forEach, random, round } from "lodash-es";
+import { random, round } from "lodash-es";
 import Observer from "observer";
-import { FunctionUtils } from "../../../utils";
+import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 import { SlidingChipHandler } from "../handlers/sliding-chip-handler";
 import { SlidingChipStore } from "../stores/sliding-chip-store";
-import * as actions from "./actions";
+import { FlyChipUtils } from "./actions";
 import Chip, { ChipDisplayType } from "./chip";
 import { SnapScrollView } from "./snap-scroll-view";
 
-const { render, handle, useObserver } = Observer;
+const { render, handle } = Observer;
 const { Chips, GameConfigs, Player } = gc;
 
 const { ccclass, property } = _decorator;
 
 @ccclass
-export default class SlidingChip extends Component {
-    @property
-    namespace = "";
-
+export default class SlidingChip extends ObserverComponent {
     @property(Node)
     chips: Node = null;
 
@@ -69,7 +66,7 @@ export default class SlidingChip extends Component {
     public chipList: Node[] = [];
     private disabledBetChips = false;
     protected chipSetting: gc.Chips.TChipSetting;
-    dispose: Function;
+
     chipFlyingTime: number = 0.8;
 
     setDisabledBetChips(status: boolean) {
@@ -77,7 +74,7 @@ export default class SlidingChip extends Component {
     }
 
     onLoad() {
-        this.dispose = useObserver(this, FunctionUtils.getNamespace(this.namespace));
+        super.onLoad();
         this.handleFirstLoad();
     }
 
@@ -86,10 +83,6 @@ export default class SlidingChip extends Component {
         this.snappedScrollView.actionScrollEnded = () => {
             this.updateSelectChip();
         };
-    }
-
-    protected onDestroy(): void {
-        this.dispose();
     }
 
     @handle(SlidingChipHandler.UpdateSelectChip)
@@ -370,7 +363,7 @@ export default class SlidingChip extends Component {
                     if (chip) {
                         const cloneChip = instantiate(chip);
                         cloneChipsBox.addChild(cloneChip);
-                        this.moveChipThenDestroy(cloneChip, destBoxInChipBoxSpacePosition, flyTime);
+                        FlyChipUtils.moveChipThenDestroy(cloneChip, destBoxInChipBoxSpacePosition, flyTime);
                     }
                 }
 
@@ -382,24 +375,4 @@ export default class SlidingChip extends Component {
             }
         }
     }
-
-    private moveChipThenDestroy(chip: Node, destBoxInChipBoxSpacePosition: Vec3, flyTime: number) {
-        chip &&
-            tween(chip)
-                .call(() => {
-                    actions.moveChipTo(chip, destBoxInChipBoxSpacePosition, flyTime);
-                })
-                .delay(0.5 * flyTime)
-                .call(() => chip.destroy())
-                .start();
-    }
-
-    moveChips = (chipsBox: Node, destBox: Node) => {
-        const destBoxPosition = destBox.parent.getComponent(UITransform).convertToWorldSpaceAR(destBox.position);
-        const destBoxInChipBoxSpacePosition = chipsBox.getComponent(UITransform).convertToNodeSpaceAR(destBoxPosition);
-
-        forEach(chipsBox.children, (chip) => {
-            this.moveChipThenDestroy(chip, destBoxInChipBoxSpacePosition, this.chipFlyingTime);
-        });
-    };
 }

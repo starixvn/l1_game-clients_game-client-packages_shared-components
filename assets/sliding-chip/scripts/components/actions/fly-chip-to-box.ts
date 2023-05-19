@@ -1,8 +1,8 @@
-import { Node, UITransform, Vec3, tween, v3 } from "cc";
-import { random } from "lodash-es";
+import { Node, UITransform } from "cc";
 import { IOwnChip, IOwnChips } from "../../../../bets/scripts/stores/bet-item-store";
 import { NumberUtils } from "../../../../utils";
 import SlidingChip from "../sliding-chip";
+import { FlyChipUtils } from "./fly-chip-utils";
 
 type TChips = {
     [value: number]: number;
@@ -22,41 +22,15 @@ export const placeChipToChipBox = (ownerChip: IOwnChip, startNode: Node, onCompl
             ?.convertToNodeSpaceAR(slidingChip.createStartNodeInfo(startNode, chipBet).worldPos);
         const chipNode = slidingChip.createSmallChip(chipBet);
         chipNode.position = chipPosition;
-        const randomPosition = getRandomPositionChip(chipNode, chipBox);
+        const randomPosition = FlyChipUtils.getRandomPositionChip(chipNode, chipBox);
         chipBox?.addChild(chipNode);
 
         if (!chipNode.activeInHierarchy) {
             chipNode.position = randomPosition;
         } else {
-            chipNode && moveChipTo(chipNode, randomPosition, flyingDuration, onComplete);
+            chipNode && FlyChipUtils.moveChipTo(chipNode, randomPosition, flyingDuration, onComplete);
         }
     }
-};
-
-export const getRandomPositionChip = (chip: Node, box: Node): Vec3 => {
-    if (chip && box) {
-        const chipBoundingBox = chip.getComponent(UITransform).getBoundingBox();
-        const xDest = random(
-            Math.floor(chip.getComponent(UITransform).width / 4),
-            Math.floor(box.getComponent(UITransform).width - chipBoundingBox.width / 2) + 1
-        );
-        const yDest = random(
-            Math.floor(chip.getComponent(UITransform).height / 4),
-            Math.floor(box.getComponent(UITransform).height - chipBoundingBox.height / 2) + 1
-        );
-        return v3(xDest, yDest);
-    }
-
-    return v3(0, 0);
-};
-
-export const moveChipTo = (chipNode: Node, randomPosition: Vec3, flyingDuration: number, onComplete?: () => void) => {
-    tween(chipNode)
-        .to(flyingDuration, { position: v3(randomPosition.x, randomPosition.y, 0) }, { easing: "sineOut" })
-        .call(() => {
-            onComplete && onComplete();
-        })
-        .start();
 };
 
 export const addChipsToChipBoxWhenJoinRoom = (rate: number, ownChip: IOwnChips) => {
@@ -105,7 +79,7 @@ const addChipsByChipsData = (slidingChip: SlidingChip, chips: TChips, chipsBox: 
         const count = chips[chipValue];
         for (let i = 0; i < count; i++) {
             const chip = slidingChip.createSmallChip(+chipValue);
-            chip.position = getRandomPositionChip(chip, chipsBox);
+            chip.position = FlyChipUtils.getRandomPositionChip(chip, chipsBox);
             chipsBox.addChild(chip);
         }
     });

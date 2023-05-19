@@ -1,10 +1,10 @@
-import { _decorator, Component, Label, log, Sprite, SpriteFrame } from "cc";
+import { _decorator, Label, log, Sprite, SpriteFrame } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
 
 import { bundleManager } from "../../bundle-magager/bundle-manager";
 import { ChipFlyingHandlers } from "../../chip-flying/scripts/handlers/chip-flying-handler";
-import { FunctionUtils } from "../../utils";
+import { ObserverComponent } from "../../common/observer-component/scripts/observer-component";
 
 const { Player } = gc;
 const { PlayerStore } = Player;
@@ -13,7 +13,7 @@ const { ccclass, property } = _decorator;
 const { useObserver, render, handle } = Observer;
 
 @ccclass
-export default class UserProfile extends Component {
+export default class UserProfile extends ObserverComponent {
     @property(Label)
     lblName: Label = null;
 
@@ -22,20 +22,15 @@ export default class UserProfile extends Component {
 
     @property(Sprite)
     sprAvatar: Sprite = null;
-    private dispose: Function;
 
     onLoad() {
-        this.dispose = useObserver(this, FunctionUtils.getNamespace());
-        this.setOwnerUsers();
+        super.onLoad();
+        this.setOwnerAvatar();
     }
 
-    @handle(ChipFlyingHandlers.SetOwnerUser)
-    setOwnerUsers() {
-        return this.node;
-    }
-
-    protected onDestroy(): void {
-        this.dispose();
+    @handle(ChipFlyingHandlers.SetOwnerAvatar)
+    setOwnerAvatar() {
+        return this.sprAvatar.node;
     }
 
     @render(PlayerStore, (store) => store.name)

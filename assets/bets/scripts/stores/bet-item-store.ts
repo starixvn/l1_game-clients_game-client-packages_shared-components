@@ -1,6 +1,7 @@
 import { Node } from "cc";
 import gc from "game-client-base";
 import inversify from "inversify";
+import { filter } from "lodash-es";
 import mobx from "mobx";
 import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 import { SlidingChipStore } from "../../../sliding-chip/scripts/stores/sliding-chip-store";
@@ -30,6 +31,7 @@ export interface IOwnChip extends Chips {
 export class BetItemStore {
     @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
     @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
+    @inject(gc.Settlements.SettlementStore) private readonly settlementStore: gc.Settlements.SettlementStore;
 
     constructor() {
         mobx.makeAutoObservable(this);
@@ -82,5 +84,23 @@ export class BetItemStore {
 
     setBetItems(betItem: BetItem) {
         this._betItems = [...this.betItems, betItem];
+    }
+
+    get settlementResultKeys() {
+        return ObjectUtils.getLowercaseObjectKeys(this.settlementStore.settlementResult);
+    }
+
+    get lostBetItems(): BetItem[] {
+        return filter(
+            this.betItems,
+            (item: BetItem) => !this.settlementStore.settlementResult[this.settlementResultKeys[item.node.name.toLowerCase()]]
+        );
+    }
+
+    get winBetItems(): BetItem[] {
+        return filter(
+            this.betItems,
+            (item: BetItem) => !!this.settlementStore.settlementResult[this.settlementResultKeys[item.node.name.toLowerCase()]]
+        );
     }
 }

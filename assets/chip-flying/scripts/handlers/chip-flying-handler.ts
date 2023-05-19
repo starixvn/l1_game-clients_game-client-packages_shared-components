@@ -1,5 +1,6 @@
 import { Node } from "cc";
 import inversify from "inversify";
+import { ChipFlying } from "../components/chip-flying";
 import { ChipFlyingStore } from "../stores/chip-flying.store";
 
 const { injectable, inject } = inversify;
@@ -15,7 +16,7 @@ export namespace ChipFlyingHandlers {
     }
 
     @injectable()
-    export class SetBoxChip {
+    export class SetDealerChipBox {
         @inject(ChipFlyingStore) private readonly chipFlyingStore: ChipFlyingStore;
 
         async handle(boxChip: Node) {
@@ -24,11 +25,19 @@ export namespace ChipFlyingHandlers {
     }
 
     @injectable()
-    export class SetOwnerUser {
+    export class SetOwnerAvatar {
         @inject(ChipFlyingStore) private readonly chipFlyingStore: ChipFlyingStore;
 
-        async handle(ownerUser: Node) {
-            this.chipFlyingStore.ownerUser = ownerUser;
+        async handle(ownerAvatar: Node) {
+            this.chipFlyingStore.ownerAvatar = ownerAvatar;
+        }
+    }
+    @injectable()
+    export class SetChipFlying {
+        @inject(ChipFlyingStore) private readonly chipFlyingStore: ChipFlyingStore;
+
+        async handle(chipFlying: ChipFlying) {
+            this.chipFlyingStore.chipFlying = chipFlying;
         }
     }
 }
