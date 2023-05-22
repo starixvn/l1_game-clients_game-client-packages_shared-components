@@ -1,4 +1,4 @@
-import { Auth, Configs, IContainerOptions, Player, getContainer } from "game-client-base";
+import { Auth, Configs, IContainerOptions, Player, buildObserverContainer, getContainer } from "game-client-base";
 import mobx from "mobx";
 import { configure } from "observer";
 import { getSharedContainer, startGame } from "../../../assets/scripts/startup";
@@ -18,9 +18,20 @@ describe(startGame.name, () => {
             expect(getContainer).toBeCalledWith(options);
         });
 
-        it("should configure the observer", () => {
+        it("should build observer container", () => {
             // Arrange
             (getContainer as jest.Mock).mockReturnValueOnce({ container: true });
+
+            // Act
+            startGame("namespace", options);
+
+            // Assert
+            expect(buildObserverContainer).toBeCalledWith({ container: true });
+        });
+
+        it("should configure the observer", () => {
+            // Arrange
+            (buildObserverContainer as jest.Mock).mockReturnValueOnce({ container: true });
 
             // Act
             startGame("namespace", options);
