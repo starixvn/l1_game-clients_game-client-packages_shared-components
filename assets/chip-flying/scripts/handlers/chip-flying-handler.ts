@@ -7,11 +7,11 @@ const { injectable, inject } = inversify;
 
 export namespace ChipFlyingHandlers {
     @injectable()
-    export class SetOtherUsers {
+    export class SetOtherPlayers {
         @inject(ChipFlyingStore) private readonly chipFlyingStore: ChipFlyingStore;
 
-        async handle(otherUsers: Node) {
-            this.chipFlyingStore.otherUsers = otherUsers;
+        async handle(otherPlayers: Node) {
+            this.chipFlyingStore.otherPlayers = otherPlayers;
         }
     }
 

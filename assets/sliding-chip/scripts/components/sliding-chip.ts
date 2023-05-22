@@ -371,7 +371,8 @@ export default class SlidingChip extends ObserverComponent {
                     .delay(flyTime * 1.5)
                     .call(() => {
                         cloneChipsBox.destroy();
-                    });
+                    })
+                    .start();
             }
         }
     }

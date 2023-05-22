@@ -1,21 +1,21 @@
 import { _decorator } from "cc";
-import Observer from "observer";
 import { ChipFlyingHandlers } from "db://shared-components/chip-flying/scripts/handlers/chip-flying-handler";
+import Observer from "observer";
 import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 
-const { useObserver, handle } = Observer;
+const { handle } = Observer;
 
 const { ccclass } = _decorator;
 
 @ccclass
-export default class OtherUsers extends ObserverComponent {
+export default class OtherPlayers extends ObserverComponent {
     onLoad() {
         super.onLoad();
-        this.setOtherUsers();
+        this.setOtherPlayers();
     }
 
-    @handle(ChipFlyingHandlers.SetOtherUsers)
-    setOtherUsers() {
+    @handle(ChipFlyingHandlers.SetOtherPlayers)
+    setOtherPlayers() {
         return this.node;
     }
 }

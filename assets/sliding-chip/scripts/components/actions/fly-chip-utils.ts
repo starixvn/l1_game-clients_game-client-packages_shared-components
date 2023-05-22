@@ -22,16 +22,14 @@ export namespace FlyChipUtils {
     export const moveChipThenDestroy = (chip: Node, destBoxInChipBoxSpacePosition: Vec3, chipFlyingTime: number) => {
         chip &&
             tween(chip)
-                .call(() => {
-                    moveChipTo(chip, destBoxInChipBoxSpacePosition, chipFlyingTime);
-                })
-                .delay(chipFlyingTime)
+                .then(moveChipTo(chip, destBoxInChipBoxSpacePosition, chipFlyingTime))
+                .delay(0.5 * chipFlyingTime)
                 .call(() => chip.destroy())
                 .start();
     };
 
     export const moveChipTo = (chip: Node, randomPosition: Vec3, flyingDuration: number, onComplete?: () => void) => {
-        tween(chip)
+        return tween(chip)
             .to(flyingDuration, { position: v3(randomPosition.x, randomPosition.y, 0) }, { easing: "sineOut" })
             .call(() => {
                 onComplete && onComplete();

@@ -1,5 +1,4 @@
 import { Node, UITransform, instantiate } from "cc";
-import gc from "game-client-base";
 import { forEach } from "lodash-es";
 import BetItem from "../../../../bets/scripts/components/bet-item";
 import { FlyChipUtils } from "../../../../sliding-chip/scripts/components/actions";
@@ -51,20 +50,7 @@ export namespace ActionChipFlying {
         });
     };
 
-    export const payChipToAllPlayers = (payChipInfo: TPayChipInfo) => {
-        const { otherPlayers, settleStatus } = payChipInfo;
-
-        payChipsToLoginPlayer(payChipInfo);
-        showPayoutForLoginPlayer(settleStatus);
-
-        if (otherPlayers) {
-            payChipsToOtherPlayers(payChipInfo);
-        }
-
-        payChipsToInGamePlayers(payChipInfo);
-    };
-
-    const payChipsToLoginPlayer = (payChipInfo: TPayChipInfo) => {
+    export const payChipsToLoginPlayer = (payChipInfo: TPayChipInfo) => {
         const { settleStatus, otherPlayers } = payChipInfo;
         const isOtherPlayers = otherPlayers !== null;
 
@@ -108,13 +94,7 @@ export namespace ActionChipFlying {
         });
     };
 
-    const showPayoutForLoginPlayer = (settleStatus: gc.Settlements.SettlementStatusStore) => {
-        if (!settleStatus || !settleStatus.win) {
-            return;
-        }
-    };
-
-    const payChipsToOtherPlayers = (payChipInfo: TPayChipInfo) => {
+    export const payChipsToOtherPlayers = (payChipInfo: TPayChipInfo) => {
         const { otherPlayers, isChipStack, betInfo, chipFlyingTime } = payChipInfo;
         if (!otherPlayers) {
             return;
@@ -126,7 +106,7 @@ export namespace ActionChipFlying {
         });
     };
 
-    const payChipsToInGamePlayers = (payChipInfo: TPayChipInfo) => {
+    export const payChipsToInGamePlayers = (payChipInfo: TPayChipInfo) => {
         const { finish } = payChipInfo;
         const winningPlayers = finish.winningPlayers;
 

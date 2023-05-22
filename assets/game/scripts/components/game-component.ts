@@ -1,11 +1,8 @@
 import { Component, Game, Label, _decorator, game } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
-import { UpdatingBalanceContainer } from "../../../balance-effect/scripts/updating-balance-container";
-import { WinningEffectContainer } from "../../../balance-effect/scripts/winning-effect-container";
-import UserProfile from "../../../user-profile/scripts/user-profile";
 
-const { Auth, Rounds, Connection, HideGame, JoinGame, Settlements, FormatUtils, RoundHistories } = gc;
+const { Rounds, Connection, HideGame, JoinGame, Settlements, FormatUtils, RoundHistories } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -19,15 +16,6 @@ export default class GameComponent extends Component {
 
     @property(Label)
     lblMaxBet: Label = null;
-
-    @property(UserProfile)
-    userProfile: UserProfile = null;
-
-    @property(WinningEffectContainer)
-    winningEffectContainer: WinningEffectContainer = null;
-
-    @property(UpdatingBalanceContainer)
-    updatingBalanceContainer: UpdatingBalanceContainer = null;
 
     protected roundId = 0;
     protected settleStatus: gc.Settlements.SettlementStatusStore = null;
@@ -63,7 +51,7 @@ export default class GameComponent extends Component {
     inGame() {}
 
     @render(Rounds.RoundTimeStore, (store) => store.roundState, { fireImmediately: false })
-    handleJoinGame(roundState: string) {
+    handleJoinGame() {
         if (this.isFirstLoad) {
             this.isFirstLoad = false;
             this.getJoinGameRoundState();
@@ -122,27 +110,6 @@ export default class GameComponent extends Component {
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult() {}
-
-    @render(Rounds.RoundTimeStore, (store) => store.isBeginShowResult)
-    payChips(isBeginShowResult: boolean) {
-        // dealer get chips and pay chips
-        isBeginShowResult && this.payChipToAllPlayers();
-    }
-
-    payChipToAllPlayers() {
-        if (this.settleStatus.win) {
-            this.showPayoutForLoginPlayer();
-        }
-    }
-
-    showPayoutForLoginPlayer() {
-        this.updatingBalanceContainer?.updateBalance(this.userProfile.node, true, this.settleStatus.bet);
-        this.winningEffectContainer?.playWinningEffect();
-        this.getBalance();
-    }
-
-    @handle(Auth.AuthHandlers.GetBalance)
-    getBalance() {}
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartGenerateResult)
     startGenerateResult(isStartGenerateResult: boolean) {

@@ -21,16 +21,14 @@ export type TPayChipInfo = {
         settlementResult: gc.GameServiceMessage.TResult;
         winningPlayers: gc.GameServiceMessage.TWinningPlayers;
     };
-    otherUsers: Node;
+    otherPlayers: Node;
     chipFlyingTime: number;
-    chipDelayFlyingTime: number;
     winningDuration: number;
     isChipStack: boolean;
     payChipsDuration: number;
     dealerChipBox: Node;
     playerSlot: any[];
-    isShowResult: boolean;
-    otherPlayers?: any;
+    isFinishedShowResult: boolean;
 };
 @injectable()
 export class ChipFlyingStore {
@@ -44,18 +42,18 @@ export class ChipFlyingStore {
         mobx.makeAutoObservable(this);
     }
 
-    private _otherUsers: Node = null;
+    private _otherPlayer: Node = null;
     private _boxChip: Node = null;
     private _ownerAvatar: Node = null;
     private _chipFlying: ChipFlying = null;
     playerSlot: any[] = [];
 
-    get otherUsers() {
-        return this._otherUsers;
+    get otherPlayers() {
+        return this._otherPlayer;
     }
 
-    set otherUsers(otherUsers: Node) {
-        this._otherUsers = otherUsers;
+    set otherPlayers(otherPlayers: Node) {
+        this._otherPlayer = otherPlayers;
     }
 
     get chipFlying() {
@@ -83,7 +81,7 @@ export class ChipFlyingStore {
     }
 
     get payChipInfo(): TPayChipInfo {
-        if (this.roundTimeStore.isShowResult) {
+        if (this.settlementStore.isFinishedShowResult) {
             const betInfo = {
                 winBetItems: this.betItemStore.winBetItems,
                 lostBetItems: this.betItemStore.lostBetItems,
@@ -100,17 +98,17 @@ export class ChipFlyingStore {
                 settleStatus: this.settlementStatusStore,
                 ownerAvatar: this.ownerAvatar,
                 slidingChip: this.slidingChipStore.slidingChip,
-                otherUsers: this.otherUsers,
-                chipFlyingTime: this.chipFlying.payChipsDuration,
-                chipDelayFlyingTime: this.chipFlying.chipDelayFlyingTime,
+                otherPlayers: this.otherPlayers,
+                chipFlyingTime: this.slidingChipStore.slidingChip.chipFlyingTime,
                 winningDuration: this.chipFlying.winningDuration,
                 isChipStack: this.chipFlying.isChipStack,
                 payChipsDuration: this.chipFlying.payChipsDuration,
                 dealerChipBox: this.chipFlying.dealerChipBox,
                 playerSlot: this.playerSlot,
-                isShowResult: this.roundTimeStore.isShowResult,
+                isFinishedShowResult: this.settlementStore.isFinishedShowResult,
             };
         }
+
         return null;
     }
 }
