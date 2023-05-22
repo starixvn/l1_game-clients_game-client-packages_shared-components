@@ -4,8 +4,9 @@ import Observer from "observer";
 
 export function startGame(namespace: string, containerOptions: gc.IContainerOptions) {
     const container = gc.getContainer(containerOptions);
+    const observerContainer = gc.buildObserverContainer(container);
 
-    Observer.configure({ [namespace]: { mobx, container } });
+    Observer.configure({ [namespace]: { mobx, container: observerContainer } });
 
     return container;
 }
