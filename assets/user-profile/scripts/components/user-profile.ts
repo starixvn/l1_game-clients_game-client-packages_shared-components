@@ -1,16 +1,17 @@
-import { _decorator, Label, log, Sprite, SpriteFrame } from "cc";
+import { BitmapFont, Label, Sprite, SpriteFrame, _decorator, log } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
 
-import { bundleManager } from "../../bundle-magager/bundle-manager";
-import { ChipFlyingHandlers } from "../../chip-flying/scripts/handlers/chip-flying-handler";
-import { ObserverComponent } from "../../common/observer-component/scripts/observer-component";
+import { bundleManager } from "db://shared-components/bundle-magager/bundle-manager";
+import { ObserverComponent } from "db://shared-components/common/observer-component/scripts/observer-component";
+import { UserProfileHandlers } from "../handlers/user-profile-handler";
+import { TEndBetInfo, UserProfileStore } from "../stores/user-profile-store";
 
-const { Player } = gc;
+const { Player, FormatUtils, Bet } = gc;
 const { PlayerStore } = Player;
 
 const { ccclass, property } = _decorator;
-const { useObserver, render, handle } = Observer;
+const { render, handle } = Observer;
 
 @ccclass
 export default class UserProfile extends ObserverComponent {
@@ -23,12 +24,18 @@ export default class UserProfile extends ObserverComponent {
     @property(Sprite)
     sprAvatar: Sprite = null;
 
+    @property(BitmapFont)
+    fontIncreaseMoney: BitmapFont = null;
+
+    @property(BitmapFont)
+    fontDecreaseMoney: BitmapFont = null;
+
     onLoad() {
         super.onLoad();
         this.setOwnerAvatar();
     }
 
-    @handle(ChipFlyingHandlers.SetOwnerAvatar)
+    @handle(UserProfileHandlers.SetOwnerAvatar)
     setOwnerAvatar() {
         return this.sprAvatar.node;
     }
@@ -54,5 +61,13 @@ export default class UserProfile extends ObserverComponent {
     @render(PlayerStore, (store) => store.balance)
     setBalance(value: number) {
         this.lblBalance.string = value.toString();
+    }
+
+    @render(UserProfileStore, (store) => store.endBetInfo)
+    endBetInfo(endBetInfo: TEndBetInfo) {
+        const { bet, balanceContainer, ownerAvatar, isProcessingBet } = endBetInfo;
+        if (bet > 0 && !isProcessingBet) {
+            balanceContainer.updateBalance(ownerAvatar, false, bet, 1, 80);
+        }
     }
 }

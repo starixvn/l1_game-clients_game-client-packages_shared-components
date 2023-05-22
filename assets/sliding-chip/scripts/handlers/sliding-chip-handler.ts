@@ -86,4 +86,13 @@ export namespace SlidingChipHandler {
             this.betStore.amount = +bet;
         }
     }
+
+    @injectable()
+    export class ResetChips implements gc.Shared.IHandler<void> {
+        @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
+
+        async handle() {
+            this.chipStore.resetChips();
+        }
+    }
 }

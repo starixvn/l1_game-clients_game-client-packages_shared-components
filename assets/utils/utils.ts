@@ -1,4 +1,5 @@
-import { math, Node, tween, UIOpacity } from "cc";
+import { Node, UIOpacity, math, tween } from "cc";
+
 export namespace AnimationUtils {
     export const fadeIn = (node: Node, duration: number, opacity = 255) => {
         const uiOpacity = node.getComponent(UIOpacity);

@@ -26,7 +26,7 @@ import Chip, { ChipDisplayType } from "./chip";
 import { SnapScrollView } from "./snap-scroll-view";
 
 const { render, handle } = Observer;
-const { Chips, GameConfigs, Player } = gc;
+const { Chips, GameConfigs, Player, Rounds } = gc;
 
 const { ccclass, property } = _decorator;
 
@@ -376,4 +376,14 @@ export default class SlidingChip extends ObserverComponent {
             }
         }
     }
+
+    @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
+    startGenerateResult(isStartingRound: boolean) {
+        if (isStartingRound) {
+            this.resetChips();
+        }
+    }
+
+    @handle(SlidingChipHandler.ResetChips)
+    resetChips() {}
 }

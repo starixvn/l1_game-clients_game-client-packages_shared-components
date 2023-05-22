@@ -1,8 +1,9 @@
-import { _decorator, Component, instantiate, Prefab } from "cc";
+import { _decorator, instantiate, Prefab } from "cc";
+import { ObserverComponent } from "../common/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
 
 @ccclass("NodeContainer")
-export class NodeContainer extends Component {
+export class NodeContainer extends ObserverComponent {
     @property(Prefab)
     prefab: Prefab = null;
 

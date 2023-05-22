@@ -6,7 +6,9 @@ import BetItem from "../../../bets/scripts/components/bet-item";
 import { BetItemStore } from "../../../bets/scripts/stores/bet-item-store";
 import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 import { SlidingChipStore } from "../../../sliding-chip/scripts/stores/sliding-chip-store";
+import { UserProfileStore } from "../../../user-profile/scripts/stores/user-profile-store";
 import { ChipFlying } from "../components/chip-flying";
+import { BalanceEffectStore } from "./../../../balance-effect/scripts/stores/balance-effect.store";
 const { injectable, inject } = inversify;
 
 export type TPayChipInfo = {
@@ -29,6 +31,7 @@ export type TPayChipInfo = {
     dealerChipBox: Node;
     playerSlot: any[];
     isFinishedShowResult: boolean;
+    balanceEffectStore: BalanceEffectStore;
 };
 @injectable()
 export class ChipFlyingStore {
@@ -36,7 +39,8 @@ export class ChipFlyingStore {
     @inject(BetItemStore) private readonly betItemStore: BetItemStore;
     @inject(gc.Settlements.SettlementStatusStore) private readonly settlementStatusStore: gc.Settlements.SettlementStatusStore;
     @inject(gc.Settlements.SettlementStore) private readonly settlementStore: gc.Settlements.SettlementStore;
-    @inject(gc.Rounds.RoundTimeStore) private readonly roundTimeStore: gc.Rounds.RoundTimeStore;
+    @inject(UserProfileStore) private readonly userProfileStore: UserProfileStore;
+    @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
     constructor() {
         mobx.makeAutoObservable(this);
@@ -44,7 +48,6 @@ export class ChipFlyingStore {
 
     private _otherPlayer: Node = null;
     private _boxChip: Node = null;
-    private _ownerAvatar: Node = null;
     private _chipFlying: ChipFlying = null;
     playerSlot: any[] = [];
 
@@ -72,14 +75,6 @@ export class ChipFlyingStore {
         this._boxChip = boxChip;
     }
 
-    get ownerAvatar() {
-        return this._ownerAvatar;
-    }
-
-    set ownerAvatar(ownerUser: Node) {
-        this._ownerAvatar = ownerUser;
-    }
-
     get payChipInfo(): TPayChipInfo {
         if (this.settlementStore.isFinishedShowResult) {
             const betInfo = {
@@ -96,7 +91,7 @@ export class ChipFlyingStore {
                 betInfo,
                 finish,
                 settleStatus: this.settlementStatusStore,
-                ownerAvatar: this.ownerAvatar,
+                ownerAvatar: this.userProfileStore.ownerAvatar,
                 slidingChip: this.slidingChipStore.slidingChip,
                 otherPlayers: this.otherPlayers,
                 chipFlyingTime: this.slidingChipStore.slidingChip.chipFlyingTime,
@@ -106,6 +101,7 @@ export class ChipFlyingStore {
                 dealerChipBox: this.chipFlying.dealerChipBox,
                 playerSlot: this.playerSlot,
                 isFinishedShowResult: this.settlementStore.isFinishedShowResult,
+                balanceEffectStore: this.balanceEffectStore,
             };
         }
 

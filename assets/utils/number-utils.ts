@@ -22,11 +22,11 @@ export namespace NumberUtils {
         return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
     };
 
-    export const getChipValueByCurrency = (value: number, rate: number, otherRate?: number): number => {
+    export const getChipValueByCurrency = (value: number, playerRate: number, otherRate?: number): number => {
         if (!otherRate) {
             otherRate = 1;
         }
 
-        return (value * otherRate) / rate;
+        return (value * otherRate) / playerRate;
     };
 }

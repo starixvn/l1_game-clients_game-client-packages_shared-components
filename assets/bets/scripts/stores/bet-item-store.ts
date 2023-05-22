@@ -17,6 +17,8 @@ interface Chips {
 
 export interface IOwnChips extends Chips {
     totalChipBet: TTotalChipBet;
+    playerRate: number;
+    chipRate: number;
 }
 
 export type TTotalChipBet = {
@@ -32,6 +34,8 @@ export class BetItemStore {
     @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
     @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
     @inject(gc.Settlements.SettlementStore) private readonly settlementStore: gc.Settlements.SettlementStore;
+    @inject(gc.Player.PlayerStore) private readonly playerStore: gc.Player.PlayerStore;
+    @inject(gc.Rounds.RoundTimeStore) private readonly roundTimeStore: gc.Rounds.RoundTimeStore;
 
     constructor() {
         mobx.makeAutoObservable(this);
@@ -46,23 +50,27 @@ export class BetItemStore {
     get ownChips() {
         let ownChips: IOwnChips[] = [];
         const chips = this.chipStore.chips;
-        Object.keys(chips).forEach((rate) => {
-            const chipValues = chips[rate];
-            const chipsKeys = ObjectUtils.getLowercaseObjectKeys(chipValues);
-            this.betItems.forEach((betItem) => {
-                const totalChipBet = chipValues[chipsKeys[betItem.node.name.toLowerCase()]];
-                if (totalChipBet) {
-                    ownChips = [
-                        ...ownChips,
-                        {
-                            chipBox: betItem.chipBox,
-                            totalChipBet,
-                            slidingChip: this.slidingChipStore.slidingChip,
-                        },
-                    ];
-                }
+        if (this.roundTimeStore.isLocking || this.roundTimeStore.isPlacingBet) {
+            Object.keys(chips).forEach((rate) => {
+                const chipValues = chips[rate];
+                const chipsKeys = ObjectUtils.getLowercaseObjectKeys(chipValues);
+                this.betItems.forEach((betItem) => {
+                    const totalChipBet = chipValues[chipsKeys[betItem.node.name.toLowerCase()]];
+                    if (totalChipBet) {
+                        ownChips = [
+                            ...ownChips,
+                            {
+                                chipBox: betItem.chipBox,
+                                totalChipBet,
+                                slidingChip: this.slidingChipStore.slidingChip,
+                                playerRate: this.playerStore.rate,
+                                chipRate: +rate,
+                            },
+                        ];
+                    }
+                });
             });
-        });
+        }
 
         return ownChips;
     }

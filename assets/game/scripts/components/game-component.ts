@@ -20,7 +20,6 @@ export default class GameComponent extends Component {
     protected roundId = 0;
     protected settleStatus: gc.Settlements.SettlementStatusStore = null;
     protected roundHistories: gc.RoundHistories.RoundHistory[] = [];
-    protected isFirstLoad = true;
 
     protected onLoad(): void {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
@@ -50,15 +49,12 @@ export default class GameComponent extends Component {
     @handle(Connection.ConnectionHandlers.InGameHandler)
     inGame() {}
 
-    @render(Rounds.RoundTimeStore, (store) => store.roundState, { fireImmediately: false })
+    @render(Rounds.RoundTimeStore, (store) => store.roundState)
     handleJoinGame() {
-        if (this.isFirstLoad) {
-            this.isFirstLoad = false;
-            this.getJoinGameRoundState();
-        }
+        this.getJoinGameRoundState();
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.joinGameState, { fireImmediately: false })
+    @render(Rounds.RoundTimeStore, (store) => store.joinGameState)
     handleJoinGameWhenShowResult(roundState: string) {
         if (
             (roundState === Rounds.ROUND_STATE.SHOW_ANIMATION_RESULT || roundState === Rounds.ROUND_STATE.SHOW_RESULT) &&

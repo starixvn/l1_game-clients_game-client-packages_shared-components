@@ -24,14 +24,7 @@ export namespace ChipFlyingHandlers {
         }
     }
 
-    @injectable()
-    export class SetOwnerAvatar {
-        @inject(ChipFlyingStore) private readonly chipFlyingStore: ChipFlyingStore;
 
-        async handle(ownerAvatar: Node) {
-            this.chipFlyingStore.ownerAvatar = ownerAvatar;
-        }
-    }
     @injectable()
     export class SetChipFlying {
         @inject(ChipFlyingStore) private readonly chipFlyingStore: ChipFlyingStore;

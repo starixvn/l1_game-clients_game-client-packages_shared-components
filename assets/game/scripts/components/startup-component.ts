@@ -24,6 +24,6 @@ export default class StartupComponent extends Component {
 
     @render(LogStore, (store) => store.message)
     logInfo(message: string) {
-        console.log(message);
+        // console.log(message);
     }
 }

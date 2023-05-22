@@ -33,8 +33,8 @@ export const placeChipToChipBox = (ownerChip: IOwnChip, startNode: Node, onCompl
     }
 };
 
-export const addChipsToChipBoxWhenJoinRoom = (rate: number, ownChip: IOwnChips) => {
-    const { slidingChip, chipBox, totalChipBet } = ownChip;
+export const addChipsToChipBoxWhenJoinRoom = (otherRate: number, ownChip: IOwnChips) => {
+    const { slidingChip, chipBox, totalChipBet, playerRate, chipRate } = ownChip;
     if (!totalChipBet) {
         return;
     }
@@ -42,7 +42,7 @@ export const addChipsToChipBoxWhenJoinRoom = (rate: number, ownChip: IOwnChips) 
     const chipValues = Object.keys(totalChipBet);
     chipValues.forEach((originalChipValue) => {
         const chipCountOfBet = totalChipBet[originalChipValue];
-        const convertChip = NumberUtils.getChipValueByCurrency(+originalChipValue, rate);
+        const convertChip = NumberUtils.getChipValueByCurrency(+originalChipValue, playerRate, chipRate);
         const convertValues = getChipQuantity(convertChip, slidingChip.chipValues);
         for (let i = 0; i < chipCountOfBet; i++) {
             addChipsByChipsData(slidingChip, convertValues, chipBox);
