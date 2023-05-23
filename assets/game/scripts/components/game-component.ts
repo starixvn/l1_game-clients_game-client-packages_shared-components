@@ -19,7 +19,6 @@ export default class GameComponent extends Component {
 
     protected roundId = 0;
     protected settleStatus: gc.Settlements.SettlementStatusStore = null;
-    protected roundHistories: gc.RoundHistories.RoundHistory[] = [];
 
     protected onLoad(): void {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
@@ -32,14 +31,10 @@ export default class GameComponent extends Component {
     }
 
     @handle(HideGame.HideGameHandler)
-    onHideGame() {
-        console.log("onGameHide");
-    }
+    onHideGame() {}
 
     @handle(JoinGame.JoinGameHandler)
-    onJoinGame() {
-        console.log("onGameShow");
-    }
+    onJoinGame() {}
 
     @render(Connection.ConnectionStore, (store) => store.signedIn)
     onSignedIn(signedIn: boolean) {
@@ -49,21 +44,21 @@ export default class GameComponent extends Component {
     @handle(Connection.ConnectionHandlers.InGameHandler)
     inGame() {}
 
-    @render(Rounds.RoundTimeStore, (store) => store.roundState)
-    handleJoinGame() {
-        this.getJoinGameRoundState();
+    @render(Rounds.RoundStore, (store) => store.isEnableGame)
+    handleJoinGame(isEnableGame: boolean) {
+        isEnableGame && this.getJoinGameRoundState();
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.joinGameState)
-    handleJoinGameWhenShowResult(roundState: string) {
+    @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomInfo)
+    handleJoinGameWhenShowResult(joinRoomInfo: gc.Rounds.TJoinRoomInfo) {
+        const { joinGameState, roundHistory } = joinRoomInfo;
         if (
-            (roundState === Rounds.ROUND_STATE.SHOW_ANIMATION_RESULT || roundState === Rounds.ROUND_STATE.SHOW_RESULT) &&
-            this.roundHistories[0]
+            (joinGameState === Rounds.ROUND_STATE.SHOW_ANIMATION_RESULT || joinGameState === Rounds.ROUND_STATE.SHOW_RESULT) &&
+            roundHistory
         ) {
-            const lastRound = this.roundHistories[0];
-            this.roundId = lastRound.roundId;
+            this.roundId = roundHistory.roundId;
             this.setRoundId();
-            this.showResult(lastRound.result, false);
+            this.showResult(roundHistory.result, false);
         }
     }
 
@@ -79,11 +74,6 @@ export default class GameComponent extends Component {
     renderMinMaxBet({ minBet, maxBet }: { minBet: number; maxBet: number }) {
         this.lblMinBet && (this.lblMinBet.string = FormatUtils.numberWithCommas(minBet));
         this.lblMaxBet && (this.lblMaxBet.string = FormatUtils.numberWithCommas(maxBet));
-    }
-
-    @render(RoundHistories.RoundHistoryStore, (store) => store.histories)
-    setRoundHistories(histories: gc.RoundHistories.RoundHistory[]) {
-        this.roundHistories = histories;
     }
 
     @handle(Rounds.RoundUIHandlers.SetRoundId)
