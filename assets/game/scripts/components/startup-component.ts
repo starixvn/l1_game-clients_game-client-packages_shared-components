@@ -12,6 +12,7 @@ export default class StartupComponent extends Component {
 
     onLoad() {
         this.connectToService();
+        this.initUserSettings();
     }
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
@@ -26,4 +27,7 @@ export default class StartupComponent extends Component {
     logInfo(message: string) {
         // console.log(message);
     }
+
+    @handle(gc.UserSettings.UserSettingHandlers, (handle) => handle.loadStorages())
+    initUserSettings() {}
 }
