@@ -7,9 +7,6 @@ const { useObserver } = Observer;
 
 @ccclass
 export class ObserverComponent extends Component {
-    @property
-    namespace = "";
-
     private dispose: Function;
 
     onLoad(): void {

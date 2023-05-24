@@ -3,12 +3,12 @@ import { ChipFlyingHandlers } from "db://shared-components/chip-flying/scripts/h
 import Observer from "observer";
 import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 
-const { useObserver, handle } = Observer;
+const { handle } = Observer;
 
 const { ccclass } = _decorator;
 
 @ccclass
-export default class OtherUsers extends ObserverComponent {
+export default class OtherPlayers extends ObserverComponent {
     onLoad() {
         super.onLoad();
         this.setOtherPlayers();

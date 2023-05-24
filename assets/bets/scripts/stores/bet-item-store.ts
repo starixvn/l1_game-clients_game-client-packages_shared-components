@@ -29,6 +29,11 @@ export interface IOwnChip extends Chips {
     chipBet: number;
 }
 
+export interface TBetStartingRound {
+    isStartingRound: boolean;
+    settlementResult: gc.GameServiceMessage.TResult;
+}
+
 @injectable()
 export class BetItemStore {
     @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
@@ -110,5 +115,12 @@ export class BetItemStore {
             this.betItems,
             (item: BetItem) => !!this.settlementStore.settlementResult[this.settlementResultKeys[item.node.name.toLowerCase()]]
         );
+    }
+
+    get getBetStartingRoundInfo() {
+        return {
+            isStartingRound: this.roundTimeStore.isStartingRound,
+            settlementResult: this.settlementStore.settlementResult,
+        };
     }
 }

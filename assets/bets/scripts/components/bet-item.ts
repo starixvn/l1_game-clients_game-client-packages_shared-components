@@ -2,6 +2,7 @@ import { _decorator, Component, Label, Node } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
 import { BetItemHandlers } from "../handlers/bet-item-handler";
+import { BetItemStore, TBetStartingRound } from "../stores/bet-item-store";
 
 const { render, handle } = Observer;
 
@@ -30,9 +31,6 @@ export default class BetItem extends Component {
 
     @property(Node)
     highlight: Node = null;
-
-    protected settlementResult: gc.GameServiceMessage.TResult;
-    private isFirstLoad = true;
 
     onLoad() {
         this.lblOwnBet.string = "";
@@ -63,38 +61,34 @@ export default class BetItem extends Component {
     @render(Rounds.RoundStore, (store) => store.ownBets)
     renderOwnBets(ownBets: gc.GameServiceMessage.OwnBets) {
         const choice = this.node.name;
-        this.lblOwnBet.string = `${ownBets[choice] ? ownBets[choice] : ""}`;
+        this.lblOwnBet.string = `${ownBets?.[choice] ? ownBets?.[choice] : ""}`;
     }
 
     @render(Rounds.RoundStore, (store) => store.totalBets)
     renderTotalBets(totalBets: gc.GameServiceMessage.TotalBets) {
         const choice = this.node.name;
-        this.lblTotalBet.string = `${totalBets[choice] ? totalBets[choice] : ""}`;
+        this.lblTotalBet.string = `${totalBets?.[choice] ? totalBets?.[choice] : ""}`;
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartGenerateResult)
     startGenerateResult(isStartGenerateResult: boolean) {
-        if (isStartGenerateResult) {
-            this.clearChips();
-        }
+        isStartGenerateResult && this.clearChips();
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStopGame)
-    public handleStopGame(isStopGame: boolean) {
-        if (isStopGame) {
-            this.clearChips();
-        }
+    handleStopGame(isStopGame: boolean) {
+        isStopGame && this.clearChips();
     }
 
     protected clearChips() {
-        this.chipBox && this.chipBox.destroyAllChildren();
+        this.chipBox?.destroyAllChildren();
     }
 
     @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomHighLight)
     handleJoinGame(joinRoomHighLight: gc.RoundHistories.TJoinRoomHighLight) {
-        const { isJoinRoom, roundHistory, isShowHighLight } = joinRoomHighLight;
+        const { isJoinRoom, roundHistory, isHighLightBetWon } = joinRoomHighLight;
         if (isJoinRoom) {
-            if (isShowHighLight) {
+            if (isHighLightBetWon) {
                 this.highlightWonBet(roundHistory?.settlementResult, false);
             } else {
                 this.setHighlight(false);
@@ -102,7 +96,7 @@ export default class BetItem extends Component {
         }
     }
 
-    public setHighlight(highlight: boolean, isAnimated = true) {
+    protected setHighlight(highlight: boolean, isAnimated = true) {
         this.highlight.active = highlight && isAnimated;
         this.handleHighlightBackground(highlight, isAnimated);
         this.handleHighlightBorder(highlight);
@@ -118,10 +112,7 @@ export default class BetItem extends Component {
 
     @render(Settlements.SettlementStore, (store) => store.settlementResult, { fireImmediately: false })
     handleResult(settlementResult: gc.GameServiceMessage.TResult) {
-        if (settlementResult) {
-            this.highlightWonBet(settlementResult, true);
-            this.settlementResult = settlementResult;
-        }
+        settlementResult && this.highlightWonBet(settlementResult, true);
     }
 
     highlightWonBet(settlementResult: gc.GameServiceMessage.TResult, isAnimated = true) {
@@ -129,27 +120,14 @@ export default class BetItem extends Component {
         this.setHighlight(settlementResult[choice], isAnimated);
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
-    resetHighlightWhenStartRound(isStartingRound: boolean) {
-        isStartingRound && this.settlementResult && this.highlightWonBet(this.settlementResult, false);
+    @render(BetItemStore, (store) => store.getBetStartingRoundInfo)
+    resetHighlightWhenStartRound(betStartingRound: TBetStartingRound) {
+        const { isStartingRound, settlementResult } = betStartingRound;
+        isStartingRound && this.highlightWonBet(settlementResult, false);
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isLocking)
     resetHighlightBlockBet(isLocking: boolean) {
         isLocking && this.setHighlight(false);
-    }
-
-    @render(RoundHistories.RoundHistoryStore, (store) => store.histories)
-    highlightFirstLoad(histories: gc.RoundHistories.RoundHistory[]) {
-        if (this.isFirstLoad) {
-            const lastRound = histories[0];
-            if (!lastRound) {
-                return;
-            }
-            this.settlementResult = lastRound?.settlementResult;
-
-            this.highlightWonBet(lastRound?.settlementResult, false);
-            this.isFirstLoad = false;
-        }
     }
 }

@@ -216,7 +216,7 @@ export default class SlidingChip extends ObserverComponent {
     }
 
     @handle(SlidingChipHandler.CreateChips)
-    async createChips() {
+    createChips() {
         this.chipList.forEach((chip) => chip.destroy());
         this.chips.removeAllChildren();
         this.chipList = [];
@@ -237,11 +237,11 @@ export default class SlidingChip extends ObserverComponent {
         return { chipsLength: this.chipList.length };
     }
 
-    createChipNode(value: number): Node {
+    private createChipNode(value: number): Node {
         return this.createBigChip(value);
     }
 
-    public createBigChip(value: number): Node {
+    private createBigChip(value: number): Node {
         const chipNode = instantiate(this.chipPrefab);
         if (chipNode) {
             const chip = chipNode.getComponent(Chip);
@@ -341,7 +341,7 @@ export default class SlidingChip extends ObserverComponent {
         return { node, worldPos };
     }
 
-    public getChipNode(bet: number): Node {
+    private getChipNode(bet: number): Node {
         return this.chips?.children?.find((child) => child.name === bet.toString());
     }
 

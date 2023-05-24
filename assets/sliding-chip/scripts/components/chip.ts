@@ -65,8 +65,6 @@ export default class Chip extends Component {
         this.lblValue.node.active = isSmall;
 
         const button = this.getComponent(Button);
-        if (button) {
-            button.enabled = false;
-        }
+        button && (button.enabled = false);
     }
 }
