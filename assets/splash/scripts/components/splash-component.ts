@@ -4,12 +4,7 @@ import Observer from "observer";
 
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, Shared, App, Chips } = gc;
-
-export const AppTypes = {
-    Club: 1,
-    App: 5,
-};
+const { Auth, App, Chips } = gc;
 
 @ccclass
 @observer
@@ -24,8 +19,7 @@ export default class Splash extends Component {
 
     @handle(Auth.AuthHandlers.SSO)
     sso() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return { urlParams, system: AppTypes.Club };
+        return new URLSearchParams(window.location.search);
     }
 
     @render(Auth.AuthStore, (store) => store.isAuthorized)
