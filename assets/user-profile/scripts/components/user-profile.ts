@@ -1,4 +1,4 @@
-import { BitmapFont, Label, Sprite, SpriteFrame, _decorator, log } from "cc";
+import { Label, Sprite, SpriteFrame, _decorator, log } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
 
@@ -23,12 +23,6 @@ export default class UserProfile extends ObserverComponent {
 
     @property(Sprite)
     sprAvatar: Sprite = null;
-
-    @property(BitmapFont)
-    fontIncreaseMoney: BitmapFont = null;
-
-    @property(BitmapFont)
-    fontDecreaseMoney: BitmapFont = null;
 
     onLoad() {
         super.onLoad();

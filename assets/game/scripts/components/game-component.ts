@@ -18,7 +18,6 @@ export default class GameComponent extends Component {
     lblMaxBet: Label = null;
 
     protected roundId = 0;
-    protected settleStatus: gc.Settlements.SettlementStatusStore = null;
 
     protected onLoad(): void {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
@@ -44,26 +43,21 @@ export default class GameComponent extends Component {
     @handle(Connection.ConnectionHandlers.InGameHandler)
     inGame() {}
 
-    @render(Rounds.RoundStore, (store) => store.isEnableGame)
-    handleJoinGame(isEnableGame: boolean) {
-        isEnableGame && this.getJoinGameRoundState();
-    }
-
-    @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomInfo)
-    handleJoinGameWhenShowResult(joinRoomInfo: gc.Rounds.TJoinRoomInfo) {
-        const { joinGameState, roundHistory } = joinRoomInfo;
-        if (
-            (joinGameState === Rounds.ROUND_STATE.SHOW_ANIMATION_RESULT || joinGameState === Rounds.ROUND_STATE.SHOW_RESULT) &&
-            roundHistory
-        ) {
-            this.roundId = roundHistory.roundId;
+    @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomShowResult)
+    handleJoinGameWhenShowResult(joinRoomShowResult: gc.RoundHistories.IJoinRoomShowResult) {
+        const { isJoinRoom, isShowResult, roundHistory } = joinRoomShowResult;
+        if (isJoinRoom && isShowResult) {
+            this.roundId = roundHistory?.roundId;
             this.setRoundId();
-            this.showResult(roundHistory.result, false);
+            this.showResult(roundHistory?.result, false);
+        }
+
+        if (!isShowResult) {
+            this.resetAnimationResult();
         }
     }
 
-    @handle(Rounds.RoundUIHandlers.GetCurrentRoundState)
-    getJoinGameRoundState() {}
+    resetAnimationResult() {}
 
     @render(Rounds.RoundStore, (store) => store.roundId)
     renderRoundId(roundId: number) {
@@ -79,11 +73,6 @@ export default class GameComponent extends Component {
     @handle(Rounds.RoundUIHandlers.SetRoundId)
     setRoundId() {
         return this.roundId;
-    }
-
-    @render(Settlements.SettlementStatusStore, (store) => store)
-    setSettlementStatus(settleStatus: gc.Settlements.SettlementStatusStore) {
-        this.settleStatus = settleStatus;
     }
 
     @render(Settlements.SettlementStore, (store) => ({ roundId: store.roundId, result: store.result }))

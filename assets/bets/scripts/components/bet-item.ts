@@ -31,8 +31,8 @@ export default class BetItem extends Component {
     @property(Node)
     highlight: Node = null;
 
-    lastRound: gc.RoundHistories.RoundHistory;
-    settlementResult: gc.GameServiceMessage.TResult;
+    protected settlementResult: gc.GameServiceMessage.TResult;
+    private isFirstLoad = true;
 
     onLoad() {
         this.lblOwnBet.string = "";
@@ -90,38 +90,33 @@ export default class BetItem extends Component {
         this.chipBox && this.chipBox.destroyAllChildren();
     }
 
-    @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomInfo)
-    handleJoinGame(joinRoomInfo: gc.Rounds.TJoinRoomInfo) {
-        const { joinGameState, roundHistory } = joinRoomInfo;
-
-        if (joinGameState === Rounds.ROUND_STATE.LOCKING_BET) {
-            this.setHighlight(false);
-        }
-
-        if (joinGameState === Rounds.ROUND_STATE.SHOW_ANIMATION_RESULT || joinGameState === Rounds.ROUND_STATE.SHOW_RESULT) {
-            this.highlightWonBet(roundHistory.settlementResult, false);
+    @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomHighLight)
+    handleJoinGame(joinRoomHighLight: gc.RoundHistories.TJoinRoomHighLight) {
+        const { isJoinRoom, roundHistory, isShowHighLight } = joinRoomHighLight;
+        if (isJoinRoom) {
+            if (isShowHighLight) {
+                this.highlightWonBet(roundHistory?.settlementResult, false);
+            } else {
+                this.setHighlight(false);
+            }
         }
     }
 
     public setHighlight(highlight: boolean, isAnimated = true) {
-        this.handleHighlight(highlight, isAnimated);
+        this.highlight.active = highlight && isAnimated;
+        this.handleHighlightBackground(highlight, isAnimated);
         this.handleHighlightBorder(highlight);
     }
 
-    protected handleHighlight(highlight: boolean, isAnimated = true) {
-        this.highlight.active = highlight && isAnimated;
-        if (this.highlightBackground) {
-            this.highlightBackground.active = highlight && isAnimated;
-        }
+    protected handleHighlightBackground(highlight: boolean, isAnimated = true) {
+        this.highlightBackground && (this.highlightBackground.active = highlight && isAnimated);
     }
 
     protected handleHighlightBorder(highlight: boolean) {
-        if (this.highlightBorder) {
-            this.highlightBorder.active = highlight;
-        }
+        this.highlightBorder && (this.highlightBorder.active = highlight);
     }
 
-    @render(Settlements.SettlementStore, (store) => store.settlementResult)
+    @render(Settlements.SettlementStore, (store) => store.settlementResult, { fireImmediately: false })
     handleResult(settlementResult: gc.GameServiceMessage.TResult) {
         if (settlementResult) {
             this.highlightWonBet(settlementResult, true);
@@ -129,21 +124,9 @@ export default class BetItem extends Component {
         }
     }
 
-    @render(RoundHistories.RoundHistoryStore, (store) => store.histories)
-    highlightLastResult(histories: gc.RoundHistories.RoundHistory[]) {
-        this.lastRound = histories[0];
-        if (!this.lastRound) {
-            return;
-        }
-
-        this.highlightWonBet(this.lastRound.settlementResult, false);
-    }
-
     highlightWonBet(settlementResult: gc.GameServiceMessage.TResult, isAnimated = true) {
-        const choice = this.node.name;
-        if (settlementResult[choice]) {
-            this.setHighlight(true, isAnimated);
-        }
+        const choice = this.node?.name ?? "";
+        this.setHighlight(settlementResult[choice], isAnimated);
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
@@ -153,8 +136,20 @@ export default class BetItem extends Component {
 
     @render(Rounds.RoundTimeStore, (store) => store.isLocking)
     resetHighlightBlockBet(isLocking: boolean) {
-        if (isLocking) {
-            this.setHighlight(false);
+        isLocking && this.setHighlight(false);
+    }
+
+    @render(RoundHistories.RoundHistoryStore, (store) => store.histories)
+    highlightFirstLoad(histories: gc.RoundHistories.RoundHistory[]) {
+        if (this.isFirstLoad) {
+            const lastRound = histories[0];
+            if (!lastRound) {
+                return;
+            }
+            this.settlementResult = lastRound?.settlementResult;
+
+            this.highlightWonBet(lastRound?.settlementResult, false);
+            this.isFirstLoad = false;
         }
     }
 }
