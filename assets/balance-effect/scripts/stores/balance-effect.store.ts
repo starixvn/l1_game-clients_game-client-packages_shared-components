@@ -2,7 +2,7 @@ import inversify from "inversify";
 import mobx from "mobx";
 import { UpdatingBalanceContainer } from "../components/updating-balance-container";
 import { WinningEffectContainer } from "../components/winning-effect-container";
-const { injectable, inject } = inversify;
+const { injectable } = inversify;
 
 @injectable()
 export class BalanceEffectStore {

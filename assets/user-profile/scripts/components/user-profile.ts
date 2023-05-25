@@ -1,4 +1,4 @@
-import { Label, Sprite, SpriteFrame, _decorator, log } from "cc";
+import { Label, Sprite, SpriteFrame, _decorator } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
 
@@ -7,7 +7,7 @@ import { ObserverComponent } from "db://shared-components/common/observer-compon
 import { UserProfileHandlers } from "../handlers/user-profile-handler";
 import { TEndBetInfo, UserProfileStore } from "../stores/user-profile-store";
 
-const { Player, FormatUtils, Bet } = gc;
+const { Player } = gc;
 const { PlayerStore } = Player;
 
 const { ccclass, property } = _decorator;
@@ -41,7 +41,6 @@ export default class UserProfile extends ObserverComponent {
 
     @render(PlayerStore, (store) => store.avatarId)
     async loadAvatar(avatarId: number) {
-        log("Loading avatarId ", avatarId);
         const spriteFrame = await bundleManager.loadSharedAsset<SpriteFrame>(`images/avatars/${avatarId}/spriteFrame`, SpriteFrame);
         if (spriteFrame) {
             this.setAvatar(spriteFrame);

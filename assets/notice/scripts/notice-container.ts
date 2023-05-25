@@ -4,25 +4,13 @@ import Observer from "observer";
 import { NodeContainer } from "../../node-container/node-container";
 import { NoticeCmp } from "./notice-cmp";
 
-const { observer, render, handle, useObserver } = Observer;
+const { render } = Observer;
 
 const { Notices } = gc;
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 @ccclass("NoticeContainer")
 export class NoticeContainer extends NodeContainer {
-    @property
-    namespaceObserver = "default";
-
-    private dispose: any;
-    onLoad() {
-        this.dispose = useObserver(this, this.namespaceObserver);
-    }
-
-    onDestroy() {
-        this.dispose();
-    }
-
     @render(Notices.NoticeStore, (store) => store.notice, { fireImmediately: false })
     showNotice(notice: gc.Notices.Notice) {
         console.log("renderNotice", notice);
