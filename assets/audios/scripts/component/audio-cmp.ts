@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
 const { observer, render, handle, useObserver } = Observer;
 
 @ccclass
-export default class ObserverComponent extends Component {
+export default class AudioComp extends Component {
     @property
     namespaceObserver = "default";
 
@@ -29,7 +29,7 @@ export default class ObserverComponent extends Component {
 
     @render(gc.UserSettings.UserSettingStore, (store) => store.musicEnable)
     renderMusicComp(enable: boolean) {
-        if (this.type !== Audios.AudioType.Music) {
+        if (this.type !== Audios.AudioType.MUSIC) {
             return;
         }
         this.updateDisplay(enable);
