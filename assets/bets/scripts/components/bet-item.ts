@@ -86,13 +86,11 @@ export default class BetItem extends Component {
 
     @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomHighLight)
     handleJoinGame(joinRoomHighLight: gc.RoundHistories.TJoinRoomHighLight) {
-        const { isJoinRoom, roundHistory, isHighLightBetWon } = joinRoomHighLight;
-        if (isJoinRoom) {
-            if (isHighLightBetWon) {
-                this.highlightWonBet(roundHistory?.settlementResult, false);
-            } else {
-                this.setHighlight(false);
-            }
+        const { roundHistory, isHighLightWithoutAnim } = joinRoomHighLight;
+        if (isHighLightWithoutAnim) {
+            this.highlightWonBet(roundHistory?.settlementResult, false);
+        } else {
+            this.setHighlight(false);
         }
     }
 
@@ -111,13 +109,13 @@ export default class BetItem extends Component {
     }
 
     @render(Settlements.SettlementStore, (store) => store.settlementResult, { fireImmediately: false })
-    handleResult(settlementResult: gc.GameServiceMessage.TResult) {
+    handleResult(settlementResult: gc.GameServiceMessage.TSettlementResult) {
         settlementResult && this.highlightWonBet(settlementResult, true);
     }
 
-    highlightWonBet(settlementResult: gc.GameServiceMessage.TResult, isAnimated = true) {
+    highlightWonBet(settlementResult: gc.GameServiceMessage.TSettlementResult, isAnimated = true) {
         const choice = this.node?.name ?? "";
-        this.setHighlight(settlementResult[choice], isAnimated);
+        this.setHighlight(settlementResult?.[choice], isAnimated);
     }
 
     @render(BetItemStore, (store) => store.getBetStartingRoundInfo)

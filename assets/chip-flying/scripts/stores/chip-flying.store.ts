@@ -8,7 +8,6 @@ import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 import { SlidingChipStore } from "../../../sliding-chip/scripts/stores/sliding-chip-store";
 import { UserProfileStore } from "../../../user-profile/scripts/stores/user-profile-store";
 import { ChipFlying } from "../components/chip-flying";
-import { BalanceEffectStore } from "./../../../balance-effect/scripts/stores/balance-effect.store";
 const { injectable, inject } = inversify;
 
 export type TPayChipInfo = {
@@ -20,7 +19,7 @@ export type TPayChipInfo = {
     ownerAvatar: Node;
     slidingChip: SlidingChip;
     finish: {
-        settlementResult: gc.GameServiceMessage.TResult;
+        settlementResult: gc.GameServiceMessage.TSettlementResult;
         winningPlayers: gc.GameServiceMessage.TWinningPlayers;
     };
     otherPlayers: Node;
@@ -31,7 +30,6 @@ export type TPayChipInfo = {
     dealerChipBox: Node;
     playerSlot: any[];
     isFinishedShowResult: boolean;
-    balanceEffectStore: BalanceEffectStore;
 };
 @injectable()
 export class ChipFlyingStore {
@@ -40,7 +38,6 @@ export class ChipFlyingStore {
     @inject(gc.Settlements.SettlementStatusStore) private readonly settlementStatusStore: gc.Settlements.SettlementStatusStore;
     @inject(gc.Settlements.SettlementStore) private readonly settlementStore: gc.Settlements.SettlementStore;
     @inject(UserProfileStore) private readonly userProfileStore: UserProfileStore;
-    @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
     constructor() {
         mobx.makeAutoObservable(this);
@@ -101,7 +98,6 @@ export class ChipFlyingStore {
                 dealerChipBox: this.chipFlying.dealerChipBox,
                 playerSlot: this.playerSlot,
                 isFinishedShowResult: this.settlementStore.isFinishedShowResult,
-                balanceEffectStore: this.balanceEffectStore,
             };
         }
 

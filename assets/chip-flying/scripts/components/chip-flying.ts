@@ -2,7 +2,8 @@ import { _decorator, Node, tween } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
 import * as actions from "../../.././sliding-chip/scripts/components/actions";
-import { BalanceEffectStore } from "../../../balance-effect/scripts/stores/balance-effect.store";
+import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
+import { TBalanceEffect } from "../../../balance-effect/scripts/stores/balance-effect.store";
 import { BetItemStore, IOwnChip, IOwnChips } from "../../../bets/scripts/stores/bet-item-store";
 import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 import { ChipFlyingHandlers } from "../handlers/chip-flying-handler";
@@ -85,10 +86,10 @@ export class ChipFlying extends ObserverComponent {
     }
 
     payChipToAllPlayers = (payChipInfo: TPayChipInfo) => {
-        const { otherPlayers, settleStatus, balanceEffectStore, ownerAvatar } = payChipInfo;
+        const { otherPlayers, settleStatus, ownerAvatar } = payChipInfo;
 
         ActionChipFlying.payChipsToLoginPlayer(payChipInfo);
-        this.showPayoutForLoginPlayer(settleStatus, balanceEffectStore, ownerAvatar);
+        this.showPayoutForLoginPlayer(settleStatus, ownerAvatar);
 
         if (otherPlayers) {
             ActionChipFlying.payChipsToOtherPlayers(payChipInfo);
@@ -97,19 +98,31 @@ export class ChipFlying extends ObserverComponent {
         ActionChipFlying.payChipsToInGamePlayers(payChipInfo);
     };
 
-    showPayoutForLoginPlayer(
-        settleStatus: gc.Settlements.SettlementStatusStore,
-        balanceEffectStore: BalanceEffectStore,
-        ownerAvatar: Node
-    ) {
+    showPayoutForLoginPlayer(settleStatus: gc.Settlements.SettlementStatusStore, ownerAvatar: Node) {
         if (settleStatus?.win) {
-            const { balanceContainer, winningContainer } = balanceEffectStore;
-            balanceContainer.updateBalance(ownerAvatar, true, settleStatus?.bet, this.winningDuration, 80, 10);
-            winningContainer.playWinningEffect();
+            this.updateBalance({
+                node: ownerAvatar,
+                win: true,
+                ballance: settleStatus?.bet,
+                duration: this.winningDuration,
+                startY: 80,
+                destY: 10,
+            });
+            this.playWinningEffect();
             this.getBalance();
         }
     }
 
     @handle(Auth.AuthHandlers.GetBalance)
     getBalance() {}
+
+    @handle(BalanceEffectHandlers.UpdateBalance)
+    updateBalance(balanceEffect: TBalanceEffect) {
+        return balanceEffect;
+    }
+
+    @handle(BalanceEffectHandlers.PlayWinningEffect)
+    playWinningEffect() {
+        return true;
+    }
 }

@@ -31,7 +31,7 @@ export interface IOwnChip extends Chips {
 
 export interface TBetStartingRound {
     isStartingRound: boolean;
-    settlementResult: gc.GameServiceMessage.TResult;
+    settlementResult: gc.GameServiceMessage.TSettlementResult;
 }
 
 @injectable()

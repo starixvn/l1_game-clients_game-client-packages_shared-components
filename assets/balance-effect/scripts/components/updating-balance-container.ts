@@ -2,11 +2,11 @@ import { BitmapFont, CCFloat, Label, Node, _decorator, tween, v3 } from "cc";
 import { NodeContainer } from "db://shared-components/node-container/node-container";
 import gc from "game-client-base";
 import Observer from "observer";
-import { BalanceEffectHandlers } from "../handlers/balance-effect-handlers";
+import { BalanceEffectStore, TUpdateBalance } from "../stores/balance-effect.store";
 
 const { FormatUtils } = gc;
 const { ccclass, property } = _decorator;
-const { handle } = Observer;
+const { render } = Observer;
 
 @ccclass()
 export class UpdatingBalanceContainer extends NodeContainer {
@@ -19,20 +19,12 @@ export class UpdatingBalanceContainer extends NodeContainer {
     @property(BitmapFont)
     fontDecreaseBalance: BitmapFont = null;
 
-    onLoad() {
-        super.onLoad();
-        this.setBalanceContainer();
-    }
-
-    @handle(BalanceEffectHandlers.SetBalanceContainer)
-    setBalanceContainer() {
-        return this;
-    }
-
-    updateBalance(node: Node, win: boolean, value: number, duration = this.duration, startY = 0, destY = 100): void {
+    @render(BalanceEffectStore, (store) => store.updateBalance, { fireImmediately: false })
+    updateBalance(updateBalance: TUpdateBalance): void {
+        const { node, win, ballance, duration, startY = 0, destY = 100 } = updateBalance?.balanceEffect;
         const balanceEffectNode = new Node();
         const lblBalance = balanceEffectNode.addComponent(Label);
-        lblBalance.string = `${win ? "+" : "-"}${FormatUtils.numberWithCommas(value, 2)}`;
+        lblBalance.string = `${win ? "+" : "-"}${FormatUtils.numberWithCommas(ballance, 2)}`;
         lblBalance.font = win ? this.fontIncreaseBalance : this.fontDecreaseBalance;
         lblBalance.lineHeight = 130;
         lblBalance.fontSize = 30;

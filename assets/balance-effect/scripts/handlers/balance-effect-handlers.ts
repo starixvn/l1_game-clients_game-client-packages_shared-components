@@ -1,26 +1,24 @@
 import inversify from "inversify";
-import { UpdatingBalanceContainer } from "../components/updating-balance-container";
-import { WinningEffectContainer } from "../components/winning-effect-container";
-import { BalanceEffectStore } from "../stores/balance-effect.store";
+import { BalanceEffectStore, TBalanceEffect } from "../stores/balance-effect.store";
 
 const { injectable, inject } = inversify;
 
 export namespace BalanceEffectHandlers {
     @injectable()
-    export class SetBalanceContainer {
+    export class UpdateBalance {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
-        async handle(balanceContainer: UpdatingBalanceContainer) {
-            this.balanceEffectStore.balanceContainer = balanceContainer;
+        async handle(balanceEffect: TBalanceEffect) {
+            this.balanceEffectStore.handleUpdateBalance(balanceEffect);
         }
     }
 
     @injectable()
-    export class WinningContainer {
+    export class PlayWinningEffect {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
-        async handle(winningContainer: WinningEffectContainer) {
-            this.balanceEffectStore.winningContainer = winningContainer;
+        async handle(status: boolean) {
+            this.balanceEffectStore.handlePlayWinningEffect(status);
         }
     }
 }

@@ -4,6 +4,8 @@ import Observer from "observer";
 
 import { bundleManager } from "db://shared-components/bundle-magager/bundle-manager";
 import { ObserverComponent } from "db://shared-components/common/observer-component/scripts/observer-component";
+import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
+import { TBalanceEffect } from "../../../balance-effect/scripts/stores/balance-effect.store";
 import { UserProfileHandlers } from "../handlers/user-profile-handler";
 import { TEndBetInfo, UserProfileStore } from "../stores/user-profile-store";
 
@@ -58,9 +60,20 @@ export default class UserProfile extends ObserverComponent {
 
     @render(UserProfileStore, (store) => store.endBetInfo)
     endBetInfo(endBetInfo: TEndBetInfo) {
-        const { bet, balanceContainer, ownerAvatar, isProcessingBet } = endBetInfo;
+        const { bet, ownerAvatar, isProcessingBet } = endBetInfo;
         if (bet > 0 && !isProcessingBet) {
-            balanceContainer.updateBalance(ownerAvatar, false, bet, 1, 80);
+            this.updateBalance({
+                node: ownerAvatar,
+                win: false,
+                ballance: bet,
+                duration: 1,
+                startY: 80,
+            });
         }
+    }
+
+    @handle(BalanceEffectHandlers.UpdateBalance)
+    updateBalance(balanceEffect: TBalanceEffect) {
+        return balanceEffect;
     }
 }

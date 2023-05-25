@@ -45,14 +45,12 @@ export default class GameComponent extends Component {
 
     @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomShowResult)
     handleJoinGameWhenShowResult(joinRoomShowResult: gc.RoundHistories.IJoinRoomShowResult) {
-        const { isJoinRoom, isShowResult, roundHistory } = joinRoomShowResult;
-        if (isJoinRoom && isShowResult) {
+        const { isShowResult, roundHistory } = joinRoomShowResult;
+        if (isShowResult) {
             this.roundId = roundHistory?.roundId;
             this.setRoundId();
             this.showResult(roundHistory?.result, false);
-        }
-
-        if (!isShowResult) {
+        } else {
             this.resetAnimationResult();
         }
     }
@@ -76,12 +74,12 @@ export default class GameComponent extends Component {
     }
 
     @render(Settlements.SettlementStore, (store) => ({ roundId: store.roundId, result: store.result }))
-    handleResult({ roundId, result }: { roundId: number; result: any }) {
+    handleResult({ roundId, result }: { roundId: number; result: gc.GameServiceMessage.TResult }) {
         roundId && (this.roundId = roundId);
         this.showResult(result, true);
     }
 
-    showResult(result: any, hasAnimation: boolean) {}
+    showResult(result: gc.GameServiceMessage.TResult, hasAnimation: boolean) {}
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult() {}
