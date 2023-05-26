@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
 const { observer, render, handle, useObserver } = Observer;
 
 @ccclass
-export default class AudioComp extends Component {
+export default class AudioCmp extends Component {
     @property
     namespaceObserver = "default";
 

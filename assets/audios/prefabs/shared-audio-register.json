@@ -1,0 +1,6 @@
+{
+    "click": {
+        "bundle": "shared-bundle",
+        "path": "click"
+    }
+}

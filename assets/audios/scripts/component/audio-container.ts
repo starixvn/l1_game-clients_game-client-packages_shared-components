@@ -11,6 +11,9 @@ const { observer, render, handle, useObserver } = Observer;
 @ccclass
 export class AudioContainer extends Component {
     @property(JsonAsset)
+    sharedAudioConfig: JsonAsset = null;
+
+    @property(JsonAsset)
     audioConfig: JsonAsset = null;
 
     @property(AudioSource)
@@ -49,7 +52,10 @@ export class AudioContainer extends Component {
     }
 
     async loadAudios() {
-        const config = this.audioConfig.json;
+        const config = {
+            ...this.sharedAudioConfig?.json,
+            ...this.audioConfig?.json,
+        };
         const keys = Object.keys(config);
         for (const key of keys) {
             const value = config[key];
