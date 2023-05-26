@@ -5,7 +5,7 @@ import { filter } from "lodash-es";
 import mobx from "mobx";
 import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 import { SlidingChipStore } from "../../../sliding-chip/scripts/stores/sliding-chip-store";
-import { ObjectUtils } from "../../../utils";
+import { NumberUtils } from "../../../utils";
 import BetItem from "../components/bet-item";
 
 const { injectable, inject } = inversify;
@@ -15,18 +15,16 @@ interface Chips {
     chipBox: Node;
 }
 
-export interface IOwnChips extends Chips {
-    totalChipBet: TTotalChipBet;
-    playerRate: number;
-    chipRate: number;
+export interface IPlayersChips extends Chips {
+    chipAmount: TChipAmount;
 }
 
-export type TTotalChipBet = {
+export type TChipAmount = {
     [chipValue: string]: number;
 };
 
 export interface IOwnChip extends Chips {
-    chipBet: number;
+    chipAmount: number;
 }
 
 export interface TBetStartingRound {
@@ -52,46 +50,51 @@ export class BetItemStore {
         return this._betItems;
     }
 
-    get ownChips() {
-        let ownChips: IOwnChips[] = [];
+    get playersChips() {
+        const players: IPlayersChips[] = [];
         const chips = this.chipStore.chips;
-        if (this.roundTimeStore.isLocking || this.roundTimeStore.isPlacingBet) {
-            Object.keys(chips).forEach((rate) => {
-                const chipValues = chips[rate];
-                const chipsKeys = ObjectUtils.getLowercaseObjectKeys(chipValues);
-                this.betItems.forEach((betItem) => {
-                    const totalChipBet = chipValues[chipsKeys[betItem.node.name.toLowerCase()]];
-                    if (totalChipBet) {
-                        ownChips = [
-                            ...ownChips,
-                            {
-                                chipBox: betItem.chipBox,
-                                totalChipBet,
-                                slidingChip: this.slidingChipStore.slidingChip,
-                                playerRate: this.playerStore.rate,
-                                chipRate: +rate,
-                            },
-                        ];
-                    }
-                });
-            });
-        }
 
-        return ownChips;
+        if (this.roundTimeStore.isLocking || this.roundTimeStore.isPlacingBet) {
+            for (const rate in chips) {
+                const chipValues = chips[rate];
+
+                for (const betItem of this.betItems) {
+                    const chipAmount = chipValues[betItem.betChoice];
+
+                    if (chipAmount) {
+                        const chipAmountConvert = this.getChipValueByCurrency(chipAmount, this.playerStore.rate, +rate);
+
+                        players.push({
+                            chipBox: betItem.chipBox,
+                            chipAmount: chipAmountConvert,
+                            slidingChip: this.slidingChipStore.slidingChip,
+                        });
+                    }
+                }
+            }
+        }
+        return players;
     }
 
-    get ownChip() {
-        const { betChoice, amount } = this.chipStore.ownChip;
+    getChipValueByCurrency(chipAmount: TChipAmount, playerRate: number, chipRate: number) {
+        const chipAmountConvert: TChipAmount = {};
+        for (const chipValue in chipAmount) {
+            const convertChipValue = NumberUtils.getChipValueByCurrency(+chipValue, playerRate, chipRate);
 
-        const betItem = this.betItems.find((item) => betChoice === item.node.name);
-        if (!betItem) {
-            return {};
+            chipAmountConvert[convertChipValue] = chipAmount[chipValue];
         }
+
+        return chipAmountConvert;
+    }
+
+    get ownChip(): IOwnChip {
+        const { betChoice, amount } = this.chipStore.ownChip;
+        const betItem = this.betItems.find((item) => betChoice === item.betChoice);
 
         return {
             slidingChip: this.slidingChipStore.slidingChip,
-            chipBox: betItem.chipBox,
-            chipBet: amount,
+            chipBox: betItem?.chipBox,
+            chipAmount: amount,
         };
     }
 
@@ -99,22 +102,12 @@ export class BetItemStore {
         this._betItems = [...this.betItems, betItem];
     }
 
-    get settlementResultKeys() {
-        return ObjectUtils.getLowercaseObjectKeys(this.settlementStore.settlementResult);
-    }
-
     get lostBetItems(): BetItem[] {
-        return filter(
-            this.betItems,
-            (item: BetItem) => !this.settlementStore.settlementResult[this.settlementResultKeys[item.node.name.toLowerCase()]]
-        );
+        return filter(this.betItems, (item: BetItem) => !this.settlementStore.settlementResult[item.betChoice]);
     }
 
     get winBetItems(): BetItem[] {
-        return filter(
-            this.betItems,
-            (item: BetItem) => !!this.settlementStore.settlementResult[this.settlementResultKeys[item.node.name.toLowerCase()]]
-        );
+        return filter(this.betItems, (item: BetItem) => this.settlementStore.settlementResult[item.betChoice]);
     }
 
     get getBetStartingRoundInfo() {

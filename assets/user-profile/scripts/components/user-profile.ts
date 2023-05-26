@@ -5,11 +5,9 @@ import Observer from "observer";
 import { bundleManager } from "db://shared-components/bundle-magager/bundle-manager";
 import { ObserverComponent } from "db://shared-components/common/observer-component/scripts/observer-component";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
-import { TBalanceEffect } from "../../../balance-effect/scripts/stores/balance-effect.store";
 import { UserProfileHandlers } from "../handlers/user-profile-handler";
-import { TEndBetInfo, UserProfileStore } from "../stores/user-profile-store";
 
-const { Player } = gc;
+const { Player, Bet } = gc;
 const { PlayerStore } = Player;
 
 const { ccclass, property } = _decorator;
@@ -58,22 +56,15 @@ export default class UserProfile extends ObserverComponent {
         this.lblBalance.string = value.toString();
     }
 
-    @render(UserProfileStore, (store) => store.endBetInfo)
-    endBetInfo(endBetInfo: TEndBetInfo) {
-        const { bet, ownerAvatar, isProcessingBet } = endBetInfo;
-        if (bet > 0 && !isProcessingBet) {
-            this.updateBalance({
-                node: ownerAvatar,
-                win: false,
-                ballance: bet,
-                duration: 1,
-                startY: 80,
-            });
+    @render(Bet.BetStore, (store) => store.lastReceivedBet)
+    endBetInfo(lastReceivedBet: gc.Bet.ILastReceivedBet) {
+        if (lastReceivedBet && lastReceivedBet.value > 0) {
+            this.updateBalance(lastReceivedBet.value);
         }
     }
 
-    @handle(BalanceEffectHandlers.UpdateBalance)
-    updateBalance(balanceEffect: TBalanceEffect) {
-        return balanceEffect;
+    @handle(BalanceEffectHandlers.UpdateBalanceWhenBet)
+    updateBalance(balance: number) {
+        return balance;
     }
 }

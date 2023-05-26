@@ -1,15 +1,24 @@
 import inversify from "inversify";
-import { BalanceEffectStore, TBalanceEffect } from "../stores/balance-effect.store";
+import { BalanceEffectStore } from "../stores/balance-effect.store";
 
 const { injectable, inject } = inversify;
 
 export namespace BalanceEffectHandlers {
     @injectable()
-    export class UpdateBalance {
+    export class UpdateBalanceWhenBet {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
-        async handle(balanceEffect: TBalanceEffect) {
-            this.balanceEffectStore.handleUpdateBalance(balanceEffect);
+        async handle(balance: number) {
+            this.balanceEffectStore.updateBalanceWhenBet(balance);
+        }
+    }
+
+    @injectable()
+    export class UpdateBalanceWhenPayout {
+        @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
+
+        async handle(balance: number) {
+            this.balanceEffectStore.updateBalanceWhenPayout(balance);
         }
     }
 

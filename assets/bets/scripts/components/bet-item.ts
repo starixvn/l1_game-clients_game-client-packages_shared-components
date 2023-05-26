@@ -36,11 +36,15 @@ export default class BetItem extends Component {
         this.lblOwnBet.string = "";
         this.lblTotalBet.string = "";
         this.lblOdds.string = "";
-        this && this.setBetItem();
+        this && this.registerBetItem();
+    }
+
+    get betChoice() {
+        return this.node.name;
     }
 
     @handle(BetItemHandlers.SetBetItems)
-    setBetItem() {
+    registerBetItem() {
         return this;
     }
 
@@ -61,13 +65,13 @@ export default class BetItem extends Component {
     @render(Rounds.RoundStore, (store) => store.ownBets)
     renderOwnBets(ownBets: gc.GameServiceMessage.OwnBets) {
         const choice = this.node.name;
-        this.lblOwnBet.string = `${ownBets?.[choice] ? ownBets?.[choice] : ""}`;
+        this.lblOwnBet.string = `${ownBets?.[choice] ?? ""}`;
     }
 
     @render(Rounds.RoundStore, (store) => store.totalBets)
     renderTotalBets(totalBets: gc.GameServiceMessage.TotalBets) {
         const choice = this.node.name;
-        this.lblTotalBet.string = `${totalBets?.[choice] ? totalBets?.[choice] : ""}`;
+        this.lblTotalBet.string = `${totalBets?.[choice] ?? ""}`;
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartGenerateResult)
@@ -84,12 +88,16 @@ export default class BetItem extends Component {
         this.chipBox?.destroyAllChildren();
     }
 
-    @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomHighLight)
-    handleJoinGame(joinRoomHighLight: gc.RoundHistories.TJoinRoomHighLight) {
-        const { roundHistory, isHighLightWithoutAnim } = joinRoomHighLight;
-        if (isHighLightWithoutAnim) {
-            this.highlightWonBet(roundHistory?.settlementResult, false);
+    @render(RoundHistories.RoundHistoryStore, (store) => store.highLightInfo)
+    handleJoinGame(highLightInfo: gc.RoundHistories.THighLightInfo) {
+        const { roundHistory, isHighLightAnim, isResetHighlight } = highLightInfo;
+        if (isHighLightAnim) {
+            this.highlightWonBet(roundHistory?.settlementResult, true);
         } else {
+            this.highlightWonBet(roundHistory?.settlementResult, false);
+        }
+
+        if (isResetHighlight) {
             this.setHighlight(false);
         }
     }
@@ -108,11 +116,6 @@ export default class BetItem extends Component {
         this.highlightBorder && (this.highlightBorder.active = highlight);
     }
 
-    @render(Settlements.SettlementStore, (store) => store.settlementResult, { fireImmediately: false })
-    handleResult(settlementResult: gc.GameServiceMessage.TSettlementResult) {
-        settlementResult && this.highlightWonBet(settlementResult, true);
-    }
-
     highlightWonBet(settlementResult: gc.GameServiceMessage.TSettlementResult, isAnimated = true) {
         const choice = this.node?.name ?? "";
         this.setHighlight(settlementResult?.[choice], isAnimated);
@@ -122,10 +125,5 @@ export default class BetItem extends Component {
     resetHighlightWhenStartRound(betStartingRound: TBetStartingRound) {
         const { isStartingRound, settlementResult } = betStartingRound;
         isStartingRound && this.highlightWonBet(settlementResult, false);
-    }
-
-    @render(Rounds.RoundTimeStore, (store) => store.isLocking)
-    resetHighlightBlockBet(isLocking: boolean) {
-        isLocking && this.setHighlight(false);
     }
 }

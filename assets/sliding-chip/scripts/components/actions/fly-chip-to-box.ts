@@ -1,6 +1,5 @@
 import { Node, UITransform } from "cc";
-import { IOwnChip, IOwnChips } from "../../../../bets/scripts/stores/bet-item-store";
-import { NumberUtils } from "../../../../utils";
+import { IOwnChip, IPlayersChips } from "../../../../bets/scripts/stores/bet-item-store";
 import SlidingChip from "../sliding-chip";
 import { FlyChipUtils } from "./fly-chip-utils";
 
@@ -13,14 +12,14 @@ const chipFlyingTime = 0.8;
 
 export const placeChipToChipBox = (ownerChip: IOwnChip, startNode: Node, onComplete: () => void) => {
     // Audio Chip Fly
-    const { chipBox, chipBet, slidingChip } = ownerChip;
-    if (slidingChip && chipBet > 0) {
+    const { chipBox, chipAmount, slidingChip } = ownerChip;
+    if (slidingChip && chipAmount > 0) {
         const isLoginUserPlaceBet = startNode == null;
         const flyingDuration = isLoginUserPlaceBet ? loginUserChipFlyingTime : chipFlyingTime;
         const chipPosition = chipBox
             ?.getComponent(UITransform)
-            ?.convertToNodeSpaceAR(slidingChip.createStartNodeInfo(startNode, chipBet).worldPos);
-        const chipNode = slidingChip.createSmallChip(chipBet);
+            ?.convertToNodeSpaceAR(slidingChip.createStartNodeInfo(startNode, chipAmount).worldPos);
+        const chipNode = slidingChip.createSmallChip(chipAmount);
         chipNode.position = chipPosition;
         const randomPosition = FlyChipUtils.getRandomPositionChip(chipNode, chipBox);
         chipBox?.addChild(chipNode);
@@ -33,17 +32,16 @@ export const placeChipToChipBox = (ownerChip: IOwnChip, startNode: Node, onCompl
     }
 };
 
-export const addChipsToChipBoxWhenJoinRoom = (otherRate: number, ownChip: IOwnChips) => {
-    const { slidingChip, chipBox, totalChipBet, playerRate, chipRate } = ownChip;
-    if (!totalChipBet) {
+export const addChipsToChipBoxWhenJoinRoom = (ownChip: IPlayersChips) => {
+    const { slidingChip, chipBox, chipAmount } = ownChip;
+    if (!chipAmount) {
         return;
     }
 
-    const chipValues = Object.keys(totalChipBet);
-    chipValues.forEach((originalChipValue) => {
-        const chipCountOfBet = totalChipBet[originalChipValue];
-        const convertChip = NumberUtils.getChipValueByCurrency(+originalChipValue, playerRate, chipRate);
-        const convertValues = getChipQuantity(convertChip, slidingChip.chipValues);
+    const chipValues = Object.keys(chipAmount);
+    chipValues.forEach((chipValue) => {
+        const chipCountOfBet = chipAmount[chipValue];
+        const convertValues = getChipQuantity(+chipValue, slidingChip.chipValues);
         for (let i = 0; i < chipCountOfBet; i++) {
             addChipsByChipsData(slidingChip, convertValues, chipBox);
         }

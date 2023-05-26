@@ -2,7 +2,6 @@ import { Node, UITransform, instantiate } from "cc";
 import { forEach } from "lodash-es";
 import BetItem from "../../../../bets/scripts/components/bet-item";
 import { FlyChipUtils } from "../../../../sliding-chip/scripts/components/actions";
-import { ObjectUtils } from "../../../../utils";
 import { TPayChipInfo } from "../../stores/chip-flying.store";
 
 export namespace ActionChipFlying {
@@ -85,9 +84,9 @@ export namespace ActionChipFlying {
         if (!ownerAvatar) {
             return;
         }
-        const betItemLowercaseObjectKeys = ObjectUtils.getLowercaseObjectKeys(settleStatus?.winningByChoices);
+
         forEach(betInfo?.winBetItems, (item: BetItem) => {
-            if (settleStatus?.winningByChoices[betItemLowercaseObjectKeys[item.node.name.toLowerCase()]]) {
+            if (settleStatus?.winningByChoices[item.betChoice]) {
                 const chipNode = !isChipStack ? item.chipBox : item.chipBox.children[0];
                 chipNode && moveChips(chipNode, ownerAvatar, chipFlyingTime);
             }

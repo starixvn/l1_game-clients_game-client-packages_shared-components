@@ -3,8 +3,7 @@ import gc from "game-client-base";
 import Observer from "observer";
 import * as actions from "../../.././sliding-chip/scripts/components/actions";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
-import { TBalanceEffect } from "../../../balance-effect/scripts/stores/balance-effect.store";
-import { BetItemStore, IOwnChip, IOwnChips } from "../../../bets/scripts/stores/bet-item-store";
+import { BetItemStore, IOwnChip, IPlayersChips } from "../../../bets/scripts/stores/bet-item-store";
 import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 import { ChipFlyingHandlers } from "../handlers/chip-flying-handler";
 import { ChipFlyingStore, TPayChipInfo } from "../stores/chip-flying.store";
@@ -39,10 +38,10 @@ export class ChipFlying extends ObserverComponent {
         return this;
     }
 
-    @render(BetItemStore, (store) => store.ownChips)
-    flyChipJoinGame(ownChips: IOwnChips[]) {
+    @render(BetItemStore, (store) => store.playersChips)
+    flyChipJoinGame(ownChips: IPlayersChips[]) {
         ownChips.forEach((ownChip) => {
-            actions.addChipsToChipBoxWhenJoinRoom(1, ownChip);
+            actions.addChipsToChipBoxWhenJoinRoom(ownChip);
         });
     }
 
@@ -86,10 +85,10 @@ export class ChipFlying extends ObserverComponent {
     }
 
     payChipToAllPlayers = (payChipInfo: TPayChipInfo) => {
-        const { otherPlayers, settleStatus, ownerAvatar } = payChipInfo;
+        const { otherPlayers, settleStatus } = payChipInfo;
 
         ActionChipFlying.payChipsToLoginPlayer(payChipInfo);
-        this.showPayoutForLoginPlayer(settleStatus, ownerAvatar);
+        this.showPayoutForLoginPlayer(settleStatus);
 
         if (otherPlayers) {
             ActionChipFlying.payChipsToOtherPlayers(payChipInfo);
@@ -98,16 +97,9 @@ export class ChipFlying extends ObserverComponent {
         ActionChipFlying.payChipsToInGamePlayers(payChipInfo);
     };
 
-    showPayoutForLoginPlayer(settleStatus: gc.Settlements.SettlementStatusStore, ownerAvatar: Node) {
+    showPayoutForLoginPlayer(settleStatus: gc.Settlements.SettlementStatusStore) {
         if (settleStatus?.win) {
-            this.updateBalance({
-                node: ownerAvatar,
-                win: true,
-                ballance: settleStatus?.bet,
-                duration: this.winningDuration,
-                startY: 80,
-                destY: 10,
-            });
+            this.updateBalance(settleStatus?.bet);
             this.playWinningEffect();
             this.getBalance();
         }
@@ -116,9 +108,9 @@ export class ChipFlying extends ObserverComponent {
     @handle(Auth.AuthHandlers.GetBalance)
     getBalance() {}
 
-    @handle(BalanceEffectHandlers.UpdateBalance)
-    updateBalance(balanceEffect: TBalanceEffect) {
-        return balanceEffect;
+    @handle(BalanceEffectHandlers.UpdateBalanceWhenPayout)
+    updateBalance(balance: number) {
+        return balance;
     }
 
     @handle(BalanceEffectHandlers.PlayWinningEffect)
