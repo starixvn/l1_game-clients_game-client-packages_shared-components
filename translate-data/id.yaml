@@ -1,5 +1,61 @@
 locale: id
-items: {}
+items: 
+  placeBetNextRound:
+    key: placeBetNextRound
+    value: Silakan tunggu putaran berikutnya.
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  cannotPlaceBet:
+    key: cannotPlaceBet
+    value: Tidak bisa bertaruh saat ini. Harap tunggu beberapa detik.
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  dataProcessing:
+    key: dataProcessing
+    value: "Data sedang diproses. Mohon tunggu..."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughScoin:
+    key: notEnoughScoin
+    value: "Scoin tidak cukup untuk memasang taruhan."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  userInsufficientFund:
+    key: userInsufficientFund
+    value: "Akun Anda memiliki dana yang tidak mencukupi."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  sessionExpired:
+    key: sessionExpired
+    value: "Sesi Anda telah berakhir. Silakan masuk lagi."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  sessionTimeout:
+    key: sessionTimeout
+    value: "Sesi Anda telah habis atau Anda belum masuk. Harap tutup jendela saat ini dan coba masuk lagi."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  notice:
+    key: notice
+    value: "ULASAN"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: id
   translateFinished: 0

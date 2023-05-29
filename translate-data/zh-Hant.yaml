@@ -1,5 +1,61 @@
 locale: zh-Hant
-items: {}
+items: 
+  placeBetNextRound:
+    key: placeBetNextRound
+    value: 請等待下一輪。
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  cannotPlaceBet:
+    key: cannotPlaceBet
+    value: 暫時不能下注。請等待幾秒鐘。
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  dataProcessing:
+    key: dataProcessing
+    value: "正在處理數據。請稍等..."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughScoin:
+    key: notEnoughScoin
+    value: "沒有足夠的 Scoin 下注。"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  userInsufficientFund:
+    key: userInsufficientFund
+    value: "您的賬戶資金不足。"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  sessionExpired:
+    key: sessionExpired
+    value: "您的會話已超時。請重新登錄。"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  sessionTimeout:
+    key: sessionTimeout
+    value: "您的會話已超時或您尚未登錄。請關閉當前窗口並再次嘗試登錄。"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  notice:
+    key: notice
+    value: "注意"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: zh-Hant
   translateFinished: 0

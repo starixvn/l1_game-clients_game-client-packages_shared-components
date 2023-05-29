@@ -14,6 +14,62 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  placeBetNextRound:
+    key: placeBetNextRound
+    value: "Please wait for the next round."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  cannotPlaceBet:
+    key: cannotPlaceBet
+    value: "Cannot bet at the moment. Please wait for a few seconds."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  dataProcessing:
+    key: dataProcessing
+    value: "Data are being processed. Please wait..."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughScoin:
+    key: notEnoughScoin
+    value: "Not enough Scoin to place bet."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  userInsufficientFund:
+    key: userInsufficientFund
+    value: "Your account has insufficient funds."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  sessionExpired:
+    key: sessionExpired
+    value: "Your session has timed out. Please login again."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  sessionTimeout:
+    key: sessionTimeout
+    value: "Your session has timed out or you have not logged in yet. Please close the current windows and try to login again."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  notice:
+    key: notice
+    value: "NOTICE"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: en
   translateFinished: 327

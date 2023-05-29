@@ -1,5 +1,61 @@
 locale: th
-items: {}
+items: 
+  placeBetNextRound:
+    key: placeBetNextRound
+    value: โปรดรอรอบต่อไป
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  cannotPlaceBet:
+    key: cannotPlaceBet
+    value: ไม่สามารถเดิมพันได้ในขณะนี้ กรุณารอสักครู่
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  dataProcessing:
+    key: dataProcessing
+    value: "กำลังประมวลผลข้อมูล โปรดรอสักครู่..."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughScoin:
+    key: notEnoughScoin
+    value: "Scoin ไม่เพียงพอที่จะวางเดิมพัน"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  userInsufficientFund:
+    key: userInsufficientFund
+    value: "บัญชีของคุณมีเงินไม่เพียงพอ"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  sessionExpired:
+    key: sessionExpired
+    value: "หมดเวลาการใช้งาน. กรุณาเข้าสู่ระบบอีกครั้ง"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  sessionTimeout:
+    key: sessionTimeout
+    value: "เซสชั่นของคุณหมดเวลาหรือคุณยังไม่ได้เข้าสู่ระบบ กรุณาปิดหน้าต่างปัจจุบันและลองเข้าสู่ระบบอีกครั้ง"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  notice:
+    key: notice
+    value: "ประกาศ"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: th
   translateFinished: 0

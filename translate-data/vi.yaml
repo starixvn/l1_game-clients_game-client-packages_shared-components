@@ -14,9 +14,65 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  placeBetNextRound:
+    key: placeBetNextRound
+    value: Vui lòng đặt cược ở phiên sau.
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  cannotPlaceBet:
+    key: cannotPlaceBet
+    value: Không thể đặt cược vào lúc này.
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  dataProcessing:
+    key: dataProcessing
+    value: "Cược đang được xử lý. Vui lòng đợi."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughScoin:
+    key: notEnoughScoin
+    value: "Bạn hiện không có đủ Scoin để cược."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  userInsufficientFund:
+    key: userInsufficientFund
+    value: "Tài khoản của bạn thiếu tiền."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  sessionExpired:
+    key: sessionExpired
+    value: "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  sessionTimeout:
+    key: sessionTimeout
+    value: "Phiên đăng nhập của bạn đã hết hạn, hoặc bạn chưa có đăng nhập. Vui lòng đóng cửa sổ game và thử đăng nhập lại."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  notice:
+    key: notice
+    value: "THÔNG BÁO"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: vi
-  translateFinished: 5
-  translateTotal: 5
+  translateFinished: 92
+  translateTotal: 70
   compileFinished: 0
-  compileTotal: 5
+  compileTotal: 6
