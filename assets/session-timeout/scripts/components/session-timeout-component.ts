@@ -9,9 +9,9 @@ const { observer, handle } = Observer;
 @observer
 export class SessionTimeoutComponent extends Component {
     onLoad() {
-        this.sessionTimeout();
+        this.ClearRecheckInInterval();
     }
 
-    @handle(gc.Auth.AuthHandlers.SessionTimeout)
-    sessionTimeout() {}
+    @handle(gc.Auth.AuthHandlers.ClearRecheckInInterval)
+    ClearRecheckInInterval() {}
 }
