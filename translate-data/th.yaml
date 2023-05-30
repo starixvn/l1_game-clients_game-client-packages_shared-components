@@ -30,7 +30,7 @@ items:
     _variants: []
   userInsufficientFund:
     key: userInsufficientFund
-    value: บัญชีของคุณมีเงินไม่เพียงพอ (%{errorCode})
+    value: บัญชีของคุณมีเงินไม่เพียงพอ ({{errorCode}})
     type: 2
     isVariant: false
     associations: []
@@ -60,28 +60,28 @@ items:
   accountNotExist:
     key: accountNotExist
     value: เกิดข้อผิดพลาด กรุณาติดต่อแอดมินสำหรับรายละเอียดเพิ่มเติม ขอบคุณค่ะ
-      (%{errorCode})
+      ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   ipRestricted:
     key: ipRestricted
-    value: ที่อยู่ IP ของคุณถูกจำกัด (%{errorCode})
+    value: ที่อยู่ IP ของคุณถูกจำกัด ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountBlacklisted:
     key: accountBlacklisted
-    value: บัญชีถูกปิดระงับ โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม (%{errorCode})
+    value: บัญชีถูกปิดระงับ โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   userNotFound:
     key: userNotFound
-    value: ไม่พบชื่อผู้ใช้ (%{errorCode})
+    value: ไม่พบชื่อผู้ใช้ ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -95,88 +95,88 @@ items:
     _variants: []
   networkError:
     key: networkError
-    value: เกิดการผิดพลาดของเครือข่าย (%{errorCode})
+    value: เกิดการผิดพลาดของเครือข่าย ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetExceeded:
     key: limitBetExceeded
-    value: เกม %{gameName} (#%{gameRoundId})\n\nการวางเดิมพันล้มเหลว!
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว!
       เงินเดิมพันของคุณเกินการตั้งค่าขีดจำกัดการเดิมพันของคุณ โปรดลองอีกครั้ง
-      (%{errorCode})
+      ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   playerNotPermittedPlay:
     key: playerNotPermittedPlay
-    value: เกม %{gameName} (#%{gameRoundId})\n\nเกมถูกปิดการใช้งาน
-      กรุณาติดต่อทีมงานของคุณสำหรับรายละเอียดเพิ่มเติม ขอบคุณค่ะ (%{errorCode})
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\nเกมถูกปิดการใช้งาน
+      กรุณาติดต่อทีมงานของคุณสำหรับรายละเอียดเพิ่มเติม ขอบคุณค่ะ ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   winLimitHit:
     key: winLimitHit
-    value: เกม %{gameName} (#%{gameRoundId})\n\nการเดิมพันล้มเหลว! ชนะขีดจำกัดแล้ว
-      กรุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ (%{errorCode})
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว! ชนะขีดจำกัดแล้ว
+      กรุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   loseLimitHit:
     key: loseLimitHit
-    value: เกม %{gameName} (#%{gameRoundId})\n\nการเดิมพันล้มเหลว! แพ้ขีดจำกัดแล้ว
-      กรุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ (%{errorCode})
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว! แพ้ขีดจำกัดแล้ว
+      กรุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetUpdated:
     key: limitBetUpdated
-    value: เกม %{gameName} (#%{gameRoundId})\n\nการเดิมพันล้มเหลว!
-      อัปเดตวงเงินเดิมพันของคุณใหม่แล้ว โปรดลองอีกครั้ง (%{errorCode})
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว!
+      อัปเดตวงเงินเดิมพันของคุณใหม่แล้ว โปรดลองอีกครั้ง ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetNotDefined:
     key: limitBetNotDefined
-    value: เกม %{gameName} (#%{gameRoundId})\n\nการเดิมพันล้มเหลว!
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว!
       ยังไม่ได้กำหนดวงเงินเดิมพันของคุณสำหรับเกมนี้ กรุณาติดต่อทีมงานของคุณ
-      ขอบคุณค่ะ (%{errorCode})
+      ขอบคุณค่ะ ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountSuspended:
     key: accountSuspended
-    value: เกม %{gameName} (#%{gameRoundId})\n\nการเดิมพันล้มเหลว! บัญชีถูกระงับ
-      รุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ (%{errorCode})
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว! บัญชีถูกระงับ
+      รุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   unavailableGame:
     key: unavailableGame
-    value: เกม %{gameName} (#%{gameRoundId})\n\n  เกมไม่สามารถใช้งานได้ในขณะนี้
-      กรุณาติดต่อแอดมินสำหรับรายละเอียดขอบคุณ (%{errorCode})
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\n  เกมไม่สามารถใช้งานได้ในขณะนี้
+      กรุณาติดต่อแอดมินสำหรับรายละเอียดขอบคุณ ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   errorOccurred:
     key: errorOccurred
-    value: เกิดข้อผิดพลาด โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม (%{errorCode})
+    value: เกิดข้อผิดพลาด โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   errorOccurredFull:
     key: errorOccurredFull
-    value: เกม %{gameName} (#%{gameRoundId})\n\nเกิดข้อผิดพลาด
-      โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม (%{errorCode})
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\nเกิดข้อผิดพลาด
+      โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -253,29 +253,29 @@ items:
     _variants: []
   placeBetFailed:
     key: placeBetFailed
-    value: เกม %{gameName} (#%{gameRoundId})\n\nล้มเหลวในการวางเดิมพัน! (%{errorCode})
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\nล้มเหลวในการวางเดิมพัน! ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   endGameFailed:
     key: endGameFailed
-    value: เกม %{gameName} (#%{gameRoundId})\n\nเกิดข้อผิดพลาด.
-      โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม (%{errorCode})
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\nเกิดข้อผิดพลาด.
+      โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   getBalanceFailed:
     key: getBalanceFailed
-    value: ไม่สามารถอัปเดตยอดเงินในบัญชี (%{errorCode})
+    value: ไม่สามารถอัปเดตยอดเงินในบัญชี ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   enterPortalFailed:
     key: enterPortalFailed
-    value: เกิดข้อผิดพลาด โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม (%{errorCode})
+    value: เกิดข้อผิดพลาด โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -296,21 +296,21 @@ items:
     _variants: []
   minBetNotice:
     key: minBetNotice
-    value: เดิมพันขั้นต่ำสำหรับตัวเลือกนี้คือ %{minBet}
+    value: เดิมพันขั้นต่ำสำหรับตัวเลือกนี้คือ {{minBet}}
     type: 4
     isVariant: false
     associations: []
     _variants: []
   maxBetForChoiceNotice:
     key: maxBetForChoiceNotice
-    value: เดิมพันสูงสุดสำหรับตัวเลือกนี้คือ %{maxBet}
+    value: เดิมพันสูงสุดสำหรับตัวเลือกนี้คือ {{maxBet}}
     type: 4
     isVariant: false
     associations: []
     _variants: []
   maxBetNotice:
     key: maxBetNotice
-    value: เงินเดิมพันรวมสูงสุดในรอบนี้คือ %{maxBet}
+    value: เงินเดิมพันรวมสูงสุดในรอบนี้คือ {{maxBet}}
     type: 4
     isVariant: false
     associations: []
@@ -401,7 +401,7 @@ items:
     _variants: []
   minBetHand:
     key: minBetHand
-    value: เดิมพันขั้นต่ำสำหรับมือนี้คือ %{minBet}
+    value: เดิมพันขั้นต่ำสำหรับมือนี้คือ {{minBet}}
     type: 4
     isVariant: false
     associations: []
@@ -478,7 +478,7 @@ items:
     _variants: []
   gameExcluded:
     key: gameExcluded
-    value: "%{gameName}\\n\\nบัญชีของคุณไม่ได้รับอนุญาตให้เล่นเกมนี้อีกต่อไป
+    value: "{{gameName}}\\n\\nบัญชีของคุณไม่ได้รับอนุญาตให้เล่นเกมนี้อีกต่อไป
       โปรดลองเกมอื่น"
     type: 4
     isVariant: false
@@ -500,7 +500,7 @@ items:
     _variants: []
   maxStakeHand:
     key: maxStakeHand
-    value: เดิมพันรวมสูงสุดในมือคือ %{maxBet}
+    value: เดิมพันรวมสูงสุดในมือคือ {{maxBet}}
     type: 4
     isVariant: false
     associations: []
@@ -508,14 +508,14 @@ items:
   accountClosed:
     key: accountClosed
     value: บัญชีถูกปิดระงับใช้งาน เซสชั่นของคุณจะหมดอายุหลังจาก 10 วินาที
-      โปรดติดต่อแดมมินสำหรับรายละเอียดเพิ่มเติม (%{errorCode})
+      โปรดติดต่อแดมมินสำหรับรายละเอียดเพิ่มเติม ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   disallowHedgeBet:
     key: disallowHedgeBet
-    value: สามารถเดิมพันได้ทั้ง %{betChoice1} หรือ %{betChoice2}
+    value: สามารถเดิมพันได้ทั้ง {{betChoice1}} หรือ {{betChoice2}}
     type: 4
     isVariant: false
     associations: []

@@ -30,7 +30,7 @@ items:
     _variants: []
   userInsufficientFund:
     key: userInsufficientFund
-    value: 您的账户资金不足。(%{errorCode})
+    value: 您的账户资金不足。({{errorCode}})
     type: 2
     isVariant: false
     associations: []
@@ -58,28 +58,28 @@ items:
     _variants: []
   accountNotExist:
     key: accountNotExist
-    value: 发生了错误。 详情请联系CSD，谢谢。(%{errorCode})
+    value: 发生了错误。 详情请联系CSD，谢谢。({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   ipRestricted:
     key: ipRestricted
-    value: 您的 IP 地址受到限制。(%{errorCode})
+    value: 您的 IP 地址受到限制。({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountBlacklisted:
     key: accountBlacklisted
-    value: 帐户已关闭。 详情请联络 CSD。(%{errorCode})
+    value: 帐户已关闭。 详情请联络 CSD。({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   userNotFound:
     key: userNotFound
-    value: 未找到用户。(%{errorCode})
+    value: 未找到用户。({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -93,83 +93,83 @@ items:
     _variants: []
   networkError:
     key: networkError
-    value: 网络错误。(%{errorCode})
+    value: 网络错误。({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetExceeded:
     key: limitBetExceeded
-    value: "%{gameName} 游戏 (#%{gameRoundId})\\n\\n下注失败！
-      您的本金已超出您的投注限额设置，请重试。(%{errorCode})"
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\\n\\n下注失败！
+      您的本金已超出您的投注限额设置，请重试。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   playerNotPermittedPlay:
     key: playerNotPermittedPlay
-    value: "%{gameName} 游戏 (#%{gameRoundId})\\n\\n游戏禁用。 详情请联络您的上线，谢谢。(%{errorCode})"
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\\n\\n游戏禁用。 详情请联络您的上线，谢谢。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   winLimitHit:
     key: winLimitHit
-    value: "%{gameName} 游戏 (#%{gameRoundId})\\n\\n下注失败！ 赢限制命中。
-      请联系您的上线，谢谢。(%{errorCode})"
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\\n\\n下注失败！ 赢限制命中。
+      请联系您的上线，谢谢。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   loseLimitHit:
     key: loseLimitHit
-    value: "%{gameName} 游戏 (#%{gameRoundId})\\n\\n下注失败！ 输限制命中。
-      请联系您的上线，谢谢。(%{errorCode})"
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\\n\\n下注失败！ 输限制命中。
+      请联系您的上线，谢谢。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetUpdated:
     key: limitBetUpdated
-    value: "%{gameName} 游戏 (#%{gameRoundId})\\n\\n下注失败！ 您的投注限额已更新，请重试。(%{errorCode})"
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\\n\\n下注失败！ 您的投注限额已更新，请重试。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetNotDefined:
     key: limitBetNotDefined
-    value: "%{gameName} 游戏 (#%{gameRoundId})\\n\\n下注失败！ 您对此游戏的投注限额尚未设置。
-      请联系您的上线，谢谢。(%{errorCode})"
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\\n\\n下注失败！ 您对此游戏的投注限额尚未设置。
+      请联系您的上线，谢谢。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountSuspended:
     key: accountSuspended
-    value: "%{gameName} 游戏 (#%{gameRoundId})\\n\\n下注失败！ 帐户已被暂停。
-      详情请联络您的上线，谢谢。(%{errorCode})"
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\\n\\n下注失败！ 帐户已被暂停。
+      详情请联络您的上线，谢谢。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   unavailableGame:
     key: unavailableGame
-    value: "%{gameName} 游戏 (#%{gameRoundId})\\n\\n该游戏暂时无法使用。
-      详情请联系CSD，谢谢。      (%{errorCode})"
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\\n\\n该游戏暂时无法使用。
+      详情请联系CSD，谢谢。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   errorOccurred:
     key: errorOccurred
-    value: 发生错误，请联系 CSD 了解详情。(%{errorCode})
+    value: 发生错误，请联系 CSD 了解详情。({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   errorOccurredFull:
     key: errorOccurredFull
-    value: "%{gameName} 游戏 (#%{gameRoundId})\\n\\n发生错误，请联系 CSD 了解详情。(%{errorCode})"
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\\n\\n发生错误，请联系 CSD 了解详情。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -246,28 +246,28 @@ items:
     _variants: []
   placeBetFailed:
     key: placeBetFailed
-    value: "%{gameName} 游戏 (#%{gameRoundId})\\n\\n下注失败！(%{errorCode})"
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\\n\\n下注失败！({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   endGameFailed:
     key: endGameFailed
-    value: "%{gameName} 游戏 (#%{gameRoundId})\\n\\n发生了错误。 详情请联络 CSD。(%{errorCode})"
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\\n\\n发生了错误。 详情请联络 CSD。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   getBalanceFailed:
     key: getBalanceFailed
-    value: 无法更新帐户余额。(%{errorCode})
+    value: 无法更新帐户余额。({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   enterPortalFailed:
     key: enterPortalFailed
-    value: 发生了错误。 详情请联络 CSD。(%{errorCode})
+    value: 发生了错误。 详情请联络 CSD。({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -288,21 +288,21 @@ items:
     _variants: []
   minBetNotice:
     key: minBetNotice
-    value: 此选项的最小赌注是 %{minBet}
+    value: 此选项的最小赌注是 {{minBet}}
     type: 4
     isVariant: false
     associations: []
     _variants: []
   maxBetForChoiceNotice:
     key: maxBetForChoiceNotice
-    value: 此选项的最大赌注是 %{maxBet}
+    value: 此选项的最大赌注是 {{maxBet}}
     type: 4
     isVariant: false
     associations: []
     _variants: []
   maxBetNotice:
     key: maxBetNotice
-    value: 本轮最大总赌注为 %{maxBet}
+    value: 本轮最大总赌注为 {{maxBet}}
     type: 4
     isVariant: false
     associations: []
@@ -393,7 +393,7 @@ items:
     _variants: []
   minBetHand:
     key: minBetHand
-    value: 这手牌的最小下注是 %{minBet}
+    value: 这手牌的最小下注是 {{minBet}}
     type: 4
     isVariant: false
     associations: []
@@ -470,7 +470,7 @@ items:
     _variants: []
   gameExcluded:
     key: gameExcluded
-    value: "%{gameName}\\n\\n您的帐户不再允许玩此游戏。 请尝试其他游戏。"
+    value: "{{gameName}}\\n\\n您的帐户不再允许玩此游戏。 请尝试其他游戏。"
     type: 4
     isVariant: false
     associations: []
@@ -491,21 +491,21 @@ items:
     _variants: []
   maxStakeHand:
     key: maxStakeHand
-    value: 手头上的最的大赌注为 %{maxBet}
+    value: 手头上的最的大赌注为 {{maxBet}}
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountClosed:
     key: accountClosed
-    value: 帐户已关闭。 您的会话将在 10 秒后过期，详情请联系 CSD。(%{errorCode})
+    value: 帐户已关闭。 您的会话将在 10 秒后过期，详情请联系 CSD。({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   disallowHedgeBet:
     key: disallowHedgeBet
-    value: 可以下注 %{betChoice1} 或 %{betChoice2}。
+    value: 可以下注 {{betChoice1}} 或 {{betChoice2}}。
     type: 4
     isVariant: false
     associations: []

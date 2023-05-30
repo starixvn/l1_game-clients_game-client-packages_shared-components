@@ -44,7 +44,7 @@ items:
     _variants: []
   userInsufficientFund:
     key: userInsufficientFund
-    value: Your account has insufficient funds. (%{errorCode})
+    value: Your account has insufficient funds. ({{errorCode}})
     type: 2
     isVariant: false
     associations: []
@@ -74,28 +74,28 @@ items:
   accountNotExist:
     key: accountNotExist
     value: An error has occurred. Please contact CSD for details thank you.
-      (%{errorCode})
+      ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   ipRestricted:
     key: ipRestricted
-    value: Your IP address is restricted. (%{errorCode})
+    value: Your IP address is restricted. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountBlacklisted:
     key: accountBlacklisted
-    value: Account has been closed. Please contact CSD for details. (%{errorCode})
+    value: Account has been closed. Please contact CSD for details. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   userNotFound:
     key: userNotFound
-    value: User was not found. (%{errorCode})
+    value: User was not found. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -109,88 +109,88 @@ items:
     _variants: []
   networkError:
     key: networkError
-    value: Network error. (%{errorCode})
+    value: Network error. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetExceeded:
     key: limitBetExceeded
-    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Your stake has
-      exceeded your bet limit settings please try again. (%{errorCode})
+    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your stake has
+      exceeded your bet limit settings please try again. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   playerNotPermittedPlay:
     key: playerNotPermittedPlay
-    value: Game %{gameName} (#%{gameRoundId})\n\nGame disabled. Please contact your
-      upline for details thank you. (%{errorCode})
+    value: Game {{gameName}} (#{{gameRoundId}})\n\nGame disabled. Please contact your
+      upline for details thank you. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   winLimitHit:
     key: winLimitHit
-    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Win limit hit.
-      Please contact your upline thank you. (%{errorCode})
+    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Win limit hit.
+      Please contact your upline thank you. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   loseLimitHit:
     key: loseLimitHit
-    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Lose limit
-      hit. Please contact your upline thank you. (%{errorCode})
+    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Lose limit
+      hit. Please contact your upline thank you. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetUpdated:
     key: limitBetUpdated
-    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Your bet limit
-      has been updated please try again. (%{errorCode})
+    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet limit
+      has been updated please try again. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetNotDefined:
     key: limitBetNotDefined
-    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Your bet limit
+    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet limit
       for this game has not been set. Please contact your upline thank you.
-      (%{errorCode})
+      ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountSuspended:
     key: accountSuspended
-    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Account has
+    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Account has
       been suspended. Please contact your upline for details thank you.
-      (%{errorCode})
+      ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   unavailableGame:
     key: unavailableGame
-    value: Game %{gameName} (#%{gameRoundId})\n\nThe game is unavailable at the
-      moment. Please contact CSD for details thank you. (%{errorCode})
+    value: Game {{gameName}} (#{{gameRoundId}})\n\nThe game is unavailable at the
+      moment. Please contact CSD for details thank you. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   errorOccurred:
     key: errorOccurred
-    value: An error has occurred please contact CSD for details. (%{errorCode})
+    value: An error has occurred please contact CSD for details. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   errorOccurredFull:
     key: errorOccurredFull
-    value: Game %{gameName} (#%{gameRoundId})\n\nAn error has occurred please
-      contact CSD for details. (%{errorCode})
+    value: Game {{gameName}} (#{{gameRoundId}})\n\nAn error has occurred please
+      contact CSD for details. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -269,29 +269,29 @@ items:
     _variants: []
   placeBetFailed:
     key: placeBetFailed
-    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! (%{errorCode})
+    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   endGameFailed:
     key: endGameFailed
-    value: Game %{gameName} (#%{gameRoundId})\n\nAn error has occurred. Please
-      contact CSD for details. (%{errorCode})
+    value: Game {{gameName}} (#{{gameRoundId}})\n\nAn error has occurred. Please
+      contact CSD for details. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   getBalanceFailed:
     key: getBalanceFailed
-    value: Cannot update the account balance. (%{errorCode})
+    value: Cannot update the account balance. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   enterPortalFailed:
     key: enterPortalFailed
-    value: An error has occurred. Please contact CSD for details. (%{errorCode})
+    value: An error has occurred. Please contact CSD for details. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -306,21 +306,21 @@ items:
     _variants: []
   minBetNotice:
     key: minBetNotice
-    value: Min bet for this option is %{minBet}
+    value: Min bet for this option is {{minBet}}
     type: 4
     isVariant: false
     associations: []
     _variants: []
   maxBetForChoiceNotice:
     key: maxBetForChoiceNotice
-    value: Max bet for this option is %{maxBet}
+    value: Max bet for this option is {{maxBet}}
     type: 4
     isVariant: false
     associations: []
     _variants: []
   maxBetNotice:
     key: maxBetNotice
-    value: Max total stake on this round is %{maxBet}
+    value: Max total stake on this round is {{maxBet}}
     type: 4
     isVariant: false
     associations: []
@@ -411,7 +411,7 @@ items:
     _variants: []
   minBetHand:
     key: minBetHand
-    value: Min bet for this hand is %{minBet}
+    value: Min bet for this hand is {{minBet}}
     type: 4
     isVariant: false
     associations: []
@@ -474,7 +474,7 @@ items:
     _variants: []
   gameExcluded:
     key: gameExcluded
-    value: "%{gameName}\\n\\nYour account is no longer allowed to play this game.
+    value: "{{gameName}}\\n\\nYour account is no longer allowed to play this game.
       Please try other games."
     type: 4
     isVariant: false
@@ -489,7 +489,7 @@ items:
     _variants: []
   maxStakeHand:
     key: maxStakeHand
-    value: Max total stake on Hand is %{maxBet}
+    value: Max total stake on Hand is {{maxBet}}
     type: 4
     isVariant: false
     associations: []
@@ -497,14 +497,14 @@ items:
   accountClosed:
     key: accountClosed
     value: Account has been closed. Your session will expire after 10 seconds please
-      contact CSD for details. (%{errorCode})
+      contact CSD for details. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   disallowHedgeBet:
     key: disallowHedgeBet
-    value: Can bet on either %{betChoice1} or %{betChoice2}.
+    value: Can bet on either {{betChoice1}} or {{betChoice2}}.
     type: 4
     isVariant: false
     associations: []
