@@ -1,5 +1,5 @@
 locale: id
-items: 
+items:
   placeBetNextRound:
     key: placeBetNextRound
     value: Silakan tunggu putaran berikutnya.
@@ -16,49 +16,524 @@ items:
     _variants: []
   dataProcessing:
     key: dataProcessing
-    value: "Data sedang diproses. Mohon tunggu..."
+    value: Data sedang diproses. Mohon tunggu...
     type: 2
     isVariant: false
     associations: []
     _variants: []
   notEnoughScoin:
     key: notEnoughScoin
-    value: "Scoin tidak cukup untuk memasang taruhan."
+    value: Scoin tidak cukup untuk memasang taruhan.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   userInsufficientFund:
     key: userInsufficientFund
-    value: "Akun Anda memiliki dana yang tidak mencukupi."
+    value: Akun Anda memiliki dana yang tidak mencukupi. (%{errorCode})
     type: 2
     isVariant: false
     associations: []
     _variants: []
   sessionExpired:
     key: sessionExpired
-    value: "Sesi Anda telah berakhir. Silakan masuk lagi."
+    value: Sesi Anda telah berakhir. Silakan masuk lagi.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   sessionTimeout:
     key: sessionTimeout
-    value: "Sesi Anda telah habis atau Anda belum masuk. Harap tutup jendela saat ini dan coba masuk lagi."
+    value: Sesi Anda telah habis atau Anda belum masuk. Harap tutup jendela saat ini
+      dan coba masuk lagi.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   notice:
     key: notice
-    value: "ULASAN"
+    value: ULASAN
     type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  accountNotExist:
+    key: accountNotExist
+    value: Sebuah kesalahan telah terjadi. Silakan hubungi CSD untuk lebih lanjut
+      terima kasih. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  ipRestricted:
+    key: ipRestricted
+    value: Alamat IP Anda dibatasi. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountBlacklisted:
+    key: accountBlacklisted
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nGagal memasang taruhan! Akun
+      telah ditutup. Silakan hubungi CSD untuk lebih lanjut. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  userNotFound:
+    key: userNotFound
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nGagal memasang taruhan!
+      Pengguna tidak ditemukan. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  sysMaintenance:
+    key: sysMaintenance
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nGagal memasang taruhan!
+      Permainan sedang dalam pemeliharaan.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  networkError:
+    key: networkError
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nGagal memasang taruhan!
+      Kesalahan jaringan. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetExceeded:
+    key: limitBetExceeded
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nGagal memasang taruhan!
+      Taruhan Anda telah melampaui batas taruhan Anda silakan coba lagi.
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  playerNotPermittedPlay:
+    key: playerNotPermittedPlay
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nPermainan dinonaktifkan.
+      Silakan hubungi upline Anda untuk lebih lanjut terima kasih.
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  winLimitHit:
+    key: winLimitHit
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nGagal memasang taruhan! Batas
+      Kemenganan. Silakan hubungi upline Anda terima kasih. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  loseLimitHit:
+    key: loseLimitHit
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nGagal memasang taruhan! Batas
+      Kekalahan. Silakan hubungi upline Anda terima kasih. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetUpdated:
+    key: limitBetUpdated
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nGagal memasang taruhan! Batas
+      taruhan Anda telah diperbarui silakan coba lagi. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetNotDefined:
+    key: limitBetNotDefined
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nGagal memasang taruhan! Batas
+      taruhan Anda untuk game ini belum ditetapkan. Silakan hubungi upline Anda
+      terima kasih. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountSuspended:
+    key: accountSuspended
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nGagal memasang taruhan! Akun
+      telah ditangguhkan. Silakan hubungi upline Anda untuk lebih lanjut terima
+      kasih. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  unavailableGame:
+    key: unavailableGame
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nPermainan tidak tersedia saat
+      ini. Silakan hubungi CSD untuk lebih lanjut terima kasih. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurred:
+    key: errorOccurred
+    value: Terjadi kesalahan hubungi CSD untuk lebih lanjut. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurredFull:
+    key: errorOccurredFull
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nTerjadi kesalahan hubungi CSD
+      untuk lebih lanjut. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  playOnOtherDevice:
+    key: playOnOtherDevice
+    value: Akun Anda sedang digunakan untuk memainkan [game] di browser atau
+      perangkat lain.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  serverError:
+    key: serverError
+    value: Server mengalami kesalahan.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidData:
+    key: invalidData
+    value: Data Tidak Valid.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  unauthorized:
+    key: unauthorized
+    value: Tidak sah.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  serverNotFound:
+    key: serverNotFound
+    value: Server tidak ditemukan.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountSignOut:
+    key: accountSignOut
+    value: Akun telah keluar karena orang lain masuk ke akun ini.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  connectionFailed:
+    key: connectionFailed
+    value: Sambungan ke server gagal.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickNameDistance:
+    key: nickNameDistance
+    value: Nama panggilan harus antara 3 dan 14 karakter.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickNameCharacter:
+    key: nickNameCharacter
+    value: Nama panggilan tidak boleh berisi spasi karakter khusus dan karakter
+      non-Inggris.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  existNickName:
+    key: existNickName
+    value: Nama panggilan sudah digunakan silakan coba yang lain.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  placeBetFailed:
+    key: placeBetFailed
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nGagal memasang taruhan!
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  endGameFailed:
+    key: endGameFailed
+    value: Permainan %{gameName} (#%{gameRoundId})\n\nSebuah kesalahan telah
+      terjadi. Silakan hubungi CSD untuk lebih lanjut. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  getBalanceFailed:
+    key: getBalanceFailed
+    value: Tidak dapat memperbarui saldo akun.(%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  enterPortalFailed:
+    key: enterPortalFailed
+    value: Sebuah kesalahan telah terjadi. Silakan hubungi CSD untuk lebih lanjut.
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  jackpotProcessing:
+    key: jackpotProcessing
+    value: Data sedang diproses jumlah pemenang Jackpot akan ditambahkan ke akun
+      Anda dalam beberapa menit.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughMoney:
+    key: notEnoughMoney
+    value: Akun Anda memiliki dana yang tidak mencukupi.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  minBetNotice:
+    key: minBetNotice
+    value: Taruhan minimum untuk opsi ini adalah %{minBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetForChoiceNotice:
+    key: maxBetForChoiceNotice
+    value: Taruhan maksimum untuk opsi ini adalah %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetNotice:
+    key: maxBetNotice
+    value: Total taruhan maksimum pada babak ini adalah %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidHandId:
+    key: invalidHandId
+    value: ID di Tangan Tidak Valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handAlreadySplit:
+    key: handAlreadySplit
+    value: Tangan ini sudah terpecahkan.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantSplitChildHand:
+    key: cantSplitChildHand
+    value: Opsi Split tidak tersedia untuk tangan ini.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantDoubleHand:
+    key: cantDoubleHand
+    value: Opsi Ganda tidak tersedia untuk tangan ini.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantHit:
+    key: cantHit
+    value: Tidak dapat menarik lebih banyak kartu.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cardsNotEqual:
+    key: cardsNotEqual
+    value: Kartu tidak sama nilainya.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handIsStand:
+    key: handIsStand
+    value: Tangan Berakhir
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidPosition:
+    key: invalidPosition
+    value: Posisi Tidak Valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handNotActive:
+    key: handNotActive
+    value: Tangan Tidak Aktif
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidDealHands:
+    key: invalidDealHands
+    value: Jumlah Tangan tidak valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  processingAction:
+    key: processingAction
+    value: Data sedang diproses harap tunggu.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidDealDueToRunningRound:
+    key: invalidDealDueToRunningRound
+    value: Taruhan Tidak Valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  minBetHand:
+    key: minBetHand
+    value: Taruhan minimum untuk tangan ini adalah %{minBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantSplitHand:
+    key: cantSplitHand
+    value: Opsi Split tidak tersedia untuk tangan ini.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetOfAnyChoiceReached:
+    key: maxBetOfAnyChoiceReached
+    value: Salah satu pilihan taruhan Anda telah melampaui batas taruhan.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  betAmountOfAnyChoiceIncorrect:
+    key: betAmountOfAnyChoiceIncorrect
+    value: Jumlah Taruhan Tidak Valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBetChoice:
+    key: invalidBetChoice
+    value: Pilihan Taruhan Tidak Valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  oneChoiceAllowed:
+    key: oneChoiceAllowed
+    value: Hanya bisa bertaruh pada satu opsi.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidPayline:
+    key: invalidPayline
+    value: Payline tidak valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidFreespin:
+    key: invalidFreespin
+    value: Freespin tidak valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidStakeLevel:
+    key: invalidStakeLevel
+    value: Level Taruhan Tidak Valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBonus:
+    key: invalidBonus
+    value: Permainan Bonus Tidak Valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  openedBonus:
+    key: openedBonus
+    value: Permainan Bonus Tidak Valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  gameExcluded:
+    key: gameExcluded
+    value: "%{gameName}\\n\\nAkun Anda tidak lagi diizinkan untuk memainkan game
+      ini. Silakan coba game lain."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughSpin:
+    key: notEnoughSpin
+    value: Putaran tidak cukup untuk dimainkan.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBet:
+    key: invalidBet
+    value: Taruhan Tidak Valid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxStakeHand:
+    key: maxStakeHand
+    value: Total taruhan maksimum di Tangan adalah %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountClosed:
+    key: accountClosed
+    value: Akun telah ditutup. Sesi Anda akan kedaluwarsa setelah 10 detik silakan
+      hubungi CSD untuk detailnya. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  disallowHedgeBet:
+    key: disallowHedgeBet
+    value: Dapat bertaruh pada %{betChoice1} atau %{betChoice2}.
+    type: 4
     isVariant: false
     associations: []
     _variants: []
 languageConfig:
   bcp47Tag: id
-  translateFinished: 0
-  translateTotal: 0
+  translateFinished: 375
+  translateTotal: 375
   compileFinished: 0
-  compileTotal: 0
+  compileTotal: 72

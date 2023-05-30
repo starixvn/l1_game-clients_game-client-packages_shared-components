@@ -16,63 +16,530 @@ items:
     _variants: []
   placeBetNextRound:
     key: placeBetNextRound
-    value: "Please wait for the next round."
+    value: Please wait for the next round.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   cannotPlaceBet:
     key: cannotPlaceBet
-    value: "Cannot bet at the moment. Please wait for a few seconds."
+    value: Cannot bet at the moment. Please wait for a few seconds.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   dataProcessing:
     key: dataProcessing
-    value: "Data are being processed. Please wait..."
+    value: Data are being processed. Please wait...
     type: 2
     isVariant: false
     associations: []
     _variants: []
   notEnoughScoin:
     key: notEnoughScoin
-    value: "Not enough Scoin to place bet."
+    value: Not enough Scoin to place bet.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   userInsufficientFund:
     key: userInsufficientFund
-    value: "Your account has insufficient funds."
+    value: Your account has insufficient funds. (%{errorCode})
     type: 2
     isVariant: false
     associations: []
     _variants: []
   sessionExpired:
     key: sessionExpired
-    value: "Your session has timed out. Please login again."
+    value: Your session has timed out. Please login again.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   sessionTimeout:
     key: sessionTimeout
-    value: "Your session has timed out or you have not logged in yet. Please close the current windows and try to login again."
+    value: Your session has timed out or you have not logged in yet. Please close
+      the current windows and try to login again.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   notice:
     key: notice
-    value: "NOTICE"
+    value: NOTICE
     type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  accountNotExist:
+    key: accountNotExist
+    value: An error has occurred. Please contact CSD for details thank you.
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  ipRestricted:
+    key: ipRestricted
+    value: Your IP address is restricted. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountBlacklisted:
+    key: accountBlacklisted
+    value: Account has been closed. Please contact CSD for details. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  userNotFound:
+    key: userNotFound
+    value: User was not found. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  sysMaintenance:
+    key: sysMaintenance
+    value: The game is under maintenance.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  networkError:
+    key: networkError
+    value: Network error. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetExceeded:
+    key: limitBetExceeded
+    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Your stake has
+      exceeded your bet limit settings please try again. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  playerNotPermittedPlay:
+    key: playerNotPermittedPlay
+    value: Game %{gameName} (#%{gameRoundId})\n\nGame disabled. Please contact your
+      upline for details thank you. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  winLimitHit:
+    key: winLimitHit
+    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Win limit hit.
+      Please contact your upline thank you. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  loseLimitHit:
+    key: loseLimitHit
+    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Lose limit
+      hit. Please contact your upline thank you. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetUpdated:
+    key: limitBetUpdated
+    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Your bet limit
+      has been updated please try again. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetNotDefined:
+    key: limitBetNotDefined
+    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Your bet limit
+      for this game has not been set. Please contact your upline thank you.
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountSuspended:
+    key: accountSuspended
+    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! Account has
+      been suspended. Please contact your upline for details thank you.
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  unavailableGame:
+    key: unavailableGame
+    value: Game %{gameName} (#%{gameRoundId})\n\nThe game is unavailable at the
+      moment. Please contact CSD for details thank you. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurred:
+    key: errorOccurred
+    value: An error has occurred please contact CSD for details. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurredFull:
+    key: errorOccurredFull
+    value: Game %{gameName} (#%{gameRoundId})\n\nAn error has occurred please
+      contact CSD for details. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  playOnOtherDevice:
+    key: playOnOtherDevice
+    value: Your account is being used to play [game] on another browser or device.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  serverError:
+    key: serverError
+    value: The server has encountered an error.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidData:
+    key: invalidData
+    value: Invalid Data.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  unauthorized:
+    key: unauthorized
+    value: Unauthorized.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  serverNotFound:
+    key: serverNotFound
+    value: The server is not found.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountSignOut:
+    key: accountSignOut
+    value: The account has been signed out because someone else logged into this
+      account.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  connectionFailed:
+    key: connectionFailed
+    value: The connection to server failed.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickNameDistance:
+    key: nickNameDistance
+    value: Nickname must be between 3 and 14 characters long.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickNameCharacter:
+    key: nickNameCharacter
+    value: Nickname cannot contain spaces special characters and non-English
+      characters.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  existNickName:
+    key: existNickName
+    value: Nickname is already taken please try another one.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  placeBetFailed:
+    key: placeBetFailed
+    value: Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  endGameFailed:
+    key: endGameFailed
+    value: Game %{gameName} (#%{gameRoundId})\n\nAn error has occurred. Please
+      contact CSD for details. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  getBalanceFailed:
+    key: getBalanceFailed
+    value: Cannot update the account balance. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  enterPortalFailed:
+    key: enterPortalFailed
+    value: An error has occurred. Please contact CSD for details. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  jackpotProcessing:
+    key: jackpotProcessing
+    value: The data are being processed the Jackpot winning amount will be added to
+      your account in a few minutes.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  minBetNotice:
+    key: minBetNotice
+    value: Min bet for this option is %{minBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetForChoiceNotice:
+    key: maxBetForChoiceNotice
+    value: Max bet for this option is %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetNotice:
+    key: maxBetNotice
+    value: Max total stake on this round is %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidHandId:
+    key: invalidHandId
+    value: Invalid Hand ID
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handAlreadySplit:
+    key: handAlreadySplit
+    value: This hand has already splitted.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantSplitChildHand:
+    key: cantSplitChildHand
+    value: Split option is not available for this hand.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantDoubleHand:
+    key: cantDoubleHand
+    value: Double option is not available for this hand.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantHit:
+    key: cantHit
+    value: Cannot draw more cards.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cardsNotEqual:
+    key: cardsNotEqual
+    value: Cards are not equal value.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handIsStand:
+    key: handIsStand
+    value: Ending Hand
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidPosition:
+    key: invalidPosition
+    value: Invalid Position
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handNotActive:
+    key: handNotActive
+    value: Inactive Hand
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidDealHands:
+    key: invalidDealHands
+    value: The number of Hands is invalid
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  processingAction:
+    key: processingAction
+    value: Data are being processed please wait.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidDealDueToRunningRound:
+    key: invalidDealDueToRunningRound
+    value: Invalid Bet
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  minBetHand:
+    key: minBetHand
+    value: Min bet for this hand is %{minBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetOfAnyChoiceReached:
+    key: maxBetOfAnyChoiceReached
+    value: One of your bet choices has exceeded the bet limit.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  betAmountOfAnyChoiceIncorrect:
+    key: betAmountOfAnyChoiceIncorrect
+    value: Invalid Bet Amount
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBetChoice:
+    key: invalidBetChoice
+    value: Invalid Bet Choice
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  oneChoiceAllowed:
+    key: oneChoiceAllowed
+    value: Can only bet on one option.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidPayline:
+    key: invalidPayline
+    value: Invalid Payline
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidFreespin:
+    key: invalidFreespin
+    value: "Invalid Freespin "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidStakeLevel:
+    key: invalidStakeLevel
+    value: Invalid Stake level
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBonus:
+    key: invalidBonus
+    value: Invalid Bonus Game
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  gameExcluded:
+    key: gameExcluded
+    value: "%{gameName}\\n\\nYour account is no longer allowed to play this game.
+      Please try other games."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughSpin:
+    key: notEnoughSpin
+    value: Not enough Spin to play.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxStakeHand:
+    key: maxStakeHand
+    value: Max total stake on Hand is %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountClosed:
+    key: accountClosed
+    value: Account has been closed. Your session will expire after 10 seconds please
+      contact CSD for details. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  disallowHedgeBet:
+    key: disallowHedgeBet
+    value: Can bet on either %{betChoice1} or %{betChoice2}.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughMoney:
+    key: notEnoughMoney
+    value: Your account has insufficient funds.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantSplitHand:
+    key: cantSplitHand
+    value: Split option is not available for this hand.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  openedBonus:
+    key: openedBonus
+    value: Invalid Bonus Game
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBet:
+    key: invalidBet
+    value: Invalid Bet
+    type: 4
     isVariant: false
     associations: []
     _variants: []
 languageConfig:
   bcp47Tag: en
-  translateFinished: 327
-  translateTotal: 327
+  translateFinished: 377
+  translateTotal: 377
   compileFinished: 0
-  compileTotal: 153
+  compileTotal: 74

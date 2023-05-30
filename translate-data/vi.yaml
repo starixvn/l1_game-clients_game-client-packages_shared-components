@@ -30,49 +30,518 @@ items:
     _variants: []
   dataProcessing:
     key: dataProcessing
-    value: "Cược đang được xử lý. Vui lòng đợi."
+    value: Cược đang được xử lý. Vui lòng đợi.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   notEnoughScoin:
     key: notEnoughScoin
-    value: "Bạn hiện không có đủ Scoin để cược."
+    value: Bạn hiện không có đủ Scoin để cược.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   userInsufficientFund:
     key: userInsufficientFund
-    value: "Tài khoản của bạn thiếu tiền."
+    value: Tài khoản của bạn thiếu tiền. (%{errorCode})
     type: 2
     isVariant: false
     associations: []
     _variants: []
   sessionExpired:
     key: sessionExpired
-    value: "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại."
+    value: Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   sessionTimeout:
     key: sessionTimeout
-    value: "Phiên đăng nhập của bạn đã hết hạn, hoặc bạn chưa có đăng nhập. Vui lòng đóng cửa sổ game và thử đăng nhập lại."
+    value: Phiên đăng nhập của bạn đã hết hạn hoặc bạn chưa có đăng nhập. Vui lòng
+      đóng cửa sổ game và thử đăng nhập lại.
     type: 2
     isVariant: false
     associations: []
     _variants: []
   notice:
     key: notice
-    value: "THÔNG BÁO"
+    value: THÔNG BÁO
     type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  accountNotExist:
+    key: accountNotExist
+    value: Đã xảy ra lỗi. Vui lòng liên hệ bộ phận CSKH để biết chi tiết cảm ơn bạn.
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  ipRestricted:
+    key: ipRestricted
+    value: Địa chỉ IP này bị chặn. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountBlacklisted:
+    key: accountBlacklisted
+    value: Tài khoản đã bị đóng. Vui lòng liên hệ bộ phận CSKH để biết chi tiết.
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  userNotFound:
+    key: userNotFound
+    value: Không tìm thấy người chơi này. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  sysMaintenance:
+    key: sysMaintenance
+    value: Hệ thống đang được bảo trì.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  networkError:
+    key: networkError
+    value: Lỗi kết nối mạng. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetExceeded:
+    key: limitBetExceeded
+    value: Game %{gameName} (#%{gameRoundId})\n\nKhoản tiền cược của bạn đã vượt quá
+      cài đặt giới hạn cược vui lòng thử lại. Đặt cược thất bại! (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  playerNotPermittedPlay:
+    key: playerNotPermittedPlay
+    value: Game %{gameName} (#%{gameRoundId})\n\nTrò chơi bị vô hiệu hóa. Vui lòng
+      liên hệ với cấp trên để biết chi tiết cảm ơn bạn. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  winLimitHit:
+    key: winLimitHit
+    value: Game %{gameName} (#%{gameRoundId})\n\nĐã đạt giới hạn thắng cược! Vui
+      lòng liên hệ với cấp trên cảm ơn bạn. Đặt cược thất bại! (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  loseLimitHit:
+    key: loseLimitHit
+    value: Game %{gameName} (#%{gameRoundId})\n\nĐã đạt giới hạn thua cược! Vui lòng
+      liên hệ với cấp trên cảm ơn bạn. Đặt cược thất bại! (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetUpdated:
+    key: limitBetUpdated
+    value: Game %{gameName} (#%{gameRoundId})\n\nHạn mức cược của bạn đã được cập
+      nhật vui lòng thử lại. Đặt cược thất bại! (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetNotDefined:
+    key: limitBetNotDefined
+    value: Game %{gameName} (#%{gameRoundId})\n\nHạn mức cược của bạn cho trò chơi
+      này chưa được thiết lập. Vui lòng liên hệ với cấp trên. Đặt cược thất bại!
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountSuspended:
+    key: accountSuspended
+    value: Game %{gameName} (#%{gameRoundId})\n\nTài khoản đã bị treo. Vui lòng liên
+      hệ với cấp trên để biết chi tiết cảm ơn bạn. Đặt cược thất bại!
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  unavailableGame:
+    key: unavailableGame
+    value: Game %{gameName} (#%{gameRoundId})\n\nTrò chơi không khả dụng vào thời
+      điểm này. Vui lòng liên hệ với bộ phận CSKH để biết chi tiết cảm ơn bạn.
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurred:
+    key: errorOccurred
+    value: Đã xảy ra lỗi. Vui lòng liên hệ với bộ phận CSKH để được hỗ trợ.
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurredFull:
+    key: errorOccurredFull
+    value: Game %{gameName} (#%{gameRoundId})\n\nĐã xảy ra lỗi. Vui lòng liên hệ với
+      bộ phận CSKH để được hỗ trợ. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  playOnOtherDevice:
+    key: playOnOtherDevice
+    value: Bạn hoặc ai đó đang chơi [game] bằng tài khoản này.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  serverError:
+    key: serverError
+    value: Máy chủ gặp sự cố.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidData:
+    key: invalidData
+    value: Dữ liệu không hợp lệ.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  unauthorized:
+    key: unauthorized
+    value: Không được phép.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  serverNotFound:
+    key: serverNotFound
+    value: Không tìm thấy máy chủ.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountSignOut:
+    key: accountSignOut
+    value: Tài khoản bị đăng xuất do có người khác đăng nhập vào tài khoản này.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  connectionFailed:
+    key: connectionFailed
+    value: Không thể kết nối tới máy chủ.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickNameDistance:
+    key: nickNameDistance
+    value: Tên nhân vật phải có từ 3 đến 14 ký tự.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickNameCharacter:
+    key: nickNameCharacter
+    value: Không gõ dấu tiếng việt không chứa khoảng trắng và các ký tự đặc biệt.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  existNickName:
+    key: existNickName
+    value: Tên nhân vật đã tồn tại.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  placeBetFailed:
+    key: placeBetFailed
+    value: Game %{gameName} (#%{gameRoundId})\n\nĐặt cược không thành công!
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  endGameFailed:
+    key: endGameFailed
+    value: Game %{gameName} (#%{gameRoundId})\n\nPhiên chơi bị lỗi. Vui lòng liên hệ
+      bộ phận CSKH để được hỗ trợ. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  getBalanceFailed:
+    key: getBalanceFailed
+    value: Không thể cập nhật số tiền trong tài khoản. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  enterPortalFailed:
+    key: enterPortalFailed
+    value: Đã xảy ra lỗi. Vui lòng liên hệ bộ phận CSKH để đươc hỗ trợ. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  jackpotProcessing:
+    key: jackpotProcessing
+    value: Dữ liệu đang được xử lý giải thưởng Nổ Hũ sẽ được cập nhật vào tài khoản
+      của bạn sau ít phút.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughMoney:
+    key: notEnoughMoney
+    value: Bạn hiện không có đủ tiền để cược.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  minBetNotice:
+    key: minBetNotice
+    value: Tiền cược tối thiểu là %{minBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetForChoiceNotice:
+    key: maxBetForChoiceNotice
+    value: Tiền cược tối đa ở cửa này là %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetNotice:
+    key: maxBetNotice
+    value: Tổng tiền cược tối đa ở phiên này là %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidHandId:
+    key: invalidHandId
+    value: ID của tay bài này không đúng.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handAlreadySplit:
+    key: handAlreadySplit
+    value: Tay bài này đã được tách bài.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantSplitChildHand:
+    key: cantSplitChildHand
+    value: Không thể tách bài ở tụ con.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantDoubleHand:
+    key: cantDoubleHand
+    value: Không thể gấp đôi tiền cược.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantHit:
+    key: cantHit
+    value: Không thể rút thêm bài.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cardsNotEqual:
+    key: cardsNotEqual
+    value: Hai lá bài không cùng giá trị.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handIsStand:
+    key: handIsStand
+    value: Tay bài đã dừng
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidPosition:
+    key: invalidPosition
+    value: Vị trí tay bài không đúng
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handNotActive:
+    key: handNotActive
+    value: Tay bài chưa tới lượt
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidDealHands:
+    key: invalidDealHands
+    value: Số lượng tay bài không hợp lệ.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  processingAction:
+    key: processingAction
+    value: Đang xử lý vui lòng đợi trong giây lát.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidDealDueToRunningRound:
+    key: invalidDealDueToRunningRound
+    value: Cược không hợp lệ do phiên chưa kết thúc.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  minBetHand:
+    key: minBetHand
+    value: Tiền cược tối thiểu của tay bài này là %{minBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantSplitHand:
+    key: cantSplitHand
+    value: Không thể tách bài.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetOfAnyChoiceReached:
+    key: maxBetOfAnyChoiceReached
+    value: Tiền cược của một trong các cửa vượt mức quy định.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  betAmountOfAnyChoiceIncorrect:
+    key: betAmountOfAnyChoiceIncorrect
+    value: Tiền cược của một trong các cửa không hợp lệ.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBetChoice:
+    key: invalidBetChoice
+    value: Cửa cược không hợp lệ.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  oneChoiceAllowed:
+    key: oneChoiceAllowed
+    value: Chỉ được cược 1 bên.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidPayline:
+    key: invalidPayline
+    value: Dòng cược không hợp lệ.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidFreespin:
+    key: invalidFreespin
+    value: Lượt quay FreeSpin không hợp lệ.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidStakeLevel:
+    key: invalidStakeLevel
+    value: Mức cược không hợp lệ.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBonus:
+    key: invalidBonus
+    value: Lượt chơi Bonus không hợp lệ.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  openedBonus:
+    key: openedBonus
+    value: Bonus thưởng không hợp lệ.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  gameExcluded:
+    key: gameExcluded
+    value: "%{gameName}\\n\\nTài khoản của bạn hiện đang bị giới hạn vui lòng thử
+      các trò chơi khác."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughSpin:
+    key: notEnoughSpin
+    value: Bạn không có lượt để quay.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBet:
+    key: invalidBet
+    value: Cược không hợp lệ
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxStakeHand:
+    key: maxStakeHand
+    value: Tổng tiền cược tối đa của tay bài này là %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountClosed:
+    key: accountClosed
+    value: Tài khoản đã bị đóng. Phiên đăng nhập sẽ hết hạn sau 10 giây. Vui lòng
+      liên hệ với cấp trên để biết thêm chi tiết. (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  disallowHedgeBet:
+    key: disallowHedgeBet
+    value: Chỉ có thể đặt cược trên %{betChoice1} hoặc %{betChoice2}.
+    type: 4
     isVariant: false
     associations: []
     _variants: []
 languageConfig:
   bcp47Tag: vi
-  translateFinished: 92
-  translateTotal: 70
+  translateFinished: 377
+  translateTotal: 355
   compileFinished: 0
-  compileTotal: 6
+  compileTotal: 74

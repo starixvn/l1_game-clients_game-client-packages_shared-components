@@ -1,5 +1,5 @@
 locale: zh-Hant
-items: 
+items:
   placeBetNextRound:
     key: placeBetNextRound
     value: 請等待下一輪。
@@ -16,49 +16,503 @@ items:
     _variants: []
   dataProcessing:
     key: dataProcessing
-    value: "正在處理數據。請稍等..."
+    value: 正在處理數據。請稍等...
     type: 2
     isVariant: false
     associations: []
     _variants: []
   notEnoughScoin:
     key: notEnoughScoin
-    value: "沒有足夠的 Scoin 下注。"
+    value: 沒有足夠的 Scoin 下注。
     type: 2
     isVariant: false
     associations: []
     _variants: []
   userInsufficientFund:
     key: userInsufficientFund
-    value: "您的賬戶資金不足。"
+    value: 您的賬戶資金不足。(%{errorCode})
     type: 2
     isVariant: false
     associations: []
     _variants: []
   sessionExpired:
     key: sessionExpired
-    value: "您的會話已超時。請重新登錄。"
+    value: 您的會話已超時。請重新登錄。
     type: 2
     isVariant: false
     associations: []
     _variants: []
   sessionTimeout:
     key: sessionTimeout
-    value: "您的會話已超時或您尚未登錄。請關閉當前窗口並再次嘗試登錄。"
+    value: 您的會話已超時或您尚未登錄。請關閉當前窗口並再次嘗試登錄。
     type: 2
     isVariant: false
     associations: []
     _variants: []
   notice:
     key: notice
-    value: "注意"
+    value: 注意
     type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  accountNotExist:
+    key: accountNotExist
+    value: 發生了錯誤。詳情請聯繫CSD，謝謝。(%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  ipRestricted:
+    key: ipRestricted
+    value: 您的 IP 地址受到限制。(%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountBlacklisted:
+    key: accountBlacklisted
+    value: 帳戶已關閉。詳情請聯絡 CSD。(%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  userNotFound:
+    key: userNotFound
+    value: 未找到用戶。(%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  sysMaintenance:
+    key: sysMaintenance
+    value: 遊戲正在維護中。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  networkError:
+    key: networkError
+    value: 網絡錯誤。(%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetExceeded:
+    key: limitBetExceeded
+    value: "%{gameName} 遊戲
+      (#%{gameRoundId})\\n\\n下注失敗！您的本金已超出您的投注限額設置，請重試。(%{errorCode})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  playerNotPermittedPlay:
+    key: playerNotPermittedPlay
+    value: "%{gameName} 遊戲 (#%{gameRoundId})\\n\\n遊戲禁用。詳情請聯絡您的上線，謝謝。(%{errorCode})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  winLimitHit:
+    key: winLimitHit
+    value: "%{gameName} 遊戲
+      (#%{gameRoundId})\\n\\n下注失敗！贏限制命中。請聯繫您的上線，謝謝。    (%{errorCode})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  loseLimitHit:
+    key: loseLimitHit
+    value: "%{gameName} 遊戲
+      (#%{gameRoundId})\\n\\n下注失敗！輸限制命中。請聯繫您的上線，謝謝。    (%{errorCode})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetUpdated:
+    key: limitBetUpdated
+    value: "%{gameName} 遊戲 (#%{gameRoundId})\\n\\n下注失敗！您的投注限額已更新，請重試。(%{errorCode})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetNotDefined:
+    key: limitBetNotDefined
+    value: "%{gameName} 遊戲
+      (#%{gameRoundId})\\n\\n下注失敗！您對此遊戲的投注限額尚未設置。請聯繫您的上線，謝謝。(%{errorCode})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountSuspended:
+    key: accountSuspended
+    value: "%{gameName} 遊戲
+      (#%{gameRoundId})\\n\\n下注失敗！帳戶已被暫停。詳情請聯絡您的上線，謝謝。(%{errorCode})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  unavailableGame:
+    key: unavailableGame
+    value: "%{gameName} 遊戲
+      (#%{gameRoundId})\\n\\n該遊戲暫時無法使用。詳情請聯繫CSD，謝謝。       (%{errorCode})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurred:
+    key: errorOccurred
+    value: 發生錯誤，請聯繫 CSD 了解詳情。(%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurredFull:
+    key: errorOccurredFull
+    value: "%{gameName} 遊戲 (#%{gameRoundId})\\n\\n發生錯誤，請聯繫 CSD 了解詳情。(%{errorCode})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  playOnOtherDevice:
+    key: playOnOtherDevice
+    value: 您的帳戶正被用於在其他瀏覽器或設備上玩 [game]。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  serverError:
+    key: serverError
+    value: 服務器遇到錯誤。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidData:
+    key: invalidData
+    value: 無效數據。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  unauthorized:
+    key: unauthorized
+    value: 未經授權。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  serverNotFound:
+    key: serverNotFound
+    value: 找不到服務器。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountSignOut:
+    key: accountSignOut
+    value: 該帳戶已被註銷，因為其他人已登錄此帳戶。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  connectionFailed:
+    key: connectionFailed
+    value: 與服務器的連接失敗。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickNameDistance:
+    key: nickNameDistance
+    value: 暱稱的長度必須在 3 到 14 個字符之間。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickNameCharacter:
+    key: nickNameCharacter
+    value: 暱稱不能包含空格、特殊字符和非英文字符。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  existNickName:
+    key: existNickName
+    value: 暱稱已被佔用，請嘗試另一個。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  placeBetFailed:
+    key: placeBetFailed
+    value: "%{gameName} 遊戲 (#%{gameRoundId})\\n\\n下注失敗！(%{errorCode})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  endGameFailed:
+    key: endGameFailed
+    value: "%{gameName} 遊戲 (#%{gameRoundId})\\n\\n發生了錯誤。詳情請聯絡 CSD。(%{errorCode})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  getBalanceFailed:
+    key: getBalanceFailed
+    value: 無法更新帳戶餘額。(%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  enterPortalFailed:
+    key: enterPortalFailed
+    value: 發生了錯誤。詳情請聯絡 CSD。(%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  jackpotProcessing:
+    key: jackpotProcessing
+    value: 數據正在處理中，中獎金額將在幾分鐘內添加到您的帳戶中。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughMoney:
+    key: notEnoughMoney
+    value: 您的賬戶資金不足。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  minBetNotice:
+    key: minBetNotice
+    value: 此選項的最小賭注是 %{minBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetForChoiceNotice:
+    key: maxBetForChoiceNotice
+    value: 此選項的最大賭注是 %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetNotice:
+    key: maxBetNotice
+    value: 本輪最大總賭注為 %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidHandId:
+    key: invalidHandId
+    value: 無效的手 ID
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handAlreadySplit:
+    key: handAlreadySplit
+    value: 這隻手已經分牌了。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantSplitChildHand:
+    key: cantSplitChildHand
+    value: “分牌”選項不適用於這手牌
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantDoubleHand:
+    key: cantDoubleHand
+    value: “加倍”選項不適用於這手牌
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantHit:
+    key: cantHit
+    value: 不能抽更多的牌。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cardsNotEqual:
+    key: cardsNotEqual
+    value: 卡牌不等價。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handIsStand:
+    key: handIsStand
+    value: 結束手牌
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidPosition:
+    key: invalidPosition
+    value: 無效位置
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handNotActive:
+    key: handNotActive
+    value: 不活躍手牌
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidDealHands:
+    key: invalidDealHands
+    value: 這數量手牌無效
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  processingAction:
+    key: processingAction
+    value: 正在處理數據，請稍候。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidDealDueToRunningRound:
+    key: invalidDealDueToRunningRound
+    value: 無效投注
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  minBetHand:
+    key: minBetHand
+    value: 這手牌的最小下注是 %{minBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantSplitHand:
+    key: cantSplitHand
+    value: “分牌”選項不適用於這手牌
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetOfAnyChoiceReached:
+    key: maxBetOfAnyChoiceReached
+    value: 您的下注選項之一已超過下注限制。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  betAmountOfAnyChoiceIncorrect:
+    key: betAmountOfAnyChoiceIncorrect
+    value: 投注金額無效
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBetChoice:
+    key: invalidBetChoice
+    value: 無效的投注選擇
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  oneChoiceAllowed:
+    key: oneChoiceAllowed
+    value: 只能押註一種選擇。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidPayline:
+    key: invalidPayline
+    value: 無效的支付線
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidFreespin:
+    key: invalidFreespin
+    value: 無效的免費旋轉
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidStakeLevel:
+    key: invalidStakeLevel
+    value: 無效的賭注級別
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBonus:
+    key: invalidBonus
+    value: 無效的獎金遊戲
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  openedBonus:
+    key: openedBonus
+    value: 無效的獎金遊戲
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  gameExcluded:
+    key: gameExcluded
+    value: "%{gameName}\\n\\n您的帳戶不再允許玩此遊戲。請嘗試其他遊戲。"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughSpin:
+    key: notEnoughSpin
+    value: 沒有足夠的旋轉來玩。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBet:
+    key: invalidBet
+    value: 無效投注
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxStakeHand:
+    key: maxStakeHand
+    value: 手頭上的最的大賭注為 %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountClosed:
+    key: accountClosed
+    value: 帳戶已關閉。您的會話將在 10 秒後過期，詳情請聯繫 CSD。(%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  disallowHedgeBet:
+    key: disallowHedgeBet
+    value: 可以下注 %{betChoice1} 或 %{betChoice2}。
+    type: 4
     isVariant: false
     associations: []
     _variants: []
 languageConfig:
   bcp47Tag: zh-Hant
-  translateFinished: 0
-  translateTotal: 0
+  translateFinished: 375
+  translateTotal: 117
   compileFinished: 0
-  compileTotal: 0
+  compileTotal: 72

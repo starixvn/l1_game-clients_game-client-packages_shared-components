@@ -1,5 +1,5 @@
 locale: th
-items: 
+items:
   placeBetNextRound:
     key: placeBetNextRound
     value: โปรดรอรอบต่อไป
@@ -16,49 +16,513 @@ items:
     _variants: []
   dataProcessing:
     key: dataProcessing
-    value: "กำลังประมวลผลข้อมูล โปรดรอสักครู่..."
+    value: กำลังประมวลผลข้อมูล โปรดรอสักครู่...
     type: 2
     isVariant: false
     associations: []
     _variants: []
   notEnoughScoin:
     key: notEnoughScoin
-    value: "Scoin ไม่เพียงพอที่จะวางเดิมพัน"
+    value: Scoin ไม่เพียงพอที่จะวางเดิมพัน
     type: 2
     isVariant: false
     associations: []
     _variants: []
   userInsufficientFund:
     key: userInsufficientFund
-    value: "บัญชีของคุณมีเงินไม่เพียงพอ"
+    value: บัญชีของคุณมีเงินไม่เพียงพอ (%{errorCode})
     type: 2
     isVariant: false
     associations: []
     _variants: []
   sessionExpired:
     key: sessionExpired
-    value: "หมดเวลาการใช้งาน. กรุณาเข้าสู่ระบบอีกครั้ง"
+    value: หมดเวลาการใช้งาน. กรุณาเข้าสู่ระบบอีกครั้ง
     type: 2
     isVariant: false
     associations: []
     _variants: []
   sessionTimeout:
     key: sessionTimeout
-    value: "เซสชั่นของคุณหมดเวลาหรือคุณยังไม่ได้เข้าสู่ระบบ กรุณาปิดหน้าต่างปัจจุบันและลองเข้าสู่ระบบอีกครั้ง"
+    value: เซสชั่นของคุณหมดเวลาหรือคุณยังไม่ได้เข้าสู่ระบบ
+      กรุณาปิดหน้าต่างปัจจุบันและลองเข้าสู่ระบบอีกครั้ง
     type: 2
     isVariant: false
     associations: []
     _variants: []
   notice:
     key: notice
-    value: "ประกาศ"
+    value: ประกาศ
     type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  accountNotExist:
+    key: accountNotExist
+    value: เกิดข้อผิดพลาด กรุณาติดต่อแอดมินสำหรับรายละเอียดเพิ่มเติม ขอบคุณค่ะ
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  ipRestricted:
+    key: ipRestricted
+    value: ที่อยู่ IP ของคุณถูกจำกัด (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountBlacklisted:
+    key: accountBlacklisted
+    value: บัญชีถูกปิดระงับ โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  userNotFound:
+    key: userNotFound
+    value: ไม่พบชื่อผู้ใช้ (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  sysMaintenance:
+    key: sysMaintenance
+    value: เกมอยู่ระหว่างการบำรุงรักษา
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  networkError:
+    key: networkError
+    value: เกิดการผิดพลาดของเครือข่าย (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetExceeded:
+    key: limitBetExceeded
+    value: เกม %{gameName} (#%{gameRoundId})\n\nการวางเดิมพันล้มเหลว!
+      เงินเดิมพันของคุณเกินการตั้งค่าขีดจำกัดการเดิมพันของคุณ โปรดลองอีกครั้ง
+      (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  playerNotPermittedPlay:
+    key: playerNotPermittedPlay
+    value: เกม %{gameName} (#%{gameRoundId})\n\nเกมถูกปิดการใช้งาน
+      กรุณาติดต่อทีมงานของคุณสำหรับรายละเอียดเพิ่มเติม ขอบคุณค่ะ (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  winLimitHit:
+    key: winLimitHit
+    value: เกม %{gameName} (#%{gameRoundId})\n\nการเดิมพันล้มเหลว! ชนะขีดจำกัดแล้ว
+      กรุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  loseLimitHit:
+    key: loseLimitHit
+    value: เกม %{gameName} (#%{gameRoundId})\n\nการเดิมพันล้มเหลว! แพ้ขีดจำกัดแล้ว
+      กรุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetUpdated:
+    key: limitBetUpdated
+    value: เกม %{gameName} (#%{gameRoundId})\n\nการเดิมพันล้มเหลว!
+      อัปเดตวงเงินเดิมพันของคุณใหม่แล้ว โปรดลองอีกครั้ง (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  limitBetNotDefined:
+    key: limitBetNotDefined
+    value: เกม %{gameName} (#%{gameRoundId})\n\nการเดิมพันล้มเหลว!
+      ยังไม่ได้กำหนดวงเงินเดิมพันของคุณสำหรับเกมนี้ กรุณาติดต่อทีมงานของคุณ
+      ขอบคุณค่ะ (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountSuspended:
+    key: accountSuspended
+    value: เกม %{gameName} (#%{gameRoundId})\n\nการเดิมพันล้มเหลว! บัญชีถูกระงับ
+      รุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  unavailableGame:
+    key: unavailableGame
+    value: เกม %{gameName} (#%{gameRoundId})\n\n  เกมไม่สามารถใช้งานได้ในขณะนี้
+      กรุณาติดต่อแอดมินสำหรับรายละเอียดขอบคุณ (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurred:
+    key: errorOccurred
+    value: เกิดข้อผิดพลาด โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurredFull:
+    key: errorOccurredFull
+    value: เกม %{gameName} (#%{gameRoundId})\n\nเกิดข้อผิดพลาด
+      โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  playOnOtherDevice:
+    key: playOnOtherDevice
+    value: บัญชีของคุณถูกใช้เพื่อเล่น [game] บนเบราว์เซอร์หรืออุปกรณ์อื่น
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  serverError:
+    key: serverError
+    value: เซิร์ฟเวอร์พบข้อผิดพลาด
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidData:
+    key: invalidData
+    value: ข้อมูลไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  unauthorized:
+    key: unauthorized
+    value: ไม่ได้รับอนุญาต
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  serverNotFound:
+    key: serverNotFound
+    value: ไม่พบเซิร์ฟเวอร์
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountSignOut:
+    key: accountSignOut
+    value: บัญชีถูกออกจากระบบเนื่องจากมีคนอื่นลงชื่อเข้าใช้บัญชีนี้
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  connectionFailed:
+    key: connectionFailed
+    value: การเชื่อมต่อกับเซิร์ฟเวอร์ล้มเหลว
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickNameDistance:
+    key: nickNameDistance
+    value: ชื่อเล่นต้องมีความยาวระหว่าง 3 ถึง 14 ตัวอักษร
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickNameCharacter:
+    key: nickNameCharacter
+    value: ชื่อเล่นต้องไม่มีการเว้นวรรค อักขระพิเศษ และตัวอักษรที่ไม่ใช่ภาษาอังกฤษ
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  existNickName:
+    key: existNickName
+    value: ชื่อเล่นถูกใช้ไปแล้ว โปรดลองชื่ออื่น
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  placeBetFailed:
+    key: placeBetFailed
+    value: เกม %{gameName} (#%{gameRoundId})\n\nล้มเหลวในการวางเดิมพัน! (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  endGameFailed:
+    key: endGameFailed
+    value: เกม %{gameName} (#%{gameRoundId})\n\nเกิดข้อผิดพลาด.
+      โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  getBalanceFailed:
+    key: getBalanceFailed
+    value: ไม่สามารถอัปเดตยอดเงินในบัญชี (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  enterPortalFailed:
+    key: enterPortalFailed
+    value: เกิดข้อผิดพลาด โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  jackpotProcessing:
+    key: jackpotProcessing
+    value: กำลังประมวลผลข้อมูล จำนวนเงินที่ชนะแจ็คพอตจะถูกเพิ่มไปยังบัญชีของเร็วๆนี้
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughMoney:
+    key: notEnoughMoney
+    value: บัญชีของคุณมีเงินไม่เพียงพอ
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  minBetNotice:
+    key: minBetNotice
+    value: เดิมพันขั้นต่ำสำหรับตัวเลือกนี้คือ %{minBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetForChoiceNotice:
+    key: maxBetForChoiceNotice
+    value: เดิมพันสูงสุดสำหรับตัวเลือกนี้คือ %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetNotice:
+    key: maxBetNotice
+    value: เงินเดิมพันรวมสูงสุดในรอบนี้คือ %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidHandId:
+    key: invalidHandId
+    value: ลายนิ้วมือไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handAlreadySplit:
+    key: handAlreadySplit
+    value: มือนี้แยกออกไปแล้ว
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantSplitChildHand:
+    key: cantSplitChildHand
+    value: "'ตัวเลือก แยก ไม่พร้อมใช้งานสำหรับมือนี้'"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantDoubleHand:
+    key: cantDoubleHand
+    value: "'ตัวเลือก สองเท่า ไม่สามารถใช้ได้สำหรับมือนี้ได้'"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantHit:
+    key: cantHit
+    value: ไม่สามารถจั่วไพ่เพิ่มได้
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cardsNotEqual:
+    key: cardsNotEqual
+    value: ไพ่มีมูลค่าไม่เท่ากัน
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handIsStand:
+    key: handIsStand
+    value: มือสิ้นสุด
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidPosition:
+    key: invalidPosition
+    value: ตำแหน่งไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  handNotActive:
+    key: handNotActive
+    value: มือที่ไม่ใช้งาน
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidDealHands:
+    key: invalidDealHands
+    value: จำนวนมือไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  processingAction:
+    key: processingAction
+    value: กำลังประมวลผลข้อมูล โปรดรอสักครู่
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidDealDueToRunningRound:
+    key: invalidDealDueToRunningRound
+    value: เดิมพันไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  minBetHand:
+    key: minBetHand
+    value: เดิมพันขั้นต่ำสำหรับมือนี้คือ %{minBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  cantSplitHand:
+    key: cantSplitHand
+    value: "'ตัวเลือก แยก ไม่พร้อมใช้งานสำหรับมือนี้'"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxBetOfAnyChoiceReached:
+    key: maxBetOfAnyChoiceReached
+    value: หนึ่งในตัวเลือกการเดิมพันของคุณเกินขีดจำกัดการเดิมพัน
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  betAmountOfAnyChoiceIncorrect:
+    key: betAmountOfAnyChoiceIncorrect
+    value: จำนวนเงินเดิมพันไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBetChoice:
+    key: invalidBetChoice
+    value: ตัวเลือกการเดิมพันที่ไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  oneChoiceAllowed:
+    key: oneChoiceAllowed
+    value: สามารถเดิมพันได้เพียงตัวเลือกเดียวเท่านั้น
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidPayline:
+    key: invalidPayline
+    value: เพย์ไลน์ไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidFreespin:
+    key: invalidFreespin
+    value: การหมุนฟรีสปินไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidStakeLevel:
+    key: invalidStakeLevel
+    value: ระดับเงินเดิมพันไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBonus:
+    key: invalidBonus
+    value: โบนัสเกมไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  openedBonus:
+    key: openedBonus
+    value: โบนัสเกมไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  gameExcluded:
+    key: gameExcluded
+    value: "%{gameName}\\n\\nบัญชีของคุณไม่ได้รับอนุญาตให้เล่นเกมนี้อีกต่อไป
+      โปรดลองเกมอื่น"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  notEnoughSpin:
+    key: notEnoughSpin
+    value: สปินไม่พอเล่น
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  invalidBet:
+    key: invalidBet
+    value: เดิมพันไม่ถูกต้อง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  maxStakeHand:
+    key: maxStakeHand
+    value: เดิมพันรวมสูงสุดในมือคือ %{maxBet}
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  accountClosed:
+    key: accountClosed
+    value: บัญชีถูกปิดระงับใช้งาน เซสชั่นของคุณจะหมดอายุหลังจาก 10 วินาที
+      โปรดติดต่อแดมมินสำหรับรายละเอียดเพิ่มเติม (%{errorCode})
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  disallowHedgeBet:
+    key: disallowHedgeBet
+    value: สามารถเดิมพันได้ทั้ง %{betChoice1} หรือ %{betChoice2}
+    type: 4
     isVariant: false
     associations: []
     _variants: []
 languageConfig:
   bcp47Tag: th
-  translateFinished: 0
-  translateTotal: 0
+  translateFinished: 375
+  translateTotal: 310
   compileFinished: 0
-  compileTotal: 0
+  compileTotal: 72
