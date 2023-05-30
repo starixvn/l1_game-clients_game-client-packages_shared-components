@@ -1,15 +1,16 @@
-import { _decorator, AudioClip, AudioSource, Component, JsonAsset, log } from "cc";
+import { _decorator, AudioClip, AudioSource, JsonAsset, log } from "cc";
 import { bundleManager } from "../../../bundle-magager/bundle-manager";
 
 import gc from "game-client-base";
 import Observer from "observer";
+import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 
 const { Audios, UserSettings } = gc;
 const { ccclass, property } = _decorator;
-const { observer, render, handle, useObserver } = Observer;
+const { render, handle } = Observer;
 
 @ccclass
-export class AudioContainer extends Component {
+export class AudioContainer extends ObserverComponent {
     @property(JsonAsset)
     sharedAudioConfig: JsonAsset = null;
 
@@ -22,19 +23,11 @@ export class AudioContainer extends Component {
     @property(AudioSource)
     sfxSource: AudioSource = null;
 
-    @property
-    namespaceObserver = "default";
-
     audios = {};
     musicIds = [];
-    private dispose: any;
-
-    onDestroy() {
-        this.dispose();
-    }
 
     onLoad() {
-        this.dispose = useObserver(this, this.namespaceObserver);
+        super.onLoad();
 
         this.loadAudios().catch((error) => log(error));
         this.musicSource.node.on(AudioSource.EventType.STARTED, () => this.updateMusicState(Audios.MusicState.STARTED));

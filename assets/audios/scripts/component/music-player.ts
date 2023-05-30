@@ -1,26 +1,14 @@
-import { _decorator, Component } from "cc";
+import { _decorator } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
+import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 
 const { Audios, UserSettings } = gc;
 const { ccclass, property } = _decorator;
-const { useObserver, render, handle } = Observer;
+const { render, handle } = Observer;
 
 @ccclass
-export default class MusicPlayer extends Component {
-    @property
-    namespaceObserver = "default";
-
-    private dispose: any;
-
-    onLoad() {
-        this.dispose = useObserver(this, this.namespaceObserver);
-    }
-
-    onDestroy() {
-        this.dispose();
-    }
-
+export default class MusicPlayer extends ObserverComponent {
     @render(Audios.AudioStore, (store) => store.musicState, { fireImmediately: false })
     playNext(state: gc.Audios.MusicState) {
         if (state == gc.Audios.MusicState.ENDED) {

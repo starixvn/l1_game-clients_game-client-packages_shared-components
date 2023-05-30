@@ -1,31 +1,19 @@
-import { _decorator, Component, Enum, Toggle } from "cc";
+import { _decorator, Enum, Toggle } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
+import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 
 const { Audios } = gc;
 const { ccclass, property } = _decorator;
-const { observer, render, handle, useObserver } = Observer;
+const { render, handle } = Observer;
 
 @ccclass
-export default class AudioCmp extends Component {
-    @property
-    namespaceObserver = "default";
-
+export default class AudioCmp extends ObserverComponent {
     @property({ type: Enum(Audios.AudioType) })
     type = Audios.AudioType.SFX;
 
     @property(Toggle)
     toggle: Toggle = null;
-
-    private dispose: any;
-
-    onLoad() {
-        this.dispose = useObserver(this, this.namespaceObserver);
-    }
-
-    onDestroy() {
-        this.dispose();
-    }
 
     @render(gc.UserSettings.UserSettingStore, (store) => store.musicEnable)
     renderMusicComp(enable: boolean) {
