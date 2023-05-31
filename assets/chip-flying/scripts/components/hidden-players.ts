@@ -8,14 +8,14 @@ const { handle } = Observer;
 const { ccclass } = _decorator;
 
 @ccclass
-export default class OtherPlayers extends ObserverComponent {
+export default class HiddenPlayers extends ObserverComponent {
     onLoad() {
         super.onLoad();
-        this.setOtherPlayers();
+        this.setHiddenPlayers();
     }
 
-    @handle(ChipFlyingHandlers.SetOtherPlayers)
-    setOtherPlayers() {
+    @handle(ChipFlyingHandlers.SetHiddenPlayers)
+    setHiddenPlayers() {
         return this.node;
     }
 }

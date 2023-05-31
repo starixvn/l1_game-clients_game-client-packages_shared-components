@@ -6,11 +6,11 @@ const { injectable, inject } = inversify;
 
 export namespace UserProfileHandlers {
     @injectable()
-    export class SetOwnerAvatar {
+    export class SetMainPlayerAvatar {
         @inject(UserProfileStore) private readonly userProfileStore: UserProfileStore;
 
-        async handle(ownerAvatar: Node) {
-            this.userProfileStore.ownerAvatar = ownerAvatar;
+        async handle(avatarNode: Node) {
+            this.userProfileStore.mainPlayerAvatarNode = avatarNode;
         }
     }
 }

@@ -85,16 +85,16 @@ export class ChipFlying extends ObserverComponent {
     }
 
     payChipToAllPlayers = (payChipInfo: TPayChipInfo) => {
-        const { otherPlayers, settleStatus } = payChipInfo;
+        const { hiddenPlayersNode: otherPlayers, settleStatus } = payChipInfo;
 
-        ActionChipFlying.payChipsToLoginPlayer(payChipInfo);
+        ActionChipFlying.payChipsToMainPlayer(payChipInfo);
         this.showPayoutForLoginPlayer(settleStatus);
 
         if (otherPlayers) {
-            ActionChipFlying.payChipsToOtherPlayers(payChipInfo);
+            ActionChipFlying.payChipsToHiddenPlayers(payChipInfo);
         }
 
-        ActionChipFlying.payChipsToInGamePlayers(payChipInfo);
+        ActionChipFlying.payChipsToAroundTablePlayers(payChipInfo);
     };
 
     showPayoutForLoginPlayer(settleStatus: gc.Settlements.SettlementStatusStore) {

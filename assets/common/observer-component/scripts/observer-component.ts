@@ -2,7 +2,7 @@ import { _decorator, Component } from "cc";
 import Observer from "observer";
 import { FunctionUtils } from "../../../utils";
 
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 const { useObserver } = Observer;
 
 @ccclass

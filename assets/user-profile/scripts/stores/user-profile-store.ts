@@ -9,17 +9,17 @@ export type TEndBetInfo = {
 
 @injectable()
 export class UserProfileStore {
-    private _ownerAvatar: Node = null;
+    private _mainPlayerAvatarNode: Node = null;
 
     constructor() {
         mobx.makeAutoObservable(this);
     }
 
-    get ownerAvatar() {
-        return this._ownerAvatar;
+    get mainPlayerAvatarNode() {
+        return this._mainPlayerAvatarNode;
     }
 
-    set ownerAvatar(ownerAvatar: Node) {
-        this._ownerAvatar = ownerAvatar;
+    set mainPlayerAvatarNode(ownerAvatar: Node) {
+        this._mainPlayerAvatarNode = ownerAvatar;
     }
 }

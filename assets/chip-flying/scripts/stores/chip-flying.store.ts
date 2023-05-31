@@ -16,13 +16,13 @@ export type TPayChipInfo = {
         lostBetItems: BetItem[];
     };
     settleStatus: gc.Settlements.SettlementStatusStore;
-    ownerAvatar: Node;
+    mainPlayerAvatarNode: Node;
     slidingChip: SlidingChip;
     finish: {
         settlementResult: gc.GameServiceMessage.TSettlementResult;
         winningPlayers: gc.GameServiceMessage.TWinningPlayers;
     };
-    otherPlayers: Node;
+    hiddenPlayersNode: Node;
     chipFlyingTime: number;
     winningDuration: number;
     isChipStack: boolean;
@@ -43,17 +43,17 @@ export class ChipFlyingStore {
         mobx.makeAutoObservable(this);
     }
 
-    private _otherPlayer: Node = null;
+    private _hiddenPlayersNode: Node = null;
     private _boxChip: Node = null;
     private _chipFlying: ChipFlying = null;
     playerSlot: any[] = [];
 
-    get otherPlayers() {
-        return this._otherPlayer;
+    get hiddenPlayersNode() {
+        return this._hiddenPlayersNode;
     }
 
-    set otherPlayers(otherPlayers: Node) {
-        this._otherPlayer = otherPlayers;
+    set hiddenPlayersNode(hiddenPlayers: Node) {
+        this._hiddenPlayersNode = hiddenPlayers;
     }
 
     get chipFlying() {
@@ -88,9 +88,9 @@ export class ChipFlyingStore {
                 betInfo,
                 finish,
                 settleStatus: this.settlementStatusStore,
-                ownerAvatar: this.userProfileStore.ownerAvatar,
+                mainPlayerAvatarNode: this.userProfileStore.mainPlayerAvatarNode,
                 slidingChip: this.slidingChipStore.slidingChip,
-                otherPlayers: this.otherPlayers,
+                hiddenPlayersNode: this.hiddenPlayersNode,
                 chipFlyingTime: this.slidingChipStore.slidingChip.chipFlyingTime,
                 winningDuration: this.chipFlying.winningDuration,
                 isChipStack: this.chipFlying.isChipStack,

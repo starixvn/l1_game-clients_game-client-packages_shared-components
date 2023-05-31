@@ -26,11 +26,11 @@ export default class UserProfile extends ObserverComponent {
 
     onLoad() {
         super.onLoad();
-        this.setOwnerAvatar();
+        this.setMainPlayerAvatar();
     }
 
-    @handle(UserProfileHandlers.SetOwnerAvatar)
-    setOwnerAvatar() {
+    @handle(UserProfileHandlers.SetMainPlayerAvatar)
+    setMainPlayerAvatar() {
         return this.sprAvatar.node;
     }
 

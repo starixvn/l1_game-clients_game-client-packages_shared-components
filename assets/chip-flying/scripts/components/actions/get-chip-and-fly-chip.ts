@@ -49,63 +49,64 @@ export namespace ActionChipFlying {
         });
     };
 
-    export const payChipsToLoginPlayer = (payChipInfo: TPayChipInfo) => {
-        const { settleStatus, otherPlayers } = payChipInfo;
-        const isOtherPlayers = otherPlayers !== null;
+    export const payChipsToMainPlayer = (payChipInfo: TPayChipInfo) => {
+        const { settleStatus, hiddenPlayersNode } = payChipInfo;
+        const isHiddenPlayers = hiddenPlayersNode !== null;
 
         if (!settleStatus || !settleStatus.win) {
             return;
         }
 
-        if (isOtherPlayers) {
-            moveChipWithRandomAmountToLoginPlayer(payChipInfo);
+        if (isHiddenPlayers) {
+            moveChipWithRandomAmountToMainPlayer(payChipInfo);
         } else {
-            moveChipWithAmountToLoginPlayer(payChipInfo);
+            moveChipWithAmountToMainPlayer(payChipInfo);
         }
     };
 
-    const moveChipWithRandomAmountToLoginPlayer = (payChipInfo: TPayChipInfo) => {
-        const { slidingChip, betInfo, isChipStack, payChipsDuration, ownerAvatar, settleStatus } = payChipInfo;
+    const moveChipWithRandomAmountToMainPlayer = (payChipInfo: TPayChipInfo) => {
+        const { slidingChip, betInfo, isChipStack, payChipsDuration, mainPlayerAvatarNode, settleStatus } = payChipInfo;
 
-        if (!ownerAvatar) {
+        if (!mainPlayerAvatarNode) {
             return;
         }
+
         forEach(betInfo?.winBetItems, (item: BetItem) => {
             if (settleStatus?.winningByChoices[item.node.name.toLowerCase()]) {
                 const chipNode = !isChipStack ? item.chipBox : item.chipBox.children[0];
-                chipNode && slidingChip.moveChipsWithRandomAmount(chipNode, ownerAvatar, payChipsDuration);
+                chipNode && slidingChip.moveChipsWithRandomAmount(chipNode, mainPlayerAvatarNode, payChipsDuration);
             }
         });
     };
 
-    const moveChipWithAmountToLoginPlayer = (payChipInfo: TPayChipInfo) => {
-        const { chipFlyingTime, betInfo, ownerAvatar, isChipStack, settleStatus } = payChipInfo;
+    const moveChipWithAmountToMainPlayer = (payChipInfo: TPayChipInfo) => {
+        const { chipFlyingTime, betInfo, mainPlayerAvatarNode, isChipStack, settleStatus } = payChipInfo;
 
-        if (!ownerAvatar) {
+        if (!mainPlayerAvatarNode) {
             return;
         }
 
         forEach(betInfo?.winBetItems, (item: BetItem) => {
             if (settleStatus?.winningByChoices[item.betChoice]) {
                 const chipNode = !isChipStack ? item.chipBox : item.chipBox.children[0];
-                chipNode && moveChips(chipNode, ownerAvatar, chipFlyingTime);
+                chipNode && moveChips(chipNode, mainPlayerAvatarNode, chipFlyingTime);
             }
         });
     };
 
-    export const payChipsToOtherPlayers = (payChipInfo: TPayChipInfo) => {
-        const { otherPlayers, isChipStack, betInfo, chipFlyingTime } = payChipInfo;
-        if (!otherPlayers) {
+    export const payChipsToHiddenPlayers = (payChipInfo: TPayChipInfo) => {
+        const { hiddenPlayersNode, isChipStack, betInfo, chipFlyingTime } = payChipInfo;
+        if (!hiddenPlayersNode) {
             return;
         }
 
         forEach(betInfo?.winBetItems, (item: BetItem) => {
             const chipNode = !isChipStack ? item.chipBox : item.chipBox.children[0];
-            chipNode && moveChips(chipNode, otherPlayers, chipFlyingTime);
+            chipNode && moveChips(chipNode, hiddenPlayersNode, chipFlyingTime);
         });
     };
 
-    export const payChipsToInGamePlayers = (payChipInfo: TPayChipInfo) => {
+    export const payChipsToAroundTablePlayers = (payChipInfo: TPayChipInfo) => {
         const { finish } = payChipInfo;
         const winningPlayers = finish.winningPlayers;
 

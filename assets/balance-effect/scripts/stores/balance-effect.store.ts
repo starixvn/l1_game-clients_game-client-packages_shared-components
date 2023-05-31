@@ -24,18 +24,18 @@ export class BalanceEffectStore {
     playWinningEffect: TWinningEffect = null;
 
     @inject(UserProfileStore) private readonly userProfileStore: UserProfileStore;
-    
+
     constructor() {
         mobx.makeAutoObservable(this);
     }
 
     updateBalanceWhenBet(balance: number) {
-        const balanceEffect = { balance, ownerAvatar: this.userProfileStore.ownerAvatar };
+        const balanceEffect = { balance, ownerAvatar: this.userProfileStore.mainPlayerAvatarNode };
         this.balanceWhenBet = { balanceEffect };
     }
 
     updateBalanceWhenPayout(balance: number) {
-        const balanceEffect = { balance, ownerAvatar: this.userProfileStore.ownerAvatar };
+        const balanceEffect = { balance, ownerAvatar: this.userProfileStore.mainPlayerAvatarNode };
         this.balanceWhenPayout = { balanceEffect };
     }
 

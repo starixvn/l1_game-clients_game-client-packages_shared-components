@@ -27,6 +27,12 @@ export interface IOwnChip extends Chips {
     chipAmount: number;
 }
 
+export interface IVisiblePlayersChip extends Chips {
+    chipAmount: number;
+    startNode: Node;
+    delayTime: number;
+}
+
 export interface TBetStartingRound {
     isStartingRound: boolean;
     settlementResult: gc.GameServiceMessage.TSettlementResult;
@@ -79,7 +85,7 @@ export class BetItemStore {
     getChipValueByCurrency(chipAmount: TChipAmount, playerRate: number, chipRate: number) {
         const chipAmountConvert: TChipAmount = {};
         for (const chipValue in chipAmount) {
-            const convertChipValue = NumberUtils.getChipValueByCurrency(+chipValue, playerRate, chipRate);
+            const convertChipValue = NumberUtils.getValueByCurrency(+chipValue, playerRate, chipRate);
 
             chipAmountConvert[convertChipValue] = chipAmount[chipValue];
         }

@@ -3,7 +3,7 @@ import { Node, UIOpacity, math, tween } from "cc";
 export namespace AnimationUtils {
     export const fadeIn = (node: Node, duration: number, opacity = 255) => {
         const uiOpacity = node.getComponent(UIOpacity);
-        fadeTo(uiOpacity, duration, opacity);
+        return fadeTo(uiOpacity, duration, opacity);
     };
 
     export const fadeOut = (node: Node, duration: number, opacity = 0) => {
