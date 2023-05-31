@@ -1,0 +1,75 @@
+import { _decorator } from "cc";
+import gc from "game-client-base";
+import Observer from "observer";
+import { ExpandableNode } from "../../../common/expandable-node/scripts/expandable-node";
+import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
+import { InGameMenuHandlers } from "../handlers/in-game-menu-handlers";
+import { InGameMenuEvents } from "../stores/in-game-menu-events";
+const { ccclass, property } = _decorator;
+const { render, handle } = Observer;
+@ccclass("InGameMenu")
+export class InGameMenu extends ObserverComponent {
+    @property(ExpandableNode)
+    expandableNode: ExpandableNode = null;
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
+    }
+
+    protected doCommons() {
+        this.playSoundClick();
+        this.expandableNode?.collapse();
+    }
+
+    @handle(InGameMenuHandlers)
+    protected handleEvent(event: string) {
+        return event;
+    }
+
+    onOpenHistory() {
+        this.doCommons();
+        this.handleEvent(InGameMenuEvents.OPEN_HISTORY);
+    }
+
+    onOpenGuide() {
+        this.doCommons();
+        this.handleEvent(InGameMenuEvents.OPEN_GUIDE);
+    }
+
+    onOpenTicketDetails() {
+        this.doCommons();
+        this.handleEvent(InGameMenuEvents.OPEN_TICKET_DETAIL);
+    }
+
+    onOpenStatistics() {
+        this.doCommons();
+        this.handleEvent(InGameMenuEvents.OPEN_STATISTIC);
+    }
+
+    onCloseGame() {
+        this.doCommons();
+        this.handleEvent(InGameMenuEvents.CLOSE_GAME);
+    }
+
+    @handle(gc.App.AppHandlers.BackToOperatorLobby)
+    onGoToLobby() {
+        this.doCommons();
+        this.handleEvent(InGameMenuEvents.GO_TO_LOBBY);
+    }
+
+    onChangeOrientation() {
+        this.doCommons();
+        this.handleEvent(InGameMenuEvents.CHANGE_ORIENTATION);
+    }
+
+    onChangeWinningNotification() {
+        this.doCommons();
+        this.handleEvent(InGameMenuEvents.CHANGE_WINNING_NOTIFICATION);
+    }
+
+    onChangeSwapCard() {
+        this.doCommons();
+        this.handleEvent(InGameMenuEvents.CHANGE_SWAP_CARD);
+    }
+}
