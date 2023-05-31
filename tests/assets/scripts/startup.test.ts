@@ -1,4 +1,4 @@
-import { Auth, Configs, IContainerOptions, Player, buildObserverContainer, getContainer } from "game-client-base";
+import { Auth, Configs, IContainerOptions, Player, buildObserverContainer, getContainer, sentryLogger } from "game-client-base";
 import mobx from "mobx";
 import { configure } from "observer";
 import { getSharedContainer, startGame } from "../../../assets/scripts/startup";
@@ -8,11 +8,28 @@ jest.mock("mobx");
 
 describe(startGame.name, () => {
     const options: IContainerOptions = { disabledFeatures: ["a"] };
-
+    const siteConfigs: Configs.SiteConfigs = {
+        systemType: "",
+        ssl: false,
+        serverDomainMapper: {},
+        subDomain: "",
+        env: "Test",
+        sentryUrl: "sentryUrl",
+        subGuideDomain: "",
+        enableMsgpackParserAllGames: false,
+        enableMsgpackParserOnNotification: false,
+        websocket: {
+            proxyPath: "",
+            route: "",
+        },
+    };
     describe("when called", () => {
+        beforeAll(() => {
+            sentryLogger.start = jest.fn();
+        });
         it("should get container from game client base", () => {
             // Act
-            startGame("namespace", options);
+            startGame("namespace", options, siteConfigs);
 
             // Assert
             expect(getContainer).toBeCalledWith(options);
@@ -23,10 +40,18 @@ describe(startGame.name, () => {
             (getContainer as jest.Mock).mockReturnValueOnce({ container: true });
 
             // Act
-            startGame("namespace", options);
+            startGame("namespace", options, siteConfigs);
 
             // Assert
             expect(buildObserverContainer).toBeCalledWith({ container: true });
+        });
+
+        it("should start sentry", () => {
+            // Act
+            startGame("namespace", options, siteConfigs);
+
+            // Assert
+            expect(sentryLogger.start).toHaveBeenCalledWith(siteConfigs.sentryUrl, siteConfigs.env, "namespace");
         });
 
         it("should configure the observer", () => {
@@ -34,7 +59,7 @@ describe(startGame.name, () => {
             (buildObserverContainer as jest.Mock).mockReturnValueOnce({ container: true });
 
             // Act
-            startGame("namespace", options);
+            startGame("namespace", options, siteConfigs);
 
             // Assert
             expect(configure).toBeCalledWith({ namespace: { mobx, container: { container: true } } });
@@ -46,7 +71,7 @@ describe(startGame.name, () => {
             (getContainer as jest.Mock).mockReturnValueOnce(expected);
 
             // Act
-            const actual = startGame("namespace", options);
+            const actual = startGame("namespace", options, siteConfigs);
 
             // Assert
             expect(actual).toStrictEqual(expected);

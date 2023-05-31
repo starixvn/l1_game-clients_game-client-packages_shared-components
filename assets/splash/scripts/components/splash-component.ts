@@ -4,7 +4,7 @@ import Observer from "observer";
 
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, App, Chips } = gc;
+const { Auth, App, Chips, sentryLogger } = gc;
 
 @ccclass
 @observer
@@ -49,7 +49,7 @@ export default class Splash extends Component {
             },
             (error) => {
                 if (error) {
-                    console.log(error);
+                    sentryLogger.logError(error);
                 } else {
                     director.loadScene(screenName);
                 }

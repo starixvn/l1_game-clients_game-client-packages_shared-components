@@ -2,9 +2,10 @@ import gc from "game-client-base";
 import mobx from "mobx";
 import Observer from "observer";
 
-export function startGame(namespace: string, containerOptions: gc.IContainerOptions) {
+export function startGame(namespace: string, containerOptions: gc.IContainerOptions, siteConfigs: gc.Configs.SiteConfigs) {
     const container = gc.getContainer(containerOptions);
     const observerContainer = gc.buildObserverContainer(container);
+    gc.sentryLogger.start(siteConfigs.sentryUrl, siteConfigs.env, namespace);
 
     Observer.configure({ [namespace]: { mobx, container: observerContainer } });
 
