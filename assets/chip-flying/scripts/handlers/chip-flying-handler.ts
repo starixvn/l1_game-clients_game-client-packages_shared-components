@@ -1,7 +1,7 @@
 import { Node } from "cc";
 import inversify from "inversify";
 import { ChipFlying } from "../components/chip-flying";
-import { ChipFlyingStore } from "../stores/chip-flying.store";
+import { ChipFlyingStore } from "../stores/chip-flying-store";
 
 const { injectable, inject } = inversify;
 

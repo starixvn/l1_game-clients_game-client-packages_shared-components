@@ -2,7 +2,7 @@ import { Node, UITransform, instantiate } from "cc";
 import { forEach } from "lodash-es";
 import BetItem from "../../../../bets/scripts/components/bet-item";
 import { FlyChipUtils } from "../../../../sliding-chip/scripts/components/actions";
-import { TPayChipInfo } from "../../stores/chip-flying.store";
+import { TPayChipInfo } from "../../stores/chip-flying-store";
 
 export namespace ActionChipFlying {
     export const dealerGetChips = (payChipInfo: TPayChipInfo, lostBetItems: BetItem[]) => {

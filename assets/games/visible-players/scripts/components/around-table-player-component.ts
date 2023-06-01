@@ -77,6 +77,7 @@ export class AroundTablePlayerComponent extends ObserverComponent {
     }
 
     private clearPlayerInfo() {
+        this.aroundTablePlayer = null;
         this.setIdentity(null);
         this.setNickname(null);
     }

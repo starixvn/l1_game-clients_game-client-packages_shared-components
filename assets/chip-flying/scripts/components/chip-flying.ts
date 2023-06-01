@@ -6,7 +6,7 @@ import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/
 import { BetItemStore, IOwnChip, IPlayersChips } from "../../../bets/scripts/stores/bet-item-store";
 import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 import { ChipFlyingHandlers } from "../handlers/chip-flying-handler";
-import { ChipFlyingStore, TPayChipInfo } from "../stores/chip-flying.store";
+import { ChipFlyingStore, TPayChipInfo } from "../stores/chip-flying-store";
 import { ActionChipFlying } from "./actions";
 
 const { Auth } = gc;

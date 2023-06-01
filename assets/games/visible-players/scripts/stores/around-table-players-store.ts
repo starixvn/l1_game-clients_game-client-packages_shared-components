@@ -5,7 +5,7 @@ import { find, remove, values } from "lodash-es";
 import mobx from "mobx";
 import BetItem from "../../../../bets/scripts/components/bet-item";
 import { BetItemStore } from "../../../../bets/scripts/stores/bet-item-store";
-import { ChipFlyingStore } from "../../../../chip-flying/scripts/stores/chip-flying.store";
+import { ChipFlyingStore } from "../../../../chip-flying/scripts/stores/chip-flying-store";
 import { getChipQuantity } from "../../../../sliding-chip/scripts/components/actions";
 import SlidingChip from "../../../../sliding-chip/scripts/components/sliding-chip";
 import { SlidingChipStore } from "../../../../sliding-chip/scripts/stores/sliding-chip-store";
