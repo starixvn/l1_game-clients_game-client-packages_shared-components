@@ -22,7 +22,7 @@ export class UpdatingBalanceContainer extends NodeContainer {
     winningDuration = 3;
 
     @render(BalanceEffectStore, (store) => store.balanceWhenBet, { fireImmediately: false })
-    updateBalanceWhenBet(balanceWhenBet: any) {
+    updateBalanceWhenMainPlayerBet(balanceWhenBet: any) {
         if (balanceWhenBet) {
             const { ownerAvatar, balance } = balanceWhenBet.balanceEffect;
             this.updateBalance(ownerAvatar, false, balance, 1, 80);
@@ -30,7 +30,7 @@ export class UpdatingBalanceContainer extends NodeContainer {
     }
 
     @render(BalanceEffectStore, (store) => store.balanceWhenPayout, { fireImmediately: false })
-    updateBalanceWhenPayout(balanceWhenPayout: any) {
+    updateBalanceWhenMainPlayerPayout(balanceWhenPayout: any) {
         if (balanceWhenPayout) {
             const { ownerAvatar, balance } = balanceWhenPayout.balanceEffect;
             this.updateBalance(ownerAvatar, true, balance, this.winningDuration, 80, 10);

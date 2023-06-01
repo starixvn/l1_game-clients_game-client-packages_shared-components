@@ -135,7 +135,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "player"
+    "value": "around-table-player"
   },
   {
     "__type__": "cc.TargetInfo",
@@ -247,7 +247,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "player"
+    "value": "around-table-player"
   },
   {
     "__type__": "cc.TargetInfo",
@@ -359,7 +359,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "player"
+    "value": "around-table-player"
   },
   {
     "__type__": "cc.TargetInfo",
@@ -471,7 +471,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "player"
+    "value": "around-table-player"
   },
   {
     "__type__": "cc.TargetInfo",
@@ -583,7 +583,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "player"
+    "value": "around-table-player"
   },
   {
     "__type__": "cc.TargetInfo",
@@ -695,7 +695,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "player"
+    "value": "around-table-player"
   },
   {
     "__type__": "cc.TargetInfo",

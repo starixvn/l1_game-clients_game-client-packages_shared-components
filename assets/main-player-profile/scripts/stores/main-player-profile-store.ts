@@ -8,7 +8,7 @@ export type TEndBetInfo = {
 };
 
 @injectable()
-export class UserProfileStore {
+export class MainPlayerProfileStore {
     private _mainPlayerAvatarNode: Node = null;
 
     constructor() {

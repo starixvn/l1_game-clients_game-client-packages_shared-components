@@ -5,6 +5,8 @@ import * as actions from "../../.././sliding-chip/scripts/components/actions";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { BetItemStore, IOwnChip, IPlayersChips } from "../../../bets/scripts/stores/bet-item-store";
 import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
+import { AroundTablePlayerComponent } from "../../../games/around-table-player/scripts/components/around-table-player-component";
+import { AroundTablePlayerUtils } from "../../../games/around-table-player/scripts/utils";
 import { ChipFlyingHandlers } from "../handlers/chip-flying-handler";
 import { ChipFlyingStore, TPayChipInfo } from "../stores/chip-flying-store";
 import { ActionChipFlying } from "./actions";
@@ -94,7 +96,7 @@ export class ChipFlying extends ObserverComponent {
             ActionChipFlying.payChipsToHiddenPlayers(payChipInfo);
         }
 
-        ActionChipFlying.payChipsToAroundTablePlayers(payChipInfo);
+        this.payChipsToAroundTablePlayers(payChipInfo);
     };
 
     showPayoutForLoginPlayer(settleStatus: gc.Settlements.SettlementStatusStore) {
@@ -116,5 +118,47 @@ export class ChipFlying extends ObserverComponent {
     @handle(BalanceEffectHandlers.PlayWinningEffect)
     playWinningEffect() {
         return true;
+    }
+
+    payChipsToAroundTablePlayers(payChipInfo: TPayChipInfo) {
+        const { finish, betInfo, slidingChip, payChipsDuration, isChipStack, winningDuration, aroundTablePlayersComponent } = payChipInfo;
+        const winningPlayers = finish.winningPlayers;
+
+        if (!winningPlayers) {
+            return;
+        }
+
+        const winningPlayerIds = Object.keys(winningPlayers);
+
+        winningPlayerIds.forEach((playerId) => {
+            const aroundTablePlayerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(aroundTablePlayersComponent, playerId);
+            if (!aroundTablePlayerSlot) {
+                return;
+            }
+
+            const winningPlayerData = winningPlayers[playerId];
+            const playerBetItems = winningPlayerData.winningByChoices;
+            const { bet, rate } = winningPlayerData;
+
+            betInfo?.winBetItems.forEach((item) => {
+                if (playerBetItems && playerBetItems[item.node.name.toLowerCase()] > 0) {
+                    const chipNode = !isChipStack ? item.chipBox : item.chipBox.children[0];
+                    chipNode && slidingChip.moveChipsWithRandomAmount(chipNode, aroundTablePlayerSlot.avatar.node, payChipsDuration);
+                }
+            });
+
+            this.showWinningEffectAroundTablePlayers(aroundTablePlayerSlot, bet, rate, winningDuration);
+        });
+    }
+
+    showWinningEffectAroundTablePlayers(
+        aroundTablePlayerSlot: AroundTablePlayerComponent,
+        bet: number,
+        rate: number,
+        winningDuration: number
+    ) {}
+
+    actionWinningAroundTablePlayer() {
+        
     }
 }

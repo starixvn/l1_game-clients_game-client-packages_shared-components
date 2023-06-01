@@ -1,7 +1,7 @@
 import { _decorator } from "cc";
-import { ChipFlyingHandlers } from "db://shared-components/chip-flying/scripts/handlers/chip-flying-handler";
 import Observer from "observer";
 import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
+import { HiddenPlayersHandlers } from "../handlers/hidden-players-handler";
 
 const { handle } = Observer;
 
@@ -14,7 +14,7 @@ export default class HiddenPlayers extends ObserverComponent {
         this.setHiddenPlayers();
     }
 
-    @handle(ChipFlyingHandlers.SetHiddenPlayers)
+    @handle(HiddenPlayersHandlers.SetHiddenPlayers)
     setHiddenPlayers() {
         return this.node;
     }

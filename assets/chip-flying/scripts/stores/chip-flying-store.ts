@@ -4,10 +4,13 @@ import inversify from "inversify";
 import mobx from "mobx";
 import BetItem from "../../../bets/scripts/components/bet-item";
 import { BetItemStore } from "../../../bets/scripts/stores/bet-item-store";
+import { AroundTablePlayerComponent } from "../../../games/around-table-player/scripts/components/around-table-player-component";
+import { AroundTablePlayersStore } from "../../../games/around-table-player/scripts/stores/around-table-players-store";
+import { MainPlayerProfileStore } from "../../../main-player-profile/scripts/stores/main-player-profile-store";
 import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 import { SlidingChipStore } from "../../../sliding-chip/scripts/stores/sliding-chip-store";
-import { UserProfileStore } from "../../../user-profile/scripts/stores/user-profile-store";
 import { ChipFlying } from "../components/chip-flying";
+import { HiddenPlayersStore } from "./hidden-players-store";
 const { injectable, inject } = inversify;
 
 export type TPayChipInfo = {
@@ -28,7 +31,7 @@ export type TPayChipInfo = {
     isChipStack: boolean;
     payChipsDuration: number;
     dealerChipBox: Node;
-    playerSlot: any[];
+    aroundTablePlayersComponent: AroundTablePlayerComponent[];
     isFinishedShowResult: boolean;
 };
 @injectable()
@@ -37,24 +40,17 @@ export class ChipFlyingStore {
     @inject(BetItemStore) private readonly betItemStore: BetItemStore;
     @inject(gc.Settlements.SettlementStatusStore) private readonly settlementStatusStore: gc.Settlements.SettlementStatusStore;
     @inject(gc.Settlements.SettlementStore) private readonly settlementStore: gc.Settlements.SettlementStore;
-    @inject(UserProfileStore) private readonly userProfileStore: UserProfileStore;
+    @inject(MainPlayerProfileStore) private readonly mainPlayerProfileStore: MainPlayerProfileStore;
+    @inject(AroundTablePlayersStore) private readonly aroundTablePlayersStore: AroundTablePlayersStore;
+    @inject(HiddenPlayersStore) private readonly hiddenPlayersStore: HiddenPlayersStore;
 
     constructor() {
         mobx.makeAutoObservable(this);
     }
 
-    private _hiddenPlayersNode: Node = null;
     private _boxChip: Node = null;
     private _chipFlying: ChipFlying = null;
     playerSlot: any[] = [];
-
-    get hiddenPlayersNode() {
-        return this._hiddenPlayersNode;
-    }
-
-    set hiddenPlayersNode(hiddenPlayers: Node) {
-        this._hiddenPlayersNode = hiddenPlayers;
-    }
 
     get chipFlying() {
         return this._chipFlying;
@@ -88,15 +84,15 @@ export class ChipFlyingStore {
                 betInfo,
                 finish,
                 settleStatus: this.settlementStatusStore,
-                mainPlayerAvatarNode: this.userProfileStore.mainPlayerAvatarNode,
+                mainPlayerAvatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode,
                 slidingChip: this.slidingChipStore.slidingChip,
-                hiddenPlayersNode: this.hiddenPlayersNode,
+                hiddenPlayersNode: this.hiddenPlayersStore.hiddenPlayersNode,
                 chipFlyingTime: this.slidingChipStore.slidingChip.chipFlyingTime,
                 winningDuration: this.chipFlying.winningDuration,
                 isChipStack: this.chipFlying.isChipStack,
                 payChipsDuration: this.chipFlying.payChipsDuration,
                 dealerChipBox: this.chipFlying.dealerChipBox,
-                playerSlot: this.playerSlot,
+                aroundTablePlayersComponent: this.aroundTablePlayersStore.aroundTablePlayersComponent,
                 isFinishedShowResult: this.settlementStore.isFinishedShowResult,
             };
         }

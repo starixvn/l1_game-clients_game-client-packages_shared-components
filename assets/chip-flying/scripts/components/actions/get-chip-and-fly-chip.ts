@@ -105,19 +105,4 @@ export namespace ActionChipFlying {
             chipNode && moveChips(chipNode, hiddenPlayersNode, chipFlyingTime);
         });
     };
-
-    export const payChipsToAroundTablePlayers = (payChipInfo: TPayChipInfo) => {
-        const { finish } = payChipInfo;
-        const winningPlayers = finish.winningPlayers;
-
-        if (!winningPlayers) {
-            return;
-        }
-
-        const winningPlayerIds = Object.keys(winningPlayers);
-
-        forEach(winningPlayerIds, (playerId) => {
-            // anim winning
-        });
-    };
 }

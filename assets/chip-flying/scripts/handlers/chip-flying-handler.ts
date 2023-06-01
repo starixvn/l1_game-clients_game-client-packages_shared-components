@@ -7,15 +7,6 @@ const { injectable, inject } = inversify;
 
 export namespace ChipFlyingHandlers {
     @injectable()
-    export class SetHiddenPlayers {
-        @inject(ChipFlyingStore) private readonly chipFlyingStore: ChipFlyingStore;
-
-        async handle(hiddenPlayers: Node) {
-            this.chipFlyingStore.hiddenPlayersNode = hiddenPlayers;
-        }
-    }
-
-    @injectable()
     export class SetDealerChipBox {
         @inject(ChipFlyingStore) private readonly chipFlyingStore: ChipFlyingStore;
 

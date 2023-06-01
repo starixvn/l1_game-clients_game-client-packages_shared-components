@@ -1,7 +1,7 @@
 import { Node } from "cc";
 import inversify from "inversify";
 import mobx from "mobx";
-import { UserProfileStore } from "../../../user-profile/scripts/stores/user-profile-store";
+import { MainPlayerProfileStore } from "../../../main-player-profile/scripts/stores/main-player-profile-store";
 const { injectable, inject } = inversify;
 
 export type TBalanceEffect = {
@@ -23,19 +23,19 @@ export class BalanceEffectStore {
     balanceWhenPayout: TUpdateBalance = null;
     playWinningEffect: TWinningEffect = null;
 
-    @inject(UserProfileStore) private readonly userProfileStore: UserProfileStore;
+    @inject(MainPlayerProfileStore) private readonly mainPlayerProfileStore: MainPlayerProfileStore;
 
     constructor() {
         mobx.makeAutoObservable(this);
     }
 
     updateBalanceWhenBet(balance: number) {
-        const balanceEffect = { balance, ownerAvatar: this.userProfileStore.mainPlayerAvatarNode };
+        const balanceEffect = { balance, ownerAvatar: this.mainPlayerProfileStore.mainPlayerAvatarNode };
         this.balanceWhenBet = { balanceEffect };
     }
 
     updateBalanceWhenPayout(balance: number) {
-        const balanceEffect = { balance, ownerAvatar: this.userProfileStore.mainPlayerAvatarNode };
+        const balanceEffect = { balance, ownerAvatar: this.mainPlayerProfileStore.mainPlayerAvatarNode };
         this.balanceWhenPayout = { balanceEffect };
     }
 

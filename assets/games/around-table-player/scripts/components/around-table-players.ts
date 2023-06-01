@@ -5,6 +5,7 @@ import { ObserverComponent } from "../../../../common/observer-component/scripts
 import { placeChipToChipBox } from "../../../../sliding-chip/scripts/components/actions";
 import { AroundTablePlayersHandlers } from "../handlers/around-table-players-handler";
 import { AroundTablePlayersStore, IAroundTablePlayerPlaceChip, IPlayerInfo } from "../stores/around-table-players-store";
+
 const { ccclass } = _decorator;
 
 const { Player, Rounds } = gc;

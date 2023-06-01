@@ -5,7 +5,7 @@ import Observer from "observer";
 import { bundleManager } from "db://shared-components/bundle-magager/bundle-manager";
 import { ObserverComponent } from "db://shared-components/common/observer-component/scripts/observer-component";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
-import { UserProfileHandlers } from "../handlers/user-profile-handler";
+import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
 
 const { Player, Bet } = gc;
 const { PlayerStore } = Player;
@@ -14,7 +14,7 @@ const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
 @ccclass
-export default class UserProfile extends ObserverComponent {
+export default class MainPlayerProfile extends ObserverComponent {
     @property(Label)
     lblName: Label = null;
 
@@ -29,7 +29,7 @@ export default class UserProfile extends ObserverComponent {
         this.setMainPlayerAvatar();
     }
 
-    @handle(UserProfileHandlers.SetMainPlayerAvatar)
+    @handle(MainPlayerProfileHandlers.SetMainPlayerAvatar)
     setMainPlayerAvatar() {
         return this.sprAvatar.node;
     }
