@@ -1,4 +1,4 @@
-import { director, _decorator } from "cc";
+import { director } from "cc";
 import StartupComponent from "../../../../../assets/game/scripts/components/startup-component";
 
 describe(StartupComponent.name, () => {

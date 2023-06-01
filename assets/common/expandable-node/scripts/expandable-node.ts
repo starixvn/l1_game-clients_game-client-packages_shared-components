@@ -1,4 +1,4 @@
-import { Component, Node, Tween, UIOpacity, _decorator, math, tween } from "cc";
+import { Component, Node, Tween, UIOpacity, _decorator, tween, v3 } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("ExpandableNode")
@@ -13,8 +13,8 @@ export class ExpandableNode extends Component {
     defaultExpand = false;
 
     protected readonly expandDuration = 0.2;
-    protected readonly expandScale = math.v3(1, 1, 1);
-    protected readonly collapseScale = math.v3(1, 0, 1);
+    protected readonly expandScale = v3(1, 1, 1);
+    protected readonly collapseScale = v3(1, 0, 1);
     protected expanded = false;
     protected expandableOpacity: UIOpacity;
 
