@@ -2,12 +2,12 @@
   "ver": "1.1.43",
   "importer": "prefab",
   "imported": true,
-  "uuid": "54a011ff-e415-4920-86e2-52387d69c5da",
+  "uuid": "b92d9375-8959-4934-ae01-687b03c9d22a",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "updating-balance-container"
+    "syncNodeName": "updating-payout-balance-main-player"
   }
 }

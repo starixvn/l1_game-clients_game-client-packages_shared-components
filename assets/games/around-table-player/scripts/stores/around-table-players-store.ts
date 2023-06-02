@@ -51,7 +51,7 @@ export class AroundTablePlayersStore {
         mobx.makeAutoObservable(this);
     }
 
-    hiddenPlayers: IHiddenPlayers;
+    hiddenPlayers: IHiddenPlayers = {};
     private _aroundTablePlayersComponent: AroundTablePlayerComponent[] = [];
     private _playerInfo: IPlayerInfo = null;
 
@@ -128,7 +128,9 @@ export class AroundTablePlayersStore {
                     return;
                 }
 
-                this.hiddenPlayers[player.id] = player;
+                console.log("add Player on hiddenPlayers-------------------", this.hiddenPlayers, player);
+
+                player?.id && (this.hiddenPlayers[player.id] = player);
             }
         }
     }

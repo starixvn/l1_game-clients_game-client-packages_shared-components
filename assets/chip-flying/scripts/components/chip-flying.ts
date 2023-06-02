@@ -90,7 +90,7 @@ export class ChipFlying extends ObserverComponent {
         const { hiddenPlayersNode: otherPlayers, settleStatus } = payChipInfo;
 
         ActionChipFlying.payChipsToMainPlayer(payChipInfo);
-        this.showPayoutForLoginPlayer(settleStatus);
+        this.showPayoutForMainPlayer(settleStatus);
 
         if (otherPlayers) {
             ActionChipFlying.payChipsToHiddenPlayers(payChipInfo);
@@ -99,10 +99,10 @@ export class ChipFlying extends ObserverComponent {
         this.payChipsToAroundTablePlayers(payChipInfo);
     };
 
-    showPayoutForLoginPlayer(settleStatus: gc.Settlements.SettlementStatusStore) {
+    showPayoutForMainPlayer(settleStatus: gc.Settlements.SettlementStatusStore) {
         if (settleStatus?.win) {
             this.updateBalance(settleStatus?.bet);
-            this.playWinningEffect();
+            this.playWinningEffectMainPlayer();
             this.getBalance();
         }
     }
@@ -110,13 +110,13 @@ export class ChipFlying extends ObserverComponent {
     @handle(Auth.AuthHandlers.GetBalance)
     getBalance() {}
 
-    @handle(BalanceEffectHandlers.UpdateBalanceWhenPayout)
+    @handle(BalanceEffectHandlers.UpdatePayoutBalanceMainPlayer)
     updateBalance(balance: number) {
         return balance;
     }
 
-    @handle(BalanceEffectHandlers.PlayWinningEffect)
-    playWinningEffect() {
+    @handle(BalanceEffectHandlers.UpdateWinEffectMainPlayer)
+    playWinningEffectMainPlayer() {
         return true;
     }
 
@@ -158,7 +158,5 @@ export class ChipFlying extends ObserverComponent {
         winningDuration: number
     ) {}
 
-    actionWinningAroundTablePlayer() {
-        
-    }
+    actionWinningAroundTablePlayer() {}
 }

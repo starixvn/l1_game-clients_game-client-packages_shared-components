@@ -63,7 +63,7 @@ export default class MainPlayerProfile extends ObserverComponent {
         }
     }
 
-    @handle(BalanceEffectHandlers.UpdateBalanceWhenBet)
+    @handle(BalanceEffectHandlers.UpdateBetBalanceMainPlayer)
     updateBalance(balance: number) {
         return balance;
     }

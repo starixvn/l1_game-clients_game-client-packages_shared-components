@@ -5,7 +5,7 @@ import { MainPlayerProfileStore } from "../../../main-player-profile/scripts/sto
 const { injectable, inject } = inversify;
 
 export type TBalanceEffect = {
-    ownerAvatar: Node;
+    avatarNode: Node;
     balance: number;
 };
 
@@ -14,14 +14,25 @@ export type TUpdateBalance = {
 };
 
 export type TWinningEffect = {
+    avatarNode: Node;
     status: boolean;
+};
+
+export type TWinningEffects = {
+    winningEffects: TWinningEffect[];
+};
+
+export type TUpdateBalances = {
+    balanceEffects: TBalanceEffect[];
 };
 
 @injectable()
 export class BalanceEffectStore {
-    balanceWhenBet: TUpdateBalance = null;
-    balanceWhenPayout: TUpdateBalance = null;
-    playWinningEffect: TWinningEffect = null;
+    betBalanceMainPlayer: TUpdateBalance = null;
+    payoutBalanceMainPlayer: TUpdateBalance = null;
+    winEffectMainPlayer: TWinningEffect = null;
+    winEffectAroundTablePlayers: TWinningEffects = null;
+    payoutBalanceAroundTablePlayers: TUpdateBalances = null;
 
     @inject(MainPlayerProfileStore) private readonly mainPlayerProfileStore: MainPlayerProfileStore;
 
@@ -29,17 +40,25 @@ export class BalanceEffectStore {
         mobx.makeAutoObservable(this);
     }
 
-    updateBalanceWhenBet(balance: number) {
-        const balanceEffect = { balance, ownerAvatar: this.mainPlayerProfileStore.mainPlayerAvatarNode };
-        this.balanceWhenBet = { balanceEffect };
+    updateBetBalanceMainPlayer(balance: number) {
+        const balanceEffect = { balance, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
+        this.betBalanceMainPlayer = { balanceEffect };
     }
 
-    updateBalanceWhenPayout(balance: number) {
-        const balanceEffect = { balance, ownerAvatar: this.mainPlayerProfileStore.mainPlayerAvatarNode };
-        this.balanceWhenPayout = { balanceEffect };
+    updatePayoutBalanceMainPlayer(balance: number) {
+        const balanceEffect = { balance, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
+        this.payoutBalanceMainPlayer = { balanceEffect };
     }
 
-    handlePlayWinningEffect(status: boolean) {
-        this.playWinningEffect = { status };
+    updateWinEffectMainPlayer(status: boolean) {
+        this.winEffectMainPlayer = { status, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
+    }
+
+    updateWinEffectAroundTablePlayer(winningEffects: TWinningEffect[]) {
+        this.winEffectAroundTablePlayers = { winningEffects };
+    }
+
+    updatePayoutBalanceAroundTablePlayer(balanceEffects: TBalanceEffect[]) {
+        this.payoutBalanceAroundTablePlayers = { balanceEffects };
     }
 }

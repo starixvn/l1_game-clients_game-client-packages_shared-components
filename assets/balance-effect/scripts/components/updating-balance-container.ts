@@ -1,12 +1,9 @@
 import { BitmapFont, CCFloat, Label, Node, _decorator, tween, v3 } from "cc";
 import { NodeContainer } from "db://shared-components/node-container/node-container";
 import gc from "game-client-base";
-import Observer from "observer";
-import { BalanceEffectStore } from "../stores/balance-effect.store";
 
 const { FormatUtils } = gc;
 const { ccclass, property } = _decorator;
-const { render } = Observer;
 
 @ccclass()
 export class UpdatingBalanceContainer extends NodeContainer {
@@ -19,35 +16,23 @@ export class UpdatingBalanceContainer extends NodeContainer {
     @property(BitmapFont)
     fontDecreaseBalance: BitmapFont = null;
 
-    winningDuration = 3;
+    @property
+    startY = 0;
 
-    @render(BalanceEffectStore, (store) => store.balanceWhenBet, { fireImmediately: false })
-    updateBalanceWhenMainPlayerBet(balanceWhenBet: any) {
-        if (balanceWhenBet) {
-            const { ownerAvatar, balance } = balanceWhenBet.balanceEffect;
-            this.updateBalance(ownerAvatar, false, balance, 1, 80);
-        }
-    }
+    @property
+    destY = 100;
 
-    @render(BalanceEffectStore, (store) => store.balanceWhenPayout, { fireImmediately: false })
-    updateBalanceWhenMainPlayerPayout(balanceWhenPayout: any) {
-        if (balanceWhenPayout) {
-            const { ownerAvatar, balance } = balanceWhenPayout.balanceEffect;
-            this.updateBalance(ownerAvatar, true, balance, this.winningDuration, 80, 10);
-        }
-    }
-
-    updateBalance(node: Node, win: boolean, balance: number, duration: number, startY = 0, destY = 100): void {
+    protected updateBalance(node: Node, win: boolean, balance: number): void {
         const balanceEffectNode = new Node();
         const lblBalance = balanceEffectNode.addComponent(Label);
         lblBalance.string = `${win ? "+" : "-"}${FormatUtils.numberWithCommas(balance, 2)}`;
         lblBalance.font = win ? this.fontIncreaseBalance : this.fontDecreaseBalance;
         lblBalance.lineHeight = 130;
         lblBalance.fontSize = 30;
-        lblBalance.node.position = v3(0, startY, 0);
+        lblBalance.node.position = v3(0, this.startY, 0);
         node.addChild(balanceEffectNode);
         tween(balanceEffectNode)
-            .to(duration, { position: v3(0, startY + destY) })
+            .to(this.duration, { position: v3(0, this.startY + this.destY) })
             .destroySelf()
             .start();
     }
