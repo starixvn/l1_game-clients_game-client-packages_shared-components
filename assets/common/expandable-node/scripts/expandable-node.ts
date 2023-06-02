@@ -57,12 +57,14 @@ export class ExpandableNode extends Component {
 
     tweenExpand() {
         Tween.stopAllByTarget(this.expandableNode);
+        Tween.stopAllByTarget(this.expandableOpacity);
         tween(this.expandableNode).to(this.expandDuration, { scale: this.expandScale }).start();
         tween(this.expandableOpacity).to(this.expandDuration, { opacity: 255 }).start();
     }
 
     tweenCollape() {
         Tween.stopAllByTarget(this.expandableNode);
+        Tween.stopAllByTarget(this.expandableOpacity);
         tween(this.expandableNode).to(this.expandDuration, { scale: this.collapseScale }).start();
         tween(this.expandableOpacity).to(this.expandDuration, { opacity: 0 }).start();
     }
