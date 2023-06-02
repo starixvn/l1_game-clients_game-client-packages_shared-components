@@ -1,7 +1,7 @@
 import { CCFloat, _decorator, tween } from "cc";
 import { NodeContainer } from "db://shared-components/node-container/node-container";
 import Observer from "observer";
-import { BalanceEffectStore, TWinningEffect } from "./../stores/balance-effect.store";
+import { BalanceEffectStore, TWinningEffect, TWinningEffects } from "./../stores/balance-effect.store";
 
 const { ccclass, property } = _decorator;
 const { render } = Observer;
@@ -17,10 +17,13 @@ export class WinningEffectContainer extends NodeContainer {
     }
 
     @render(BalanceEffectStore, (store) => store.winEffectAroundTablePlayers, { fireImmediately: false })
-    playWinningEffectAroundTablePlayer(playWinningEffectAroundTablePlayers: TWinningEffect[]) {
-        playWinningEffectAroundTablePlayers.forEach((playWinningEffectAroundTablePlayer) => {
-            this.playWinningEffect(playWinningEffectAroundTablePlayer);
-        });
+    playWinningEffectAroundTablePlayer(winEffectAroundTablePlayers: TWinningEffects) {
+        const { winningEffects } = winEffectAroundTablePlayers ?? {};
+        if (winningEffects) {
+            winningEffects.forEach((winningEffect) => {
+                this.playWinningEffect(winningEffect);
+            });
+        }
     }
 
     playWinningEffect(playWinningEffectMainPlayer: TWinningEffect) {

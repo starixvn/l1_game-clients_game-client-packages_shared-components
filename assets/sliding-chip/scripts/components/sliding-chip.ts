@@ -21,7 +21,8 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 import { SlidingChipHandler } from "../handlers/sliding-chip-handler";
 import { SlidingChipStore } from "../stores/sliding-chip-store";
-import { FlyChipUtils } from "./actions";
+
+import { FlyChipUtils } from "../utils";
 import Chip, { ChipDisplayType } from "./chip";
 import { SnapScrollView } from "./snap-scroll-view";
 
@@ -110,7 +111,7 @@ export default class SlidingChip extends ObserverComponent {
         this.setChipValues();
     }
 
-    @render(Player.PlayerStore, (store) => store.stakeLevel, { fireImmediately: false })
+    @render(Player.MainPlayerStore, (store) => store.stakeLevel, { fireImmediately: false })
     updateChipsByUserStaleLevel() {
         this.setChipValues();
     }

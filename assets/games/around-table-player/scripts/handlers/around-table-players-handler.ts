@@ -20,7 +20,7 @@ export namespace AroundTablePlayersHandlers {
     export class AddAroundTablePlayer {
         @inject(AroundTablePlayersStore) private readonly aroundTablePlayersStore: AroundTablePlayersStore;
 
-        async handle(aroundTablePlayer: gc.GameServiceMessage.Player) {
+        async handle(aroundTablePlayer: gc.GameServiceMessage.AroundTablePlayer) {
             this.aroundTablePlayersStore.addPlayer(aroundTablePlayer);
         }
     }
@@ -29,8 +29,17 @@ export namespace AroundTablePlayersHandlers {
     export class AddAroundTablePlayers {
         @inject(AroundTablePlayersStore) private readonly aroundTablePlayersStore: AroundTablePlayersStore;
 
-        async handle(aroundTablePlayers: gc.GameServiceMessage.Players) {
+        async handle(aroundTablePlayers: gc.GameServiceMessage.AroundTablePlayers) {
             this.aroundTablePlayersStore.addPlayers(aroundTablePlayers);
+        }
+    }
+
+    @injectable()
+    export class RemoveAroundTablePlayer {
+        @inject(AroundTablePlayersStore) private readonly aroundTablePlayersStore: AroundTablePlayersStore;
+
+        async handle(aroundTablePlayerIdOutGame: string) {
+            this.aroundTablePlayersStore.removePlayer(aroundTablePlayerIdOutGame);
         }
     }
 

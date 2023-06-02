@@ -1,7 +1,7 @@
 import { Node, UITransform, instantiate } from "cc";
 import { forEach } from "lodash-es";
 import BetItem from "../../../../bets/scripts/components/bet-item";
-import { FlyChipUtils } from "../../../../sliding-chip/scripts/components/actions";
+import { FlyChipUtils } from "../../../../sliding-chip/scripts/utils";
 import { TPayChipInfo } from "../../stores/chip-flying-store";
 
 export namespace ActionChipFlying {

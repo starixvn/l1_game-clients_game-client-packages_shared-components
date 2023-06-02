@@ -3,10 +3,11 @@ import gc from "game-client-base";
 import Observer from "observer";
 import * as actions from "../../.././sliding-chip/scripts/components/actions";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
+import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect.store";
 import { BetItemStore, IOwnChip, IPlayersChips } from "../../../bets/scripts/stores/bet-item-store";
 import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
-import { AroundTablePlayerComponent } from "../../../games/around-table-player/scripts/components/around-table-player-component";
 import { AroundTablePlayerUtils } from "../../../games/around-table-player/scripts/utils";
+import { NumberUtils } from "../../../utils";
 import { ChipFlyingHandlers } from "../handlers/chip-flying-handler";
 import { ChipFlyingStore, TPayChipInfo } from "../stores/chip-flying-store";
 import { ActionChipFlying } from "./actions";
@@ -26,7 +27,6 @@ export class ChipFlying extends ObserverComponent {
         this.setChipFlying();
     }
     protected enablePlaceChips = true;
-    public winningDuration = 3;
     public isChipStack = false;
     public payChipsDuration = 1.2;
     public chipDelayFlyingTime = 1.25;
@@ -121,7 +121,7 @@ export class ChipFlying extends ObserverComponent {
     }
 
     payChipsToAroundTablePlayers(payChipInfo: TPayChipInfo) {
-        const { finish, betInfo, slidingChip, payChipsDuration, isChipStack, winningDuration, aroundTablePlayersComponent } = payChipInfo;
+        const { finish, betInfo, slidingChip, payChipsDuration, isChipStack, aroundTablePlayersComponent } = payChipInfo;
         const winningPlayers = finish.winningPlayers;
 
         if (!winningPlayers) {
@@ -129,6 +129,8 @@ export class ChipFlying extends ObserverComponent {
         }
 
         const winningPlayerIds = Object.keys(winningPlayers);
+        const winningEffects: TWinningEffect[] = [];
+        const balanceEffects: TBalanceEffect[] = [];
 
         winningPlayerIds.forEach((playerId) => {
             const aroundTablePlayerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(aroundTablePlayersComponent, playerId);
@@ -141,22 +143,29 @@ export class ChipFlying extends ObserverComponent {
             const { bet, rate } = winningPlayerData;
 
             betInfo?.winBetItems.forEach((item) => {
-                if (playerBetItems && playerBetItems[item.node.name.toLowerCase()] > 0) {
+                if (playerBetItems && playerBetItems[item.betChoice] > 0) {
                     const chipNode = !isChipStack ? item.chipBox : item.chipBox.children[0];
                     chipNode && slidingChip.moveChipsWithRandomAmount(chipNode, aroundTablePlayerSlot.avatar.node, payChipsDuration);
                 }
             });
 
-            this.showWinningEffectAroundTablePlayers(aroundTablePlayerSlot, bet, rate, winningDuration);
+            const convertValue = NumberUtils.getValueByCurrency(bet, rate || 1);
+            aroundTablePlayerSlot.increaseBalance(convertValue);
+            winningEffects.push({ avatarNode: aroundTablePlayerSlot.node, status: true });
+            balanceEffects.push({ avatarNode: aroundTablePlayerSlot.node, balance: convertValue });
         });
+
+        this.showBalanceEffectAroundTablePlayers(winningEffects);
+        this.showBallanceEffectAroundTablePlayers(balanceEffects);
     }
 
-    showWinningEffectAroundTablePlayers(
-        aroundTablePlayerSlot: AroundTablePlayerComponent,
-        bet: number,
-        rate: number,
-        winningDuration: number
-    ) {}
+    @handle(BalanceEffectHandlers.UpdateWinEffectAroundTablePlayer)
+    showBalanceEffectAroundTablePlayers(winningEffects: TWinningEffect[]) {
+        return winningEffects;
+    }
 
-    actionWinningAroundTablePlayer() {}
+    @handle(BalanceEffectHandlers.UpdatePayoutBalanceAroundTablePlayer)
+    showBallanceEffectAroundTablePlayers(balanceEffects: TBalanceEffect[]) {
+        return balanceEffects;
+    }
 }

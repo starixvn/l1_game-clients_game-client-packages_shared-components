@@ -8,7 +8,7 @@ import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
 
 const { Player, Bet } = gc;
-const { PlayerStore } = Player;
+const { MainPlayerStore } = Player;
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -34,12 +34,12 @@ export default class MainPlayerProfile extends ObserverComponent {
         return this.sprAvatar.node;
     }
 
-    @render(PlayerStore, (store) => store.name)
+    @render(MainPlayerStore, (store) => store.name)
     setName(text: string) {
         this.lblName && (this.lblName.string = text);
     }
 
-    @render(PlayerStore, (store) => store.avatarId)
+    @render(MainPlayerStore, (store) => store.avatarId)
     async loadAvatar(avatarId: number) {
         const spriteFrame = await bundleManager.loadSharedAsset<SpriteFrame>(`images/avatars/${avatarId}/spriteFrame`, SpriteFrame);
         if (spriteFrame) {
@@ -51,7 +51,7 @@ export default class MainPlayerProfile extends ObserverComponent {
         this.sprAvatar && (this.sprAvatar.spriteFrame = frame);
     }
 
-    @render(PlayerStore, (store) => store.balance)
+    @render(MainPlayerStore, (store) => store.balance)
     setBalance(value: number) {
         this.lblBalance.string = value.toString();
     }

@@ -1,7 +1,7 @@
 import { Node, UITransform } from "cc";
 import { IOwnChip, IPlayersChips } from "../../../../bets/scripts/stores/bet-item-store";
+import { FlyChipUtils } from "../../utils/fly-chip-utils";
 import SlidingChip from "../sliding-chip";
-import { FlyChipUtils } from "./fly-chip-utils";
 
 type TChips = {
     [value: number]: number;

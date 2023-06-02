@@ -43,7 +43,7 @@ export class BetItemStore {
     @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
     @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
     @inject(gc.Settlements.SettlementStore) private readonly settlementStore: gc.Settlements.SettlementStore;
-    @inject(gc.Player.PlayerStore) private readonly playerStore: gc.Player.PlayerStore;
+    @inject(gc.Player.MainPlayerStore) private readonly mainPlayerStore: gc.Player.MainPlayerStore;
     @inject(gc.Rounds.RoundTimeStore) private readonly roundTimeStore: gc.Rounds.RoundTimeStore;
 
     constructor() {
@@ -68,7 +68,7 @@ export class BetItemStore {
                     const chipAmount = chipValues[betItem.betChoice];
 
                     if (chipAmount) {
-                        const chipAmountConvert = this.getChipValueByCurrency(chipAmount, this.playerStore.rate, +rate);
+                        const chipAmountConvert = this.getChipValueByCurrency(chipAmount, this.mainPlayerStore.rate, +rate);
 
                         players.push({
                             chipBox: betItem.chipBox,

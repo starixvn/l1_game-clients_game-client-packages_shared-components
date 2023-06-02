@@ -27,7 +27,6 @@ export type TPayChipInfo = {
     };
     hiddenPlayersNode: Node;
     chipFlyingTime: number;
-    winningDuration: number;
     isChipStack: boolean;
     payChipsDuration: number;
     dealerChipBox: Node;
@@ -88,7 +87,6 @@ export class ChipFlyingStore {
                 slidingChip: this.slidingChipStore.slidingChip,
                 hiddenPlayersNode: this.hiddenPlayersStore.hiddenPlayersNode,
                 chipFlyingTime: this.slidingChipStore.slidingChip.chipFlyingTime,
-                winningDuration: this.chipFlying.winningDuration,
                 isChipStack: this.chipFlying.isChipStack,
                 payChipsDuration: this.chipFlying.payChipsDuration,
                 dealerChipBox: this.chipFlying.dealerChipBox,

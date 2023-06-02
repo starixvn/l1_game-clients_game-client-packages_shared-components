@@ -92,8 +92,20 @@ export class AroundTablePlayerComponent extends ObserverComponent {
     }
 
     private setNickname(nickname: string | null) {
-        const truncatedNickname = nickname ? (nickname.length > 8 ? `${nickname.substring(0, 7)}...` : nickname) : "";
-        this.updateNicknameLabel(truncatedNickname);
+        this.updateNicknameLabel(this.truncatedNickname(nickname));
+    }
+
+    private truncatedNickname(nickname: string) {
+        let truncatedNickname = "";
+        if (nickname) {
+            if (nickname.length > 8) {
+                truncatedNickname = `${nickname.substring(0, 7)}...`;
+            } else {
+                truncatedNickname = nickname;
+            }
+        }
+
+        return truncatedNickname;
     }
 
     private updateNicknameLabel(nickname: string) {

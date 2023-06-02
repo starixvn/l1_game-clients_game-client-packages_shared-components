@@ -10,8 +10,8 @@ export class SlidingChipStore {
     @inject(gc.GameConfigs.GameConfigStore)
     protected readonly gameConfigStore: gc.GameConfigs.GameConfigStore;
 
-    @inject(gc.Player.PlayerStore)
-    protected readonly playerStore: gc.Player.PlayerStore;
+    @inject(gc.Player.MainPlayerStore)
+    protected readonly playerStore: gc.Player.MainPlayerStore;
 
     constructor() {
         mobx.makeAutoObservable(this);

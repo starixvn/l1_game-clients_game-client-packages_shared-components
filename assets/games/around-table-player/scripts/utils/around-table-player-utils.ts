@@ -60,7 +60,7 @@ export namespace AroundTablePlayerUtils {
         }
 
         players[player.id] = player;
-        Shared.utils.StorageManager.set(aroundTablePlayersCacheKey(), JSON.stringify(players));
+        Shared.utils.StorageManager.set(aroundTablePlayersCacheKey(), players);
     };
 
     export const getBetItem = (betItems: BetItem[], betChoice: string): BetItem => {

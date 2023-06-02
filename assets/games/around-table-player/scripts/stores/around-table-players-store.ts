@@ -15,7 +15,7 @@ import { AroundTablePlayerUtils } from "../utils";
 
 const { injectable, inject } = inversify;
 
-export interface IAroundTablePlayers extends gc.GameServiceMessage.Player {
+export interface IAroundTablePlayers extends gc.GameServiceMessage.AroundTablePlayer {
     idleCount?: number;
     rate?: number;
 }
@@ -43,7 +43,7 @@ export interface IAroundTablePlayerPlaceChip {
 export class AroundTablePlayersStore {
     @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
     @inject(BetItemStore) private readonly betItemStore: BetItemStore;
-    @inject(gc.Player.PlayerStore) private readonly playerStore: gc.Player.PlayerStore;
+    @inject(gc.Player.MainPlayerStore) private readonly mainPlayerStore: gc.Player.MainPlayerStore;
     @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
     @inject(HiddenPlayersStore) private readonly hiddenPlayersStore: HiddenPlayersStore;
 
@@ -71,14 +71,12 @@ export class AroundTablePlayersStore {
         this._aroundTablePlayersComponent = [...this.aroundTablePlayersComponent, aroundTablePlayerComponent];
     }
 
-    removePlayer(playerOutGame: gc.GameServiceMessage.OutGame) {
-        const { playerId } = playerOutGame;
-
-        if (!playerId) {
+    removePlayer(aroundTablePlayerIdOutGame: string) {
+        if (!aroundTablePlayerIdOutGame) {
             return;
         }
 
-        const playerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayersComponent, playerId);
+        const playerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayersComponent, aroundTablePlayerIdOutGame);
         if (playerSlot) {
             this.playerInfo = {
                 playerComp: playerSlot,
@@ -93,11 +91,11 @@ export class AroundTablePlayersStore {
                 delete this.hiddenPlayers[newPlayerId];
             }
         } else {
-            delete this.hiddenPlayers[playerId];
+            delete this.hiddenPlayers[aroundTablePlayerIdOutGame];
         }
     }
 
-    addPlayers(playersInfo: gc.GameServiceMessage.Players) {
+    addPlayers(playersInfo: gc.GameServiceMessage.AroundTablePlayers) {
         const players: IAroundTablePlayers[] = Object.values(playersInfo);
         const realPlayers: IAroundTablePlayers[] = players.filter((player: IAroundTablePlayers) => !player.type);
         const botPlayers: IAroundTablePlayers[] = players.filter((player: IAroundTablePlayers) => player.type);
@@ -206,7 +204,7 @@ export class AroundTablePlayersStore {
                 this.updateHiddenPlayerStorage(playerChip);
             }
 
-            const convertValue = NumberUtils.getValueByCurrency(amount, this.playerStore.rate);
+            const convertValue = NumberUtils.getValueByCurrency(amount, this.mainPlayerStore.rate);
             const chipValues = getChipQuantity(convertValue, this.slidingChipStore.chipValues);
 
             return {

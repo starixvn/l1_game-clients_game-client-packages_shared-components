@@ -16,13 +16,13 @@ export class UpdatingBalanceContainer extends NodeContainer {
     @property(BitmapFont)
     fontDecreaseBalance: BitmapFont = null;
 
-    @property
+    @property(CCFloat)
     startY = 0;
 
-    @property
+    @property(CCFloat)
     destY = 100;
 
-    protected updateBalance(node: Node, win: boolean, balance: number): void {
+    updateBalance(parent: Node, win: boolean, balance: number): void {
         const balanceEffectNode = new Node();
         const lblBalance = balanceEffectNode.addComponent(Label);
         lblBalance.string = `${win ? "+" : "-"}${FormatUtils.numberWithCommas(balance, 2)}`;
@@ -30,7 +30,7 @@ export class UpdatingBalanceContainer extends NodeContainer {
         lblBalance.lineHeight = 130;
         lblBalance.fontSize = 30;
         lblBalance.node.position = v3(0, this.startY, 0);
-        node.addChild(balanceEffectNode);
+        parent.addChild(balanceEffectNode);
         tween(balanceEffectNode)
             .to(this.duration, { position: v3(0, this.startY + this.destY) })
             .destroySelf()

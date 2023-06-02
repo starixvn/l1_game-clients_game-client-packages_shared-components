@@ -109,6 +109,8 @@
       "__uuid__": "01e2a2c7-4d15-4697-a7f2-9dec94f41cf6",
       "__expectedType__": "cc.BitmapFont"
     },
+    "startY": 110,
+    "destY": 100,
     "_id": ""
   },
   {

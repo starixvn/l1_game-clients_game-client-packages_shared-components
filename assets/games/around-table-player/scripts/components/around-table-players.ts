@@ -16,24 +16,34 @@ export class AroundTablePlayers extends ObserverComponent {
     protected aroundTablePlayerChip = [];
     protected isFlyChipSlow = true;
 
-    @render(Player.OtherPlayersStore, (store) => store.player)
-    renderAroundTablePlayer(player: gc.GameServiceMessage.Player) {
-        player && this.addAroundTablePlayer(player);
+    @render(Player.AroundTablePlayersStore, (store) => store.aroundTablePlayer)
+    renderAroundTablePlayer(aroundTablePlayer: gc.GameServiceMessage.AroundTablePlayer) {
+        aroundTablePlayer && this.addAroundTablePlayer(aroundTablePlayer);
     }
 
     @handle(AroundTablePlayersHandlers.AddAroundTablePlayer)
-    addAroundTablePlayer(player: gc.GameServiceMessage.Player) {
-        return player;
+    addAroundTablePlayer(aroundTablePlayer: gc.GameServiceMessage.AroundTablePlayer) {
+        return aroundTablePlayer;
     }
 
-    @render(Player.OtherPlayersStore, (store) => store.players)
-    renderAroundTablePlayers(players: gc.GameServiceMessage.Players) {
-        players && this.addAroundTablePlayers(players);
+    @render(Player.AroundTablePlayersStore, (store) => store.aroundTablePlayers)
+    renderAroundTablePlayers(aroundTablePlayers: gc.GameServiceMessage.AroundTablePlayers) {
+        aroundTablePlayers && this.addAroundTablePlayers(aroundTablePlayers);
     }
 
     @handle(AroundTablePlayersHandlers.AddAroundTablePlayers)
-    addAroundTablePlayers(players: gc.GameServiceMessage.Players) {
-        return players;
+    addAroundTablePlayers(aroundTablePlayers: gc.GameServiceMessage.AroundTablePlayers) {
+        return aroundTablePlayers;
+    }
+
+    @render(Player.AroundTablePlayersStore, (store) => store.aroundTablePlayerIdOutGame)
+    handleRemoveAroundTablePlayer(aroundTablePlayerIdOutGame: string) {
+        aroundTablePlayerIdOutGame && this.removeAroundTablePlayer(aroundTablePlayerIdOutGame);
+    }
+
+    @handle(AroundTablePlayersHandlers.RemoveAroundTablePlayer)
+    removeAroundTablePlayer(aroundTablePlayerIdOutGame: string) {
+        return aroundTablePlayerIdOutGame;
     }
 
     @render(AroundTablePlayersStore, (store) => store.playerInfo, { fireImmediately: false })
