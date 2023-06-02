@@ -39,7 +39,7 @@ export class ExpandableNode extends Component {
             this.expandableNode.scale = this.collapseScale;
             return;
         }
-        this.tweenCollape();
+        this.tweenCollapse();
     }
 
     expand() {
@@ -62,7 +62,7 @@ export class ExpandableNode extends Component {
         tween(this.expandableOpacity).to(this.expandDuration, { opacity: 255 }).start();
     }
 
-    tweenCollape() {
+    tweenCollapse() {
         Tween.stopAllByTarget(this.expandableNode);
         Tween.stopAllByTarget(this.expandableOpacity);
         tween(this.expandableNode).to(this.expandDuration, { scale: this.collapseScale }).start();

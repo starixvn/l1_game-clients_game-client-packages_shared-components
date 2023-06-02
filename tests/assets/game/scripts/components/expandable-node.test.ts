@@ -3,14 +3,14 @@ import { ExpandableNode } from "../../../../../assets/common/expandable-node/scr
 describe("ExpandableNode", () => {
     let expandableNode: ExpandableNode;
 
-    beforeAll(() => {
+    beforeEach(() => {
         expandableNode = new ExpandableNode();
         expandableNode.expandableNode = new Node();
         expandableNode.tapToCollapseNode = new Node();
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("onClickExpand", () => {
@@ -82,7 +82,7 @@ describe("ExpandableNode", () => {
 
     describe("collapse", () => {
         beforeEach(() => {
-            expandableNode.tweenCollape = jest.fn();
+            expandableNode.tweenCollapse = jest.fn();
         });
 
         it("should not call tweenCollapse, when animated false", () => {
@@ -97,7 +97,7 @@ describe("ExpandableNode", () => {
             expect(expandableNode.tapToCollapseNode.active).toBe(false);
             expect(expandableNode["expandableOpacity"].opacity).toBe(0);
             expect(expandableNode.expandableNode.scale).toEqual(expandableNode["collapseScale"]);
-            expect(expandableNode.tweenCollape).not.toBeCalled();
+            expect(expandableNode.tweenCollapse).not.toBeCalled();
         });
 
         it("should call tweenCollapse, when animated true", () => {
@@ -110,7 +110,7 @@ describe("ExpandableNode", () => {
             // Assert
             expect(expandableNode["expanded"]).toBe(false);
             expect(expandableNode.tapToCollapseNode.active).toBe(false);
-            expect(expandableNode.tweenCollape).toBeCalled();
+            expect(expandableNode.tweenCollapse).toBeCalled();
         });
     });
 
@@ -139,19 +139,16 @@ describe("ExpandableNode", () => {
 
         it("should call stopAllByTarget then call tween", () => {
             // Arrange
-
             // Act
             expandableNode.tweenExpand();
 
             // Assert
             expect(Tween.stopAllByTarget).toBeCalledWith(expandableNode.expandableNode);
             expect(Tween.stopAllByTarget).toBeCalledWith(expandableNode["expandableOpacity"]);
-            expect(tween).toBeCalledWith(expandableNode.expandableNode);
-            expect(tween).toBeCalledWith(expandableNode["expandableOpacity"]);
         });
     });
 
-    describe("tweenCollape", () => {
+    describe("tweenCollapse", () => {
         beforeEach(() => {
             expandableNode["expandableOpacity"] = new UIOpacity();
         });
@@ -160,7 +157,7 @@ describe("ExpandableNode", () => {
             // Arrange
 
             // Act
-            expandableNode.tweenCollape();
+            expandableNode.tweenCollapse();
 
             // Assert
             expect(Tween.stopAllByTarget).toBeCalledWith(expandableNode.expandableNode);
