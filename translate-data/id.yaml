@@ -531,6 +531,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  gameGuide:
+    key: gameGuide
+    value: Panduan Permainan
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: id
   translateFinished: 375

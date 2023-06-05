@@ -520,9 +520,16 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  gameGuide:
+    key: gameGuide
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: index
-  translateFinished: 377
+  translateFinished: 378
   translateTotal: 0
   compileFinished: 0
   compileTotal: 0

@@ -1,6 +1,10 @@
 import { Component, Game, Label, _decorator, game } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
+import { InGameMenuEvents } from "../../../in-game-menu/scripts/stores/in-game-menu-events";
+import { InGameMenuStore } from "../../../in-game-menu/scripts/stores/in-game-menu-store";
+import { NodeContainer } from "../../../node-container/node-container";
+import WebViewGuide from "../../game-guide/scripts/web-view-guide";
 
 const { Rounds, Connection, HideGame, JoinGame, Settlements, FormatUtils, RoundHistories } = gc;
 const { ccclass, property } = _decorator;
@@ -16,6 +20,9 @@ export default class GameComponent extends Component {
 
     @property(Label)
     lblMaxBet: Label = null;
+
+    @property(NodeContainer)
+    guideContainer: NodeContainer = null;
 
     protected roundId = 0;
 
@@ -101,4 +108,12 @@ export default class GameComponent extends Component {
 
     @handle(Rounds.RoundUIHandlers.ResetRoundStore)
     resetForNewRound() {}
+
+    @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
+    openGuide({ event }: { event: InGameMenuEvents }) {
+        if (event === InGameMenuEvents.OPEN_GUIDE) {
+            const guide = this.guideContainer.createNode();
+            guide.getComponent(WebViewGuide)?.initUrl();
+        }
+    }
 }

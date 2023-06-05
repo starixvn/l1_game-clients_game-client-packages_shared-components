@@ -537,6 +537,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  gameGuide:
+    key: gameGuide
+    value: Game Guides
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: en
   translateFinished: 377

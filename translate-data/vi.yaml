@@ -539,6 +539,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  gameGuide:
+    key: gameGuide
+    value: Hướng Dẫn
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: vi
   translateFinished: 377

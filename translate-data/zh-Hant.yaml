@@ -510,6 +510,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  gameGuide:
+    key: gameGuide
+    value: 遊戲指南
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: zh-Hant
   translateFinished: 375
