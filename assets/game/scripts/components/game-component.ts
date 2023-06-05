@@ -10,9 +10,9 @@ import WebViewGuide from "../../game-guide/scripts/web-view-guide";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
 
-const { Rounds, Connection, HideGame, JoinGame, Settlements, FormatUtils, RoundHistories } = gc;
+const { BetHistory, Rounds, Connection, HideGame, JoinGame, Settlements, FormatUtils, RoundHistories } = gc;
 const { ccclass, property } = _decorator;
-const { render, handle } = Observer;
+const { render, handle, observer } = Observer;
 
 @ccclass
 export default class GameComponent extends GameComponentBase {
@@ -31,6 +31,7 @@ export default class GameComponent extends GameComponentBase {
     containerOptions: gc.IContainerOptions;
 
     onLoad() {
+        console.log(this);
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
         game.on(Game.EVENT_SHOW, this.onShowGame, this);
         this.connectToService();
@@ -135,5 +136,13 @@ export default class GameComponent extends GameComponentBase {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundStartPlacingBet() {
         return gc.Audios.AudioIds.START_PLACING_BET;
+    }
+    
+    @handle(BetHistory.BetHistoryHandlers.BetHistoryCallServiceHandler)
+    hanldeShowBetHistory() {}
+
+    onClickShowBetHistory() {
+        this.hanldeShowBetHistory();
+        console.log("BtnBetHistory click");
     }
 }
