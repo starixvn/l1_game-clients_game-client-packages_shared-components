@@ -21,6 +21,9 @@ export class NoticeCmp extends Dialog {
     @property(Node)
     nodeError: Node = null;
 
+    @property(Node)
+    btnConfirm: Node = null;
+
     onClose: () => void;
 
     setData(data: { title: string; message: string; type: NoticeType; onClose: () => void }) {
@@ -34,6 +37,7 @@ export class NoticeCmp extends Dialog {
         const isInfo = type === NoticeType.Info;
         this.nodeInfo.active = isInfo;
         this.nodeError.active = !isInfo;
+        this.btnConfirm.active = isInfo;
     }
 
     onOkClick() {
