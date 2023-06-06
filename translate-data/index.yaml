@@ -1,535 +1,556 @@
 locale: index
 items:
-  f773c1ab-20bb-4e29-99cc-c27dd65abf19:
-    key: f773c1ab-20bb-4e29-99cc-c27dd65abf19
-    value: ""
-    type: 1
-    isVariant: false
-    associations:
-      - reference: f773c1ab-20bb-4e29-99cc-c27dd65abf19
-    _variants: []
-  18e41e64-36b8-44d4-a0d5-040b4ab9742b:
-    key: 18e41e64-36b8-44d4-a0d5-040b4ab9742b
-    value: ""
-    type: 1
-    isVariant: false
-    associations:
-      - reference: 18e41e64-36b8-44d4-a0d5-040b4ab9742b
-    _variants: []
-  placeBetNextRound:
-    key: placeBetNextRound
-    value: ""
-    type: 2
-    isVariant: false
-    associations: []
-    _variants: []
-  cannotPlaceBet:
-    key: cannotPlaceBet
-    value: ""
-    type: 2
-    isVariant: false
-    associations: []
-    _variants: []
-  dataProcessing:
-    key: dataProcessing
-    value: ""
-    type: 2
-    isVariant: false
-    associations: []
-    _variants: []
-  notEnoughScoin:
-    key: notEnoughScoin
-    value: ""
-    type: 2
-    isVariant: false
-    associations: []
-    _variants: []
-  userInsufficientFund:
-    key: userInsufficientFund
-    value: ""
-    type: 2
-    isVariant: false
-    associations: []
-    _variants: []
-  sessionExpired:
-    key: sessionExpired
-    value: ""
-    type: 2
-    isVariant: false
-    associations: []
-    _variants: []
-  sessionTimeout:
-    key: sessionTimeout
-    value: ""
-    type: 2
-    isVariant: false
-    associations: []
-    _variants: []
-  notice:
-    key: notice
-    value: ""
-    type: 2
-    isVariant: false
-    associations: []
-    _variants: []
-  accountNotExist:
-    key: accountNotExist
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  ipRestricted:
-    key: ipRestricted
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  accountBlacklisted:
-    key: accountBlacklisted
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  userNotFound:
-    key: userNotFound
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  sysMaintenance:
-    key: sysMaintenance
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  networkError:
-    key: networkError
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  limitBetExceeded:
-    key: limitBetExceeded
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  playerNotPermittedPlay:
-    key: playerNotPermittedPlay
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  winLimitHit:
-    key: winLimitHit
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  loseLimitHit:
-    key: loseLimitHit
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  limitBetUpdated:
-    key: limitBetUpdated
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  limitBetNotDefined:
-    key: limitBetNotDefined
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  accountSuspended:
-    key: accountSuspended
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  unavailableGame:
-    key: unavailableGame
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  errorOccurred:
-    key: errorOccurred
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  errorOccurredFull:
-    key: errorOccurredFull
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  playOnOtherDevice:
-    key: playOnOtherDevice
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  serverError:
-    key: serverError
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  invalidData:
-    key: invalidData
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  unauthorized:
-    key: unauthorized
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  serverNotFound:
-    key: serverNotFound
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  accountSignOut:
-    key: accountSignOut
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  connectionFailed:
-    key: connectionFailed
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  nickNameDistance:
-    key: nickNameDistance
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  nickNameCharacter:
-    key: nickNameCharacter
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  existNickName:
-    key: existNickName
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  placeBetFailed:
-    key: placeBetFailed
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  endGameFailed:
-    key: endGameFailed
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  getBalanceFailed:
-    key: getBalanceFailed
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  enterPortalFailed:
-    key: enterPortalFailed
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  jackpotProcessing:
-    key: jackpotProcessing
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  minBetNotice:
-    key: minBetNotice
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  maxBetForChoiceNotice:
-    key: maxBetForChoiceNotice
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  maxBetNotice:
-    key: maxBetNotice
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  invalidHandId:
-    key: invalidHandId
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  handAlreadySplit:
-    key: handAlreadySplit
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  cantSplitChildHand:
-    key: cantSplitChildHand
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  cantDoubleHand:
-    key: cantDoubleHand
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  cantHit:
-    key: cantHit
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  cardsNotEqual:
-    key: cardsNotEqual
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  handIsStand:
-    key: handIsStand
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  invalidPosition:
-    key: invalidPosition
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  handNotActive:
-    key: handNotActive
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  invalidDealHands:
-    key: invalidDealHands
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  processingAction:
-    key: processingAction
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  invalidDealDueToRunningRound:
-    key: invalidDealDueToRunningRound
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  minBetHand:
-    key: minBetHand
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  maxBetOfAnyChoiceReached:
-    key: maxBetOfAnyChoiceReached
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  betAmountOfAnyChoiceIncorrect:
-    key: betAmountOfAnyChoiceIncorrect
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  invalidBetChoice:
-    key: invalidBetChoice
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  oneChoiceAllowed:
-    key: oneChoiceAllowed
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  invalidPayline:
-    key: invalidPayline
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  invalidFreespin:
-    key: invalidFreespin
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  invalidStakeLevel:
-    key: invalidStakeLevel
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  invalidBonus:
-    key: invalidBonus
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  gameExcluded:
-    key: gameExcluded
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  notEnoughSpin:
-    key: notEnoughSpin
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  maxStakeHand:
-    key: maxStakeHand
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  accountClosed:
-    key: accountClosed
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  disallowHedgeBet:
-    key: disallowHedgeBet
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  notEnoughMoney:
-    key: notEnoughMoney
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  cantSplitHand:
-    key: cantSplitHand
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  openedBonus:
-    key: openedBonus
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  invalidBet:
-    key: invalidBet
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
-  gameGuide:
-    key: gameGuide
-    value: ""
-    type: 4
-    isVariant: false
-    associations: []
-    _variants: []
+    f773c1ab-20bb-4e29-99cc-c27dd65abf19:
+        key: f773c1ab-20bb-4e29-99cc-c27dd65abf19
+        value: ""
+        type: 1
+        isVariant: false
+        associations:
+            - reference: f773c1ab-20bb-4e29-99cc-c27dd65abf19
+        _variants: []
+    18e41e64-36b8-44d4-a0d5-040b4ab9742b:
+        key: 18e41e64-36b8-44d4-a0d5-040b4ab9742b
+        value: ""
+        type: 1
+        isVariant: false
+        associations:
+            - reference: 18e41e64-36b8-44d4-a0d5-040b4ab9742b
+        _variants: []
+    placeBetNextRound:
+        key: placeBetNextRound
+        value: ""
+        type: 2
+        isVariant: false
+        associations: []
+        _variants: []
+    cannotPlaceBet:
+        key: cannotPlaceBet
+        value: ""
+        type: 2
+        isVariant: false
+        associations: []
+        _variants: []
+    dataProcessing:
+        key: dataProcessing
+        value: ""
+        type: 2
+        isVariant: false
+        associations: []
+        _variants: []
+    notEnoughScoin:
+        key: notEnoughScoin
+        value: ""
+        type: 2
+        isVariant: false
+        associations: []
+        _variants: []
+    userInsufficientFund:
+        key: userInsufficientFund
+        value: ""
+        type: 2
+        isVariant: false
+        associations: []
+        _variants: []
+    sessionExpired:
+        key: sessionExpired
+        value: ""
+        type: 2
+        isVariant: false
+        associations: []
+        _variants: []
+    sessionTimeout:
+        key: sessionTimeout
+        value: ""
+        type: 2
+        isVariant: false
+        associations: []
+        _variants: []
+    notice:
+        key: notice
+        value: ""
+        type: 2
+        isVariant: false
+        associations: []
+        _variants: []
+    accountNotExist:
+        key: accountNotExist
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    ipRestricted:
+        key: ipRestricted
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    accountBlacklisted:
+        key: accountBlacklisted
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    userNotFound:
+        key: userNotFound
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    sysMaintenance:
+        key: sysMaintenance
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    networkError:
+        key: networkError
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    limitBetExceeded:
+        key: limitBetExceeded
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    playerNotPermittedPlay:
+        key: playerNotPermittedPlay
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    winLimitHit:
+        key: winLimitHit
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    loseLimitHit:
+        key: loseLimitHit
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    limitBetUpdated:
+        key: limitBetUpdated
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    limitBetNotDefined:
+        key: limitBetNotDefined
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    accountSuspended:
+        key: accountSuspended
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    unavailableGame:
+        key: unavailableGame
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    errorOccurred:
+        key: errorOccurred
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    errorOccurredFull:
+        key: errorOccurredFull
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    playOnOtherDevice:
+        key: playOnOtherDevice
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    serverError:
+        key: serverError
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    invalidData:
+        key: invalidData
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    unauthorized:
+        key: unauthorized
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    serverNotFound:
+        key: serverNotFound
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    accountSignOut:
+        key: accountSignOut
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    connectionFailed:
+        key: connectionFailed
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    nickNameDistance:
+        key: nickNameDistance
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    nickNameCharacter:
+        key: nickNameCharacter
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    existNickName:
+        key: existNickName
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    placeBetFailed:
+        key: placeBetFailed
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    endGameFailed:
+        key: endGameFailed
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    getBalanceFailed:
+        key: getBalanceFailed
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    enterPortalFailed:
+        key: enterPortalFailed
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    jackpotProcessing:
+        key: jackpotProcessing
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    minBetNotice:
+        key: minBetNotice
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    maxBetForChoiceNotice:
+        key: maxBetForChoiceNotice
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    maxBetNotice:
+        key: maxBetNotice
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    invalidHandId:
+        key: invalidHandId
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    handAlreadySplit:
+        key: handAlreadySplit
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    cantSplitChildHand:
+        key: cantSplitChildHand
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    cantDoubleHand:
+        key: cantDoubleHand
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    cantHit:
+        key: cantHit
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    cardsNotEqual:
+        key: cardsNotEqual
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    handIsStand:
+        key: handIsStand
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    invalidPosition:
+        key: invalidPosition
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    handNotActive:
+        key: handNotActive
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    invalidDealHands:
+        key: invalidDealHands
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    processingAction:
+        key: processingAction
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    invalidDealDueToRunningRound:
+        key: invalidDealDueToRunningRound
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    minBetHand:
+        key: minBetHand
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    maxBetOfAnyChoiceReached:
+        key: maxBetOfAnyChoiceReached
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    betAmountOfAnyChoiceIncorrect:
+        key: betAmountOfAnyChoiceIncorrect
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    invalidBetChoice:
+        key: invalidBetChoice
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    oneChoiceAllowed:
+        key: oneChoiceAllowed
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    invalidPayline:
+        key: invalidPayline
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    invalidFreespin:
+        key: invalidFreespin
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    invalidStakeLevel:
+        key: invalidStakeLevel
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    invalidBonus:
+        key: invalidBonus
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    gameExcluded:
+        key: gameExcluded
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    notEnoughSpin:
+        key: notEnoughSpin
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    maxStakeHand:
+        key: maxStakeHand
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    accountClosed:
+        key: accountClosed
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    disallowHedgeBet:
+        key: disallowHedgeBet
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    notEnoughMoney:
+        key: notEnoughMoney
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    cantSplitHand:
+        key: cantSplitHand
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    openedBonus:
+        key: openedBonus
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    invalidBet:
+        key: invalidBet
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    gameGuide:
+        key: gameGuide
+        value: ""
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    choice_even:
+        key: choice_even
+        value: ""
+        type: 2
+        isVariant: false
+        associations: []
+        _variants: []
+    choice_odd:
+        key: choice_odd
+        value: ""
+        type: 2
+        isVariant: false
+        associations: []
+        _variants: []
+    game_name_2:
+        key: game_name_2
+        value: ""
+        type: 2
+        isVariant: false
+        associations: []
+        _variants: []
 languageConfig:
-  bcp47Tag: index
-  translateFinished: 378
-  translateTotal: 0
-  compileFinished: 0
-  compileTotal: 0
+    bcp47Tag: index
+    translateFinished: 378
+    translateTotal: 0
+    compileFinished: 0
+    compileTotal: 0
