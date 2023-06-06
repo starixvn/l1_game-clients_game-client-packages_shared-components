@@ -25,18 +25,12 @@ export class AroundTablePlayerComponent extends ObserverComponent {
     @property(Sprite)
     avatar: Sprite = null;
 
+    @property
+    maxBalanceDisplay = 99999;
+
     static readonly maxIdleCount = 2;
-    private _maxBalanceDisplay = 99999;
 
-    get maxBalanceDisplay() {
-        return this._maxBalanceDisplay;
-    }
-
-    set maxBalanceDisplay(maxBalance: number) {
-        this._maxBalanceDisplay = maxBalance;
-    }
-
-    aroundTablePlayer: IAroundTablePlayers;
+    public aroundTablePlayer: IAroundTablePlayers = null;
 
     onLoad() {
         super.onLoad();
@@ -49,23 +43,15 @@ export class AroundTablePlayerComponent extends ObserverComponent {
         return this;
     }
 
-    get isIdle() {
-        return this.aroundTablePlayer.idleCount > AroundTablePlayerComponent.maxIdleCount;
-    }
-
     async setInfo(player: IAroundTablePlayers) {
         this.node.active = true;
         this.node.getComponent(UIOpacity).opacity = 0;
-        try {
-            if (player) {
-                await this.updatePlayerInfo(player);
-                await fadeIn(this.node, 1);
-            } else {
-                this.clearPlayerInfo();
-                await fadeOut(this.node, 1);
-            }
-        } catch (error) {
-            console.error("Error in setInfo visible player:", error);
+        if (player) {
+            await this.updatePlayerInfo(player);
+            await fadeIn(this.node, 1);
+        } else {
+            this.clearPlayerInfo();
+            await fadeOut(this.node, 1);
         }
     }
 
@@ -77,9 +63,7 @@ export class AroundTablePlayerComponent extends ObserverComponent {
     }
 
     private clearPlayerInfo() {
-        this.aroundTablePlayer = null;
         this.setIdentity(null);
-        this.setNickname(null);
     }
 
     private setIdentity(player: IAroundTablePlayers) {

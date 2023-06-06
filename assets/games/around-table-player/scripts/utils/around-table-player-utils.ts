@@ -66,4 +66,8 @@ export namespace AroundTablePlayerUtils {
     export const getBetItem = (betItems: BetItem[], betChoice: string): BetItem => {
         return find(betItems, (item: BetItem) => item.betChoice === betChoice);
     };
+
+    export const isIdle = (playersComponent: AroundTablePlayerComponent) => {
+        return playersComponent.aroundTablePlayer.idleCount > AroundTablePlayerComponent.maxIdleCount;
+    };
 }

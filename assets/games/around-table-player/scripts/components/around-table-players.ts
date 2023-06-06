@@ -4,7 +4,7 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../../common/observer-component/scripts/observer-component";
 import { placeChipToChipBox } from "../../../../sliding-chip/scripts/components/actions";
 import { AroundTablePlayersHandlers } from "../handlers/around-table-players-handler";
-import { AroundTablePlayersStore, IAroundTablePlayerPlaceChip, IPlayerInfo } from "../stores/around-table-players-store";
+import { AroundTablePlayersStore, IAroundTablePlayerPlaceChip, INewPlayerInfo } from "../stores/around-table-players-store";
 
 const { ccclass } = _decorator;
 
@@ -38,7 +38,7 @@ export class AroundTablePlayers extends ObserverComponent {
 
     @render(Player.AroundTablePlayersStore, (store) => store.aroundTablePlayerIdOutGame)
     handleRemoveAroundTablePlayer(aroundTablePlayerIdOutGame: string) {
-        aroundTablePlayerIdOutGame && this.removeAroundTablePlayer(aroundTablePlayerIdOutGame);
+        this.removeAroundTablePlayer(aroundTablePlayerIdOutGame);
     }
 
     @handle(AroundTablePlayersHandlers.RemoveAroundTablePlayer)
@@ -46,10 +46,25 @@ export class AroundTablePlayers extends ObserverComponent {
         return aroundTablePlayerIdOutGame;
     }
 
-    @render(AroundTablePlayersStore, (store) => store.playerInfo, { fireImmediately: false })
-    async addAroundTablePlayerInfo(playerInfo: IPlayerInfo) {
-        const { playerComp, value } = playerInfo ?? {};
-        playerComp && value && (await playerInfo.playerComp.setInfo(value));
+    @render(AroundTablePlayersStore, (store) => store.newPlayerInfo)
+    addAroundTablePlayerInfo(newPlayerInfo: INewPlayerInfo) {
+        const { value } = newPlayerInfo ?? {};
+        let clonePlayerInfo = null;
+        if (value) {
+            const { id, name, red, avatarId, type, idleCount = 0 } = value;
+            clonePlayerInfo = {
+                id,
+                name,
+                red,
+                avatarId,
+                type,
+                idleCount,
+            };
+        }
+
+        newPlayerInfo?.playerComp.setInfo(clonePlayerInfo).catch(() => {
+            console.log("Error setInfo");
+        });
     }
 
     @render(Rounds.RoundTimeStore, (store) => ({ roundTime: store.roundTime, lockingBet: store.lockingBet }))

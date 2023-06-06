@@ -17,14 +17,13 @@ const { injectable, inject } = inversify;
 
 export interface IAroundTablePlayers extends gc.GameServiceMessage.AroundTablePlayer {
     idleCount?: number;
-    rate?: number;
 }
 
 export interface IHiddenPlayers {
     [playerId: string]: IAroundTablePlayers;
 }
 
-export interface IPlayerInfo {
+export interface INewPlayerInfo {
     playerComp: AroundTablePlayerComponent;
     value: IAroundTablePlayers;
 }
@@ -52,19 +51,11 @@ export class AroundTablePlayersStore {
     }
 
     hiddenPlayers: IHiddenPlayers = {};
+    newPlayerInfo: INewPlayerInfo = null;
     private _aroundTablePlayersComponent: AroundTablePlayerComponent[] = [];
-    private _playerInfo: IPlayerInfo = null;
 
     get aroundTablePlayersComponent() {
         return this._aroundTablePlayersComponent;
-    }
-
-    get playerInfo() {
-        return this._playerInfo;
-    }
-
-    set playerInfo(playerInfo: IPlayerInfo) {
-        this._playerInfo = playerInfo;
     }
 
     setPlayersComp(aroundTablePlayerComponent: AroundTablePlayerComponent) {
@@ -77,8 +68,9 @@ export class AroundTablePlayersStore {
         }
 
         const playerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayersComponent, aroundTablePlayerIdOutGame);
+
         if (playerSlot) {
-            this.playerInfo = {
+            this.newPlayerInfo = {
                 playerComp: playerSlot,
                 value: null,
             };
@@ -118,15 +110,13 @@ export class AroundTablePlayersStore {
                 const emptySlot = AroundTablePlayerUtils.getEmptyPlayerSlot(this.aroundTablePlayersComponent);
 
                 if (emptySlot && player.idleCount <= AroundTablePlayerComponent.maxIdleCount) {
-                    this.playerInfo = {
+                    this.newPlayerInfo = {
                         playerComp: emptySlot,
                         value: player,
                     };
 
                     return;
                 }
-
-                console.log("add Player on hiddenPlayers-------------------", this.hiddenPlayers, player);
 
                 player?.id && (this.hiddenPlayers[player.id] = player);
             }
@@ -137,6 +127,7 @@ export class AroundTablePlayersStore {
         const hiddenPlayers: IAroundTablePlayers[] = values(this.hiddenPlayers);
         for (const player of this.aroundTablePlayersComponent) {
             const aroundTablePlayer = player.aroundTablePlayer;
+
             if (!aroundTablePlayer) {
                 return;
             }
@@ -144,7 +135,7 @@ export class AroundTablePlayersStore {
             aroundTablePlayer.idleCount++;
             AroundTablePlayerUtils.storePlayerToCache(aroundTablePlayer);
 
-            if (player.isIdle) {
+            if (AroundTablePlayerUtils.isIdle(player)) {
                 await this.handleIdleAroundTablePlayer(player, aroundTablePlayer, hiddenPlayers);
             }
         }
@@ -172,7 +163,10 @@ export class AroundTablePlayersStore {
         const newPlayer = AroundTablePlayerUtils.findIdleHiddenPlayer(hiddenPlayers);
 
         if (newPlayer) {
-            await aroundTablePlayerComp.setInfo(newPlayer);
+            this.newPlayerInfo = {
+                playerComp: aroundTablePlayerComp,
+                value: newPlayer,
+            };
             delete this.hiddenPlayers[newPlayer.id];
             this.hiddenPlayers[oldPlayerData.id] = oldPlayerData;
             remove(hiddenPlayers, newPlayer);
@@ -185,7 +179,10 @@ export class AroundTablePlayersStore {
         botAroundTablePlayer: AroundTablePlayerComponent
     ) {
         this.hiddenPlayers[aroundTablePlayer.id] = aroundTablePlayer;
-        await botAroundTablePlayer.setInfo(realPlayer);
+        this.newPlayerInfo = {
+            playerComp: botAroundTablePlayer,
+            value: realPlayer,
+        };
     }
 
     get aroundTablePlayerPlaceChip(): IAroundTablePlayerPlaceChip {
