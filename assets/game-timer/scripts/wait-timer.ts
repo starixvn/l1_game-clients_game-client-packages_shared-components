@@ -9,6 +9,7 @@ const { RoundTimeStore } = Rounds;
 const { ccclass, property } = _decorator;
 const { observer, render, handle } = Observer;
 
+@ccclass
 export default class WaitTimer extends SingleTimer {
     @render(RoundTimeStore, (store) => store.roundState)
     setVisibility(state: string) {

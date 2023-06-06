@@ -1,14 +1,12 @@
-import { _decorator, Color, Component, Label, Node, tween, UIRenderer, v3 } from "cc";
+import { _decorator, Color, Label, Node, tween, UIRenderer, v3 } from "cc";
 import gc from "game-client-base";
-import Observer from "observer";
+import { ObserverComponent } from "../../common/observer-component/scripts/observer-component";
 
 const { Rounds } = gc;
-const { RoundTimeStore } = Rounds;
 const { ccclass, property } = _decorator;
-const { observer, render, handle } = Observer;
 
 @ccclass()
-export default class TwoDigitsTimer extends Component {
+export default class TwoDigitsTimer extends ObserverComponent {
     @property(Label)
     lblDigitFirst: Label = null;
 

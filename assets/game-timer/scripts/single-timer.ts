@@ -1,14 +1,15 @@
-import { _decorator, Component, Label } from "cc";
+import { _decorator, Label } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
+import { ObserverComponent } from "../../common/observer-component/scripts/observer-component";
 
 const { Rounds } = gc;
 const { RoundTimeStore } = Rounds;
 const { ccclass, property } = _decorator;
 const { observer, render, handle } = Observer;
 
-@ccclass()
-export class SingleTimer extends Component {
+@ccclass
+export class SingleTimer extends ObserverComponent {
     @property({ type: Label })
     lblSingle: Label = null;
 
