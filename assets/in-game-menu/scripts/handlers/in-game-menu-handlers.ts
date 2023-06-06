@@ -4,9 +4,9 @@ const { inject, injectable } = inversify;
 
 @injectable()
 export class InGameMenuHandlers {
-    @inject(InGameMenuStore) private readonly connectionStore: InGameMenuStore;
+    @inject(InGameMenuStore) private readonly inGameMenuStore: InGameMenuStore;
 
     handle(event: string) {
-        this.connectionStore.event = { event };
+        this.inGameMenuStore.event = { event };
     }
 }
