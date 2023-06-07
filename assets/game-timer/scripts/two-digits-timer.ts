@@ -1,4 +1,4 @@
-import { _decorator, Color, Label, Node, tween, UIRenderer, v3 } from "cc";
+import { _decorator, Color, Label, Node, tween, UIOpacity, UIRenderer, v3 } from "cc";
 import gc from "game-client-base";
 import { ObserverComponent } from "../../common/observer-component/scripts/observer-component";
 
@@ -46,14 +46,18 @@ export default class TwoDigitsTimer extends ObserverComponent {
 
     protected handleBetTimeAnimation(node: Node) {
         if (this.animated) {
+            node.position = v3(node.position.x, this.heightOffset);
             tween(node)
-                .to(0, {
-                    position: v3(node.position.x, this.heightOffset),
-                })
                 .to(0.3, {
+                    position: v3(node.position.x, -5),
+                })
+                .to(0.1, {
                     position: v3(node.position.x, 0),
                 })
                 .start();
+            const uiOpacity = node.getComponent(UIOpacity);
+            uiOpacity.opacity = 0;
+            tween(uiOpacity).to(0.2, { opacity: 255 }).start();
         }
     }
     setState(state: string) {
