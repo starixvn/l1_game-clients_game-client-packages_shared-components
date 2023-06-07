@@ -541,8 +541,8 @@ items:
         isVariant: false
         associations: []
         _variants: []
-    game_name_2:
-        key: game_name_2
+    gameNames.2:
+        key: gameNames.2
         value: ""
         type: 2
         isVariant: false
