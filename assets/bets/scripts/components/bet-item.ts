@@ -73,6 +73,8 @@ export default class BetItem extends Component {
         const choice = this.node.name;
         if (ownBets?.[choice]) {
             this.lblOwnBet.string = gc.FormatUtils.numberWithCommas(ownBets[choice]);
+        } else {
+            this.lblOwnBet.string = "";
         }
     }
 
@@ -81,6 +83,8 @@ export default class BetItem extends Component {
         const choice = this.node.name;
         if (totalBets?.[choice]) {
             this.lblTotalBet.string = gc.FormatUtils.numberWithCommas(totalBets[choice]);
+        } else {
+            this.lblTotalBet.string = "";
         }
     }
 
