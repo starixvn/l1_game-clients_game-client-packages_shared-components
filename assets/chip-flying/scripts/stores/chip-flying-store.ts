@@ -30,7 +30,7 @@ export type TPayChipInfo = {
     isChipStack: boolean;
     payChipsDuration: number;
     dealerChipBox: Node;
-    aroundTablePlayersComponent: AroundTablePlayerComponent[];
+    aroundTablePlayerComponents: AroundTablePlayerComponent[];
     isFinishedShowResult: boolean;
 };
 @injectable()
@@ -90,7 +90,7 @@ export class ChipFlyingStore {
                 isChipStack: this.chipFlying.isChipStack,
                 payChipsDuration: this.chipFlying.payChipsDuration,
                 dealerChipBox: this.chipFlying.dealerChipBox,
-                aroundTablePlayersComponent: this.aroundTablePlayersStore.aroundTablePlayersComponent,
+                aroundTablePlayerComponents: this.aroundTablePlayersStore.aroundTablePlayerComponents,
                 isFinishedShowResult: this.settlementStore.isFinishedShowResult,
             };
         }

@@ -1,5 +1,5 @@
 import inversify from "inversify";
-import { BalanceEffectStore, TBalanceEffect, TWinningEffect } from "../stores/balance-effect.store";
+import { BalanceEffectStore, TBalanceEffect, TWinningEffect } from "../stores/balance-effect-store";
 
 const { injectable, inject } = inversify;
 

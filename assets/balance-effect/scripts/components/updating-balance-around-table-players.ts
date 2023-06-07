@@ -1,7 +1,7 @@
 import { CCFloat, _decorator } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
-import { BalanceEffectStore, TUpdateBalances } from "../stores/balance-effect.store";
+import { BalanceEffectStore, TUpdateBalances } from "../stores/balance-effect-store";
 import { UpdatingBalanceContainer } from "./updating-balance-container";
 
 const { ccclass, property } = _decorator;

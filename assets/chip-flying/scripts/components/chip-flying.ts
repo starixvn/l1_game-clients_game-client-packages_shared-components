@@ -3,7 +3,7 @@ import gc from "game-client-base";
 import Observer from "observer";
 import * as actions from "../../.././sliding-chip/scripts/components/actions";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
-import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect.store";
+import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
 import { BetItemStore, IOwnChip, IPlayersChips } from "../../../bets/scripts/stores/bet-item-store";
 import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 import { AroundTablePlayerUtils } from "../../../games/around-table-player/scripts/utils";
@@ -121,7 +121,14 @@ export class ChipFlying extends ObserverComponent {
     }
 
     payChipsToAroundTablePlayers(payChipInfo: TPayChipInfo) {
-        const { finish, betInfo, slidingChip, payChipsDuration, isChipStack, aroundTablePlayersComponent } = payChipInfo;
+        const {
+            finish,
+            betInfo,
+            slidingChip,
+            payChipsDuration,
+            isChipStack,
+            aroundTablePlayerComponents,
+        } = payChipInfo;
         const winningPlayers = finish.winningPlayers;
 
         if (!winningPlayers) {
@@ -133,7 +140,7 @@ export class ChipFlying extends ObserverComponent {
         const balanceEffects: TBalanceEffect[] = [];
 
         winningPlayerIds.forEach((playerId) => {
-            const aroundTablePlayerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(aroundTablePlayersComponent, playerId);
+            const aroundTablePlayerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(aroundTablePlayerComponents, playerId);
             if (!aroundTablePlayerSlot) {
                 return;
             }
@@ -155,17 +162,17 @@ export class ChipFlying extends ObserverComponent {
             balanceEffects.push({ avatarNode: aroundTablePlayerSlot.node, balance: convertValue });
         });
 
-        this.showBalanceEffectAroundTablePlayers(winningEffects);
-        this.showBallanceEffectAroundTablePlayers(balanceEffects);
+        this.showWinningEffectAroundTablePlayers(winningEffects);
+        this.showBalanceEffectAroundTablePlayers(balanceEffects);
     }
 
     @handle(BalanceEffectHandlers.UpdateWinEffectAroundTablePlayer)
-    showBalanceEffectAroundTablePlayers(winningEffects: TWinningEffect[]) {
+    showWinningEffectAroundTablePlayers(winningEffects: TWinningEffect[]) {
         return winningEffects;
     }
 
     @handle(BalanceEffectHandlers.UpdatePayoutBalanceAroundTablePlayer)
-    showBallanceEffectAroundTablePlayers(balanceEffects: TBalanceEffect[]) {
+    showBalanceEffectAroundTablePlayers(balanceEffects: TBalanceEffect[]) {
         return balanceEffects;
     }
 }

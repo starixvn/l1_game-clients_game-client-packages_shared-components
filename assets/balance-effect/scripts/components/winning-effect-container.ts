@@ -1,7 +1,7 @@
 import { CCFloat, _decorator, tween } from "cc";
 import { NodeContainer } from "db://shared-components/node-container/node-container";
 import Observer from "observer";
-import { BalanceEffectStore, TWinningEffect, TWinningEffects } from "./../stores/balance-effect.store";
+import { BalanceEffectStore, TWinningEffect, TWinningEffects } from "../stores/balance-effect-store";
 
 const { ccclass, property } = _decorator;
 const { render } = Observer;

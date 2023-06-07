@@ -9,8 +9,8 @@ export namespace HiddenPlayersHandlers {
     export class SetHiddenPlayers {
         @inject(HiddenPlayersStore) private readonly hiddenPlayersStore: HiddenPlayersStore;
 
-        async handle(hiddenPlayers: Node) {
-            this.hiddenPlayersStore.hiddenPlayersNode = hiddenPlayers;
+        async handle(hiddenPlayersNode: Node) {
+            this.hiddenPlayersStore.hiddenPlayersNode = hiddenPlayersNode;
         }
     }
 }

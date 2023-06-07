@@ -52,14 +52,14 @@ export class AroundTablePlayersStore {
 
     hiddenPlayers: IHiddenPlayers = {};
     newPlayerInfo: INewPlayerInfo = null;
-    private _aroundTablePlayersComponent: AroundTablePlayerComponent[] = [];
+    private _aroundTablePlayerComponents: AroundTablePlayerComponent[] = [];
 
-    get aroundTablePlayersComponent() {
-        return this._aroundTablePlayersComponent;
+    get aroundTablePlayerComponents() {
+        return this._aroundTablePlayerComponents;
     }
 
     setPlayersComp(aroundTablePlayerComponent: AroundTablePlayerComponent) {
-        this._aroundTablePlayersComponent = [...this.aroundTablePlayersComponent, aroundTablePlayerComponent];
+        this._aroundTablePlayerComponents = [...this.aroundTablePlayerComponents, aroundTablePlayerComponent];
     }
 
     removePlayer(aroundTablePlayerIdOutGame: string) {
@@ -67,7 +67,7 @@ export class AroundTablePlayersStore {
             return;
         }
 
-        const playerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayersComponent, aroundTablePlayerIdOutGame);
+        const playerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayerComponents, aroundTablePlayerIdOutGame);
 
         if (playerSlot) {
             this.newPlayerInfo = {
@@ -102,12 +102,12 @@ export class AroundTablePlayersStore {
 
     addPlayer(player: IAroundTablePlayers) {
         if (player) {
-            const playerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayersComponent, player.id);
+            const playerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayerComponents, player.id);
             const playerFromCache = AroundTablePlayerUtils.getPlayerFromCache(player.id);
             player.idleCount = playerFromCache ? playerFromCache.idleCount : 0;
 
             if (!playerSlot) {
-                const emptySlot = AroundTablePlayerUtils.getEmptyPlayerSlot(this.aroundTablePlayersComponent);
+                const emptySlot = AroundTablePlayerUtils.getEmptyPlayerSlot(this.aroundTablePlayerComponents);
 
                 if (emptySlot && player.idleCount <= AroundTablePlayerComponent.maxIdleCount) {
                     this.newPlayerInfo = {
@@ -125,7 +125,7 @@ export class AroundTablePlayersStore {
 
     async figureOutAroundTablePlayers() {
         const hiddenPlayers: IAroundTablePlayers[] = values(this.hiddenPlayers);
-        for (const player of this.aroundTablePlayersComponent) {
+        for (const player of this.aroundTablePlayerComponents) {
             const aroundTablePlayer = player.aroundTablePlayer;
 
             if (!aroundTablePlayer) {
@@ -140,7 +140,7 @@ export class AroundTablePlayersStore {
             }
         }
 
-        const botAroundTablePlayerPlayerComps = AroundTablePlayerUtils.getBotAroundTablePlayerComps(this.aroundTablePlayersComponent);
+        const botAroundTablePlayerPlayerComps = AroundTablePlayerUtils.getBotAroundTablePlayerComps(this.aroundTablePlayerComponents);
         const realPlayers = AroundTablePlayerUtils.getRealPlayer(hiddenPlayers);
 
         for (const botAroundTablePlayer of botAroundTablePlayerPlayerComps) {
@@ -190,7 +190,7 @@ export class AroundTablePlayersStore {
         if (playerChip) {
             const { betChoice, amount, playerId } = this.chipStore.playerChip;
             let startNode: Node;
-            const aroundTablePlayer = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayersComponent, playerId);
+            const aroundTablePlayer = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayerComponents, playerId);
             const betItem: BetItem = AroundTablePlayerUtils.getBetItem(this.betItemStore.betItems, betChoice);
 
             if (aroundTablePlayer) {

@@ -1,6 +1,6 @@
 import { _decorator } from "cc";
 import Observer from "observer";
-import { BalanceEffectStore, TUpdateBalance } from "../stores/balance-effect.store";
+import { BalanceEffectStore, TUpdateBalance } from "../stores/balance-effect-store";
 import { UpdatingBalanceContainer } from "./updating-balance-container";
 
 const { ccclass, property } = _decorator;
