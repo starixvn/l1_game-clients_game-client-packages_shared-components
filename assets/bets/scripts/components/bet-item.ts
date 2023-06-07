@@ -71,13 +71,17 @@ export default class BetItem extends Component {
     @render(Rounds.RoundStore, (store) => store.ownBets)
     renderOwnBets(ownBets: gc.GameServiceMessage.OwnBets) {
         const choice = this.node.name;
-        this.lblOwnBet.string = `${ownBets?.[choice] ?? ""}`;
+        if (ownBets?.[choice]) {
+            this.lblOwnBet.string = gc.FormatUtils.numberWithCommas(ownBets[choice]);
+        }
     }
 
     @render(Rounds.RoundStore, (store) => store.totalBets)
     renderTotalBets(totalBets: gc.GameServiceMessage.TotalBets) {
         const choice = this.node.name;
-        this.lblTotalBet.string = `${totalBets?.[choice] ?? ""}`;
+        if (totalBets?.[choice]) {
+            this.lblTotalBet.string = gc.FormatUtils.numberWithCommas(totalBets[choice]);
+        }
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartGenerateResult)
