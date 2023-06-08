@@ -517,6 +517,41 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  copySuccess:
+    key: copySuccess
+    value: 复制成功！
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  md5Result:
+    key: md5Result
+    value: 结果
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  md5String:
+    key: md5String
+    value: MD5 钥匙
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  md5Copy:
+    key: md5Copy
+    value: 复制
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  copyMD5Failed:
+    key: copyMD5Failed
+    value: 复印功能暂时不能用。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: zh-Hans
   translateFinished: 375

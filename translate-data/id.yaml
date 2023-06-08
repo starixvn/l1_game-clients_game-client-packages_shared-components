@@ -538,6 +538,41 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  copySuccess:
+    key: copySuccess
+    value: Salin berhasil!
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  md5Result:
+    key: md5Result
+    value: HASIL
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  md5String:
+    key: md5String
+    value: KUNCI MD5
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  md5Copy:
+    key: md5Copy
+    value: Salin
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  copyMD5Failed:
+    key: copyMD5Failed
+    value: Fungsi salin untuk sementara tidak tersedia.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: id
   translateFinished: 375

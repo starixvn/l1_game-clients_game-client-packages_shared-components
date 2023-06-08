@@ -567,6 +567,41 @@ items:
         isVariant: false
         associations: []
         _variants: []
+    copySuccess:
+      key: copySuccess
+      value: Copy thành công!
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    md5Result:
+      key: md5Result
+      value: KẾT QUẢ
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    md5String:
+      key: md5String
+      value: CHUỖI MD5
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    md5Copy:
+      key: md5Copy
+      value: COPY
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    copyMD5Failed:
+      key: copyMD5Failed
+      value: Chức năng Copy tạm thời không hoạt động.
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
 languageConfig:
     bcp47Tag: vi
     translateFinished: 377

@@ -527,6 +527,41 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  copySuccess:
+    key: copySuccess
+    value: คัดลอกสำเร็จ!
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  md5Result:
+    key: md5Result
+    value: ผลลัพธ์
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  md5String:
+    key: md5String
+    value: คีย์ MD5
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  md5Copy:
+    key: md5Copy
+    value: คัดลอก
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  copyMD5Failed:
+    key: copyMD5Failed
+    value: ฟังก์ชันคัดลอกใช้งานไม่ได้ชั่วคราว
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: th
   translateFinished: 375

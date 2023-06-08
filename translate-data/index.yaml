@@ -548,6 +548,44 @@ items:
         isVariant: false
         associations: []
         _variants: []
+    copySuccess:
+      key: copySuccess
+      value: ""
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    md5Result:
+      key: md5Result
+      value: ""
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    md5String:
+      key: md5String
+      value: ""
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    md5Copy:
+      key: md5Copy
+      value: ""
+      type: 4
+      isVariant: false
+      associations:
+        - sceneUuid: 4a49865f-b2fd-40aa-af17-613de6bab065
+          nodeUuid: 58h4mJtZFDiY7ZfS/15ZSa
+          reference: 4a49865f-b2fd-40aa-af17-613de6bab065
+      _variants: []
+    copyMD5Failed:
+      key: copyMD5Failed
+      value: ""
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
 languageConfig:
     bcp47Tag: index
     translateFinished: 378
