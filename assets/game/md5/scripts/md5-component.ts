@@ -61,20 +61,10 @@ export default class MD5Component extends Component {
         this.initMD5Wrapper();
     }
 
-    onDestroy() {
-        this.removeTouchEvents();
-    }
-
     private registerTouchEvents() {
         this.nodeMd5ContentContainer.on(Node.EventType.MOUSE_ENTER, this.showTooltip, this);
         this.nodeMd5ContentContainer.on(Node.EventType.MOUSE_LEAVE, this.hideTooltip, this);
         this.nodeMd5ContentContainer.on(Node.EventType.TOUCH_START, this.showTooltip, this);
-    }
-
-    private removeTouchEvents() {
-        this.nodeMd5ContentContainer.off(Node.EventType.MOUSE_ENTER, this.showTooltip, this);
-        this.nodeMd5ContentContainer.off(Node.EventType.MOUSE_LEAVE, this.hideTooltip, this);
-        this.nodeMd5ContentContainer.off(Node.EventType.TOUCH_START, this.showTooltip, this);
     }
 
     initMD5Wrapper() {

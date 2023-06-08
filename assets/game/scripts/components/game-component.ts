@@ -1,4 +1,4 @@
-import { Component, Game, Label, _decorator, game } from "cc";
+import { Component, Game, Label, _decorator, director, game, log } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
 import { InGameMenuEvents } from "../../../game/in-game-menu/scripts/stores/in-game-menu-events";
@@ -28,19 +28,26 @@ export default class GameComponent extends Component {
 
     protected onLoad(): void {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
-        game.on(Game.EVENT_SHOW, this.onJoinGame, this);
+        game.on(Game.EVENT_SHOW, this.onShowGame, this);
     }
 
     protected onDestroy(): void {
         game.off(Game.EVENT_HIDE, this.onHideGame, this);
-        game.off(Game.EVENT_SHOW, this.onJoinGame, this);
+        game.off(Game.EVENT_SHOW, this.onShowGame, this);
     }
 
     @handle(HideGame.HideGameHandler)
-    onHideGame() {}
+    onHideGame() {
+        log("Game run in background ============================================");
+    }
 
-    @handle(JoinGame.JoinGameHandler)
-    onJoinGame() {}
+    refreshContainer() {}
+
+    onShowGame() {
+        log("Game run in foreground ============================================");
+        this.refreshContainer();
+        director.loadScene("game");
+    }
 
     @render(Connection.ConnectionStore, (store) => store.signedIn)
     onSignedIn(signedIn: boolean) {
