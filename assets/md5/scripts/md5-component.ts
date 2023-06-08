@@ -167,7 +167,7 @@ export default class MD5Component extends Component {
     }
 
     showHint() {
-        tween(this.hintCopyNode.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).delay(3).to(0.1, { opacity: 0 }).start();
+        tween(this.hintCopyNode.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).delay(3).to(0.1, { opacity: 1 }).start();
     }
 
     setCaptionAndHintForMD5(isMD5Key: boolean) {
