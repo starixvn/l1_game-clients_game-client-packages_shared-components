@@ -1,6 +1,5 @@
 import gc from "game-client-base";
 import inversify from "inversify";
-import SlidingChip from "../components/sliding-chip";
 import { SlidingChipStore } from "../stores/sliding-chip-store";
 
 const { injectable, inject } = inversify;
@@ -51,10 +50,9 @@ export namespace SlidingChipHandler {
     export class SetChipValues {
         @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
 
-        async handle(slidingChip: SlidingChip) {
+        async handle() {
             this.slidingChipStore.resetBet();
             this.slidingChipStore.setChipValuesByStakeLevel();
-            this.slidingChipStore.slidingChip = slidingChip;
         }
     }
 

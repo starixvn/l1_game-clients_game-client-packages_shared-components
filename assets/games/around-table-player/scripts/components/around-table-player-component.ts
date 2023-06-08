@@ -1,14 +1,11 @@
 import { Label, Sprite, SpriteFrame, UIOpacity, _decorator } from "cc";
 import gc from "game-client-base";
-import Observer from "observer";
 import { bundleManager } from "../../../../bundle-magager/bundle-manager";
 import { ObserverComponent } from "../../../../common/observer-component/scripts/observer-component";
 import { NumberUtils } from "../../../../utils";
 import { AnimationUtils } from "../../../../utils/utils";
-import { AroundTablePlayersHandlers } from "../handlers/around-table-players-handler";
-import { IAroundTablePlayers } from "../stores/around-table-players-store";
+import { IAroundTablePlayers } from "../stores/around-table-players-chip-store";
 
-const { handle } = Observer;
 const { ccclass, property } = _decorator;
 const { fadeIn, fadeOut } = AnimationUtils;
 
@@ -35,12 +32,6 @@ export class AroundTablePlayerComponent extends ObserverComponent {
     onLoad() {
         super.onLoad();
         this.node.active = false;
-        this.registerOtherPlayers();
-    }
-
-    @handle(AroundTablePlayersHandlers.SetPlayerComponent)
-    registerOtherPlayers() {
-        return this;
     }
 
     async setInfo(player: IAroundTablePlayers) {

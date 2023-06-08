@@ -4,102 +4,151 @@ import Observer from "observer";
 import * as actions from "../../.././sliding-chip/scripts/components/actions";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
-import { BetItemStore, IOwnChip, IPlayersChips } from "../../../bets/scripts/stores/bet-item-store";
+import { BetItems } from "../../../bets/scripts/components/bet-items";
+import { BetItemStore, IAroundTablePlayersChips, IMainPlayerChip, TChipAmount } from "../../../bets/scripts/stores/bet-item-store";
 import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
+import { AroundTablePlayers } from "../../../games/around-table-player/scripts/components/around-table-players";
 import { AroundTablePlayerUtils } from "../../../games/around-table-player/scripts/utils";
+import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 import { NumberUtils } from "../../../utils";
-import { ChipFlyingHandlers } from "../handlers/chip-flying-handler";
 import { ChipFlyingStore, TPayChipInfo } from "../stores/chip-flying-store";
 import { ActionChipFlying } from "./actions";
 
-const { Auth } = gc;
+const { Auth, Chips } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
+
+export interface IChipFlyingInfo {
+    slidingChip: SlidingChip;
+    hiddenPlayersNode: Node;
+    mainPlayerAvatarNode: Node;
+    isChipStack: boolean;
+    payChipsDuration: number;
+}
 
 @ccclass
 export class ChipFlying extends ObserverComponent {
     @property(Node)
+    mainPlayerAvatarNode: Node = null;
+
+    @property(Node)
+    hiddenPlayersNode: Node = null;
+
+    @property(Node)
     dealerChipBox: Node = null;
 
-    onLoad() {
-        super.onLoad();
-        this.setDealerChipBox();
-        this.setChipFlying();
-    }
+    @property(SlidingChip)
+    slidingChip: SlidingChip = null;
+
+    @property(AroundTablePlayers)
+    aroundTablePlayers: AroundTablePlayers = null;
+
+    @property(BetItems)
+    betItems: BetItems = null;
+
     protected enablePlaceChips = true;
-    public isChipStack = false;
-    public payChipsDuration = 1.2;
-    public chipDelayFlyingTime = 1.25;
+    protected isChipStack = false;
+    protected payChipsDuration = 1.2;
+    protected chipDelayFlyingTime = 1.25;
 
-    @handle(ChipFlyingHandlers.SetDealerChipBox)
-    setDealerChipBox() {
-        return this.dealerChipBox;
-    }
-    @handle(ChipFlyingHandlers.SetChipFlying)
-    setChipFlying() {
-        return this;
-    }
+    @render(BetItemStore, (store) => store.aroundTablePlayersChips)
+    flyChipJoinGame(mainPlayersChips: IAroundTablePlayersChips) {
+        const { chips, isLocking, isPlacingBet, mainPlayerRate } = mainPlayersChips ?? {};
 
-    @render(BetItemStore, (store) => store.playersChips)
-    flyChipJoinGame(ownChips: IPlayersChips[]) {
-        ownChips.forEach((ownChip) => {
-            actions.addChipsToChipBoxWhenJoinRoom(ownChip);
-        });
-    }
+        if (isLocking || isPlacingBet) {
+            for (const rate in chips) {
+                const chipValues = chips[rate];
 
-    @render(BetItemStore, (store) => store.ownChip)
-    flyChip(ownChip: IOwnChip) {
-        actions.placeChipToChipBox(ownChip, null, null);
-    }
+                for (const betItem of this.betItems?.betItemComponents || []) {
+                    const chipAmount = chipValues[betItem.betChoice];
 
-    @render(ChipFlyingStore, (store) => store.payChipInfo)
-    payChips(payChipInfo: TPayChipInfo) {
-        if (payChipInfo?.isFinishedShowResult) {
-            const { finish, betInfo } = payChipInfo;
-
-            if (!this || !finish?.settlementResult || !this.enablePlaceChips || !this.node) {
-                return;
-            }
-
-            if (!this.node.activeInHierarchy) {
-                ActionChipFlying.dealerGetChips(payChipInfo, betInfo?.lostBetItems);
-                ActionChipFlying.dealerPayChips(payChipInfo, betInfo?.winBetItems);
-                this.isChipStack && ActionChipFlying.removeChipStack(betInfo?.winBetItems);
-                this.payChipToAllPlayers(payChipInfo);
-            } else {
-                tween(this.node)
-                    .delay(this.chipDelayFlyingTime)
-                    .call(() => {
-                        ActionChipFlying.dealerGetChips(payChipInfo, betInfo?.lostBetItems);
-                    })
-                    .delay(this.chipDelayFlyingTime)
-                    .call(() => {
-                        ActionChipFlying.dealerPayChips(payChipInfo, betInfo?.winBetItems);
-                    })
-                    .delay(this.chipDelayFlyingTime)
-                    .call(() => {
-                        this.isChipStack && ActionChipFlying.removeChipStack(betInfo?.winBetItems);
-                        this.payChipToAllPlayers(payChipInfo);
-                    })
-                    .start();
+                    if (chipAmount) {
+                        const chipAmountConvert = this.getChipValueByCurrency(chipAmount, mainPlayerRate, +rate);
+                        actions.addChipsToChipBoxWhenJoinRoom(betItem.chipBox, chipAmountConvert, this.slidingChip);
+                    }
+                }
             }
         }
     }
 
-    payChipToAllPlayers = (payChipInfo: TPayChipInfo) => {
-        const { hiddenPlayersNode: otherPlayers, settleStatus } = payChipInfo;
+    private getChipValueByCurrency(chipAmount: TChipAmount, playerRate: number, chipRate: number) {
+        const chipAmountConvert: TChipAmount = {};
+        for (const chipValue in chipAmount) {
+            const convertChipValue = NumberUtils.getValueByCurrency(+chipValue, playerRate, chipRate);
 
-        ActionChipFlying.payChipsToMainPlayer(payChipInfo);
+            chipAmountConvert[convertChipValue] = chipAmount[chipValue];
+        }
+
+        return chipAmountConvert;
+    }
+
+    @render(Chips.ChipStore, (store) => store.ownChip)
+    flyChip(ownChip: gc.GameServiceMessage.OwnChip) {
+        const { betChoice, amount } = ownChip ?? {};
+        if (!betChoice || !amount) {
+            return;
+        }
+
+        const betItem = this.betItems?.betItemComponents.find((item) => betChoice === item.betChoice);
+        const mainPlayerChip: IMainPlayerChip = {
+            chipBox: betItem?.chipBox,
+            chipAmount: amount,
+        };
+        actions.placeChipToChipBox(this.slidingChip, mainPlayerChip, null, null);
+    }
+
+    @render(ChipFlyingStore, (store) => store.payChipInfo)
+    payChips(payChipInfo: TPayChipInfo) {
+        const { finish } = payChipInfo ?? {};
+
+        if (!this || !finish?.settlementResult || !this.enablePlaceChips || !this.node) {
+            return;
+        }
+
+        if (!this.node.activeInHierarchy) {
+            ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems);
+            ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems);
+            this.isChipStack && ActionChipFlying.removeChipStack(this.betItems?.winBetItems);
+            this.payChipToAllPlayers(payChipInfo);
+        } else {
+            tween(this.node)
+                .delay(this.chipDelayFlyingTime)
+                .call(() => {
+                    ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems);
+                })
+                .delay(this.chipDelayFlyingTime)
+                .call(() => {
+                    ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems);
+                })
+                .delay(this.chipDelayFlyingTime)
+                .call(() => {
+                    this.isChipStack && ActionChipFlying.removeChipStack(this.betItems?.winBetItems);
+                    this.payChipToAllPlayers(payChipInfo);
+                })
+                .start();
+        }
+    }
+
+    private payChipToAllPlayers = (payChipInfo: TPayChipInfo) => {
+        const { settleStatus } = payChipInfo;
+        const chipFlyingInfo: IChipFlyingInfo = {
+            slidingChip: this.slidingChip,
+            hiddenPlayersNode: this.hiddenPlayersNode,
+            mainPlayerAvatarNode: this.mainPlayerAvatarNode,
+            isChipStack: this.isChipStack,
+            payChipsDuration: this.payChipsDuration,
+        };
+        ActionChipFlying.payChipsToMainPlayer(payChipInfo?.settleStatus, chipFlyingInfo, this.betItems?.winBetItems);
         this.showPayoutForMainPlayer(settleStatus);
 
-        if (otherPlayers) {
-            ActionChipFlying.payChipsToHiddenPlayers(payChipInfo);
+        if (this.hiddenPlayersNode) {
+            ActionChipFlying.payChipsToHiddenPlayers(this.hiddenPlayersNode, this.isChipStack, this.betItems?.winBetItems);
         }
 
         this.payChipsToAroundTablePlayers(payChipInfo);
     };
 
-    showPayoutForMainPlayer(settleStatus: gc.Settlements.SettlementStatusStore) {
+    private showPayoutForMainPlayer(settleStatus: gc.Settlements.SettlementStatusStore) {
         if (settleStatus?.win) {
             this.updateBalance(settleStatus?.bet);
             this.playWinningEffectMainPlayer();
@@ -121,14 +170,7 @@ export class ChipFlying extends ObserverComponent {
     }
 
     payChipsToAroundTablePlayers(payChipInfo: TPayChipInfo) {
-        const {
-            finish,
-            betInfo,
-            slidingChip,
-            payChipsDuration,
-            isChipStack,
-            aroundTablePlayerComponents,
-        } = payChipInfo;
+        const { finish } = payChipInfo;
         const winningPlayers = finish.winningPlayers;
 
         if (!winningPlayers) {
@@ -140,7 +182,10 @@ export class ChipFlying extends ObserverComponent {
         const balanceEffects: TBalanceEffect[] = [];
 
         winningPlayerIds.forEach((playerId) => {
-            const aroundTablePlayerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(aroundTablePlayerComponents, playerId);
+            const aroundTablePlayerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(
+                this.aroundTablePlayers?.aroundTablePlayerComponents,
+                playerId
+            );
             if (!aroundTablePlayerSlot) {
                 return;
             }
@@ -149,10 +194,11 @@ export class ChipFlying extends ObserverComponent {
             const playerBetItems = winningPlayerData.winningByChoices;
             const { bet, rate } = winningPlayerData;
 
-            betInfo?.winBetItems.forEach((item) => {
+            this.betItems.winBetItems.forEach((item) => {
                 if (playerBetItems && playerBetItems[item.betChoice] > 0) {
-                    const chipNode = !isChipStack ? item.chipBox : item.chipBox.children[0];
-                    chipNode && slidingChip.moveChipsWithRandomAmount(chipNode, aroundTablePlayerSlot.avatar.node, payChipsDuration);
+                    const chipNode = !this.isChipStack ? item.chipBox : item.chipBox.children[0];
+                    chipNode &&
+                        this.slidingChip.moveChipsWithRandomAmount(chipNode, aroundTablePlayerSlot.avatar.node, this.payChipsDuration);
                 }
             });
 

@@ -61,14 +61,12 @@ export default class SlidingChip extends ObserverComponent {
     lowValueChipSprite: SpriteFrame = null;
 
     public chipValues: number[] = [];
-    public readonly chipDelayFlyingTime = 1.25;
-    public smallChipScale = 0.29;
-    public enableStakeLevel = true;
-    public chipList: Node[] = [];
+    protected smallChipScale = 0.29;
+    protected chipList: Node[] = [];
     private disabledBetChips = false;
     protected chipSetting: gc.Chips.TChipSetting;
 
-    chipFlyingTime: number = 0.8;
+    static chipFlyingTime: number = 0.8;
 
     setDisabledBetChips(status: boolean) {
         this.disabledBetChips = status;
@@ -275,9 +273,7 @@ export default class SlidingChip extends ObserverComponent {
     }
 
     @handle(SlidingChipHandler.SetChipValues)
-    setChipValues() {
-        return this;
-    }
+    setChipValues() {}
 
     @render(SlidingChipStore, (store) => store.isResetScrollViewOffset)
     needResetScrollViewOffset() {

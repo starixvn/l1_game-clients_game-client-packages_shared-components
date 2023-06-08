@@ -1,29 +1,27 @@
 import { Node } from "cc";
 import gc from "game-client-base";
 import inversify from "inversify";
-import { filter } from "lodash-es";
 import mobx from "mobx";
-import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
-import { SlidingChipStore } from "../../../sliding-chip/scripts/stores/sliding-chip-store";
-import { NumberUtils } from "../../../utils";
-import BetItem from "../components/bet-item";
 
 const { injectable, inject } = inversify;
 
 interface Chips {
-    slidingChip: SlidingChip;
-    chipBox: Node;
+    chipBox?: Node;
 }
 
-export interface IPlayersChips extends Chips {
-    chipAmount: TChipAmount;
+export interface IAroundTablePlayersChips extends Chips {
+    chipAmount?: TChipAmount;
+    chips: gc.Chips.Chips;
+    isLocking: boolean;
+    isPlacingBet: boolean;
+    mainPlayerRate: number;
 }
 
 export type TChipAmount = {
     [chipValue: string]: number;
 };
 
-export interface IOwnChip extends Chips {
+export interface IMainPlayerChip extends Chips {
     chipAmount: number;
 }
 
@@ -34,7 +32,6 @@ export interface TBetStartingRound {
 
 @injectable()
 export class BetItemStore {
-    @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
     @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
     @inject(gc.Settlements.SettlementStore) private readonly settlementStore: gc.Settlements.SettlementStore;
     @inject(gc.Player.MainPlayerStore) private readonly mainPlayerStore: gc.Player.MainPlayerStore;
@@ -44,70 +41,16 @@ export class BetItemStore {
         mobx.makeAutoObservable(this);
     }
 
-    private _betItems: BetItem[] = [];
-
-    get betItems() {
-        return this._betItems;
-    }
-
-    get playersChips() {
-        const players: IPlayersChips[] = [];
-        const chips = this.chipStore.chips;
-
+    get aroundTablePlayersChips() {
         if (this.roundTimeStore.isLocking || this.roundTimeStore.isPlacingBet) {
-            for (const rate in chips) {
-                const chipValues = chips[rate];
-
-                for (const betItem of this.betItems) {
-                    const chipAmount = chipValues[betItem.betChoice];
-
-                    if (chipAmount) {
-                        const chipAmountConvert = this.getChipValueByCurrency(chipAmount, this.mainPlayerStore.rate, +rate);
-
-                        players.push({
-                            chipBox: betItem.chipBox,
-                            chipAmount: chipAmountConvert,
-                            slidingChip: this.slidingChipStore.slidingChip,
-                        });
-                    }
-                }
-            }
+            return {
+                chips: this.chipStore.chips,
+                isLocking: this.roundTimeStore.isLocking,
+                isPlacingBet: this.roundTimeStore.isPlacingBet,
+                mainPlayerRate: this.mainPlayerStore.rate,
+            };
         }
-        return players;
-    }
-
-    getChipValueByCurrency(chipAmount: TChipAmount, playerRate: number, chipRate: number) {
-        const chipAmountConvert: TChipAmount = {};
-        for (const chipValue in chipAmount) {
-            const convertChipValue = NumberUtils.getValueByCurrency(+chipValue, playerRate, chipRate);
-
-            chipAmountConvert[convertChipValue] = chipAmount[chipValue];
-        }
-
-        return chipAmountConvert;
-    }
-
-    get ownChip(): IOwnChip {
-        const { betChoice, amount } = this.chipStore.ownChip;
-        const betItem = this.betItems.find((item) => betChoice === item.betChoice);
-
-        return {
-            slidingChip: this.slidingChipStore.slidingChip,
-            chipBox: betItem?.chipBox,
-            chipAmount: amount,
-        };
-    }
-
-    setBetItems(betItem: BetItem) {
-        this._betItems = [...this.betItems, betItem];
-    }
-
-    get lostBetItems(): BetItem[] {
-        return filter(this.betItems, (item: BetItem) => !this.settlementStore.settlementResult[item.betChoice]);
-    }
-
-    get winBetItems(): BetItem[] {
-        return filter(this.betItems, (item: BetItem) => this.settlementStore.settlementResult[item.betChoice]);
+        return null;
     }
 
     get getBetStartingRoundInfo() {

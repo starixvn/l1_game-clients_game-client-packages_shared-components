@@ -1,5 +1,5 @@
 import { Node, UITransform } from "cc";
-import { IOwnChip, IPlayersChips } from "../../../../bets/scripts/stores/bet-item-store";
+import { IMainPlayerChip, TChipAmount } from "../../../../bets/scripts/stores/bet-item-store";
 import { FlyChipUtils } from "../../utils/fly-chip-utils";
 import SlidingChip from "../sliding-chip";
 
@@ -10,9 +10,9 @@ type TChips = {
 const loginUserChipFlyingTime = 0.5;
 const chipFlyingTime = 0.8;
 
-export const placeChipToChipBox = (ownerChip: IOwnChip, startNode: Node, onComplete: () => void) => {
+export const placeChipToChipBox = (slidingChip: SlidingChip, mainPlayerChip: IMainPlayerChip, startNode: Node, onComplete: () => void) => {
     // Audio Chip Fly
-    const { chipBox, chipAmount, slidingChip } = ownerChip;
+    const { chipBox, chipAmount } = mainPlayerChip;
     if (slidingChip && chipAmount > 0) {
         const isLoginUserPlaceBet = startNode == null;
         const flyingDuration = isLoginUserPlaceBet ? loginUserChipFlyingTime : chipFlyingTime;
@@ -32,8 +32,7 @@ export const placeChipToChipBox = (ownerChip: IOwnChip, startNode: Node, onCompl
     }
 };
 
-export const addChipsToChipBoxWhenJoinRoom = (ownChip: IPlayersChips) => {
-    const { slidingChip, chipBox, chipAmount } = ownChip;
+export const addChipsToChipBoxWhenJoinRoom = (chipBox: Node, chipAmount: TChipAmount, slidingChip: SlidingChip) => {
     if (!chipAmount) {
         return;
     }

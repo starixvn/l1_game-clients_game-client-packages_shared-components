@@ -3,7 +3,7 @@ import { find } from "lodash-es";
 import BetItem from "../../../../bets/scripts/components/bet-item";
 import { FunctionUtils } from "../../../../utils";
 import { AroundTablePlayerComponent } from "../components/around-table-player-component";
-import { IAroundTablePlayers } from "../stores/around-table-players-store";
+import { IAroundTablePlayers, INewPlayerInfo } from "../stores/around-table-players-chip-store";
 const { Shared } = gc;
 
 export namespace AroundTablePlayerUtils {
@@ -69,5 +69,31 @@ export namespace AroundTablePlayerUtils {
 
     export const isIdle = (playersComponent: AroundTablePlayerComponent) => {
         return playersComponent.aroundTablePlayer.idleCount > AroundTablePlayerComponent.maxIdleCount;
+    };
+
+    export const updatePlayerSlotDataStorage = (playerChip: gc.GameServiceMessage.PlayerChip, playerSlot: AroundTablePlayerComponent) => {
+        playerSlot.setBalance(playerChip.red);
+        playerSlot.aroundTablePlayer.idleCount = 0;
+        AroundTablePlayerUtils.storePlayerToCache(playerSlot.aroundTablePlayer);
+    };
+
+    export const addAroundTablePlayerInfo = (newPlayerInfo: INewPlayerInfo) => {
+        const { value } = newPlayerInfo ?? {};
+        let clonePlayerInfo = null;
+        if (value) {
+            const { id, name, red, avatarId, type, idleCount = 0 } = value;
+            clonePlayerInfo = {
+                id,
+                name,
+                red,
+                avatarId,
+                type,
+                idleCount,
+            };
+        }
+
+        newPlayerInfo?.playerComp.setInfo(clonePlayerInfo).catch(() => {
+            console.log("Error setInfo");
+        });
     };
 }

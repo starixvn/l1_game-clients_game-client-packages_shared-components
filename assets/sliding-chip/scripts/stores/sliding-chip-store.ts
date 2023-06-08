@@ -1,7 +1,6 @@
 import gc from "game-client-base";
 import inversify from "inversify";
 import mobx from "mobx";
-import SlidingChip from "../components/sliding-chip";
 
 const { injectable, inject } = inversify;
 
@@ -22,7 +21,6 @@ export class SlidingChipStore {
     isResetScrollViewOffset = false;
     private _currentChip = "0";
     private _selectChip = 0;
-    private _slidingChip: SlidingChip = null;
 
     set selectChip(index: number) {
         this._selectChip = index;
@@ -30,14 +28,6 @@ export class SlidingChipStore {
 
     get selectChip() {
         return this._selectChip;
-    }
-
-    set slidingChip(slidingChip: SlidingChip) {
-        this._slidingChip = slidingChip;
-    }
-
-    get slidingChip() {
-        return this._slidingChip;
     }
 
     onLoad(minChipSelect: number) {

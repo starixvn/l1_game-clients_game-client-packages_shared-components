@@ -1,12 +1,11 @@
 import { _decorator, Component, Label, Node } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
-import { BetItemHandlers } from "../handlers/bet-item-handler";
 import { BetItemStore, TBetStartingRound } from "../stores/bet-item-store";
 
 const { render, handle } = Observer;
 
-const { Rounds, RoundHistories, Settlements } = gc;
+const { Rounds, RoundHistories } = gc;
 
 const { property } = _decorator;
 
@@ -36,16 +35,10 @@ export default class BetItem extends Component {
         this.lblOwnBet.string = "";
         this.lblTotalBet.string = "";
         this.lblOdds.string = "";
-        this && this.registerBetItem();
     }
 
     get betChoice() {
         return this.node.name;
-    }
-
-    @handle(BetItemHandlers.SetBetItems)
-    registerBetItem() {
-        return this;
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
