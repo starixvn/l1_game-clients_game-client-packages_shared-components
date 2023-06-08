@@ -1,21 +1,38 @@
-import { _decorator } from "cc";
+import { Prefab, _decorator, Node, instantiate } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
-import { BetHistoryCmp } from "./bet-history-cmp";
 import { NodeContainer } from "../../../node-container/node-container";
+import BetHistoryBodyItem from "./bet-history-body-item";
+import { BetHistoryTable } from "./bet-history-table";
 
 const { render } = Observer;
 
 const { BetHistory } = gc;
-const { ccclass } = _decorator;
+const { ccclass, property } = _decorator;
 
 @ccclass("BetHistoryContainer")
 export class BetHistoryContainer extends NodeContainer {
-    // @render(BetHistory.BetHistoryStore, (store) => store.data, { fireImmediately: false })
+    @property(Prefab)
+    headerPrefab: Prefab = null;
+
+    @property(Prefab)
+    bodyPrefab: Prefab = null;
+
+    getHistoryItemComponent(node: Node) {
+        return node.getComponent(BetHistoryBodyItem);
+    }
+
+    buildBodyRow(ticket: any, index: number): Node {
+        return null;
+    }
+
+    @render(BetHistory.BetHistoryStore, (store) => store.data, { fireImmediately: false })
     showBetHistory(model: gc.BetHistory.BetHistoryModel) {
-        // console.log("open Bet History", model);
-        // const node = this.createNode();
-        // const betHistoryCmp = node.getComponent(BetHistoryCmp);
-        // betHistoryCmp.setData(model);
+        const table = this.createNode().getComponent(BetHistoryTable);
+
+        table.header.addChild(instantiate(this.headerPrefab));
+        model.betLogs.forEach((ticket, index) => {
+            table.body.addChild(this.buildBodyRow(ticket, index));
+        });
     }
 }
