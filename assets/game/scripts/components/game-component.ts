@@ -24,16 +24,28 @@ export default class GameComponent extends Component {
     @property(NodeContainer)
     guideContainer: NodeContainer = null;
 
+    @property(NodeContainer)
+    md5Container: NodeContainer = null;
+
     protected roundId = 0;
 
     protected onLoad(): void {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
         game.on(Game.EVENT_SHOW, this.onJoinGame, this);
+
+        this.initMd5Container();
+        
     }
 
     protected onDestroy(): void {
         game.off(Game.EVENT_HIDE, this.onHideGame, this);
         game.off(Game.EVENT_SHOW, this.onJoinGame, this);
+    }
+
+    initMd5Container(){
+        if(this.md5Container){
+            this.md5Container.createNode();            
+        }
     }
 
     @handle(HideGame.HideGameHandler)
