@@ -52,20 +52,14 @@ export default class GameComponent extends Component {
 
     @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomShowResult)
     handleJoinGameAndShowResult(joinRoomShowResult: gc.RoundHistories.IRoundHistoryInfo) {
-        const { roundHistory } = joinRoomShowResult ?? {};
-        if (roundHistory) {
+        const { roundHistory, isShow } = joinRoomShowResult ?? {};
+        if (roundHistory && isShow) {
+            console.log("handleJoinGameAndShowResult: ", isShow);
             this.roundId = roundHistory?.roundId;
             this.setRoundId();
             this.showResult(roundHistory?.result, false);
         }
     }
-
-    @render(RoundHistories.RoundHistoryStore, (store) => store.isResetResultJoinRoom)
-    handleResetResultWhenJoinRoom(isResetResultJoinRoom: boolean) {
-        isResetResultJoinRoom && this.resetAnimationResult();
-    }
-
-    resetAnimationResult() {}
 
     @render(Rounds.RoundStore, (store) => store.roundId)
     renderRoundId(roundId: number) {
