@@ -2,14 +2,13 @@ import { Label, Sprite, SpriteFrame, UIOpacity, _decorator } from "cc";
 import gc from "game-client-base";
 import { bundleManager } from "../../../../bundle-magager/bundle-manager";
 import { ObserverComponent } from "../../../../common/observer-component/scripts/observer-component";
-import { NumberUtils } from "../../../../utils";
 import { AnimationUtils } from "../../../../utils/utils";
 import { IAroundTablePlayers } from "../stores/around-table-players-chip-store";
 
 const { ccclass, property } = _decorator;
 const { fadeIn, fadeOut } = AnimationUtils;
 
-const { FormatUtils } = gc;
+const { FormatUtils, NumberUtils } = gc;
 
 @ccclass
 export class AroundTablePlayerComponent extends ObserverComponent {

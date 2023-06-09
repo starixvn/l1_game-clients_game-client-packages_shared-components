@@ -55,14 +55,12 @@ export namespace ActionChipFlying {
     ) => {
         const isHiddenPlayers = chipFlyingInfo?.hiddenPlayersNode !== null;
 
-        if (!settleStatus || !settleStatus.win) {
-            return;
-        }
-
-        if (isHiddenPlayers) {
-            moveChipWithRandomAmountToMainPlayer(settleStatus, chipFlyingInfo, winBetItems);
-        } else {
-            moveChipWithAmountToMainPlayer(settleStatus, chipFlyingInfo, winBetItems);
+        if (settleStatus && settleStatus?.win) {
+            if (isHiddenPlayers) {
+                moveChipWithRandomAmountToMainPlayer(settleStatus, chipFlyingInfo, winBetItems);
+            } else {
+                moveChipWithAmountToMainPlayer(settleStatus, chipFlyingInfo, winBetItems);
+            }
         }
     };
 

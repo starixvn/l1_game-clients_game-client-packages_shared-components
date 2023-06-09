@@ -4,7 +4,6 @@ import inversify from "inversify";
 import mobx from "mobx";
 import { getChipQuantity } from "../../../../sliding-chip/scripts/components/actions";
 import { SlidingChipStore } from "../../../../sliding-chip/scripts/stores/sliding-chip-store";
-import { NumberUtils } from "../../../../utils";
 import { AroundTablePlayerComponent } from "../components/around-table-player-component";
 
 const { injectable, inject } = inversify;
@@ -50,7 +49,7 @@ export class AroundTablePlayersChipStore {
     get aroundTablePlayerChip(): IAroundTablePlayerChip {
         const playerChip = this.chipStore.playerChip;
         if (playerChip) {
-            const convertValue = NumberUtils.getValueByCurrency(playerChip?.amount, this.mainPlayerStore.rate);
+            const convertValue = gc.NumberUtils.getValueByCurrency(playerChip?.amount, this.mainPlayerStore.rate);
             const chipValues = getChipQuantity(convertValue, this.slidingChipStore.chipValues);
 
             return {

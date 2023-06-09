@@ -10,11 +10,10 @@ import { ObserverComponent } from "../../../common/observer-component/scripts/ob
 import { AroundTablePlayers } from "../../../games/around-table-player/scripts/components/around-table-players";
 import { AroundTablePlayerUtils } from "../../../games/around-table-player/scripts/utils";
 import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
-import { NumberUtils } from "../../../utils";
 import { ChipFlyingStore, TPayChipInfo } from "../stores/chip-flying-store";
 import { ActionChipFlying } from "./actions";
 
-const { Auth, Chips } = gc;
+const { Auth, Chips, NumberUtils } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 

@@ -53,15 +53,12 @@ export class AroundTablePlayers extends ObserverComponent {
     renderAroundTablePlayers(aroundTablePlayers: gc.GameServiceMessage.AroundTablePlayers) {
         if (aroundTablePlayers) {
             const players: IAroundTablePlayers[] = Object.values(aroundTablePlayers);
-            const realPlayers: IAroundTablePlayers[] = players.filter((player: IAroundTablePlayers) => !player.type);
-            const botPlayers: IAroundTablePlayers[] = players.filter((player: IAroundTablePlayers) => player.type);
+            // Real player is type equal false
+            const sortedPlayers: IAroundTablePlayers[] = players.sort((playerA, playerB) => (playerA.type === false ? -1 : 1));
 
-            const addPlayerToTable = (player: IAroundTablePlayers) => {
+            sortedPlayers.forEach((player) => {
                 this.addNewPlayer(player);
-            };
-
-            realPlayers.forEach(addPlayerToTable);
-            botPlayers.forEach(addPlayerToTable);
+            });
         }
     }
 
@@ -86,13 +83,13 @@ export class AroundTablePlayers extends ObserverComponent {
         }
     }
 
-    @render(gc.AroundTablePlayers.AroundTablePlayersStore, (store) => store.aroundTablePlayerIdOutGame)
-    handleRemoveAroundTablePlayer(aroundTablePlayerIdOutGame: string) {
-        if (!aroundTablePlayerIdOutGame) {
+    @render(gc.AroundTablePlayers.AroundTablePlayersStore, (store) => store.outGamePlayerId)
+    handleRemoveAroundTablePlayer(outGamePlayerId: string) {
+        if (!outGamePlayerId) {
             return;
         }
 
-        const playerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayerComponents, aroundTablePlayerIdOutGame);
+        const playerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayerComponents, outGamePlayerId);
 
         if (playerSlot) {
             AroundTablePlayerUtils.addAroundTablePlayerInfo({
@@ -108,7 +105,7 @@ export class AroundTablePlayers extends ObserverComponent {
                 delete this.hiddenPlayers[newPlayerId];
             }
         } else {
-            delete this.hiddenPlayers[aroundTablePlayerIdOutGame];
+            delete this.hiddenPlayers[outGamePlayerId];
         }
     }
 

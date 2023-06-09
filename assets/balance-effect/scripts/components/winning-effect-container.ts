@@ -18,18 +18,18 @@ export class WinningEffectContainer extends NodeContainer {
 
     @render(BalanceEffectStore, (store) => store.winEffectAroundTablePlayers, { fireImmediately: false })
     winEffectAroundTablePlayers(winEffectAroundTablePlayers: TWinningEffects) {
-        const { winningEffects } = winEffectAroundTablePlayers ?? {};
-        if (winningEffects) {
-            winningEffects.forEach((winningEffect) => {
+        if (winEffectAroundTablePlayers?.winningEffects) {
+            winEffectAroundTablePlayers.winningEffects.forEach((winningEffect) => {
                 this.playWinningEffect(winningEffect);
             });
         }
     }
 
     playWinningEffect(playWinningEffectMainPlayer: TWinningEffect) {
-        const { avatarNode } = playWinningEffectMainPlayer ?? {};
-        const winningEffectNode = this.createNode();
-        avatarNode.addChild(winningEffectNode);
-        tween(winningEffectNode).delay(this.duration).destroySelf().start();
+        if (playWinningEffectMainPlayer?.avatarNode) {
+            const winningEffectNode = this.createNode();
+            playWinningEffectMainPlayer.avatarNode.addChild(winningEffectNode);
+            tween(winningEffectNode).delay(this.duration).destroySelf().start();
+        }
     }
 }
