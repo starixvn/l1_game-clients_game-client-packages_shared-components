@@ -28,11 +28,11 @@ export type TUpdateBalances = {
 
 @injectable()
 export class BalanceEffectStore {
-    betBalanceMainPlayer: TUpdateBalance = null;
-    payoutBalanceMainPlayer: TUpdateBalance = null;
+    decreaseBalanceMainPlayer: TUpdateBalance = null;
+    increaseBalanceMainPlayer: TUpdateBalance = null;
     winEffectMainPlayer: TWinningEffect = null;
     winEffectAroundTablePlayers: TWinningEffects = null;
-    payoutBalanceAroundTablePlayers: TUpdateBalances = null;
+    decreaseBalanceAroundTablePlayers: TUpdateBalances = null;
 
     @inject(MainPlayerProfileStore) private readonly mainPlayerProfileStore: MainPlayerProfileStore;
 
@@ -40,25 +40,25 @@ export class BalanceEffectStore {
         mobx.makeAutoObservable(this);
     }
 
-    updateBetBalanceMainPlayer(balance: number) {
+    mainPlayerUpdateDecreaseBalance(balance: number) {
         const balanceEffect = { balance, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
-        this.betBalanceMainPlayer = { balanceEffect };
+        this.decreaseBalanceMainPlayer = { balanceEffect };
     }
 
-    updatePayoutBalanceMainPlayer(balance: number) {
+    mainPlayerUpdateIncreaseBalance(balance: number) {
         const balanceEffect = { balance, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
-        this.payoutBalanceMainPlayer = { balanceEffect };
+        this.increaseBalanceMainPlayer = { balanceEffect };
     }
 
-    updateWinEffectMainPlayer(status: boolean) {
+    mainPlayerUpdateWinEffect(status: boolean) {
         this.winEffectMainPlayer = { status, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
     }
 
-    updateWinEffectAroundTablePlayer(winningEffects: TWinningEffect[]) {
+    aroundTablePlayersUpdateWinEffect(winningEffects: TWinningEffect[]) {
         this.winEffectAroundTablePlayers = { winningEffects };
     }
 
-    updatePayoutBalanceAroundTablePlayer(balanceEffects: TBalanceEffect[]) {
-        this.payoutBalanceAroundTablePlayers = { balanceEffects };
+    aroundTablePlayersUpdateDecreaseBalance(balanceEffects: TBalanceEffect[]) {
+        this.decreaseBalanceAroundTablePlayers = { balanceEffects };
     }
 }

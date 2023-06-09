@@ -12,12 +12,12 @@ export class WinningEffectContainer extends NodeContainer {
     duration: number = 3;
 
     @render(BalanceEffectStore, (store) => store.winEffectMainPlayer, { fireImmediately: false })
-    playWinningEffectMainPlayer(playWinningEffectMainPlayer: TWinningEffect) {
+    winEffectMainPlayer(playWinningEffectMainPlayer: TWinningEffect) {
         this.playWinningEffect(playWinningEffectMainPlayer);
     }
 
     @render(BalanceEffectStore, (store) => store.winEffectAroundTablePlayers, { fireImmediately: false })
-    playWinningEffectAroundTablePlayer(winEffectAroundTablePlayers: TWinningEffects) {
+    winEffectAroundTablePlayers(winEffectAroundTablePlayers: TWinningEffects) {
         const { winningEffects } = winEffectAroundTablePlayers ?? {};
         if (winningEffects) {
             winningEffects.forEach((winningEffect) => {

@@ -96,7 +96,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "f4fd2XcnBJnpy7604krA7z",
+    "fileId": "cbCJjHNDhP44f/eLuvXrTy",
     "prefabRootNode": {
       "__id__": 1
     },
@@ -126,7 +126,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "updating-bet-balance-main-player"
+    "value": "main-player-decrease-balance-effect"
   },
   {
     "__type__": "cc.TargetInfo",
@@ -208,7 +208,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "b40DTHDJ1PWJeUe7vS4Z4Q",
+    "fileId": "75GW1YNU9Pw6VCCC356gDH",
     "prefabRootNode": {
       "__id__": 1
     },
@@ -238,7 +238,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "updating-payout-balance-main-player"
+    "value": "main-player-increase-balance-effect"
   },
   {
     "__type__": "cc.TargetInfo",
@@ -320,7 +320,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "084e9Le7hHFIhO56yMshfG",
+    "fileId": "57tLTl5zZO0ZV2s7VVnxxP",
     "prefabRootNode": {
       "__id__": 1
     },
@@ -350,7 +350,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "updating-balance-around-table-players"
+    "value": "around-table-players-increase-balance-effect"
   },
   {
     "__type__": "cc.TargetInfo",

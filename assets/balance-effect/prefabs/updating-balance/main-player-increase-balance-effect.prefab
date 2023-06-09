@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "updating-balance-around-table-players",
+    "_name": "main-player-increase-balance-effect",
     "_objFlags": 0,
     "_native": "",
     "data": {
@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "updating-balance-around-table-players",
+    "_name": "main-player-increase-balance-effect",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -86,7 +86,7 @@
     "fileId": "04zm3GUUlMDJx6MW4ewLrt"
   },
   {
-    "__type__": "a95deXhfNtCNaZhBJVgYu5M",
+    "__type__": "5eaabi5gjJOHoZ01RXDyi4I",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -100,7 +100,7 @@
       "__uuid__": "1924c9b5-0533-455a-8e17-9e2bd8ff2c65",
       "__expectedType__": "cc.Prefab"
     },
-    "duration": 1,
+    "duration": 3,
     "fontIncreaseBalance": {
       "__uuid__": "873a1741-b920-4f57-a218-c401a0e73a5c",
       "__expectedType__": "cc.BitmapFont"
@@ -109,13 +109,13 @@
       "__uuid__": "01e2a2c7-4d15-4697-a7f2-9dec94f41cf6",
       "__expectedType__": "cc.BitmapFont"
     },
-    "startY": 0,
+    "startY": 80,
     "destY": 10,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "3cU3eZ23dIFKhlhw3P2AgQ"
+    "fileId": "61mMfdvytBF7b8IBustPRT"
   },
   {
     "__type__": "cc.PrefabInfo",

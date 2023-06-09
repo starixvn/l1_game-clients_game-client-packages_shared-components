@@ -5,46 +5,46 @@ const { injectable, inject } = inversify;
 
 export namespace BalanceEffectHandlers {
     @injectable()
-    export class UpdateBetBalanceMainPlayer {
+    export class MainPlayerDecreaseBalance {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(balance: number) {
-            this.balanceEffectStore.updateBetBalanceMainPlayer(balance);
+            this.balanceEffectStore.mainPlayerUpdateDecreaseBalance(balance);
         }
     }
 
     @injectable()
-    export class UpdatePayoutBalanceMainPlayer {
+    export class MainPlayerIncreaseBalance {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(balance: number) {
-            this.balanceEffectStore.updatePayoutBalanceMainPlayer(balance);
+            this.balanceEffectStore.mainPlayerUpdateIncreaseBalance(balance);
         }
     }
 
     @injectable()
-    export class UpdateWinEffectMainPlayer {
+    export class MainPlayerUpdateWinEffect {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(status: boolean) {
-            this.balanceEffectStore.updateWinEffectMainPlayer(status);
+            this.balanceEffectStore.mainPlayerUpdateWinEffect(status);
         }
     }
     @injectable()
-    export class UpdateWinEffectAroundTablePlayer {
+    export class AroundTablePlayersUpdateWinEffect {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(winningEffects: TWinningEffect[]) {
-            this.balanceEffectStore.updateWinEffectAroundTablePlayer(winningEffects);
+            this.balanceEffectStore.aroundTablePlayersUpdateWinEffect(winningEffects);
         }
     }
 
     @injectable()
-    export class UpdatePayoutBalanceAroundTablePlayer {
+    export class AroundTablePlayersUpdateIncreaseBalance {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(balanceEffects: TBalanceEffect[]) {
-            this.balanceEffectStore.updatePayoutBalanceAroundTablePlayer(balanceEffects);
+            this.balanceEffectStore.aroundTablePlayersUpdateDecreaseBalance(balanceEffects);
         }
     }
 }

@@ -53,19 +53,20 @@ export class ChipFlying extends ObserverComponent {
 
     @render(BetItemStore, (store) => store.aroundTablePlayersChips)
     flyChipJoinGame(mainPlayersChips: IAroundTablePlayersChips) {
-        const { chips, isLocking, isPlacingBet, mainPlayerRate } = mainPlayersChips ?? {};
+        const { chips, mainPlayerRate } = mainPlayersChips ?? {};
+        if (!chips && !mainPlayerRate) {
+            return;
+        }
 
-        if (isLocking || isPlacingBet) {
-            for (const rate in chips) {
-                const chipValues = chips[rate];
+        for (const rate in chips) {
+            const chipValues = chips[rate];
 
-                for (const betItem of this.betItems.betItemComponents) {
-                    const chipAmount = chipValues[betItem.betChoice];
+            for (const betItem of this.betItems.betItemComponents) {
+                const chipAmount = chipValues[betItem.betChoice];
 
-                    if (chipAmount) {
-                        const chipAmountConvert = this.getChipValueByCurrency(chipAmount, mainPlayerRate, +rate);
-                        actions.addChipsToChipBoxWhenJoinRoom(betItem.chipBox, chipAmountConvert, this.slidingChip);
-                    }
+                if (chipAmount) {
+                    const chipAmountConvert = this.getChipValueByCurrency(chipAmount, mainPlayerRate, +rate);
+                    actions.addChipsToChipBoxWhenJoinRoom(betItem.chipBox, chipAmountConvert, this.slidingChip);
                 }
             }
         }
@@ -156,8 +157,8 @@ export class ChipFlying extends ObserverComponent {
 
     private showPayoutForMainPlayer(settleStatus: gc.Settlements.SettlementStatusStore) {
         if (settleStatus?.win) {
-            this.updateBalance(settleStatus?.bet);
-            this.playWinningEffectMainPlayer();
+            this.mainPlayerIncreaseBalance(settleStatus?.bet);
+            this.mainPlayerPlayWinningEffect();
             this.getBalance();
         }
     }
@@ -165,13 +166,13 @@ export class ChipFlying extends ObserverComponent {
     @handle(Auth.AuthHandlers.GetBalance)
     getBalance() {}
 
-    @handle(BalanceEffectHandlers.UpdatePayoutBalanceMainPlayer)
-    updateBalance(balance: number) {
+    @handle(BalanceEffectHandlers.MainPlayerIncreaseBalance)
+    mainPlayerIncreaseBalance(balance: number) {
         return balance;
     }
 
-    @handle(BalanceEffectHandlers.UpdateWinEffectMainPlayer)
-    playWinningEffectMainPlayer() {
+    @handle(BalanceEffectHandlers.MainPlayerUpdateWinEffect)
+    mainPlayerPlayWinningEffect() {
         return true;
     }
 
@@ -214,17 +215,17 @@ export class ChipFlying extends ObserverComponent {
             balanceEffects.push({ avatarNode: aroundTablePlayerSlot.node, balance: convertValue });
         });
 
-        this.showWinningEffectAroundTablePlayers(winningEffects);
-        this.showBalanceEffectAroundTablePlayers(balanceEffects);
+        this.aroundTablePlayersShowWinningEffect(winningEffects);
+        this.AroundTablePlayersUpdateIncreaseBalance(balanceEffects);
     }
 
-    @handle(BalanceEffectHandlers.UpdateWinEffectAroundTablePlayer)
-    showWinningEffectAroundTablePlayers(winningEffects: TWinningEffect[]) {
+    @handle(BalanceEffectHandlers.AroundTablePlayersUpdateWinEffect)
+    aroundTablePlayersShowWinningEffect(winningEffects: TWinningEffect[]) {
         return winningEffects;
     }
 
-    @handle(BalanceEffectHandlers.UpdatePayoutBalanceAroundTablePlayer)
-    showBalanceEffectAroundTablePlayers(balanceEffects: TBalanceEffect[]) {
+    @handle(BalanceEffectHandlers.AroundTablePlayersUpdateIncreaseBalance)
+    AroundTablePlayersUpdateIncreaseBalance(balanceEffects: TBalanceEffect[]) {
         return balanceEffects;
     }
 }

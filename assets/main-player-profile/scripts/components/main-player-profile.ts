@@ -59,12 +59,12 @@ export default class MainPlayerProfile extends ObserverComponent {
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
     endBetInfo(lastReceivedBet: gc.Bet.ILastReceivedBet) {
         if (lastReceivedBet && lastReceivedBet.value > 0) {
-            this.updateBalance(lastReceivedBet.value);
+            this.mainPlayerDecreaseBalance(lastReceivedBet.value);
         }
     }
 
-    @handle(BalanceEffectHandlers.UpdateBetBalanceMainPlayer)
-    updateBalance(balance: number) {
+    @handle(BalanceEffectHandlers.MainPlayerDecreaseBalance)
+    mainPlayerDecreaseBalance(balance: number) {
         return balance;
     }
 }

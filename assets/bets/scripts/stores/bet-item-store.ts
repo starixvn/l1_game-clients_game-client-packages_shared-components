@@ -11,8 +11,6 @@ interface Chips {
 
 export interface IAroundTablePlayersChips extends Chips {
     chips: gc.Chips.Chips;
-    isLocking: boolean;
-    isPlacingBet: boolean;
     mainPlayerRate: number;
 }
 
@@ -40,12 +38,10 @@ export class BetItemStore {
         mobx.makeAutoObservable(this);
     }
 
-    get aroundTablePlayersChips() {
+    get aroundTablePlayersChips(): IAroundTablePlayersChips {
         if (this.roundTimeStore.isLocking || this.roundTimeStore.isPlacingBet) {
             return {
                 chips: this.chipStore.chips,
-                isLocking: this.roundTimeStore.isLocking,
-                isPlacingBet: this.roundTimeStore.isPlacingBet,
                 mainPlayerRate: this.mainPlayerStore.rate,
             };
         }

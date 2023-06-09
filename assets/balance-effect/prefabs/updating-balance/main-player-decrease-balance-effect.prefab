@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "updating-payout-balance-main-player",
+    "_name": "main-player-decrease-balance-effect",
     "_objFlags": 0,
     "_native": "",
     "data": {
@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "updating-payout-balance-main-player",
+    "_name": "main-player-decrease-balance-effect",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -86,7 +86,7 @@
     "fileId": "04zm3GUUlMDJx6MW4ewLrt"
   },
   {
-    "__type__": "5eaabi5gjJOHoZ01RXDyi4I",
+    "__type__": "cd643P2dddAn6W1irit4jT3",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -109,13 +109,13 @@
       "__uuid__": "01e2a2c7-4d15-4697-a7f2-9dec94f41cf6",
       "__expectedType__": "cc.BitmapFont"
     },
-    "startY": 110,
-    "destY": 10,
+    "startY": 80,
+    "destY": 100,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "61mMfdvytBF7b8IBustPRT"
+    "fileId": "d68/XkdA5KSJPy7+K/zdv4"
   },
   {
     "__type__": "cc.PrefabInfo",
