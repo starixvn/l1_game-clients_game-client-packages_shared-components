@@ -1,8 +1,6 @@
 import { _decorator, Component } from "cc";
+import { ObserverComponent } from "../../../common/observer-component/scripts/observer-component";
 
-const { ccclass } = _decorator;
-
-@ccclass
-export default class BetHistoryBodyItem extends Component {
+export default class BetHistoryBodyItem extends ObserverComponent {
     setData(data: any, index: number) {}
 }

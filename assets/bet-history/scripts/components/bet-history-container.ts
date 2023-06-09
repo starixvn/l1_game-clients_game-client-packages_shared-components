@@ -8,15 +8,17 @@ import { BetHistoryTable } from "./bet-history-table";
 const { render } = Observer;
 
 const { BetHistory } = gc;
-const { ccclass, property } = _decorator;
+const { property } = _decorator;
 
-@ccclass("BetHistoryContainer")
 export class BetHistoryContainer extends NodeContainer {
     @property(Prefab)
     headerPrefab: Prefab = null;
 
     @property(Prefab)
     bodyPrefab: Prefab = null;
+
+    wrapperNode: Node = null;
+    table: any = null;
 
     getHistoryItemComponent(node: Node) {
         return node.getComponent(BetHistoryBodyItem);
@@ -26,13 +28,26 @@ export class BetHistoryContainer extends NodeContainer {
         return null;
     }
 
+    // @render(BetHistory.BetHistoryStore, (store) => store.showBetHistory, { fireImmediately: false })
+    // checkExistedBetHistory(model: gc.BetHistory.BetHistoryStore) {
+    //     if (model.showBetHistory) {
+    //         this.wrapperNode = this.createNode();
+    //     }
+    // }
+
     @render(BetHistory.BetHistoryStore, (store) => store.data, { fireImmediately: false })
     showBetHistory(model: gc.BetHistory.BetHistoryModel) {
-        const table = this.createNode().getComponent(BetHistoryTable);
+        if (this.wrapperNode && this.wrapperNode.active) {
+            this.table.header.destroyAllChildren();
+            this.table.body.destroyAllChildren();
+        } else {
+            this.wrapperNode = this.createNode();
+            this.table = this.wrapperNode.getComponent(BetHistoryTable);
+        }
 
-        table.header.addChild(instantiate(this.headerPrefab));
+        this.table.header.addChild(instantiate(this.headerPrefab));
         model.betLogs.forEach((ticket, index) => {
-            table.body.addChild(this.buildBodyRow(ticket, index));
+            this.table.body.addChild(this.buildBodyRow(ticket, index));
         });
     }
 }

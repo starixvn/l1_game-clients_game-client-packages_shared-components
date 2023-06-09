@@ -19,6 +19,9 @@ export class BetHistoryTable extends Dialog {
     @property(Node)
     body: Node = null;
 
+    @property(Node)
+    pagination: Node = null;
+
     @property(Prefab)
     headerPrefab: Prefab = null;
 
@@ -27,9 +30,6 @@ export class BetHistoryTable extends Dialog {
 
     @property(ScrollView)
     scrollView: ScrollView = null;
-
-    // @property(PaginationCommon)
-    // pagination: PaginationCommon = null;
 
     protected start(): void {
         this.table.getComponent(UITransform).width = 1300;

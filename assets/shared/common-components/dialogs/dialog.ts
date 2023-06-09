@@ -1,11 +1,12 @@
 import { _decorator, Component, Node } from "cc";
 import { AnimationUtils } from "../../utils/utils";
+import { ObserverComponent } from "../common/observer-component/scripts/observer-component";
 
 const { bounceIn, bounceOut, fadeIn, fadeOut } = AnimationUtils;
 const { ccclass, property } = _decorator;
 
 @ccclass("Dialog")
-export class Dialog extends Component {
+export class Dialog extends ObserverComponent {
     @property(Node)
     nodeFadeBackground: Node = null;
 
