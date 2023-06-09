@@ -32,6 +32,7 @@ export default class MD5Frame extends Component {
         const uiTransform = this.md5Node.getComponent(UITransform);
         uiTransform.width = width;
         
-        this.layoutNode.updateLayout();
+        const layoutNode = this.node.getComponent(Layout);
+        layoutNode.updateLayout();
     }
 }

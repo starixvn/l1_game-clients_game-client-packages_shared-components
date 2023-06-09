@@ -42,6 +42,9 @@ export default class MD5Component extends Component {
     @property(Node)
     md5TooltipContainer: Node = null;
 
+    @property(Node)
+    md5FrameNode: Node = null;
+
     @property
     delayShowRawValue = 0;
 
@@ -57,6 +60,7 @@ export default class MD5Component extends Component {
     onLoad() {
         this.initMD5Tooltip();
         this.registerTouchEvents();
+        this.initMD5Wrapper();
     }
 
     onDestroy() {
@@ -76,8 +80,8 @@ export default class MD5Component extends Component {
     }
 
    
-    initMD5Wrapper(node: Node) {
-        const md5Frame = node.getComponent(MD5Frame);
+    initMD5Wrapper() {
+        const md5Frame = this.md5FrameNode.getComponent(MD5Frame);
         this.md5Text = md5Frame.md5Label;
         this.copyButton = md5Frame.md5CopyBtn;
         this.hintCopyNode = md5Frame.md5HintCopy;

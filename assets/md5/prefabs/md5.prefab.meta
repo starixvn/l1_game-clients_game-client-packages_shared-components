@@ -2,12 +2,12 @@
   "ver": "1.1.43",
   "importer": "prefab",
   "imported": true,
-  "uuid": "da263770-b364-484c-891e-cbca7ac67615",
+  "uuid": "4a49865f-b2fd-40aa-af17-613de6bab065",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "md5-tooltip"
+    "syncNodeName": "md5"
   }
 }
