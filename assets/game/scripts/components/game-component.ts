@@ -87,9 +87,15 @@ export default class GameComponent extends Component {
     handleResult({ roundId, result }: { roundId: number; result: gc.GameServiceMessage.TResult }) {
         roundId && (this.roundId = roundId);
         this.showResult(result, true);
+        this.playSoundReceiveFinish();
     }
 
     showResult(result: gc.GameServiceMessage.TResult, hasAnimation: boolean) {}
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundReceiveFinish() {
+        return gc.Audios.AudioIds.RECEIVE_FINISH;
+    }
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult() {}
@@ -116,5 +122,15 @@ export default class GameComponent extends Component {
             const guide = this.guideContainer.createNode();
             guide.getComponent(WebViewGuide)?.initUrl();
         }
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
+    startNewRound(isStartPlacingBet: boolean) {
+        isStartPlacingBet && this.playSoundStartPlacingBet();
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundStartPlacingBet() {
+        return gc.Audios.AudioIds.START_PLACING_BET;
     }
 }

@@ -59,7 +59,7 @@ export class ChipFlying extends ObserverComponent {
             for (const rate in chips) {
                 const chipValues = chips[rate];
 
-                for (const betItem of this.betItems?.betItemComponents || []) {
+                for (const betItem of this.betItems.betItemComponents) {
                     const chipAmount = chipValues[betItem.betChoice];
 
                     if (chipAmount) {
@@ -95,6 +95,12 @@ export class ChipFlying extends ObserverComponent {
             chipAmount: amount,
         };
         actions.placeChipToChipBox(this.slidingChip, mainPlayerChip, null, null);
+        this.playSoundSingleChip();
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundSingleChip() {
+        return gc.Audios.AudioIds.SINGLE_CHIP;
     }
 
     @render(ChipFlyingStore, (store) => store.payChipInfo)

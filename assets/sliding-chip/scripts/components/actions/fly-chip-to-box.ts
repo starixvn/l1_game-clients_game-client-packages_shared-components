@@ -7,15 +7,10 @@ type TChips = {
     [value: number]: number;
 };
 
-const loginUserChipFlyingTime = 0.5;
-const chipFlyingTime = 0.8;
-
 export const placeChipToChipBox = (slidingChip: SlidingChip, mainPlayerChip: IMainPlayerChip, startNode: Node, onComplete: () => void) => {
-    // Audio Chip Fly
     const { chipBox, chipAmount } = mainPlayerChip;
     if (slidingChip && chipAmount > 0) {
-        const isLoginUserPlaceBet = startNode == null;
-        const flyingDuration = isLoginUserPlaceBet ? loginUserChipFlyingTime : chipFlyingTime;
+        const flyingDuration = startNode == null ? SlidingChip.mainPlayerChipFlyingTime : SlidingChip.chipFlyingTime;
         const chipPosition = chipBox
             ?.getComponent(UITransform)
             ?.convertToNodeSpaceAR(slidingChip.createStartNodeInfo(startNode, chipAmount).worldPos);

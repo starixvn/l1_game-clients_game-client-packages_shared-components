@@ -67,6 +67,7 @@ export default class SlidingChip extends ObserverComponent {
     protected chipSetting: gc.Chips.TChipSetting;
 
     static chipFlyingTime: number = 0.8;
+    static mainPlayerChipFlyingTime = 0.5;
 
     setDisabledBetChips(status: boolean) {
         this.disabledBetChips = status;
@@ -158,14 +159,19 @@ export default class SlidingChip extends ObserverComponent {
 
     @handle(SlidingChipHandler.ClickArrow, (handler, payload: { chipMovingStep: number }) => handler.handlePrev(payload))
     public onPrevious() {
-        // Audio Click
+        this.playSoundClick();
         return { chipMovingStep: this.movingStep };
     }
 
     @handle(SlidingChipHandler.ClickArrow, (handler, payload: { chipMovingStep: number }) => handler.handleNext(payload))
     public onNext() {
-        // Audio Click
+        this.playSoundClick();
         return { chipMovingStep: this.movingStep };
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
     }
 
     @render(SlidingChipStore, (store) => store.selectChip)
@@ -223,7 +229,7 @@ export default class SlidingChip extends ObserverComponent {
             const node = this.createChipNode(value);
             if (node) {
                 this.chips.addChild(node);
-                node.on("click", this.onClickBet.bind(this));
+                node.on("click", this.onClickChip.bind(this));
                 this.chipList.push(node);
             }
         });
@@ -254,8 +260,8 @@ export default class SlidingChip extends ObserverComponent {
         return null;
     }
 
-    public onClickBet(target: Component) {
-        // Audio Click
+    public onClickChip(target: Component) {
+        this.playSoundClick();
         const bet = target.node.name;
         this.setSelectChipAndScroll(bet);
     }

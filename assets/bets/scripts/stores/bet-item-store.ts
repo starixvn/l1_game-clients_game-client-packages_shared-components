@@ -10,7 +10,6 @@ interface Chips {
 }
 
 export interface IAroundTablePlayersChips extends Chips {
-    chipAmount?: TChipAmount;
     chips: gc.Chips.Chips;
     isLocking: boolean;
     isPlacingBet: boolean;

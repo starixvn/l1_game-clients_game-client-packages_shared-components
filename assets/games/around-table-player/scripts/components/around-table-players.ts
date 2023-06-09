@@ -40,7 +40,8 @@ export class AroundTablePlayers extends ObserverComponent {
 
     onLoad(): void {
         super.onLoad();
-        this.aroundTablePlayerComponents = this.node.getComponentsInChildren(AroundTablePlayerComponent) ?? [];
+        this.aroundTablePlayerComponents =
+            this.node.getComponentsInChildren(AroundTablePlayerComponent).filter((component) => component && component.node.active) ?? [];
     }
 
     @render(gc.AroundTablePlayers.AroundTablePlayersStore, (store) => store.aroundTablePlayer)

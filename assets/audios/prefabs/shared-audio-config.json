@@ -2,5 +2,17 @@
     "click": {
         "bundle": "shared-bundle",
         "path": "click"
+    },
+    "single-chip": {
+        "bundle": "shared-bundle",
+        "path": "single-chip"
+    },
+    "receive-finish": {
+        "bundle": "shared-bundle",
+        "path": "receive-finish"
+    },
+    "start-placing-bet": {
+        "bundle": "shared-bundle",
+        "path": "start-placing-bet"
     }
 }
