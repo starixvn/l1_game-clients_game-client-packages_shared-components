@@ -1809,16 +1809,16 @@
     "__prefab": {
       "__id__": 85
     },
-    "md5Label": {
+    "lblMd5": {
       "__id__": 7
     },
-    "md5CopyBtn": {
+    "btnMd5Copy": {
       "__id__": 74
     },
-    "md5HintCopy": {
+    "nodeMd5Hint": {
       "__id__": 52
     },
-    "md5Node": {
+    "nodeMd5": {
       "__id__": 17
     },
     "_id": ""

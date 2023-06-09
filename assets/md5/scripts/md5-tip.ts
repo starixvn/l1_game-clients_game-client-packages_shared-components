@@ -8,7 +8,7 @@ export enum ResultTipType {
 @ccclass
 export default class MD5Tip extends Component {
     @property(Label)
-    roundId: Label = null;
+    lblRoundId: Label = null;
 
     @property({ type: Enum(ResultTipType) })
     md5type = ResultTipType.Label;
@@ -19,7 +19,7 @@ export default class MD5Tip extends Component {
             return this.md5type === ResultTipType.Label;
         }
     })
-    result: Label = null;
+    lblResult: Label = null;
 
     @property({
         type: RichText,
@@ -30,7 +30,7 @@ export default class MD5Tip extends Component {
     resultRichText: RichText = null;
 
     public setData(data = "") {
-        this.result && (this.result.string = `${data}`);
+        this.lblResult && (this.lblResult.string = `${data}`);
         this.resultRichText && (this.resultRichText.string = `${data}`);
     }
 

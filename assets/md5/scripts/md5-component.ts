@@ -3,13 +3,11 @@ import MD5Tip from "./md5-tip";
 import MD5Frame from "./md5-frame";
 import gc from "game-client-base";
 import Observer from "observer";
-const { render, handle } = Observer;
-const { Rounds, RoundHistories, Settlements } = gc;
-import { AnimationUtils } from "../../utils/utils";
+const { render } = Observer;
+const { Rounds } = gc;
 
-import { Component, _decorator, Node, Label, Button, Layout, UITransform, Prefab, tween, UIOpacity, v3, instantiate, sys  } from "cc";
+import { Component, _decorator, Node, Label, Button, UITransform, Prefab, tween, UIOpacity, v3, instantiate, sys  } from "cc";
 const { ccclass, property} = _decorator;
-
 
 export type MD5Type = {
     extraInfos: any;
@@ -19,31 +17,31 @@ export type MD5Type = {
 @ccclass
 export default class MD5Component extends Component {
     @property(Label)
-    md5Text: Label = null;
+    lblCaption: Label = null;
 
     @property(EffectAppearanceLabel)
-    md5Value: EffectAppearanceLabel = null;
+    lblMd5Value: EffectAppearanceLabel = null;
 
     @property(Button)
-    copyButton: Button = null;
+    btnCopy: Button = null;
 
     @property(Node)
-    hintCopyNode: Node = null;
+    nodeHintCopy: Node = null;
 
     @property(Node)
-    md5ContentContainer: Node = null;
+    nodeMd5ContentContainer: Node = null;
 
     @property
     lengthOfMd5 = 21;
 
     @property(Prefab)
-    md5TooltipPrefab: Prefab = null;
+    prfMd5Tooltip: Prefab = null;
 
     @property(Node)
-    md5TooltipContainer: Node = null;
+    nodeMd5TooltipContainer: Node = null;
 
     @property(Node)
-    md5FrameNode: Node = null;
+    nodeMd5Frame: Node = null;
 
     @property
     delayShowRawValue = 0;
@@ -54,7 +52,7 @@ export default class MD5Component extends Component {
     readonly delayShowHashValue: number = 1.35;
     protected md5Tip: MD5Tip = null;
     maximumStringAllowed = 32;
-    public hintLabel: Label = null;
+    public lblHint: Label = null;
     protected tipString: string;
 
     onLoad() {
@@ -68,26 +66,26 @@ export default class MD5Component extends Component {
     }
 
     private registerTouchEvents() {
-        this.md5ContentContainer.on(Node.EventType.MOUSE_ENTER, this.showTooltip, this);
-        this.md5ContentContainer.on(Node.EventType.MOUSE_LEAVE, this.hideTooltip, this);
-        this.md5ContentContainer.on(Node.EventType.TOUCH_START, this.showTooltip, this);
+        this.nodeMd5ContentContainer.on(Node.EventType.MOUSE_ENTER, this.showTooltip, this);
+        this.nodeMd5ContentContainer.on(Node.EventType.MOUSE_LEAVE, this.hideTooltip, this);
+        this.nodeMd5ContentContainer.on(Node.EventType.TOUCH_START, this.showTooltip, this);
     }
 
     private removeTouchEvents() {
-        this.md5ContentContainer.off(Node.EventType.MOUSE_ENTER, this.showTooltip, this);
-        this.md5ContentContainer.off(Node.EventType.MOUSE_LEAVE, this.hideTooltip, this);
-        this.md5ContentContainer.off(Node.EventType.TOUCH_START, this.showTooltip, this);
+        this.nodeMd5ContentContainer.off(Node.EventType.MOUSE_ENTER, this.showTooltip, this);
+        this.nodeMd5ContentContainer.off(Node.EventType.MOUSE_LEAVE, this.hideTooltip, this);
+        this.nodeMd5ContentContainer.off(Node.EventType.TOUCH_START, this.showTooltip, this);
     }
 
    
     initMD5Wrapper() {
-        const md5Frame = this.md5FrameNode.getComponent(MD5Frame);
-        this.md5Text = md5Frame.md5Label;
-        this.copyButton = md5Frame.md5CopyBtn;
-        this.hintCopyNode = md5Frame.md5HintCopy;
-        const md5ContentWidth = this.md5ContentContainer.getComponent(UITransform).width;
-        this.hintLabel = this.hintCopyNode.getChildByName("content").getComponent(Label);
-        this.hintLabel.string = gc.Shared.l10n.t("copySuccess");
+        const md5Frame = this.nodeMd5Frame.getComponent(MD5Frame);
+        this.lblCaption = md5Frame.lblMd5;
+        this.btnCopy = md5Frame.btnMd5Copy;
+        this.nodeHintCopy = md5Frame.nodeMd5Hint;
+        const md5ContentWidth = this.nodeMd5ContentContainer.getComponent(UITransform).width;
+        this.lblHint = this.nodeHintCopy.getChildByName("content").getComponent(Label);
+        this.lblHint.string = gc.Shared.l10n.t("copySuccess");
         this.setCaptionAndHintForMD5(false);
         md5Frame.onClickCopyButton = () => {
             this.onClickCopyButton();
@@ -96,9 +94,9 @@ export default class MD5Component extends Component {
     }
 
     initMD5Tooltip() {
-        const mini = instantiate(this.md5TooltipPrefab);
+        const mini = instantiate(this.prfMd5Tooltip);
         this.md5Tip = mini.getComponent(MD5Tip);
-        this.md5TooltipContainer.addChild(mini);
+        this.nodeMd5TooltipContainer.addChild(mini);
     }
 
     showTooltip() {
@@ -143,11 +141,11 @@ export default class MD5Component extends Component {
     generateMD5Result(data: gc.GameServiceMessage.ResultHash) {
         const value = data?.hashValue || data?.rawValue;
         const formatValue = value.length > this.maximumStringAllowed ? value.slice(0, this.lengthOfMd5) + "..." : value;
-        this.md5Value.string = `${formatValue}`;
+        this.lblMd5Value.string = `${formatValue}`;
     }
 
     resetMd5() {
-        this.md5Value.string = "";
+        this.lblMd5Value.string = "";
         this.tipString = "";
         this.setCopyString("");
         this.timeout && clearTimeout(this.timeout);
@@ -164,20 +162,20 @@ export default class MD5Component extends Component {
     onClickCopyButton() {
         const isAndroid = sys.os === sys.OS.LINUX || sys.os === sys.OS.ANDROID;
         gc.GameUtils.copyToClipboard(this.md5CopyString, isAndroid, (message: string) => {
-            this.hintLabel.string = message;
+            this.lblHint.string = message;
             this.showHint();
         });
         this.md5Tip.show(false);
     }
 
     showHint() {
-        tween(this.hintCopyNode.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).delay(3).to(0.1, { opacity: 1 }).start();
+        tween(this.nodeHintCopy.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).delay(3).to(0.1, { opacity: 1 }).start();
     }
 
     setCaptionAndHintForMD5(isMD5Key: boolean) {
-        this.md5Text.string = gc.Shared.l10n.t(isMD5Key ? "md5Result" : "md5String");
-        this.md5Text.node.position = v3(-5, 0, 0);
-        tween(this.md5Text.node)
+        this.lblCaption.string = gc.Shared.l10n.t(isMD5Key ? "md5Result" : "md5String");
+        this.lblCaption.node.position = v3(-5, 0, 0);
+        tween(this.lblCaption.node)
             .to(0.3, { position: v3(0, 0, 0) })
             .start();
     }

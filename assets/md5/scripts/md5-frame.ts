@@ -5,16 +5,16 @@ const { ccclass, property} = _decorator;
 @ccclass
 export default class MD5Frame extends Component {
     @property(Label)
-    md5Label: Label = null;
+    lblMd5: Label = null;
 
     @property(Button)
-    md5CopyBtn: Button = null;
+    btnMd5Copy: Button = null;
 
     @property(Node)
-    md5HintCopy: Node = null;
+    nodeMd5Hint: Node = null;
 
     @property(Node)
-    md5Node: Node = null;
+    nodeMd5: Node = null;
 
     public clickCopyButton = () => {};
 
@@ -29,7 +29,7 @@ export default class MD5Frame extends Component {
     }
 
     updateLayout(width: number) {
-        const uiTransform = this.md5Node.getComponent(UITransform);
+        const uiTransform = this.nodeMd5.getComponent(UITransform);
         uiTransform.width = width;
         
         const layoutNode = this.node.getComponent(Layout);
