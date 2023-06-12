@@ -28,14 +28,14 @@ export default class GameComponent extends Component {
 
     protected onLoad(): void {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
-        game.on(Game.EVENT_SHOW, this.onJoinGame, this);        
+        game.on(Game.EVENT_SHOW, this.onJoinGame, this);
     }
 
     protected onDestroy(): void {
         game.off(Game.EVENT_HIDE, this.onHideGame, this);
         game.off(Game.EVENT_SHOW, this.onJoinGame, this);
     }
-   
+
     @handle(HideGame.HideGameHandler)
     onHideGame() {}
 
@@ -54,7 +54,6 @@ export default class GameComponent extends Component {
     handleJoinGameAndShowResult(joinRoomShowResult: gc.RoundHistories.IRoundHistoryInfo) {
         const { roundHistory, isShow } = joinRoomShowResult ?? {};
         if (roundHistory && isShow) {
-            console.log("handleJoinGameAndShowResult: ", isShow);
             this.roundId = roundHistory?.roundId;
             this.setRoundId();
             this.showResult(roundHistory?.result, false);
