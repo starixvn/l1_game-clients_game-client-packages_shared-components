@@ -7,7 +7,8 @@ import { ObserverComponent } from "db://shared-components/common/observer-compon
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
 
-const { Player, Bet } = gc;
+const { Player, Bet, FormatUtils } = gc;
+
 const { MainPlayerStore } = Player;
 
 const { ccclass, property } = _decorator;
@@ -53,7 +54,7 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     @render(MainPlayerStore, (store) => store.balance)
     setBalance(value: number) {
-        this.lblBalance.string = value.toString();
+        this.lblBalance.string = FormatUtils.truncateFixedDecimals(value, 2).toString();
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
