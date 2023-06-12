@@ -40,25 +40,25 @@ export class BalanceEffectStore {
         mobx.makeAutoObservable(this);
     }
 
-    mainPlayerUpdateDecreaseBalance(balance: number) {
+    updateMainPlayerDecreaseBalance(balance: number) {
         const balanceEffect = { balance, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
         this.decreaseBalanceMainPlayer = { balanceEffect };
     }
 
-    mainPlayerUpdateIncreaseBalance(balance: number) {
+    updateMainPlayerIncreaseBalance(balance: number) {
         const balanceEffect = { balance, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
         this.increaseBalanceMainPlayer = { balanceEffect };
     }
 
-    mainPlayerUpdateWinEffect(status: boolean) {
+    updateMainPlayerWinEffect(status: boolean) {
         this.winEffectMainPlayer = { status, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
     }
 
-    aroundTablePlayersUpdateWinEffect(winningEffects: TWinningEffect[]) {
+    updateAroundTablePlayersWinEffect(winningEffects: TWinningEffect[]) {
         this.winEffectAroundTablePlayers = { winningEffects };
     }
 
-    aroundTablePlayersUpdateDecreaseBalance(balanceEffects: TBalanceEffect[]) {
+    updateAroundTablePlayersDecreaseBalance(balanceEffects: TBalanceEffect[]) {
         this.decreaseBalanceAroundTablePlayers = { balanceEffects };
     }
 }

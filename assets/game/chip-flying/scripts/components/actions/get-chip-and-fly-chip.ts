@@ -49,13 +49,13 @@ export namespace ActionChipFlying {
     };
 
     export const payChipsToMainPlayer = (
-        settleStatus: gc.Settlements.SettlementStatusStore,
+        settleStatus: gc.GameServiceMessage.Status,
         chipFlyingInfo: IChipFlyingInfo,
         winBetItems: BetItem[]
     ) => {
         const isHiddenPlayers = chipFlyingInfo?.hiddenPlayersNode !== null;
 
-        if (settleStatus && settleStatus?.win) {
+        if (settleStatus?.win) {
             if (isHiddenPlayers) {
                 moveChipWithRandomAmountToMainPlayer(settleStatus, chipFlyingInfo, winBetItems);
             } else {
@@ -65,7 +65,7 @@ export namespace ActionChipFlying {
     };
 
     const moveChipWithRandomAmountToMainPlayer = (
-        settleStatus: gc.Settlements.SettlementStatusStore,
+        settleStatus: gc.GameServiceMessage.Status,
         chipFlyingInfo: IChipFlyingInfo,
         winBetItems: BetItem[]
     ) => {
@@ -84,7 +84,7 @@ export namespace ActionChipFlying {
     };
 
     const moveChipWithAmountToMainPlayer = (
-        settleStatus: gc.Settlements.SettlementStatusStore,
+        settleStatus: gc.GameServiceMessage.Status,
         chipFlyingInfo: IChipFlyingInfo,
         winBetItems: BetItem[]
     ) => {

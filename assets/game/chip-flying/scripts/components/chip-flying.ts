@@ -10,10 +10,10 @@ import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/
 import { BetItems } from "../../../bets/scripts/components/bet-items";
 import { BetItemStore, IAroundTablePlayersChips, IMainPlayerChip, TChipAmount } from "../../../bets/scripts/stores/bet-item-store";
 import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
-import { ChipFlyingStore, TPayChipInfo } from "../stores/chip-flying-store";
+
 import { ActionChipFlying } from "./actions";
 
-const { Auth, Chips, NumberUtils } = gc;
+const { Auth, Chips, NumberUtils, Settlements, Rounds } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -49,6 +49,8 @@ export class ChipFlying extends ObserverComponent {
     protected isChipStack = false;
     protected payChipsDuration = 1.2;
     protected chipDelayFlyingTime = 1.25;
+
+    protected settlementStatus: gc.GameServiceMessage.Status = null;
 
     @render(BetItemStore, (store) => store.aroundTablePlayersChips)
     flyChipJoinGame(mainPlayersChips: IAroundTablePlayersChips) {
@@ -103,11 +105,9 @@ export class ChipFlying extends ObserverComponent {
         return gc.Audios.AudioIds.SINGLE_CHIP;
     }
 
-    @render(ChipFlyingStore, (store) => store.payChipInfo)
-    payChips(payChipInfo: TPayChipInfo) {
-        const { finish } = payChipInfo ?? {};
-
-        if (!this || !finish?.settlementResult || !this.enablePlaceChips || !this.node) {
+    @render(Settlements.SettlementStore, (store) => store.payChipInfo)
+    payChips(payChipInfo: gc.Settlements.TPayChipInfo) {
+        if (!this || !payChipInfo?.settlementResult || !this.enablePlaceChips || !this.node) {
             return;
         }
 
@@ -135,8 +135,7 @@ export class ChipFlying extends ObserverComponent {
         }
     }
 
-    private payChipToAllPlayers = (payChipInfo: TPayChipInfo) => {
-        const { settleStatus } = payChipInfo;
+    private payChipToAllPlayers = (payChipInfo: gc.Settlements.TPayChipInfo) => {
         const chipFlyingInfo: IChipFlyingInfo = {
             slidingChip: this.slidingChip,
             hiddenPlayersNode: this.hiddenPlayersNode,
@@ -144,8 +143,9 @@ export class ChipFlying extends ObserverComponent {
             isChipStack: this.isChipStack,
             payChipsDuration: this.payChipsDuration,
         };
-        ActionChipFlying.payChipsToMainPlayer(payChipInfo?.settleStatus, chipFlyingInfo, this.betItems?.winBetItems);
-        this.showPayoutForMainPlayer(settleStatus);
+
+        ActionChipFlying.payChipsToMainPlayer(this.settlementStatus, chipFlyingInfo, this.betItems?.winBetItems);
+        this.showPayoutForMainPlayer();
 
         if (this.hiddenPlayersNode) {
             ActionChipFlying.payChipsToHiddenPlayers(this.hiddenPlayersNode, this.isChipStack, this.betItems?.winBetItems);
@@ -154,9 +154,9 @@ export class ChipFlying extends ObserverComponent {
         this.payChipsToAroundTablePlayers(payChipInfo);
     };
 
-    private showPayoutForMainPlayer(settleStatus: gc.Settlements.SettlementStatusStore) {
-        if (settleStatus?.win) {
-            this.mainPlayerIncreaseBalance(settleStatus?.bet);
+    private showPayoutForMainPlayer() {
+        if (this.settlementStatus?.win) {
+            this.mainPlayerIncreaseBalance(this.settlementStatus?.bet);
             this.mainPlayerPlayWinningEffect();
             this.getBalance();
         }
@@ -170,14 +170,13 @@ export class ChipFlying extends ObserverComponent {
         return balance;
     }
 
-    @handle(BalanceEffectHandlers.MainPlayerUpdateWinEffect)
+    @handle(BalanceEffectHandlers.UpdateMainPlayerWinEffect)
     mainPlayerPlayWinningEffect() {
         return true;
     }
 
-    payChipsToAroundTablePlayers(payChipInfo: TPayChipInfo) {
-        const { finish } = payChipInfo;
-        const winningPlayers = finish.winningPlayers;
+    payChipsToAroundTablePlayers(payChipInfo: gc.Settlements.TPayChipInfo) {
+        const winningPlayers = payChipInfo.winningPlayers;
 
         if (!winningPlayers) {
             return;
@@ -215,16 +214,26 @@ export class ChipFlying extends ObserverComponent {
         });
 
         this.aroundTablePlayersShowWinningEffect(winningEffects);
-        this.AroundTablePlayersUpdateIncreaseBalance(balanceEffects);
+        this.updateAroundTablePlayersIncreaseBalance(balanceEffects);
     }
 
-    @handle(BalanceEffectHandlers.AroundTablePlayersUpdateWinEffect)
+    @handle(BalanceEffectHandlers.UpdateAroundTablePlayersWinEffect)
     aroundTablePlayersShowWinningEffect(winningEffects: TWinningEffect[]) {
         return winningEffects;
     }
 
-    @handle(BalanceEffectHandlers.AroundTablePlayersUpdateIncreaseBalance)
-    AroundTablePlayersUpdateIncreaseBalance(balanceEffects: TBalanceEffect[]) {
+    @handle(BalanceEffectHandlers.UpdateAroundTablePlayersIncreaseBalance)
+    updateAroundTablePlayersIncreaseBalance(balanceEffects: TBalanceEffect[]) {
         return balanceEffects;
+    }
+
+    @render(Settlements.SettlementStatusStore, (store) => store.settlementStatus, { fireImmediately: false })
+    handleSettleStatus(settlementStatus: gc.GameServiceMessage.Status) {
+        this.settlementStatus = settlementStatus;
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
+    startNewRound(isStartPlacingBet: boolean) {
+        isStartPlacingBet && (this.settlementStatus = null);
     }
 }

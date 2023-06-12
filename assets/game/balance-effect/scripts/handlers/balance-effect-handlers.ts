@@ -9,7 +9,7 @@ export namespace BalanceEffectHandlers {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(balance: number) {
-            this.balanceEffectStore.mainPlayerUpdateDecreaseBalance(balance);
+            this.balanceEffectStore.updateMainPlayerDecreaseBalance(balance);
         }
     }
 
@@ -18,33 +18,33 @@ export namespace BalanceEffectHandlers {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(balance: number) {
-            this.balanceEffectStore.mainPlayerUpdateIncreaseBalance(balance);
+            this.balanceEffectStore.updateMainPlayerIncreaseBalance(balance);
         }
     }
 
     @injectable()
-    export class MainPlayerUpdateWinEffect {
+    export class UpdateMainPlayerWinEffect {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(status: boolean) {
-            this.balanceEffectStore.mainPlayerUpdateWinEffect(status);
+            this.balanceEffectStore.updateMainPlayerWinEffect(status);
         }
     }
     @injectable()
-    export class AroundTablePlayersUpdateWinEffect {
+    export class UpdateAroundTablePlayersWinEffect {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(winningEffects: TWinningEffect[]) {
-            this.balanceEffectStore.aroundTablePlayersUpdateWinEffect(winningEffects);
+            this.balanceEffectStore.updateAroundTablePlayersWinEffect(winningEffects);
         }
     }
 
     @injectable()
-    export class AroundTablePlayersUpdateIncreaseBalance {
+    export class UpdateAroundTablePlayersIncreaseBalance {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(balanceEffects: TBalanceEffect[]) {
-            this.balanceEffectStore.aroundTablePlayersUpdateDecreaseBalance(balanceEffects);
+            this.balanceEffectStore.updateAroundTablePlayersDecreaseBalance(balanceEffects);
         }
     }
 }
