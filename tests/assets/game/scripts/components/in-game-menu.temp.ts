@@ -1,7 +1,7 @@
 import gc from "game-client-base";
-import { ExpandableNode } from "../../../../../assets/common/expandable-node/scripts/expandable-node";
-import { InGameMenu } from "../../../../../assets/in-game-menu/scripts/components/in-game-menu";
-import { InGameMenuEvents } from "../../../../../assets/in-game-menu/scripts/stores/in-game-menu-events";
+import { InGameMenu } from "../../../../../assets/game/in-game-menu/scripts/components/in-game-menu";
+import { InGameMenuEvents } from "../../../../../assets/game/in-game-menu/scripts/stores/in-game-menu-events";
+import { ExpandableNode } from "../../../../../assets/shared/common-components/expandable-node/scripts/expandable-node";
 
 jest.mock("../../../../../assets/common/observer-component/scripts/observer-component", () => {
     return {

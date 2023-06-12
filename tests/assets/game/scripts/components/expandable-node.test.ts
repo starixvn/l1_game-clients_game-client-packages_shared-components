@@ -1,5 +1,5 @@
 import { Node, Tween, UIOpacity, tween } from "cc";
-import { ExpandableNode } from "../../../../../assets/common/expandable-node/scripts/expandable-node";
+import { ExpandableNode } from "../../../../../assets/shared/common-components/expandable-node/scripts/expandable-node";
 describe("ExpandableNode", () => {
     let expandableNode: ExpandableNode;
 

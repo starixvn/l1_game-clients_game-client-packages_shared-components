@@ -1,7 +1,7 @@
 import { _decorator } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
-import LoadWebView from "../../../common/web-view/load-web-view";
+import LoadWebView from "../../../shared/common-components/web-view/load-web-view";
 
 const { GameGuide, GameConfigs, UrlUtils } = gc;
 const { handle, render } = Observer;

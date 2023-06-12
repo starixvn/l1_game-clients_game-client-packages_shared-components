@@ -1,9 +1,9 @@
 import { Component, Game, Label, _decorator, game } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
-import { InGameMenuEvents } from "../../../in-game-menu/scripts/stores/in-game-menu-events";
-import { InGameMenuStore } from "../../../in-game-menu/scripts/stores/in-game-menu-store";
-import { NodeContainer } from "../../../node-container/node-container";
+import { InGameMenuEvents } from "../../../game/in-game-menu/scripts/stores/in-game-menu-events";
+import { InGameMenuStore } from "../../../game/in-game-menu/scripts/stores/in-game-menu-store";
+import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
 import WebViewGuide from "../../game-guide/scripts/web-view-guide";
 
 const { Rounds, Connection, HideGame, JoinGame, Settlements, FormatUtils, RoundHistories } = gc;

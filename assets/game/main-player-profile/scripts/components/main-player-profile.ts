@@ -1,0 +1,71 @@
+import { Label, Sprite, SpriteFrame, _decorator } from "cc";
+import gc from "game-client-base";
+import Observer from "observer";
+
+import { bundleManager } from "db://shared-components/shared/common-components/bundle-magager/bundle-manager";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
+import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
+import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
+
+const { Player, Bet, FormatUtils } = gc;
+
+const { MainPlayerStore } = Player;
+
+const { ccclass, property } = _decorator;
+const { render, handle } = Observer;
+
+@ccclass
+export default class MainPlayerProfile extends ObserverComponent {
+    @property(Label)
+    lblName: Label = null;
+
+    @property(Label)
+    lblBalance: Label = null;
+
+    @property(Sprite)
+    sprAvatar: Sprite = null;
+
+    onLoad() {
+        super.onLoad();
+        this.setMainPlayerAvatar();
+    }
+
+    @handle(MainPlayerProfileHandlers.SetMainPlayerAvatar)
+    setMainPlayerAvatar() {
+        return this.sprAvatar.node;
+    }
+
+    @render(MainPlayerStore, (store) => store.name)
+    setName(text: string) {
+        this.lblName && (this.lblName.string = text);
+    }
+
+    @render(MainPlayerStore, (store) => store.avatarId)
+    async loadAvatar(avatarId: number) {
+        const spriteFrame = await bundleManager.loadSharedAsset<SpriteFrame>(`images/avatars/${avatarId}/spriteFrame`, SpriteFrame);
+        if (spriteFrame) {
+            this.setAvatar(spriteFrame);
+        }
+    }
+
+    setAvatar(frame: SpriteFrame) {
+        this.sprAvatar && (this.sprAvatar.spriteFrame = frame);
+    }
+
+    @render(MainPlayerStore, (store) => store.balance)
+    setBalance(value: number) {
+        this.lblBalance.string = FormatUtils.truncateFixedDecimals(value, 2).toString();
+    }
+
+    @render(Bet.BetStore, (store) => store.lastReceivedBet)
+    endBetInfo(lastReceivedBet: gc.Bet.ILastReceivedBet) {
+        if (lastReceivedBet && lastReceivedBet.value > 0) {
+            this.mainPlayerDecreaseBalance(lastReceivedBet.value);
+        }
+    }
+
+    @handle(BalanceEffectHandlers.MainPlayerDecreaseBalance)
+    mainPlayerDecreaseBalance(balance: number) {
+        return balance;
+    }
+}
