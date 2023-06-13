@@ -137,12 +137,12 @@ export default class GameComponent extends GameComponentBase {
     playSoundStartPlacingBet() {
         return gc.Audios.AudioIds.START_PLACING_BET;
     }
-    
+
     @handle(BetHistory.BetHistoryHandlers.BetHistoryCallServiceHandler, (handler) => handler.handle(1))
     hanldeShowBetHistory() {}
 
     @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
-    open_history({ event }: { event: InGameMenuEvents }) {
+    openBetHistory({ event }: { event: InGameMenuEvents }) {
         if (event === InGameMenuEvents.OPEN_HISTORY) {
             this.hanldeShowBetHistory();
             console.log("BtnBetHistory click");
