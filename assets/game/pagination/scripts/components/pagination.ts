@@ -1,11 +1,11 @@
-import { _decorator, Component, Node, CCInteger, Layout, Label } from "cc";
+import { _decorator, Node, CCInteger, Label } from "cc";
 import Observer from "observer";
 import PaginationItem from "./pagination-item";
 import gc from "game-client-base";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 
 const { ccclass, property } = _decorator;
-const { handle, observer, render } = Observer;
+const { handle, render } = Observer;
 const { BetHistory } = gc;
 
 @ccclass("Pagination")
@@ -37,165 +37,75 @@ export default class Pagination extends ObserverComponent {
     @property(Node)
     nodeLast: Node = null;
 
-    @property({ type: CCInteger })
-    page = 1;
-
-    @property({ type: CCInteger })
-    columnsOnPage = 10;
-
-    @property({ type: CCInteger })
-    total = 0;
-
-    protected pageSelect: any = null;
+    protected pageButtons: number = 5;
     protected control: any = null;
-    protected lengthNodePage: any = null;
-    protected distanceNumberCenter = 0;
-    protected distanceYetChaos = 0;
-    protected totalPage = 0;
+    protected totalPages = 0;
     protected pageRed = 0;
-    protected listComponentPage: PaginationItem[] = [];
-    protected listNodePage: Node[] = [];
-    protected pageNumberCurrent = 1;
+    protected currentPage = 1;
 
-    init(main: any) {
-        console.log("Pagination Pagination Pagination");
-        const listPageName = [];
-        this.listNodePage = [this.nodePage1, this.nodePage2, this.nodePage3, this.nodePage4, this.nodePage5];
-        this.listNodePage.forEach((node) => {
-            this.listComponentPage.push(node.getComponent(PaginationItem));
-        });
-        this.control = main;
-        this.listComponentPage.forEach((page) => {
-            listPageName.push(page.node.name);
-        });
-        this.lengthNodePage = listPageName.length;
-        this.distanceNumberCenter = Math.floor(this.lengthNodePage / 2);
-        this.distanceYetChaos = Math.round(this.lengthNodePage / 2);
-    }
-    onSet(page: number, columnsOnPage: number, totalRow: number) {
-        this.page = page;
-        this.columnsOnPage = columnsOnPage;
-        this.total = totalRow;
-        this.totalPage = Math.ceil(totalRow / this.columnsOnPage);
-        this.pageRed = this.totalPage - this.page;
-        if (totalRow > 0) {
-            this.listNodePage.forEach((node) => {
-                node.active = false;
-            });
-            this.node.active = true;
-            this.handleActionPage();
-        } else {
-            this.node.active = false;
-        }
-        this.updateArrowButtonsVisibility();
-        this.updateLayout1();
-    }
-    resetPageCurrent() {
-        this.pageNumberCurrent = 1;
-    }
-    updateLayout1() {
-        const layout = this.node.getComponent(Layout);
-        layout.enabled = true;
-        layout.updateLayout();
-        layout.enabled = false;
-    }
-    handleActionPage() {
-        let startIndex = 1;
-        let isButtonActive = false;
-        if (this.page === 1 || this.totalPage <= this.lengthNodePage) {
-            startIndex = 1;
-        } else if (this.page > 3) {
-            startIndex = this.getStartPage();
-        }
-        this.listComponentPage.forEach((component, index) => {
-            if (index <= this.totalPage && startIndex <= this.totalPage) {
-                isButtonActive = false;
-                // component.node.page = startIndex;
-                component.number.string = startIndex.toString();
-                startIndex++;
-                component.node.active = true;
-                if (+component.number.string === this.pageNumberCurrent) {
-                    isButtonActive = true;
-                    this.pageSelect = component;
-                    component.node.pauseSystemEvents(true);
-                }
-                component.updateHighlight(isButtonActive);
-            } else {
-                component.node.active = false;
-            }
-        });
-        return void 0;
-    }
-    getStartPage() {
-        const numberSub = this.page === this.totalPage ? this.lengthNodePage - 1 : this.distanceYetChaos;
-        const isCheckPage = this.page + this.distanceNumberCenter <= this.totalPage;
-        return isCheckPage ? this.page - this.distanceNumberCenter : this.page - numberSub;
-    }
-    updateArrowButtonsVisibility() {
-        const conditionPrecedent = this.totalPage > 5;
-        this.nodeFirst.active = this.pageNumberCurrent > 2 && conditionPrecedent;
-        this.nodeLast.active = this.pageRed > 1 && conditionPrecedent;
-        this.nodePrevious.active = this.pageNumberCurrent > 1 && conditionPrecedent;
-        this.nodeNext.active = this.pageRed > 0 && conditionPrecedent;
-    }
-    onClickFirst(event: any) {
-        this.pageNumberCurrent = 1;
-        this.getPageData();
+    onClickFirst() {
+        this.currentPage = 1;
+        this.fectchData();
         // AudioManager.getInstance().playClick();
     }
-    onClickLast(event: any) {
-        this.pageNumberCurrent = this.totalPage;
-        this.getPageData();
+    onClickLast() {
+        this.currentPage = this.totalPages;
+        this.fectchData();
         // AudioManager.getInstance().playClick();
     }
-    onClickPrevious(event: any) {
-        this.pageNumberCurrent--;
-        this.getPageData();
+    onClickPrevious() {
+        this.currentPage--;
+        this.fectchData();
         // AudioManager.getInstance().playClick();
     }
 
-    onClickNext(event: any) {
-        this.pageNumberCurrent++;
-        this.getPageData();
+    onClickNext() {
+        this.currentPage++;
+        this.fectchData();
         // AudioManager.getInstance().playClick();
     }
 
     onClickPage(event: any) {
-        const selectedPage = event.currentTarget.getComponentsInChildren(Label)[0].string;
-        this.pageNumberCurrent = selectedPage;
-        this.getPageData();
+        this.currentPage = parseInt(event.currentTarget.getComponentsInChildren(Label)[0].string);
+        this.fectchData();
     }
 
     @handle(BetHistory.BetHistoryHandlers.BetHistoryCallServiceHandler, (handler, pageNumber: number) => handler.handle(pageNumber))
-    getPageData() {
-        console.log(`pageNumber: ${this.pageNumberCurrent}`);
-        return this.pageNumberCurrent;
+    fectchData() {
+        return this.currentPage;
     }
 
     @render(BetHistory.BetHistoryStore, (store) => store.data)
     setData(model: gc.BetHistory.BetHistoryModel) {
-        this.pageNumberCurrent = model.page;
-        this.total = model.total;
-        this.columnsOnPage = model.pageSize;
-        this.pageSelect = model.pageSize;
-        this.totalPage = Math.ceil(model.total / model.pageSize);
+        this.currentPage = model.page;
+        this.totalPages = Math.ceil(model.total / model.pageSize);
+        this.pageRed = this.totalPages > this.pageButtons ? this.totalPages - this.currentPage : 0;
 
         this.updateLayout();
     }
 
+    updateArrowButtonsVisibility() {
+        const conditionPrecedent = this.totalPages > this.pageButtons;
+
+        this.nodeFirst.active = conditionPrecedent && this.currentPage > 2;
+        this.nodeLast.active = conditionPrecedent && this.pageRed > 1;
+
+        this.nodePrevious.active = conditionPrecedent && this.currentPage > 1;
+        this.nodeNext.active = conditionPrecedent && this.pageRed > 0;
+    }
+
     updateLayout() {
-        this.listNodePage = [this.nodePage1, this.nodePage2, this.nodePage3, this.nodePage4, this.nodePage5];
+        if (this.totalPages === 1) {
+            this.node.active = false;
+            return;
+        }
 
         const startedIndex = this.getStartedPageIndex();
-        this.pageRed = this.totalPage > 5 ? this.totalPage - this.pageNumberCurrent : 0;
 
-        this.listNodePage.forEach((node, index) => {
-            node.getComponentsInChildren(Label)[0].string = (startedIndex + index).toString();
-            node.getComponent(PaginationItem).updateHighlight(
-                node.getComponentsInChildren(Label)[0].string === this.pageNumberCurrent.toString()
-            );
-            this.listComponentPage.push(node.getComponent(PaginationItem));
-            node.active = index < this.totalPage;
+        [this.nodePage1, this.nodePage2, this.nodePage3, this.nodePage4, this.nodePage5].forEach((node, index) => {
+            const pageNumber = startedIndex + index;
+            node.getComponent(PaginationItem).updateHighlight(pageNumber === this.currentPage, pageNumber);
+            node.active = index < this.totalPages;
         });
 
         this.updateArrowButtonsVisibility();
@@ -203,12 +113,12 @@ export default class Pagination extends ObserverComponent {
 
     getStartedPageIndex() {
         switch (true) {
-            case this.pageNumberCurrent <= 3:
+            case this.currentPage <= 3:
                 return 1;
-            case this.totalPage - this.pageNumberCurrent < 5:
-                return this.totalPage > 5 ? this.totalPage - 4 : 1;
+            case this.currentPage > Math.ceil(this.pageButtons / 2) && this.currentPage < this.totalPages - Math.ceil(this.pageButtons / 2):
+                return this.currentPage - Math.ceil(this.pageButtons / 2);
             default:
-                return this.pageNumberCurrent - 3;
+                return this.totalPages - (this.pageButtons - 1);
         }
     }
 }

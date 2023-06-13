@@ -16,7 +16,8 @@ export default class PaginationItem extends Component {
 
     textNormalColor = Color.WHITE;
 
-    updateHighlight(highlight: boolean) {
+    updateHighlight(highlight: boolean, pageNumber: number) {
+        this.number.string = pageNumber.toString();
         this.number.color = highlight ? this.textHighlightColor : this.textNormalColor;
         this.bg.active = !highlight;
         this.bgSelect.active = highlight;
