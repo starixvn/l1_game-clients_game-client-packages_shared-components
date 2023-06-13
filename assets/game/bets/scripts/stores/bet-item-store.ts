@@ -9,15 +9,6 @@ interface Chips {
     chipBox?: Node;
 }
 
-export interface IAroundTablePlayersChips extends Chips {
-    chips: gc.Chips.Chips;
-    mainPlayerRate: number;
-}
-
-export type TChipAmount = {
-    [chipValue: string]: number;
-};
-
 export interface IMainPlayerChip extends Chips {
     chipAmount: number;
 }
@@ -36,16 +27,6 @@ export class BetItemStore {
 
     constructor() {
         mobx.makeAutoObservable(this);
-    }
-
-    get aroundTablePlayersChips(): IAroundTablePlayersChips {
-        if (this.roundTimeStore.isLocking || this.roundTimeStore.isPlacingBet) {
-            return {
-                chips: this.chipStore.chips,
-                mainPlayerRate: this.mainPlayerStore.rate,
-            };
-        }
-        return null;
     }
 
     get getBetStartingRoundInfo() {

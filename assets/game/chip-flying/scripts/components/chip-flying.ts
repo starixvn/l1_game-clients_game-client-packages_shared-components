@@ -1,16 +1,16 @@
 import { _decorator, Node, tween } from "cc";
 import gc from "game-client-base";
 import Observer from "observer";
-import { AroundTablePlayers } from "../../../../game/around-table-player/scripts/components/around-table-players";
-import { AroundTablePlayerUtils } from "../../../../game/around-table-player/scripts/utils";
-import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import * as actions from "../../.././sliding-chip/scripts/components/actions";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
 import { BetItems } from "../../../bets/scripts/components/bet-items";
-import { BetItemStore, IAroundTablePlayersChips, IMainPlayerChip, TChipAmount } from "../../../bets/scripts/stores/bet-item-store";
+import { IMainPlayerChip } from "../../../bets/scripts/stores/bet-item-store";
 import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 
+import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { AroundTablePlayers } from "../../../around-table-player/scripts/components/around-table-players";
+import { AroundTablePlayerUtils } from "../../../around-table-player/scripts/utils";
 import { ActionChipFlying } from "./actions";
 
 const { Auth, Chips, NumberUtils, Settlements, Rounds } = gc;
@@ -52,36 +52,18 @@ export class ChipFlying extends ObserverComponent {
 
     protected settlementStatus: gc.GameServiceMessage.Status = null;
 
-    @render(BetItemStore, (store) => store.aroundTablePlayersChips)
-    flyChipJoinGame(mainPlayersChips: IAroundTablePlayersChips) {
-        const { chips, mainPlayerRate } = mainPlayersChips ?? {};
-        if (!chips && !mainPlayerRate) {
+    @render(Chips.ChipStore, (store) => store.chipsByCurrency)
+    flyChipJoinGame(chipsByCurrency: gc.Chips.TChipsByCurrency) {
+        if (!chipsByCurrency) {
             return;
         }
 
-        for (const rate in chips) {
-            const chipValues = chips[rate];
-
-            for (const betItem of this.betItems.betItemComponents) {
-                const chipAmount = chipValues[betItem.betChoice];
-
-                if (chipAmount) {
-                    const chipAmountConvert = this.getChipValueByCurrency(chipAmount, mainPlayerRate, +rate);
-                    actions.addChipsToChipBoxWhenJoinRoom(betItem.chipBox, chipAmountConvert, this.slidingChip);
-                }
+        for (const betItem of this.betItems.betItemComponents) {
+            const chipAmount = chipsByCurrency[betItem.betChoice];
+            if (chipAmount) {
+                actions.addChipsToChipBoxWhenJoinRoom(betItem.chipBox, chipAmount, this.slidingChip);
             }
         }
-    }
-
-    private getChipValueByCurrency(chipAmount: TChipAmount, playerRate: number, chipRate: number) {
-        const chipAmountConvert: TChipAmount = {};
-        for (const chipValue in chipAmount) {
-            const convertChipValue = NumberUtils.getValueByCurrency(+chipValue, playerRate, chipRate);
-
-            chipAmountConvert[convertChipValue] = chipAmount[chipValue];
-        }
-
-        return chipAmountConvert;
     }
 
     @render(Chips.ChipStore, (store) => store.ownChip)
@@ -170,7 +152,7 @@ export class ChipFlying extends ObserverComponent {
         return balance;
     }
 
-    @handle(BalanceEffectHandlers.UpdateMainPlayerWinEffect)
+    @handle(BalanceEffectHandlers.MainPlayerWinEffect)
     mainPlayerPlayWinningEffect() {
         return true;
     }
@@ -217,12 +199,12 @@ export class ChipFlying extends ObserverComponent {
         this.updateAroundTablePlayersIncreaseBalance(balanceEffects);
     }
 
-    @handle(BalanceEffectHandlers.UpdateAroundTablePlayersWinEffect)
+    @handle(BalanceEffectHandlers.AroundTablePlayersWinEffect)
     aroundTablePlayersShowWinningEffect(winningEffects: TWinningEffect[]) {
         return winningEffects;
     }
 
-    @handle(BalanceEffectHandlers.UpdateAroundTablePlayersIncreaseBalance)
+    @handle(BalanceEffectHandlers.AroundTablePlayersIncreaseBalance)
     updateAroundTablePlayersIncreaseBalance(balanceEffects: TBalanceEffect[]) {
         return balanceEffects;
     }

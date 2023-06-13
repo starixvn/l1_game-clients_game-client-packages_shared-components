@@ -1,5 +1,6 @@
 import { Node, UITransform } from "cc";
-import { IMainPlayerChip, TChipAmount } from "../../../../bets/scripts/stores/bet-item-store";
+import gc from "game-client-base";
+import { IMainPlayerChip } from "../../../../bets/scripts/stores/bet-item-store";
 import { FlyChipUtils } from "../../utils/fly-chip-utils";
 import SlidingChip from "../sliding-chip";
 
@@ -27,7 +28,7 @@ export const placeChipToChipBox = (slidingChip: SlidingChip, mainPlayerChip: IMa
     }
 };
 
-export const addChipsToChipBoxWhenJoinRoom = (chipBox: Node, chipAmount: TChipAmount, slidingChip: SlidingChip) => {
+export const addChipsToChipBoxWhenJoinRoom = (chipBox: Node, chipAmount: gc.Chips.IChipAmount, slidingChip: SlidingChip) => {
     if (!chipAmount) {
         return;
     }

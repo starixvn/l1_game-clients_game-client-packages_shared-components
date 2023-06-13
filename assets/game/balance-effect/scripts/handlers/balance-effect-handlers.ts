@@ -23,7 +23,7 @@ export namespace BalanceEffectHandlers {
     }
 
     @injectable()
-    export class UpdateMainPlayerWinEffect {
+    export class MainPlayerWinEffect {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(status: boolean) {
@@ -31,7 +31,7 @@ export namespace BalanceEffectHandlers {
         }
     }
     @injectable()
-    export class UpdateAroundTablePlayersWinEffect {
+    export class AroundTablePlayersWinEffect {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(winningEffects: TWinningEffect[]) {
@@ -40,7 +40,7 @@ export namespace BalanceEffectHandlers {
     }
 
     @injectable()
-    export class UpdateAroundTablePlayersIncreaseBalance {
+    export class AroundTablePlayersIncreaseBalance {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(balanceEffects: TBalanceEffect[]) {
