@@ -171,7 +171,7 @@ export class AroundTablePlayers extends ObserverComponent {
                 for (; count > 0; count--) {
                     const ownerChip = {
                         chipBox,
-                        chipAmount: +chipValue,
+                        chipValue: +chipValue,
                     };
                     placeChipToChipBox(this.slidingChip, ownerChip, startNode, null);
                 }

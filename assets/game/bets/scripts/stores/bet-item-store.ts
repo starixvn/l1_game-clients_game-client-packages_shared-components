@@ -10,7 +10,7 @@ interface Chips {
 }
 
 export interface IMainPlayerChip extends Chips {
-    chipAmount: number;
+    chipValue: number;
 }
 
 export interface TBetStartingRound {

@@ -52,16 +52,16 @@ export class ChipFlying extends ObserverComponent {
 
     protected settlementStatus: gc.GameServiceMessage.Status = null;
 
-    @render(Chips.ChipStore, (store) => store.chipsByCurrency)
-    flyChipJoinGame(chipsByCurrency: gc.Chips.TChipsByCurrency) {
-        if (!chipsByCurrency) {
+    @render(Chips.ChipStore, (store) => store.chipsByMainPlayerRate)
+    flyChipJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {
+        if (!chipsByMainPlayerRate) {
             return;
         }
 
         for (const betItem of this.betItems.betItemComponents) {
-            const chipAmount = chipsByCurrency[betItem.betChoice];
-            if (chipAmount) {
-                actions.addChipsToChipBoxWhenJoinRoom(betItem.chipBox, chipAmount, this.slidingChip);
+            const chipGroup = chipsByMainPlayerRate[betItem.betChoice];
+            if (chipGroup) {
+                actions.addChipsToChipBoxWhenJoinRoom(betItem.chipBox, chipGroup, this.slidingChip);
             }
         }
     }
@@ -76,7 +76,7 @@ export class ChipFlying extends ObserverComponent {
         const betItem = this.betItems?.betItemComponents.find((item) => betChoice === item.betChoice);
         const mainPlayerChip: IMainPlayerChip = {
             chipBox: betItem?.chipBox,
-            chipAmount: amount,
+            chipValue: amount,
         };
         actions.placeChipToChipBox(this.slidingChip, mainPlayerChip, null, null);
         this.playSoundSingleChip();
