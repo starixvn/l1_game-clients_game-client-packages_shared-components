@@ -43,31 +43,37 @@ export default class Pagination extends ObserverComponent {
     protected pageRed = 0;
     protected currentPage = 1;
 
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
+    }
+
     onClickFirst() {
         this.currentPage = 1;
         this.fectchData();
-        // AudioManager.getInstance().playClick();
+        this.playSoundClick();
     }
     onClickLast() {
         this.currentPage = this.totalPages;
         this.fectchData();
-        // AudioManager.getInstance().playClick();
+        this.playSoundClick();
     }
     onClickPrevious() {
         this.currentPage--;
         this.fectchData();
-        // AudioManager.getInstance().playClick();
+        this.playSoundClick();
     }
 
     onClickNext() {
         this.currentPage++;
         this.fectchData();
-        // AudioManager.getInstance().playClick();
+        this.playSoundClick();
     }
 
     onClickPage(event: any) {
         this.currentPage = parseInt(event.currentTarget.getComponentsInChildren(Label)[0].string);
         this.fectchData();
+        this.playSoundClick();
     }
 
     @handle(BetHistory.BetHistoryHandlers.BetHistoryCallServiceHandler, (handler, pageNumber: number) => handler.handle(pageNumber))
@@ -115,10 +121,11 @@ export default class Pagination extends ObserverComponent {
         switch (true) {
             case this.currentPage <= 3:
                 return 1;
-            case this.currentPage > Math.ceil(this.pageButtons / 2) && this.currentPage < this.totalPages - Math.ceil(this.pageButtons / 2):
-                return this.currentPage - Math.ceil(this.pageButtons / 2);
+            case this.currentPage > Math.round(this.pageButtons / 2) &&
+                this.currentPage < this.totalPages - Math.round(this.pageButtons / 2):
+                return this.currentPage - Math.round(this.pageButtons / 2);
             default:
-                return this.totalPages - (this.pageButtons - 1);
+                return this.totalPages - this.pageButtons + 1;
         }
     }
 }
