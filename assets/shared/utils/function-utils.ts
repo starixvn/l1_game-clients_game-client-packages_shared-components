@@ -1,9 +1,9 @@
 import { find } from "cc";
-import StartupComponent from "../../game/scripts/components/startup-component";
+import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 
 export namespace FunctionUtils {
     export const getNamespace = () => {
-        const namespace = find("Canvas").getComponent(StartupComponent)?.namespace;
+        const namespace = find("Canvas").getComponent(GameComponentBase)?.namespace;
         return namespace || "default";
     };
 }

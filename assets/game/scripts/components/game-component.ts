@@ -1,17 +1,21 @@
 import gc from "@sg/game-client-base";
-import { Component, Game, Label, _decorator, director, game, log } from "cc";
+import { Game, Label, _decorator, director, game, log } from "cc";
 import Observer from "observer";
+import { siteConfigs } from "../../../../../../assets/scripts/site-configs";
 import { InGameMenuEvents } from "../../../game/in-game-menu/scripts/stores/in-game-menu-events";
 import { InGameMenuStore } from "../../../game/in-game-menu/scripts/stores/in-game-menu-store";
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
+import { startGame } from "../../../shared/scripts/startup";
 import WebViewGuide from "../../game-guide/scripts/web-view-guide";
+import { LogStore } from "../stores/log-store";
+import { GameComponentBase } from "./game-component-base";
 
 const { Rounds, Connection, HideGame, JoinGame, Settlements, FormatUtils, RoundHistories } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
 @ccclass
-export default class GameComponent extends Component {
+export default class GameComponent extends GameComponentBase {
     @property(Label)
     lblRoundId: Label = null;
 
@@ -25,11 +29,30 @@ export default class GameComponent extends Component {
     guideContainer: NodeContainer = null;
 
     protected roundId = 0;
+    containerOptions: gc.IContainerOptions;
 
-    protected onLoad(): void {
+    onLoad() {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
         game.on(Game.EVENT_SHOW, this.onShowGame, this);
+        this.connectToService();
+        this.initUserSettings();
     }
+
+    @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
+    connectToService() {}
+
+    @render(gc.App.AppStore, (store) => store.isUM)
+    loadUMScene(isUM: boolean) {
+        isUM && director.loadScene("under-maintenance");
+    }
+
+    @render(LogStore, (store) => store.message)
+    logInfo(message: string) {
+        // console.log(message);
+    }
+
+    @handle(gc.UserSettings.UserSettingHandlers, (handle) => handle.loadStorages())
+    initUserSettings() {}
 
     protected onDestroy(): void {
         game.off(Game.EVENT_HIDE, this.onHideGame, this);
@@ -41,7 +64,9 @@ export default class GameComponent extends Component {
         log("Game run in background ============================================");
     }
 
-    refreshContainer() {}
+    refreshContainer() {
+        startGame(this.namespace, this.containerOptions, siteConfigs);
+    }
 
     onShowGame() {
         log("Game run in foreground ============================================");

@@ -1,11 +1,11 @@
 import { director } from "cc";
-import StartupComponent from "../../../../../assets/game/scripts/components/startup-component";
+import GameComponent from "db://shared-components/game/scripts/components/game-component";
 
-describe(StartupComponent.name, () => {
-    let component: StartupComponent;
+describe(GameComponent.name, () => {
+    let component: GameComponent;
 
     beforeEach(() => {
-        component = new StartupComponent();
+        component = new GameComponent();
     });
 
     describe("onLoad", () => {
