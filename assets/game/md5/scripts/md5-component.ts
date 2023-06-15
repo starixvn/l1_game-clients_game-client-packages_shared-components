@@ -61,6 +61,10 @@ export default class MD5Component extends Component {
         this.initMD5Wrapper();
     }
 
+    protected onDestroy(): void {
+        this.handleClearTimeout();
+    }
+
     private registerTouchEvents() {
         this.nodeMd5ContentContainer.on(Node.EventType.MOUSE_ENTER, this.showTooltip, this);
         this.nodeMd5ContentContainer.on(Node.EventType.MOUSE_LEAVE, this.hideTooltip, this);
@@ -100,12 +104,13 @@ export default class MD5Component extends Component {
         this.md5Tip.show(false);
     }
 
-    @render(Rounds.RoundStore, (store) => store.resultHash)
+    @render(Rounds.RoundStore, (store) => store.resultHash, { fireImmediately: false })
     renderMd5(resultHash: gc.GameServiceMessage.ResultHash) {
         this.updateMD5String(resultHash);
     }
 
     updateMD5String(data: gc.GameServiceMessage.ResultHash) {
+        this.handleClearTimeout();
         if (!this.node.activeInHierarchy) {
             this.handleMD5Data(data);
             return;
@@ -136,7 +141,7 @@ export default class MD5Component extends Component {
         this.lblMd5Value && (this.lblMd5Value.string = "");
         this.tipString = "";
         this.setCopyString("");
-        this.timeout && clearTimeout(this.timeout);
+        this.handleClearTimeout();
     }
 
     setCopyString(text: string) {
@@ -170,5 +175,9 @@ export default class MD5Component extends Component {
 
     setDelayShowRawValue(delay: number) {
         this.delayShowRawValue = delay;
+    }
+
+    handleClearTimeout() {
+        this.timeout && clearTimeout(this.timeout);
     }
 }

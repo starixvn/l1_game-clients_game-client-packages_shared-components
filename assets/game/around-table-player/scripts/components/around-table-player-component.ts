@@ -1,8 +1,7 @@
 import gc from "@sg/game-client-base";
-import { Label, Sprite, SpriteFrame, UIOpacity, _decorator } from "cc";
+import { Component, Label, Sprite, SpriteFrame, UIOpacity, _decorator } from "cc";
 import { IAroundTablePlayers } from "../stores/around-table-players-chip-store";
 import { bundleManager } from "./../../../../shared/common-components/bundle-magager/bundle-manager";
-import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
 import { AnimationUtils } from "./../../../../shared/utils/utils";
 
 const { ccclass, property } = _decorator;
@@ -11,7 +10,7 @@ const { fadeIn, fadeOut } = AnimationUtils;
 const { FormatUtils, NumberUtils } = gc;
 
 @ccclass
-export class AroundTablePlayerComponent extends ObserverComponent {
+export class AroundTablePlayerComponent extends Component {
     @property(Label)
     lblNickname: Label = null;
 
@@ -29,14 +28,13 @@ export class AroundTablePlayerComponent extends ObserverComponent {
     public aroundTablePlayer: IAroundTablePlayers = null;
 
     onLoad() {
-        super.onLoad();
         this.node.active = false;
     }
 
     async setInfo(player: IAroundTablePlayers) {
-        this.node.active = true;
-        this.node.getComponent(UIOpacity).opacity = 0;
-        if (player) {
+        if (player?.red && player?.name && player?.avatarId) {
+            this.node.active = true;
+            this.node.getComponent(UIOpacity).opacity = 0;
             await this.updatePlayerInfo(player);
             await fadeIn(this.node, 1);
         } else {
