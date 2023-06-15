@@ -589,9 +589,172 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  betHistoryTitle:
+    key: betHistoryTitle
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - sceneUuid: e9e7deee-091c-46ca-814e-73a33f55526f
+        nodeUuid: 72E0I0BKlEdpeE7VsWYAW9
+        reference: e9e7deee-091c-46ca-814e-73a33f55526f
+      - sceneUuid: e9e7deee-091c-46ca-814e-73a33f55526f
+        nodeUuid: 72E0I0BKlEdpeE7VsWYAW9
+        reference: e9e7deee-091c-46ca-814e-73a33f55526f
+      - sceneUuid: e9e7deee-091c-46ca-814e-73a33f55526f
+        nodeUuid: 0eoxYd0MpOSbOI64QYZ2Un
+        reference: e9e7deee-091c-46ca-814e-73a33f55526f
+      - sceneUuid: e9e7deee-091c-46ca-814e-73a33f55526f
+        nodeUuid: bfoBnQyFJHjbMJUx5680Wm
+        reference: e9e7deee-091c-46ca-814e-73a33f55526f
+      - sceneUuid: e9e7deee-091c-46ca-814e-73a33f55526f
+        nodeUuid: b3jyI/4OFHFIMsGoypMdO8
+        reference: e9e7deee-091c-46ca-814e-73a33f55526f
+      - sceneUuid: 16e1ca38-402a-4aaf-b60c-6b4200fe1cf1
+        nodeUuid: 1abaUPX2FBd600j32xZwGH
+        reference: 16e1ca38-402a-4aaf-b60c-6b4200fe1cf1
+    _variants: []
+  time:
+    key: time
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: d5RAa+MExIwLxzlVuXUJYo
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: d5RAa+MExIwLxzlVuXUJYo
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+    _variants: []
+  round:
+    key: round
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 05Zxuq/JpIEri9Xr+FQBRG
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 05Zxuq/JpIEri9Xr+FQBRG
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+    _variants: []
+  result:
+    key: result
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 17iQOoLZpP5b0fCJCSGwy4
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 17iQOoLZpP5b0fCJCSGwy4
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+    _variants: []
+  event:
+    key: event
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 91W856dYlCKKEyCc8Gjwx9
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 91W856dYlCKKEyCc8Gjwx9
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+    _variants: []
+  odd:
+    key: odd
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 5clVpfNJpOzLpdra7BGvZW
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 5clVpfNJpOzLpdra7BGvZW
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+    _variants: []
+  twoRed:
+    key: twoRed
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 20Ztq/xGxBRaRGNggWGpeB
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 2apUiS6JJF7YytZ/nclLbb
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+    _variants: []
+  threeRed:
+    key: threeRed
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a1
+        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: cfrCO0+DdI6qZQ9DMjX0ro
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - *a1
+    _variants: []
+  fourRed:
+    key: fourRed
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a2
+        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 20Ztq/xGxBRaRGNggWGpeB
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - *a2
+    _variants: []
+  oneRed:
+    key: oneRed
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a3
+        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: eboCBaoKJBMKyWP8QrAtN7
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - *a3
+    _variants: []
+  fourWhite:
+    key: fourWhite
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a4
+        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 523pBm26JOL7HFRYYA3Enj
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - *a4
+    _variants: []
+  win:
+    key: win
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a5
+        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: fdU1SwrvBPDIslK30ldGZJ
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - *a5
+    _variants: []
 languageConfig:
   bcp47Tag: index
-  translateFinished: 378
+  translateFinished: 390
   translateTotal: 0
   compileFinished: 0
   compileTotal: 0

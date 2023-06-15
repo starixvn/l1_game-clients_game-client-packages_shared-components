@@ -1,26 +1,16 @@
-import { _decorator, Node, Prefab, ScrollView, UITransform, Widget } from "cc";
-import { Dialog } from "../../../../shared/common-components/dialogs/dialog";
+import { _decorator, instantiate, Node, Prefab } from "cc";
+import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import BetHistoryBodyItem from "./bet-history-body-item";
+import gc from "@sg/game-client-base";
+
 const { ccclass, property } = _decorator;
-
 @ccclass()
-export class BetHistoryTable extends Dialog {
-    @property(Node)
-    closedButton: Node = null;
-
-    @property(Node)
-    mainBackground: Node = null;
-
-    @property(Node)
-    table: Node = null;
-
+export class BetHistoryTable extends ObserverComponent {
     @property(Node)
     header: Node = null;
 
     @property(Node)
     body: Node = null;
-
-    @property(Node)
-    pagination: Node = null;
 
     @property(Prefab)
     headerPrefab: Prefab = null;
@@ -28,18 +18,25 @@ export class BetHistoryTable extends Dialog {
     @property(Prefab)
     bodyPrefab: Prefab = null;
 
-    @property(ScrollView)
-    scrollView: ScrollView = null;
-
-    protected start(): void {
-        this.table.getComponent(UITransform).width = 1300;
-        this.mainBackground.getComponent(UITransform).width = 750;
-
-        const widget = this.closedButton.getComponent(Widget);
-        widget!.right = widget!.right - 75;
+    getHistoryItemComponent(node: Node) {
+        return node.getComponent(BetHistoryBodyItem);
     }
 
-    onClosed() {
-        this.hide();
+    buildBodyRow(ticket: any, index: number): Node {
+        return null;
+    }
+
+    showBetHistory(model: gc.BetHistory.BetHistoryModel) {
+        this.clearOldTable();
+
+        this.header.addChild(instantiate(this.headerPrefab));
+        model.betLogs.forEach((ticket, index) => {
+            this.body.addChild(this.buildBodyRow(ticket, index));
+        });
+    }
+
+    clearOldTable() {
+        this.header.destroyAllChildren();
+        this.body.destroyAllChildren();
     }
 }

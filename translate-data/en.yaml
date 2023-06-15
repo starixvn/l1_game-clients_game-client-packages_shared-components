@@ -116,24 +116,24 @@ items:
         _variants: []
     limitBetExceeded:
         key: limitBetExceeded
-        value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your stake has
-            exceeded your bet limit settings please try again. ({{errorCode}})
+        value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your stake
+            has exceeded your bet limit settings please try again. ({{errorCode}})
         type: 4
         isVariant: false
         associations: []
         _variants: []
     playerNotPermittedPlay:
         key: playerNotPermittedPlay
-        value: Game {{gameName}} (#{{gameRoundId}})\n\nGame disabled. Please contact your
-            upline for details thank you. ({{errorCode}})
+        value: Game {{gameName}} (#{{gameRoundId}})\n\nGame disabled. Please contact
+            your upline for details thank you. ({{errorCode}})
         type: 4
         isVariant: false
         associations: []
         _variants: []
     winLimitHit:
         key: winLimitHit
-        value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Win limit hit.
-            Please contact your upline thank you. ({{errorCode}})
+        value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Win limit
+            hit. Please contact your upline thank you. ({{errorCode}})
         type: 4
         isVariant: false
         associations: []
@@ -148,17 +148,17 @@ items:
         _variants: []
     limitBetUpdated:
         key: limitBetUpdated
-        value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet limit
-            has been updated please try again. ({{errorCode}})
+        value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet
+            limit has been updated please try again. ({{errorCode}})
         type: 4
         isVariant: false
         associations: []
         _variants: []
     limitBetNotDefined:
         key: limitBetNotDefined
-        value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet limit
-            for this game has not been set. Please contact your upline thank you.
-            ({{errorCode}})
+        value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet
+            limit for this game has not been set. Please contact your upline thank
+            you. ({{errorCode}})
         type: 4
         isVariant: false
         associations: []
@@ -269,7 +269,8 @@ items:
         _variants: []
     placeBetFailed:
         key: placeBetFailed
-        value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! ({{errorCode}})
+        value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet!
+            ({{errorCode}})
         type: 4
         isVariant: false
         associations: []
@@ -560,49 +561,91 @@ items:
         _variants: []
     gameNames.2:
         key: gameNames.2
-        value: "SeDie"
+        value: SeDie
         type: 2
         isVariant: false
         associations: []
         _variants: []
     copySuccess:
-      key: copySuccess
-      value: Copy successful!
-      type: 4
-      isVariant: false
-      associations: []
-      _variants: []
+        key: copySuccess
+        value: Copy successful!
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
     md5Result:
-      key: md5Result
-      value: RESULT
-      type: 4
-      isVariant: false
-      associations: []
-      _variants: []
+        key: md5Result
+        value: RESULT
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
     md5String:
-      key: md5String
-      value: MD5 KEY
-      type: 4
-      isVariant: false
-      associations: []
-      _variants: []
+        key: md5String
+        value: MD5 KEY
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
     md5Copy:
-      key: md5Copy
-      value: COPY
-      type: 4
-      isVariant: false
-      associations: []
-      _variants: []
+        key: md5Copy
+        value: COPY
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
     copyMD5Failed:
-      key: copyMD5Failed
-      value: Copy function is temporarily unavailable.
-      type: 4
-      isVariant: false
-      associations: []
-      _variants: []
+        key: copyMD5Failed
+        value: Copy function is temporarily unavailable.
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    betHistoryTitle:
+        key: betHistoryTitle
+        value: Bet History
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    fourRed:
+        key: fourRed
+        value: 4 Red
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    threeRed:
+        key: threeRed
+        value: 3 Red
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    twoRed:
+        key: twoRed
+        value: 2 Red
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    oneRed:
+        key: oneRed
+        value: 1 Red
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
+    fourWhite:
+        key: fourWhite
+        value: 4 White
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
 languageConfig:
     bcp47Tag: en
-    translateFinished: 377
-    translateTotal: 377
+    translateFinished: 390
+    translateTotal: 390
     compileFinished: 0
-    compileTotal: 74
+    compileTotal: 84

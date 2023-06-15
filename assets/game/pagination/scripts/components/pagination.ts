@@ -1,7 +1,7 @@
-import { _decorator, Node, CCInteger, Label } from "cc";
+import { _decorator, Node, Label } from "cc";
 import Observer from "observer";
 import PaginationItem from "./pagination-item";
-import gc from "game-client-base";
+import gc from "@sg/game-client-base";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 
 const { ccclass, property } = _decorator;
