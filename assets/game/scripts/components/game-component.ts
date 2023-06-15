@@ -28,7 +28,6 @@ export default class GameComponent extends GameComponentBase {
     @property(NodeContainer)
     guideContainer: NodeContainer = null;
 
-    protected roundId = 0;
     containerOptions: gc.IContainerOptions;
 
     onLoad() {
@@ -86,13 +85,11 @@ export default class GameComponent extends GameComponentBase {
     handleJoinGameAndShowResult(joinRoomShowResult: gc.RoundHistories.IRoundHistoryInfo) {
         const { roundHistory, isShow } = joinRoomShowResult ?? {};
         if (roundHistory && isShow) {
-            this.roundId = roundHistory?.roundId;
-            this.setRoundId();
             this.showResult(roundHistory?.result, false);
         }
     }
 
-    @render(Rounds.RoundStore, (store) => store.roundId)
+    @render(Rounds.RoundStore, (store) => store.clientRoundId)
     renderRoundId(roundId: number) {
         this.lblRoundId && (this.lblRoundId.string = `#${roundId}`);
     }
@@ -103,14 +100,8 @@ export default class GameComponent extends GameComponentBase {
         this.lblMaxBet && (this.lblMaxBet.string = FormatUtils.numberWithCommas(maxBet));
     }
 
-    @handle(Rounds.RoundUIHandlers.SetRoundId)
-    setRoundId() {
-        return this.roundId;
-    }
-
     @render(Settlements.SettlementStore, (store) => ({ roundId: store.roundId, result: store.result }))
     handleResult({ roundId, result }: { roundId: number; result: gc.GameServiceMessage.TResult }) {
-        roundId && (this.roundId = roundId);
         this.showResult(result, true);
         this.playSoundReceiveFinish();
     }
@@ -130,8 +121,6 @@ export default class GameComponent extends GameComponentBase {
         if (isStartGenerateResult) {
             this.finishedSettlement();
             this.resetForNewRound();
-            this.roundId++;
-            this.setRoundId();
         }
     }
 
