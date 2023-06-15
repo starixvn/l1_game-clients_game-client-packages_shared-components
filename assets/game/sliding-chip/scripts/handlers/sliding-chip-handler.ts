@@ -1,4 +1,4 @@
-import gc from "game-client-base";
+import gc from "@sg/game-client-base";
 import inversify from "inversify";
 import { SlidingChipStore } from "../stores/sliding-chip-store";
 

@@ -1,7 +1,7 @@
 import { _decorator, AudioClip, AudioSource, JsonAsset, log } from "cc";
 import { bundleManager } from "../../../../shared/common-components/bundle-magager/bundle-manager";
 
-import gc from "game-client-base";
+import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 

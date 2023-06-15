@@ -1,4 +1,4 @@
-import gc from "game-client-base";
+import gc from "@sg/game-client-base";
 import Observer from "observer";
 import EffectAppearanceLabel from "./effect-appearance-label";
 import MD5Frame from "./md5-frame";

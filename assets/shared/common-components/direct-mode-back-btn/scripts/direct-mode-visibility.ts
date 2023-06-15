@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Component, Enum } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 
 export enum NodeType {

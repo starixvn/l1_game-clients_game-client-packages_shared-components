@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { Node, WebView, _decorator, tween } from "cc";
-import gc from "game-client-base";
 import { ObserverComponent } from "../observer-component/scripts/observer-component";
 
 const { UrlUtils } = gc;

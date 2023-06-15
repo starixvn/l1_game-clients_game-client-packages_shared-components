@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Node, tween } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 import * as actions from "../../.././sliding-chip/scripts/components/actions";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";

@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { Node, _decorator, tween } from "cc";
-import gc from "game-client-base";
 import { remove, values } from "lodash-es";
 import Observer from "observer";
 import BetItem from "../../../bets/scripts/components/bet-item";

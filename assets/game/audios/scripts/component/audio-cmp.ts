@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Enum, Toggle } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 

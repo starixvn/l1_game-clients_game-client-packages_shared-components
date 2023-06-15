@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Component, Label, Node } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 import { BetItemStore, TBetStartingRound } from "../stores/bet-item-store";
 

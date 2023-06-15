@@ -1,4 +1,4 @@
-import gc from "game-client-base";
+import gc from "@sg/game-client-base";
 import { InGameMenu } from "../../../../../assets/game/in-game-menu/scripts/components/in-game-menu";
 import { InGameMenuEvents } from "../../../../../assets/game/in-game-menu/scripts/stores/in-game-menu-events";
 import { ExpandableNode } from "../../../../../assets/shared/common-components/expandable-node/scripts/expandable-node";

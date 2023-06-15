@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 import { NodeContainer } from "../../node-container/node-container";
 import { WarningCmp } from "./warning-cmp";

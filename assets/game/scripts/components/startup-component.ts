@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { Component, _decorator, director } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 import { LogStore } from "../stores/log-store";
 

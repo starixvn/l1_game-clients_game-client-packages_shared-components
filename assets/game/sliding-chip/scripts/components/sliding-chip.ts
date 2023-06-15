@@ -1,3 +1,4 @@
+import gc from "@sg/game-client-base";
 import {
     Color,
     Component,
@@ -15,7 +16,6 @@ import {
     tween,
     v3,
 } from "cc";
-import gc from "game-client-base";
 import { random, round } from "lodash-es";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";

@@ -1,4 +1,4 @@
-import gc from "game-client-base";
+import gc from "@sg/game-client-base";
 import { find } from "lodash-es";
 import { FunctionUtils } from "../../../../shared/utils";
 import BetItem from "../../../bets/scripts/components/bet-item";

@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Component, director, ProgressBar } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 
 const { ccclass, property } = _decorator;

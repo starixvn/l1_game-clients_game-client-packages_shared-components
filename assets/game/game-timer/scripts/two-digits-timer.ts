@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Color, Label, Node, tween, UIOpacity, UIRenderer, v3 } from "cc";
-import gc from "game-client-base";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 
 const { Rounds } = gc;

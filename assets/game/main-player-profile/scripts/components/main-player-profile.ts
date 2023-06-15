@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { Label, Sprite, SpriteFrame, _decorator } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-magager/bundle-manager";

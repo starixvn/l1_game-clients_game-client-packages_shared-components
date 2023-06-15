@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 import { ExpandableNode } from "../../../../shared/common-components/expandable-node/scripts/expandable-node";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";

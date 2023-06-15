@@ -1,9 +1,9 @@
-import { Auth, Configs, IContainerOptions, Player, buildObserverContainer, getContainer, sentryLogger } from "game-client-base";
+import { Auth, Configs, IContainerOptions, Player, buildObserverContainer, getContainer, sentryLogger } from "@sg/game-client-base";
 import mobx from "mobx";
 import { configure } from "observer";
 import { getSharedContainer, startGame } from "../../../assets/shared/scripts/startup";
 
-jest.mock("game-client-base");
+jest.mock("@sg/game-client-base");
 jest.mock("mobx");
 
 describe(startGame.name, () => {

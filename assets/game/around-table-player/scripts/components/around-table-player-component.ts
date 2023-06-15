@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { Label, Sprite, SpriteFrame, UIOpacity, _decorator } from "cc";
-import gc from "game-client-base";
 import { IAroundTablePlayers } from "../stores/around-table-players-chip-store";
 import { bundleManager } from "./../../../../shared/common-components/bundle-magager/bundle-manager";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";

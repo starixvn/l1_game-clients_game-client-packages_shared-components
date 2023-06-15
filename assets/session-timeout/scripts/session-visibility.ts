@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Component, director } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 
 const { render, handle, observer } = Observer;

@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 import LoadWebView from "../../../shared/common-components/web-view/load-web-view";
 

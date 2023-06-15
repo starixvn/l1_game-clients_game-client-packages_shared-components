@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { Component, Game, Label, _decorator, director, game, log } from "cc";
-import gc from "game-client-base";
 import Observer from "observer";
 import { InGameMenuEvents } from "../../../game/in-game-menu/scripts/stores/in-game-menu-events";
 import { InGameMenuStore } from "../../../game/in-game-menu/scripts/stores/in-game-menu-store";

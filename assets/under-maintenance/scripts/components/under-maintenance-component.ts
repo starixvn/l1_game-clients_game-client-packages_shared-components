@@ -1,6 +1,6 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Component, Label } from "cc";
 import Observer from "observer";
-import gc from "game-client-base";
 import { UMInfo } from "sc-user-service-client/dist/auth";
 const { ccclass, property } = _decorator;
 const { observer, render } = Observer;

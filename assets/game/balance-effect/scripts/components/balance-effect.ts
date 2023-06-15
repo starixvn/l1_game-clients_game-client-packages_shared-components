@@ -1,5 +1,5 @@
+import gc from "@sg/game-client-base";
 import { BitmapFont, CCFloat, Label, Node, _decorator, tween, v3 } from "cc";
-import gc from "game-client-base";
 import { NodeContainer } from "../../../../shared/common-components/node-container/node-container";
 import { TBalanceEffect } from "../stores/balance-effect-store";
 
