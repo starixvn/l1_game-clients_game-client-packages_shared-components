@@ -5,7 +5,7 @@ import { MainPlayerProfileStore } from "../../../main-player-profile/scripts/sto
 const { injectable, inject } = inversify;
 
 export type TBalanceEffect = {
-    avatarNode: Node;
+    effectNode: Node;
     balance: number;
 };
 
@@ -14,7 +14,7 @@ export type TUpdateBalance = {
 };
 
 export type TWinningEffect = {
-    avatarNode: Node;
+    effectNode: Node;
     status: boolean;
 };
 
@@ -41,17 +41,17 @@ export class BalanceEffectStore {
     }
 
     updateMainPlayerDecreaseBalance(balance: number) {
-        const balanceEffect = { balance, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
+        const balanceEffect = { balance, effectNode: this.mainPlayerProfileStore.containerEffectNode };
         this.decreaseBalanceMainPlayer = { balanceEffect };
     }
 
     updateMainPlayerIncreaseBalance(balance: number) {
-        const balanceEffect = { balance, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
+        const balanceEffect = { balance, effectNode: this.mainPlayerProfileStore.containerEffectNode };
         this.increaseBalanceMainPlayer = { balanceEffect };
     }
 
     updateMainPlayerWinEffect(status: boolean) {
-        this.winEffectMainPlayer = { status, avatarNode: this.mainPlayerProfileStore.mainPlayerAvatarNode };
+        this.winEffectMainPlayer = { status, effectNode: this.mainPlayerProfileStore.containerEffectNode };
     }
 
     updateAroundTablePlayersWinEffect(winningEffects: TWinningEffect[]) {

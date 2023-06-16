@@ -26,8 +26,8 @@ export class BalanceContainer extends NodeContainer {
     isIncrease = true;
 
     updateBalanceWhenPlayerBet(balanceEffect: TBalanceEffect) {
-        if (balanceEffect?.avatarNode && balanceEffect?.balance) {
-            this.updateBalanceEffect(balanceEffect.avatarNode, balanceEffect.balance);
+        if (balanceEffect?.effectNode && balanceEffect?.balance) {
+            this.updateBalanceEffect(balanceEffect.effectNode, balanceEffect.balance);
         }
     }
 

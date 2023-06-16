@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Label, Sprite, SpriteFrame, _decorator } from "cc";
+import { Label, Node, Sprite, SpriteFrame, _decorator } from "cc";
 import Observer from "observer";
 
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-magager/bundle-manager";
@@ -25,14 +25,17 @@ export default class MainPlayerProfile extends ObserverComponent {
     @property(Sprite)
     sprAvatar: Sprite = null;
 
+    @property(Node)
+    containerEffect: Node = null;
+
     onLoad() {
         super.onLoad();
-        this.setMainPlayerAvatar();
+        this.setMainPlayerContainerEffect();
     }
 
-    @handle(MainPlayerProfileHandlers.SetMainPlayerAvatar)
-    setMainPlayerAvatar() {
-        return this.sprAvatar.node;
+    @handle(MainPlayerProfileHandlers.MainPlayerContainerEffect)
+    setMainPlayerContainerEffect() {
+        return this.containerEffect;
     }
 
     @render(MainPlayerStore, (store) => store.name)

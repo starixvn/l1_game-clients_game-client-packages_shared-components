@@ -6,11 +6,11 @@ const { injectable, inject } = inversify;
 
 export namespace MainPlayerProfileHandlers {
     @injectable()
-    export class SetMainPlayerAvatar {
+    export class MainPlayerContainerEffect {
         @inject(MainPlayerProfileStore) private readonly mainPlayerProfileStore: MainPlayerProfileStore;
 
         async handle(avatarNode: Node) {
-            this.mainPlayerProfileStore.mainPlayerAvatarNode = avatarNode;
+            this.mainPlayerProfileStore.containerEffectNode = avatarNode;
         }
     }
 }

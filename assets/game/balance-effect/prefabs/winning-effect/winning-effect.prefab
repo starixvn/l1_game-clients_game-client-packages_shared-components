@@ -30,14 +30,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 26
+        "__id__": 28
       },
       {
-        "__id__": 28
+        "__id__": 30
       }
     ],
     "_prefab": {
-      "__id__": 30
+      "__id__": 32
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -400,10 +400,13 @@
       },
       {
         "__id__": 23
+      },
+      {
+        "__id__": 25
       }
     ],
     "_prefab": {
-      "__id__": 25
+      "__id__": 27
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -483,7 +486,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "1ef4a92d-e610-4346-ae0b-27bcca850b1c@04807",
+      "__uuid__": "1ef4a92d-e610-4346-ae0b-27bcca850b1c@3c2e0",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -527,6 +530,29 @@
     "fileId": "feo355Dt9JnbEYThuEcirS"
   },
   {
+    "__type__": "06e88JkRbBI3I5biYl95u15",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 18
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 26
+    },
+    "atlas": {
+      "__uuid__": "1ef4a92d-e610-4346-ae0b-27bcca850b1c",
+      "__expectedType__": "cc.SpriteAtlas"
+    },
+    "prefix": "THANG",
+    "defaultLocalized": "",
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "b90i/SI19ADYxF4/UXmVDn"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -548,7 +574,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 27
+      "__id__": 29
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -575,7 +601,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 29
+      "__id__": 31
     },
     "playOnLoad": true,
     "_clips": [

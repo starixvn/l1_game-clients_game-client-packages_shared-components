@@ -191,8 +191,8 @@ export class ChipFlying extends ObserverComponent {
 
             const convertValue = NumberUtils.getValueByCurrency(bet, rate || 1);
             aroundTablePlayerSlot.increaseBalance(convertValue);
-            winningEffects.push({ avatarNode: aroundTablePlayerSlot.node, status: true });
-            balanceEffects.push({ avatarNode: aroundTablePlayerSlot.node, balance: convertValue });
+            winningEffects.push({ effectNode: aroundTablePlayerSlot.node, status: true });
+            balanceEffects.push({ effectNode: aroundTablePlayerSlot.node, balance: convertValue });
         });
 
         this.aroundTablePlayersShowWinningEffect(winningEffects);

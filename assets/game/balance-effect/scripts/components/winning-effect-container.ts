@@ -26,9 +26,9 @@ export class WinningEffectContainer extends NodeContainer {
     }
 
     playWinningEffect(playWinningEffectMainPlayer: TWinningEffect) {
-        if (playWinningEffectMainPlayer?.avatarNode) {
+        if (playWinningEffectMainPlayer?.effectNode) {
             const winningEffectNode = this.createNode();
-            playWinningEffectMainPlayer.avatarNode.addChild(winningEffectNode);
+            playWinningEffectMainPlayer.effectNode.addChild(winningEffectNode);
             tween(winningEffectNode).delay(this.duration).destroySelf().start();
         }
     }
