@@ -117,18 +117,7 @@ export default class GameComponent extends GameComponentBase {
     finishShowResult() {}
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartGenerateResult)
-    startGenerateResult(isStartGenerateResult: boolean) {
-        if (isStartGenerateResult) {
-            this.finishedSettlement();
-            this.resetForNewRound();
-        }
-    }
-
-    @handle(Settlements.SettlementUIHandlers.FinishedSettlement)
-    finishedSettlement() {}
-
-    @handle(Rounds.RoundUIHandlers.ResetRoundStore)
-    resetForNewRound() {}
+    startGenerateResult(isStartGenerateResult: boolean) {}
 
     @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
     openGuide({ event }: { event: InGameMenuEvents }) {
