@@ -3,21 +3,14 @@ import { InGameMenu } from "../../../../../assets/game/in-game-menu/scripts/comp
 import { InGameMenuEvents } from "../../../../../assets/game/in-game-menu/scripts/stores/in-game-menu-events";
 import { ExpandableNode } from "../../../../../assets/shared/common-components/expandable-node/scripts/expandable-node";
 
-jest.mock("../../../../../assets/common/observer-component/scripts/observer-component", () => {
+jest.mock("../../../../../assets/shared/common-components/expandable-node/scripts/expandable-node", () => {
     return {
-        ObserverComponent: jest.fn().mockImplementation(() => {
-            return {};
-        }),
-    };
-});
-
-jest.mock("../../../../../assets/common/expandable-node/scripts/expandable-node", () => {
-    return {
-        ExpandableNode: {
-            collapse: jest.fn(),
+        ExpandableNode: class {
+            collapse = jest.fn();
         },
     };
 });
+
 describe("InGameMenu", () => {
     let instance: InGameMenu;
 
