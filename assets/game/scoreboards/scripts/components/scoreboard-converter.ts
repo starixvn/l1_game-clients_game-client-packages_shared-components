@@ -3,10 +3,6 @@ import { ScoreboardConverterProperty } from "../models/scoreboard-converter-prop
 
 const { ccclass, property } = _decorator;
 
-export function identity(data: unknown) {
-    return data;
-}
-
 @ccclass
 export class ScoreboardDataConverter extends Component {
     @property

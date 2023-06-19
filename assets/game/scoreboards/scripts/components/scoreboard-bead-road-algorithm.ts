@@ -7,7 +7,7 @@ const { ccclass, property, requireComponent } = _decorator;
 
 @ccclass
 @requireComponent(ScoreboardDataConverter)
-export class ScoreboardBigRoadAlgorithm extends ScoreboardAlgorithm {
+export class ScoreboardBeadRoadAlgorithm extends ScoreboardAlgorithm {
     @property(ScoreboardDataConverter)
     protected converter: ScoreboardDataConverter = null;
 
