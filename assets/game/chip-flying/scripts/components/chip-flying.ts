@@ -49,12 +49,12 @@ export class ChipFlying extends ObserverComponent {
     protected isChipStack = false;
     protected payChipsDuration = 1.2;
     protected chipDelayFlyingTime = 1.25;
-
     protected settlementStatus: gc.GameServiceMessage.Status = null;
+    private isShowChipOnBetItem = true;
 
     @render(Chips.ChipStore, (store) => store.chipsByMainPlayerRate, { fireImmediately: false })
     flyChipJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {
-        if (!chipsByMainPlayerRate) {
+        if (!chipsByMainPlayerRate || !this.isShowChipOnBetItem) {
             return;
         }
 
@@ -217,5 +217,10 @@ export class ChipFlying extends ObserverComponent {
     @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
     startNewRound(isStartPlacingBet: boolean) {
         isStartPlacingBet && (this.settlementStatus = null);
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => store.isResultDisplayRange)
+    handleStopGame(isResultDisplayRange: boolean) {
+        isResultDisplayRange && (this.isShowChipOnBetItem = !isResultDisplayRange);
     }
 }
