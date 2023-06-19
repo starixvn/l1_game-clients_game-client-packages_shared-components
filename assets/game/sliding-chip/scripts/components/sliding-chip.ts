@@ -27,7 +27,7 @@ import Chip, { ChipDisplayType } from "./chip";
 import { SnapScrollView } from "./snap-scroll-view";
 
 const { render, handle } = Observer;
-const { Chips, GameConfigs, Player, Rounds } = gc;
+const { Chips, Rounds } = gc;
 
 const { ccclass, property } = _decorator;
 
@@ -68,6 +68,7 @@ export default class SlidingChip extends ObserverComponent {
 
     static chipFlyingTime: number = 0.8;
     static mainPlayerChipFlyingTime = 0.5;
+    private currentSelectChip = 0;
 
     setDisabledBetChips(status: boolean) {
         this.disabledBetChips = status;
@@ -102,17 +103,6 @@ export default class SlidingChip extends ObserverComponent {
         } else if (selectChip >= this.chipList.length - 1) {
             this.setRightButtonStatus(false);
         }
-    }
-
-    @render(GameConfigs.GameConfigStore, (store) => store.chips, { fireImmediately: false })
-    setChips() {
-        // init
-        this.setChipValues();
-    }
-
-    @render(Player.MainPlayerStore, (store) => store.stakeLevel, { fireImmediately: false })
-    updateChipsByUserStaleLevel() {
-        this.setChipValues();
     }
 
     @handle(SlidingChipHandler.UpdateCurrentBet)
@@ -196,6 +186,8 @@ export default class SlidingChip extends ObserverComponent {
         if (bet) {
             this.updateCurrentBet(bet);
         }
+
+        this.currentSelectChip = selectChip;
     }
 
     private getChipDisplayType(index: number) {
@@ -222,24 +214,35 @@ export default class SlidingChip extends ObserverComponent {
 
     @handle(SlidingChipHandler.CreateChips)
     createChips() {
-        this.chipList.forEach((chip) => chip.destroy());
-        this.chips.removeAllChildren();
-        this.chipList = [];
-        this.chipValues.forEach((value) => {
-            const node = this.createChipNode(value);
-            if (node) {
-                this.chips.addChild(node);
-                node.on("click", this.onClickChip.bind(this));
-                this.chipList.push(node);
-            }
+        this.destroyChips();
+        this.chipList = this.chipValues.map((value) => this.createChipNode(value)).filter((node) => node !== null);
+
+        this.chipList.forEach((node) => {
+            this.chips.addChild(node);
+            node.on("click", this.onClickChip.bind(this));
         });
 
         const layout = this.chips.getComponent(Layout);
-        layout.enabled = true;
-        layout.updateLayout();
-        layout.enabled = false;
+        if (layout) {
+            layout.enabled = true;
+            layout.updateLayout();
+            layout.enabled = false;
+        }
+
+        this.chipList.length > 0 && this.restoreChipState();
 
         return { chipsLength: this.chipList.length };
+    }
+
+    protected restoreChipState() {
+        this.scrollToSelectedIndex(this.currentSelectChip);
+        this.highlightChip(this.chipList?.[this.currentSelectChip], true);
+    }
+
+    protected destroyChips() {
+        this.chipList?.forEach((chip) => chip.destroy());
+        this.chips.removeAllChildren();
+        this.chipList = [];
     }
 
     private createChipNode(value: number): Node {
@@ -252,7 +255,7 @@ export default class SlidingChip extends ObserverComponent {
             const chip = chipNode.getComponent(Chip);
             chip.setColor(this.getChipColor(value));
             chip.setValue(value);
-            const index = this.chipValues.findIndex((chipValue) => chipValue === value);
+            const index = this.chipValues.findIndex((chipValue) => chipValue === +value);
             chip.setType(this.getChipDisplayType(index));
             return chipNode;
         }
@@ -278,17 +281,15 @@ export default class SlidingChip extends ObserverComponent {
         return { selectedChip: index };
     }
 
-    @handle(SlidingChipHandler.SetChipValues)
-    setChipValues() {}
-
     @render(SlidingChipStore, (store) => store.isResetScrollViewOffset)
     needResetScrollViewOffset() {
         this.snappedScrollView.scrollView.scrollToPercentHorizontal(0, 0.1, true);
     }
 
-    @render(SlidingChipStore, (store) => store.chipValues, { fireImmediately: true })
-    updateChipValues(chipValues: number[]) {
-        this.chipValues = chipValues;
+    @render(Rounds.RoundStore, (store) => store.chipValuesByStakeLevel, { fireImmediately: false })
+    updateChipValues(chipValuesByStakeLevel: number[]) {
+        // init
+        this.chipValues = chipValuesByStakeLevel;
         this.createChips();
         this.updateChips();
     }

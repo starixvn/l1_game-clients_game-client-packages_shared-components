@@ -52,7 +52,7 @@ export class ChipFlying extends ObserverComponent {
 
     protected settlementStatus: gc.GameServiceMessage.Status = null;
 
-    @render(Chips.ChipStore, (store) => store.chipsByMainPlayerRate)
+    @render(Chips.ChipStore, (store) => store.chipsByMainPlayerRate, { fireImmediately: false })
     flyChipJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {
         if (!chipsByMainPlayerRate) {
             return;

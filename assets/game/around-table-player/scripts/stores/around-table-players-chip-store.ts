@@ -3,7 +3,6 @@ import { Node } from "cc";
 import inversify from "inversify";
 import mobx from "mobx";
 import { getChipQuantity } from "../../../sliding-chip/scripts/components/actions";
-import { SlidingChipStore } from "../../../sliding-chip/scripts/stores/sliding-chip-store";
 import { AroundTablePlayerComponent } from "../components/around-table-player-component";
 
 const { injectable, inject } = inversify;
@@ -40,7 +39,7 @@ export interface IAroundTablePlayerPlaceChip {
 export class AroundTablePlayersChipStore {
     @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
     @inject(gc.Player.MainPlayerStore) private readonly mainPlayerStore: gc.Player.MainPlayerStore;
-    @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
+    @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
 
     constructor() {
         mobx.makeAutoObservable(this);
@@ -50,7 +49,7 @@ export class AroundTablePlayersChipStore {
         const playerChip = this.chipStore.playerChip;
         if (playerChip) {
             const convertValue = gc.NumberUtils.getValueByCurrency(playerChip?.amount, this.mainPlayerStore.rate);
-            const chipValues = getChipQuantity(convertValue, this.slidingChipStore.chipValues);
+            const chipValues = getChipQuantity(convertValue, this.roundStore.chipValuesByStakeLevel);
 
             return {
                 chipValues,
