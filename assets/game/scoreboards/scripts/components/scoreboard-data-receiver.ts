@@ -16,7 +16,7 @@ export class ScoreboardDataReceiver extends ObserverComponent {
     @property(Scoreboard)
     protected beadRoad: Scoreboard = null;
 
-    protected lastRound: unknown = null;
+    protected lastRound: unknown = {};
     protected rounds: unknown[] = [];
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
@@ -36,7 +36,7 @@ export class ScoreboardDataReceiver extends ObserverComponent {
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.isLocking)
     public toggleBlinkNode(active: boolean) {
-        if (active) {
+        if (active && this.bigRoad) {
             const converter = this.bigRoad.getComponent(ScoreboardDataConverter);
             const round = converter.createRound();
             const lastResult = converter.convert(this.lastRound)?.[converter.keyOfA];
@@ -45,7 +45,7 @@ export class ScoreboardDataReceiver extends ObserverComponent {
             round[converter.resultKey][converter.blinkKey] = true;
 
             this.rounds.push(round);
-            this.bigRoad?.render(this.rounds);
+            this.bigRoad.render(this.rounds);
         }
     }
 }

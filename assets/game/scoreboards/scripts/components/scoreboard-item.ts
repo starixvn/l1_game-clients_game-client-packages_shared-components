@@ -29,8 +29,8 @@ export class ScoreboardItem extends Component {
 
     render() {
         if (this.isValidState()) {
-            this.renderers?.forEach(this.reset.bind(this));
-            this.renderers?.forEach(this.executeRender.bind(this));
+            this.renderers.forEach(this.reset.bind(this));
+            this.renderers.forEach(this.executeRender.bind(this));
         }
     }
 
