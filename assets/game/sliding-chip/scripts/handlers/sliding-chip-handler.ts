@@ -30,10 +30,10 @@ export namespace SlidingChipHandler {
     export class UpdateChips implements gc.Shared.IHandler<void> {
         @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
         @inject(gc.Bet.BetStore) private readonly betStore: gc.Bet.BetStore;
-        @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
+        @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
 
         async handle() {
-            const chipValues = this.roundStore.chipValuesByStakeLevel;
+            const chipValues = this.chipStore.chipValuesByStakeLevel;
             const currentBet =
                 chipValues.findIndex((value) => parseInt(value.toString()) === parseInt(this.slidingChipStore.currentChip)) !== -1
                     ? this.slidingChipStore.currentChip

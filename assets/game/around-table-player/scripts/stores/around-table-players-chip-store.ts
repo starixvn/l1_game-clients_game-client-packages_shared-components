@@ -39,7 +39,6 @@ export interface IAroundTablePlayerPlaceChip {
 export class AroundTablePlayersChipStore {
     @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
     @inject(gc.Player.MainPlayerStore) private readonly mainPlayerStore: gc.Player.MainPlayerStore;
-    @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
 
     constructor() {
         mobx.makeAutoObservable(this);
@@ -49,7 +48,7 @@ export class AroundTablePlayersChipStore {
         const playerChip = this.chipStore.playerChip;
         if (playerChip) {
             const convertValue = gc.NumberUtils.getValueByCurrency(playerChip?.amount, this.mainPlayerStore.rate);
-            const chipValues = getChipQuantity(convertValue, this.roundStore.chipValuesByStakeLevel);
+            const chipValues = getChipQuantity(convertValue, this.chipStore.chipValuesByStakeLevel);
 
             return {
                 chipValues,

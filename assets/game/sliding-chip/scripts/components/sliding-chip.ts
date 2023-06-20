@@ -286,7 +286,7 @@ export default class SlidingChip extends ObserverComponent {
         this.snappedScrollView.scrollView.scrollToPercentHorizontal(0, 0.1, true);
     }
 
-    @render(Rounds.RoundStore, (store) => store.chipValuesByStakeLevel, { fireImmediately: false })
+    @render(Chips.ChipStore, (store) => store.chipValuesByStakeLevel, { fireImmediately: false })
     updateChipValues(chipValuesByStakeLevel: number[]) {
         // init
         this.chipValues = chipValuesByStakeLevel;
