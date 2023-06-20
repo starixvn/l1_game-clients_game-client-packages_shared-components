@@ -1,11 +1,15 @@
-import { _decorator, instantiate, Node, Prefab } from "cc";
-import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import BetHistoryBodyItem from "./bet-history-body-item";
+import { _decorator, Component, instantiate, Node, Prefab } from "cc";
+import BetHistoryBodyItem, { IBetHistoryLog } from "./bet-history-body-item";
 import gc from "@sg/game-client-base";
 
 const { ccclass, property } = _decorator;
+
+export interface IBetHistoryTable {
+    showBetHistory(model: gc.BetHistory.BetHistoryModel): void;
+}
+
 @ccclass()
-export class BetHistoryTable extends ObserverComponent {
+export class BetHistoryTable extends Component {
     @property(Node)
     header: Node = null;
 
@@ -22,16 +26,18 @@ export class BetHistoryTable extends ObserverComponent {
         return node.getComponent(BetHistoryBodyItem);
     }
 
-    buildBodyRow(ticket: any, index: number): Node {
-        return null;
+    buildBodyRow(betLogItem: IBetHistoryLog, index: number): Node {
+        const bodyRow = instantiate(this.bodyPrefab);
+        this.getHistoryItemComponent(bodyRow)?.setData(betLogItem, index);
+        return bodyRow;
     }
 
     showBetHistory(model: gc.BetHistory.BetHistoryModel) {
         this.clearOldTable();
 
         this.header.addChild(instantiate(this.headerPrefab));
-        model.betLogs.forEach((ticket, index) => {
-            this.body.addChild(this.buildBodyRow(ticket, index));
+        model.betLogs.forEach((betLogItem, index) => {
+            this.body.addChild(this.buildBodyRow(betLogItem, index));
         });
     }
 

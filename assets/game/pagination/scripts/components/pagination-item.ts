@@ -1,25 +1,31 @@
-import { _decorator, Component, Node, Label, Color } from "cc";
+import { _decorator, Component, Node, Label, EventHandler, Color } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("PaginationItem")
 export default class PaginationItem extends Component {
     @property(Node)
-    bgSelect: Node = null;
+    nodeBackgroundSelect: Node = null;
 
     @property(Node)
-    bg: Node = null;
+    nodeBackground: Node = null;
 
     @property(Label)
-    number: Label = null;
+    lblNumber: Label = null;
 
-    textHighlightColor = Color.BLACK;
+    @property(Color)
+    textHighlightColor: Color = new Color();
 
-    textNormalColor = Color.WHITE;
+    @property(Color)
+    textNormalColor: Color = new Color();
 
     updateHighlight(highlight: boolean, pageNumber: number) {
-        this.number.string = pageNumber.toString();
-        this.number.color = highlight ? this.textHighlightColor : this.textNormalColor;
-        this.bg.active = !highlight;
-        this.bgSelect.active = highlight;
+        this.lblNumber.string = pageNumber.toString();
+        this.lblNumber.color = highlight ? this.textHighlightColor : this.textNormalColor;
+        this.nodeBackground.active = !highlight;
+        this.nodeBackgroundSelect.active = highlight;
+
+        const clickEventHandler = new EventHandler();
+        clickEventHandler.target = this.node;
+        clickEventHandler.customEventData = pageNumber.toString();
     }
 }

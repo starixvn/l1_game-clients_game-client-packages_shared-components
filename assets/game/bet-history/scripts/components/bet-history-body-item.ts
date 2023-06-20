@@ -1,5 +1,10 @@
-import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { Component, _decorator } from "cc";
 
-export default class BetHistoryBodyItem extends ObserverComponent {
-    setData(data: any, index: number) {}
+export interface IBetHistoryLog {
+    time: string;
+    round: number;
+    win: number;
+}
+export default class BetHistoryBodyItem extends Component {
+    setData(data: IBetHistoryLog, index: number) {}
 }

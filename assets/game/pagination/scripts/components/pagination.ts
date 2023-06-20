@@ -17,25 +17,13 @@ export default class Pagination extends ObserverComponent {
     nodePrevious: Node = null;
 
     @property(Node)
-    nodePage1: Node = null;
-
-    @property(Node)
-    nodePage2: Node = null;
-
-    @property(Node)
-    nodePage3: Node = null;
-
-    @property(Node)
-    nodePage4: Node = null;
-
-    @property(Node)
-    nodePage5: Node = null;
-
-    @property(Node)
     nodeNext: Node = null;
 
     @property(Node)
     nodeLast: Node = null;
+
+    @property(PaginationItem)
+    pages: PaginationItem[] = [];
 
     protected pageButtons: number = 5;
     protected control: any = null;
@@ -48,40 +36,37 @@ export default class Pagination extends ObserverComponent {
         return gc.Audios.AudioIds.CLICK;
     }
 
-    onClickFirst() {
+    handleFirstPage() {
         this.currentPage = 1;
-        this.fectchData();
-        this.playSoundClick();
+        this.fetchData();
     }
-    onClickLast() {
+
+    handleLastPage() {
         this.currentPage = this.totalPages;
-        this.fectchData();
-        this.playSoundClick();
+        this.fetchData();
     }
-    onClickPrevious() {
+    hanldePreviousPage() {
         this.currentPage--;
-        this.fectchData();
-        this.playSoundClick();
+        this.fetchData();
     }
 
-    onClickNext() {
+    hanldeNextPage() {
         this.currentPage++;
-        this.fectchData();
-        this.playSoundClick();
+        this.fetchData();
     }
 
-    onClickPage(event: any) {
-        this.currentPage = parseInt(event.currentTarget.getComponentsInChildren(Label)[0].string);
-        this.fectchData();
-        this.playSoundClick();
+    hanldePage(event: any, pageNumber: string) {
+        this.currentPage = parseInt(pageNumber);
+        this.fetchData();
     }
 
     @handle(BetHistory.BetHistoryHandlers.BetHistoryCallServiceHandler, (handler, pageNumber: number) => handler.handle(pageNumber))
-    fectchData() {
+    fetchData() {
+        this.playSoundClick();
         return this.currentPage;
     }
 
-    @render(BetHistory.BetHistoryStore, (store) => store.data)
+    @render(BetHistory.BetHistoryStore, (store) => store.betHistoryModel)
     setData(model: gc.BetHistory.BetHistoryModel) {
         this.currentPage = model.page;
         this.totalPages = Math.ceil(model.total / model.pageSize);
@@ -108,10 +93,10 @@ export default class Pagination extends ObserverComponent {
 
         const startedIndex = this.getStartedPageIndex();
 
-        [this.nodePage1, this.nodePage2, this.nodePage3, this.nodePage4, this.nodePage5].forEach((node, index) => {
+        this.pages.forEach((page, index) => {
             const pageNumber = startedIndex + index;
-            node.getComponent(PaginationItem).updateHighlight(pageNumber === this.currentPage, pageNumber);
-            node.active = index < this.totalPages;
+            page.updateHighlight(pageNumber === this.currentPage, pageNumber);
+            page.node.active = index < this.totalPages;
         });
 
         this.updateArrowButtonsVisibility();

@@ -263,7 +263,7 @@
     },
     "component": "",
     "_componentId": "96d9dPKqSlMJr26QtziHLuy",
-    "handler": "onClickFirst",
+    "handler": "handleFirstPage",
     "customEventData": "1"
   },
   {
@@ -498,7 +498,7 @@
     },
     "component": "",
     "_componentId": "96d9dPKqSlMJr26QtziHLuy",
-    "handler": "onClickPrevious",
+    "handler": "hanldePreviousPage",
     "customEventData": ""
   },
   {
@@ -1166,7 +1166,7 @@
     },
     "component": "",
     "_componentId": "96d9dPKqSlMJr26QtziHLuy",
-    "handler": "onClickPage",
+    "handler": "hanldePage",
     "customEventData": "1"
   },
   {
@@ -1225,14 +1225,28 @@
     "__prefab": {
       "__id__": 57
     },
-    "bgSelect": {
+    "nodeBackgroundSelect": {
       "__id__": 25
     },
-    "bg": {
+    "nodeBackground": {
       "__id__": 33
     },
-    "number": {
+    "lblNumber": {
       "__id__": 42
+    },
+    "textHighlightColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "textNormalColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
     },
     "_id": ""
   },
@@ -1858,7 +1872,7 @@
     },
     "component": "",
     "_componentId": "96d9dPKqSlMJr26QtziHLuy",
-    "handler": "onClickPage",
+    "handler": "hanldePage",
     "customEventData": "2"
   },
   {
@@ -1917,14 +1931,28 @@
     "__prefab": {
       "__id__": 92
     },
-    "bgSelect": {
+    "nodeBackgroundSelect": {
       "__id__": 60
     },
-    "bg": {
+    "nodeBackground": {
       "__id__": 68
     },
-    "number": {
+    "lblNumber": {
       "__id__": 77
+    },
+    "textHighlightColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "textNormalColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
     },
     "_id": ""
   },
@@ -2550,7 +2578,7 @@
     },
     "component": "",
     "_componentId": "96d9dPKqSlMJr26QtziHLuy",
-    "handler": "onClickPage",
+    "handler": "hanldePage",
     "customEventData": "3"
   },
   {
@@ -2609,14 +2637,28 @@
     "__prefab": {
       "__id__": 127
     },
-    "bgSelect": {
+    "nodeBackgroundSelect": {
       "__id__": 95
     },
-    "bg": {
+    "nodeBackground": {
       "__id__": 103
     },
-    "number": {
+    "lblNumber": {
       "__id__": 112
+    },
+    "textHighlightColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "textNormalColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
     },
     "_id": ""
   },
@@ -3242,7 +3284,7 @@
     },
     "component": "",
     "_componentId": "96d9dPKqSlMJr26QtziHLuy",
-    "handler": "onClickPage",
+    "handler": "hanldePage",
     "customEventData": "4"
   },
   {
@@ -3301,14 +3343,28 @@
     "__prefab": {
       "__id__": 162
     },
-    "bgSelect": {
+    "nodeBackgroundSelect": {
       "__id__": 130
     },
-    "bg": {
+    "nodeBackground": {
       "__id__": 138
     },
-    "number": {
+    "lblNumber": {
       "__id__": 147
+    },
+    "textHighlightColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "textNormalColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
     },
     "_id": ""
   },
@@ -3934,7 +3990,7 @@
     },
     "component": "",
     "_componentId": "96d9dPKqSlMJr26QtziHLuy",
-    "handler": "onClickPage",
+    "handler": "hanldePage",
     "customEventData": "5"
   },
   {
@@ -3993,14 +4049,28 @@
     "__prefab": {
       "__id__": 197
     },
-    "bgSelect": {
+    "nodeBackgroundSelect": {
       "__id__": 165
     },
-    "bg": {
+    "nodeBackground": {
       "__id__": 173
     },
-    "number": {
+    "lblNumber": {
       "__id__": 182
+    },
+    "textHighlightColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "textNormalColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
     },
     "_id": ""
   },
@@ -4195,7 +4265,7 @@
     },
     "component": "",
     "_componentId": "96d9dPKqSlMJr26QtziHLuy",
-    "handler": "onClickNext",
+    "handler": "hanldeNextPage",
     "customEventData": ""
   },
   {
@@ -4430,7 +4500,7 @@
     },
     "component": "",
     "_componentId": "96d9dPKqSlMJr26QtziHLuy",
-    "handler": "onClickLast",
+    "handler": "handleLastPage",
     "customEventData": ""
   },
   {
@@ -4553,27 +4623,29 @@
     "nodePrevious": {
       "__id__": 13
     },
-    "nodePage1": {
-      "__id__": 24
-    },
-    "nodePage2": {
-      "__id__": 59
-    },
-    "nodePage3": {
-      "__id__": 94
-    },
-    "nodePage4": {
-      "__id__": 129
-    },
-    "nodePage5": {
-      "__id__": 164
-    },
     "nodeNext": {
       "__id__": 199
     },
     "nodeLast": {
       "__id__": 210
     },
+    "pages": [
+      {
+        "__id__": 56
+      },
+      {
+        "__id__": 91
+      },
+      {
+        "__id__": 126
+      },
+      {
+        "__id__": 161
+      },
+      {
+        "__id__": 196
+      }
+    ],
     "_id": ""
   },
   {

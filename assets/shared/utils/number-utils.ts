@@ -1,19 +1,4 @@
 export namespace NumberUtils {
-    const formatCommasReg = /\B(?=(\d{3})+(?!\d))/g;
-    export const numberWithCommas = (number: number, toFixed = 1, noZeroSuffix = true) => {
-        if (number) {
-            let trimZeroNumber = "";
-            if (noZeroSuffix) {
-                trimZeroNumber = `${+(+number).toFixed(toFixed)}`;
-            } else {
-                trimZeroNumber = (+number).toFixed(toFixed);
-            }
-            return trimZeroNumber.replace(formatCommasReg, ",");
-        }
-
-        return "0";
-    };
-
     export const getChipFormatter = (num: number, digits = 0) => {
         const si = [
             { value: 1, symbol: "" },

@@ -6,7 +6,8 @@ import { ObserverComponent } from "../../../../shared/common-components/observer
 import { InGameMenuHandlers } from "../handlers/in-game-menu-handlers";
 import { InGameMenuEvents } from "../stores/in-game-menu-events";
 const { ccclass, property } = _decorator;
-const { render, handle } = Observer;
+const { handle } = Observer;
+
 @ccclass("InGameMenu")
 export class InGameMenu extends ObserverComponent {
     @property(ExpandableNode)

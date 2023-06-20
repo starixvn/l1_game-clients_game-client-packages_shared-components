@@ -10,7 +10,7 @@ import WebViewGuide from "../../game-guide/scripts/web-view-guide";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
 
-const { BetHistory, Rounds, Connection, HideGame, JoinGame, Settlements, FormatUtils, RoundHistories } = gc;
+const { Rounds, Connection, HideGame, Settlements, FormatUtils, RoundHistories } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle, observer } = Observer;
 
@@ -31,7 +31,6 @@ export default class GameComponent extends GameComponentBase {
     containerOptions: gc.IContainerOptions;
 
     onLoad() {
-        console.log(this);
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
         game.on(Game.EVENT_SHOW, this.onShowGame, this);
         this.connectToService();
@@ -47,9 +46,7 @@ export default class GameComponent extends GameComponentBase {
     }
 
     @render(LogStore, (store) => store.message)
-    logInfo(message: string) {
-        // console.log(message);
-    }
+    logInfo(message: string) {}
 
     @handle(gc.UserSettings.UserSettingHandlers, (handle) => handle.loadStorages())
     initUserSettings() {}
@@ -136,16 +133,5 @@ export default class GameComponent extends GameComponentBase {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundStartPlacingBet() {
         return gc.Audios.AudioIds.START_PLACING_BET;
-    }
-
-    @handle(BetHistory.BetHistoryHandlers.BetHistoryCallServiceHandler, (handler) => handler.handle(1))
-    hanldeShowBetHistory() {}
-
-    @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
-    openBetHistory({ event }: { event: InGameMenuEvents }) {
-        if (event === InGameMenuEvents.OPEN_HISTORY) {
-            this.hanldeShowBetHistory();
-            console.log("BtnBetHistory click");
-        }
     }
 }
