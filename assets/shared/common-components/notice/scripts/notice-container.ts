@@ -13,9 +13,10 @@ const { ccclass } = _decorator;
 export class NoticeContainer extends NodeContainer {
     @render(Notices.NoticeStore, (store) => store.notice, { fireImmediately: false })
     showNotice(notice: gc.Notices.Notice) {
-        console.log("renderNotice", notice);
-        const node = this.createNode();
-        const noticeCmp = node.getComponent(NoticeCmp);
-        noticeCmp.setData(notice);
+        if (this.visibility) {
+            const node = this.createNode();
+            const noticeCmp = node.getComponent(NoticeCmp);
+            noticeCmp.setData(notice);
+        }
     }
 }

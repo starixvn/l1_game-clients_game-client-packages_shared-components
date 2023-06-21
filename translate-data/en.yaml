@@ -643,6 +643,41 @@ items:
         isVariant: false
         associations: []
         _variants: []
+    splash_firstVisit:
+      key: splash_firstVisit
+      value: If this is your first visit, downloading may take a while.
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    splash_checkDownloading:
+      key: splash_checkDownloading
+      value: Checking and downloading the latest update packages...
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    splash_loginFailed:
+      key: splash_loginFailed
+      value: Failed to load game data. Please close the current windows and try again.
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    splash_connectionLost:
+      key: splash_connectionLost
+      value: The connection is unstable, please check.
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    lostGameConnection:
+      key: lostGameConnection
+      value: "{{gameName}}\n\nThe connection is unstable, please check."
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
 languageConfig:
     bcp47Tag: en
     translateFinished: 390

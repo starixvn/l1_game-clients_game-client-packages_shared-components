@@ -1,4 +1,4 @@
-import { Auth, Configs, IContainerOptions, Player, buildObserverContainer, getContainer, sentryLogger } from "@sg/game-client-base";
+import { App, Auth, Configs, IContainerOptions, Player, buildObserverContainer, getContainer, sentryLogger } from "@sg/game-client-base";
 import mobx from "mobx";
 import { configure } from "observer";
 import { getSharedContainer, startGame } from "../../../assets/shared/scripts/startup";
@@ -98,7 +98,9 @@ describe(getSharedContainer.name, () => {
             getSharedContainer(configs);
 
             // Assert
-            expect(getContainer).toBeCalledWith(expect.objectContaining({ enabledFeatures: [Player.FEATURE_NAME, Auth.FEATURE_NAME] }));
+            expect(getContainer).toBeCalledWith(
+                expect.objectContaining({ enabledFeatures: [Player.FEATURE_NAME, Auth.FEATURE_NAME, App.FEATURE_NAME] })
+            );
         });
 
         it("should return the container", () => {

@@ -552,6 +552,41 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  splash_firstVisit:
+    key: splash_firstVisit
+    value: 如果这是您第一次访问，下载可能需要一段时间。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_checkDownloading:
+    key: splash_checkDownloading
+    value: 正在检查和下载最新的更新包...
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_loginFailed:
+    key: splash_loginFailed
+    value: 无法加载游戏数据。 请关闭当前窗口并重试。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_connectionLost:
+    key: splash_connectionLost
+    value: 连接不稳定，请检查。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  lostGameConnection:
+    key: lostGameConnection
+    value: "{{gameName}}\n\n连接不稳定，请检查。"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: zh-Hans
   translateFinished: 375

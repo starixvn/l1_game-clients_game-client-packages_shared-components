@@ -562,6 +562,41 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  splash_firstVisit:
+    key: splash_firstVisit
+    value: หากคุณเข้าชมครั้งแรก อาจใช้เวลาในการดาวน์โหลดสักครู่
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_checkDownloading:
+    key: splash_checkDownloading
+    value: กำลังตรวจสอบและกำลังดาวน์โหลดเกมของการอัพเดทล่าสุด
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_loginFailed:
+    key: splash_loginFailed
+    value: การดาวน์โหลดล้มเหลว กรุณาลองปิดหน้าต่างแล้วลองใหม่อีกครั้ง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_connectionLost:
+    key: splash_connectionLost
+    value: การเชื่อมต่อขัดข้อง กรุณาตรวจสอบอีกครั้ง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  lostGameConnection:
+    key: lostGameConnection
+    value: "{{gameName}}\n\nการเชื่อมต่อไม่เสถียร โปรดตรวจสอบอีกครั้ง"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: th
   translateFinished: 375

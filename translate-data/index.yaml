@@ -752,6 +752,41 @@ items:
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
       - *a5
     _variants: []
+  splash_firstVisit:
+    key: splash_firstVisit
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_checkDownloading:
+    key: splash_checkDownloading
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_loginFailed:
+    key: splash_loginFailed
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_connectionLost:
+    key: splash_connectionLost
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  lostGameConnection:
+    key: lostGameConnection
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: index
   translateFinished: 390

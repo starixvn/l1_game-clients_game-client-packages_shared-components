@@ -611,6 +611,41 @@ items:
         isVariant: false
         associations: []
         _variants: []
+    splash_firstVisit:
+      key: splash_firstVisit
+      value: Lần truy cập đầu tiên, việc tải dữ liệu sẽ mất chút thời gian.
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    splash_checkDownloading:
+      key: splash_checkDownloading
+      value: Đang kiểm tra và tải gói cập nhật game mới nhất...
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    splash_loginFailed:
+      key: splash_loginFailed
+      value: Đăng nhập thất bại, bạn hãy làm lại thao tác đăng nhập từ đầu.
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    splash_connectionLost:
+      key: splash_connectionLost
+      value: Mất kết nối hoặc kết nối không ổn định. Vui lòng kiểm tra và thử lại.
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
+    lostGameConnection:
+        key: lostGameConnection
+        value: "{{gameName}}\n\nMất kết nối hoặc kết nối không ổn định. Vui lòng kiểm tra và thử lại."
+        type: 4
+        isVariant: false
+        associations: []
+        _variants: []
 languageConfig:
     bcp47Tag: vi
     translateFinished: 390

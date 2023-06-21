@@ -573,6 +573,41 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  splash_firstVisit:
+    key: splash_firstVisit
+    value: Jika ini adalah kunjungan pertama Anda, pengunduhan mungkin memakan waktu cukup lama.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_checkDownloading:
+    key: splash_checkDownloading
+    value: Memeriksa dan mengunduh paket pembaruan terbaru...
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_loginFailed:
+    key: splash_loginFailed
+    value: Gagal memuat data game. Harap tutup jendela saat ini dan coba lagi.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  splash_connectionLost:
+    key: splash_connectionLost
+    value: Koneksi tidak stabil, silakan periksa.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  lostGameConnection:
+      key: lostGameConnection
+      value: "{{gameName}}\n\nKoneksi tidak stabil, silakan periksa."
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
 languageConfig:
   bcp47Tag: id
   translateFinished: 375

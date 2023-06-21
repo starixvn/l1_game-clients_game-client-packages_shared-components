@@ -184,7 +184,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>tagline_sc1_zh_cn.png</key>
+            <key>tagline_sc1_zh-Hans.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -199,7 +199,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>tagline_sc1_zh_tw.png</key>
+            <key>tagline_sc1_zh-Hant.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -274,7 +274,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>tagline_sc2_zh_cn.png</key>
+            <key>tagline_sc2_zh-Hans.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -289,7 +289,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>tagline_sc2_zh_tw.png</key>
+            <key>tagline_sc2_zh-Hant.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -318,7 +318,7 @@
             <key>size</key>
             <string>{1024,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:78343e1330079360a16949d777bc529e:f10609a787c73562876b5c8f64c0b6a4:db57b41b9eb0081dd72d1b2da3eea767$</string>
+            <string>$TexturePacker:SmartUpdate:009c8ed146d5edf5a0d6fd5325e6cfc6:f10609a787c73562876b5c8f64c0b6a4:db57b41b9eb0081dd72d1b2da3eea767$</string>
             <key>textureFileName</key>
             <string>splash-screen.png</string>
         </dict>
