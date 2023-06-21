@@ -56,7 +56,7 @@ export default class TwoDigitsTimer extends ObserverComponent {
                 })
                 .start();
             const uiOpacity = node.getComponent(UIOpacity);
-            uiOpacity.opacity = 0;
+            uiOpacity.opacity = 1;
             tween(uiOpacity).to(0.2, { opacity: 255 }).start();
         }
     }

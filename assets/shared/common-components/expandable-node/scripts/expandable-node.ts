@@ -35,7 +35,7 @@ export class ExpandableNode extends Component {
         }
 
         if (!animated) {
-            this.expandableOpacity.opacity = 0;
+            this.expandableOpacity.opacity = 1;
             this.expandableNode.scale = this.collapseScale;
             return;
         }

@@ -34,7 +34,7 @@ export class AroundTablePlayerComponent extends Component {
     async setInfo(player: IAroundTablePlayers) {
         if (player?.red && player?.name && player?.avatarId) {
             this.node.active = true;
-            this.node.getComponent(UIOpacity).opacity = 0;
+            this.node.getComponent(UIOpacity).opacity = 1;
             await this.updatePlayerInfo(player);
             await fadeIn(this.node, 1);
         } else {

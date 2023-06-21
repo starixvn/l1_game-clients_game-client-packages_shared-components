@@ -12,7 +12,7 @@ export class WarningCmp extends Component {
 
     autoDisappear() {
         const opacity = this.node.getComponent(UIOpacity);
-        opacity.opacity = 0;
+        opacity.opacity = 1;
         const duration = 0.2;
         const delay = 0.5;
         tween(opacity).to(duration, { opacity: 255 }).delay(delay).to(duration, { opacity: 0 }).start();

@@ -6,7 +6,7 @@ export namespace AnimationUtils {
         return fadeTo(uiOpacity, duration, opacity);
     };
 
-    export const fadeOut = (node: Node, duration: number, opacity = 0) => {
+    export const fadeOut = (node: Node, duration: number, opacity = 1) => {
         const uiOpacity = node.getComponent(UIOpacity);
         return fadeTo(uiOpacity, duration, opacity);
     };

@@ -95,7 +95,7 @@ describe("ExpandableNode", () => {
             // Assert
             expect(expandableNode["expanded"]).toBe(false);
             expect(expandableNode.tapToCollapseNode.active).toBe(false);
-            expect(expandableNode["expandableOpacity"].opacity).toBe(0);
+            expect(expandableNode["expandableOpacity"].opacity).toBe(1);
             expect(expandableNode.expandableNode.scale).toEqual(expandableNode["collapseScale"]);
             expect(expandableNode.tweenCollapse).not.toBeCalled();
         });
