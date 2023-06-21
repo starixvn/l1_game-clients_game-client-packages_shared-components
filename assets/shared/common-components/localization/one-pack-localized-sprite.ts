@@ -1,15 +1,17 @@
-import { Component, Sprite, SpriteAtlas, _decorator, error } from "cc";
+import { CCString, Component, Sprite, SpriteAtlas, _decorator, error } from "cc";
+import { l10n } from "../../../../../localization-editor/static/assets/l10n";
+
 const { ccclass, property } = _decorator;
 
-@ccclass
+@ccclass("OnePackLocalizedSprite")
 export class OnePackLocalizedSprite extends Component {
     @property(SpriteAtlas)
     atlas: SpriteAtlas = null;
 
-    @property
+    @property(CCString)
     prefix = "";
 
-    @property
+    @property(CCString)
     defaultLocalized = "";
 
     protected sprite: Sprite;
@@ -19,11 +21,10 @@ export class OnePackLocalizedSprite extends Component {
     }
 
     fetchRender() {
-        const sprite = this.getComponent(Sprite);
+        const sprite = this.node.getComponent(Sprite);
         if (sprite) {
             this.sprite = sprite;
-            this.updateSprite(window.l10n.currentLanguage);
-            return;
+            this.updateSprite(l10n.currentLanguage);
         }
     }
 
