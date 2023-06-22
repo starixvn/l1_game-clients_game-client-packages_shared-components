@@ -37,13 +37,10 @@
       },
       {
         "__id__": 128
-      },
-      {
-        "__id__": 130
       }
     ],
     "_prefab": {
-      "__id__": 132
+      "__id__": 130
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -2484,41 +2481,6 @@
     "fileId": "b658exu21F45J5tfTrHZzF"
   },
   {
-    "__type__": "6fac29yM09PHYpb4RxDbwKL",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 129
-    },
-    "closeBtn": {
-      "__id__": 95
-    },
-    "backWrapper": {
-      "__id__": 6
-    },
-    "mainFrame": {
-      "__id__": 13
-    },
-    "gameName": {
-      "__id__": 76
-    },
-    "titleBgNode": {
-      "__id__": 42
-    },
-    "title": {
-      "__id__": 83
-    },
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "2bJr0jRhhAN5EB7YPxn42l"
-  },
-  {
     "__type__": "cc.Sprite",
     "_name": "",
     "_objFlags": 0,
@@ -2527,7 +2489,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 131
+      "__id__": 129
     },
     "_customMaterial": null,
     "_srcBlendFactor": 2,
