@@ -26,18 +26,18 @@ export class NoticeCmp extends Dialog {
 
     onClose: () => void;
 
-    setData(data: { title: string; message: string; type: NoticeType; onClose: () => void }) {
+    setData(data: { title: string; message: string; type: NoticeType; onClose: () => void; showBtnCofirmButton?: boolean }) {
         this.lblTitle.string = data.title;
         this.lblMessage.string = data.message;
         this.onClose = data.onClose;
-        this.updateDisplay(data.type);
+        this.updateDisplay(data.type, data.showBtnCofirmButton);
     }
 
-    updateDisplay(type: NoticeType) {
+    updateDisplay(type: NoticeType, showBtnCofirmButton?: boolean) {
         const isInfo = type === NoticeType.Info;
         this.nodeInfo.active = isInfo;
         this.nodeError.active = !isInfo;
-        this.btnConfirm.active = isInfo;
+        this.btnConfirm.active = showBtnCofirmButton || isInfo;
     }
 
     onOkClick() {

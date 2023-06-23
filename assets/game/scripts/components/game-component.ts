@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Game, Label, _decorator, director, game, log } from "cc";
+import { Game, Label, _decorator, director, game, log, Node } from "cc";
 import Observer from "observer";
 import { InGameMenuEvents } from "../../../game/in-game-menu/scripts/stores/in-game-menu-events";
 import { InGameMenuStore } from "../../../game/in-game-menu/scripts/stores/in-game-menu-store";
@@ -8,7 +8,7 @@ import WebViewGuide from "../../game-guide/scripts/web-view-guide";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
 
-const { Rounds, Connection, HideGame, Settlements, FormatUtils, RoundHistories } = gc;
+const { Rounds, Connection, HideGame, Settlements, FormatUtils, RoundHistories, DisabledGame } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle, observer } = Observer;
 
@@ -25,6 +25,12 @@ export default class GameComponent extends GameComponentBase {
 
     @property(NodeContainer)
     guideContainer: NodeContainer = null;
+
+    @property(Node)
+    nodeOverlayBackground: Node = null;
+
+    @property(Node)
+    inGameMenu: Node = null;
 
     containerOptions: gc.IContainerOptions;
 
@@ -126,5 +132,13 @@ export default class GameComponent extends GameComponentBase {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundStartPlacingBet() {
         return gc.Audios.AudioIds.START_PLACING_BET;
+    }
+
+    @render(DisabledGame.DisabledGameStore, (store) => store.showPopup)
+    setOverlayBackground(showPopup: boolean) {
+        if (showPopup) {
+            this.inGameMenu.active = false;
+            this.nodeOverlayBackground.active = true;
+        }
     }
 }

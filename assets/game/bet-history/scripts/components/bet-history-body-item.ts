@@ -1,10 +1,6 @@
-import { Component, _decorator } from "cc";
+import { Component } from "cc";
 
-export interface IBetHistoryLog {
-    time: string;
-    round: number;
-    win: number;
-}
+import gc from "@sg/game-client-base";
 export default class BetHistoryBodyItem extends Component {
-    setData(data: IBetHistoryLog, index: number) {}
+    setData(data: gc.BetHistory.IBetHistoryLog, index: number) {}
 }
