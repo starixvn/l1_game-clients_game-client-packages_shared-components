@@ -10,7 +10,7 @@ import { GameComponentBase } from "./game-component-base";
 
 const { Rounds, Connection, HideGame, Settlements, FormatUtils, RoundHistories, DisabledGame } = gc;
 const { ccclass, property } = _decorator;
-const { render, handle, observer } = Observer;
+const { render, handle } = Observer;
 
 @ccclass
 export default class GameComponent extends GameComponentBase {
