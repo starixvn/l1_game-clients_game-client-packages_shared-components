@@ -221,4 +221,26 @@ export class ChipFlying extends ObserverComponent {
     startNewRound(isStartPlacingBet: boolean) {
         isStartPlacingBet && (this.settlementStatus = null);
     }
+
+    @render(Chips.ChipStore, (store) => store.collectChipsReBet, { fireImmediately: false })
+    flyChipReBet(collectChipsReBet: gc.Chips.TChipReBet[]) {
+        if (collectChipsReBet.length === 0) {
+            return;
+        }
+
+        collectChipsReBet.forEach((chipReBet) => {
+            const { betChoice, amount } = chipReBet;
+            const betItem = this.betItems?.betItemComponents.find((item) => betChoice === item.betChoice);
+            actions.placeChipToChipBox(
+                this.slidingChip,
+                {
+                    chipBox: betItem?.chipBox,
+                    chipValue: amount,
+                },
+                null,
+                null
+            );
+            this.playSoundSingleChip();
+        });
+    }
 }
