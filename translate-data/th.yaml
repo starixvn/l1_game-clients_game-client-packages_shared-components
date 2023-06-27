@@ -253,7 +253,8 @@ items:
     _variants: []
   placeBetFailed:
     key: placeBetFailed
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\nล้มเหลวในการวางเดิมพัน! ({{errorCode}})
+    value: เกม {{gameName}} (#{{gameRoundId}})\n\nล้มเหลวในการวางเดิมพัน!
+      ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -592,7 +593,61 @@ items:
     _variants: []
   lostGameConnection:
     key: lostGameConnection
-    value: "{{gameName}}\n\nการเชื่อมต่อไม่เสถียร โปรดตรวจสอบอีกครั้ง"
+    value: |-
+      {{gameName}}
+
+      การเชื่อมต่อไม่เสถียร โปรดตรวจสอบอีกครั้ง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  createNickname:
+    key: createNickname
+    value: "ตั้งชื่อเล่น "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  characterName:
+    key: characterName
+    value: "ชื่อเล่น "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  pleaseSelectName:
+    key: pleaseSelectName
+    value: "กรุณาเลือกชื่อเล่นในเกม "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  enterYourName:
+    key: enterYourName
+    value: "กรอกชื่อเล่น "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  submit:
+    key: submit
+    value: "ตกลง "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickRequire:
+    key: nickRequire
+    value: "หมายเหตุ:\n\n+ ชื่อเล่นต้องมีความยาวระหว่าง 3 ถึง 14 ตัวอักษร\n\n+
+      ต้องไม่มีช่องว่าง อักขระพิเศษ และอักขระที่ไม่ใช่ภาษาอังกฤษ\n\n+
+      ไม่สามารถเปลี่ยนชื่อเล่นหลังจากทำการยืนยัน "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nameInvalid:
+    key: nameInvalid
+    value: "กรอกชื่อเล่นไม่ถูกต้อง กรุณาลองกรอกใหม่อีกครั้ง "
     type: 4
     isVariant: false
     associations: []
@@ -606,7 +661,7 @@ items:
     _variants: []
 languageConfig:
   bcp47Tag: th
-  translateFinished: 375
-  translateTotal: 310
+  translateFinished: 376
+  translateTotal: 311
   compileFinished: 0
-  compileTotal: 72
+  compileTotal: 90

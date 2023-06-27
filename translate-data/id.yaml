@@ -124,33 +124,34 @@ items:
     _variants: []
   winLimitHit:
     key: winLimitHit
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Batas
-      Kemenganan. Silakan hubungi upline Anda terima kasih. ({{errorCode}})
+    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+      Batas Kemenganan. Silakan hubungi upline Anda terima kasih.
+      ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   loseLimitHit:
     key: loseLimitHit
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Batas
-      Kekalahan. Silakan hubungi upline Anda terima kasih. ({{errorCode}})
+    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+      Batas Kekalahan. Silakan hubungi upline Anda terima kasih. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetUpdated:
     key: limitBetUpdated
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Batas
-      taruhan Anda telah diperbarui silakan coba lagi. ({{errorCode}})
+    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+      Batas taruhan Anda telah diperbarui silakan coba lagi. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetNotDefined:
     key: limitBetNotDefined
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Batas
-      taruhan Anda untuk game ini belum ditetapkan. Silakan hubungi upline Anda
-      terima kasih. ({{errorCode}})
+    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+      Batas taruhan Anda untuk game ini belum ditetapkan. Silakan hubungi upline
+      Anda terima kasih. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -166,8 +167,9 @@ items:
     _variants: []
   unavailableGame:
     key: unavailableGame
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nPermainan tidak tersedia saat
-      ini. Silakan hubungi CSD untuk lebih lanjut terima kasih. ({{errorCode}})
+    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nPermainan tidak tersedia
+      saat ini. Silakan hubungi CSD untuk lebih lanjut terima kasih.
+      ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -181,8 +183,8 @@ items:
     _variants: []
   errorOccurredFull:
     key: errorOccurredFull
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nTerjadi kesalahan hubungi CSD
-      untuk lebih lanjut. ({{errorCode}})
+    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nTerjadi kesalahan hubungi
+      CSD untuk lebih lanjut. ({{errorCode}})
     type: 4
     isVariant: false
     associations: []
@@ -575,7 +577,8 @@ items:
     _variants: []
   splash_firstVisit:
     key: splash_firstVisit
-    value: Jika ini adalah kunjungan pertama Anda, pengunduhan mungkin memakan waktu cukup lama.
+    value: Jika ini adalah kunjungan pertama Anda, pengunduhan mungkin memakan waktu
+      cukup lama.
     type: 4
     isVariant: false
     associations: []
@@ -602,22 +605,73 @@ items:
     associations: []
     _variants: []
   lostGameConnection:
-      key: lostGameConnection
-      value: "{{gameName}}\n\nKoneksi tidak stabil, silakan periksa."
-      type: 4
-      isVariant: false
-      associations: []
-      _variants: []
+    key: lostGameConnection
+    value: "{{gameName}}\n\nKoneksi tidak stabil, silakan periksa."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  createNickname:
+    key: createNickname
+    value: "Buat Nama Panggilan Anda "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  characterName:
+    key: characterName
+    value: "Nama panggilan "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  pleaseSelectName:
+    key: pleaseSelectName
+    value: "SILAKAN PILIH NAMA PANGGILAN ANDA DALAM GAME. "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  enterYourName:
+    key: enterYourName
+    value: "Masukkan nama panggilan Anda. "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  submit:
+    key: submit
+    value: "KIRIMKAN "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nickRequire:
+    key: nickRequire
+    value: "Catatan:\n\n+ Nama panggilan harus antara 3 dan 14 karakter.\n\n+ Tidak
+      boleh mengandung spasi, karakter khusus, dan karakter non-Inggris.\n\n+
+      Tidak dapat mengubah nama panggilan setelah mengirimkan. "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nameInvalid:
+    key: nameInvalid
+    value: "Nama panggilan yang dimasukkan tidak valid, harap coba lagi. "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
   newUpdateAvailable:
     key: newUpdateAvailable
     value: "Pembaruan baru tersedia. Harap segarkan halaman."
     type: 4
     isVariant: false
     associations: []
-    _variants: []
+    _variants: []  
 languageConfig:
   bcp47Tag: id
-  translateFinished: 375
-  translateTotal: 375
+  translateFinished: 376
+  translateTotal: 376
   compileFinished: 0
-  compileTotal: 72
+  compileTotal: 90

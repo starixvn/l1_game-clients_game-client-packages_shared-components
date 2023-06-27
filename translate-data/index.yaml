@@ -698,11 +698,12 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a1
-        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: cfrCO0+DdI6qZQ9DMjX0ro
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - *a1
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: cfrCO0+DdI6qZQ9DMjX0ro
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
     _variants: []
   fourRed:
     key: fourRed
@@ -710,11 +711,12 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a2
-        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: 20Ztq/xGxBRaRGNggWGpeB
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - *a2
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 20Ztq/xGxBRaRGNggWGpeB
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
     _variants: []
   oneRed:
     key: oneRed
@@ -722,11 +724,12 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a3
-        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: eboCBaoKJBMKyWP8QrAtN7
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - *a3
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: eboCBaoKJBMKyWP8QrAtN7
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
     _variants: []
   fourWhite:
     key: fourWhite
@@ -734,11 +737,12 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a4
-        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: 523pBm26JOL7HFRYYA3Enj
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - *a4
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 523pBm26JOL7HFRYYA3Enj
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
     _variants: []
   win:
     key: win
@@ -746,11 +750,12 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a5
-        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: fdU1SwrvBPDIslK30ldGZJ
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - *a5
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: fdU1SwrvBPDIslK30ldGZJ
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
     _variants: []
   splash_firstVisit:
     key: splash_firstVisit
@@ -787,13 +792,75 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  createNickname:
+    key: createNickname
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  characterName:
+    key: characterName
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  pleaseSelectName:
+    key: pleaseSelectName
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  enterYourName:
+    key: enterYourName
+    value: ""
+    type: 4
+    isVariant: false
+    associations:
+      - sceneUuid: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
+        nodeUuid: c0+AOb8uBIU5dxl4nQavZS
+        reference: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
+    _variants: []
+  submit:
+    key: submit
+    value: ""
+    type: 4
+    isVariant: false
+    associations:
+      - sceneUuid: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
+        nodeUuid: 6eSNEcuAZDRpBIeq1VYW2P
+        reference: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
+    _variants: []
+  nickRequire:
+    key: nickRequire
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  nameInvalid:
+    key: nameInvalid
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  LanguageTag:
+    key: LanguageTag
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
   newUpdateAvailable:
     key: newUpdateAvailable
     value: ""
     type: 4
     isVariant: false
     associations: []
-    _variants: []
+    _variants: []  
 languageConfig:
   bcp47Tag: index
   translateFinished: 390
