@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
 import { Component, Node, ProgressBar, _decorator, director } from "cc";
 import Observer from "observer";
+import GameConnection from "../../../shared/common-components/game-connection";
 import { RandomWaitingMessage } from "../random-waiting-message";
 
 const { ccclass, property } = _decorator;
@@ -22,9 +23,19 @@ export default class Splash extends Component {
     @property(Node)
     nodeSloganSC2: Node = null;
 
+    gameConnection: GameConnection = null;
+
     onLoad() {
+        this.initGameConnectionComponent();
         this.updateProgressBar(0);
         this.sso();
+    }
+
+    private initGameConnectionComponent() {
+        this.gameConnection = this.getComponent(GameConnection);
+        if (this.gameConnection) {
+            this.gameConnection.openGameCallback = () => this.loadSceneGame();
+        }
     }
 
     @handle(Auth.AuthHandlers.SSO)
@@ -37,8 +48,12 @@ export default class Splash extends Component {
         if (isAuthorized) {
             this.loadChipSetting();
             this.triggerRecheckIn();
-            this.loadSceneGame();
+            this.connectToGameService();
         }
+    }
+
+    connectToGameService() {
+        this.gameConnection?.connectToService();
     }
 
     @render(App.AppStore, (store) => store.isUM)
@@ -57,9 +72,9 @@ export default class Splash extends Component {
     }
 
     loadSceneGame() {
-        const screenName = "game";
+        const sceneName = "game";
         director.preloadScene(
-            screenName,
+            sceneName,
             (completedCount: number, totalCount: number) => {
                 this.updateProgressBar(completedCount / totalCount);
             },
@@ -67,7 +82,7 @@ export default class Splash extends Component {
                 if (error) {
                     sentryLogger.logError(error);
                 } else {
-                    director.loadScene(screenName);
+                    director.loadScene(sceneName);
                 }
             }
         );

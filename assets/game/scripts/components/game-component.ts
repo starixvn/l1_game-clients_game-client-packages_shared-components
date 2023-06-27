@@ -31,7 +31,6 @@ export default class GameComponent extends GameComponentBase {
     onLoad() {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
         game.on(Game.EVENT_SHOW, this.onShowGame, this);
-        this.connectToService();
         this.initUserSettings();
     }
 

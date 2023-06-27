@@ -1,6 +1,5 @@
 import { _decorator, Component } from "cc";
 import Observer from "observer";
-import { FunctionUtils } from "../../../utils";
 
 const { ccclass } = _decorator;
 const { useObserver } = Observer;
@@ -10,7 +9,7 @@ export class ObserverComponent extends Component {
     private dispose: Function;
 
     onLoad(): void {
-        this.dispose = useObserver(this, FunctionUtils.getNamespace());
+        this.dispose = useObserver(this, window.envConfig.mainObserver);
     }
 
     protected onDestroy(): void {
