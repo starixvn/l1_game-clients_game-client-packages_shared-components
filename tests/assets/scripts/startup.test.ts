@@ -22,6 +22,7 @@ describe(startGame.name, () => {
             proxyPath: "",
             route: "",
         },
+        mainObserver: "",
     };
     describe("when called", () => {
         beforeAll(() => {
@@ -90,6 +91,7 @@ describe(getSharedContainer.name, () => {
         subGuideDomain: "guide",
         systemType: "type",
         websocket: { proxyPath: "/", route: "route" },
+        mainObserver: "",
     };
 
     describe("when called", () => {
