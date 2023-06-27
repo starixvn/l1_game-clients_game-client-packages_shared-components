@@ -1,11 +1,9 @@
 import gc from "@sg/game-client-base";
 import { Game, Label, _decorator, director, game, log } from "cc";
 import Observer from "observer";
-import { siteConfigs } from "../../../../../../assets/scripts/site-configs";
 import { InGameMenuEvents } from "../../../game/in-game-menu/scripts/stores/in-game-menu-events";
 import { InGameMenuStore } from "../../../game/in-game-menu/scripts/stores/in-game-menu-store";
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
-import { startGame } from "../../../shared/scripts/startup";
 import WebViewGuide from "../../game-guide/scripts/web-view-guide";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
@@ -61,14 +59,10 @@ export default class GameComponent extends GameComponentBase {
         log("Game run in background ============================================");
     }
 
-    refreshContainer() {
-        startGame(this.namespace, this.containerOptions, siteConfigs);
-    }
-
     onShowGame() {
         log("Game run in foreground ============================================");
-        this.refreshContainer();
-        director.loadScene("game");
+        // TODO: Temporary reset
+        window.location.reload();
     }
 
     @render(Connection.ConnectionStore, (store) => store.signedIn)
