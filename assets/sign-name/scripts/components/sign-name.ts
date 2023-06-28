@@ -1,7 +1,6 @@
 import gc from "@sg/game-client-base";
 import { AudioSource, Component, EditBox, EventKeyboard, Input, KeyCode, Label, Node, _decorator, input, sys } from "cc";
 import Observer from "observer";
-import { BrowserUtils } from "../../../../shared/utils/browser-utils";
 
 const { ccclass, property } = _decorator;
 const { observer, handle } = Observer;
@@ -28,8 +27,9 @@ export class SignName extends Component {
     @property(AudioSource)
     soundClick: AudioSource = null;
 
-    set stateNode(isActive: boolean) {
-        this.node.active = isActive;
+    protected onLoad(): void {
+        this.node.active = false;
+        window.skipFullscreen = true;
     }
 
     onEnable() {
@@ -62,12 +62,12 @@ export class SignName extends Component {
 
     addEvent() {
         input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
-        BrowserUtils.getHTMLElementByEditBox(this.username).addEventListener("keydown", this.keyHandle, !1);
+        this.username.node.on("keydown", this.keyHandle, !1);
         this.username.node.on("text-changed", this.usernameTextChanged, this);
     }
 
     removeEvent() {
-        BrowserUtils.getHTMLElementByEditBox(this.username).removeEventListener("keydown", this.keyHandle, !1);
+        this.username.node.off("keydown", this.keyHandle, !1);
         input.off(Input.EventType.KEY_DOWN, this.onKeyDown, this);
         this.username.node.off("text-changed", this.usernameTextChanged, this);
     }
@@ -97,7 +97,7 @@ export class SignName extends Component {
     }
 
     changeNextFocusEditBox() {
-        BrowserUtils.focusEditBox(this.username);
+        this.username.focus();
     }
 
     clean() {
