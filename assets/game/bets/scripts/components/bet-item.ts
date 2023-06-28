@@ -1,15 +1,17 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, Label, Node } from "cc";
+import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
+import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { BetItemStore, TBetStartingRound } from "../stores/bet-item-store";
 
 const { render, handle } = Observer;
 
 const { Rounds, RoundHistories } = gc;
 
-const { property } = _decorator;
+const { property, ccclass } = _decorator;
 
-export default class BetItem extends Component {
+@ccclass
+export default class BetItem extends ObserverComponent {
     @property(Label)
     lblOwnBet: Label = null;
 
@@ -32,6 +34,7 @@ export default class BetItem extends Component {
     highlight: Node = null;
 
     onLoad() {
+        super.onLoad();
         this.lblOwnBet.string = "";
         this.lblTotalBet.string = "";
         this.lblOdds.string = "";

@@ -20,9 +20,7 @@ export interface TBetStartingRound {
 
 @injectable()
 export class BetItemStore {
-    @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
     @inject(gc.Settlements.SettlementStore) private readonly settlementStore: gc.Settlements.SettlementStore;
-    @inject(gc.Player.MainPlayerStore) private readonly mainPlayerStore: gc.Player.MainPlayerStore;
     @inject(gc.Rounds.RoundTimeStore) private readonly roundTimeStore: gc.Rounds.RoundTimeStore;
 
     constructor() {
