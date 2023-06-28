@@ -608,6 +608,13 @@ items:
       isVariant: false
       associations: []
       _variants: []
+  newUpdateAvailable:
+    key: newUpdateAvailable
+    value: "Pembaruan baru tersedia. Harap segarkan halaman."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: id
   translateFinished: 375

@@ -646,6 +646,13 @@ items:
         isVariant: false
         associations: []
         _variants: []
+    newUpdateAvailable:
+      key: newUpdateAvailable
+      value: "Vui lòng tải lại trang để cập nhật phiên bản mới."
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
 languageConfig:
     bcp47Tag: vi
     translateFinished: 390

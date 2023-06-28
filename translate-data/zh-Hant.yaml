@@ -587,6 +587,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  newUpdateAvailable:
+    key: newUpdateAvailable
+    value: "有新的更新可用。請刷新頁面。"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: zh-Hant
   translateFinished: 375

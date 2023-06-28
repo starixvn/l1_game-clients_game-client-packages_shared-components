@@ -597,6 +597,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  newUpdateAvailable:
+    key: newUpdateAvailable
+    value: "มีการปรับปรุงใหม่ โปรดรีเฟรชหน้าเว็บไซต์"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: th
   translateFinished: 375

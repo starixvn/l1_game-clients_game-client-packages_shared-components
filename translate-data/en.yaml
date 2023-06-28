@@ -678,6 +678,13 @@ items:
       isVariant: false
       associations: []
       _variants: []
+    newUpdateAvailable:
+      key: newUpdateAvailable
+      value: "New update available. Please refresh the page."
+      type: 4
+      isVariant: false
+      associations: []
+      _variants: []
 languageConfig:
     bcp47Tag: en
     translateFinished: 390
