@@ -4,6 +4,7 @@ import { GameComponentBase } from "../../game/scripts/components/game-component-
 export namespace FunctionUtils {
     export const getNamespace = () => {
         const namespace = find("Canvas").getComponent(GameComponentBase)?.namespace;
-        return namespace || "default";
+
+        return namespace || window?.envConfig?.mainObserverNamespace || "default";
     };
 }
