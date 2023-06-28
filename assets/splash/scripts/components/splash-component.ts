@@ -23,10 +23,13 @@ export default class Splash extends Component {
     @property(Node)
     nodeSloganSC2: Node = null;
 
+    @property(Node)
+    signNameContainer: Node = null;
+
     gameConnection: GameConnection = null;
 
     onLoad() {
-        gc.initMobxLogger();
+        this.signNameContainer.active = false;
         this.initGameConnectionComponent();
         this.updateProgressBar(0);
         this.sso();
@@ -101,4 +104,13 @@ export default class Splash extends Component {
 
     @handle(Chips.ChipSettingHandler)
     loadChipSetting() {}
+
+    @render(Auth.AuthStore, (store) => store.isShowSignName)
+    handleShowSignName(isShowSignName: boolean) {
+        if (isShowSignName) {
+            this.signNameContainer.active = true;
+        } else {
+            this.signNameContainer.active = false;
+        }
+    }
 }

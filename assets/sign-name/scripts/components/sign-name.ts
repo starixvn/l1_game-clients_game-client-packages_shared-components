@@ -28,7 +28,6 @@ export class SignName extends Component {
     soundClick: AudioSource = null;
 
     protected onLoad(): void {
-        this.node.active = false;
         window.skipFullscreen = true;
     }
 
