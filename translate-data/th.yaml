@@ -478,7 +478,7 @@ items:
     _variants: []
   gameExcluded:
     key: gameExcluded
-    value: "{{gameName}}\\n\\nบัญชีของคุณไม่ได้รับอนุญาตให้เล่นเกมนี้อีกต่อไป
+    value: "{{gameName}}\n\nบัญชีของคุณไม่ได้รับอนุญาตให้เล่นเกมนี้อีกต่อไป
       โปรดลองเกมอื่น"
     type: 4
     isVariant: false

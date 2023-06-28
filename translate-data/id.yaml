@@ -489,7 +489,7 @@ items:
     _variants: []
   gameExcluded:
     key: gameExcluded
-    value: "{{gameName}}\\n\\nAkun Anda tidak lagi diizinkan untuk memainkan game
+    value: "{{gameName}}\n\nAkun Anda tidak lagi diizinkan untuk memainkan game
       ini. Silakan coba game lain."
     type: 4
     isVariant: false

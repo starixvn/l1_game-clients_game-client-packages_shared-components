@@ -470,7 +470,7 @@ items:
     _variants: []
   gameExcluded:
     key: gameExcluded
-    value: "{{gameName}}\\n\\n您的帳戶不再允許玩此遊戲。請嘗試其他遊戲。"
+    value: "{{gameName}}\n\n您的帳戶不再允許玩此遊戲。請嘗試其他遊戲。"
     type: 4
     isVariant: false
     associations: []

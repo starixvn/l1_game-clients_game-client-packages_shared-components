@@ -499,7 +499,7 @@ items:
         _variants: []
     gameExcluded:
         key: gameExcluded
-        value: "{{gameName}}\\n\\nTài khoản của bạn hiện đang bị giới hạn vui lòng thử
+        value: "{{gameName}}\n\nTài khoản của bạn hiện đang bị giới hạn vui lòng thử
             các trò chơi khác."
         type: 4
         isVariant: false
