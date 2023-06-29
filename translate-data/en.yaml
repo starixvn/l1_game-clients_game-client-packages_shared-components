@@ -116,66 +116,66 @@ items:
     _variants: []
   limitBetExceeded:
     key: limitBetExceeded
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your stake
-      has exceeded your bet limit settings please try again. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your stake
+      has exceeded your bet limit settings please try again. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   playerNotPermittedPlay:
     key: playerNotPermittedPlay
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nGame disabled. Please contact
-      your upline for details thank you. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nGame disabled. Please contact
+      your upline for details thank you. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   winLimitHit:
     key: winLimitHit
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Win limit
-      hit. Please contact your upline thank you. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Win limit
+      hit. Please contact your upline thank you. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   loseLimitHit:
     key: loseLimitHit
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Lose limit
-      hit. Please contact your upline thank you. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Lose limit
+      hit. Please contact your upline thank you. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetUpdated:
     key: limitBetUpdated
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet
-      limit has been updated please try again. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet
+      limit has been updated please try again. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetNotDefined:
     key: limitBetNotDefined
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet
       limit for this game has not been set. Please contact your upline thank
-      you. ({{errorCode}})
+      you. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountSuspended:
     key: accountSuspended
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Account has
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Account has
       been suspended. Please contact your upline for details thank you.
-      ({{errorCode}})
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   unavailableGame:
     key: unavailableGame
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nThe game is unavailable at the
-      moment. Please contact CSD for details thank you. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nThe game is unavailable at the
+      moment. Please contact CSD for details thank you. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -189,8 +189,8 @@ items:
     _variants: []
   errorOccurredFull:
     key: errorOccurredFull
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nAn error has occurred please
-      contact CSD for details. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nAn error has occurred please
+      contact CSD for details. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -269,16 +269,16 @@ items:
     _variants: []
   placeBetFailed:
     key: placeBetFailed
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet!
-      ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet!
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   endGameFailed:
     key: endGameFailed
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nAn error has occurred. Please
-      contact CSD for details. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nAn error has occurred. Please
+      contact CSD for details. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -475,7 +475,7 @@ items:
     _variants: []
   gameExcluded:
     key: gameExcluded
-    value: "{{gameName}}\\n\\nYour account is no longer allowed to play this game.
+    value: "{{gameName}}\n\nYour account is no longer allowed to play this game.
       Please try other games."
     type: 4
     isVariant: false
@@ -683,7 +683,7 @@ items:
     _variants: []
   createNickname:
     key: createNickname
-    value: "Create Your Nickname "
+    value: "Create Your Nickname"
     type: 4
     isVariant: false
     associations: []
@@ -697,7 +697,7 @@ items:
     _variants: []
   pleaseSelectName:
     key: pleaseSelectName
-    value: "PLEASE SELECT YOUR NICKNAME IN-GAME. "
+    value: "PLEASE SELECT YOUR NICKNAME IN-GAME."
     type: 4
     isVariant: false
     associations: []
@@ -720,14 +720,14 @@ items:
     key: nickRequire
     value: "Note:\n\n+ Nickname must be between 3 and 14 characters long.\n\n+ Cannot
       contain spaces, special characters, and non-English characters. \n\n+
-      Cannot change the nickname after submitting. "
+      Cannot change the nickname after submitting."
     type: 4
     isVariant: false
     associations: []
     _variants: []
   nameInvalid:
     key: nameInvalid
-    value: "The entered nickname is invalid, please try again. "
+    value: "The entered nickname is invalid, please try again."
     type: 4
     isVariant: false
     associations: []

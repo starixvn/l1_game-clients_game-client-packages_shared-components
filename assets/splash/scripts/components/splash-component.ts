@@ -29,6 +29,7 @@ export default class Splash extends Component {
     gameConnection: GameConnection = null;
 
     onLoad() {
+        gc.initMobxLogger();
         this.signNameContainer.active = false;
         this.initGameConnectionComponent();
         this.updateProgressBar(0);
@@ -105,12 +106,18 @@ export default class Splash extends Component {
     @handle(Chips.ChipSettingHandler)
     loadChipSetting() {}
 
-    @render(Auth.AuthStore, (store) => store.isShowSignName)
+    @render(Auth.AuthStore, (store) => store.isShowSignName, { fireImmediately: false })
     handleShowSignName(isShowSignName: boolean) {
-        if (isShowSignName) {
-            this.signNameContainer.active = true;
-        } else {
-            this.signNameContainer.active = false;
-        }
+        this.toggleSignNameContainer(isShowSignName);
+        this.updateContentUnderBackground(!isShowSignName);
+    }
+
+    private toggleSignNameContainer(isActive: boolean) {
+        this.signNameContainer.active = isActive;
+    }
+
+    private updateContentUnderBackground(status: boolean) {
+        this.progressBar.node.active = status;
+        this.cpnMessage.node.active = status;
     }
 }

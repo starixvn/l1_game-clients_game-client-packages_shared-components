@@ -797,7 +797,10 @@ items:
     value: ""
     type: 4
     isVariant: false
-    associations: []
+    associations:
+      - sceneUuid: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
+        nodeUuid: ddW21iZohEZ6rEq+8Rw3wx
+        reference: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
     _variants: []
   characterName:
     key: characterName
@@ -830,7 +833,7 @@ items:
     isVariant: false
     associations:
       - sceneUuid: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
-        nodeUuid: 6eSNEcuAZDRpBIeq1VYW2P
+        nodeUuid: 0eVoZzLu1D9YPUrcuA+0+T
         reference: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
     _variants: []
   nickRequire:

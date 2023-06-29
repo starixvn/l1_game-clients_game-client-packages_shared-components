@@ -101,14 +101,14 @@ items:
   limitBetExceeded:
     key: limitBetExceeded
     value: "{{gameName}} 遊戲
-      (#{{gameRoundId}})\\n\\n下注失敗！您的本金已超出您的投注限額設置，請重試。({{errorCode}})"
+      (#{{gameRoundId}})\n\n下注失敗！您的本金已超出您的投注限額設置，請重試。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   playerNotPermittedPlay:
     key: playerNotPermittedPlay
-    value: "{{gameName}} 遊戲 (#{{gameRoundId}})\\n\\n遊戲禁用。詳情請聯絡您的上線，謝謝。({{errorCode}})"
+    value: "{{gameName}} 遊戲 (#{{gameRoundId}})\n\n遊戲禁用。詳情請聯絡您的上線，謝謝。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -116,7 +116,7 @@ items:
   winLimitHit:
     key: winLimitHit
     value: "{{gameName}} 遊戲
-      (#{{gameRoundId}})\\n\\n下注失敗！贏限制命中。請聯繫您的上線，謝謝。({{errorCode}})"
+      (#{{gameRoundId}})\n\n下注失敗！贏限制命中。請聯繫您的上線，謝謝。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -124,7 +124,7 @@ items:
   loseLimitHit:
     key: loseLimitHit
     value: "{{gameName}} 遊戲
-      (#{{gameRoundId}})\\n\\n下注失敗！輸限制命中。請聯繫您的上線，謝謝。({{errorCode}})"
+      (#{{gameRoundId}})\n\n下注失敗！輸限制命中。請聯繫您的上線，謝謝。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -132,7 +132,7 @@ items:
   limitBetUpdated:
     key: limitBetUpdated
     value: "{{gameName}} 遊戲
-      (#{{gameRoundId}})\\n\\n下注失敗！您的投注限額已更新，請重試。({{errorCode}})"
+      (#{{gameRoundId}})\n\n下注失敗！您的投注限額已更新，請重試。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -140,7 +140,7 @@ items:
   limitBetNotDefined:
     key: limitBetNotDefined
     value: "{{gameName}} 遊戲
-      (#{{gameRoundId}})\\n\\n下注失敗！您對此遊戲的投注限額尚未設置。請聯繫您的上線，謝謝。({{errorCode}})"
+      (#{{gameRoundId}})\n\n下注失敗！您對此遊戲的投注限額尚未設置。請聯繫您的上線，謝謝。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -148,7 +148,7 @@ items:
   accountSuspended:
     key: accountSuspended
     value: "{{gameName}} 遊戲
-      (#{{gameRoundId}})\\n\\n下注失敗！帳戶已被暫停。詳情請聯絡您的上線，謝謝。({{errorCode}})"
+      (#{{gameRoundId}})\n\n下注失敗！帳戶已被暫停。詳情請聯絡您的上線，謝謝。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -156,7 +156,7 @@ items:
   unavailableGame:
     key: unavailableGame
     value: "{{gameName}} 遊戲
-      (#{{gameRoundId}})\\n\\n該遊戲暫時無法使用。詳情請聯繫CSD，謝謝。({{errorCode}})"
+      (#{{gameRoundId}})\n\n該遊戲暫時無法使用。詳情請聯繫CSD，謝謝。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -170,7 +170,7 @@ items:
     _variants: []
   errorOccurredFull:
     key: errorOccurredFull
-    value: "{{gameName}} 遊戲 (#{{gameRoundId}})\\n\\n發生錯誤，請聯繫 CSD 了解詳情。({{errorCode}})"
+    value: "{{gameName}} 遊戲 (#{{gameRoundId}})\n\n發生錯誤，請聯繫 CSD 了解詳情。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -247,14 +247,14 @@ items:
     _variants: []
   placeBetFailed:
     key: placeBetFailed
-    value: "{{gameName}} 遊戲 (#{{gameRoundId}})\\n\\n下注失敗！({{errorCode}})"
+    value: "{{gameName}} 遊戲 (#{{gameRoundId}})\n\n下注失敗！({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   endGameFailed:
     key: endGameFailed
-    value: "{{gameName}} 遊戲 (#{{gameRoundId}})\\n\\n發生了錯誤。詳情請聯絡 CSD。({{errorCode}})"
+    value: "{{gameName}} 遊戲 (#{{gameRoundId}})\n\n發生了錯誤。詳情請聯絡 CSD。({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -593,7 +593,7 @@ items:
     _variants: []
   createNickname:
     key: createNickname
-    value: "創建您的暱稱 "
+    value: "創建您的暱稱"
     type: 4
     isVariant: false
     associations: []
@@ -607,14 +607,14 @@ items:
     _variants: []
   pleaseSelectName:
     key: pleaseSelectName
-    value: "請在遊戲中選擇您的暱稱。 "
+    value: "請在遊戲中選擇您的暱稱。"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   enterYourName:
     key: enterYourName
-    value: "輸入你的暱稱。 "
+    value: "輸入你的暱稱。"
     type: 4
     isVariant: false
     associations: []
@@ -628,14 +628,14 @@ items:
     _variants: []
   nickRequire:
     key: nickRequire
-    value: "注意：\n\n+ 暱稱的長度必須在 3 到 14 個字符之間。\n\n+ 不能包含空格、特殊字符和非英文字符。\n\n+ 提交後不能更改暱稱。 "
+    value: "注意：\n\n+ 暱稱的長度必須在 3 到 14 個字符之間。\n\n+ 不能包含空格、特殊字符和非英文字符。\n\n+ 提交後不能更改暱稱。"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   nameInvalid:
     key: nameInvalid
-    value: "輸入的暱稱無效，請重試。 "
+    value: "輸入的暱稱無效，請重試。"
     type: 4
     isVariant: false
     associations: []

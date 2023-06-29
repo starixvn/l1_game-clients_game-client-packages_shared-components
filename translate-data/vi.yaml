@@ -117,68 +117,68 @@ items:
     _variants: []
   limitBetExceeded:
     key: limitBetExceeded
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nKhoản tiền cược của bạn đã vượt
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nKhoản tiền cược của bạn đã vượt
       quá cài đặt giới hạn cược vui lòng thử lại. Đặt cược thất bại!
-      ({{errorCode}})
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   playerNotPermittedPlay:
     key: playerNotPermittedPlay
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nTrò chơi bị vô hiệu hóa. Vui lòng
-      liên hệ với cấp trên để biết chi tiết cảm ơn bạn. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nTrò chơi bị vô hiệu hóa. Vui lòng
+      liên hệ với cấp trên để biết chi tiết cảm ơn bạn. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   winLimitHit:
     key: winLimitHit
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nĐã đạt giới hạn thắng cược! Vui
-      lòng liên hệ với cấp trên cảm ơn bạn. Đặt cược thất bại! ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nĐã đạt giới hạn thắng cược! Vui
+      lòng liên hệ với cấp trên cảm ơn bạn. Đặt cược thất bại! ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   loseLimitHit:
     key: loseLimitHit
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nĐã đạt giới hạn thua cược! Vui
-      lòng liên hệ với cấp trên cảm ơn bạn. Đặt cược thất bại! ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nĐã đạt giới hạn thua cược! Vui
+      lòng liên hệ với cấp trên cảm ơn bạn. Đặt cược thất bại! ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetUpdated:
     key: limitBetUpdated
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nHạn mức cược của bạn đã được cập
-      nhật vui lòng thử lại. Đặt cược thất bại! ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nHạn mức cược của bạn đã được cập
+      nhật vui lòng thử lại. Đặt cược thất bại! ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetNotDefined:
     key: limitBetNotDefined
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nHạn mức cược của bạn cho trò chơi
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nHạn mức cược của bạn cho trò chơi
       này chưa được thiết lập. Vui lòng liên hệ với cấp trên. Đặt cược thất bại!
-      ({{errorCode}})
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountSuspended:
     key: accountSuspended
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nTài khoản đã bị treo. Vui lòng
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nTài khoản đã bị treo. Vui lòng
       liên hệ với cấp trên để biết chi tiết cảm ơn bạn. Đặt cược thất bại!
-      ({{errorCode}})
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   unavailableGame:
     key: unavailableGame
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nTrò chơi không khả dụng vào thời
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nTrò chơi không khả dụng vào thời
       điểm này. Vui lòng liên hệ với bộ phận CSKH để biết chi tiết cảm ơn bạn.
-      ({{errorCode}})
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -193,8 +193,8 @@ items:
     _variants: []
   errorOccurredFull:
     key: errorOccurredFull
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nĐã xảy ra lỗi. Vui lòng liên hệ
-      với bộ phận CSKH để được hỗ trợ. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nĐã xảy ra lỗi. Vui lòng liên hệ
+      với bộ phận CSKH để được hỗ trợ. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -271,16 +271,16 @@ items:
     _variants: []
   placeBetFailed:
     key: placeBetFailed
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nĐặt cược không thành công!
-      ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nĐặt cược không thành công!
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   endGameFailed:
     key: endGameFailed
-    value: Game {{gameName}} (#{{gameRoundId}})\n\nPhiên chơi bị lỗi. Vui lòng liên
-      hệ bộ phận CSKH để được hỗ trợ. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nPhiên chơi bị lỗi. Vui lòng liên
+      hệ bộ phận CSKH để được hỗ trợ. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -650,29 +650,29 @@ items:
     associations: []
     _variants: []
   createNickname:
-    key: "createNickname "
-    value: "Tạo tên nhân vật "
+    key: "createNickname"
+    value: "Tạo tên nhân vật"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   characterName:
     key: characterName
-    value: "Tên nhân vật "
+    value: "Tên nhân vật"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   pleaseSelectName:
     key: pleaseSelectName
-    value: "VUI LÒNG CHỌN TÊN NHÂN VẬT HIỂN THỊ TRONG GAME "
+    value: "VUI LÒNG CHỌN TÊN NHÂN VẬT HIỂN THỊ TRONG GAME"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   enterYourName:
     key: enterYourName
-    value: "Nhập tên nhân vật "
+    value: "Nhập tên nhân vật"
     type: 4
     isVariant: false
     associations: []
@@ -688,14 +688,14 @@ items:
     key: nickRequire
     value: "Lưu ý:\n\n+ Tên nhân vật phải có từ 3 đến 14 ký tự.\n\n+ Không gõ dấu
       tiếng việt, không chứa khoảng trắng và các ký tự đặc biệt.\n\n+ Không thể
-      đổi tên nhân vật sau khi tạo. "
+      đổi tên nhân vật sau khi tạo."
     type: 4
     isVariant: false
     associations: []
     _variants: []
   nameInvalid:
     key: nameInvalid
-    value: "Tên nhân vật không hợp lệ. "
+    value: "Tên nhân vật không hợp lệ."
     type: 4
     isVariant: false
     associations: []

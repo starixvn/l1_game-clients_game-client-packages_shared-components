@@ -74,102 +74,102 @@ items:
     _variants: []
   accountBlacklisted:
     key: accountBlacklisted
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Akun
-      telah ditutup. Silakan hubungi CSD untuk lebih lanjut. ({{errorCode}})
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Akun
+      telah ditutup. Silakan hubungi CSD untuk lebih lanjut. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   userNotFound:
     key: userNotFound
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
-      Pengguna tidak ditemukan. ({{errorCode}})
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+      Pengguna tidak ditemukan. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   sysMaintenance:
     key: sysMaintenance
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
-      Permainan sedang dalam pemeliharaan.
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+      Permainan sedang dalam pemeliharaan."
     type: 4
     isVariant: false
     associations: []
     _variants: []
   networkError:
     key: networkError
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
-      Kesalahan jaringan. ({{errorCode}})
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+      Kesalahan jaringan. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetExceeded:
     key: limitBetExceeded
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
       Taruhan Anda telah melampaui batas taruhan Anda silakan coba lagi.
-      ({{errorCode}})
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   playerNotPermittedPlay:
     key: playerNotPermittedPlay
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nPermainan dinonaktifkan.
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nPermainan dinonaktifkan.
       Silakan hubungi upline Anda untuk lebih lanjut terima kasih.
-      ({{errorCode}})
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   winLimitHit:
     key: winLimitHit
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
       Batas Kemenganan. Silakan hubungi upline Anda terima kasih.
-      ({{errorCode}})
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   loseLimitHit:
     key: loseLimitHit
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
-      Batas Kekalahan. Silakan hubungi upline Anda terima kasih. ({{errorCode}})
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+      Batas Kekalahan. Silakan hubungi upline Anda terima kasih. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetUpdated:
     key: limitBetUpdated
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
-      Batas taruhan Anda telah diperbarui silakan coba lagi. ({{errorCode}})
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+      Batas taruhan Anda telah diperbarui silakan coba lagi. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetNotDefined:
     key: limitBetNotDefined
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
       Batas taruhan Anda untuk game ini belum ditetapkan. Silakan hubungi upline
-      Anda terima kasih. ({{errorCode}})
+      Anda terima kasih. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountSuspended:
     key: accountSuspended
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Akun
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Akun
       telah ditangguhkan. Silakan hubungi upline Anda untuk lebih lanjut terima
-      kasih. ({{errorCode}})
+      kasih. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   unavailableGame:
     key: unavailableGame
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nPermainan tidak tersedia
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nPermainan tidak tersedia
       saat ini. Silakan hubungi CSD untuk lebih lanjut terima kasih.
-      ({{errorCode}})
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -183,8 +183,8 @@ items:
     _variants: []
   errorOccurredFull:
     key: errorOccurredFull
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nTerjadi kesalahan hubungi
-      CSD untuk lebih lanjut. ({{errorCode}})
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nTerjadi kesalahan hubungi
+      CSD untuk lebih lanjut. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -263,16 +263,16 @@ items:
     _variants: []
   placeBetFailed:
     key: placeBetFailed
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
-      ({{errorCode}})
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   endGameFailed:
     key: endGameFailed
-    value: Permainan {{gameName}} (#{{gameRoundId}})\n\nSebuah kesalahan telah
-      terjadi. Silakan hubungi CSD untuk lebih lanjut. ({{errorCode}})
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nSebuah kesalahan telah
+      terjadi. Silakan hubungi CSD untuk lebih lanjut. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -613,7 +613,7 @@ items:
     _variants: []
   createNickname:
     key: createNickname
-    value: "Buat Nama Panggilan Anda "
+    value: "Buat Nama Panggilan Anda"
     type: 4
     isVariant: false
     associations: []
@@ -627,14 +627,14 @@ items:
     _variants: []
   pleaseSelectName:
     key: pleaseSelectName
-    value: "SILAKAN PILIH NAMA PANGGILAN ANDA DALAM GAME. "
+    value: "SILAKAN PILIH NAMA PANGGILAN ANDA DALAM GAME."
     type: 4
     isVariant: false
     associations: []
     _variants: []
   enterYourName:
     key: enterYourName
-    value: "Masukkan nama panggilan Anda. "
+    value: "Masukkan nama panggilan Anda."
     type: 4
     isVariant: false
     associations: []
@@ -648,16 +648,21 @@ items:
     _variants: []
   nickRequire:
     key: nickRequire
-    value: "Catatan:\n\n+ Nama panggilan harus antara 3 dan 14 karakter.\n\n+ Tidak
-      boleh mengandung spasi, karakter khusus, dan karakter non-Inggris.\n\n+
-      Tidak dapat mengubah nama panggilan setelah mengirimkan. "
+    value: |-
+      Catatan:
+
+      + Nama panggilan harus antara 3 dan 14 karakter.
+
+      + Tidak boleh mengandung spasi, karakter khusus, dan karakter non-Inggris.
+
+      + Tidak dapat mengubah nama panggilan setelah mengirimkan. 
     type: 4
     isVariant: false
     associations: []
     _variants: []
   nameInvalid:
     key: nameInvalid
-    value: "Nama panggilan yang dimasukkan tidak valid, harap coba lagi. "
+    value: "Nama panggilan yang dimasukkan tidak valid, harap coba lagi."
     type: 4
     isVariant: false
     associations: []

@@ -102,66 +102,66 @@ items:
     _variants: []
   limitBetExceeded:
     key: limitBetExceeded
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว!
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว!
       เงินเดิมพันของคุณเกินการตั้งค่าขีดจำกัดการเดิมพันของคุณ โปรดลองอีกครั้ง
-      ({{errorCode}})
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   playerNotPermittedPlay:
     key: playerNotPermittedPlay
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\nเกมถูกปิดการใช้งาน
-      กรุณาติดต่อทีมงานของคุณสำหรับรายละเอียดเพิ่มเติม ขอบคุณค่ะ ({{errorCode}})
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nเกมถูกปิดการใช้งาน
+      กรุณาติดต่อทีมงานของคุณสำหรับรายละเอียดเพิ่มเติม ขอบคุณค่ะ ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   winLimitHit:
     key: winLimitHit
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว! ชนะขีดจำกัดแล้ว
-      กรุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ ({{errorCode}})
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว! ชนะขีดจำกัดแล้ว
+      กรุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   loseLimitHit:
     key: loseLimitHit
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว! แพ้ขีดจำกัดแล้ว
-      กรุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ ({{errorCode}})
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว! แพ้ขีดจำกัดแล้ว
+      กรุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetUpdated:
     key: limitBetUpdated
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว!
-      อัปเดตวงเงินเดิมพันของคุณใหม่แล้ว โปรดลองอีกครั้ง ({{errorCode}})
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว!
+      อัปเดตวงเงินเดิมพันของคุณใหม่แล้ว โปรดลองอีกครั้ง ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetNotDefined:
     key: limitBetNotDefined
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว!
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว!
       ยังไม่ได้กำหนดวงเงินเดิมพันของคุณสำหรับเกมนี้ กรุณาติดต่อทีมงานของคุณ
-      ขอบคุณค่ะ ({{errorCode}})
+      ขอบคุณค่ะ ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountSuspended:
     key: accountSuspended
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว! บัญชีถูกระงับ
-      รุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ ({{errorCode}})
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการเดิมพันล้มเหลว! บัญชีถูกระงับ
+      รุณาติดต่อทีมงานของคุณ ขอบคุณค่ะ ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   unavailableGame:
     key: unavailableGame
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\n  เกมไม่สามารถใช้งานได้ในขณะนี้
-      กรุณาติดต่อแอดมินสำหรับรายละเอียดขอบคุณ ({{errorCode}})
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\n  เกมไม่สามารถใช้งานได้ในขณะนี้
+      กรุณาติดต่อแอดมินสำหรับรายละเอียดขอบคุณ ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -175,8 +175,8 @@ items:
     _variants: []
   errorOccurredFull:
     key: errorOccurredFull
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\nเกิดข้อผิดพลาด
-      โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม ({{errorCode}})
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nเกิดข้อผิดพลาด
+      โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -253,16 +253,16 @@ items:
     _variants: []
   placeBetFailed:
     key: placeBetFailed
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\nล้มเหลวในการวางเดิมพัน!
-      ({{errorCode}})
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nล้มเหลวในการวางเดิมพัน!
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   endGameFailed:
     key: endGameFailed
-    value: เกม {{gameName}} (#{{gameRoundId}})\n\nเกิดข้อผิดพลาด.
-      โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม ({{errorCode}})
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nเกิดข้อผิดพลาด.
+      โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -603,7 +603,7 @@ items:
     _variants: []
   createNickname:
     key: createNickname
-    value: "ตั้งชื่อเล่น "
+    value: "ตั้งชื่อเล่น"
     type: 4
     isVariant: false
     associations: []
