@@ -26,6 +26,7 @@ export default class Splash extends Component {
     gameConnection: GameConnection = null;
 
     onLoad() {
+        gc.initMobxLogger();
         this.initGameConnectionComponent();
         this.updateProgressBar(0);
         this.sso();
