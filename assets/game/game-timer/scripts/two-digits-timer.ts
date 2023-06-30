@@ -62,7 +62,6 @@ export default class TwoDigitsTimer extends ObserverComponent {
     }
     setState(state: string) {
         switch (state) {
-            case Rounds.ROUND_STATE.BEGIN_LOCKING_BET:
             case Rounds.ROUND_STATE.LOCKING_BET:
                 this.setColor(this.lockingColor);
                 break;

@@ -89,11 +89,6 @@ export default class BetItem extends ObserverComponent {
         isStartGenerateResult && this.clearChips();
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStopGame)
-    handleStopGame(isStopGame: boolean) {
-        isStopGame && this.clearChips();
-    }
-
     protected clearChips() {
         this.chipBox?.destroyAllChildren();
     }
@@ -108,25 +103,25 @@ export default class BetItem extends ObserverComponent {
         }
 
         if (isResetHighlight) {
-            this.setHighlight(false);
+            this.highlightBorder.active = false;
         }
     }
 
-    protected setHighlight(highlight: boolean, isAnimated = true) {
+    protected setHighlight(highlight: boolean, isAnimated: boolean) {
         this.highlight.active = highlight && isAnimated;
         this.handleHighlightBackground(highlight, isAnimated);
-        this.handleHighlightBorder(highlight);
+        this.handleHighlightBorder(highlight, isAnimated);
     }
 
     protected handleHighlightBackground(highlight: boolean, isAnimated = true) {
         this.highlightBackground && (this.highlightBackground.active = highlight && isAnimated);
     }
 
-    protected handleHighlightBorder(highlight: boolean) {
-        this.highlightBorder && (this.highlightBorder.active = highlight);
+    protected handleHighlightBorder(highlight: boolean, isAnimated: boolean) {
+        this.highlightBorder && (this.highlightBorder.active = highlight && !isAnimated);
     }
 
-    highlightWonBet(settlementResult: gc.GameServiceMessage.TSettlementResult, isAnimated = true) {
+    highlightWonBet(settlementResult: gc.GameServiceMessage.TSettlementResult, isAnimated: boolean) {
         const choice = this.node?.name ?? "";
         this.setHighlight(settlementResult?.[choice], isAnimated);
     }

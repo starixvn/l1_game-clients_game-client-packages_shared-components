@@ -16,7 +16,6 @@ export class BetItems extends ObserverComponent {
     onLoad() {
         super.onLoad();
         this.betItemComponents = this.node.getComponentsInChildren(BetItem) ?? [];
-        console.log(this.betItemComponents);
     }
 
     @render(Settlements.SettlementStore, (store) => store.settlementResult)
