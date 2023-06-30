@@ -655,6 +655,27 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  underMaintenanceTime:
+    key: underMaintenanceTime
+    value: 从 {{- startTime}} 到 {{- endTime}} (GMT+8)
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  underMaintenanceSystem:
+    key: underMaintenanceSystem
+    value: 本网站正在维护中。 请稍后再回来。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  underMaintenanceSuggest:
+    key: underMaintenanceSuggest
+    value: 维护完成后请重新登录继续玩游戏。
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: zh-Hans
   translateFinished: 376

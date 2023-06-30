@@ -673,7 +673,29 @@ items:
     type: 4
     isVariant: false
     associations: []
-    _variants: []  
+    _variants: []
+  underMaintenanceTime:
+    key: underMaintenanceTime
+    value: Mulai dari {{- startTime}} hingga {{- endTime}} (GMT+8).
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  underMaintenanceSystem:
+    key: underMaintenanceSystem
+    value: SITUS DALAM PEMELIHARAAN. SILAKAN KEMBALI LAGI.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  underMaintenanceSuggest:
+    key: underMaintenanceSuggest
+    value: Silakan login kembali untuk melanjutkan permainan setelah maintenance
+      selesai.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: id
   translateFinished: 376

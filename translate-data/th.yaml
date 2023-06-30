@@ -659,6 +659,27 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  underMaintenanceTime:
+    key: underMaintenanceTime
+    value: เริ่มต้นจาก {{- startTime}} ถึง {{- endTime}} (GMT+8)
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  underMaintenanceSystem:
+    key: underMaintenanceSystem
+    value: ระบบปิดปรับปรุง กรุณาเข้ามาใช้งานใหม่อีกครั้ง
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  underMaintenanceSuggest:
+    key: underMaintenanceSuggest
+    value: กรุณาเข้าสู่ระบบใหม่อีกครั้งเพื่อเล่นเกมต่อหลังจากการปิดปรับปรุงเสร็จสิ้นแล้ว
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: th
   translateFinished: 376

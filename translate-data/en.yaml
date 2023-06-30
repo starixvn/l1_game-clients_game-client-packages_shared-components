@@ -745,7 +745,28 @@ items:
     type: 4
     isVariant: false
     associations: []
-    _variants: []  
+    _variants: []
+  underMaintenanceTime:
+    key: underMaintenanceTime
+    value: Starting from {{- startTime}} to {{- endTime}} (GMT+8).
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  underMaintenanceSystem:
+    key: underMaintenanceSystem
+    value: THE SITE IS UNDER MAINTENANCE. PLEASE COME BACK LATER.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  underMaintenanceSuggest:
+    key: underMaintenanceSuggest
+    value: Please kindly re-login to continue playing games after the maintenance is complete.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: en
   translateFinished: 390

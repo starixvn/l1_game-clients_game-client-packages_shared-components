@@ -706,7 +706,28 @@ items:
       type: 4
       isVariant: false
       associations: []
-      _variants: []  
+      _variants: []
+  underMaintenanceTime:
+    key: underMaintenanceTime
+    value: Thời gian bảo trì từ {{- startTime}} đến {{- endTime}} (GMT+8).
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  underMaintenanceSystem:
+    key: underMaintenanceSystem
+    value: "HỆ THỐNG ĐANG ĐƯỢC BẢO TRÌ.\r\nVUI LÒNG QUAY LẠI SAU."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  underMaintenanceSuggest:
+    key: underMaintenanceSuggest
+    value: Sau thời gian bảo trì, bạn hãy đăng nhập lại để có thể tiếp tục chơi game.
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: vi
   translateFinished: 390
