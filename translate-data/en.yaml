@@ -64,6 +64,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  sessionTimeout_break:
+    key: sessionTimeout_break
+    value: "Your session has timed out or you have not logged in yet.\nPlease close the current windows and try to login again."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
   notice:
     key: notice
     value: NOTICE

@@ -50,6 +50,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  sessionTimeout_break:
+    key: sessionTimeout_break
+    value: "เซสชั่นของคุณหมดเวลาหรือคุณยังไม่ได้เข้าสู่ระบบ\nกรุณาปิดหน้าต่างปัจจุบันและลองเข้าสู่ระบบอีกครั้ง"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
   notice:
     key: notice
     value: ประกาศ

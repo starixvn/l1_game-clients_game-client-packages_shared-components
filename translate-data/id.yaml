@@ -50,6 +50,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  sessionTimeout_break:
+    key: sessionTimeout_break
+    value: "Sesi Anda telah habis atau Anda belum masuk.\nHarap tutup jendela saat ini dan coba masuk lagi."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
   notice:
     key: notice
     value: ULASAN

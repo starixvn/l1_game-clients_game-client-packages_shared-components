@@ -49,6 +49,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  sessionTimeout_break:
+    key: sessionTimeout_break
+    value: "您的會話已超時或您尚未登錄。\n請關閉當前窗口並再次嘗試登錄。"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
   notice:
     key: notice
     value: 注意

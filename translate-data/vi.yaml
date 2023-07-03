@@ -64,6 +64,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  sessionTimeout_break:
+    key: sessionTimeout_break
+    value: "Phiên đăng nhập của bạn đã hết hạn, hoặc bạn chưa có đăng nhập.\nVui lòng đóng cửa sổ game và thử đăng nhập lại."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
   notice:
     key: notice
     value: THÔNG BÁO
