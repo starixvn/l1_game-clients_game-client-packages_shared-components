@@ -394,7 +394,7 @@ export default class SlidingChip extends ObserverComponent {
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
-    startGenerateResult(isStartingRound: boolean) {
+    handleStartingRound(isStartingRound: boolean) {
         if (isStartingRound) {
             this.resetChips();
         }

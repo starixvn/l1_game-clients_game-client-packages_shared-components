@@ -84,9 +84,9 @@ export default class BetItem extends ObserverComponent {
         }
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartGenerateResult)
-    startGenerateResult(isStartGenerateResult: boolean) {
-        isStartGenerateResult && this.clearChips();
+    @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
+    clearChipsAtStartRound(isStartRound: boolean) {
+        isStartRound && this.clearChips();
     }
 
     protected clearChips() {

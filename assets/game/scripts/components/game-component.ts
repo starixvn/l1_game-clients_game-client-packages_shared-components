@@ -110,8 +110,8 @@ export default class GameComponent extends GameComponentBase {
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult() {}
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartGenerateResult)
-    startGenerateResult(isStartGenerateResult: boolean) {}
+    @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
+    handleStartRound(isStartRound: boolean) {}
 
     @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
     openGuide({ event }: { event: InGameMenuEvents }) {
