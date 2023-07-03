@@ -217,19 +217,18 @@
       "__id__": 5
     },
     "asset": {
-      "__uuid__": "9e5d7e8c-7abe-4626-aeb8-be8f72a0a45e",
+      "__uuid__": "5f3ca3a9-6505-4b05-af9b-49fa260bf96c",
       "__expectedType__": "cc.Prefab"
     },
     "fileId": "0bJoNP3opKtJF/6UkhRGpt",
     "instance": {
       "__id__": 7
     },
-    "targetOverrides": null,
-    "nestedPrefabInstanceRoots": null
+    "targetOverrides": null
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "a3YRVJSmJJWrcnlcW7myNx",
+    "fileId": "c8c+smmCNKXrS2/EA6Pyhd",
     "prefabRootNode": null,
     "mountedChildren": [],
     "mountedComponents": [],
