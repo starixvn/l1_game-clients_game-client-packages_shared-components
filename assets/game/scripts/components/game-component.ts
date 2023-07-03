@@ -60,7 +60,6 @@ export default class GameComponent extends GameComponentBase {
 
     onShowGame() {
         log("Game run in foreground ============================================");
-        // TODO: Temporary reset
         window.location.reload();
     }
 
