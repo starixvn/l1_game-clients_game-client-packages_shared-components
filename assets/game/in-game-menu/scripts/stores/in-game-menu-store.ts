@@ -9,8 +9,14 @@ interface EventData {
 @injectable()
 export class InGameMenuStore {
     constructor() {
-        mobx.makeAutoObservable(this);
+        mobx.makeAutoObservable(this, { _event: false });
     }
 
-    event: EventData = null;
+    _event: EventData = null;
+    public get event(): EventData {
+        return this._event;
+    }
+    public set event(value: EventData) {
+        this._event = value;
+    }
 }
