@@ -676,6 +676,76 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  accountBlacklistedPlaceBet:
+    key: accountBlacklistedPlaceBet
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\n\n下注失败！ 帐户已关闭。 详情请联络 CSD。({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []     
+  errorOccurredPlaceBet:
+    key: errorOccurredPlaceBet
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\n\n下注失败！ 发生错误，请联系 CSD 了解详情。({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  sessionTimeoutPlaceBet:
+    key: sessionTimeoutPlaceBet
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\n\n下注失败！ 您的会话已超时或您尚未登录。 请关闭当前窗口并再次尝试登录。"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  loginFailedPlaceBet:
+    key: loginFailedPlaceBet
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\n\n下注失败！ 登录名或密码不正确。"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  accountLockedPlaceBet:
+    key: accountLockedPlaceBet
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\n\n下注失败！ 帐户已关闭。 详情请联络您的上线，谢谢。"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  accountNotExistPlaceBet:
+    key: accountNotExistPlaceBet
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\n\n下注失败！ 发生了错误。 详情请联系CSD，谢谢。({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  ipRestrictedPlaceBet:
+    key: ipRestrictedPlaceBet
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\n\n下注失败！ 您的 IP 地址受到限制。({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  userNotFoundPlaceBet:
+    key: userNotFoundPlaceBet
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\n\n下注失败！ 未找到用户。({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  sysMaintenancePlaceBet:
+    key: sysMaintenancePlaceBet
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\n\n下注失败！ 游戏正在维护中。"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  networkErrorPlaceBet:
+    key: networkErrorPlaceBet
+    value: "{{gameName}} 游戏 (#{{gameRoundId}})\n\n下注失败！ 网络错误。({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []  
 languageConfig:
   bcp47Tag: zh-Hans
   translateFinished: 376

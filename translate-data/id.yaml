@@ -696,6 +696,76 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  accountBlacklistedPlaceBet:
+    key: accountBlacklistedPlaceBet
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Akun telah ditutup. Silakan hubungi CSD untuk lebih lanjut. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []  
+  errorOccurredPlaceBet:
+    key: errorOccurredPlaceBet
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Terjadi kesalahan, hubungi CSD untuk lebih lanjut. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  sessionTimeoutPlaceBet:
+    key: sessionTimeoutPlaceBet
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Sesi Anda telah habis atau Anda belum masuk. Harap tutup jendela saat ini dan coba masuk lagi."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  loginFailedPlaceBet:
+    key: loginFailedPlaceBet
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Nama login atau kata sandi salah."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  accountLockedPlaceBet:
+    key: accountLockedPlaceBet
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Akun telah ditutup. Silakan hubungi upline Anda untuk lebih lanjut, terima kasih."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  accountNotExistPlaceBet:
+    key: accountNotExistPlaceBet
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Sebuah kesalahan telah terjadi. Silakan hubungi CSD untuk lebih lanjut, terima kasih. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  ipRestrictedPlaceBet:
+    key: ipRestrictedPlaceBet
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Alamat IP Anda dibatasi. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  userNotFoundPlaceBet:
+    key: userNotFoundPlaceBet
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Pengguna tidak ditemukan. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  sysMaintenancePlaceBet:
+    key: sysMaintenancePlaceBet
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Permainan sedang dalam pemeliharaan."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  networkErrorPlaceBet:
+    key: networkErrorPlaceBet
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Kesalahan jaringan. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []  
 languageConfig:
   bcp47Tag: id
   translateFinished: 376

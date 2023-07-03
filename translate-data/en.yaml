@@ -767,6 +767,77 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  accountBlacklistedPlaceBet:
+    key: accountBlacklistedPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Account has been closed. Please contact CSD for details. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurredPlaceBet:
+    key: errorOccurredPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! An error has occurred, please contact CSD for details. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  sessionTimeoutPlaceBet:
+    key: sessionTimeoutPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\r\n\r\nFailed to place bet! Your session has timed out or you have not logged in yet. Please close the current windows and try to login again."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  loginFailedPlaceBet:
+    key: loginFailedPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\r\n\r\nFailed to place bet! Incorrect login name or password."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  accountLockedPlaceBet:
+    key: accountLockedPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\r\n\r\nFailed to place bet! Account has been closed. Please contact your upline for details, thank you."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  accountNotExistPlaceBet:
+    key: accountNotExistPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! An error has occurred. Please contact CSD for details, thank you. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  ipRestrictedPlaceBet:
+    key: ipRestrictedPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your IP address is restricted. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  userNotFoundPlaceBet:
+    key: userNotFoundPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! User was not found. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  sysMaintenancePlaceBet:
+    key: sysMaintenancePlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\r\n\r\nFailed to place bet! The game is under maintenance."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  networkErrorPlaceBet:
+    key: networkErrorPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\r\n\r\nFailed to place bet! Network error.({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []   
+
 languageConfig:
   bcp47Tag: en
   translateFinished: 390

@@ -728,6 +728,76 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  accountBlacklistedPlaceBet:
+    key: accountBlacklistedPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nTài khoản đã bị đóng. Vui lòng liên hệ bộ phận CSKH để biết chi tiết. Đặt cược thất bại! ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []    
+  errorOccurredPlaceBet:
+    key: errorOccurredPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nĐã xảy ra lỗi. Vui lòng liên hệ với bộ phận CSKH để được hỗ trợ. ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  sessionTimeoutPlaceBet:
+    key: sessionTimeoutPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nPhiên đăng nhập của bạn đã hết hạn, hoặc bạn chưa có đăng nhập. Vui lòng đóng cửa sổ game và thử đăng nhập lại. Đặt cược thất bại!"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  loginFailedPlaceBet:
+    key: loginFailedPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\r\n\r\nTài khoản hoặc mật khẩu đăng nhập không đúng. Đặt cược thất bại!"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  accountLockedPlaceBet:
+    key: accountLockedPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nTài khoản đã bị đóng. Vui lòng liên hệ với cấp trên để biết chi tiết, cảm ơn bạn. Đặt cược thất bại!"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  accountNotExistPlaceBet:
+    key: accountNotExistPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nĐã xảy ra lỗi. Vui lòng liên hệ bộ phận CSKH để biết chi tiết, cảm ơn bạn. Đặt cược thất bại! ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  ipRestrictedPlaceBet:
+    key: ipRestrictedPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nĐịa chỉ IP này bị chặn. Đặt cược thất bại! ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  userNotFoundPlaceBet:
+    key: userNotFoundPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nKhông tìm thấy người chơi này. Đặt cược thất bại! ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  sysMaintenancePlaceBet:
+    key: sysMaintenancePlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\r\n\r\nHệ thống đang được bảo trì."
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  networkErrorPlaceBet:
+    key: networkErrorPlaceBet
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nLỗi kết nối mạng. Đặt cược thất bại! ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: vi
   translateFinished: 390

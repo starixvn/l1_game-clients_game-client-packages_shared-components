@@ -680,6 +680,76 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  accountBlacklistedPlaceBet:
+    key: accountBlacklistedPlaceBet
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว! บัญชีถูกปิด โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  errorOccurredPlaceBet:
+    key: errorOccurredPlaceBet
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว! เกิดข้อผิดพลาด โปรดติดต่อแอดมินเพื่อขอรายละเอียดเพิ่มเติม ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  sessionTimeoutPlaceBet:
+    key: sessionTimeoutPlaceBet
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว! เซสชั่นของคุณหมดเวลาหรือคุณยังไม่ได้เข้าสู่ระบบ กรุณาปิดหน้าต่างปัจจุบันและลองเข้าสู่ระบบอีกครั้ง"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  loginFailedPlaceBet:
+    key: loginFailedPlaceBet
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว! ชื่อเข้าสู่ระบบหรือรหัสผ่านไม่ถูกต้อง"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  accountLockedPlaceBet:
+    key: accountLockedPlaceBet
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว! บัญชีถูกปิด กรุณาติดต่อเจ้าหน้าที่ของคุณสำหรับรายละเอียดเพิ่มเติม ขอบคุณค่ะ"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  accountNotExistPlaceBet:
+    key: accountNotExistPlaceBet
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว! เกิดข้อผิดพลาด กรุณาติดต่อแอดมินสำหรับรายละเอียดเพิ่มเติม ขอบคุณค่ะ ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  ipRestrictedPlaceBet:
+    key: ipRestrictedPlaceBet
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว! ที่อยู่ IP ของคุณถูกจำกัด ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  userNotFoundPlaceBet:
+    key: userNotFoundPlaceBet
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว! ไม่พบชื่อผู้ใช้ ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  sysMaintenancePlaceBet:
+    key: sysMaintenancePlaceBet
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว! เกมอยู่ระหว่างการบำรุงรักษา "
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: [] 
+  networkErrorPlaceBet:
+    key: networkErrorPlaceBet
+    value: "เกม {{gameName}} (#{{gameRoundId}})\n\nการวางเดิมพันล้มเหลว! เกิดข้อผิดพลาดของเครือข่าย ({{errorCode}})"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []     
 languageConfig:
   bcp47Tag: th
   translateFinished: 376
