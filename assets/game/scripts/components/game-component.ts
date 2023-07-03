@@ -32,6 +32,7 @@ export default class GameComponent extends GameComponentBase {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
         game.on(Game.EVENT_SHOW, this.onShowGame, this);
         this.initUserSettings();
+        this.initPlayerSelections();
     }
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
@@ -47,6 +48,9 @@ export default class GameComponent extends GameComponentBase {
 
     @handle(gc.UserSettings.UserSettingHandlers, (handle) => handle.loadStorages())
     initUserSettings() {}
+
+    @handle(gc.PlayerSelections.PlayerSelectionHandlers.InitHandlers)
+    initPlayerSelections() {}
 
     protected onDestroy(): void {
         game.off(Game.EVENT_HIDE, this.onHideGame, this);

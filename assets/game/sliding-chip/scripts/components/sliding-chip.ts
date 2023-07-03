@@ -70,6 +70,7 @@ export default class SlidingChip extends ObserverComponent {
     static mainPlayerChipFlyingTime = 0.5;
     private currentSelectChip = 0;
 
+
     setDisabledBetChips(status: boolean) {
         this.disabledBetChips = status;
     }
@@ -190,6 +191,11 @@ export default class SlidingChip extends ObserverComponent {
         this.currentSelectChip = selectChip;
     }
 
+    @handle(gc.PlayerSelections.PlayerSelectionHandlers.ChipHandlers)
+    updatePlayerSelectionChip(selectChip: number){
+        return selectChip;
+    }
+
     private getChipDisplayType(index: number) {
         return index > this.chipValues.length - 3 ? ChipDisplayType.VIP : ChipDisplayType.Normal;
     }
@@ -232,6 +238,11 @@ export default class SlidingChip extends ObserverComponent {
         this.chipList.length > 0 && this.restoreChipState();
 
         return { chipsLength: this.chipList.length };
+    }
+
+    @render(gc.PlayerSelections.PlayerSelectionStore, (store) => store.chip)
+    getPlayerSelectionChip(chip: number) {
+        this.currentSelectChip = chip;
     }
 
     protected restoreChipState() {
@@ -278,6 +289,7 @@ export default class SlidingChip extends ObserverComponent {
             }
         }
 
+        this.updatePlayerSelectionChip(index);
         return { selectedChip: index };
     }
 
