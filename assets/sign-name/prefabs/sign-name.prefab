@@ -2610,7 +2610,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": -23.275,
       "z": 0
     },
     "_lrot": {
@@ -2704,7 +2704,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 102.49,
+      "width": 93.7,
       "height": 37.8
     },
     "_anchorPoint": {
@@ -2797,7 +2797,7 @@
     },
     "_key": "submit",
     "_count": 0,
-    "format": 1,
+    "format": 3,
     "suffix": "",
     "_id": ""
   },
@@ -3054,7 +3054,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1244.21,
-      "height": 217.8
+      "height": 213
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3088,13 +3088,13 @@
       "b": 255,
       "a": 255
     },
-    "_string": "ui.nick_require",
+    "_string": "Note:\n+ Nickname must be between 3 and 14 characters long.\n+ Cannot contain spaces, special characters, and non-English characters. \n+ Cannot change the nickname after submitting. ",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
     "_fontSize": 36,
     "_fontFamily": "Arial",
-    "_lineHeight": 30,
+    "_lineHeight": 50,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
@@ -3150,7 +3150,7 @@
     "fileId": "20nzsryj9FI5v/lVlczWTz"
   },
   {
-    "__type__": "30d83qzRfZHLYMFn4KA9PG4",
+    "__type__": "c6b0f2v0I5KNpUsa0rGBsy1",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -3162,11 +3162,13 @@
     },
     "_key": "nickRequire",
     "_count": 0,
+    "format": 0,
+    "suffix": "",
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "d75W+JYx9CZIvbPPIZdOyZ"
+    "fileId": "efpd4z3WJNpIKc4rbiiTys"
   },
   {
     "__type__": "cc.PrefabInfo",

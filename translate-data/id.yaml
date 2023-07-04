@@ -263,7 +263,7 @@ items:
     _variants: []
   existNickName:
     key: existNickName
-    value: Nama panggilan sudah digunakan silakan coba yang lain.
+    value: Nama panggilan sudah digunakan, silakan coba yang lain.
     type: 4
     isVariant: false
     associations: []
@@ -655,14 +655,7 @@ items:
     _variants: []
   nickRequire:
     key: nickRequire
-    value: |-
-      Catatan:
-
-      + Nama panggilan harus antara 3 dan 14 karakter.
-
-      + Tidak boleh mengandung spasi, karakter khusus, dan karakter non-Inggris.
-
-      + Tidak dapat mengubah nama panggilan setelah mengirimkan. 
+    value: "Catatan:\n+ Nama panggilan harus antara 3 dan 14 karakter.\n+ Tidak boleh mengandung spasi, karakter khusus, dan karakter non-Inggris.\n+ Tidak dapat mengubah nama panggilan setelah mengirimkan. " 
     type: 4
     isVariant: false
     associations: []

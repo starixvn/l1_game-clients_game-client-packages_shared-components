@@ -269,7 +269,7 @@ items:
     _variants: []
   existNickName:
     key: existNickName
-    value: Nickname is already taken please try another one.
+    value: Nickname is already taken, please try another one.
     type: 4
     isVariant: false
     associations: []
@@ -725,8 +725,8 @@ items:
     _variants: []
   nickRequire:
     key: nickRequire
-    value: "Note:\n\n+ Nickname must be between 3 and 14 characters long.\n\n+ Cannot
-      contain spaces, special characters, and non-English characters. \n\n+
+    value: "Note:\n+ Nickname must be between 3 and 14 characters long.\n+ Cannot
+      contain spaces, special characters, and non-English characters. \n+
       Cannot change the nickname after submitting."
     type: 4
     isVariant: false

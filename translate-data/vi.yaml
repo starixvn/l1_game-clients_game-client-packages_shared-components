@@ -693,8 +693,8 @@ items:
     _variants: []
   nickRequire:
     key: nickRequire
-    value: "Lưu ý:\n\n+ Tên nhân vật phải có từ 3 đến 14 ký tự.\n\n+ Không gõ dấu
-      tiếng việt, không chứa khoảng trắng và các ký tự đặc biệt.\n\n+ Không thể
+    value: "Lưu ý:\n+ Tên nhân vật phải có từ 3 đến 14 ký tự.\n+ Không gõ dấu
+      tiếng việt, không chứa khoảng trắng và các ký tự đặc biệt.\n+ Không thể
       đổi tên nhân vật sau khi tạo."
     type: 4
     isVariant: false
