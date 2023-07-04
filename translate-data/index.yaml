@@ -989,6 +989,20 @@ items:
     isVariant: false
     associations: []
     _variants: [] 
+  startPlaceBet:
+    key: startPlaceBet
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  stopPlaceBet:
+    key: stopPlaceBet
+    value: ""
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: index
   translateFinished: 390

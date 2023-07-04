@@ -745,6 +745,20 @@ items:
     isVariant: false
     associations: []
     _variants: []  
+  startPlaceBet:
+    key: startPlaceBet
+    value: "請投注。"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  stopPlaceBet:
+    key: stopPlaceBet
+    value: "停止投注。"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: zh-Hant
   translateFinished: 376

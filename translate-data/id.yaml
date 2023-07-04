@@ -773,6 +773,20 @@ items:
     isVariant: false
     associations: []
     _variants: []  
+  startPlaceBet:
+    key: startPlaceBet
+    value: "Pasangkan Taruhan Anda"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  stopPlaceBet:
+    key: stopPlaceBet
+    value: "Tidak ada taruhan lagi"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: id
   translateFinished: 376

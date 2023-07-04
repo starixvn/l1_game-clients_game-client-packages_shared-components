@@ -805,6 +805,20 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  startPlaceBet:
+    key: startPlaceBet
+    value: "Place your bets"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  stopPlaceBet:
+    key: stopPlaceBet
+    value: "No more bets"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: vi
   translateFinished: 390

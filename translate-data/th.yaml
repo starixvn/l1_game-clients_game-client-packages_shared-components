@@ -756,7 +756,21 @@ items:
     type: 4
     isVariant: false
     associations: []
-    _variants: []     
+    _variants: []  
+  startPlaceBet:
+    key: startPlaceBet
+    value: "วางเงินเดิมพัน"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []
+  stopPlaceBet:
+    key: stopPlaceBet
+    value: "ไม่มีการเดิมพันอีกต่อไป"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []   
 languageConfig:
   bcp47Tag: th
   translateFinished: 376
