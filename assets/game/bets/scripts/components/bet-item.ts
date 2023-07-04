@@ -2,7 +2,6 @@ import gc from "@sg/game-client-base";
 import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { BetItemStore, TBetStartingRound } from "../stores/bet-item-store";
 
 const { render, handle } = Observer;
 
@@ -55,53 +54,26 @@ export default class BetItem extends ObserverComponent {
         return this.node.name;
     }
 
-    @render(Rounds.RoundStore, (store) => store.roundOdds)
-    renderOdds(roundOdds: gc.Rounds.RoundOdds) {
-        const { odds, fractional } = roundOdds;
-        const choice = this.node.name;
-        if (odds[choice]) {
-            this.lblOdds.string = gc.FormatUtils.formatOdds(odds[choice], fractional);
-        }
+    renderOdd(odds, fractional) {
+        this.lblOdds.string = gc.FormatUtils.formatOdds(odds, fractional);
     }
 
-    @render(Rounds.RoundStore, (store) => store.ownBets)
-    renderOwnBets(ownBets: gc.GameServiceMessage.OwnBets) {
-        const choice = this.node.name;
-        if (ownBets?.[choice]) {
-            this.lblOwnBet.string = gc.FormatUtils.numberWithCommas(ownBets[choice]);
-        } else {
-            this.lblOwnBet.string = "";
-        }
+    renderOwnBet(ownBet: string) {
+        this.lblOwnBet.string = ownBet;
     }
 
-    @render(Rounds.RoundStore, (store) => store.totalBets)
-    renderTotalBets(totalBets: gc.GameServiceMessage.TotalBets) {
-        const choice = this.node.name;
-        if (totalBets?.[choice]) {
-            this.lblTotalBet.string = gc.FormatUtils.numberWithCommas(totalBets[choice]);
-        } else {
-            this.lblTotalBet.string = "";
-        }
+    renderTotalBet(totalBet: string) {
+        this.lblTotalBet.string = totalBet;
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
-    clearChipsAtStartRound(isStartRound: boolean) {
-        isStartRound && this.clearChips();
-    }
-
-    protected clearChips() {
+    clearChips() {
         this.chipBox?.destroyAllChildren();
     }
 
     @render(RoundHistories.RoundHistoryStore, (store) => store.highLightInfo)
     handleJoinGame(highLightInfo: gc.RoundHistories.THighLightInfo) {
         const { roundHistory, isHighLightAnim, isResetHighlight } = highLightInfo;
-        if (isHighLightAnim) {
-            this.highlightWonBet(roundHistory?.settlementResult, true);
-        } else {
-            this.highlightWonBet(roundHistory?.settlementResult, false);
-        }
-
+        this.highlightWonBet(roundHistory?.settlementResult, isHighLightAnim);
         if (isResetHighlight) {
             this.highlightBorder.active = false;
         }
@@ -124,11 +96,5 @@ export default class BetItem extends ObserverComponent {
     highlightWonBet(settlementResult: gc.GameServiceMessage.TSettlementResult, isAnimated: boolean) {
         const choice = this.node?.name ?? "";
         this.setHighlight(settlementResult?.[choice], isAnimated);
-    }
-
-    @render(BetItemStore, (store) => store.getBetStartingRoundInfo)
-    resetHighlightWhenStartRound(betStartingRound: TBetStartingRound) {
-        const { isStartingRound, settlementResult } = betStartingRound;
-        isStartingRound && this.highlightWonBet(settlementResult, false);
     }
 }

@@ -6,7 +6,7 @@ import BetItem from "./bet-item";
 const { ccclass } = _decorator;
 
 const { render } = Observer;
-const { Settlements } = gc;
+const { Settlements, Rounds } = gc;
 
 @ccclass()
 export class BetItems extends ObserverComponent {
@@ -29,5 +29,49 @@ export class BetItems extends ObserverComponent {
 
     get winBetItems(): BetItem[] {
         return this.betItemComponents.filter((item: BetItem) => this.settlementResult?.[item.betChoice]);
+    }
+
+    filterBetItem(choice: string) {
+        return this.betItemComponents.find((item) => item.node.name === choice);
+    }
+
+    @render(Rounds.RoundStore, (store) => store.roundOdds)
+    renderOdds(roundOdds: gc.Rounds.RoundOdds) {
+        const { odds, fractional } = roundOdds;
+        Object.keys(odds).forEach((choice) => {
+            const betItem = this.filterBetItem(choice);
+            betItem.renderOdd(odds[choice], fractional);
+        });
+    }
+
+    @render(Rounds.RoundStore, (store) => store.ownBets)
+    renderOwnBets(ownBets: gc.GameServiceMessage.OwnBets) {
+        this.betItemComponents.forEach((betItem) => {
+            const choice = betItem.node.name;
+            if (ownBets?.[choice]) {
+                betItem.renderOwnBet(gc.FormatUtils.numberWithCommas(ownBets[choice]));
+            } else {
+                betItem.renderOwnBet("");
+            }
+        });
+    }
+
+    @render(Rounds.RoundStore, (store) => store.totalBets)
+    renderTotalBets(totalBets: gc.GameServiceMessage.TotalBets) {
+        this.betItemComponents.forEach((betItem) => {
+            const choice = betItem.node.name;
+            if (totalBets?.[choice]) {
+                betItem.renderTotalBet(gc.FormatUtils.numberWithCommas(totalBets[choice]));
+            } else {
+                betItem.renderTotalBet("");
+            }
+        });
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
+    clearChipsAtStartRound(isStartRound: boolean) {
+        if (isStartRound) {
+            this.betItemComponents.forEach((betItem) => betItem.clearChips());
+        }
     }
 }
