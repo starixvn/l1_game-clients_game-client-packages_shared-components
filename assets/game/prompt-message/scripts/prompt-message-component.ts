@@ -1,12 +1,11 @@
-import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
-import { Label, UIOpacity,  _decorator, tween, math } from "cc";
+import { Label, UIOpacity,  _decorator, tween, math, Component } from "cc";
 const { ccclass, property } = _decorator;
 import gc from "@sg/game-client-base";
 const { LocalizedUtils } = gc;
 
 
 @ccclass
-export default class PromptMessageComponent extends ObserverComponent {
+export default class PromptMessageComponent extends Component {
   @property({ type: Label })
   protected resultText: Label = null;  
 
@@ -37,16 +36,15 @@ export default class PromptMessageComponent extends ObserverComponent {
         .to(duration, {
             scale: math.v3(1.5, 1.5),
         })
-        .destroySelf()
         .start();
 }
 
-  showPlaceYourBetMessage() {
+  showStartBetMessage() {
     const message = LocalizedUtils.getLocalizedText("startPlaceBet").toUpperCase();
     this.content = message;
   }
 
-  showNoMoreBetMessage() {
+  showStopBetMessage() {
     const message = LocalizedUtils.getLocalizedText("stopPlaceBet").toUpperCase();
     this.content = message;
   }

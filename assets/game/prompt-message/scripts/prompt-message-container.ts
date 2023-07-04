@@ -5,26 +5,34 @@ import { NodeContainer } from "../../../shared/common-components/node-container/
 import PromptMessageComponent from "./prompt-message-component";
 const { Rounds } = gc;
 const { render } = Observer;
-const { ccclass } = _decorator;
+const { ccclass, property } = _decorator;
+
 
 @ccclass("PromptMessageContainer")
 export class PromptMessageContainer extends NodeContainer {
+    @property(PromptMessageComponent)
+    promptMessageComponent: PromptMessageComponent = null;
+
     @render(Rounds.RoundTimeStore, (store) => ({ roundState: store.roundState }))
-    showNoMoreBetMessage({roundState}) {        
+    showStopBetMessage({roundState}) {        
         if(roundState === Rounds.ROUND_STATE.LOCKING_BET){
-            this.initComponent().showNoMoreBetMessage();
+            this.getComponent().showStopBetMessage();
         }               
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
-    showPlaceYourBetMessage(isStartPlacingBet: boolean) {
+    showStartBetMessage(isStartPlacingBet: boolean) {
         if(isStartPlacingBet){
-            this.initComponent().showPlaceYourBetMessage();
+            this.getComponent().showStartBetMessage();
         }
     }
 
-    initComponent(){
-        const node = this.createNode();
-        return node.getComponent(PromptMessageComponent);
+    getComponent(){
+        if(!this.promptMessageComponent){
+            const node = this.createNode();
+            this.promptMessageComponent =  node.getComponent(PromptMessageComponent);    
+        }
+
+        return this.promptMessageComponent;        
     }
 }
