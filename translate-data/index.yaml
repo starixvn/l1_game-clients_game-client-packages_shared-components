@@ -988,7 +988,7 @@ items:
     type: 4
     isVariant: false
     associations: []
-    _variants: [] 
+    _variants: []
   startPlaceBet:
     key: startPlaceBet
     value: ""
@@ -1009,10 +1009,23 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a1
-        sceneUuid: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
+      - sceneUuid: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
         nodeUuid: 15wRpHXudNpJTtttv+M1BL
         reference: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
+      - sceneUuid: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
+        nodeUuid: 15wRpHXudNpJTtttv+M1BL
+        reference: 8c292cc4-084a-4ecb-b338-b85cb79c1f8f
+    _variants: []
+  ok:
+    key: ok
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a1
+        sceneUuid: 36155e0b-972d-4aca-a1f9-9fea663e9e62
+        nodeUuid: e7rQ8ecpFIv5STqxpDswWm
+        reference: 36155e0b-972d-4aca-a1f9-9fea663e9e62
       - *a1
     _variants: []
 languageConfig:

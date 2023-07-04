@@ -770,7 +770,14 @@ items:
     type: 4
     isVariant: false
     associations: []
-    _variants: []   
+    _variants: []  
+  ok:
+    key: ok
+    value: "โอเค"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []    
 languageConfig:
   bcp47Tag: th
   translateFinished: 376

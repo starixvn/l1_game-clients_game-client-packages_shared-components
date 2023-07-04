@@ -650,7 +650,7 @@ items:
     _variants: []
   nameInvalid:
     key: nameInvalid
-    value: "创建您的昵称"
+    value: "输入的昵称无效，请重试。"
     type: 4
     isVariant: false
     associations: []
@@ -767,6 +767,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  ok:
+    key: ok
+    value: "好的"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []     
 languageConfig:
   bcp47Tag: zh-Hans
   translateFinished: 376

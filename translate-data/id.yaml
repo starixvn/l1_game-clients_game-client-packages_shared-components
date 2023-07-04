@@ -780,6 +780,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  ok:
+    key: ok
+    value: "Ok"
+    type: 4
+    isVariant: false
+    associations: []
+    _variants: []   
 languageConfig:
   bcp47Tag: id
   translateFinished: 376
