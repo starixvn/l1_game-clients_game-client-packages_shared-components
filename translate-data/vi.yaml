@@ -506,7 +506,7 @@ items:
     _variants: []
   gameExcluded:
     key: gameExcluded
-    value: "{{gameName}}\n\n\n\nTài khoản của bạn hiện đang bị giới hạn vui lòng thử
+    value: "{{gameName}}\n\nTài khoản của bạn hiện đang bị giới hạn vui lòng thử
       các trò chơi khác."
     type: 4
     isVariant: false
@@ -833,6 +833,13 @@ items:
     isVariant: false
     associations: []
     _variants: []    
+  gameNames.67:
+    key: gameNames.67
+    value: "Đại Chiến Rồng Hổ"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []  
 languageConfig:
   bcp47Tag: vi
   translateFinished: 390

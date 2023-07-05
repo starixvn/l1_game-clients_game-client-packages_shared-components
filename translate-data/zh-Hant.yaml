@@ -773,6 +773,14 @@ items:
     isVariant: false
     associations: []
     _variants: []   
+    _variants: []   
+  gameNames.67:
+    key: gameNames.67
+    value: "Dragon Tiger Fight"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []      
 languageConfig:
   bcp47Tag: zh-Hant
   translateFinished: 376

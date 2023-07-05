@@ -1031,10 +1031,17 @@ items:
   back:
     key: back
     value: ""
-    type: 2
+    type: 4
     isVariant: false
     associations: []
     _variants: []
+  gameNames.67:
+    key: gameNames.67
+    value: ""
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []  
 languageConfig:
   bcp47Tag: index
   translateFinished: 390

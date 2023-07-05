@@ -70,7 +70,6 @@ export default class SlidingChip extends ObserverComponent {
     static mainPlayerChipFlyingTime = 0.5;
     private currentSelectChip = 0;
 
-
     setDisabledBetChips(status: boolean) {
         this.disabledBetChips = status;
     }
@@ -137,7 +136,7 @@ export default class SlidingChip extends ObserverComponent {
             const activeNode = chip.getChildByName("active");
             activeNode.active = highlight;
             chip.setSiblingIndex(highlight ? this.chipList.length + 1 : 0);
-            const scaleChip = highlight ? 1.15 : 1;
+            const scaleChip = highlight ? 1.1 : 1;
             const posY = highlight ? 12 : 0;
             tween(chip)
                 .to(0.2, {
@@ -192,7 +191,7 @@ export default class SlidingChip extends ObserverComponent {
     }
 
     @handle(gc.PlayerSelections.PlayerSelectionHandlers.ChipHandlers)
-    updatePlayerSelectionChip(selectChip: number){
+    updatePlayerSelectionChip(selectChip: number) {
         return selectChip;
     }
 

@@ -748,7 +748,7 @@ items:
     _variants: []
   newUpdateAvailable:
     key: newUpdateAvailable
-    value: "有新的更新可用。請刷新頁面。"
+    value: "New update available. Please refresh the page."
     type: 4
     isVariant: false
     associations: []
@@ -872,6 +872,13 @@ items:
     isVariant: false
     associations: []
     _variants: []    
+  gameNames.67:
+    key: gameNames.67
+    value: "Dragon Tiger Fight"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []  
 languageConfig:
   bcp47Tag: en
   translateFinished: 390
