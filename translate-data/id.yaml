@@ -787,6 +787,13 @@ items:
     isVariant: false
     associations: []
     _variants: []   
+  back:
+    key: back
+    value: "Kembali"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: id
   translateFinished: 376

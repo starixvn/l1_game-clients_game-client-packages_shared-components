@@ -864,6 +864,13 @@ items:
     type: 4
     isVariant: false
     associations: []
+    _variants: []
+  back:
+    key: back
+    value: "Back"
+    type: 2
+    isVariant: false
+    associations: []
     _variants: []    
 languageConfig:
   bcp47Tag: en

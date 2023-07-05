@@ -765,7 +765,14 @@ items:
     type: 4
     isVariant: false
     associations: []
-    _variants: []     
+    _variants: []
+  back:
+    key: back
+    value: "回"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []   
 languageConfig:
   bcp47Tag: zh-Hant
   translateFinished: 376
