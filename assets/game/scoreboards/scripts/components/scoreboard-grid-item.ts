@@ -48,7 +48,7 @@ export class ScoreboardGridItem<T> extends GridItem<T> {
         const isBottom = (index + 1) % grid.settings.row === 0;
         const isLeft = (index / grid.settings.row) >> 0 === 0;
 
-        this.borderBottom!.active = isBottom;
-        this.borderLeft!.active = isLeft;
+        this.borderBottom && (this.borderBottom.active = isBottom);
+        this.borderLeft && (this.borderLeft.active = isLeft);
     }
 }

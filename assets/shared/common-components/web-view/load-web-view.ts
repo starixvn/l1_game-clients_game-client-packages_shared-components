@@ -13,7 +13,7 @@ export default class LoadWebView extends ObserverComponent {
     @property(Node)
     nodeLoading: Node = null;
 
-    protected url: string = "";
+    protected url = "";
     protected onWebViewLoaded = () => {};
 
     onLoad(): void {

@@ -5,8 +5,8 @@ const { ccclass, property } = _decorator;
 @ccclass("ScoreboardConverterProperty")
 export class ScoreboardConverterProperty {
     @property
-    key: string = "";
+    key = "";
 
     @property
-    value: string = "";
+    value = "";
 }

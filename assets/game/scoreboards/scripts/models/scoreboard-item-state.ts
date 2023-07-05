@@ -6,7 +6,7 @@ const { ccclass, property } = _decorator;
 @ccclass("ScoreboardItemState")
 export class ScoreboardItemState {
     @property(CCInteger)
-    tie: number = 0;
+    tie = 0;
 
     @property({ type: Enum(ScoreboardItemStatus) })
     status = ScoreboardItemStatus.NONE;
