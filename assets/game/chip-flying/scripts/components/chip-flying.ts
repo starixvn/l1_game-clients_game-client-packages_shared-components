@@ -5,7 +5,6 @@ import * as actions from "../../.././sliding-chip/scripts/components/actions";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
 import { BetItems } from "../../../bets/scripts/components/bet-items";
-import { IMainPlayerChip } from "../../../bets/scripts/stores/bet-item-store";
 import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -23,6 +22,11 @@ export interface IChipFlyingInfo {
     mainPlayerAvatarNode: Node;
     isChipStack: boolean;
     payChipsDuration: number;
+}
+
+export interface IMainPlayerChip {
+    chipValue: number;
+    chipBox?: Node;
 }
 
 @ccclass

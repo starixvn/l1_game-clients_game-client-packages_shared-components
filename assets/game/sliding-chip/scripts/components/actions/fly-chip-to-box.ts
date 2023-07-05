@@ -1,6 +1,6 @@
 import gc from "@sg/game-client-base";
 import { Node, UITransform } from "cc";
-import { IMainPlayerChip } from "../../../../bets/scripts/stores/bet-item-store";
+import { IMainPlayerChip } from "../../../../chip-flying/scripts/components/chip-flying";
 import { FlyChipUtils } from "../../utils/fly-chip-utils";
 import SlidingChip from "../sliding-chip";
 
