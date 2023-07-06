@@ -1,5 +1,7 @@
 import gc from "@sg/game-client-base";
-import { Component, Label, Sprite, SpriteFrame, UIOpacity, _decorator } from "cc";
+import { Label, Sprite, SpriteFrame, UIOpacity, _decorator } from "cc";
+import Observer from "observer";
+import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { IAroundTablePlayers } from "../stores/around-table-players-chip-store";
 import { bundleManager } from "./../../../../shared/common-components/bundle-magager/bundle-manager";
 import { AnimationUtils } from "./../../../../shared/utils/utils";
@@ -7,10 +9,11 @@ import { AnimationUtils } from "./../../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
 const { fadeIn, fadeOut } = AnimationUtils;
 
-const { FormatUtils, NumberUtils } = gc;
+const { FormatUtils, NumberUtils, AroundTablePlayers } = gc;
+const { render, handle } = Observer;
 
 @ccclass
-export class AroundTablePlayerComponent extends Component {
+export class AroundTablePlayerComponent extends ObserverComponent {
     @property(Label)
     lblNickname: Label = null;
 
@@ -24,11 +27,20 @@ export class AroundTablePlayerComponent extends Component {
     maxBalanceDisplay = 99999;
 
     static readonly maxIdleCount = 2;
-
     public aroundTablePlayer: IAroundTablePlayers = null;
 
     onLoad() {
+        super.onLoad();
         this.node.active = false;
+        this.updateMaxBalanceDisplay();
+    }
+
+    @handle(AroundTablePlayers.MaxBalanceDisplay)
+    updateMaxBalanceDisplay() {}
+
+    @render(AroundTablePlayers.AroundTablePlayersStore, (store) => store.maxBalanceDisplay)
+    renderMaxBalanceDisplay(maxBalanceDisplay: number) {
+        this.maxBalanceDisplay = maxBalanceDisplay;
     }
 
     async setInfo(player: IAroundTablePlayers) {
