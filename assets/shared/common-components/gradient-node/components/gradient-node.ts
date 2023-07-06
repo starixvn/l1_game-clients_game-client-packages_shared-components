@@ -1,4 +1,4 @@
-import { _decorator, Component, Material, RenderComponent, Texture2D } from "cc";
+import { _decorator, Component, Material, Texture2D, UIRenderer } from "cc";
 const { ccclass, property, executeInEditMode } = _decorator;
 
 @ccclass
@@ -23,7 +23,7 @@ export class GradientNode extends Component {
         this.cloneMaterial = new Material();
         this.cloneMaterial.copy(this.originMaterial);
 
-        const renderComponent = this.getComponent(RenderComponent);
+        const renderComponent = this.getComponent(UIRenderer);
         if (renderComponent) {
             renderComponent.customMaterial = this.cloneMaterial;
             renderComponent.customMaterial.setProperty("albedoTexture", this.albedoTexture);
