@@ -18,10 +18,10 @@ export default class Splash extends Component {
     cpnMessage: RandomWaitingMessage = null;
 
     @property(Node)
-    nodeSloganSC1: Node = null;
+    nodeSloganSG: Node = null;
 
     @property(Node)
-    nodeSloganSC2: Node = null;
+    nodeSloganVG: Node = null;
 
     @property(Node)
     signNameContainer: Node = null;
@@ -95,9 +95,9 @@ export default class Splash extends Component {
 
     @render(Configs.SiteConfigs, (store) => store.systemType)
     showSystemSlogan(systemType: string) {
-        const isSystemSC1 = systemType === "SC1";
-        this.nodeSloganSC1.active = isSystemSC1;
-        this.nodeSloganSC2.active = !isSystemSC1;
+        const isSystemSG = systemType === Configs.SystemConfigs.SG.name;
+        this.nodeSloganSG.active = isSystemSG;
+        this.nodeSloganVG.active = !isSystemSG;
     }
 
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
