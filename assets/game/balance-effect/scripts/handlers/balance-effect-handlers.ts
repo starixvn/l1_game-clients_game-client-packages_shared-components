@@ -44,7 +44,7 @@ export namespace BalanceEffectHandlers {
         @inject(BalanceEffectStore) private readonly balanceEffectStore: BalanceEffectStore;
 
         async handle(balanceEffects: TBalanceEffect[]) {
-            this.balanceEffectStore.updateAroundTablePlayersDecreaseBalance(balanceEffects);
+            this.balanceEffectStore.updateAroundTablePlayersIncreaseBalance(balanceEffects);
         }
     }
 }

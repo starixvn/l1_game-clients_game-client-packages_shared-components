@@ -32,7 +32,7 @@ export class BalanceEffectStore {
     increaseBalanceMainPlayer: TUpdateBalance = null;
     winEffectMainPlayer: TWinningEffect = null;
     winEffectAroundTablePlayers: TWinningEffects = null;
-    decreaseBalanceAroundTablePlayers: TUpdateBalances = null;
+    increaseBalanceAroundTablePlayers: TUpdateBalances = null;
 
     @inject(MainPlayerProfileStore) private readonly mainPlayerProfileStore: MainPlayerProfileStore;
 
@@ -58,7 +58,7 @@ export class BalanceEffectStore {
         this.winEffectAroundTablePlayers = { winningEffects };
     }
 
-    updateAroundTablePlayersDecreaseBalance(balanceEffects: TBalanceEffect[]) {
-        this.decreaseBalanceAroundTablePlayers = { balanceEffects };
+    updateAroundTablePlayersIncreaseBalance(balanceEffects: TBalanceEffect[]) {
+        this.increaseBalanceAroundTablePlayers = { balanceEffects };
     }
 }

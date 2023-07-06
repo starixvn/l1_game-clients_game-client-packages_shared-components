@@ -8,8 +8,8 @@ const { render } = Observer;
 
 @ccclass()
 export class AroundTablePlayersIncreaseBalanceEffect extends BalanceContainer {
-    @render(BalanceEffectStore, (store) => store.decreaseBalanceAroundTablePlayers, { fireImmediately: false })
-    decreaseBalanceAroundTablePlayers(payoutBalanceAroundTablePlayers: TUpdateBalances) {
+    @render(BalanceEffectStore, (store) => store.increaseBalanceAroundTablePlayers, { fireImmediately: false })
+    increaseBalanceAroundTablePlayers(payoutBalanceAroundTablePlayers: TUpdateBalances) {
         if (payoutBalanceAroundTablePlayers?.balanceEffects) {
             payoutBalanceAroundTablePlayers.balanceEffects.forEach((balanceEffect) => {
                 this.updateBalanceWhenPlayerBet(balanceEffect);
