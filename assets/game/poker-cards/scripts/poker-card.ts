@@ -1,7 +1,7 @@
 import { Color, Component, Sprite, SpriteAtlas, _decorator } from "cc";
 const { ccclass, property } = _decorator;
 
-export const convertOldRank = (num: number): string => {
+export const convertRank = (num: number): string => {
     num++;
     const dict = {
         11: "J",
@@ -18,8 +18,8 @@ export interface CardModel {
 }
 
 export interface ServiceCard {
-    card: number;
-    type: number;
+    rank: number;
+    suit: number;
 }
 
 @ccclass
@@ -48,9 +48,7 @@ export class PokerCard extends Component {
         k: "k_picture",
     };
     setServiceCard(card: ServiceCard): void {
-        const rank = convertOldRank(+card.card);
-        const suit = card.type;
-        this.setCard({ rank, suit });
+        this.setCard({ rank: convertRank(+card.rank), suit: card.suit });
     }
 
     setCard(card: CardModel) {
