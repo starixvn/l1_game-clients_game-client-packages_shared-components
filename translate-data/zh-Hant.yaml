@@ -775,7 +775,7 @@ items:
     _variants: []   
   gameNames.67:
     key: gameNames.67
-    value: "Dragon Tiger Fight"
+    value: "龍虎鬥"
     type: 2
     isVariant: false
     associations: []
