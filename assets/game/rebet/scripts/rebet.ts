@@ -21,7 +21,7 @@ export class ReBet extends ObserverComponent {
     @handle(gc.Bet.ReBetHandlers.LoadRuleReBetStorage)
     loadRuleReBetStorage() {}
 
-    @render(Bet.ReBetStore, (store) => store.isShowBtnReBet, { fireImmediately: false })
+    @render(Bet.ReBetStore, (store) => store.isShowBtnReBet)
     checkReBetStatus(isShowBtnReBet: boolean) {
         this.reBetButton.changeInteractable(isShowBtnReBet);
     }
@@ -36,7 +36,7 @@ export class ReBet extends ObserverComponent {
         return gc.Audios.AudioIds.CLICK;
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isVisibleReBet, { fireImmediately: false })
+    @render(Rounds.RoundTimeStore, (store) => store.isVisibleReBet)
     visibleReBetBtn(isVisibleReBet: boolean) {
         isVisibleReBet && this.reBetButton.changeInteractable(false);
     }
