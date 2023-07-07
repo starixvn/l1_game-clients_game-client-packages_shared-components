@@ -1,4 +1,4 @@
-import { _decorator, Label, Node } from "cc";
+import { Label, Node, Sprite, SpriteFrame, _decorator } from "cc";
 import { Dialog } from "../../dialogs/dialog";
 const { ccclass, property } = _decorator;
 
@@ -9,17 +9,20 @@ enum NoticeType {
 
 @ccclass()
 export class NoticeCmp extends Dialog {
+    @property(Sprite)
+    containerBackground: Sprite = null;
+
     @property(Label)
     lblTitle: Label = null;
 
     @property(Label)
     lblMessage: Label = null;
 
-    @property(Node)
-    nodeInfo: Node = null;
+    @property(SpriteFrame)
+    errorBackground: SpriteFrame = null;
 
-    @property(Node)
-    nodeError: Node = null;
+    @property(SpriteFrame)
+    infoBackground: SpriteFrame = null;
 
     @property(Node)
     btnConfirm: Node = null;
@@ -35,9 +38,16 @@ export class NoticeCmp extends Dialog {
 
     updateDisplay(type: NoticeType, showBtnConfirmButton?: boolean) {
         const isInfo = type === NoticeType.Info;
-        this.nodeInfo.active = isInfo;
-        this.nodeError.active = !isInfo;
+        this.setBackground(isInfo);
         this.btnConfirm.active = showBtnConfirmButton || isInfo;
+    }
+
+    setBackground(isInfo: boolean) {
+        if (isInfo) {
+            this.containerBackground.spriteFrame = this.infoBackground;
+        } else {
+            this.containerBackground.spriteFrame = this.errorBackground;
+        }
     }
 
     onOkClick() {

@@ -26,7 +26,7 @@ export class ReBet extends ObserverComponent {
         this.reBetButton.changeInteractable(isShowBtnReBet);
     }
 
-    @handle(gc.Bet.BetHandler, (handler) => handler.handleReBet())
+    @handle(gc.Bet.ReBetHandlers.ReBetHandler)
     onReBet() {
         this.playSoundClick();
     }
