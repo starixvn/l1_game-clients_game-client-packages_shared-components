@@ -357,9 +357,24 @@
       "__uuid__": "090e19e7-db1b-4bd2-b621-3f5fbeb7cb88",
       "__expectedType__": "cc.Material"
     },
+    "type": 1,
     "albedoTexture": {
       "__uuid__": "ab270599-c161-4b31-83c8-f5a1481af6a3@6c48a",
       "__expectedType__": "cc.Texture2D"
+    },
+    "topColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "bottomColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
     },
     "_id": ""
   },

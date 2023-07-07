@@ -16,7 +16,10 @@ CCEffect %{
         cullMode: none
       properties:
         alphaThreshold: { value: 0.5 }
+        type:           { value: 0, target: type, editor: { displayName: type } }
         albedoTexture:  { value: grey, target: albedoMap, editor: { displayName: AlbedoMap } }
+        topColor:       { value: [1,1,1,0], target: topColor, editor: { displayName: TopColor } }
+        bottomColor:    { value: [1,0,0,0], target: bottomColor, editor: { displayName: BottomColor } }
 }%
 
 CCProgram sprite-vs %{
@@ -44,15 +47,28 @@ CCProgram sprite-fs %{
   #include <builtin/internal/alpha-test>
 
   in vec2 uv0;
+  
   uniform sampler2D albedoMap;
   
   #pragma builtin(local)
   layout(set = 2, binding = 12) uniform sampler2D cc_spriteTexture;
+  
+  uniform GradientUBO
+  { 
+    mediump vec4 topColor;
+    mediump vec4 bottomColor;
+    int type;
+  };
 
   vec4 frag () {
     vec4 o = vec4(1, 1, 1, 1);
+
     o *= texture(cc_spriteTexture, uv0);
-    o *= texture(albedoMap, uv0);
+    if(type == 0){
+      o.rgb = ((topColor - bottomColor) * mix(bottomColor.a, topColor.a, 1.0 - uv0.y) + bottomColor).rgb;
+    } else {
+      o *= texture(albedoMap, uv0);
+    }
 
     ALPHA_TEST(o);
     return o;

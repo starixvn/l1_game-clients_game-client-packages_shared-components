@@ -9,7 +9,9 @@
   },
   "_techIdx": 0,
   "_defines": [
-    {}
+    {
+      "TWO_COLORED": true
+    }
   ],
   "_states": [
     {
@@ -23,6 +25,11 @@
     }
   ],
   "_props": [
-    {}
+    {
+      "albedoTexture": {
+        "__uuid__": "6e3e5912-3933-4667-bafc-c89f415fb6bb@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      }
+    }
   ]
 }

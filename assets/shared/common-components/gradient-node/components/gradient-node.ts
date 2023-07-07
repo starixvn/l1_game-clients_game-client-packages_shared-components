@@ -1,5 +1,10 @@
-import { _decorator, Component, Material, Texture2D, UIRenderer } from "cc";
+import { Color, Component, Enum, Material, Texture2D, UIRenderer, _decorator } from "cc";
 const { ccclass, property, executeInEditMode } = _decorator;
+
+enum Type {
+    TwoColor,
+    UseTexture,
+}
 
 @ccclass
 @executeInEditMode
@@ -7,9 +12,30 @@ export class GradientNode extends Component {
     @property(Material)
     originMaterial: Material = null;
 
-    @property(Texture2D)
+    @property({ type: Enum(Type) })
+    type = Type.TwoColor;
+
+    @property({
+        type: Texture2D,
+        visible: function (this: GradientNode) {
+            return this.type === Type.UseTexture;
+        },
+    })
     albedoTexture: Texture2D = null;
 
+    @property({
+        visible: function (this: GradientNode) {
+            return this.type === Type.TwoColor;
+        },
+    })
+    topColor: Color = new Color();
+
+    @property({
+        visible: function (this: GradientNode) {
+            return this.type === Type.TwoColor;
+        },
+    })
+    bottomColor: Color = new Color();
     private cloneMaterial: Material;
 
     onLoad() {
@@ -17,7 +43,7 @@ export class GradientNode extends Component {
     }
 
     private changeMaterial() {
-        if (!this.albedoTexture || !this.originMaterial) {
+        if (!this.originMaterial) {
             return;
         }
         this.cloneMaterial = new Material();
@@ -26,7 +52,15 @@ export class GradientNode extends Component {
         const renderComponent = this.getComponent(UIRenderer);
         if (renderComponent) {
             renderComponent.customMaterial = this.cloneMaterial;
-            renderComponent.customMaterial.setProperty("albedoTexture", this.albedoTexture);
+            renderComponent.customMaterial.setProperty("type", this.type);
+            const useTexture = this.type === Type.UseTexture;
+
+            if (useTexture) {
+                this.albedoTexture && renderComponent.customMaterial.setProperty("albedoTexture", this.albedoTexture);
+            } else {
+                renderComponent.customMaterial.setProperty("topColor", this.topColor);
+                renderComponent.customMaterial.setProperty("bottomColor", this.bottomColor);
+            }
         }
     }
 
