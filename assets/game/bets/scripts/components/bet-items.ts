@@ -6,7 +6,7 @@ import BetItem from "./bet-item";
 const { ccclass } = _decorator;
 
 const { render } = Observer;
-const { Settlements, Rounds } = gc;
+const { Settlements, Rounds, RoundHistories } = gc;
 
 @ccclass()
 export class BetItems extends ObserverComponent {
@@ -73,5 +73,26 @@ export class BetItems extends ObserverComponent {
         if (isStartRound) {
             this.betItemComponents.forEach((betItem) => betItem.clearChips());
         }
+    }
+
+    @render(RoundHistories.RoundHistoryStore, (store) => store.highLightInfo)
+    handleJoinGame(highLightInfo: gc.RoundHistories.THighLightInfo) {
+        const { roundHistory, isHighLightAnim, isResetHighlight } = highLightInfo;
+
+        if (isResetHighlight) {
+            this.betItemComponents.forEach((betItem) => {
+                betItem.resetHighlightBorder();
+            });
+            return;
+        }
+
+        this.betItemComponents.forEach((betItem) => {
+            const choice = betItem.node.name;
+            if (roundHistory?.settlementResult?.[choice]) {
+                betItem.setHighlight(true, isHighLightAnim);
+            } else {
+                betItem.setHighlight(false, isHighLightAnim);
+            }
+        });
     }
 }

@@ -30,7 +30,7 @@ export default class BetItem extends ObserverComponent {
     highlightBackground: Node = null;
 
     @property(Node)
-    highlight: Node = null;
+    highlightWinning: Node = null;
 
     onLoad() {
         super.onLoad();
@@ -70,31 +70,21 @@ export default class BetItem extends ObserverComponent {
         this.chipBox?.destroyAllChildren();
     }
 
-    @render(RoundHistories.RoundHistoryStore, (store) => store.highLightInfo)
-    handleJoinGame(highLightInfo: gc.RoundHistories.THighLightInfo) {
-        const { roundHistory, isHighLightAnim, isResetHighlight } = highLightInfo;
-        this.highlightWonBet(roundHistory?.settlementResult, isHighLightAnim);
-        if (isResetHighlight) {
-            this.highlightBorder.active = false;
-        }
+    public setHighlight(isHighlight: boolean, isAnimated: boolean) {
+        this.handleHighlightAnim(isHighlight && isAnimated);
+        this.handleHighlightBorder(isHighlight && !isAnimated);
     }
 
-    protected setHighlight(highlight: boolean, isAnimated: boolean) {
-        this.highlight.active = highlight && isAnimated;
-        this.handleHighlightBackground(highlight, isAnimated);
-        this.handleHighlightBorder(highlight, isAnimated);
+    protected handleHighlightAnim(isActive: boolean) {
+        this.highlightWinning.active = isActive;
+        this.highlightBackground.active = isActive;
     }
 
-    protected handleHighlightBackground(highlight: boolean, isAnimated = true) {
-        this.highlightBackground && (this.highlightBackground.active = highlight && isAnimated);
+    protected handleHighlightBorder(isActive: boolean) {
+        this.highlightBorder.active = isActive;
     }
 
-    protected handleHighlightBorder(highlight: boolean, isAnimated: boolean) {
-        this.highlightBorder && (this.highlightBorder.active = highlight && !isAnimated);
-    }
-
-    highlightWonBet(settlementResult: gc.GameServiceMessage.TSettlementResult, isAnimated: boolean) {
-        const choice = this.node?.name ?? "";
-        this.setHighlight(settlementResult?.[choice], isAnimated);
+    public resetHighlightBorder() {
+        this.highlightBorder.active = false;
     }
 }

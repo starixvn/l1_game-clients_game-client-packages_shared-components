@@ -94,8 +94,10 @@ export default class GameComponent extends GameComponentBase {
         this.lblMaxBet && (this.lblMaxBet.string = FormatUtils.numberWithCommas(maxBet));
     }
 
-    @render(Settlements.SettlementStore, (store) => ({ roundId: store.roundId, result: store.result }))
+    @render(Settlements.SettlementStore, (store) => ({ roundId: store.roundId, result: store.result }), { fireImmediately: false })
     handleResult({ roundId, result }: { roundId: number; result: gc.GameServiceMessage.TResult }) {
+        console.log("result---------------------------------------------", result);
+
         this.showResult(result, true);
         this.playSoundReceiveFinish();
     }
