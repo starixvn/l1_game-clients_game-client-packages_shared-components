@@ -31,10 +31,13 @@
     "_components": [
       {
         "__id__": 131
+      },
+      {
+        "__id__": 133
       }
     ],
     "_prefab": {
-      "__id__": 133
+      "__id__": 135
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1712,12 +1715,10 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 1
-    },
+    "target": null,
     "component": "",
-    "_componentId": "290507EnCRMXKwNRaZ3IM7o",
-    "handler": "onClickCopyButton",
+    "_componentId": "",
+    "handler": "",
     "customEventData": ""
   },
   {
@@ -2818,6 +2819,51 @@
     "fileId": "58c5cudppCO7SL9B4R738h"
   },
   {
+    "__type__": "ea2ceKU5+ROYYczeAvaN999",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 134
+    },
+    "lblCaption": {
+      "__id__": 7
+    },
+    "lblMd5Value": {
+      "__id__": 118
+    },
+    "btnCopy": {
+      "__id__": 76
+    },
+    "nodeHintCopy": {
+      "__id__": 54
+    },
+    "nodeMd5ContentContainer": {
+      "__id__": 89
+    },
+    "lengthOfMd5": 21,
+    "prfMd5Tooltip": {
+      "__uuid__": "afaa4c6c-f593-4a26-bba6-6a4baabf5cb4",
+      "__expectedType__": "cc.Prefab"
+    },
+    "nodeMd5TooltipContainer": {
+      "__id__": 129
+    },
+    "nodeMd5Frame": {
+      "__id__": 2
+    },
+    "delayShowRawValue": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "6d2BNVGCZBRbRz77TfuLuX"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -2826,7 +2872,6 @@
       "__id__": 0
     },
     "fileId": "c46/YsCPVOJYA4mWEpNYRx",
-    "instance": null,
     "targetOverrides": null
   }
 ]
