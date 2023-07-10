@@ -9,7 +9,7 @@ import { AnimationUtils } from "./../../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
 const { fadeIn, fadeOut } = AnimationUtils;
 
-const { FormatUtils, NumberUtils, AroundTablePlayers } = gc;
+const { FormatUtils, AroundTablePlayers } = gc;
 const { render, handle } = Observer;
 
 @ccclass
@@ -97,11 +97,10 @@ export class AroundTablePlayerComponent extends ObserverComponent {
     }
 
     private displayBalance(balance: number) {
-        const convertValue = NumberUtils.getValueByCurrency(balance, 1);
         this.lblBalance.string =
-            convertValue > this.maxBalanceDisplay
+            balance > this.maxBalanceDisplay
                 ? `${FormatUtils.numberWithCommas(this.maxBalanceDisplay)}+`
-                : FormatUtils.numberWithCommas(convertValue, 2);
+                : FormatUtils.numberWithCommas(balance, 2);
     }
 
     async setAvatar(avatarId: number) {

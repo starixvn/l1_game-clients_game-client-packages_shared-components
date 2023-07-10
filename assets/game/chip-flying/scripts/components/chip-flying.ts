@@ -12,7 +12,7 @@ import { AroundTablePlayers } from "../../../around-table-player/scripts/compone
 import { AroundTablePlayerUtils } from "../../../around-table-player/scripts/utils";
 import { ActionChipFlying } from "./actions";
 
-const { Auth, Chips, NumberUtils, Settlements, Rounds } = gc;
+const { Auth, Chips, Settlements, Rounds } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -182,7 +182,6 @@ export class ChipFlying extends ObserverComponent {
 
             const winningPlayerData = winningPlayers[playerId];
             const playerBetItems = winningPlayerData.winningByChoices;
-            const { bet, rate } = winningPlayerData;
 
             this.betItems.winBetItems.forEach((item) => {
                 if (playerBetItems && playerBetItems[item.betChoice] > 0) {
@@ -192,10 +191,10 @@ export class ChipFlying extends ObserverComponent {
                 }
             });
 
-            const convertValue = NumberUtils.getValueByCurrency(bet, rate || 1);
-            aroundTablePlayerSlot.increaseBalance(convertValue);
+            const { bet } = winningPlayerData;
+            aroundTablePlayerSlot.increaseBalance(bet);
             winningEffects.push({ effectNode: aroundTablePlayerSlot.node, status: true });
-            balanceEffects.push({ effectNode: aroundTablePlayerSlot.node, balance: convertValue });
+            balanceEffects.push({ effectNode: aroundTablePlayerSlot.node, balance: bet });
         });
 
         this.aroundTablePlayersShowWinningEffect(winningEffects);
