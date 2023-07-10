@@ -3,10 +3,7 @@ import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 
-const { render, handle } = Observer;
-
-const { Rounds, RoundHistories } = gc;
-
+const { handle } = Observer;
 const { property, ccclass } = _decorator;
 
 @ccclass
@@ -70,17 +67,12 @@ export default class BetItem extends ObserverComponent {
         this.chipBox?.destroyAllChildren();
     }
 
-    public setHighlight(isHighlight: boolean, isAnimated: boolean) {
-        this.handleHighlightAnim(isHighlight && isAnimated);
-        this.handleHighlightBorder(isHighlight && !isAnimated);
-    }
-
-    protected handleHighlightAnim(isActive: boolean) {
+    public handleHighlightAnim(isActive: boolean) {
         this.highlightWinning.active = isActive;
         this.highlightBackground.active = isActive;
     }
 
-    protected handleHighlightBorder(isActive: boolean) {
+    public handleHighlightBorder(isActive: boolean) {
         this.highlightBorder.active = isActive;
     }
 

@@ -3,8 +3,8 @@ import { _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
 import BetItem from "./bet-item";
-const { ccclass } = _decorator;
 
+const { ccclass } = _decorator;
 const { render } = Observer;
 const { Settlements, Rounds, RoundHistories } = gc;
 
@@ -12,6 +12,7 @@ const { Settlements, Rounds, RoundHistories } = gc;
 export class BetItems extends ObserverComponent {
     betItemComponents: BetItem[] = [];
     settlementResult: gc.GameServiceMessage.TSettlementResult = null;
+    protected isRunAnimHighlight = false;
 
     onLoad() {
         super.onLoad();
@@ -74,25 +75,50 @@ export class BetItems extends ObserverComponent {
             this.betItemComponents.forEach((betItem) => betItem.clearChips());
         }
     }
+    @render(Rounds.RoundTimeStore, (store) => store.isLocking)
+    setRunAnimHighlight(isLocking: boolean) {
+        isLocking && (this.isRunAnimHighlight = true);
+    }
 
-    @render(RoundHistories.RoundHistoryStore, (store) => store.highLightInfo)
-    handleJoinGame(highLightInfo: gc.RoundHistories.THighLightInfo) {
-        const { roundHistory, isHighLightAnim, isResetHighlight } = highLightInfo;
+    @render(Rounds.RoundStore, (store) => store.highLightAnim, { fireImmediately: false })
+    handleHighlightAnim(highLightInfo: gc.Rounds.THighLightInfo) {
+        const { settlementResult, isAnim } = highLightInfo;
+        if (highLightInfo?.settlementResult && this.isRunAnimHighlight) {
+            this.betItemComponents.forEach((betItem) => {
+                const choice = betItem.node.name;
+                betItem.handleHighlightAnim(settlementResult?.[choice] && isAnim);
+            });
+        }
+    }
 
+    @render(Rounds.RoundStore, (store) => store.highLightBorder, { fireImmediately: false })
+    handleHighlightBorder(highLightBorder: gc.Rounds.THighLightBorder) {
+        if (highLightBorder?.settlementResult) {
+            this.showHighlightBorder(highLightBorder?.settlementResult);
+        }
+    }
+
+    @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomShowResult)
+    handleHighlightBorderWhenJoinRoom(joinRoomShowResult: gc.RoundHistories.IRoundHistoryInfo) {
+        const { roundHistory, isShow } = joinRoomShowResult ?? {};
+        if (roundHistory && isShow) {
+            this.showHighlightBorder(roundHistory?.settlementResult);
+        }
+    }
+
+    protected showHighlightBorder(settlementResult: gc.GameServiceMessage.TSettlementResult) {
+        this.betItemComponents.forEach((betItem) => {
+            const choice = betItem.node?.name;
+            choice && betItem.handleHighlightBorder(settlementResult?.[choice]);
+        });
+    }
+
+    @render(Rounds.RoundStore, (store) => store.isResetHighlight)
+    handleResetHighlight(isResetHighlight: boolean) {
         if (isResetHighlight) {
             this.betItemComponents.forEach((betItem) => {
                 betItem.resetHighlightBorder();
             });
-            return;
         }
-
-        this.betItemComponents.forEach((betItem) => {
-            const choice = betItem.node.name;
-            if (roundHistory?.settlementResult?.[choice]) {
-                betItem.setHighlight(true, isHighLightAnim);
-            } else {
-                betItem.setHighlight(false, isHighLightAnim);
-            }
-        });
     }
 }
