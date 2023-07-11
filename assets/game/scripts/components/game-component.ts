@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Game, Label, _decorator, director, game, log } from "cc";
+import { Game, Label, _decorator, director, game } from "cc";
 import Observer from "observer";
 import { InGameMenuEvents } from "../../../game/in-game-menu/scripts/stores/in-game-menu-events";
 import { InGameMenuStore } from "../../../game/in-game-menu/scripts/stores/in-game-menu-store";
@@ -58,12 +58,9 @@ export default class GameComponent extends GameComponentBase {
     }
 
     @handle(HideGame.HideGameHandler)
-    onHideGame() {
-        log("Game run in background ============================================");
-    }
+    onHideGame() {}
 
     onShowGame() {
-        log("Game run in foreground ============================================");
         window.location.reload();
     }
 
@@ -94,10 +91,8 @@ export default class GameComponent extends GameComponentBase {
         this.lblMaxBet && (this.lblMaxBet.string = FormatUtils.numberWithCommas(maxBet));
     }
 
-    @render(Settlements.SettlementStore, (store) => ({ roundId: store.roundId, result: store.result }), { fireImmediately: false })
-    handleResult({ roundId, result }: { roundId: number; result: gc.GameServiceMessage.TResult }) {
-        console.log("result---------------------------------------------", result);
-
+    @render(Settlements.SettlementStore, (store) => store.result, { fireImmediately: false })
+    handleResult(result: gc.GameServiceMessage.TResult) {
         this.showResult(result, true);
         this.playSoundReceiveFinish();
     }

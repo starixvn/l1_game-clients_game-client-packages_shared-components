@@ -109,7 +109,7 @@ export class BetItems extends ObserverComponent {
     protected showHighlightBorder(settlementResult: gc.GameServiceMessage.TSettlementResult) {
         this.betItemComponents.forEach((betItem) => {
             const choice = betItem.node?.name;
-            choice && betItem.handleHighlightBorder(settlementResult?.[choice]);
+            choice && betItem.handleHighlightStatic(settlementResult?.[choice]);
         });
     }
 
@@ -117,7 +117,7 @@ export class BetItems extends ObserverComponent {
     handleResetHighlight(isResetHighlight: boolean) {
         if (isResetHighlight) {
             this.betItemComponents.forEach((betItem) => {
-                betItem.resetHighlightBorder();
+                betItem.handleHighlightStatic(false);
             });
         }
     }

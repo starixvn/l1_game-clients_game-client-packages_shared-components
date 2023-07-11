@@ -55,7 +55,6 @@ export class AudioContainer extends ObserverComponent {
             const bundle = value.bundle;
             const path = `audios/${value.path ?? key}`;
             const audioClip = await bundleManager.loadAssetsFromBundle(bundle, path, AudioClip, null);
-            log("loaded audio ", key);
             this.audios[key] = audioClip;
             if (value.type && value.type === "music") {
                 this.musicIds.push(key);

@@ -21,13 +21,10 @@ export default class BetItem extends ObserverComponent {
     chipBox: Node = null;
 
     @property(Node)
-    highlightBorder: Node = null;
+    nodeStatic: Node = null;
 
     @property(Node)
-    highlightBackground: Node = null;
-
-    @property(Node)
-    highlightWinning: Node = null;
+    nodeAnim: Node = null;
 
     onLoad() {
         super.onLoad();
@@ -51,7 +48,7 @@ export default class BetItem extends ObserverComponent {
         return this.node.name;
     }
 
-    renderOdd(odds, fractional) {
+    renderOdd(odds: number, fractional: boolean) {
         this.lblOdds.string = gc.FormatUtils.formatOdds(odds, fractional);
     }
 
@@ -68,15 +65,10 @@ export default class BetItem extends ObserverComponent {
     }
 
     public handleHighlightAnim(isActive: boolean) {
-        this.highlightWinning.active = isActive;
-        this.highlightBackground.active = isActive;
+        this.nodeAnim.active = isActive;
     }
 
-    public handleHighlightBorder(isActive: boolean) {
-        this.highlightBorder.active = isActive;
-    }
-
-    public resetHighlightBorder() {
-        this.highlightBorder.active = false;
+    public handleHighlightStatic(isActive: boolean) {
+        this.nodeStatic.active = isActive;
     }
 }
