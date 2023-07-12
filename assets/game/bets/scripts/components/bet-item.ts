@@ -21,10 +21,10 @@ export default class BetItem extends ObserverComponent {
     chipBox: Node = null;
 
     @property(Node)
-    nodeStatic: Node = null;
+    highlightStatic: Node = null;
 
     @property(Node)
-    nodeAnim: Node = null;
+    highlightAnim: Node = null;
 
     onLoad() {
         super.onLoad();
@@ -65,10 +65,10 @@ export default class BetItem extends ObserverComponent {
     }
 
     public handleHighlightAnim(isActive: boolean) {
-        this.nodeAnim.active = isActive;
+        this.highlightAnim.active = isActive;
     }
 
     public handleHighlightStatic(isActive: boolean) {
-        this.nodeStatic.active = isActive;
+        this.highlightStatic.active = isActive;
     }
 }
