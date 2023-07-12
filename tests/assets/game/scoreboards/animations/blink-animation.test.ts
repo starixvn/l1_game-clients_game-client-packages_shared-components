@@ -1,5 +1,5 @@
 import { Tween, tween, tweenInstance } from "cc";
-import { BlinkAnimation } from "../../../../../assets/game/scoreboards/scripts/animations/blink-animation";
+import { BlinkAnimation } from "db://shared-components/shared/common-components/blink-animation/blink-animation";
 
 describe(BlinkAnimation.name, () => {
     let component: BlinkAnimation;
