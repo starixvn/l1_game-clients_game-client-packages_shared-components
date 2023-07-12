@@ -659,6 +659,9 @@ items:
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: 17iQOoLZpP5b0fCJCSGwy4
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: a3yZvVOfhAcYznbSqGaA2j
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
     _variants: []
   event:
     key: event
@@ -757,9 +760,6 @@ items:
     type: 2
     isVariant: false
     associations:
-      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-        nodeUuid: fdU1SwrvBPDIslK30ldGZJ
-        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: fdU1SwrvBPDIslK30ldGZJ
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
@@ -1022,11 +1022,12 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a1
-        sceneUuid: 36155e0b-972d-4aca-a1f9-9fea663e9e62
+      - sceneUuid: 36155e0b-972d-4aca-a1f9-9fea663e9e62
         nodeUuid: e7rQ8ecpFIv5STqxpDswWm
         reference: 36155e0b-972d-4aca-a1f9-9fea663e9e62
-      - *a1
+      - sceneUuid: 36155e0b-972d-4aca-a1f9-9fea663e9e62
+        nodeUuid: e7rQ8ecpFIv5STqxpDswWm
+        reference: 36155e0b-972d-4aca-a1f9-9fea663e9e62
     _variants: []
   back:
     key: back
@@ -1041,7 +1042,61 @@ items:
     type: 2
     isVariant: false
     associations: []
-    _variants: []  
+    _variants: []
+  totalStake:
+    key: totalStake
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a1
+        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: fcJ93Yy+pBSJGMFYLdSTH+
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - *a1
+    _variants: []
+  tiger:
+    key: tiger
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a2
+        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: eaUNRSWgZFfYwkRpXOarH+
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - *a2
+      - sceneUuid: 0345d729-4538-418b-8637-7856cfa0bec7
+        nodeUuid: 2c/t8mMddMya2OYaGQL18n
+        reference: 0345d729-4538-418b-8637-7856cfa0bec7
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 39R8oq7yNDoZeDVvP/vG47
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 988Yo/vMhBf4JmQK4LLQ5O
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+    _variants: []
+  dragon:
+    key: dragon
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a3
+        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: c1Arz5WTxN7LeKw8uok9ej
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - *a3
+      - sceneUuid: 0345d729-4538-418b-8637-7856cfa0bec7
+        nodeUuid: 2c/t8mMddMya2OYaGQL18n
+        reference: 0345d729-4538-418b-8637-7856cfa0bec7
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: acqc8I3zVOx4qIXP/e7W2X
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 98c9yDNsVI27l8dTa3UsiH
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+    _variants: []
 languageConfig:
   bcp47Tag: index
   translateFinished: 390

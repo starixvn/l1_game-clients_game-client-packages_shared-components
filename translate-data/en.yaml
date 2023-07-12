@@ -879,6 +879,34 @@ items:
     isVariant: false
     associations: []
     _variants: []  
+  totalStake:
+    key: totalStake
+    value: "Total Stake"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []    
+  dragon:
+    key: dragon
+    value: "Dragon"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []    
+  tiger:
+    key: tiger
+    value: "Tiger"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []   
+  result:
+    key: result
+    value: "Result"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []   
 languageConfig:
   bcp47Tag: en
   translateFinished: 390
