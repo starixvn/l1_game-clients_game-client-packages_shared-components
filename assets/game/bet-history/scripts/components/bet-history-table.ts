@@ -1,5 +1,5 @@
 import { _decorator, Component, instantiate, Node, Prefab } from "cc";
-import BetHistoryBodyItem, { IBetHistoryLog } from "./bet-history-body-item";
+import BetHistoryBodyItem from "./bet-history-body-item";
 import gc from "@sg/game-client-base";
 
 const { ccclass, property } = _decorator;
@@ -26,7 +26,7 @@ export class BetHistoryTable extends Component {
         return node.getComponent(BetHistoryBodyItem);
     }
 
-    buildBodyRow(betLogItem: IBetHistoryLog, index: number): Node {
+    buildBodyRow(betLogItem: gc.BetHistory.IBetHistoryLog, index: number): Node {
         const bodyRow = instantiate(this.bodyPrefab);
         this.getHistoryItemComponent(bodyRow)?.setData(betLogItem, index);
         return bodyRow;

@@ -606,9 +606,6 @@ items:
         nodeUuid: 72E0I0BKlEdpeE7VsWYAW9
         reference: e9e7deee-091c-46ca-814e-73a33f55526f
       - sceneUuid: e9e7deee-091c-46ca-814e-73a33f55526f
-        nodeUuid: 72E0I0BKlEdpeE7VsWYAW9
-        reference: e9e7deee-091c-46ca-814e-73a33f55526f
-      - sceneUuid: e9e7deee-091c-46ca-814e-73a33f55526f
         nodeUuid: 0eoxYd0MpOSbOI64QYZ2Un
         reference: e9e7deee-091c-46ca-814e-73a33f55526f
       - sceneUuid: e9e7deee-091c-46ca-814e-73a33f55526f
@@ -619,6 +616,9 @@ items:
         reference: e9e7deee-091c-46ca-814e-73a33f55526f
       - sceneUuid: 16e1ca38-402a-4aaf-b60c-6b4200fe1cf1
         nodeUuid: 1abaUPX2FBd600j32xZwGH
+        reference: 16e1ca38-402a-4aaf-b60c-6b4200fe1cf1
+      - sceneUuid: 16e1ca38-402a-4aaf-b60c-6b4200fe1cf1
+        nodeUuid: ddPLhJ+X9Efp2tETmDx3xu
         reference: 16e1ca38-402a-4aaf-b60c-6b4200fe1cf1
     _variants: []
   time:
@@ -633,6 +633,9 @@ items:
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: d5RAa+MExIwLxzlVuXUJYo
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: 470ph9bf1J6qnvVcxNscK1
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
     _variants: []
   round:
     key: round
@@ -646,6 +649,12 @@ items:
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: 05Zxuq/JpIEri9Xr+FQBRG
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: 89naUsYxhD9bEH7XK+RJKx
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: adGU1A425CKLdnTeDDlg1D
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
     _variants: []
   result:
     key: result
@@ -662,6 +671,12 @@ items:
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: a3yZvVOfhAcYznbSqGaA2j
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: b4VpF0RwBPSpf+0g36aJI1
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: c4koJt+PVHp6fnzyft+nBc
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
     _variants: []
   event:
     key: event
@@ -763,6 +778,9 @@ items:
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: fdU1SwrvBPDIslK30ldGZJ
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: 85gHQLIL9P2IaqEWM3gC0g
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
     _variants: []
   splash_firstVisit:
     key: splash_firstVisit
@@ -1049,11 +1067,12 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a1
-        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: fcJ93Yy+pBSJGMFYLdSTH+
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - *a1
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: fcJ93Yy+pBSJGMFYLdSTH+
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
     _variants: []
   tiger:
     key: tiger
@@ -1061,11 +1080,12 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a2
-        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: eaUNRSWgZFfYwkRpXOarH+
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - *a2
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: eaUNRSWgZFfYwkRpXOarH+
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
       - sceneUuid: 0345d729-4538-418b-8637-7856cfa0bec7
         nodeUuid: 2c/t8mMddMya2OYaGQL18n
         reference: 0345d729-4538-418b-8637-7856cfa0bec7
@@ -1075,6 +1095,15 @@ items:
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: 988Yo/vMhBf4JmQK4LLQ5O
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 8b6f9809-c3fb-46e7-b87d-383af89aca9e
+        nodeUuid: 33is8mt49MAqDpHQqvH/8I
+        reference: 8b6f9809-c3fb-46e7-b87d-383af89aca9e
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: 5arV6O6SBBC5Z88UJCAL9P
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: 422ux7MixMobTfUtBNvM29
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
     _variants: []
   dragon:
     key: dragon
@@ -1082,11 +1111,12 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a3
-        sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: c1Arz5WTxN7LeKw8uok9ej
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - *a3
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: c1Arz5WTxN7LeKw8uok9ej
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
       - sceneUuid: 0345d729-4538-418b-8637-7856cfa0bec7
         nodeUuid: 2c/t8mMddMya2OYaGQL18n
         reference: 0345d729-4538-418b-8637-7856cfa0bec7
@@ -1096,6 +1126,67 @@ items:
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: 98c9yDNsVI27l8dTa3UsiH
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: 8b6f9809-c3fb-46e7-b87d-383af89aca9e
+        nodeUuid: 33is8mt49MAqDpHQqvH/8I
+        reference: 8b6f9809-c3fb-46e7-b87d-383af89aca9e
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: 5arV6O6SBBC5Z88UJCAL9P
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: 33v8nsSe5HhY70wF1Hjzl1
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+    _variants: []
+  betDetail:
+    key: betDetail
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: dfW/37YPJP7oUe0U3Lyc31
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: dfW/37YPJP7oUe0U3Lyc31
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: 4e6fyMKbZGG5vPEQORukjp
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+    _variants: []
+  amount:
+    key: amount
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a1
+        sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: aak7x1VLlFSr5zlbFXtxWe
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - *a1
+    _variants: []
+  odds:
+    key: odds
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a2
+        sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: feqHlXMbFN2b/0VXqDLo2R
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - *a2
+    _variants: []
+  choice:
+    key: choice
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - &a3
+        sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: 2c9c2ycLdCNqy9+jJ4Wyfz
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - *a3
     _variants: []
 languageConfig:
   bcp47Tag: index
