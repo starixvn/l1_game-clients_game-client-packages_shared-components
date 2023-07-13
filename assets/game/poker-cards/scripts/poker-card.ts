@@ -1,4 +1,5 @@
-import { Color, Component, Node, Sprite, SpriteAtlas, _decorator } from "cc";
+import { Animation, Color, Component, Node, Sprite, SpriteAtlas, _decorator } from "cc";
+import { AnimationUtils } from "../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
 
 export const convertRank = (num: number): string => {
@@ -20,6 +21,10 @@ export interface CardModel {
 export interface ServiceCard {
     rank: number;
     suit: number;
+}
+
+enum AnimationName {
+    Open_Card = "open-card",
 }
 
 @ccclass
@@ -47,12 +52,25 @@ export class PokerCard extends Component {
         q: "q_picture",
         k: "k_picture",
     };
+    animation: Animation;
+    protected onLoad(): void {
+        this.animation = this.getComponent(Animation);
+    }
+
     setServiceCard(card: ServiceCard): void {
         this.setCard({ rank: convertRank(+card.rank), suit: card.suit });
     }
 
     setCard(card: CardModel) {
         this.card = card;
+    }
+
+    async openCard() {
+        if (this.animation) {
+            await AnimationUtils.playAnimation(this.animation, AnimationName.Open_Card);
+        } else {
+            this.faceUp();
+        }
     }
 
     faceUp() {

@@ -1,4 +1,4 @@
-import { Node, UIOpacity, math, tween } from "cc";
+import { Animation, Node, UIOpacity, math, tween } from "cc";
 
 export namespace AnimationUtils {
     export const fadeIn = (node: Node, duration: number, opacity = 255) => {
@@ -49,6 +49,17 @@ export namespace AnimationUtils {
                 .to(duration, { scale: scaleTo }, { easing: "backIn" })
                 .call(() => resolve())
                 .start();
+        });
+    };
+
+    export const playAnimation = (animation: Animation, animationName: string) => {
+        return new Promise<void>((resolve, reject) => {
+            const onFinished = () => {
+                animation.off(Animation.EventType.FINISHED, onFinished);
+                resolve();
+            };
+            animation.on(Animation.EventType.FINISHED, onFinished);
+            animation.play(animationName);
         });
     };
 }
