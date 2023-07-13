@@ -1,4 +1,4 @@
-import { Color, Component, Sprite, SpriteAtlas, _decorator } from "cc";
+import { Color, Component, Node, Sprite, SpriteAtlas, _decorator } from "cc";
 const { ccclass, property } = _decorator;
 
 export const convertRank = (num: number): string => {
@@ -27,8 +27,8 @@ export class PokerCard extends Component {
     @property(SpriteAtlas)
     atlas: SpriteAtlas = null;
 
-    @property(Sprite)
-    background: Sprite = null;
+    @property(Node)
+    bgWhiteCard: Node = null;
 
     @property(Sprite)
     rank: Sprite = null;
@@ -74,7 +74,7 @@ export class PokerCard extends Component {
 
                 this.setLargeSuiteImage(lowerCaseRank);
 
-                this.background.spriteFrame = this.atlas.getSpriteFrame("card_bg");
+                this.bgWhiteCard.active = true;
                 this.setDetailVisibility(true);
             } else {
                 console.warn("Call setFaceUp when this.card null");
@@ -99,6 +99,6 @@ export class PokerCard extends Component {
 
     protected showCardBack() {
         this.setDetailVisibility(false);
-        this.background.spriteFrame = this.atlas.getSpriteFrame("BACK_1");
+        this.bgWhiteCard.active = false;
     }
 }
