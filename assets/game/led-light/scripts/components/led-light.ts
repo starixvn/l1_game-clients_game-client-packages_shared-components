@@ -1,15 +1,26 @@
-import { Component, Node, UITransform, _decorator, v3 } from "cc";
+import gc from "@sg/game-client-base";
+import { Node, Prefab, UIOpacity, UITransform, _decorator, instantiate, v3 } from "cc";
+import Observer from "observer";
+import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { LedLightItem } from "./led-light-item";
 import { LedLightTooltip } from "./led-light-tooltip";
+
 const { ccclass, property } = _decorator;
+const { render } = Observer;
 
 @ccclass("LedLight")
-export class LedLight extends Component {
+export class LedLight extends ObserverComponent {
     @property(Node)
     containerItem: Node = null;
 
-    @property(LedLightTooltip)
-    tooltip: LedLightTooltip = null;
+    @property(Node)
+    containerTooltip: Node = null;
+
+    @property(Node)
+    ledLightItem: Node = null;
+
+    @property(Prefab)
+    tooltipPrefab: Prefab = null;
 
     @property(Node)
     nodeNext: Node = null;
@@ -17,131 +28,124 @@ export class LedLight extends Component {
     @property
     maxItems = 33;
 
-    private _nextItemActive = false;
-    get nextItemActive(): boolean {
-        return this._nextItemActive;
+    protected ledLightItems: LedLightItem[] = [];
+    protected selectedLedLight: Node = null;
+    protected rounds: gc.RoundHistories.RoundHistory[] = [];
+    protected isShowDotNext = false;
+    protected toolTipCompt: LedLightTooltip = null;
+
+    onLoad() {
+        super.onLoad();
+        this.createLedLightItems();
+        this.createToolTip();
     }
 
-    set nextItemActive(value: boolean) {
-        this._nextItemActive = value;
-        this.updateDisplayItems();
-    }
-
-    private _managedByParent = false;
-
-    get managedByParent(): boolean {
-        return this._managedByParent;
-    }
-
-    set managedByParent(value: boolean) {
-        this._managedByParent = value;
-
-        if (!value) {
-            this.schedule(this.updateDisplayItems, 1);
-        } else {
-            this.unschedule(this.updateDisplayItems);
+    protected createLedLightItems() {
+        this.containerItem.destroyAllChildren();
+        for (let index = 0; index < this.maxItems; index++) {
+            const ledLightNode = instantiate(this.ledLightItem);
+            const ledLightCompt = ledLightNode.getComponent(LedLightItem);
+            ledLightCompt.listener = this.ledLightItemListener;
+            this.containerItem.addChild(ledLightNode);
+            this.ledLightItems.push(ledLightCompt);
+            ledLightNode.active = false;
         }
     }
 
-    protected ledLightItems: LedLightItem[] = [];
-    protected selectedLedLight: Node = null;
-    protected isShowDotNext = () => false;
-    protected dataLogs: undefined[] = [];
-    protected isHideNextDot = false;
-
-    onLoad() {
-        this.ledLightItems = this.containerItem.children.map((child) => child.getComponent(LedLightItem));
-        this.ledLightItems.forEach((item) => {
-            item.node.active = false;
-            item.listener = this.ledLightItemListener;
-        });
-        this.schedule(this.updateDisplayItems, 1);
+    protected createToolTip() {
+        this.containerTooltip.destroyAllChildren();
+        const toolTipNode = instantiate(this.tooltipPrefab);
+        this.containerTooltip.addChild(toolTipNode);
+        this.toolTipCompt = toolTipNode.getComponent(LedLightTooltip);
+        this.hideTooltip();
     }
 
     private ledLightItemListener = {
         onEnter: (node: Node) => {
             this.selectedLedLight = node;
-            const data = node.getComponent(LedLightItem).ledLightItemInfo;
-            if (this.tooltip && data) {
-                const pos = this.tooltip.node.parent
+            const ledLightInfo = node.getComponent(LedLightItem).ledLightItemInfo;
+            if (this.toolTipCompt && ledLightInfo) {
+                const pos = this.toolTipCompt.node.parent
                     .getComponent(UITransform)
                     .convertToNodeSpaceAR(node.getComponent(UITransform).convertToWorldSpaceAR(v3(0, 0, 0)));
-                this.tooltip.node.position = v3(pos.x, this.tooltip.node.position.y, 0);
-                this.tooltip.setTooltipInfo(data);
-                this.tooltip.showTooltip();
+                this.toolTipCompt.node.position = v3(pos.x, this.toolTipCompt.node.position.y, 0);
+                this.toolTipCompt.setTooltipInfo(ledLightInfo);
+                this.toolTipCompt.showTooltip();
             }
         },
         onLeave: () => {
             this.selectedLedLight = null;
-            this.tooltip?.showTooltip(false);
+            this.toolTipCompt?.showTooltip(false);
         },
     };
 
-    onDestroy() {
-        this.unschedule(this.updateDisplayItems);
-    }
-
-    changeConditionShowDotNext(condition: () => boolean) {
-        this.isShowDotNext = condition;
-    }
-
     protected onUpdateTooltipInfo(node: Node) {
         const itemInfo = node?.getComponent(LedLightItem).ledLightItemInfo;
-        if (this.tooltip?.node?.active && itemInfo) {
-            this.tooltip.setTooltipInfo(itemInfo);
+        if (this.toolTipCompt?.node?.active && itemInfo) {
+            this.toolTipCompt.setTooltipInfo(itemInfo);
         }
     }
 
-    public setLedLightInfo(dataLogs: undefined[]) {
-        this.dataLogs = { ...dataLogs };
-
-        this.updateDisplayItems();
+    @render(gc.Rounds.RoundTimeStore, (store) => store.isLocking)
+    public handleBlinkNextDot(isLocking: boolean) {
+        this.isShowDotNext = isLocking;
+        isLocking && this.hideTooltip();
+        this.updateLedLightItemInfo(this.rounds, isLocking);
     }
 
-    protected updateDisplayItems() {
-        if (this.dataLogs.length === 0 || this.ledLightItems.length === 0) {
+    @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
+    public setLedLightInfo(rounds: gc.RoundHistories.RoundHistory[]) {
+        this.rounds = [...rounds];
+        this.updateLedLightItemInfo(this.rounds, this.isShowDotNext);
+    }
+
+    protected updateLedLightItemInfo(rounds: gc.RoundHistories.RoundHistory[], isShowDotNext: boolean) {
+        if (this.rounds.length === 0 || this.ledLightItems.length === 0) {
             return;
         }
+        const stepStart = isShowDotNext ? 1 : 0;
+        this.hideAllDots(stepStart);
+        this.updateFirstLedLightItem();
+        this.updateNextNode();
 
-        if (this.managedByParent) {
-            this.updateLedLightItemInfo(this.dataLogs, this.nextItemActive);
-        } else {
-            const showNext = this.nodeNext && this.isShowDotNext();
-            this.updateLedLightItemInfo(this.dataLogs, showNext);
-        }
-    }
-
-    protected updateLedLightItemInfo(data: undefined[], showNext: boolean) {
-        this.hideAllDots();
-        this.ledLightItems[0].node.active = !showNext;
-        this.nodeNext && (this.nodeNext.active = showNext);
-
-        const startIndex = showNext ? 1 : 0;
-
-        data.forEach((log, index) => {
-            const calculatedIndex = startIndex + index;
+        rounds.forEach((round, index) => {
+            const calculatedIndex = stepStart + index;
             if (calculatedIndex >= this.ledLightItems.length) {
                 return;
             }
-            const item = this.ledLightItems[calculatedIndex];
-            item.setLedLightItemInfo(log);
-            item.node.active = true;
+            const ledLightItem = this.ledLightItems[calculatedIndex];
+            ledLightItem.setLedLightItemInfo(round);
+            ledLightItem.node.active = true;
         });
 
-        this.selectedLedLight && this.onUpdateTooltipInfo(this.selectedLedLight);
+        this.updateSelectedLedLightTooltip();
+    }
 
-        if (showNext) {
-            this.hideTooltip();
+    protected hideAllDots(stepStart: number) {
+        this.ledLightItems.forEach((item, index) => {
+            if (index >= stepStart) {
+                item.setStatusNode(false);
+            }
+        });
+    }
+
+    protected updateFirstLedLightItem() {
+        const firstLedLightItem = this.ledLightItems[0];
+        if (firstLedLightItem) {
+            firstLedLightItem.getComponent(UIOpacity).opacity = this.isShowDotNext ? 1 : 255;
+            firstLedLightItem.highlight.active = !this.isShowDotNext;
         }
     }
 
-    protected hideAllDots() {
-        this.ledLightItems.forEach((item) => {
-            item.setStatusNode(false);
-        });
+    protected updateNextNode() {
+        this.nodeNext && (this.nodeNext.active = this.isShowDotNext);
+    }
+
+    protected updateSelectedLedLightTooltip() {
+        this.selectedLedLight && this.onUpdateTooltipInfo(this.selectedLedLight);
     }
 
     protected hideTooltip() {
-        this?.tooltip.showTooltip(false);
+        this?.toolTipCompt.showTooltip(false);
     }
 }

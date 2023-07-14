@@ -324,7 +324,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "red",
+    "_name": "dot-red",
     "_objFlags": 0,
     "_parent": {
       "__id__": 9
@@ -457,7 +457,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "value",
+    "_name": "red-value",
     "_objFlags": 0,
     "_parent": {
       "__id__": 9
@@ -593,7 +593,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "white",
+    "_name": "dot-white",
     "_objFlags": 0,
     "_parent": {
       "__id__": 9
@@ -726,7 +726,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "value",
+    "_name": "white-value",
     "_objFlags": 0,
     "_parent": {
       "__id__": 9
