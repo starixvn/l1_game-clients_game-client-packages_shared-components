@@ -1,4 +1,4 @@
-import { Animation, Node, UIOpacity, math, tween } from "cc";
+import { Animation, Node, UIOpacity, UITransform, Vec3, math, tween } from "cc";
 
 export namespace AnimationUtils {
     export const fadeIn = (node: Node, duration: number, opacity = 255) => {
@@ -52,14 +52,34 @@ export namespace AnimationUtils {
         });
     };
 
-    export const playAnimation = (animation: Animation, animationName: string) => {
+    export const playAnimation = (animation: Animation, animationName: string, duration?: number) => {
         return new Promise<void>((resolve, reject) => {
             const onFinished = () => {
                 animation.off(Animation.EventType.FINISHED, onFinished);
                 resolve();
             };
+            if (duration) {
+                const clip = animation.clips.find((clip) => clip.name === animationName);
+                clip.speed = clip.duration / duration;
+            }
             animation.on(Animation.EventType.FINISHED, onFinished);
             animation.play(animationName);
         });
+    };
+
+    export const getPositionAtDestNode = (node: Node, destNode: Node) => {
+        const parent = node.parent.getComponent(UITransform);
+        const destNodeTranform = destNode.getComponent(UITransform);
+        const position = parent.convertToNodeSpaceAR(destNodeTranform.convertToWorldSpaceAR(Vec3.ZERO));
+        return position;
+    };
+
+    export const movingNode = (node: Node, duration: number, destNode: Node | Vec3) => {
+        const position = destNode instanceof Node ? getPositionAtDestNode(node, destNode) : destNode;
+        tween(node)
+            .to(duration, {
+                position,
+            })
+            .start();
     };
 }

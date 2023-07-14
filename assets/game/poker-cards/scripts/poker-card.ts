@@ -25,6 +25,9 @@ export interface ServiceCard {
 
 enum AnimationName {
     Open_Card = "open-card",
+    Drop_Card = "drop-card",
+    Draw_Card = "draw-card",
+    Pull_Card = "pull-card",
 }
 
 @ccclass
@@ -63,6 +66,18 @@ export class PokerCard extends Component {
 
     setCard(card: CardModel) {
         this.card = card;
+    }
+
+    pullCard(duration: number) {
+        return AnimationUtils.playAnimation(this.animation, AnimationName.Pull_Card, duration);
+    }
+
+    drawCard(duration: number) {
+        return AnimationUtils.playAnimation(this.animation, AnimationName.Draw_Card, duration);
+    }
+
+    dropCard(duration: number) {
+        return AnimationUtils.playAnimation(this.animation, AnimationName.Drop_Card, duration);
     }
 
     async openCard() {
