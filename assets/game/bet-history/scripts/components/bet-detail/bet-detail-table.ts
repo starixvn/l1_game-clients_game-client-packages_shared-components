@@ -2,8 +2,8 @@ import { _decorator, Component, instantiate, Label, Node, Prefab } from "cc";
 import gc from "@sg/game-client-base";
 import { IBetLog, IBetLogDetails } from "./stores/bet-detail-store";
 import BetDetailBodyItem from "./bet-detail-body-item";
-import { convertRank, PokerCard } from "../../../../poker-cards/scripts/poker-card";
-import { BetChoice, Choice } from "../../../../../../../../assets/game/scripts/components/dtf-commons";
+import { PokerCard } from "../../../../poker-cards/scripts/poker-card";
+import ResultBodyItem from "../../../../../../../../assets/game/scripts/components/bet-history/result-body-item";
 
 const { ccclass, property } = _decorator;
 
@@ -25,17 +25,14 @@ export class BetDetailTable extends Component {
     @property(Prefab)
     bodyPrefab: Prefab = null;
 
-    @property(PokerCard)
-    cards: PokerCard[] = [];
-
-    @property(Label)
-    dragonRank: Label = null;
-
-    @property(Label)
-    tigerRank: Label = null;
-
     @property(Label)
     lblRound: Label = null;
+
+    @property(Prefab)
+    resultPrefab: Prefab = null;
+
+    @property(Node)
+    result: Node = null;
 
     getBetDetailItemComponent(node: Node) {
         return node.getComponent(BetDetailBodyItem);
@@ -47,24 +44,18 @@ export class BetDetailTable extends Component {
         return bodyRow;
     }
 
-    showBetDetail(begLog: IBetLog) {
-        const { result, roundId, odds, settlementResult, freeBet } = begLog;
+    showBetDetail(betLog: IBetLog) {
+        const { result, roundId, odds, settlementResult, freeBet } = betLog;
 
         this.lblRound.string = roundId.toString();
-        const dragonCard = result[BetChoice.Dragon];
-        this.cards[Choice.Dragon].setServiceCard(dragonCard);
-        this.cards[Choice.Dragon].faceUp();
-        this.dragonRank.string = convertRank(dragonCard.rank);
 
-        const tigerCard = result[BetChoice.Tiger];
-        this.cards[Choice.Tiger].setServiceCard(tigerCard);
-        this.cards[Choice.Tiger].faceUp();
-        this.tigerRank.string = convertRank(tigerCard.rank);
-
+        const bodyRow = instantiate(this.resultPrefab);
+        bodyRow.getComponent(ResultBodyItem).setData(betLog);
+        this.result.addChild(bodyRow);
         // this.clearOldTable();
 
         // this.header.addChild(instantiate(this.headerPrefab));
-        begLog.betLogDetails.forEach((item, index) => {
+        betLog.betLogDetails.forEach((item, index) => {
             this.body.addChild(this.buildBodyRow(item, index, odds, settlementResult, freeBet));
         });
     }
