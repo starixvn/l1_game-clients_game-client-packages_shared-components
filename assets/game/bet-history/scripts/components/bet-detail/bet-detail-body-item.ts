@@ -1,7 +1,6 @@
-import { Component } from "cc";
-import { IBetDetailLog } from "./stores/bet-detail-store";
 import { ObserverComponent } from "../../../../../shared/common-components/observer-component/scripts/observer-component";
+import { IBetLogDetails } from "./stores/bet-detail-store";
 
 export default class BetDetailBodyItem extends ObserverComponent {
-    setData(data: IBetDetailLog, index: number) {}
+    setData(betLogDetail: IBetLogDetails, index: number, odds: any, settlementResult: any, freeBet: boolean) {}
 }
