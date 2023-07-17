@@ -25,7 +25,18 @@
       }
     ],
     "_exoticAnimation": null,
-    "_events": [],
+    "_events": [
+      {
+        "frame": 0.75,
+        "func": "",
+        "params": []
+      },
+      {
+        "frame": 0.75,
+        "func": "faceDown",
+        "params": []
+      }
+    ],
     "_embeddedPlayers": []
   },
   {
@@ -250,6 +261,7 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
+      0.75,
       0.7833333611488342
     ],
     "_values": [
@@ -258,6 +270,18 @@
         "interpolationMode": 0,
         "tangentWeightMode": 0,
         "value": 1,
+        "rightTangent": 0,
+        "rightTangentWeight": 1,
+        "leftTangent": 0,
+        "leftTangentWeight": 1,
+        "easingMethod": 0,
+        "__editorExtras__": null
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 0,
+        "tangentWeightMode": 0,
+        "value": 0,
         "rightTangent": 0,
         "rightTangentWeight": 1,
         "leftTangent": 0,
@@ -291,6 +315,7 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
+      0.75,
       0.7833333611488342
     ],
     "_values": [
@@ -299,6 +324,18 @@
         "interpolationMode": 0,
         "tangentWeightMode": 0,
         "value": 1,
+        "rightTangent": 0,
+        "rightTangentWeight": 1,
+        "leftTangent": 0,
+        "leftTangentWeight": 1,
+        "easingMethod": 0,
+        "__editorExtras__": null
+      },
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 0,
+        "tangentWeightMode": 0,
+        "value": 0.5404255390167236,
         "rightTangent": 0,
         "rightTangentWeight": 1,
         "leftTangent": 0,
@@ -332,9 +369,22 @@
     "__type__": "cc.RealCurve",
     "_times": [
       0,
+      0.75,
       0.7833333611488342
     ],
     "_values": [
+      {
+        "__type__": "cc.RealKeyframeValue",
+        "interpolationMode": 0,
+        "tangentWeightMode": 0,
+        "value": 1,
+        "rightTangent": 0,
+        "rightTangentWeight": 1,
+        "leftTangent": 0,
+        "leftTangentWeight": 1,
+        "easingMethod": 0,
+        "__editorExtras__": null
+      },
       {
         "__type__": "cc.RealKeyframeValue",
         "interpolationMode": 0,
