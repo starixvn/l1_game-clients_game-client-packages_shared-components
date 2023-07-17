@@ -839,7 +839,98 @@ items:
     type: 2
     isVariant: false
     associations: []
-    _variants: []  
+    _variants: [] 
+  mainChoiceResultHeader:
+    key: mainChoiceResultHeader
+    value: (Rồng | Hổ)
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  win:
+    key: win
+    value: Thắng
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  stake:
+    key: stake
+    value: Cược
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  odds:
+    key: odds
+    value: Tỷ Lệ Cược
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  choice:
+    key: choice
+    value: Lựa Chọn
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  dragon:
+    key: dragon
+    value: Rồng
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  tiger:
+    key: tiger
+    value: Hổ
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  result:
+    key: result
+    value: Kết Quả
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  betDetail:
+    key: betDetail
+    value: Chi Tiết Cược
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  amount:
+    key: amount
+    value: Tổng Cược
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: [] 
+  time:
+    key: time
+    value: Thời Gian
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  round:
+    key: round
+    value: Phiên
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  totalStake:
+    key: totalStake
+    value: Tổng Cược
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: vi
   translateFinished: 390

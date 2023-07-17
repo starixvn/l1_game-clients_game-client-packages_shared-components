@@ -791,7 +791,91 @@ items:
     type: 2
     isVariant: false
     associations: []
-    _variants: []   
+    _variants: [] 
+  betDetail:
+    key: betDetail
+    value: รายละเอียดการเดิมพัน
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  choice:
+    key: choice
+    value: ตัวเลือกการเดิมพัน
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  result:
+    key: result
+    value: ผลลัพธ์
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  stake:
+    key: stake
+    value: เดิมพัน
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  odds:
+    key: odds
+    value: อัตราต่อรอง
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  win:
+    key: win
+    value: ชนะ
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  dragon:
+    key: dragon
+    value: มังกร
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  tiger:
+    key: tiger
+    value: เสือ
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  mainChoiceResultHeader:
+    key: mainChoiceResultHeader
+    value: (มังกร | เสือ)
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  totalStake:
+    key: totalStake
+    value: เดิมพันรวม
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  time:
+    key: time
+    value: เวลา
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  round:
+    key: round
+    value: รอบ
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: th
   translateFinished: 376

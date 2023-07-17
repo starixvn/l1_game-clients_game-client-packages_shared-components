@@ -801,6 +801,90 @@ items:
     isVariant: false
     associations: []
     _variants: []  
+  mainChoiceResultHeader:
+    key: mainChoiceResultHeader
+    value: (DRAGON | TIGER)
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  choice:
+    key: choice
+    value: Pilihan Taruhan
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  win:
+    key: win
+    value: Menang
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  stake:
+    key: stake
+    value: Taruhan
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  odds:
+    key: odds
+    value: Odds
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  result:
+    key: result
+    value: Hasil
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  totalStake:
+    key: totalStake
+    value: Total\nTaruhan
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  betDetail:
+    key: betDetail
+    value: Detail Bet
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  dragon:
+    key: dragon
+    value: Dragon
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  tiger:
+    key: tiger
+    value: Tiger
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  time:
+    key: time
+    value: Waktu
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  round:
+    key: round
+    value: Babak
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: id
   translateFinished: 376

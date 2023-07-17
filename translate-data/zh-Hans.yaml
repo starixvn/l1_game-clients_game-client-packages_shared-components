@@ -788,6 +788,90 @@ items:
     isVariant: false
     associations: []
     _variants: []    
+  stake:
+    key: stake
+    value: 赌注
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  mainChoiceResultHeader:
+    key: mainChoiceResultHeader
+    value: （龙 | 虎）
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  win:
+    key: win
+    value: 赢
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  odds:
+    key: odds
+    value: 赔率
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  choice:
+    key: choice
+    value: 投注选择
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  betDetail:
+    key: betDetail
+    value: 投注详情
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  result:
+    key: result
+    value: 结果
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  totalStake:
+    key: totalStake
+    value: 总赌注
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  dragon:
+    key: dragon
+    value: 龙
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  tiger:
+    key: tiger
+    value: 虎
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  time:
+    key: time
+    value: 时间
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  round:
+    key: round
+    value: 回合
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: zh-Hans
   translateFinished: 376
