@@ -3,11 +3,9 @@ import { Component, Node, ProgressBar, _decorator, director } from "cc";
 import Observer from "observer";
 import GameConnection from "../../../shared/common-components/game-connection";
 import { RandomWaitingMessage } from "../random-waiting-message";
-
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
 const { Auth, App, Chips, sentryLogger, Configs } = gc;
-
 @ccclass
 @observer
 export default class Splash extends Component {
