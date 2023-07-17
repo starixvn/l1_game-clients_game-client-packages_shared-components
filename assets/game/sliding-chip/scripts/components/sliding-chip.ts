@@ -313,8 +313,9 @@ export default class SlidingChip extends ObserverComponent {
     public createSmallChip(bet: number, scale = 0.29, showValue = false): Node {
         if (bet === 0) {
             const node = this.createLowValueChip();
-            node.rotation = random(0, 360);
+            node.angle = random(0, 360);
             node.scale = v3(this.smallChipScale, this.smallChipScale, this.smallChipScale);
+
             return node;
         }
         const chip = this.createBigChip(bet);

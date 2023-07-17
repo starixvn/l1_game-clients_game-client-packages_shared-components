@@ -10,21 +10,19 @@ type TChips = {
 
 export const placeChipToChipBox = (slidingChip: SlidingChip, mainPlayerChip: IMainPlayerChip, startNode: Node, onComplete: () => void) => {
     const { chipBox, chipValue } = mainPlayerChip;
-    if (slidingChip && chipValue > 0) {
-        const flyingDuration = startNode == null ? SlidingChip.mainPlayerChipFlyingTime : SlidingChip.chipFlyingTime;
-        const chipPosition = chipBox
-            ?.getComponent(UITransform)
-            ?.convertToNodeSpaceAR(slidingChip.createStartNodeInfo(startNode, chipValue).worldPos);
-        const chipNode = slidingChip.createSmallChip(chipValue);
-        chipNode.position = chipPosition;
-        const randomPosition = FlyChipUtils.getRandomPositionChip(chipNode, chipBox);
-        chipBox?.addChild(chipNode);
+    const flyingDuration = startNode == null ? SlidingChip.mainPlayerChipFlyingTime : SlidingChip.chipFlyingTime;
+    const chipPosition = chipBox
+        ?.getComponent(UITransform)
+        ?.convertToNodeSpaceAR(slidingChip.createStartNodeInfo(startNode, chipValue).worldPos);
+    const chipNode = slidingChip.createSmallChip(chipValue);
+    chipNode.position = chipPosition;
+    const randomPosition = FlyChipUtils.getRandomPositionChip(chipNode, chipBox);
+    chipBox?.addChild(chipNode);
 
-        if (!chipNode.activeInHierarchy) {
-            chipNode.position = randomPosition;
-        } else {
-            chipNode && FlyChipUtils.moveChipTo(chipNode, randomPosition, flyingDuration, onComplete);
-        }
+    if (!chipNode.activeInHierarchy) {
+        chipNode.position = randomPosition;
+    } else {
+        chipNode && FlyChipUtils.moveChipTo(chipNode, randomPosition, flyingDuration, onComplete);
     }
 };
 
