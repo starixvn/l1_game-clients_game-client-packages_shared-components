@@ -25,13 +25,17 @@ export class BetHistoryContainer extends NodeContainer {
         }
     }
 
-    @render(BetHistory.BetHistoryStore, (store) => store.betHistoryModel, { fireImmediately: false })
-    showBetHistory(model: gc.BetHistory.BetHistoryModel) {
+    @render(BetHistory.BetHistoryStore, (store) => {
+        return {
+            betHistoryModel:store.betHistoryModel,
+            fractionalOddsFormat: store.fractionalOddsFormat
+}}, { fireImmediately: false })
+    showBetHistory({betHistoryModel, fractionalOddsFormat}) {
         if (!this.wrapperNode?.active) {
             this.wrapperNode = this.createNode();
             this.table = this.wrapperNode.getComponent(BetHistoryTable);
         }
 
-        this.table.showBetHistory(model);
+        this.table.showBetHistory(betHistoryModel, fractionalOddsFormat);
     }
 }

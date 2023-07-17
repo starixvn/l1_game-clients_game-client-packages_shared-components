@@ -1,9 +1,8 @@
-import { Node } from "cc";
 import inversify from "inversify";
 import mobx from "mobx";
-import { PokerCard, ServiceCard } from "../../../../../poker-cards/scripts/poker-card";
+import { ServiceCard } from "../../../../../poker-cards/scripts/poker-card";
 import { IBetHistoryLog } from "@sg/game-client-base/dist/game/bet-history";
-const { injectable, inject } = inversify;
+const { injectable } = inversify;
 
 export interface IBetLogDetails {
     amount: number;
@@ -11,10 +10,7 @@ export interface IBetLogDetails {
     choice: string;
 }
 
-export interface IBetLog extends IBetHistoryLog {
-    betwin: number;
-    totalAmount: number;
-    freeBet: boolean;
+export interface IBetHistoryLogInDetails extends IBetHistoryLog {
     odds: {
         dragon: number;
         tiger: number;
@@ -40,15 +36,20 @@ export interface IBetLog extends IBetHistoryLog {
     betLogDetails: Array<IBetLogDetails>;
 }
 
+export interface IBetDetailModel{
+    betLog: IBetHistoryLogInDetails;
+    fractionalOddsFormat: boolean;
+}
+
 @injectable()
 export class BetDetailStore {
     constructor() {
         mobx.makeAutoObservable(this);
     }
 
-    betLog: IBetLog = null;
+    model: IBetDetailModel = null;
 
-    setData(betLog: IBetLog) {
-        this.betLog = betLog;
+    setData(model: IBetDetailModel) {
+        this.model = model;
     }
 }
