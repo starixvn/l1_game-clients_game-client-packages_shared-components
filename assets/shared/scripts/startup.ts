@@ -17,7 +17,13 @@ export function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
         onContainerCreated: (container) => {
             container.bind(gc.Configs.SiteConfigs).toConstantValue(siteConfigs);
         },
-        enabledFeatures: [gc.Player.FEATURE_NAME, gc.Auth.FEATURE_NAME, gc.App.FEATURE_NAME],
+        enabledFeatures: [
+            gc.Player.FEATURE_NAME,
+            gc.Auth.FEATURE_NAME,
+            gc.App.FEATURE_NAME,
+            gc.Notification.FEATURE_NAME,
+            gc.ConnectSite.FEATURE_NAME,
+        ],
     };
 
     return gc.getContainer(containerOptions);
