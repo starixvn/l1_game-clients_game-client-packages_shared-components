@@ -1,8 +1,8 @@
 import { _decorator, Component, instantiate, Label, Node, Prefab } from "cc";
 import gc from "@sg/game-client-base";
 import BetDetailBodyItem from "./bet-detail-body-item";
-import ResultBodyItem from "../../../../../../../../assets/game/scripts/components/bet-history/result-body-item";
 import { ServiceCard } from "../../../../poker-cards/scripts/poker-card";
+import { BaseResultBodyItem } from "../bet-history-body-item";
 
 const { ccclass, property } = _decorator;
 
@@ -65,7 +65,7 @@ export class BetDetailTable extends Component {
         const { result, settlementResult, odds, freeBet, betLogDetails } = betHistoryLog;
 
         const bodyRow = instantiate(this.resultPrefab);
-        bodyRow.getComponent(ResultBodyItem).setData(result as gc.BetHistory.DynamicObject<ServiceCard>, settlementResult);
+        bodyRow.getComponent(BaseResultBodyItem).setData(result as gc.BetHistory.DynamicObject<ServiceCard>, settlementResult);
         this.result.addChild(bodyRow);
 
         betLogDetails.forEach((item, index) => {
