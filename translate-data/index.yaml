@@ -1188,6 +1188,13 @@ items:
         reference: ff4a7cb1-c194-44bb-b810-5982525b617d
       - *a3
     _variants: []
+  limitBetChanged:
+    key: limitBetChanged
+    value: ""
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []  
 languageConfig:
   bcp47Tag: index
   translateFinished: 390

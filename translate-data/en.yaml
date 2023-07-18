@@ -1011,6 +1011,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  limitBetChanged:
+    key: limitBetChanged
+    value: "Your bet limit has just been changed."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []  
 languageConfig:
   bcp47Tag: en
   translateFinished: 390

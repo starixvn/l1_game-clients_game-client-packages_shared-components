@@ -864,6 +864,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  limitBetChanged:
+    key: limitBetChanged
+    value: "您的投注限額剛剛更改。"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []  
 languageConfig:
   bcp47Tag: zh-Hant
   translateFinished: 376

@@ -931,6 +931,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  limitBetChanged:
+    key: limitBetChanged
+    value: "Hạn mức cược của bạn vừa được cập nhật."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []   
 languageConfig:
   bcp47Tag: vi
   translateFinished: 390

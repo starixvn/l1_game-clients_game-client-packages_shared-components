@@ -876,6 +876,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  limitBetChanged:
+    key: limitBetChanged
+    value: "วงเงินเดิมพันของคุณเพิ่งมีการเปลี่ยนแปลง"
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []       
 languageConfig:
   bcp47Tag: th
   translateFinished: 376

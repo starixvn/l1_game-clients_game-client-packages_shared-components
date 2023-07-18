@@ -875,6 +875,13 @@ items:
     isVariant: false
     associations: []
     _variants: []
+  limitBetChanged:
+    key: limitBetChanged
+    value: "Batas taruhan Anda baru saja diubah."
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []    
 languageConfig:
   bcp47Tag: id
   translateFinished: 376
