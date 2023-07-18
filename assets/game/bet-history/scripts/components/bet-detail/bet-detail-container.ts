@@ -2,18 +2,19 @@ import { Node, _decorator } from "cc";
 import Observer from "observer";
 import { NodeContainer } from "../../../../../shared/common-components/node-container/node-container";
 import { BetDetailTable } from "./bet-detail-table";
-import { IBetDetailModel, BetDetailStore } from "./stores/bet-detail-store";
+import gc from "@sg/game-client-base";
 
 const { ccclass } = _decorator;
-const { render} = Observer;
+const { render } = Observer;
+const { BetHistory } = gc;
 
 @ccclass("BetDetailContainer")
 export class BetDetailContainer extends NodeContainer {
     wrapperNode: Node = null;
     table: BetDetailTable = null;
 
-    @render(BetDetailStore, (store) => store.model, { fireImmediately: false })
-    showBetDetailPopup(model: IBetDetailModel) {
+    @render(BetHistory.BetDetailHitoryStore, (store) => store.model, { fireImmediately: false })
+    showBetDetailPopup(model: gc.BetHistory.BetDetailModel) {
         if (!this.wrapperNode?.active) {
             this.wrapperNode = this.createNode();
             this.table = this.wrapperNode.getComponent(BetDetailTable);

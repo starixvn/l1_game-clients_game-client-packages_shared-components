@@ -26,18 +26,18 @@ export class BetHistoryTable extends Component {
         return node.getComponent(BetHistoryBodyItem);
     }
 
-    buildBodyRow(betLogItem: gc.BetHistory.IBetHistoryLog, index: number, fractionalOddsFormat: boolean): Node {
+    buildBodyRow(betLogItem: gc.BetHistory.BetHistoryLog, index: number): Node {
         const bodyRow = instantiate(this.bodyPrefab);
-        this.getHistoryItemComponent(bodyRow)?.setData(betLogItem, index, fractionalOddsFormat);
+        this.getHistoryItemComponent(bodyRow)?.setData(betLogItem, index);
         return bodyRow;
     }
 
-    showBetHistory(model: gc.BetHistory.BetHistoryModel, fractionalOddsFormat: boolean) {
+    showBetHistory(model: gc.BetHistory.BetHistoryModel) {
         this.clearOldTable();
 
         this.header.addChild(instantiate(this.headerPrefab));
         model.betLogs.forEach((betLogItem, index) => {
-            this.body.addChild(this.buildBodyRow(betLogItem, index, fractionalOddsFormat));
+            this.body.addChild(this.buildBodyRow(betLogItem, index));
         });
     }
 

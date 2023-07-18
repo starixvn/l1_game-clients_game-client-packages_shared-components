@@ -2,7 +2,7 @@ import { _decorator, Component, instantiate, Label, Node, Prefab } from "cc";
 import gc from "@sg/game-client-base";
 import BetDetailBodyItem from "./bet-detail-body-item";
 import ResultBodyItem from "../../../../../../../../assets/game/scripts/components/bet-history/result-body-item";
-import { IBetLogDetails, IBetDetailModel } from "./stores/bet-detail-store";
+import { ServiceCard } from "../../../../poker-cards/scripts/poker-card";
 
 const { ccclass, property } = _decorator;
 
@@ -37,23 +37,39 @@ export class BetDetailTable extends Component {
         return node.getComponent(BetDetailBodyItem);
     }
 
-    buildBodyRow(betLogItem: IBetLogDetails, index: number, odds: any, settlementResult: any, freeBet: boolean, fractionalOddsFormat: boolean): Node {
+    buildBodyRow(
+        betLogItem: gc.BetHistory.BetDetailsLog,
+        index: number,
+        odds: gc.BetHistory.DynamicObject<number>,
+        settlementResult: gc.BetHistory.DynamicObject<boolean>,
+        freeBet: boolean,
+        fractionalOddsFormat: boolean
+    ): Node {
         const bodyRow = instantiate(this.bodyPrefab);
-        this.getBetDetailItemComponent(bodyRow)?.setData(betLogItem, index, odds, settlementResult, freeBet, fractionalOddsFormat);
+        const { choice } = betLogItem;
+
+        this.getBetDetailItemComponent(bodyRow)?.setData(
+            betLogItem,
+            index,
+            odds[choice],
+            settlementResult[choice],
+            freeBet,
+            fractionalOddsFormat
+        );
+
         return bodyRow;
     }
 
-    showBetDetail(model: IBetDetailModel) {
-        const {betLog, fractionalOddsFormat}= model;
-        const { odds, settlementResult, freeBet } = betLog;
+    showBetDetail(model: gc.BetHistory.BetDetailModel) {
+        const { fractionalOddsFormat, betHistoryLog } = model;
+        const { result, settlementResult, odds, freeBet, betLogDetails } = betHistoryLog;
 
         const bodyRow = instantiate(this.resultPrefab);
-        bodyRow.getComponent(ResultBodyItem).setData(betLog);
+        bodyRow.getComponent(ResultBodyItem).setData(result as gc.BetHistory.DynamicObject<ServiceCard>, settlementResult);
         this.result.addChild(bodyRow);
 
-        betLog.betLogDetails.forEach((item, index) => {
+        betLogDetails.forEach((item, index) => {
             this.body.addChild(this.buildBodyRow(item, index, odds, settlementResult, freeBet, fractionalOddsFormat));
         });
     }
-
 }
