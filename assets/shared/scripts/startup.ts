@@ -6,7 +6,7 @@ import Observer from "observer";
 const loadI18n = (siteConfigs: gc.Configs.SiteConfigs) => {
     try {
         const isUseTolgeeRealTime = siteConfigs.env.toLocaleLowerCase().indexOf("local") >= 0 && !siteConfigs.isDev;
-        const languageId = gc.Shared.utils.TransaltionManager.getLanguageId();
+        const languageId = gc.Shared.utils.TranslationManager.getLanguageId();
         const languageCodes = ["en", "id", "th", "vi", "zh_cn", "zh_tw"];
         const translationOptions: gc.Shared.utils.TranslationOptions = {
             languageId: languageId,
@@ -17,7 +17,7 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs) => {
             availableLanguages: languageCodes,
             onLoaded: () => {
                 console.log("started tolgee");
-                console.log(gc.Shared.utils.TransaltionManager.translate("Common.bet_choice"));
+                console.log(gc.Shared.utils.TranslationManager.translate("Common.bet_choice"));
             },
         };
 
@@ -28,7 +28,7 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs) => {
             translationOptions.tg = togleWeb.Tolgee().use(togleWeb.DevTools()).init(siteConfigs.tolgee);
         }
 
-        gc.Shared.utils.TransaltionManager.init(translationOptions);
+        gc.Shared.utils.TranslationManager.init(translationOptions);
     } catch (e) {
         console.log(e);
     }
