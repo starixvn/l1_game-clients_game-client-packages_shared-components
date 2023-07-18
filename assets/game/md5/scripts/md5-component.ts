@@ -82,7 +82,7 @@ export default class MD5Component extends Component {
         }
     }
 
-    private generateMD5Result(data: gc.GameServiceMessage.ResultHash) {
+    protected generateMD5Result(data: gc.GameServiceMessage.ResultHash) {
         const value = data?.hashValue || data?.rawValue;
         const formatValue = value.length > this.maximumStringAllowed ? value.slice(0, this.lengthOfMd5) + "..." : value;
         this.lblMd5Value && (this.lblMd5Value.string = `${formatValue}`);
