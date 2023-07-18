@@ -114,7 +114,7 @@ items:
   limitBetExceeded:
     key: limitBetExceeded
     value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
-      Taruhan Anda telah melampaui batas taruhan Anda silakan coba lagi.
+      Taruhan Anda telah melampaui batas taruhan Anda, silakan coba lagi.
       ({{errorCode}})"
     type: 4
     isVariant: false
@@ -122,52 +122,42 @@ items:
     _variants: []
   playerNotPermittedPlay:
     key: playerNotPermittedPlay
-    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nPermainan dinonaktifkan.
-      Silakan hubungi upline Anda untuk lebih lanjut terima kasih.
-      ({{errorCode}})"
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nPermainan dinonaktifkan. Silakan hubungi upline Anda untuk lebih lanjut, terima kasih. \n({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   winLimitHit:
     key: winLimitHit
-    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
-      Batas Kemenganan. Silakan hubungi upline Anda terima kasih.
-      ({{errorCode}})"
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Batas Kemenganan. Silakan hubungi upline Anda, terima kasih. \n({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   loseLimitHit:
     key: loseLimitHit
-    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
-      Batas Kekalahan. Silakan hubungi upline Anda terima kasih. ({{errorCode}})"
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Batas Kekalahan. Silakan hubungi upline Anda, terima kasih. \n({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetUpdated:
     key: limitBetUpdated
-    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
-      Batas taruhan Anda telah diperbarui silakan coba lagi. ({{errorCode}})"
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Batas taruhan Anda telah diperbarui, silakan coba lagi. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetNotDefined:
     key: limitBetNotDefined
-    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan!
-      Batas taruhan Anda untuk game ini belum ditetapkan. Silakan hubungi upline
-      Anda terima kasih. ({{errorCode}})"
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Batas taruhan Anda untuk game ini belum ditetapkan. Silakan hubungi upline Anda, terima kasih. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountSuspended:
     key: accountSuspended
-    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Akun
-      telah ditangguhkan. Silakan hubungi upline Anda untuk lebih lanjut terima
-      kasih. ({{errorCode}})"
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nGagal memasang taruhan! Akun telah ditangguhkan. Silakan hubungi upline Anda untuk lebih lanjut, terima kasih. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -175,7 +165,7 @@ items:
   unavailableGame:
     key: unavailableGame
     value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nPermainan tidak tersedia
-      saat ini. Silakan hubungi CSD untuk lebih lanjut terima kasih.
+      saat ini. Silakan hubungi CSD untuk lebih lanjut, terima kasih.
       ({{errorCode}})"
     type: 4
     isVariant: false
@@ -190,7 +180,7 @@ items:
     _variants: []
   errorOccurredFull:
     key: errorOccurredFull
-    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nTerjadi kesalahan hubungi
+    value: "Permainan {{gameName}} (#{{gameRoundId}})\n\nTerjadi kesalahan, hubungi
       CSD untuk lebih lanjut. ({{errorCode}})"
     type: 4
     isVariant: false

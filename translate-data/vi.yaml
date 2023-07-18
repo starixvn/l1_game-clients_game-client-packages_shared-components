@@ -125,7 +125,7 @@ items:
   limitBetExceeded:
     key: limitBetExceeded
     value: "Game {{gameName}} (#{{gameRoundId}})\n\nKhoản tiền cược của bạn đã vượt
-      quá cài đặt giới hạn cược vui lòng thử lại. Đặt cược thất bại!
+      quá cài đặt giới hạn cược, vui lòng thử lại. Đặt cược thất bại!
       ({{errorCode}})"
     type: 4
     isVariant: false
@@ -134,7 +134,7 @@ items:
   playerNotPermittedPlay:
     key: playerNotPermittedPlay
     value: "Game {{gameName}} (#{{gameRoundId}})\n\nTrò chơi bị vô hiệu hóa. Vui lòng
-      liên hệ với cấp trên để biết chi tiết cảm ơn bạn. ({{errorCode}})"
+      liên hệ với cấp trên để biết chi tiết, cảm ơn bạn. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -184,7 +184,7 @@ items:
   unavailableGame:
     key: unavailableGame
     value: "Game {{gameName}} (#{{gameRoundId}})\n\nTrò chơi không khả dụng vào thời
-      điểm này. Vui lòng liên hệ với bộ phận CSKH để biết chi tiết cảm ơn bạn.
+      điểm này. Vui lòng liên hệ với bộ phận CSKH để biết chi tiết, cảm ơn bạn.
       ({{errorCode}})"
     type: 4
     isVariant: false

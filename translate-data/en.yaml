@@ -127,96 +127,66 @@ items:
     _variants: []
   limitBetExceeded:
     key: limitBetExceeded
-    value: >-
-      Game {{gameName}} (#{{gameRoundId}})
-
-
-      Failed to place bet! Your stake has exceeded your bet limit settings
-      please try again. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your stake
+      has exceeded your bet limit settings, please try again. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   playerNotPermittedPlay:
     key: playerNotPermittedPlay
-    value: >-
-      Game {{gameName}} (#{{gameRoundId}})
-
-
-      Game disabled. Please contact your upline for details thank you.
-      ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nGame disabled. Please contact
+      your upline, for details thank you. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   winLimitHit:
     key: winLimitHit
-    value: >-
-      Game {{gameName}} (#{{gameRoundId}})
-
-
-      Failed to place bet! Win limit hit. Please contact your upline thank you.
-      ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Win limit
+      hit. Please contact your upline, thank you. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   loseLimitHit:
     key: loseLimitHit
-    value: >-
-      Game {{gameName}} (#{{gameRoundId}})
-
-
-      Failed to place bet! Lose limit hit. Please contact your upline thank you.
-      ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Lose limit
+      hit. Please contact your upline, thank you. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetUpdated:
     key: limitBetUpdated
-    value: >-
-      Game {{gameName}} (#{{gameRoundId}})
-
-
-      Failed to place bet! Your bet limit has been updated please try again.
-      ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet
+      limit has been updated, please try again. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   limitBetNotDefined:
     key: limitBetNotDefined
-    value: >-
-      Game {{gameName}} (#{{gameRoundId}})
-
-
-      Failed to place bet! Your bet limit for this game has not been set. Please
-      contact your upline thank you. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Your bet
+      limit for this game has not been set. Please contact your upline, thank
+      you. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   accountSuspended:
     key: accountSuspended
-    value: >-
-      Game {{gameName}} (#{{gameRoundId}})
-
-
-      Failed to place bet! Account has been suspended. Please contact your
-      upline for details thank you. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nFailed to place bet! Account has
+      been suspended. Please contact your upline for details, thank you.
+      ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
     _variants: []
   unavailableGame:
     key: unavailableGame
-    value: >-
-      Game {{gameName}} (#{{gameRoundId}})
-
-
-      The game is unavailable at the moment. Please contact CSD for details
-      thank you. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nThe game is unavailable at the
+      moment. Please contact CSD for details, thank you. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
@@ -230,10 +200,8 @@ items:
     _variants: []
   errorOccurredFull:
     key: errorOccurredFull
-    value: |-
-      Game {{gameName}} (#{{gameRoundId}})
-
-      An error has occurred please contact CSD for details. ({{errorCode}})
+    value: "Game {{gameName}} (#{{gameRoundId}})\n\nAn error has occurred, please
+      contact CSD for details. ({{errorCode}})"
     type: 4
     isVariant: false
     associations: []
