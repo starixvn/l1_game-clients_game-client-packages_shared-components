@@ -1,4 +1,4 @@
-import { Animation, Node, UIOpacity, UITransform, Vec3, math, tween } from "cc";
+import { Animation, Node, UIOpacity, UITransform, Vec3, math, sp, tween } from "cc";
 
 export namespace AnimationUtils {
     export const fadeIn = (node: Node, duration: number, opacity = 255) => {
@@ -64,6 +64,22 @@ export namespace AnimationUtils {
             }
             animation.on(Animation.EventType.FINISHED, onFinished);
             animation.play(animationName);
+        });
+    };
+
+    export const playSpine = (spine: sp.Skeleton, animationName: string, duration?: number) => {
+        return new Promise<void>((resolve, reject) => {
+            const animationDuration = spine.findAnimation(animationName).duration;
+            if (duration) {
+                spine.timeScale = animationDuration / duration;
+            } else {
+                duration = animationDuration;
+            }
+            spine.setAnimation(0, animationName, false);
+            tween(spine)
+                .delay(duration)
+                .call(() => resolve())
+                .start();
         });
     };
 

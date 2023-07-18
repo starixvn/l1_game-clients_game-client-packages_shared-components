@@ -91,13 +91,20 @@ export default class GameComponent extends GameComponentBase {
         this.lblMaxBet && (this.lblMaxBet.string = FormatUtils.numberWithCommas(maxBet));
     }
 
-    @render(Settlements.SettlementStore, (store) => store.result, { fireImmediately: false })
-    handleResult(result: gc.GameServiceMessage.TResult) {
-        this.showResult(result, true);
+    @render(Settlements.SettlementStore, (store) => ({ result: store.result, settlementResult: store.settlementResult }), {
+        fireImmediately: false,
+    })
+    handleResult(data: { result: gc.GameServiceMessage.TResult; settlementResult: gc.GameServiceMessage.TSettlementResult }) {
+        const { result, settlementResult } = data;
+        this.showResult(result, true).then(() => {
+            if (!settlementResult) {
+                return;
+            }
+            this.finishShowResult(settlementResult);
+        });
         this.playSoundReceiveFinish();
     }
-
-    showResult(result: gc.GameServiceMessage.TResult, hasAnimation: boolean) {}
+    async showResult(result: gc.GameServiceMessage.TResult, hasAnimation: boolean) {}
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundReceiveFinish() {
@@ -105,7 +112,7 @@ export default class GameComponent extends GameComponentBase {
     }
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
-    finishShowResult() {}
+    finishShowResult(settlementResult: gc.GameServiceMessage.TSettlementResult) {}
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
     handleStartRound(isStartRound: boolean) {}
