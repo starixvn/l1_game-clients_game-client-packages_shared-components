@@ -34,9 +34,9 @@ export class ScoreboardDataReceiver extends ObserverComponent {
         this.lastRound = round;
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.isLocking)
-    public toggleBlinkNode(active: boolean) {
-        if (active && this.bigRoad) {
+    @render(gc.Rounds.RoundStore, (store) => store.isAnimBlink)
+    public toggleBlinkNode(isAnimBlink: boolean) {
+        if (isAnimBlink && this.bigRoad) {
             const converter = this.bigRoad.getComponent(ScoreboardDataConverter);
             const round = converter.createRound();
             const lastResult = converter.convert(this.lastRound)?.[converter.keyOfA];

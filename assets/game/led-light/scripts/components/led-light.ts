@@ -86,11 +86,11 @@ export class LedLight extends ObserverComponent {
         }
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.isLocking)
-    public handleBlinkNextDot(isLocking: boolean) {
-        this.isShowDotNext = isLocking;
-        isLocking && this.hideTooltip();
-        this.updateLedLightItemInfo(this.rounds, isLocking);
+    @render(gc.Rounds.RoundStore, (store) => store.isAnimBlink)
+    public handleBlinkNextDot(isAnimBlink: boolean) {
+        this.isShowDotNext = isAnimBlink;
+        isAnimBlink && this.hideTooltip();
+        this.updateLedLightItemInfo(this.rounds, isAnimBlink);
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
