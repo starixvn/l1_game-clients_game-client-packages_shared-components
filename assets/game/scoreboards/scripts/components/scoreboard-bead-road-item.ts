@@ -12,6 +12,13 @@ export class ScoreboardBeadRoadItem<T> extends ScoreboardGridItem<T> {
     createState(_: GridItemSettings, data?: T, container?: Node): ScoreboardItemState {
         const converter = container.getComponent(ScoreboardDataConverter);
 
+        if (data[converter.blinkKey]) {
+            return {
+                status: ScoreboardItemStatus.BLINK,
+                tie: 0,
+            };
+        }
+
         if (data[converter.keyOfA] === undefined) {
             return {
                 status: ScoreboardItemStatus.NONE,

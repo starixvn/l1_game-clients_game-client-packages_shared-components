@@ -39,14 +39,14 @@
         "__id__": 34
       },
       {
-        "__id__": 38
+        "__id__": 39
       },
       {
-        "__id__": 40
+        "__id__": 41
       }
     ],
     "_prefab": {
-      "__id__": 42
+      "__id__": 43
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -678,6 +678,9 @@
       },
       {
         "__id__": 37
+      },
+      {
+        "__id__": 38
       }
     ],
     "_id": ""
@@ -697,6 +700,11 @@
     "value": "tie"
   },
   {
+    "__type__": "ScoreboardConverterProperty",
+    "key": "blinkKey",
+    "value": "blink"
+  },
+  {
     "__type__": "ce586UxhXVMkpPsmXmPwpj0",
     "_name": "",
     "_objFlags": 0,
@@ -705,7 +713,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 39
+      "__id__": 40
     },
     "converter": {
       "__id__": 34
@@ -728,7 +736,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 41
+      "__id__": 42
     },
     "grid": {
       "__id__": 28
@@ -737,7 +745,7 @@
       "__id__": 34
     },
     "algorithm": {
-      "__id__": 38
+      "__id__": 39
     },
     "_id": ""
   },
