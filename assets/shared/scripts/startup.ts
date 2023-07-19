@@ -3,11 +3,11 @@ import gc from "@sg/game-client-base";
 import mobx from "mobx";
 import Observer from "observer";
 
-const loadI18n = (siteConfigs: gc.Configs.SiteConfigs) => {
+const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) => {
     try {
         const isUseTolgeeRealTime = false; // temporary meanwhile finding solution for loading realtime
         //siteConfigs.env.toLocaleLowerCase().indexOf("local") >= 0 && !siteConfigs.isDev;
-        const languageId = gc.Shared.utils.TranslationManager.getLanguageId();
+        const languageId = gc.Translator.getLanguageId();
         const languageCodes = ["en", "id", "th", "vi", "zh_cn", "zh_tw"];
         const translationOptions: gc.Shared.utils.TranslationOptions = {
             languageId: languageId,
@@ -18,8 +18,11 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs) => {
             availableLanguages: languageCodes,
             onLoaded: () => {
                 console.log("started tolgee");
-                console.log(gc.Shared.utils.TranslationManager.translate("Common.bet_choice"));
+                console.log(gc.Translator.t("Common.bet_choice"));
+                console.log(gc.Translator.gameTranslate("tie"));
+                console.log(gc.Translator.commonTranslate("copyfailed_md5"));
             },
+            gameNamespace: gameNamespace,
         };
 
         // if (isUseTolgeeRealTime) {
@@ -29,14 +32,14 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs) => {
         //     translationOptions.tg = togleWeb.Tolgee().use(togleWeb.DevTools()).init(siteConfigs.tolgee);
         // }
 
-        gc.Shared.utils.TranslationManager.init(translationOptions);
+        gc.Translator.init(translationOptions);
     } catch (e) {
         console.log(e);
     }
 };
 
 export function startGame(namespace: string, containerOptions: gc.IContainerOptions, siteConfigs: gc.Configs.SiteConfigs) {
-    loadI18n(siteConfigs);
+    loadI18n(siteConfigs, namespace);
 
     const container = gc.getContainer(containerOptions);
     const observerContainer = gc.buildObserverContainer(container);
