@@ -43,6 +43,11 @@ export default class GameComponent extends GameComponentBase {
         isUM && director.loadScene("under-maintenance");
     }
 
+    @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.name)
+    logLoadScene(gameName: string) {
+        console.log(`LoadScene ${gameName}`);
+    }
+
     @render(LogStore, (store) => store.message)
     logInfo(message: string) {}
 
