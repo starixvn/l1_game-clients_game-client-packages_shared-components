@@ -883,6 +883,13 @@ items:
     isVariant: false
     associations: []
     _variants: []       
+  tie:
+    key: tie
+    value: เสมอ
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []  
 languageConfig:
   bcp47Tag: th
   translateFinished: 376

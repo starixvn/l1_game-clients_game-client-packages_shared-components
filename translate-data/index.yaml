@@ -1194,7 +1194,14 @@ items:
     type: 2
     isVariant: false
     associations: []
-    _variants: []  
+    _variants: []
+  tie:
+    key: tie
+    value: ""
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []     
 languageConfig:
   bcp47Tag: index
   translateFinished: 390

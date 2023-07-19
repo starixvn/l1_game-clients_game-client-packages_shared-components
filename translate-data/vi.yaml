@@ -938,6 +938,13 @@ items:
     isVariant: false
     associations: []
     _variants: []   
+  tie:
+    key: tie
+    value: Hòa
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []  
 languageConfig:
   bcp47Tag: vi
   translateFinished: 390
