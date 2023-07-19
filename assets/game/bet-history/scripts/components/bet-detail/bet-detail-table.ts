@@ -2,6 +2,7 @@ import { _decorator, Component, instantiate, Label, Node, Prefab } from "cc";
 import gc from "@sg/game-client-base";
 import BetDetailBodyItem from "./bet-detail-body-item";
 import { BaseResultBodyItem } from "../bet-history-body-item";
+import { BetChoice } from "../../../../../../../../assets/game/scripts/components/dtf-commons";
 
 const { ccclass, property } = _decorator;
 
@@ -53,7 +54,8 @@ export class BetDetailTable extends Component {
             odds[choice],
             settlementResult[choice],
             freeBet,
-            fractionalOddsFormat
+            fractionalOddsFormat,
+            settlementResult[BetChoice.Tie]
         );
 
         return bodyRow;

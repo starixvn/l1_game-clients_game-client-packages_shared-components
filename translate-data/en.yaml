@@ -950,14 +950,14 @@ items:
     _variants: []
   betDetail:
     key: betDetail
-    value: Bet Detail
+    value: Bet Details
     type: 2
     isVariant: false
     associations: []
     _variants: []
   choice:
     key: choice
-    value: Choice
+    value: Bet Choice
     type: 2
     isVariant: false
     associations: []

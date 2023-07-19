@@ -8,6 +8,7 @@ export default class BetDetailBodyItem extends ObserverComponent {
         odd: number,
         isWin: boolean,
         freeBet: boolean,
-        fractionalOddsFormat: boolean
+        fractionalOddsFormat: boolean,
+        isTie?: boolean
     ) {}
 }
