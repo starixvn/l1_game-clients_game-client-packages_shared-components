@@ -86,24 +86,37 @@ export class LedLight extends ObserverComponent {
         }
     }
 
-    @render(gc.Rounds.RoundStore, (store) => store.isAnimBlink)
-    public handleBlinkNextDot(isAnimBlink: boolean) {
-        this.isShowDotNext = isAnimBlink;
-        isAnimBlink && this.hideTooltip();
-        this.updateLedLightItemInfo(this.rounds, isAnimBlink);
+    @render(gc.Rounds.RoundTimeStore, (store) => store.isLocking)
+    public handleBlinkNextDot(isLocking: boolean) {
+        if (isLocking) {
+            this.isShowDotNext = isLocking;
+            this.hideTooltip();
+            this.updateLedLightItemInfo(this.rounds, this.stepStart);
+        }
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     public setLedLightInfo(rounds: gc.RoundHistories.RoundHistory[]) {
         this.rounds = [...rounds];
-        this.updateLedLightItemInfo(this.rounds, this.isShowDotNext);
+        this.updateLedLightItemInfo(this.rounds, this.stepStart);
     }
 
-    protected updateLedLightItemInfo(rounds: gc.RoundHistories.RoundHistory[], isShowDotNext: boolean) {
+    get stepStart() {
+        return this.isShowDotNext ? 1 : 0;
+    }
+
+    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
+    public hideBlinkNode(isFinishedShowResult: boolean) {
+        if (isFinishedShowResult) {
+            this.isShowDotNext = false;
+        }
+    }
+
+    protected updateLedLightItemInfo(rounds: gc.RoundHistories.RoundHistory[], stepStart: number) {
         if (this.rounds.length === 0 || this.ledLightItems.length === 0) {
             return;
         }
-        const stepStart = isShowDotNext ? 1 : 0;
+
         this.hideAllDots(stepStart);
         this.updateFirstLedLightItem();
         this.updateNextNode();
