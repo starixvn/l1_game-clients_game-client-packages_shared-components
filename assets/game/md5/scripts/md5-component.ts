@@ -45,9 +45,9 @@ export default class MD5Component extends Component {
     }
 
     private registerTouchEvents() {
-        this.nodeContentContainer.on(Node.EventType.MOUSE_ENTER, this.showTooltip, this);
-        this.nodeContentContainer.on(Node.EventType.MOUSE_LEAVE, this.hideTooltip, this);
-        this.nodeContentContainer.on(Node.EventType.TOUCH_START, this.showTooltip, this);
+        this.nodeContentContainer?.on(Node.EventType.MOUSE_ENTER, this.showTooltip, this);
+        this.nodeContentContainer?.on(Node.EventType.MOUSE_LEAVE, this.hideTooltip, this);
+        this.nodeContentContainer?.on(Node.EventType.TOUCH_START, this.showTooltip, this);
     }
 
     private initHintAndCaption() {
@@ -65,7 +65,7 @@ export default class MD5Component extends Component {
     }
 
     private hideTooltip() {
-        this.md5Tip.show(false);
+        this.md5Tip?.show(false);
     }
 
     @render(Rounds.RoundStore, (store) => store.resultHash, { fireImmediately: false })
@@ -82,7 +82,7 @@ export default class MD5Component extends Component {
         }
     }
 
-    protected generateMD5Result(data: gc.GameServiceMessage.ResultHash) {
+    generateMD5Result(data: gc.GameServiceMessage.ResultHash) {
         const value = data?.hashValue || data?.rawValue;
         const formatValue = value.length > this.maximumStringAllowed ? value.slice(0, this.lengthOfMd5) + "..." : value;
         this.lblMd5Value && (this.lblMd5Value.string = `${formatValue}`);
