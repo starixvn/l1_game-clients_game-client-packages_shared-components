@@ -1,17 +1,23 @@
 import { Animation, Node, UIOpacity, UITransform, Vec3, math, sp, tween } from "cc";
 
 export namespace AnimationUtils {
+    const getUiOpacity = (node: Node) => {
+        let uiOpacity = node.getComponent(UIOpacity);
+        if (!uiOpacity) {
+            uiOpacity = node.addComponent(UIOpacity);
+        }
+        return uiOpacity;
+    };
     export const fadeIn = (node: Node, duration: number, opacity = 255) => {
-        const uiOpacity = node.getComponent(UIOpacity);
-        return fadeTo(uiOpacity, duration, opacity);
+        return fadeTo(node, duration, opacity);
     };
 
     export const fadeOut = (node: Node, duration: number, opacity = 1) => {
-        const uiOpacity = node.getComponent(UIOpacity);
-        return fadeTo(uiOpacity, duration, opacity);
+        return fadeTo(node, duration, opacity);
     };
 
-    export const fadeTo = (uiOpacity: UIOpacity, duration: number, opacity: number) => {
+    export const fadeTo = (node: Node, duration: number, opacity: number) => {
+        const uiOpacity = getUiOpacity(node);
         if (uiOpacity) {
             tween(uiOpacity).to(duration, { opacity: opacity }).start();
         }
