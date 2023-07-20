@@ -28,11 +28,6 @@
     "_events": [
       {
         "frame": 0.75,
-        "func": "",
-        "params": []
-      },
-      {
-        "frame": 0.75,
         "func": "faceDown",
         "params": []
       }

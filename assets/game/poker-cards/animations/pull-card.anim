@@ -25,7 +25,13 @@
       }
     ],
     "_exoticAnimation": null,
-    "_events": [],
+    "_events": [
+      {
+        "frame": 0,
+        "func": "faceDown",
+        "params": []
+      }
+    ],
     "_embeddedPlayers": []
   },
   {

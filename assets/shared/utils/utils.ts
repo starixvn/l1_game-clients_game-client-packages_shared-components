@@ -64,9 +64,9 @@ export namespace AnimationUtils {
                 animation.off(Animation.EventType.FINISHED, onFinished);
                 resolve();
             };
-            if (duration) {
-                const clip = animation.clips.find((clip) => clip.name === animationName);
-                clip.speed = clip.duration / duration;
+            if (duration > 0) {
+                const state = animation.getState(animationName);
+                state.speed = state.clip.duration / duration;
             }
             animation.on(Animation.EventType.FINISHED, onFinished);
             animation.play(animationName);
