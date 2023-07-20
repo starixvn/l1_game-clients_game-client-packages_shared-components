@@ -62,6 +62,10 @@ export class LedLight extends ObserverComponent {
 
     private ledLightItemListener = {
         onEnter: (node: Node) => {
+            if (node.getComponent(UIOpacity).opacity <= 1) {
+                return;
+            }
+
             this.selectedLedLight = node;
             const ledLightInfo = node.getComponent(LedLightItem).ledLightItemInfo;
             if (this.toolTipCompt && ledLightInfo) {
