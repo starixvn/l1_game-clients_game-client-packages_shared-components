@@ -1,5 +1,6 @@
 import { CCString, Component, Sprite, SpriteAtlas, _decorator, error } from "cc";
-import { l10n } from "../../../../../localization-editor/static/assets/l10n";
+import gc from "@sg/game-client-base";
+const {Translator} = gc;
 
 const { ccclass, property } = _decorator;
 
@@ -24,7 +25,7 @@ export class OnePackLocalizedSprite extends Component {
         const sprite = this.node.getComponent(Sprite);
         if (sprite) {
             this.sprite = sprite;
-            this.updateSprite(l10n.currentLanguage);
+            this.updateSprite(Translator.getCurrentLanguageId());
         }
     }
 

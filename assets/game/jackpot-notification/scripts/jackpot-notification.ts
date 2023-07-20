@@ -1,7 +1,8 @@
 import { _decorator, Component, Label, tween, NodeEventType, v2, v3, UITransform } from "cc";
 import gc from "@sg/game-client-base";
 import Observer from "observer";
-import { l10n } from "../../../../../localization-editor/static/assets/l10n";
+const {Translator} = gc;
+
 
 const { render, observer } = Observer;
 const { ccclass, property } = _decorator;
@@ -111,7 +112,7 @@ export class JackpotNotification extends Component {
     notifyJackpotWinner(jackpotWinner: gc.NotificationServiceMessage.JackpotWinner) {
         this.lblPlayerName.string = jackpotWinner.winnerName;
         this.lblAmount.string = FormatUtils.numberWithCommas(jackpotWinner.amount, 2);
-        this.lblGameName.string = l10n.t(`gameNames.${jackpotWinner.gameId}`);
+        this.lblGameName.string = Translator.translate(`gameNames.${jackpotWinner.gameId}`);
 
         this.node.active = true;
 

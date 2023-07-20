@@ -3,7 +3,7 @@ import { Component, Label, Tween, UIOpacity, Vec3, _decorator, tween, v3 } from 
 import { shuffle } from "lodash-es";
 
 const { ccclass, property } = _decorator;
-const { LocalizedUtils } = gc;
+const { Translator } = gc;
 
 @ccclass
 export class RandomWaitingMessage extends Component {
@@ -14,7 +14,7 @@ export class RandomWaitingMessage extends Component {
     private readonly displayMessageTime = 4;
     private readonly moveY = 35;
     currentIndex = 0;
-    messageList = ["splash_firstVisit", "splash_checkDownloading"];
+    messageList = ["message_download_first_visit", "splash_check_downloading"];
     messageTweens: Tween<any>[] = [];
 
     onLoad() {
@@ -27,7 +27,7 @@ export class RandomWaitingMessage extends Component {
         if (this.currentIndex > this.messageList.length - 1) {
             this.currentIndex = 0;
         }
-        this.setMessage(LocalizedUtils.getLocalizedText(this.messageList[this.currentIndex]));
+        this.setMessage(Translator.commonTranslate(this.messageList[this.currentIndex]));
         const nodeMessage = this.lblMessage.node;
         nodeMessage.setPosition(nodeMessage.getPosition().x, this.moveY);
         nodeMessage.getComponent(UIOpacity).opacity = 0;

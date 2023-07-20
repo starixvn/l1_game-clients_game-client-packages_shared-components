@@ -1,6 +1,7 @@
 import { CCBoolean, Component, Font, Label, _decorator } from "cc";
-import { l10n } from "../../../../../localization-editor/static/assets/l10n";
 import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
+import gc from "@sg/game-client-base";
+const {Translator} = gc;
 
 const { ccclass, property } = _decorator;
 
@@ -54,7 +55,7 @@ export class LocalizedFont extends Component {
     }
 
     handleCacheMode() {
-        const lang = l10n.currentLanguage;
+        const lang = Translator.getCurrentLanguageId();
         switch (lang) {
             case "th":
             case "zh-Hans":
@@ -69,7 +70,7 @@ export class LocalizedFont extends Component {
     }
 
     getFontNameByLanguage(): any {
-        const lang = l10n.currentLanguage;
+        const lang = Translator.getCurrentLanguageId();
         const overrideFonts = this.overrideFonts.find((data) => data.language === lang);
         return overrideFonts?.name || this.fontBases[lang] || this.fontBases["en"];
     }

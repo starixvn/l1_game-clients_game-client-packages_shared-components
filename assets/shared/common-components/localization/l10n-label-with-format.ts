@@ -2,6 +2,8 @@ import { CCString, Enum, _decorator } from "cc";
 import { EDITOR } from "cc/env";
 import { L10nLabel, l10n } from "../../../../../localization-editor/static/assets/l10n";
 import { FormationHandler } from "./formation-handler";
+import gc from "@sg/game-client-base";
+const { Translator } = gc;
 
 const { ccclass, property } = _decorator;
 
@@ -14,7 +16,7 @@ export class L10nLabelWithFormat extends L10nLabel {
     suffix = "";
 
     render() {
-        const translatedString = l10n.t(this._key, { count: this._count });
+        const translatedString = Translator.translate(this._key, { count: this._count });
         if (typeof this.label === "undefined" || typeof translatedString === "undefined") {
             return;
         }

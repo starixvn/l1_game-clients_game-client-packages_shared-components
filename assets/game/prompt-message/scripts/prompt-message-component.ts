@@ -1,8 +1,7 @@
 import { Label, UIOpacity,  _decorator, tween, math, Component } from "cc";
 const { ccclass, property } = _decorator;
 import gc from "@sg/game-client-base";
-const { LocalizedUtils } = gc;
-
+const { Translator } = gc;
 
 @ccclass
 export default class PromptMessageComponent extends Component {
@@ -40,12 +39,12 @@ export default class PromptMessageComponent extends Component {
 }
 
   showStartBetMessage() {
-    const message = LocalizedUtils.getLocalizedText("startPlaceBet").toUpperCase();
+    const message = Translator.commonTranslate("message_place_bets").toUpperCase();
     this.content = message;
   }
 
   showStopBetMessage() {
-    const message = LocalizedUtils.getLocalizedText("stopPlaceBet").toUpperCase();
+    const message = Translator.commonTranslate("message_stop_bet").toUpperCase();
     this.content = message;
   }
 }

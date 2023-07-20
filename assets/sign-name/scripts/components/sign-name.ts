@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
 import { AudioSource, Component, EditBox, EventKeyboard, Input, KeyCode, Label, Node, _decorator, input, sys } from "cc";
 import Observer from "observer";
+const { Translator } = gc;
 
 const { ccclass, property } = _decorator;
 const { observer, handle } = Observer;
@@ -105,7 +106,7 @@ export class SignName extends Component {
 
     onSignNameClick() {
         if (this.validateUsername(this.username.string)) {
-            this.lblErrorMessage.string = Shared.l10n.t("nameInvalid");
+            this.lblErrorMessage.string = Translator.commonTranslate("name_invalid");
         } else {
             this.handleSignName(this.username.string);
         }
@@ -113,7 +114,7 @@ export class SignName extends Component {
 
     usernameTextChanged() {
         if (this.validateUsername(this.username.string)) {
-            this.lblErrorMessage.string = Shared.l10n.t("nameInvalid");
+            this.lblErrorMessage.string = Translator.commonTranslate("name_invalid");
         } else {
             this.lblErrorMessage.string = "";
         }

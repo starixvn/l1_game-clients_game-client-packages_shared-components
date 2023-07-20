@@ -1,5 +1,7 @@
 import { CCString, MaskComponent, SpriteAtlas, _decorator } from "cc";
-import { l10n } from "../../../../../localization-editor/static/assets/l10n";
+import gc from "@sg/game-client-base";
+const {Translator} = gc;
+
 
 const { ccclass, property } = _decorator;
 
@@ -13,7 +15,7 @@ export class LocalizedSpriteMask extends MaskComponent {
 
     onLoad() {
         super.onLoad();
-        this._sprite && (this._sprite.spriteFrame = this.getSpriteFrameByLang(l10n.currentLanguage));
+        this._sprite && (this._sprite.spriteFrame = this.getSpriteFrameByLang(Translator.getCurrentLanguageId()));
     }
 
     getSpriteFrameByLang(lang: string) {
