@@ -1025,6 +1025,20 @@ items:
     isVariant: false
     associations: []
     _variants: []  
+  headerDragon:
+    key: headerDragon
+    value: ( Dragon
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  headerTiger:
+    key: headerTiger
+    value: Tiger )
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: en
   translateFinished: 390

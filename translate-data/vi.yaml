@@ -945,6 +945,20 @@ items:
     isVariant: false
     associations: []
     _variants: []  
+  headerDragon:
+    key: headerDragon
+    value: ( Rồng
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  headerTiger:
+    key: headerTiger
+    value: Hổ )
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: vi
   translateFinished: 390

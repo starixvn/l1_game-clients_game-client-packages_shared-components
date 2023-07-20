@@ -886,6 +886,20 @@ items:
     isVariant: false
     associations: []
     _variants: []  
+  headerDragon:
+    key: headerDragon
+    value: ( 龙
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  headerTiger:
+    key: headerTiger
+    value: 虎 )
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: zh-Hans
   translateFinished: 376

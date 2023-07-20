@@ -630,9 +630,6 @@ items:
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: d5RAa+MExIwLxzlVuXUJYo
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-        nodeUuid: d5RAa+MExIwLxzlVuXUJYo
-        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
       - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
         nodeUuid: 470ph9bf1J6qnvVcxNscK1
         reference: ff4a7cb1-c194-44bb-b810-5982525b617d
@@ -643,9 +640,6 @@ items:
     type: 2
     isVariant: false
     associations:
-      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-        nodeUuid: 05Zxuq/JpIEri9Xr+FQBRG
-        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: 05Zxuq/JpIEri9Xr+FQBRG
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
@@ -663,12 +657,6 @@ items:
     isVariant: false
     associations:
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-        nodeUuid: 17iQOoLZpP5b0fCJCSGwy4
-        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-        nodeUuid: 17iQOoLZpP5b0fCJCSGwy4
-        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: a3yZvVOfhAcYznbSqGaA2j
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
@@ -676,6 +664,12 @@ items:
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
       - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
         nodeUuid: c4koJt+PVHp6fnzyft+nBc
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: 6e1b864f-b77d-4936-9d50-dac4ec07332a
+        nodeUuid: 146/jwDWxDa7YlMQUCxhCC
+        reference: 6e1b864f-b77d-4936-9d50-dac4ec07332a
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: ffbz5WFj5K2JKbotF/o6wu
         reference: ff4a7cb1-c194-44bb-b810-5982525b617d
     _variants: []
   event:
@@ -775,9 +769,6 @@ items:
     type: 2
     isVariant: false
     associations:
-      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-        nodeUuid: fdU1SwrvBPDIslK30ldGZJ
-        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
       - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
         nodeUuid: 85gHQLIL9P2IaqEWM3gC0g
         reference: ff4a7cb1-c194-44bb-b810-5982525b617d
@@ -1070,9 +1061,6 @@ items:
       - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
         nodeUuid: fcJ93Yy+pBSJGMFYLdSTH+
         reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
-        nodeUuid: fcJ93Yy+pBSJGMFYLdSTH+
-        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
     _variants: []
   tiger:
     key: tiger
@@ -1104,6 +1092,9 @@ items:
       - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
         nodeUuid: 422ux7MixMobTfUtBNvM29
         reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: 6e1b864f-b77d-4936-9d50-dac4ec07332a
+        nodeUuid: 48NcpSS2NNk5gb6RALHpgo
+        reference: 6e1b864f-b77d-4936-9d50-dac4ec07332a
     _variants: []
   dragon:
     key: dragon
@@ -1135,6 +1126,9 @@ items:
       - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
         nodeUuid: 33v8nsSe5HhY70wF1Hjzl1
         reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: 6e1b864f-b77d-4936-9d50-dac4ec07332a
+        nodeUuid: dfJqbYSPhDTIZeOMLrnIqj
+        reference: 6e1b864f-b77d-4936-9d50-dac4ec07332a
     _variants: []
   betDetail:
     key: betDetail
@@ -1158,11 +1152,9 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a1
-        sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
         nodeUuid: aak7x1VLlFSr5zlbFXtxWe
         reference: ff4a7cb1-c194-44bb-b810-5982525b617d
-      - *a1
     _variants: []
   odds:
     key: odds
@@ -1170,11 +1162,12 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a2
-        sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
         nodeUuid: feqHlXMbFN2b/0VXqDLo2R
         reference: ff4a7cb1-c194-44bb-b810-5982525b617d
-      - *a2
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: feqHlXMbFN2b/0VXqDLo2R
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
     _variants: []
   choice:
     key: choice
@@ -1182,11 +1175,54 @@ items:
     type: 2
     isVariant: false
     associations:
-      - &a3
-        sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
         nodeUuid: 2c9c2ycLdCNqy9+jJ4Wyfz
         reference: ff4a7cb1-c194-44bb-b810-5982525b617d
-      - *a3
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: 2c9c2ycLdCNqy9+jJ4Wyfz
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: 6ba9sDjx5IFYjqA423JEuO
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+    _variants: []
+  stake:
+    key: stake
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: ddqpc5d7BLhJ6fVv/yd5Ww
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: ddqpc5d7BLhJ6fVv/yd5Ww
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+    _variants: []
+  headerDragon:
+    key: headerDragon
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: f5/G3YLtxJxaJ//aLdpzzd
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: ffbz5WFj5K2JKbotF/o6wu
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
+    _variants: []
+  headerTiger:
+    key: headerTiger
+    value: ""
+    type: 2
+    isVariant: false
+    associations:
+      - sceneUuid: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+        nodeUuid: acMcvkCC1MTbqTJ3Gtna9z
+        reference: 0c2059be-a0a3-4a85-80e6-e69c4ded0a99
+      - sceneUuid: ff4a7cb1-c194-44bb-b810-5982525b617d
+        nodeUuid: ffbz5WFj5K2JKbotF/o6wu
+        reference: ff4a7cb1-c194-44bb-b810-5982525b617d
     _variants: []
   limitBetChanged:
     key: limitBetChanged

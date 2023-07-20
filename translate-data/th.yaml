@@ -890,6 +890,20 @@ items:
     isVariant: false
     associations: []
     _variants: []  
+  headerDragon:
+    key: headerDragon
+    value: ( มังกร
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
+  headerTiger:
+    key: headerTiger
+    value: เสือ )
+    type: 2
+    isVariant: false
+    associations: []
+    _variants: []
 languageConfig:
   bcp47Tag: th
   translateFinished: 376
