@@ -1,4 +1,4 @@
-import { _decorator, Node, Label } from "cc";
+import { _decorator, Node, Label, Layout } from "cc";
 import Observer from "observer";
 import PaginationItem from "./pagination-item";
 import gc from "@sg/game-client-base";
@@ -28,8 +28,9 @@ export default class Pagination extends ObserverComponent {
     protected pageButtons: number = 5;
     protected control: any = null;
     protected totalPages = 0;
-    protected pageRed = 0;
     protected currentPage = 1;
+    protected distanceYetChaos = Math.round(this.pageButtons / 2);
+    protected distanceNumberCenter = Math.floor(this.pageButtons / 2);
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundClick() {
@@ -56,7 +57,7 @@ export default class Pagination extends ObserverComponent {
     }
 
     hanldePage(event: any, pageNumber: string) {
-        this.currentPage = parseInt(pageNumber);
+        this.currentPage = parseInt(event.currentTarget.getComponentsInChildren(Label)[0].string);
         this.fetchData();
     }
 
@@ -70,19 +71,16 @@ export default class Pagination extends ObserverComponent {
     setData(model: gc.BetHistory.BetHistoryModel) {
         this.currentPage = model.page;
         this.totalPages = Math.ceil(model.total / model.pageSize);
-        this.pageRed = this.totalPages > this.pageButtons ? this.totalPages - this.currentPage : 0;
 
         this.updateLayout();
     }
 
     updateArrowButtonsVisibility() {
-        const conditionPrecedent = this.totalPages > this.pageButtons;
+        this.nodeFirst.active = this.currentPage > 2;
+        this.nodeLast.active = this.currentPage < this.totalPages - 1;
 
-        this.nodeFirst.active = conditionPrecedent && this.currentPage > 2;
-        this.nodeLast.active = conditionPrecedent && this.pageRed > 1;
-
-        this.nodePrevious.active = conditionPrecedent && this.currentPage > 1;
-        this.nodeNext.active = conditionPrecedent && this.pageRed > 0;
+        this.nodePrevious.active = this.currentPage > 1;
+        this.nodeNext.active = this.currentPage < this.totalPages;
     }
 
     updateLayout() {
@@ -91,7 +89,7 @@ export default class Pagination extends ObserverComponent {
             return;
         }
 
-        const startedIndex = this.getStartedPageIndex();
+        let startedIndex = this.getStartedPageIndex();
 
         this.pages.forEach((page, index) => {
             const pageNumber = startedIndex + index;
@@ -100,6 +98,14 @@ export default class Pagination extends ObserverComponent {
         });
 
         this.updateArrowButtonsVisibility();
+        this.updateLayout1();
+    }
+
+    updateLayout1() {
+        const layout = this.node.getComponent(Layout);
+        layout.enabled = true;
+        layout.updateLayout();
+        layout.enabled = false;
     }
 
     getStartedPageIndex() {
@@ -110,7 +116,7 @@ export default class Pagination extends ObserverComponent {
                 this.currentPage < this.totalPages - Math.round(this.pageButtons / 2):
                 return this.currentPage - Math.round(this.pageButtons / 2);
             default:
-                return this.totalPages - this.pageButtons + 1;
+                return Math.max(0, this.totalPages - this.pageButtons) + 1;
         }
     }
 }

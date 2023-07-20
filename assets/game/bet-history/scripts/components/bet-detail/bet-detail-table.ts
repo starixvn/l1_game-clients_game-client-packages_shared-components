@@ -12,13 +12,7 @@ export interface IBetHistoryTable {
 @ccclass()
 export class BetDetailTable extends Component {
     @property(Node)
-    header: Node = null;
-
-    @property(Node)
     body: Node = null;
-
-    @property(Prefab)
-    headerPrefab: Prefab = null;
 
     @property(Prefab)
     bodyPrefab: Prefab = null;
