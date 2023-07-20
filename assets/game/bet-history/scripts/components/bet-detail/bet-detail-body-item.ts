@@ -6,9 +6,8 @@ export default class BetDetailBodyItem extends ObserverComponent {
         betDetailsLog: gc.BetHistory.BetDetailsLog,
         index: number,
         odd: number,
-        isWin: boolean,
+        settlementResult: gc.BetHistory.DynamicObject<boolean>,
         freeBet: boolean,
-        fractionalOddsFormat: boolean,
-        isTie?: boolean
+        fractionalOddsFormat: boolean
     ) {}
 }

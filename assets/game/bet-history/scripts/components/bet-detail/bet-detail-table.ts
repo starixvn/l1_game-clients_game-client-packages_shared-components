@@ -2,7 +2,6 @@ import { _decorator, Component, instantiate, Label, Node, Prefab } from "cc";
 import gc from "@sg/game-client-base";
 import BetDetailBodyItem from "./bet-detail-body-item";
 import { BaseResultBodyItem } from "../bet-history-body-item";
-import { BetChoice } from "../../../../../../../../assets/game/scripts/components/dtf-commons";
 
 const { ccclass, property } = _decorator;
 
@@ -48,15 +47,7 @@ export class BetDetailTable extends Component {
         const bodyRow = instantiate(this.bodyPrefab);
         const { choice } = betLogItem;
 
-        this.getBetDetailItemComponent(bodyRow)?.setData(
-            betLogItem,
-            index,
-            odds[choice],
-            settlementResult[choice],
-            freeBet,
-            fractionalOddsFormat,
-            settlementResult[BetChoice.Tie]
-        );
+        this.getBetDetailItemComponent(bodyRow)?.setData(betLogItem, index, odds[choice], settlementResult, freeBet, fractionalOddsFormat);
 
         return bodyRow;
     }
