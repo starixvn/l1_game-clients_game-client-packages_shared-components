@@ -1,16 +1,15 @@
 import gc from "@sg/game-client-base";
-// import * as togleWeb from "@tolgee/web";
 import mobx from "mobx";
 import Observer from "observer";
 
 const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) => {
     try {
-        const isUseTolgeeRealTime = false; // temporary meanwhile finding solution for loading realtime
-        //siteConfigs.env.toLocaleLowerCase().indexOf("local") >= 0 && !siteConfigs.isDev;
+        const isUseTolgeeRealTime = siteConfigs.env.toLocaleLowerCase().indexOf("local") >= 0 && !siteConfigs.isDev;
         const languageId = gc.Translator.getLanguageId();
         const languageCodes = ["en", "id", "th", "vi", "zh_cn", "zh_tw"];
         const translationOptions: gc.Shared.utils.TranslationOptions = {
             languageId: languageId,
+            tolgeeUrl: siteConfigs.tolgeeUrl,
             isUseTolgeeRealTime: isUseTolgeeRealTime,
             getStaticData: (languageId) => {
                 return window["languages"][languageId];
@@ -24,13 +23,6 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) =>
             },
             gameNamespace: gameNamespace,
         };
-
-        // if (isUseTolgeeRealTime) {
-        //     siteConfigs.tolgee.defaultLanguage = languageId;
-        //     siteConfigs.tolgee.defaultNs = "Common";
-        //     siteConfigs.tolgee.ns = ["Common", "gameNames", "messages", "ui", "DragonTigerFight"];
-        //     translationOptions.tg = togleWeb.Tolgee().use(togleWeb.DevTools()).init(siteConfigs.tolgee);
-        // }
 
         gc.Translator.init(translationOptions);
     } catch (e) {
