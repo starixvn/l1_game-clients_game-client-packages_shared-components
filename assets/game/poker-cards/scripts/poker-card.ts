@@ -25,7 +25,9 @@ export interface ServiceCard {
 
 enum AnimationName {
     Open_Card = "open-card",
+    Close_Card = "close-card",
     Drop_Card = "drop-card",
+    Close_After_Drop = "close-after-drop",
     Draw_Card = "draw-card",
     Pull_Card = "pull-card",
 }
@@ -86,6 +88,14 @@ export class PokerCard extends Component {
         } else {
             this.faceUp();
         }
+    }
+
+    async closeCard(duration: number) {
+        await AnimationUtils.playAnimation(this.animation, AnimationName.Close_Card, duration);
+    }
+
+    async closeAfterDrop(duration: number) {
+        await AnimationUtils.playAnimation(this.animation, AnimationName.Close_After_Drop, duration);
     }
 
     faceUp() {

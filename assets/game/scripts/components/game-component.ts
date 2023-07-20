@@ -101,10 +101,10 @@ export default class GameComponent extends GameComponentBase {
     })
     handleResult(data: { result: gc.GameServiceMessage.TResult; settlementResult: gc.GameServiceMessage.TSettlementResult }) {
         const { result, settlementResult } = data;
+        if (!result || !settlementResult) {
+            return;
+        }
         this.showResult(result, true).then(() => {
-            if (!settlementResult) {
-                return;
-            }
             this.finishShowResult(settlementResult);
         });
         this.playSoundReceiveFinish();

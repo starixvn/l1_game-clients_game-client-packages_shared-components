@@ -1488,15 +1488,21 @@
         "__uuid__": "2ad13f41-cdf4-44bc-83f4-6c7b72de47df",
         "__expectedType__": "cc.AnimationClip"
       },
-      null,
-      null,
+      {
+        "__uuid__": "c4f29710-c8d3-4ab7-a14d-c054bdbc0b2d",
+        "__expectedType__": "cc.AnimationClip"
+      },
+      {
+        "__uuid__": "7ba4f077-bd93-43d4-9655-17c3b073f48a",
+        "__expectedType__": "cc.AnimationClip"
+      },
       null,
       null,
       null,
       null
     ],
     "_defaultClip": {
-      "__uuid__": "1a7e7846-0fc2-456a-8e07-3f10a3865dc6",
+      "__uuid__": "7080e78f-aa20-455c-88ee-85ba4f500226",
       "__expectedType__": "cc.AnimationClip"
     },
     "_id": ""
