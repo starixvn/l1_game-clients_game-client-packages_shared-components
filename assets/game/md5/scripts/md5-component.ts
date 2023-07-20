@@ -3,7 +3,7 @@ import Observer from "observer";
 import EffectAppearanceLabel from "./effect-appearance-label";
 import MD5Tip from "./md5-tip";
 const { render } = Observer;
-const { Rounds } = gc;
+const { Rounds, Settlements } = gc;
 
 import { Component, Label, Node, UIOpacity, _decorator, sys, tween, v3 } from "cc";
 const { ccclass, property } = _decorator;
@@ -37,6 +37,7 @@ export default class MD5Component extends Component {
     protected lblHint: Label = null;
     protected tipString: string;
     private md5CopyString: string = null;
+    private resultHash: gc.GameServiceMessage.ResultHash = {};
 
     onLoad() {
         this.registerTouchEvents();
@@ -70,7 +71,18 @@ export default class MD5Component extends Component {
 
     @render(Rounds.RoundStore, (store) => store.resultHash, { fireImmediately: false })
     private renderMd5(resultHash: gc.GameServiceMessage.ResultHash) {
-        this.handleMD5Data(resultHash);
+        this.resultHash = resultHash;
+        !this.lblMd5Value?.string && this.handleMD5Data(resultHash);
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
+    private updateMd5String(isStartPlacingBet: boolean) {
+        isStartPlacingBet && this.handleMD5Data(this.resultHash);
+    }
+
+    @render(Settlements.SettlementStore, (store) => store.isFinishedShowResult)
+    private updateMd5Result(isFinishedShowResult: boolean) {
+        isFinishedShowResult && this.handleMD5Data(this.resultHash);
     }
 
     private handleMD5Data(data: gc.GameServiceMessage.ResultHash) {

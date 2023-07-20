@@ -1,5 +1,5 @@
-import { Component, _decorator, Node, Label, Button, Layout, UITransform, Prefab, tween, UIOpacity, Mask, RichText, sys, Vec3  } from "cc";
-const { ccclass, property} = _decorator;
+import { Component, _decorator, Node, Label, Button, Layout, UITransform, Prefab, tween, UIOpacity, Mask, RichText, sys, Vec3 } from "cc";
+const { ccclass, property } = _decorator;
 
 @ccclass
 export default class EffectAppearanceLabel extends Component {
@@ -16,6 +16,11 @@ export default class EffectAppearanceLabel extends Component {
     speed = 400;
 
     private _value: string;
+
+    get string() {
+        return this.label?.string || this.richText?.string;
+    }
+
     set string(value: string) {
         this._value = value;
         const updated = (this.label && value !== this.label?.string) || (this.richText && value !== this.richText?.string);
@@ -28,7 +33,11 @@ export default class EffectAppearanceLabel extends Component {
     }
 
     protected getContentWidth(): number {
-        return this.label ? this.label.node.getComponent(UITransform).width : this.richText ? this.richText.node.getComponent(UITransform).width * this.richText.node.scale.x : 0;
+        return this.label
+            ? this.label.node.getComponent(UITransform).width
+            : this.richText
+            ? this.richText.node.getComponent(UITransform).width * this.richText.node.scale.x
+            : 0;
     }
 
     protected calculateDistance(): number {
@@ -46,6 +55,6 @@ export default class EffectAppearanceLabel extends Component {
             return;
         }
         const duration = width / this.speed;
-        tween(this.mask.node.getComponent(UITransform)).to(duration, {width: width}).start();
+        tween(this.mask.node.getComponent(UITransform)).to(duration, { width: width }).start();
     }
 }
