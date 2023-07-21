@@ -1,0 +1,171 @@
+CCEffect %{
+  techniques:
+  - passes:
+    - vert: vs:vert
+      frag: fs:frag
+      depthStencilState:
+        depthTest: false
+        depthWrite: false
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      rasterizerState:
+        cullMode: none
+      properties:
+        alphaThreshold: { value: 0.5 }
+        lightColor: {
+          value: [1.0, 1.0, 0.0, 1.0], 
+          editor: { 
+            type: color,
+          } 
+        }
+        lightCenterPoint: {
+          value: [0.2, 0.2],
+          editor: {
+          }
+        }
+        lightAngle: {
+          value: 36.0,
+          editor: {
+            range: [0.0, 360.0],
+          } 
+        }
+        lightWidth: {
+          value: 0.2,
+          editor: {
+          }
+        }
+        enableGradient: {
+          value: 1.0,
+          editor: {
+          }
+        }
+        cropAlpha: {
+          value: 1.0,
+          editor: {
+          }
+        }
+        enableFog: {
+          value: 0.0,
+          editor: {
+          }
+        }
+}%
+
+CCProgram vs %{
+  precision highp float;
+
+  #include <builtin/uniforms/cc-global>
+
+  in vec3 a_position;
+  in vec4 a_color;
+  in vec2 a_texCoord;
+
+  out vec4 v_color;
+  out vec2 uv0;
+
+  vec4 vert () {
+    vec4 pos = vec4(a_position, 1);
+
+    #if USE_PIXEL_ALIGNMENT
+      pos = cc_matView * pos;
+      pos.xyz = floor(pos.xyz);
+      pos = cc_matProj * pos;
+    #else
+      pos = cc_matViewProj * pos;
+    #endif
+
+    uv0 = a_texCoord;
+    v_color = a_color;
+
+    return pos;
+  }
+}%
+
+CCProgram fs %{
+  precision highp float;
+  
+  #include <builtin/internal/embedded-alpha>
+  #include <builtin/internal/alpha-test>
+
+  in vec4 v_color;
+  in vec2 uv0;
+  #pragma builtin(local)
+  layout(set = 2, binding = 12) uniform sampler2D cc_spriteTexture;
+
+  uniform Light {
+    vec4 lightColor;
+    vec2 lightCenterPoint;
+    float lightAngle;
+    float lightWidth;
+    float enableGradient;
+    float cropAlpha;   
+    float enableFog;
+  };
+
+   vec4 addLightColor(vec4 textureColor, vec4 lightColor, vec2 lightCenterPoint, float lightAngle, float lightWidth) {
+    if (lightWidth <= 0.0) {
+      return textureColor;
+    }
+
+    float angleInRadians = radians(lightAngle);
+    float dis = 0.0;
+    if (mod(lightAngle, 180.0) != 0.0) {
+      lightAngle = mod(lightAngle, 180.0); 
+      angleInRadians = radians(lightAngle);
+      float tanAngle = tan(angleInRadians);
+      float lightOffsetX = lightCenterPoint.x - ((1.0 - lightCenterPoint.y) / tanAngle);
+
+      float dx = lightOffsetX + (1.0 - uv0.y) / tanAngle;
+
+      float offsetDis = abs(uv0.x - dx);
+
+      dis = sin(angleInRadians) * offsetDis;
+    } else {
+      dis = abs(uv0.y - lightCenterPoint.y);
+    }
+    
+    float a = 1.0 ;
+    if (bool(cropAlpha)) {
+      a *= step(0.01, textureColor.a);
+    }
+
+    if (!bool(enableFog)) {
+      a *= step(dis, lightWidth * 0.5);
+    }
+
+    if (bool(enableGradient)) {
+      a *= 1.0 - dis / (lightWidth * 0.5);
+    }
+
+    vec4 finalLightColor = lightColor * a;
+
+    return textureColor * textureColor.a + finalLightColor;
+  }
+
+  vec4 frag () {
+    vec4 o = vec4(1, 1, 1, 1);
+
+      o *= CCSampleWithAlphaSeparated(cc_spriteTexture, uv0);
+      #if IS_GRAY
+        float gray  = 0.2126 * o.r + 0.7152 * o.g + 0.0722 * o.b;
+        o.r = o.g = o.b = gray;
+      #endif
+
+    o *= v_color;
+
+    ALPHA_TEST(o);
+    
+    #if ENABLE_LIGHT
+     o = addLightColor(o, lightColor, lightCenterPoint, lightAngle, lightWidth);
+      #if ENABLE_2_LIGHT
+      o = addLightColor(o, lightColor, lightCenterPoint, lightAngle + 90.0, lightWidth);
+      #endif
+    #endif
+
+    return o;
+  }
+}%
