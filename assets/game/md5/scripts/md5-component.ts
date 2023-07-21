@@ -3,7 +3,7 @@ import Observer from "observer";
 import EffectAppearanceLabel from "./effect-appearance-label";
 import MD5Tip from "./md5-tip";
 const { render } = Observer;
-const { Rounds, Settlements } = gc;
+const { Rounds, Settlements, Translator } = gc;
 
 import { Component, Label, Node, UIOpacity, _decorator, sys, tween, v3 } from "cc";
 const { ccclass, property } = _decorator;
@@ -53,7 +53,7 @@ export default class MD5Component extends Component {
 
     private initHintAndCaption() {
         this.lblHint = this.nodeHintCopy.getChildByName("content").getComponent(Label);
-        this.lblHint.string = gc.Shared.l10n.t("copySuccess");
+        this.lblHint.string = Translator.commonTranslate("copy_successfully_md5");
         this.updateTextCaption(false);
     }
 
@@ -128,7 +128,7 @@ export default class MD5Component extends Component {
     }
 
     private updateTextCaption(isMD5Key: boolean) {
-        this.lblCaption.string = gc.Shared.l10n.t(isMD5Key ? "md5Result" : "md5String");
+        this.lblCaption.string = Translator.commonTranslate(isMD5Key ? "md5_result" : "md5_key");
         this.lblCaption.node.position = v3(-5, 0, 0);
         tween(this.lblCaption.node)
             .to(0.3, { position: v3(0, 0, 0) })

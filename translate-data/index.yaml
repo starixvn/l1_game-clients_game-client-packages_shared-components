@@ -581,13 +581,7 @@ items:
     value: ""
     type: 4
     isVariant: false
-    associations:
-      - sceneUuid: 4229fd91-1ded-407f-b130-7b678b820c27
-        nodeUuid: 0aySxnYbxHeoHxN3ZV6Cp/
-        reference: 4229fd91-1ded-407f-b130-7b678b820c27
-      - sceneUuid: 9e5d7e8c-7abe-4626-aeb8-be8f72a0a45e
-        nodeUuid: d1wJ3QifNK5KFbVvnkNNss
-        reference: 9e5d7e8c-7abe-4626-aeb8-be8f72a0a45e
+    associations: []
     _variants: []
   copyMD5Failed:
     key: copyMD5Failed
@@ -1237,7 +1231,7 @@ items:
     type: 2
     isVariant: false
     associations: []
-    _variants: []     
+    _variants: []
 languageConfig:
   bcp47Tag: index
   translateFinished: 390

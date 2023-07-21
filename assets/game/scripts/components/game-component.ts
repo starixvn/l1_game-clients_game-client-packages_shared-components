@@ -87,7 +87,7 @@ export default class GameComponent extends GameComponentBase {
 
     @render(Rounds.RoundStore, (store) => store.clientRoundId)
     renderRoundId(roundId: number) {
-        this.lblRoundId && (this.lblRoundId.string = `#${roundId}`);
+        roundId > 0 && this.lblRoundId && (this.lblRoundId.string = `#${roundId}`);
     }
 
     @render(Rounds.RoundStore, (store) => ({ minBet: store.minBet, maxBet: store.maxBet }))

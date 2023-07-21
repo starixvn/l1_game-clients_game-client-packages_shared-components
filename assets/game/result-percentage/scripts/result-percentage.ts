@@ -47,7 +47,7 @@ export class ResultPercentage extends ObserverComponent {
         const percentage = this.calculateWinPercentage(this.originalChoices, histories);
         this.labels.forEach((label) => {
             const choice = label.node.name;
-            label.string = `${percentage[choice]}%`;
+            percentage[choice] !== undefined && (label.string = `${percentage[choice]}%`);
         });
     }
 
