@@ -16,8 +16,8 @@ export class LedLight extends ObserverComponent {
     @property(Node)
     containerTooltip: Node = null;
 
-    @property(Node)
-    ledLightItem: Node = null;
+    @property(Prefab)
+    ledLightItem: Prefab = null;
 
     @property(Prefab)
     tooltipPrefab: Prefab = null;
@@ -62,10 +62,6 @@ export class LedLight extends ObserverComponent {
 
     private ledLightItemListener = {
         onEnter: (node: Node) => {
-            if (node.getComponent(UIOpacity).opacity <= 1) {
-                return;
-            }
-
             this.selectedLedLight = node;
             const ledLightInfo = node.getComponent(LedLightItem).ledLightItemInfo;
             if (this.toolTipCompt && ledLightInfo) {

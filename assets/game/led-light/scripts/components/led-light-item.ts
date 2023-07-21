@@ -1,5 +1,6 @@
 import gc from "@sg/game-client-base";
-import { CCString, Component, Node, Sprite, SpriteAtlas, SpriteFrame, _decorator } from "cc";
+import { Component, Node, Sprite, SpriteFrame, _decorator } from "cc";
+import { LedLightItemModel } from "./led-light-item-model";
 const { ccclass, property } = _decorator;
 
 export interface IItemInfo {
@@ -15,14 +16,8 @@ export class LedLightItem extends Component {
     @property(Node)
     highlight: Node = null;
 
-    @property(SpriteAtlas)
-    itemAtlas: SpriteAtlas = null;
-
-    @property({ type: CCString })
-    choiceNames: string[] = [];
-
-    @property({ type: CCString })
-    backgroundForChoiceNames: string[] = [];
+    @property({ type: LedLightItemModel })
+    itemModel: LedLightItemModel[] = [];
 
     public ledLightItemInfo: gc.RoundHistories.RoundHistory = null;
 
@@ -32,14 +27,14 @@ export class LedLightItem extends Component {
     }
 
     protected getSpriteFrameFromSettlement(settlementResult: gc.GameServiceMessage.TSettlementResult): SpriteFrame {
-        let spriteFrame = "";
-        this.choiceNames.forEach((choiceName, index) => {
-            if (settlementResult[choiceName]) {
-                spriteFrame = this.backgroundForChoiceNames[index];
+        let spriteFrame: SpriteFrame = null;
+        this.itemModel.forEach((item) => {
+            if (settlementResult[item.choiceNames]) {
+                spriteFrame = item.backgroundForChoice;
             }
         });
 
-        return this.itemAtlas.getSpriteFrame(spriteFrame);
+        return spriteFrame;
     }
 
     public listener = {
