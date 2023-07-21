@@ -242,6 +242,7 @@ export default class SlidingChip extends ObserverComponent {
     @render(gc.PlayerSelections.PlayerSelectionStore, (store) => store.chip)
     getPlayerSelectionChip(chip: number) {
         this.currentSelectChip = chip;
+        this.setSelectChipFromPlayer(chip);
     }
 
     protected restoreChipState() {
@@ -276,11 +277,11 @@ export default class SlidingChip extends ObserverComponent {
     public onClickChip(target: Component) {
         this.playSoundClick();
         const bet = target.node.name;
-        this.setSelectChipAndScroll(bet);
+        this.setSelectChip(bet);
     }
 
-    @handle(SlidingChipHandler.SetSelectChipAndScroll)
-    protected setSelectChipAndScroll(bet: string) {
+    @handle(SlidingChipHandler.SetSelectChip)
+    protected setSelectChip(bet: string) {
         let index = 0;
         for (; index < this.chipList.length; index++) {
             if (this.chipList[index].name === bet) {
@@ -402,4 +403,9 @@ export default class SlidingChip extends ObserverComponent {
 
     @handle(SlidingChipHandler.ResetChips)
     resetChips() {}
+
+    @handle(SlidingChipHandler.SetSelectChip)
+    protected setSelectChipFromPlayer(selectedChip: number) {
+        return { selectedChip };
+    }
 }

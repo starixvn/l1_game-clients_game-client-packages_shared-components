@@ -56,7 +56,7 @@ export namespace SlidingChipHandler {
     }
 
     @injectable()
-    export class SetSelectChipAndScroll implements gc.Shared.IHandler<{ selectedChip: number }> {
+    export class SetSelectChip implements gc.Shared.IHandler<{ selectedChip: number }> {
         @inject(SlidingChipStore) private readonly slidingChipStore: SlidingChipStore;
 
         async handle({ selectedChip }) {
