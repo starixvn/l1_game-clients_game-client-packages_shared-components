@@ -1103,7 +1103,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "UI.CREATE_NICKNAME",
+    "_string": "CREATE YOUR NICKNAME",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 46,
@@ -1149,7 +1149,7 @@
     "fileId": "33QyrJZs5CWYrQOVq5ZY+T"
   },
   {
-    "__type__": "c6b0f2v0I5KNpUsa0rGBsy1",
+    "__type__": "d79a8JOa2JHfr/hBtgYdLqO",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -1159,15 +1159,13 @@
     "__prefab": {
       "__id__": 53
     },
-    "_key": "createNickname",
-    "_count": 0,
+    "key": "Common.create_nick_name",
     "format": 1,
-    "suffix": "",
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "6bagh+L2lD/KRPEGTaVpzK"
+    "fileId": "f79BMLgHtIrLEx9NLXsm4w"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -1309,7 +1307,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 204.32,
+      "width": 490.18,
       "height": 56.7
     },
     "_anchorPoint": {
@@ -1344,7 +1342,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "ui.character_name",
+    "_string": "Common.character_name",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 40,
@@ -1390,7 +1388,7 @@
     "fileId": "2bePpb6LFAwLqJvbTSa7s9"
   },
   {
-    "__type__": "30d83qzRfZHLYMFn4KA9PG4",
+    "__type__": "d79a8JOa2JHfr/hBtgYdLqO",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -1400,13 +1398,13 @@
     "__prefab": {
       "__id__": 64
     },
-    "_key": "characterName",
-    "_count": 0,
+    "key": "Common.character_name",
+    "format": 0,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "42xUDrm5RPIaVwnmd8m+8i"
+    "fileId": "2f4P3LWU5HnZo06HB+eCmE"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -1639,7 +1637,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "Ui.enter_your_name",
+    "_string": "Common.enter_your_name",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 18,
@@ -1720,7 +1718,7 @@
     "fileId": "63VL5FjrVEXYOBz8F8pVov"
   },
   {
-    "__type__": "30d83qzRfZHLYMFn4KA9PG4",
+    "__type__": "d79a8JOa2JHfr/hBtgYdLqO",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -1730,13 +1728,13 @@
     "__prefab": {
       "__id__": 78
     },
-    "_key": "enterYourName",
-    "_count": 0,
+    "key": "Common.enter_your_name",
+    "format": 0,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "b8pUIEw8RGsrD/XTQWBe6u"
+    "fileId": "d1M8pu2vRMLa1Lb7SNrS6W"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -2726,7 +2724,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 93.7,
+      "width": 96.26,
       "height": 37.8
     },
     "_anchorPoint": {
@@ -2761,7 +2759,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "Ui.submit",
+    "_string": "SUBMIT",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 24,
@@ -2807,7 +2805,7 @@
     "fileId": "f1do1zo7VCqp4mVcNywqPG"
   },
   {
-    "__type__": "c6b0f2v0I5KNpUsa0rGBsy1",
+    "__type__": "d79a8JOa2JHfr/hBtgYdLqO",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -2817,15 +2815,13 @@
     "__prefab": {
       "__id__": 132
     },
-    "_key": "submit",
-    "_count": 0,
-    "format": 3,
-    "suffix": "",
+    "key": "Common.submit",
+    "format": 1,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "75/Fz/IclNobQuOE0JMIcY"
+    "fileId": "5diUA7fiZPJqgYFSzWnLQe"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -3078,7 +3074,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1244.21,
+      "width": 1300.32,
       "height": 213
     },
     "_anchorPoint": {
@@ -3113,7 +3109,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "Note:\n+ Nickname must be between 3 and 14 characters long.\n+ Cannot contain spaces, special characters, and non-English characters. \n+ Cannot change the nickname after submitting. ",
+    "_string": "Note:\n      + Nickname must be between 3 and 14 characters long.\n      + Cannot contain spaces, special characters, and non-English characters. \n      + Cannot change the nickname after submitting.",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -3194,7 +3190,7 @@
     "fileId": "20nzsryj9FI5v/lVlczWTz"
   },
   {
-    "__type__": "c6b0f2v0I5KNpUsa0rGBsy1",
+    "__type__": "d79a8JOa2JHfr/hBtgYdLqO",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -3204,15 +3200,13 @@
     "__prefab": {
       "__id__": 152
     },
-    "_key": "nickRequire",
-    "_count": 0,
+    "key": "Common.nickname_requirement",
     "format": 0,
-    "suffix": "",
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "efpd4z3WJNpIKc4rbiiTys"
+    "fileId": "98oi1Mr+5PPoWxzk13VHFy"
   },
   {
     "__type__": "cc.PrefabInfo",
