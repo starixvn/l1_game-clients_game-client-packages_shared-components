@@ -77,7 +77,7 @@ export class BetItems extends ObserverComponent {
     }
 
     @render(Rounds.RoundStore, (store) => store.highLightAnim, { fireImmediately: false })
-    handleHighlightAnim(highLightInfo: gc.Rounds.THighLightInfo) {
+    handleHighlightAnim(highLightInfo: gc.Rounds.THighlightAnim) {
         const { settlementResult, isAnim } = highLightInfo;
         if (highLightInfo?.settlementResult) {
             this.betItemComponents.forEach((betItem) => {
@@ -87,22 +87,22 @@ export class BetItems extends ObserverComponent {
         }
     }
 
-    @render(Rounds.RoundStore, (store) => store.highLightBorder, { fireImmediately: false })
-    handleHighlightBorder(highLightBorder: gc.Rounds.THighLightBorder) {
-        if (!isEmpty(highLightBorder?.settlementResult)) {
-            this.showHighlightBorder(highLightBorder.settlementResult);
+    @render(Rounds.RoundStore, (store) => store.highlightStatic, { fireImmediately: false })
+    handleHighlightStatic(highlightStatic: gc.Rounds.THighlightStatic) {
+        if (!isEmpty(highlightStatic?.settlementResult)) {
+            this.showHighlightStatic(highlightStatic.settlementResult);
         }
     }
 
     @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomShowResult)
-    handleHighlightBorderWhenJoinRoom(joinRoomShowResult: gc.RoundHistories.IRoundHistoryInfo) {
+    handleHighlightStaticWhenJoinRoom(joinRoomShowResult: gc.RoundHistories.IRoundHistoryInfo) {
         const { roundHistory, isShow } = joinRoomShowResult ?? {};
         if (roundHistory?.settlementResult && isShow) {
-            this.showHighlightBorder(roundHistory.settlementResult);
+            this.showHighlightStatic(roundHistory.settlementResult);
         }
     }
 
-    protected showHighlightBorder(settlementResult: gc.GameServiceMessage.TSettlementResult) {
+    protected showHighlightStatic(settlementResult: gc.GameServiceMessage.TSettlementResult) {
         this.betItemComponents.forEach((betItem) => {
             const choice = betItem.node.name;
             betItem.handleHighlightStatic(settlementResult?.[choice]);
