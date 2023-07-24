@@ -31,7 +31,7 @@ export class ResultPercentage extends ObserverComponent {
     originalChoices: string[] = [];
     onLoad() {
         super.onLoad();
-        this.originalChoices = this.supportChoices.split(",");
+        this.generateOriginalChoices();
         if (this.autoFindLabels && this.labelContainer) {
             this.labelContainer.children.forEach((child) => {
                 const label = child.getComponent(Label);
@@ -40,6 +40,10 @@ export class ResultPercentage extends ObserverComponent {
                 }
             });
         }
+    }
+
+    generateOriginalChoices() {
+        this.originalChoices = this.supportChoices.split(",");
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
@@ -71,7 +75,8 @@ export class ResultPercentage extends ObserverComponent {
         let total = 0;
         const percentage = {};
         choices.forEach((choice, index) => {
-            const value = Math.floor((count[choice] * 100) / roundHistory.length);
+            const rawValue = (count[choice] * 100) / roundHistory.length;
+            const value = index === 0 ? Math.ceil(rawValue) : Math.floor(rawValue);
             percentage[choice] = `${value}`;
             if (index === choices.length - 1) {
                 percentage[choice] = `${100 - total}`;
