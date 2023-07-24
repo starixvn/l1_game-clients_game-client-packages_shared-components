@@ -53,6 +53,7 @@ export class BetDetailTable extends Component {
         const bodyRow = instantiate(this.resultPrefab);
         bodyRow.getComponent(BaseResultBodyItem).setData(result, settlementResult);
         this.result.addChild(bodyRow);
+        this.lblRound.string = betHistoryLog.roundId.toString();
 
         betLogDetails.forEach((item, index) => {
             this.body.addChild(this.buildBodyRow(item, index, odds, settlementResult, freeBet, fractionalOddsFormat));

@@ -18,15 +18,10 @@ export default class PaginationItem extends Component {
     @property(Color)
     textNormalColor: Color = new Color();
 
-    clickEventHandler = new EventHandler();
-
     updateHighlight(highlight: boolean, pageNumber: number) {
         this.lblNumber.string = pageNumber.toString();
         this.lblNumber.color = highlight ? this.textHighlightColor : this.textNormalColor;
         this.nodeBackground.active = !highlight;
         this.nodeBackgroundSelect.active = highlight;
-
-        this.clickEventHandler.target = this.node;
-        this.clickEventHandler.customEventData = pageNumber.toString();
     }
 }
