@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
 import mobx from "mobx";
 import Observer from "observer";
+import * as i18n from "db://i18n/LanguageData";
 
 const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) => {
     try {
@@ -25,6 +26,7 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) =>
         };
 
         gc.Translator.init(translationOptions);
+        i18n.init(languageId);
     } catch (e) {
         console.log(e);
     }
