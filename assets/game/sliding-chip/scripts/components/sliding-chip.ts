@@ -166,8 +166,8 @@ export default class SlidingChip extends ObserverComponent {
 
     @render(SlidingChipStore, (store) => store.selectChip)
     scrollToSelectedIndex(selectChip: number) {
+        this.currentSelectChip = selectChip;
         this.updateArrowVisibility(selectChip);
-
         const min = this.snappedScrollView.getMinDisplay();
         if (selectChip <= min) {
             this.snappedScrollView.scrollTo(selectChip);
@@ -186,8 +186,6 @@ export default class SlidingChip extends ObserverComponent {
         if (bet) {
             this.updateCurrentBet(bet);
         }
-
-        this.currentSelectChip = selectChip;
     }
 
     @handle(gc.PlayerSelections.PlayerSelectionHandlers.ChipHandlers)
@@ -237,12 +235,6 @@ export default class SlidingChip extends ObserverComponent {
         this.chipList.length > 0 && this.restoreChipState();
 
         return { chipsLength: this.chipList.length };
-    }
-
-    @render(gc.PlayerSelections.PlayerSelectionStore, (store) => store.chip)
-    getPlayerSelectionChip(chip: number) {
-        this.currentSelectChip = chip;
-        this.setSelectChipFromPlayer(chip);
     }
 
     protected restoreChipState() {
@@ -403,9 +395,4 @@ export default class SlidingChip extends ObserverComponent {
 
     @handle(SlidingChipHandler.ResetChips)
     resetChips() {}
-
-    @handle(SlidingChipHandler.SetSelectChip)
-    protected setSelectChipFromPlayer(selectedChip: number) {
-        return { selectedChip };
-    }
 }

@@ -1,3 +1,4 @@
+import gc from "@sg/game-client-base";
 import inversify from "inversify";
 import mobx from "mobx";
 
@@ -5,8 +6,16 @@ const { injectable, inject } = inversify;
 
 @injectable()
 export class SlidingChipStore {
+    @inject(gc.PlayerSelections.PlayerSelectionStore) private readonly playerSelectionStore: gc.PlayerSelections.PlayerSelectionStore;
     constructor() {
         mobx.makeAutoObservable(this);
+
+        mobx.when(
+            () => !!this.playerSelectionStore?.chip,
+            () => {
+                this.selectChip = this.playerSelectionStore.chip;
+            }
+        );
     }
 
     chipsLength = 0;
