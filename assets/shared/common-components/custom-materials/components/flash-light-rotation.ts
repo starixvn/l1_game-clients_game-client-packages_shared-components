@@ -8,6 +8,9 @@ export class FlashLightRotation extends Component {
     @property
     degreePerSecond = 360;
 
+    @property
+    clockwise = true;
+
     private controller: FlashLightController;
     onLoad() {
         this.controller = this.getComponent(FlashLightController);
@@ -17,12 +20,16 @@ export class FlashLightRotation extends Component {
         const data = {
             angle: 0,
         };
+        const angle = this.clockwise ? -this.degreePerSecond : this.degreePerSecond;
         tween(data)
             .by(
                 1,
-                { angle: -this.degreePerSecond },
+                { angle },
                 {
                     onUpdate: (target: { angle }) => {
+                        if (!this.controller) {
+                            return;
+                        }
                         this.controller.lightAngle = target.angle;
                         this.controller.updateController();
                     },
