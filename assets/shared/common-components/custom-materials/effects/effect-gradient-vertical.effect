@@ -16,7 +16,7 @@ CCEffect %{
         cullMode: none
       properties:
         alphaThreshold: { value: 0.5 }
-        type:           { value: 0, target: type, editor: { displayName: type } }
+        type:           { value: 0.0, target: type, editor: { displayName: type } }
         albedoTexture:  { value: grey, target: albedoMap, editor: { displayName: AlbedoMap } }
         topColor:       { value: [1,1,1,0], target: topColor, editor: { displayName: TopColor } }
         bottomColor:    { value: [1,0,0,0], target: bottomColor, editor: { displayName: BottomColor } }
@@ -57,14 +57,14 @@ CCProgram sprite-fs %{
   { 
     mediump vec4 topColor;
     mediump vec4 bottomColor;
-    int type;
+    float type;
   };
 
   vec4 frag () {
     vec4 o = vec4(1, 1, 1, 1);
 
     o *= texture(cc_spriteTexture, uv0);
-    if(type == 0){
+    if(type == 0.0){
       o.rgb = ((topColor - bottomColor) * smoothstep(bottomColor.a, topColor.a, 1.0 - uv0.y) + bottomColor).rgb;
     } else {
       o *= texture(albedoMap, uv0);

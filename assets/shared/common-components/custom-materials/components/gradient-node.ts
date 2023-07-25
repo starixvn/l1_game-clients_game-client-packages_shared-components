@@ -52,8 +52,8 @@ export class GradientNode extends Component {
         const renderComponent = this.getComponent(UIRenderer);
         if (renderComponent) {
             renderComponent.customMaterial = this.cloneMaterial;
-            renderComponent.customMaterial.setProperty("type", this.type);
             const useTexture = this.type === Type.UseTexture;
+            renderComponent.customMaterial.setProperty("type", useTexture ? 1.0 : 0.0);
 
             if (useTexture) {
                 this.albedoTexture && renderComponent.customMaterial.setProperty("albedoTexture", this.albedoTexture);
