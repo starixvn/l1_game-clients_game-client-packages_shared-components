@@ -28,6 +28,9 @@ export class ResultPercentage extends ObserverComponent {
     @property
     supportChoices = "dragon,tiger,tie";
 
+    @property
+    enablePercentage = true;
+
     originalChoices: string[] = [];
     onLoad() {
         super.onLoad();
@@ -47,24 +50,20 @@ export class ResultPercentage extends ObserverComponent {
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
-    render(histories: any) {
+    render(histories: gc.RoundHistories.RoundHistory[]) {
+        if (this.enablePercentage) {
+            this.handlePercentageChoice(histories);
+        } else {
+            this.handleOccurrenceChoice(histories);
+        }
+    }
+
+    handlePercentageChoice(histories: gc.RoundHistories.RoundHistory[]) {
         const percentage = this.calculateWinPercentage(this.originalChoices, histories);
         this.labels.forEach((label) => {
             const choice = label.node.name;
             percentage[choice] !== undefined && (label.string = `${percentage[choice]}%`);
         });
-    }
-
-    calculateWin(originalChoices: string[], roundHistory: any) {
-        return roundHistory.reduce((count: any, history) => {
-            originalChoices.forEach((choice) => {
-                count[choice] = count[choice] ?? 0;
-                if (history.settlementResult[choice]) {
-                    count[choice] = count[choice] + 1;
-                }
-            });
-            return count;
-        }, {});
     }
 
     calculateWinPercentage(originalChoices: string[], roundHistory: any) {
@@ -86,5 +85,25 @@ export class ResultPercentage extends ObserverComponent {
         });
 
         return percentage;
+    }
+
+    calculateWin(originalChoices: string[], roundHistory: any) {
+        return roundHistory.reduce((count: any, history) => {
+            originalChoices.forEach((choice) => {
+                count[choice] = count[choice] ?? 0;
+                if (history.settlementResult[choice]) {
+                    count[choice] = count[choice] + 1;
+                }
+            });
+            return count;
+        }, {});
+    }
+
+    handleOccurrenceChoice(histories: gc.RoundHistories.RoundHistory[]) {
+        const countChoices = this.calculateWin(this.originalChoices, histories);
+        this.labels.forEach((label) => {
+            const choice = label.node.name;
+            countChoices[choice] !== undefined && (label.string = countChoices[choice]);
+        });
     }
 }

@@ -9,6 +9,7 @@ describe("ResultPercentage", () => {
     describe("calculateWinPercentage", () => {
         it("should sort ascending value, then round up with first", () => {
             // Arrange
+            component.enablePercentage = true;
             const roundHistory = [];
             const pushData = (choice, count) => {
                 for (let i = 0; i < count; i++) {
@@ -28,6 +29,20 @@ describe("ResultPercentage", () => {
             expect(percentage["tie"]).toEqual("1");
             expect(percentage["tiger"]).toEqual("49");
             expect(percentage["dragon"]).toEqual("50");
+        });
+    });
+
+    describe("calculateOccurrence", () => {
+        it("should runtime ok", () => {
+            // Arrange
+            component.enablePercentage = false;
+            const roundHistory = [];
+
+            // Act
+            component.handleOccurrenceChoice(roundHistory);
+
+            // Assert
+            expect(component).toBeTruthy();
         });
     });
 });
