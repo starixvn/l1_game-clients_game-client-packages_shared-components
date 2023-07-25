@@ -31,9 +31,16 @@ export default class BetItem extends ObserverComponent {
 
     onLoad() {
         super.onLoad();
-        this.lblOwnBet.string = "";
-        this.lblTotalBet.string = "";
-        this.lblOdds.string = "";
+        this.handleLblFirstLoad();
+    }
+
+    handleLblFirstLoad() {
+        [this.lblOwnBet, this.lblTotalBet, this.lblOdds].forEach((label) => {
+            if (label) {
+                label.string = "";
+                label.cacheMode = Label.CacheMode.CHAR;
+            }
+        });
     }
 
     get betChoice() {

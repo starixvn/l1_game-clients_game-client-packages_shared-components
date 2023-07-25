@@ -1,9 +1,9 @@
 import gc from "@sg/game-client-base";
-import { _decorator } from "cc";
+import { Node, _decorator } from "cc";
 import { isEmpty } from "lodash-es";
 import Observer from "observer";
 import { StaticNode } from "../../../../shared/common-components/static-node/static-node";
-import StaticNodeInfo from "../../../../shared/common-components/static-node/static-node-info";
+import { StaticNodeGroupId } from "../../../../shared/common-components/static-node/static-node-info";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
 import BetItem from "./bet-item";
 
@@ -11,6 +11,9 @@ const { ccclass } = _decorator;
 const { render } = Observer;
 const { Settlements, Rounds, RoundHistories } = gc;
 
+type TContainerStatics = {
+    [groupId: number]: Node[];
+};
 @ccclass()
 export class BetItems extends ObserverComponent {
     betItemComponents: BetItem[] = [];
@@ -23,35 +26,26 @@ export class BetItems extends ObserverComponent {
     }
 
     protected handleStaticNode() {
-        this.handleStaticTextContainer();
-        this.handleStaticChipContainer();
-        this.handleStaticBetInfoContainer();
-    }
+        const containerStatics: TContainerStatics = {
+            [StaticNodeGroupId.TextContainer]: [],
+            [StaticNodeGroupId.ChipContainer]: [],
+            [StaticNodeGroupId.BetInfoContainer]: [],
+        };
 
-    private handleStaticTextContainer() {
         this.betItemComponents.forEach((betItemComponent) => {
-            const choiceComp = betItemComponent.choice?.addComponent(StaticNode);
-            choiceComp && (choiceComp.groupId = StaticNodeInfo.textContainer.groupId);
-
-            const oddComp = betItemComponent.lblOdds?.addComponent(StaticNode);
-            oddComp && (oddComp.groupId = StaticNodeInfo.textContainer.groupId);
+            containerStatics[StaticNodeGroupId.TextContainer].push(betItemComponent?.choice, betItemComponent?.lblOdds?.node);
+            containerStatics[StaticNodeGroupId.ChipContainer].push(betItemComponent?.chipBox);
+            containerStatics[StaticNodeGroupId.BetInfoContainer].push(
+                betItemComponent?.lblOwnBet?.node,
+                betItemComponent?.lblTotalBet?.node
+            );
         });
-    }
 
-    private handleStaticChipContainer() {
-        this.betItemComponents.forEach((betItemComponent) => {
-            const chipBoxComp = betItemComponent.chipBox?.addComponent(StaticNode);
-            chipBoxComp && (chipBoxComp.groupId = StaticNodeInfo.chipContainer.groupId);
-        });
-    }
-
-    private handleStaticBetInfoContainer() {
-        this.betItemComponents.forEach((betItemComponent) => {
-            const ownBetComp = betItemComponent.lblOwnBet?.addComponent(StaticNode);
-            ownBetComp && (ownBetComp.groupId = StaticNodeInfo.betInfoContainer.groupId);
-
-            const totalBetComp = betItemComponent.lblTotalBet?.addComponent(StaticNode);
-            totalBetComp && (totalBetComp.groupId = StaticNodeInfo.betInfoContainer.groupId);
+        Object.keys(containerStatics).forEach((groupId) => {
+            containerStatics[groupId].forEach((item: Node) => {
+                const itemComp = item?.addComponent(StaticNode);
+                itemComp && (itemComp.groupId = +groupId);
+            });
         });
     }
 
