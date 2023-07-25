@@ -25,6 +25,7 @@ describe(ScoreboardDataReceiver.name, () => {
 
         beadRoad = {
             render: jest.fn(),
+            getComponent: jest.fn().mockReturnValue(converter),
         } as any;
 
         component["bigRoad"] = bigRoad;
@@ -109,70 +110,122 @@ describe(ScoreboardDataReceiver.name, () => {
         });
 
         describe("when the active flag is true", () => {
-            it("should get converter component", () => {
-                // Act
-                component.toggleBlinkNode(true);
+            describe("when beadRoad is null & bigRoad not null", () => {
+                beforeEach(() => {
+                    component["beadRoad"] = null;
+                });
+                it("should get converter component", () => {
+                    // Act
+                    component.toggleBlinkNode(true);
 
-                // Assert
-                expect(bigRoad.getComponent).toBeCalledWith(ScoreboardDataConverter);
-            });
+                    // Assert
+                    expect(bigRoad.getComponent).toBeCalledWith(ScoreboardDataConverter);
+                });
 
-            it("should create a new round", () => {
-                // Arrange
-                jest.spyOn(converter, "createRound");
-
-                // Act
-                component.toggleBlinkNode(true);
-
-                // Assert
-                expect(converter.createRound).toBeCalled();
-            });
-
-            it("should push a round to cache", () => {
-                // Act
-                component.toggleBlinkNode(true);
-
-                // Assert
-                expect(component["rounds"]).toStrictEqual([
-                    {
-                        settlementResult: {
-                            a: undefined,
-                            blink: true,
-                            tie: false,
-                        },
-                    },
-                ]);
-            });
-
-            it("should render the big road", () => {
-                // Arrange
-                component.setLastRound({ settlementResult: { a: true } });
-
-                // Act
-                component.toggleBlinkNode(true);
-
-                // Assert
-                expect(bigRoad.render).toBeCalledWith([
-                    {
-                        settlementResult: {
-                            a: true,
-                            blink: true,
-                            tie: false,
-                        },
-                    },
-                ]);
-            });
-
-            describe("and the big road is undefined", () => {
-                it("should not render the big road", () => {
+                it("should create a new round", () => {
                     // Arrange
-                    component["bigRoad"] = undefined;
+                    jest.spyOn(converter, "createRound");
 
                     // Act
                     component.toggleBlinkNode(true);
 
                     // Assert
+                    expect(converter.createRound).toBeCalled();
+                });
+
+                it("should render the big road", () => {
+                    // Arrange
+                    component.setLastRound({ settlementResult: { a: true } });
+
+                    // Act
+                    component.toggleBlinkNode(true);
+
+                    // Assert
+                    expect(bigRoad.render).toBeCalledWith([
+                        {
+                            settlementResult: {
+                                a: true,
+                                blink: true,
+                                tie: false,
+                            },
+                        },
+                    ]);
+                });
+            });
+
+            describe("when bigRoad is null & beadRoad not null", () => {
+                const gridSetting = { row: 2, column: 2 };
+                beforeEach(() => {
+                    component["bigRoad"] = null;
+                    (beadRoad.getComponent as jest.Mock).mockReturnValueOnce(converter).mockReturnValueOnce({ settings: gridSetting });
+                });
+                it("should get converter component", () => {
+                    // Act
+                    component.toggleBlinkNode(true);
+
+                    // Assert
+                    expect(beadRoad.getComponent).toBeCalledWith(ScoreboardDataConverter);
+                });
+
+                it("should create a new round", () => {
+                    // Arrange
+                    jest.spyOn(converter, "createRound");
+
+                    // Act
+                    component.toggleBlinkNode(true);
+
+                    // Assert
+                    expect(converter.createRound).toBeCalled();
+                });
+
+                it("should render the bead road", () => {
+                    // Arrange
+                    const round = {
+                        settlementResult: {
+                            a: true,
+                            blink: false,
+                            tie: false,
+                        },
+                    };
+                    component["rounds"] = [round, round, round, round];
+
+                    // Act
+                    component.toggleBlinkNode(true);
+
+                    // Assert
+                    expect(beadRoad.render).toBeCalledWith([
+                        round,
+                        round,
+                        round,
+                        {
+                            settlementResult: {
+                                a: false,
+                                blink: true,
+                                tie: false,
+                            },
+                        },
+                    ]);
+                });
+            });
+
+            describe("and the big road is null & bead road is null", () => {
+                beforeEach(() => {
+                    component["bigRoad"] = undefined;
+                    component["beadRoad"] = null;
+                });
+                it("should not render the big road", () => {
+                    // Act
+                    component.toggleBlinkNode(true);
+
+                    // Assert
                     expect(bigRoad.render).toBeCalledTimes(0);
+                });
+                it("should not render the bead road", () => {
+                    // Act
+                    component.toggleBlinkNode(true);
+
+                    // Assert
+                    expect(beadRoad.render).toBeCalledTimes(0);
                 });
             });
         });

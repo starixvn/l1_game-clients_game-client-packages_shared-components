@@ -32,6 +32,7 @@ describe(GridLayout.name, () => {
         grid.settings = gridLayoutSettings;
         grid.itemSettings = itemSettings;
 
+        // @ts-ignore
         grid.layout.node.children = [fakeItem];
     });
 

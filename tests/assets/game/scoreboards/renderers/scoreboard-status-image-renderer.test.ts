@@ -58,6 +58,7 @@ describe(ScoreboardStatusImageRenderer.name, () => {
             const sprite = { spriteFrame: null };
 
             (component.node.getComponent as jest.Mock).mockReturnValue(sprite);
+            // @ts-ignore
             image.image = { image: true };
 
             // Act
