@@ -33,8 +33,8 @@ export class LocalizedFont extends Component {
             id: "noto-serif-regular",
             en: "noto-serif-regular",
             th: "noto-serif-regular-thai",
-            "zh-Hans": "noto-serif-regular-zhcn",
-            "zh-Hant": "noto-serif-regular-zhtw",
+            "zh_cn": "noto-serif-regular-zhcn",
+            "zh_tw": "noto-serif-regular-zhtw",
         };
     }
 
@@ -58,8 +58,8 @@ export class LocalizedFont extends Component {
         const lang = Translator.getCurrentLanguageId();
         switch (lang) {
             case "th":
-            case "zh-Hans":
-            case "zh-Hant":
+            case "zh_cn":
+            case "zh_tw":
                 this.label.cacheMode = Label.CacheMode.BITMAP;
                 break;
 

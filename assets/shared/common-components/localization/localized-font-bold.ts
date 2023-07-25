@@ -11,8 +11,8 @@ export default class LocalizedFontBold extends LocalizedFont {
             id: "noto-serif-bold",
             en: "noto-serif-bold",
             th: "noto-serif-bold-thai",
-            "zh-Hans": "noto-serif-bold-zhcn",
-            "zh-Hant": "noto-serif-bold-zhtw",
+            "zh_cn": "noto-serif-bold-zhcn",
+            "zh_tw": "noto-serif-bold-zhtw",
         };
     }
 }
