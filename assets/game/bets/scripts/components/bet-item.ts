@@ -26,6 +26,9 @@ export default class BetItem extends ObserverComponent {
     @property(Node)
     highlightAnim: Node = null;
 
+    @property(Node)
+    choice: Node = null;
+
     onLoad() {
         super.onLoad();
         this.lblOwnBet.string = "";

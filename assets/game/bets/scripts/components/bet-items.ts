@@ -2,6 +2,8 @@ import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import { isEmpty } from "lodash-es";
 import Observer from "observer";
+import { StaticNode } from "../../../../shared/common-components/static-node/static-node";
+import StaticNodeInfo from "../../../../shared/common-components/static-node/static-node-info";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
 import BetItem from "./bet-item";
 
@@ -17,6 +19,40 @@ export class BetItems extends ObserverComponent {
     onLoad() {
         super.onLoad();
         this.node && (this.betItemComponents = this.node.getComponentsInChildren(BetItem) ?? []);
+        this.handleStaticNode();
+    }
+
+    protected handleStaticNode() {
+        this.handleStaticTextContainer();
+        this.handleStaticChipContainer();
+        this.handleStaticBetInfoContainer();
+    }
+
+    private handleStaticTextContainer() {
+        this.betItemComponents.forEach((betItemComponent) => {
+            const choiceComp = betItemComponent.choice?.addComponent(StaticNode);
+            choiceComp && (choiceComp.groupId = StaticNodeInfo.textContainer.groupId);
+
+            const oddComp = betItemComponent.lblOdds?.addComponent(StaticNode);
+            oddComp && (oddComp.groupId = StaticNodeInfo.textContainer.groupId);
+        });
+    }
+
+    private handleStaticChipContainer() {
+        this.betItemComponents.forEach((betItemComponent) => {
+            const chipBoxComp = betItemComponent.chipBox?.addComponent(StaticNode);
+            chipBoxComp && (chipBoxComp.groupId = StaticNodeInfo.chipContainer.groupId);
+        });
+    }
+
+    private handleStaticBetInfoContainer() {
+        this.betItemComponents.forEach((betItemComponent) => {
+            const ownBetComp = betItemComponent.lblOwnBet?.addComponent(StaticNode);
+            ownBetComp && (ownBetComp.groupId = StaticNodeInfo.betInfoContainer.groupId);
+
+            const totalBetComp = betItemComponent.lblTotalBet?.addComponent(StaticNode);
+            totalBetComp && (totalBetComp.groupId = StaticNodeInfo.betInfoContainer.groupId);
+        });
     }
 
     @render(Settlements.SettlementStore, (store) => store.settlementResult)
