@@ -1,4 +1,4 @@
-import { Color, Component, Material, UIRenderer, Vec2, _decorator, v2 } from "cc";
+import { Color, Component, Material, UIRenderer, Vec2, _decorator, v2, v4 } from "cc";
 const { ccclass, property, executeInEditMode } = _decorator;
 
 @ccclass
@@ -32,13 +32,8 @@ export class FlashLightController extends Component {
         if (!this.uiRenderer) {
             this.init();
         }
-        let material: Material = this.uiRenderer.getMaterialInstance(0);
+        const material: Material = this.uiRenderer.getMaterialInstance(0);
         material.setProperty("lightColor", this.lightColor);
-        material.setProperty("lightCenterPoint", this.lightCenterPoint);
-        material.setProperty("lightAngle", this.lightAngle);
-        material.setProperty("lightWidth", this.lightWidth);
-        material.setProperty("enableGradient", this.enableGradient ? 1.0 : 0.0);
-        material.setProperty("cropAlpha", this.cropAlpha ? 1.0 : 0.0);
-        material.setProperty("enableFog", this.enableFog ? 1.0 : 0.0);
+        material.setProperty("lightInfo", v4(this.lightCenterPoint.x, this.lightCenterPoint.y, this.lightAngle, this.lightWidth));
     }
 }

@@ -3,7 +3,6 @@ import { FlashLightController } from "./flash-light-controller";
 const { ccclass, property, executeInEditMode } = _decorator;
 
 @ccclass
-@executeInEditMode
 export class FlashLightRotation extends Component {
     @property
     degreePerSecond = 360;
