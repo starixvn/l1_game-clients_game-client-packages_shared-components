@@ -1028,9 +1028,6 @@ items:
       - sceneUuid: 36155e0b-972d-4aca-a1f9-9fea663e9e62
         nodeUuid: e7rQ8ecpFIv5STqxpDswWm
         reference: 36155e0b-972d-4aca-a1f9-9fea663e9e62
-      - sceneUuid: 36155e0b-972d-4aca-a1f9-9fea663e9e62
-        nodeUuid: e7rQ8ecpFIv5STqxpDswWm
-        reference: 36155e0b-972d-4aca-a1f9-9fea663e9e62
     _variants: []
   back:
     key: back
