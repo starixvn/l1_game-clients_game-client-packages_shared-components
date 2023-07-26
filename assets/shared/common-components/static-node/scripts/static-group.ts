@@ -17,7 +17,7 @@ export class StaticGroup extends Component {
     @property({ type: Node })
     dynamicRootNodes: Node[] = [];
 
-    private initialized = false;
+    protected initialized = false;
 
     onLoad() {
         this.dynamicRootNodes.forEach((node) =>
@@ -41,13 +41,13 @@ export class StaticGroup extends Component {
 
     scheduleMoveNodeToContainer() {
         this.contents.forEach((child) => {
-            this.moveNodeToContainer(child, this.container);
+            this.moveNodeToContainer(child, this.container, this.groupId);
         });
     }
 
-    moveNodeToContainer(content: Node, container: Node) {
+    moveNodeToContainer(content: Node, container: Node, groupId: number) {
         content.getComponent(Layout)?.updateLayout();
-        const staticNodes = content.getComponentsInChildren(StaticNode).filter((node) => node.groupId === this.groupId);
+        const staticNodes = content.getComponentsInChildren(StaticNode).filter((node) => node.groupId === groupId);
         staticNodes.forEach((staticNode) => {
             staticNode.init();
             GameUtils.moveToOtherNode(staticNode.node, container);
