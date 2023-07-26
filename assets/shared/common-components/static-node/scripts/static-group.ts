@@ -1,5 +1,5 @@
 import { Component, Layout, Node, _decorator, macro } from "cc";
-import { GameUtils } from "../../utils";
+import { GameUtils } from "db://shared-components/shared/utils";
 import { StaticNode } from "./static-node";
 const { ccclass, property } = _decorator;
 

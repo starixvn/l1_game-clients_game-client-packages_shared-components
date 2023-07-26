@@ -2,8 +2,8 @@ import gc from "@sg/game-client-base";
 import { Node, _decorator } from "cc";
 import { isEmpty } from "lodash-es";
 import Observer from "observer";
-import { StaticNode } from "../../../../shared/common-components/static-node/static-node";
-import { StaticNodeGroupId } from "../../../../shared/common-components/static-node/static-node-info";
+import { StaticNode } from "../../../../shared/common-components/static-node/scripts/static-node";
+import { StaticNodeGroupId } from "../../../../shared/common-components/static-node/scripts/static-node-info";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
 import BetItem from "./bet-item";
 
