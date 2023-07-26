@@ -39,14 +39,8 @@ export default class BetItem extends ObserverComponent {
         return this.node.name;
     }
 
-    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
-    playSoundClick() {
-        return gc.Audios.AudioIds.CLICK;
-    }
-
     @handle(gc.Bet.BetHandler, (handler, payload: string) => handler.handle(payload))
     onBet() {
-        this.playSoundClick();
         return this.node.name;
     }
 
