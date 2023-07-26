@@ -12,4 +12,7 @@ export class StaticGroupsModel {
 
     @property
     groupId = 0;
+
+    @property(Node)
+    dynamicRootNodes: Node[] = [];
 }
