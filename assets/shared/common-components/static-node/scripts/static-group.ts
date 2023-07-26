@@ -46,11 +46,13 @@ export class StaticGroup extends Component {
     }
 
     moveNodeToContainer(content: Node, container: Node, groupId: number) {
-        content.getComponent(Layout)?.updateLayout();
-        const staticNodes = content.getComponentsInChildren(StaticNode).filter((node) => node.groupId === groupId);
-        staticNodes.forEach((staticNode) => {
-            staticNode.init();
-            ComponentUtils.moveToOtherNode(staticNode.node, container);
-        });
+        if (content && container && groupId) {
+            content.getComponent(Layout)?.updateLayout();
+            const staticNodes = content.getComponentsInChildren(StaticNode).filter((node) => node.groupId === groupId);
+            staticNodes.forEach((staticNode) => {
+                staticNode.init();
+                ComponentUtils.moveToOtherNode(staticNode.node, container);
+            });
+        }
     }
 }

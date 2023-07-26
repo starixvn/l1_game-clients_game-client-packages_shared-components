@@ -7,9 +7,6 @@ const { ccclass, property } = _decorator;
 @ccclass("StaticGroups")
 export class StaticGroups extends StaticGroup {
     @property({ type: Node, visible: false, override: true })
-    contents: Node[] = [];
-
-    @property({ type: Node, visible: false, override: true })
     container: Node = null;
 
     @property({ visible: false, override: true })
@@ -33,8 +30,14 @@ export class StaticGroups extends StaticGroup {
 
     scheduleMoveNodeToContainer() {
         this.staticGroups.forEach((staticGroup) => {
+            this.contents.forEach((content) => {
+                this.moveNodeToContainer(content, staticGroup?.container, staticGroup?.groupId);
+            });
+
             staticGroup.contents.forEach((content) => {
-                this.moveNodeToContainer(content, staticGroup.container, staticGroup.groupId);
+                if (!this.contents?.includes(content)) {
+                    this.moveNodeToContainer(content, staticGroup?.container, staticGroup?.groupId);
+                }
             });
         });
     }
