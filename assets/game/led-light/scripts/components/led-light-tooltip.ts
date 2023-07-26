@@ -1,5 +1,6 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Component, Label } from "cc";
+import { ComponentUtils } from "../../../../shared/utils";
 const { ccclass, property } = _decorator;
 
 @ccclass("LedLightTooltip")
@@ -9,6 +10,10 @@ export class LedLightTooltip extends Component {
 
     @property(Label)
     roundId: Label = null;
+
+    protected onLoad(): void {
+        ComponentUtils.handleLabelFirstLoad([this.roundId]);
+    }
 
     public setTooltipInfo(ledLightInfo: gc.RoundHistories.RoundHistory) {
         // handle

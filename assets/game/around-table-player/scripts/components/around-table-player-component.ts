@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { Label, Sprite, SpriteFrame, UIOpacity, _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { ComponentUtils } from "../../../../shared/utils";
 import { IAroundTablePlayers } from "../stores/around-table-players-chip-store";
 import { bundleManager } from "./../../../../shared/common-components/bundle-magager/bundle-manager";
 import { AnimationUtils } from "./../../../../shared/utils/utils";
@@ -33,6 +34,7 @@ export class AroundTablePlayerComponent extends ObserverComponent {
         super.onLoad();
         this.node.active = false;
         this.updateMaxBalanceDisplay();
+        ComponentUtils.handleLabelFirstLoad([this.lblNickname, this.lblBalance]);
     }
 
     @handle(AroundTablePlayers.MaxBalanceDisplay)

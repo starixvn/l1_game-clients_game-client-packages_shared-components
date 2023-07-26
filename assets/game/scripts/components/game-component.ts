@@ -6,6 +6,7 @@ import { InGameMenuStore } from "../../../game/in-game-menu/scripts/stores/in-ga
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
 import { StaticNodeGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
+import { ComponentUtils } from "../../../shared/utils";
 import WebViewGuide from "../../game-guide/scripts/web-view-guide";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
@@ -29,31 +30,23 @@ export default class GameComponent extends GameComponentBase {
     guideContainer: NodeContainer = null;
 
     containerOptions: gc.IContainerOptions;
-    lblList = [];
+
     onLoad() {
+        let lblList = [];
+        lblList.push(this?.lblRoundId, this?.lblMinBet, this?.lblMaxBet);
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
         game.on(Game.EVENT_SHOW, this.onShowGame, this);
         this.initUserSettings();
         this.initPlayerSelections();
-        this.lblList.push(this?.lblRoundId, this?.lblMinBet, this?.lblMaxBet);
-        this.handleStaticNode();
-        this.handleLblFirstLoad();
+        this.handleStaticNode(lblList);
+        ComponentUtils.handleLabelFirstLoad(lblList);
     }
 
-    protected handleStaticNode() {
-        this.lblList.forEach((label) => {
+    protected handleStaticNode(lblList: Label[]) {
+        lblList?.forEach((label) => {
             if (label) {
                 const component = label?.addComponent(StaticNode);
                 component && (component.groupId = StaticNodeGroupId.TextContainer);
-            }
-        });
-    }
-
-    protected handleLblFirstLoad() {
-        this.lblList.forEach((label) => {
-            if (label) {
-                label.string = "";
-                label.cacheMode = Label.CacheMode.CHAR;
             }
         });
     }

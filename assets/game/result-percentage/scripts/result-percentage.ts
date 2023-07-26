@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, Label, Node } from "cc";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import Observer from "observer";
+import { ComponentUtils } from "../../../shared/utils";
 const { ccclass, property } = _decorator;
 const { render } = Observer;
 @ccclass
@@ -43,6 +44,7 @@ export class ResultPercentage extends ObserverComponent {
                 }
             });
         }
+        ComponentUtils.handleLabelFirstLoad(this.labels);
     }
 
     generateOriginalChoices() {

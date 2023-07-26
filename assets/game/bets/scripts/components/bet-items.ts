@@ -42,7 +42,7 @@ export class BetItems extends ObserverComponent {
         });
 
         Object.keys(containerStatics).forEach((groupId) => {
-            containerStatics[groupId].forEach((item: Node) => {
+            containerStatics[groupId]?.forEach((item: Node) => {
                 const itemComp = item?.addComponent(StaticNode);
                 itemComp && (itemComp.groupId = +groupId);
             });

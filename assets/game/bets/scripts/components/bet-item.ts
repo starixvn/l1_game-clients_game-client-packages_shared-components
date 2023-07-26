@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { ComponentUtils } from "../../../../shared/utils";
 
 const { handle } = Observer;
 const { property, ccclass } = _decorator;
@@ -31,16 +32,7 @@ export default class BetItem extends ObserverComponent {
 
     onLoad() {
         super.onLoad();
-        this.handleLblFirstLoad();
-    }
-
-    handleLblFirstLoad() {
-        [this.lblOwnBet, this.lblTotalBet, this.lblOdds].forEach((label) => {
-            if (label) {
-                label.string = "";
-                label.cacheMode = Label.CacheMode.CHAR;
-            }
-        });
+        ComponentUtils.handleLabelFirstLoad([this.lblOwnBet, this.lblTotalBet, this.lblOdds]);
     }
 
     get betChoice() {

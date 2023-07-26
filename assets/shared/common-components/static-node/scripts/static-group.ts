@@ -1,5 +1,5 @@
 import { Component, Layout, Node, _decorator, macro } from "cc";
-import { GameUtils } from "db://shared-components/shared/utils";
+import { ComponentUtils } from "db://shared-components/shared/utils";
 import { StaticNode } from "./static-node";
 const { ccclass, property } = _decorator;
 
@@ -50,7 +50,7 @@ export class StaticGroup extends Component {
         const staticNodes = content.getComponentsInChildren(StaticNode).filter((node) => node.groupId === groupId);
         staticNodes.forEach((staticNode) => {
             staticNode.init();
-            GameUtils.moveToOtherNode(staticNode.node, container);
+            ComponentUtils.moveToOtherNode(staticNode.node, container);
         });
     }
 }
