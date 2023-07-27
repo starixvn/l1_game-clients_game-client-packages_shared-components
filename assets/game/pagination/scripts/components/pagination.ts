@@ -57,7 +57,12 @@ export default class Pagination extends ObserverComponent {
     }
 
     hanldePage(event: any) {
-        this.currentPage = parseInt(event.currentTarget.getComponentsInChildren(Label)[0].string);
+        const pageIndex = parseInt(event.currentTarget.getComponentsInChildren(Label)[0].string);
+        if (pageIndex === this.currentPage) {
+            return;
+        }
+
+        this.currentPage = pageIndex;
         this.fetchData();
     }
 
