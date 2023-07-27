@@ -13,7 +13,7 @@ import { GameComponentBase } from "./game-component-base";
 
 const { Rounds, Connection, HideGame, Settlements, FormatUtils, RoundHistories } = gc;
 const { ccclass, property } = _decorator;
-const { render, handle, observer } = Observer;
+const { render, handle } = Observer;
 
 @ccclass
 export default class GameComponent extends GameComponentBase {
@@ -32,7 +32,7 @@ export default class GameComponent extends GameComponentBase {
     containerOptions: gc.IContainerOptions;
 
     onLoad() {
-        let lblList = [];
+        const lblList = [];
         lblList.push(this?.lblRoundId, this?.lblMinBet, this?.lblMaxBet);
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
         game.on(Game.EVENT_SHOW, this.onShowGame, this);
