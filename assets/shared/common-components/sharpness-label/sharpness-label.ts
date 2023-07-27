@@ -3,16 +3,21 @@ const { ccclass } = _decorator;
 
 @ccclass("SharpnessLabel")
 export class SharpnessLabel extends Component {
-    weightFontSize = 2;
-    weightScale = 0.5;
+    private weightFontSize = 2;
+    private weightScale = 0.5;
 
     protected onLoad(): void {
-        const label = this.node?.getComponent(Label);
-        const richText = this.node?.getComponent(RichText);
+        const label = this.node.getComponent(Label);
+        const richText = this.node.getComponent(RichText);
+
         [label, richText].forEach((component) => {
             if (component) {
-                component.fontSize = component.fontSize * this.weightFontSize;
-                component.lineHeight = component.lineHeight * this.weightFontSize;
+                component.fontSize *= this.weightFontSize;
+                component.lineHeight *= this.weightFontSize;
+            }
+
+            if (component instanceof RichText) {
+                richText.maxWidth *= this.weightFontSize;
             }
         });
 

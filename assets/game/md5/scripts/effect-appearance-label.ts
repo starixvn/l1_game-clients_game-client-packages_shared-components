@@ -1,4 +1,4 @@
-import { Component, _decorator, Node, Label, Button, Layout, UITransform, Prefab, tween, UIOpacity, Mask, RichText, sys, Vec3 } from "cc";
+import { Component, Label, Mask, RichText, UITransform, _decorator, tween } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass
@@ -49,7 +49,6 @@ export default class EffectAppearanceLabel extends Component {
         this.mask.node.getComponent(UITransform).width = 0;
 
         const width = this.calculateDistance();
-        console.log("width ", width, this.mask.node.activeInHierarchy);
         if (!this.mask.node.activeInHierarchy) {
             this.mask.node.getComponent(UITransform).width = width;
             return;
