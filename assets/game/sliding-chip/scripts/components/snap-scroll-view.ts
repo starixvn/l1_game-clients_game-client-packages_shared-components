@@ -45,10 +45,6 @@ export class SnapScrollView extends Component {
         return this._scrollView;
     }
 
-    protected start() {
-        this.initCalculatedPercent();
-    }
-
     public initCalculatedPercent() {
         const count = this.contentItemCount();
         const contentWidth = this.scrollContentWidth();

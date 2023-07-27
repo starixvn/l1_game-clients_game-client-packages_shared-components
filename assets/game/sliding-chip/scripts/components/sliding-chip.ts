@@ -301,6 +301,7 @@ export default class SlidingChip extends ObserverComponent {
     @handle(SlidingChipHandler.UpdateChips)
     updateChips() {
         this.snappedScrollView.initCalculatedPercent();
+        this.snappedScrollView.scrollTo(this.currentSelectChip);
     }
 
     public createSmallChip(bet: number, scale = 0.29, showValue = false): Node {
