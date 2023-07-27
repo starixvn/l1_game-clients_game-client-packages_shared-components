@@ -1,4 +1,4 @@
-export enum StaticNodeGroupId {
+export enum StaticGroupId {
     UIContainer = 1,
     TextContainer = 2,
     ChipContainer = 3,

@@ -5,7 +5,7 @@ import { InGameMenuEvents } from "../../../game/in-game-menu/scripts/stores/in-g
 import { InGameMenuStore } from "../../../game/in-game-menu/scripts/stores/in-game-menu-store";
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
-import { StaticNodeGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
+import { StaticGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
 import { ComponentUtils } from "../../../shared/utils";
 import WebViewGuide from "../../game-guide/scripts/web-view-guide";
 import { LogStore } from "../stores/log-store";
@@ -39,14 +39,14 @@ export default class GameComponent extends GameComponentBase {
         this.initUserSettings();
         this.initPlayerSelections();
         this.handleStaticNode(lblList);
-        ComponentUtils.handleLabelFirstLoad(lblList);
+        ComponentUtils.firstLoadEmptyLabel(lblList);
     }
 
     protected handleStaticNode(lblList: Label[]) {
         lblList?.forEach((label) => {
             if (label) {
                 const component = label?.addComponent(StaticNode);
-                component && (component.groupId = StaticNodeGroupId.TextContainer);
+                component && (component.groupId = StaticGroupId.TextContainer);
             }
         });
     }

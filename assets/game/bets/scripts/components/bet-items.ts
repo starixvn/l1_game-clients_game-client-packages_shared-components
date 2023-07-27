@@ -3,7 +3,7 @@ import { Node, _decorator } from "cc";
 import { isEmpty } from "lodash-es";
 import Observer from "observer";
 import { StaticNode } from "../../../../shared/common-components/static-node/scripts/static-node";
-import { StaticNodeGroupId } from "../../../../shared/common-components/static-node/scripts/static-node-info";
+import { StaticGroupId } from "../../../../shared/common-components/static-node/scripts/static-node-info";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
 import BetItem from "./bet-item";
 
@@ -27,18 +27,15 @@ export class BetItems extends ObserverComponent {
 
     protected handleStaticNode() {
         const containerStatics: TContainerStatics = {
-            [StaticNodeGroupId.TextContainer]: [],
-            [StaticNodeGroupId.ChipContainer]: [],
-            [StaticNodeGroupId.BetInfoContainer]: [],
+            [StaticGroupId.TextContainer]: [],
+            [StaticGroupId.ChipContainer]: [],
+            [StaticGroupId.BetInfoContainer]: [],
         };
 
         this.betItemComponents.forEach((betItemComponent) => {
-            containerStatics[StaticNodeGroupId.TextContainer].push(betItemComponent?.choice, betItemComponent?.lblOdds?.node);
-            containerStatics[StaticNodeGroupId.ChipContainer].push(betItemComponent?.chipBox);
-            containerStatics[StaticNodeGroupId.BetInfoContainer].push(
-                betItemComponent?.lblOwnBet?.node,
-                betItemComponent?.lblTotalBet?.node
-            );
+            containerStatics[StaticGroupId.TextContainer].push(betItemComponent?.choice, betItemComponent?.lblOdds?.node);
+            containerStatics[StaticGroupId.ChipContainer].push(betItemComponent?.chipBox);
+            containerStatics[StaticGroupId.BetInfoContainer].push(betItemComponent?.lblOwnBet?.node, betItemComponent?.lblTotalBet?.node);
         });
 
         Object.keys(containerStatics).forEach((groupId) => {

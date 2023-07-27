@@ -34,7 +34,7 @@ export class AroundTablePlayerComponent extends ObserverComponent {
         super.onLoad();
         this.node.active = false;
         this.updateMaxBalanceDisplay();
-        ComponentUtils.handleLabelFirstLoad([this.lblNickname, this.lblBalance]);
+        ComponentUtils.firstLoadEmptyLabel([this.lblNickname, this.lblBalance]);
     }
 
     @handle(AroundTablePlayers.MaxBalanceDisplay)

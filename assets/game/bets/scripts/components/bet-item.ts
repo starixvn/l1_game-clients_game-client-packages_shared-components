@@ -32,7 +32,7 @@ export default class BetItem extends ObserverComponent {
 
     onLoad() {
         super.onLoad();
-        ComponentUtils.handleLabelFirstLoad([this.lblOwnBet, this.lblTotalBet, this.lblOdds]);
+        ComponentUtils.firstLoadEmptyLabel([this.lblOwnBet, this.lblTotalBet, this.lblOdds]);
     }
 
     get betChoice() {
