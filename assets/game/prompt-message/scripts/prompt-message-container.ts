@@ -7,32 +7,31 @@ const { Rounds } = gc;
 const { render } = Observer;
 const { ccclass, property } = _decorator;
 
-
 @ccclass("PromptMessageContainer")
 export class PromptMessageContainer extends NodeContainer {
     @property(PromptMessageComponent)
     promptMessageComponent: PromptMessageComponent = null;
 
     @render(Rounds.RoundTimeStore, (store) => ({ roundState: store.roundState }))
-    showStopBetMessage({roundState}) {        
-        if(roundState === Rounds.ROUND_STATE.LOCKING_BET){
+    showStopBetMessage({ roundState }) {
+        if (roundState === Rounds.ROUND_STATE.LOCKING_BET) {
             this.getComponent().showStopBetMessage();
-        }               
+        }
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
     showStartBetMessage(isStartPlacingBet: boolean) {
-        if(isStartPlacingBet){
+        if (isStartPlacingBet) {
             this.getComponent().showStartBetMessage();
         }
     }
 
-    getComponent(){
-        if(!this.promptMessageComponent){
+    getComponent() {
+        if (!this.promptMessageComponent) {
             const node = this.createNode();
-            this.promptMessageComponent =  node.getComponent(PromptMessageComponent);    
+            this.promptMessageComponent = node.getComponent(PromptMessageComponent);
         }
 
-        return this.promptMessageComponent;        
+        return this.promptMessageComponent;
     }
 }
