@@ -20,7 +20,7 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) =>
                 console.log("started tolgee");
                 console.log(gc.Translator.t("Common.bet_choice"));
                 console.log(gc.Translator.gameTranslate("glossary_tie"));
-                console.log(gc.Translator.commonTranslate("copyfailed_md5"));
+                console.log(gc.Translator.commonTranslate("copy_failed_md5"));
             },
             gameNamespace: gameNamespace,
         };
