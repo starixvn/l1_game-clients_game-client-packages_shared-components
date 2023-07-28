@@ -31,12 +31,14 @@ CCProgram sprite-vs %{
   in vec4 a_color;
 
   out vec2 uv0;
+  out vec4 v_light;
 
   vec4 vert () {
     vec4 pos = vec4(a_position, 1);
 
     pos = cc_matViewProj * pos;
     uv0 = a_texCoord;
+    v_light = a_color;
 
     return pos;
   }
@@ -47,6 +49,7 @@ CCProgram sprite-fs %{
   #include <builtin/internal/alpha-test>
 
   in vec2 uv0;
+  in vec4 v_light;
   
   uniform sampler2D albedoMap;
   
@@ -69,6 +72,8 @@ CCProgram sprite-fs %{
     } else {
       o *= texture(albedoMap, uv0);
     }
+
+     o.a = o.a * v_light.a;
 
     ALPHA_TEST(o);
     return o;
