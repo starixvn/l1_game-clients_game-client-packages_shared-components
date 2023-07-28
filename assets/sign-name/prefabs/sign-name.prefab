@@ -1307,7 +1307,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 490.18,
+      "width": 193.93,
       "height": 56.7
     },
     "_anchorPoint": {
@@ -1342,7 +1342,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "Common.character_name",
+    "_string": "Nickname",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 40,
@@ -1637,7 +1637,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "Common.enter_your_name",
+    "_string": "Enter your nickname.",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 18,
@@ -2724,7 +2724,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 96.26,
+      "width": 87.47,
       "height": 37.8
     },
     "_anchorPoint": {
@@ -2759,7 +2759,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "SUBMIT",
+    "_string": "Submit",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 24,
@@ -2816,7 +2816,7 @@
       "__id__": 132
     },
     "key": "Common.submit",
-    "format": 1,
+    "format": 3,
     "_id": ""
   },
   {
