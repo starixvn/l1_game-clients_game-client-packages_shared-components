@@ -40,7 +40,7 @@ export default class BetDetailBodyItem extends ObserverComponent {
         this.lblTime.string = DateTimeUtils.formatDateTime(time);
         this.lblChoice.string = this.choiceMapping[choice];
         this.lblOdds.string = (fractionalOddsFormat ? FormatUtils.numberWithCommas(+odd - 1, 2) : odd).toString();
-        this.lblAmount.string = FormatUtils.numberWithCommas(amount);
+        this.lblAmount.string = FormatUtils.numberWithCommas(amount, 2);
     }
 
     setHighlightTicketDetail(highlight: boolean) {
