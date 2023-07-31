@@ -68,7 +68,7 @@ CCProgram sprite-fs %{
 
     o *= texture(cc_spriteTexture, uv0);
     if(type == 0.0){
-      o.rgb = ((topColor - bottomColor) * smoothstep(bottomColor.a, topColor.a, 1.0 - uv0.y) + bottomColor).rgb;
+      o.rgb *= ((topColor - bottomColor) * smoothstep(bottomColor.a, topColor.a, 1.0 - uv0.y) + bottomColor).rgb;
     } else {
       o *= texture(albedoMap, uv0);
     }
