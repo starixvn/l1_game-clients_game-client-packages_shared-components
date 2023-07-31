@@ -15,16 +15,17 @@ export class PromptMessageContainer extends NodeContainer {
     @render(Rounds.RoundTimeStore, (store) => ({ roundState: store.roundState }))
     showStopBetMessage({ roundState }) {
         if (roundState === Rounds.ROUND_STATE.LOCKING_BET) {
-            this.getComponent().showStopBetMessage();
+            this.getComponent()?.showStopBetMessage();
         }
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
     showStartBetMessage(isStartingRound: boolean) {
         if (isStartingRound) {
-            setTimeout(() => {
-                this.getComponent().showStartBetMessage();
-            }, 1000);            
+            this.scheduleOnce(() => {
+                this.getComponent()?.showStartBetMessage();
+            }, 1);
+            
         }
     }
 
