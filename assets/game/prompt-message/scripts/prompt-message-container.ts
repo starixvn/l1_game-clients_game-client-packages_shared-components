@@ -19,10 +19,12 @@ export class PromptMessageContainer extends NodeContainer {
         }
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
-    showStartBetMessage(isStartPlacingBet: boolean) {
-        if (isStartPlacingBet) {
-            this.getComponent().showStartBetMessage();
+    @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
+    showStartBetMessage(isStartingRound: boolean) {
+        if (isStartingRound) {
+            setTimeout(() => {
+                this.getComponent().showStartBetMessage();
+            }, 1000);            
         }
     }
 
