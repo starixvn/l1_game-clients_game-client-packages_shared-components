@@ -5,7 +5,7 @@ import * as i18n from "db://i18n/LanguageData";
 
 const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) => {
     try {
-        const isUseTolgeeRealTime = siteConfigs.env.toLocaleLowerCase().indexOf("local") >= 0 && !siteConfigs.isDev;
+        const isUseTolgeeRealTime = !!siteConfigs.tolgeeUrl;
         const languageId = gc.Translator.getLanguageId();
         const languageCodes = ["en", "id", "th", "vi", "zh_cn", "zh_tw"];
         const translationOptions: gc.Shared.utils.TranslationOptions = {
