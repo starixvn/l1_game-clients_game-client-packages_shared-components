@@ -9,11 +9,13 @@ export class AroundTablePlayerBet extends Component {
     @property
     isXAxis = true;
 
-    protected duration = 0.5;
-    protected durationAnimMove = 0.2;
-    protected stepMove = 20;
-    protected easingStart: TweenEasing = "sineOut";
-    protected easingEnd: TweenEasing = "sineIn";
+    @property
+    stepMove = 5;
+
+    protected duration = 0.3;
+    protected durationAnimMove = 0.15;
+    protected easingStart: TweenEasing = "quintOut";
+    protected easingEnd: TweenEasing = "quintOut";
     protected originalPosition: math.Vec3 = null;
 
     protected onLoad(): void {
@@ -21,7 +23,6 @@ export class AroundTablePlayerBet extends Component {
     }
 
     animMoveBet() {
-        console.log("animMoveBet------");
         tween(this.node)
             .to(
                 this.durationAnimMove,
