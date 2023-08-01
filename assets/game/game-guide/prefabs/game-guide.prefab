@@ -1718,7 +1718,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "HƯỚNG DẪN",
+    "_string": "GAME GUIDES",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 24,
@@ -1745,7 +1745,7 @@
     "fileId": "29PFHOGD9LIrHKGwUz7FbJ"
   },
   {
-    "__type__": "c6b0f2v0I5KNpUsa0rGBsy1",
+    "__type__": "d79a8JOa2JHfr/hBtgYdLqO",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -1755,15 +1755,13 @@
     "__prefab": {
       "__id__": 76
     },
-    "_key": "gameGuide",
-    "_count": 0,
+    "key": "Common.game_guide",
     "format": 1,
-    "suffix": "",
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "e5zmpR6YBODagWy7CiDrCa"
+    "fileId": "97i4mfTOVH95T5FdsHb5JB"
   },
   {
     "__type__": "6c12eWZ3I5D5rOwWyjWmS36",

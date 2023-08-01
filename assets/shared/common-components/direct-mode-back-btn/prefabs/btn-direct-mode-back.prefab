@@ -337,7 +337,7 @@
     "fileId": "4cADJ3j51JV7gWINX0811Q"
   },
   {
-    "__type__": "30d83qzRfZHLYMFn4KA9PG4",
+    "__type__": "edf98QH2D1AUoCrtQlbxFrU",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -347,13 +347,12 @@
     "__prefab": {
       "__id__": 14
     },
-    "_key": "back",
-    "_count": 0,
+    "key": "Common.back",
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "48P6b8q91OS7/9A5YctaCl"
+    "fileId": "db/tyXhuJAIo77v5dKXN39"
   },
   {
     "__type__": "cc.PrefabInfo",
