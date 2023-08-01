@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { Node, UITransform } from "cc";
 import { AroundTablePlayerBet } from "../../../../around-table-player/scripts/components/around-table-player-bet";
 import { IMainPlayerChip } from "../../../../chip-flying/scripts/components/chip-flying";
+import { HiddenPlayersBet } from "../../../../hidden-players/scripts/components/hidden-players-bet";
 import { FlyChipUtils } from "../../utils/fly-chip-utils";
 import SlidingChip from "../sliding-chip";
 
@@ -9,7 +10,13 @@ type TChips = {
     [value: number]: number;
 };
 
-export const placeChipToChipBox = (slidingChip: SlidingChip, mainPlayerChip: IMainPlayerChip, startNode: Node, onComplete: () => void) => {
+export const placeChipToChipBox = (
+    slidingChip: SlidingChip,
+    mainPlayerChip: IMainPlayerChip,
+    startNode: Node,
+    onComplete: () => void,
+    isHiddenPlayer = false
+) => {
     const { chipBox, chipValue } = mainPlayerChip;
     const flyingDuration = startNode == null ? SlidingChip.mainPlayerChipFlyingTime : SlidingChip.chipFlyingTime;
     const chipPosition = chipBox
@@ -24,7 +31,17 @@ export const placeChipToChipBox = (slidingChip: SlidingChip, mainPlayerChip: IMa
         chipNode.position = randomPosition;
     } else {
         chipNode && FlyChipUtils.moveChipTo(chipNode, randomPosition, flyingDuration, onComplete);
-        startNode !== null && startNode.parent?.getComponent(AroundTablePlayerBet)?.animMoveBet();
+        handleAnimWhenPlayerBet(isHiddenPlayer, startNode);
+    }
+};
+
+const handleAnimWhenPlayerBet = (isHiddenPlayer: boolean, startNode: Node) => {
+    if (startNode) {
+        if (isHiddenPlayer) {
+            startNode.getComponent(HiddenPlayersBet).animScaleOut();
+            return;
+        }
+        startNode?.parent?.getComponent(AroundTablePlayerBet)?.animMoveBet();
     }
 };
 

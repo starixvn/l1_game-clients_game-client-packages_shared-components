@@ -33,6 +33,7 @@ export interface IAroundTablePlayerPlaceChip {
     };
     chipBox: Node;
     startNode: Node;
+    isHiddenPlayer?: boolean;
 }
 
 @injectable()

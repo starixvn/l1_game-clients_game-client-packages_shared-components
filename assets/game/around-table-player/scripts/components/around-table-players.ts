@@ -127,6 +127,7 @@ export class AroundTablePlayers extends ObserverComponent {
 
         const { betChoice, playerId } = playerChip;
         let startNode: Node;
+        let isHiddenPlayer = false;
         const aroundTablePlayer = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayerComponents, playerId);
         const betItem: BetItem = AroundTablePlayerUtils.getBetItem(this.betItems.betItemComponents, betChoice);
 
@@ -135,6 +136,7 @@ export class AroundTablePlayers extends ObserverComponent {
             startNode = aroundTablePlayer.avatar.node;
         } else {
             startNode = this.hiddenPlayersNode;
+            isHiddenPlayer = true;
             this.updateHiddenPlayerStorage(playerChip);
         }
 
@@ -142,6 +144,7 @@ export class AroundTablePlayers extends ObserverComponent {
             chipValues,
             chipBox: betItem?.chipBox,
             startNode,
+            isHiddenPlayer,
         };
 
         if (!this.node.activeInHierarchy) {
@@ -164,7 +167,7 @@ export class AroundTablePlayers extends ObserverComponent {
     }
 
     protected placeAroundTablePlayerChip(visiblePlayerPlaceChip: IAroundTablePlayerPlaceChip) {
-        const { chipValues, chipBox, startNode } = visiblePlayerPlaceChip ?? {};
+        const { chipValues, chipBox, startNode, isHiddenPlayer } = visiblePlayerPlaceChip ?? {};
         if (chipValues) {
             Object.keys(chipValues).forEach((chipValue) => {
                 let count = chipValues[chipValue];
@@ -173,7 +176,7 @@ export class AroundTablePlayers extends ObserverComponent {
                         chipBox,
                         chipValue: +chipValue,
                     };
-                    placeChipToChipBox(this.slidingChip, ownerChip, startNode, null);
+                    placeChipToChipBox(this.slidingChip, ownerChip, startNode, null, isHiddenPlayer);
                 }
             });
 
