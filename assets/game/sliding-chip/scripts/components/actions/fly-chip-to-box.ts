@@ -1,5 +1,6 @@
 import gc from "@sg/game-client-base";
 import { Node, UITransform } from "cc";
+import { AroundTablePlayerBet } from "../../../../around-table-player/scripts/components/around-table-player-bet";
 import { IMainPlayerChip } from "../../../../chip-flying/scripts/components/chip-flying";
 import { FlyChipUtils } from "../../utils/fly-chip-utils";
 import SlidingChip from "../sliding-chip";
@@ -23,6 +24,7 @@ export const placeChipToChipBox = (slidingChip: SlidingChip, mainPlayerChip: IMa
         chipNode.position = randomPosition;
     } else {
         chipNode && FlyChipUtils.moveChipTo(chipNode, randomPosition, flyingDuration, onComplete);
+        startNode !== null && startNode.parent?.getComponent(AroundTablePlayerBet)?.animMoveBet();
     }
 };
 
