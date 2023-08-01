@@ -5,7 +5,7 @@ import MD5Tip from "./md5-tip";
 const { render } = Observer;
 const { Rounds, Settlements, Translator } = gc;
 
-import { Component, Label, Node, UIOpacity, _decorator, sys, tween, v3 } from "cc";
+import { Component, Label, Node, UIOpacity, _decorator, tween, v3 } from "cc";
 const { ccclass, property } = _decorator;
 
 export type MD5Type = {
@@ -38,11 +38,17 @@ export default class MD5Component extends Component {
     protected tipString: string;
     private md5CopyString: string = null;
     private resultHash: gc.GameServiceMessage.ResultHash = {};
+    private isCopying = false;
 
     onLoad() {
         this.registerTouchEvents();
         this.hideTooltip();
         this.initHintAndCaption();
+        window.addEventListener("message", this.registerEventCopyMD5.bind(this));
+    }
+
+    protected onDestroy(): void {
+        window.removeEventListener("message", this.registerEventCopyMD5.bind(this));
     }
 
     private registerTouchEvents() {
@@ -115,12 +121,19 @@ export default class MD5Component extends Component {
     }
 
     onClickCopyButton() {
-        const isAndroid = sys.os === sys.OS.LINUX || sys.os === sys.OS.ANDROID;
-        gc.GameUtils.copyToClipboard(this.md5CopyString, isAndroid, (message: string) => {
-            this.lblHint.string = message;
-            this.showHint();
-        });
+        this.isCopying = true;
         this.md5Tip.show(false);
+        gc.GameUtils.copyToClipboard(this.md5CopyString);
+    }
+
+    private registerEventCopyMD5(event: MessageEvent) {
+        const success = event.data.copySuccessfully;
+        if (success !== undefined && this.isCopying) {
+            this.isCopying = false;
+            const key = success ? "copy_successfully_md5" : "copy_failed_md5";
+            this.lblHint.string = gc.Translator.commonTranslate(key);
+            this.showHint();
+        }
     }
 
     private showHint() {
