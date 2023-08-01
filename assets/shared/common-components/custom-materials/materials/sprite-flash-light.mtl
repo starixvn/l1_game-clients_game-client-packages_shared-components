@@ -12,6 +12,7 @@
     {
       "USE_PIXEL_ALIGNMENT": true,
       "USE_ALPHA_TEST": true,
+      "USE_TEXTURE": true,
       "ENABLE_LIGHT": true
     }
   ],
@@ -27,15 +28,6 @@
     }
   ],
   "_props": [
-    {
-      "lightCenterPoint": {
-        "__type__": "cc.Vec2",
-        "x": 0.5,
-        "y": 0.5
-      },
-      "lightAngle": 45,
-      "lightWidth": 0.3,
-      "cropAlpha": 0
-    }
+    {}
   ]
 }

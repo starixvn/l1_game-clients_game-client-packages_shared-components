@@ -1,21 +1,16 @@
-import { _decorator, Component, tween } from "cc";
-import { FlashLightController } from "./flash-light-controller";
-const { ccclass, property, executeInEditMode } = _decorator;
+import { _decorator, tween } from "cc";
+import { FlashLightBase } from "./flash-light-base";
+const { ccclass, property } = _decorator;
 
 @ccclass
-export class FlashLightRotation extends Component {
+export class FlashLightRotation extends FlashLightBase {
     @property
     degreePerSecond = 360;
 
     @property
     clockwise = true;
 
-    private controller: FlashLightController;
-    onLoad() {
-        this.controller = this.getComponent(FlashLightController);
-    }
-
-    onEnable() {
+    initStart() {
         const data = {
             angle: 0,
         };
