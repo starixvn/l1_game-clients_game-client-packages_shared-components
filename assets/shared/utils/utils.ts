@@ -91,8 +91,8 @@ export namespace AnimationUtils {
 
     export const getPositionAtDestNode = (node: Node, destNode: Node) => {
         const parent = node.parent.getComponent(UITransform);
-        const destNodeTranform = destNode.getComponent(UITransform);
-        return parent.convertToNodeSpaceAR(destNodeTranform.convertToWorldSpaceAR(Vec3.ZERO));
+        const destNodeTransform = destNode.getComponent(UITransform);
+        return parent.convertToNodeSpaceAR(destNodeTransform.convertToWorldSpaceAR(Vec3.ZERO));
     };
 
     export const movingNode = (node: Node, duration: number, destNode: Node | Vec3) => {
@@ -102,5 +102,14 @@ export namespace AnimationUtils {
                 position,
             })
             .start();
+    };
+
+    export const delayTime = (time: number) => {
+        return new Promise<void>((resolve) => {
+            tween({})
+                .delay(time)
+                .call(() => resolve())
+                .start();
+        });
     };
 }

@@ -14,5 +14,9 @@
     "start-placing-bet": {
         "bundle": "shared-bundle",
         "path": "start-placing-bet"
+    },
+    "draw-single-card": {
+        "bundle": "shared-bundle",
+        "path": "draw-single-card"
     }
 }
