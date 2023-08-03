@@ -666,8 +666,8 @@
     "lightColor": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 255,
-      "b": 255,
+      "g": 249,
+      "b": 111,
       "a": 255
     },
     "lightCenterPoint": {
@@ -675,8 +675,8 @@
       "x": 0,
       "y": 0.5
     },
-    "lightAngle": 87,
-    "lightWidth": 0.05,
+    "lightAngle": 89,
+    "lightWidth": 0.02,
     "enableGradient": true,
     "cropAlpha": true,
     "enableFog": false,
@@ -692,7 +692,7 @@
     "_enabled": true,
     "__prefab": null,
     "direction": 0,
-    "speed": 240,
+    "speed": 700,
     "_id": "ca5+Dd1zhDhrVX7bD+1b80"
   },
   {
@@ -990,8 +990,8 @@
     "lightColor": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 255,
-      "b": 255,
+      "g": 249,
+      "b": 111,
       "a": 255
     },
     "lightCenterPoint": {
@@ -999,8 +999,8 @@
       "x": 0,
       "y": 0.5
     },
-    "lightAngle": 87,
-    "lightWidth": 0.05,
+    "lightAngle": 89,
+    "lightWidth": 0.02,
     "enableGradient": true,
     "cropAlpha": true,
     "enableFog": false,
@@ -1016,7 +1016,7 @@
     "_enabled": true,
     "__prefab": null,
     "direction": 0,
-    "speed": 240,
+    "speed": 700,
     "_id": "cdh7r/cjRDo5RQYJish2MT"
   },
   {
