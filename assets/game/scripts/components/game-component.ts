@@ -123,14 +123,9 @@ export default class GameComponent extends GameComponentBase {
         this.showResult(result, true).then(() => {
             this.finishShowResult(settlementResult);
         });
-        this.playSoundReceiveFinish();
+        this.playSound(gc.Audios.AudioIds.RECEIVE_FINISH);
     }
     async showResult(result: gc.GameServiceMessage.TResult, hasAnimation: boolean) {}
-
-    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
-    playSoundReceiveFinish() {
-        return gc.Audios.AudioIds.RECEIVE_FINISH;
-    }
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult(settlementResult: gc.GameServiceMessage.TSettlementResult) {}
@@ -148,11 +143,11 @@ export default class GameComponent extends GameComponentBase {
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
     startNewRound(isStartPlacingBet: boolean) {
-        isStartPlacingBet && this.playSoundStartPlacingBet();
+        isStartPlacingBet && this.playSound(gc.Audios.AudioIds.START_PLACING_BET);
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
-    playSoundStartPlacingBet() {
-        return gc.Audios.AudioIds.START_PLACING_BET;
+    playSound(id: string) {
+        return id;
     }
 }
