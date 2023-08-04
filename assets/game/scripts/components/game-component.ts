@@ -141,9 +141,9 @@ export default class GameComponent extends GameComponentBase {
         }
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
-    startNewRound(isStartPlacingBet: boolean) {
-        isStartPlacingBet && this.playSound(gc.Audios.AudioIds.START_PLACING_BET);
+    @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
+    startNewRound(isStartRound: boolean) {
+        isStartRound && this.playSound(gc.Audios.AudioIds.STARTING_ROUND);
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))

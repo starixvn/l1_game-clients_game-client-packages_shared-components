@@ -11,9 +11,9 @@
         "bundle": "shared-bundle",
         "path": "receive-finish"
     },
-    "start-placing-bet": {
+    "starting-round": {
         "bundle": "shared-bundle",
-        "path": "start-placing-bet"
+        "path": "starting-round"
     },
     "draw-single-card": {
         "bundle": "shared-bundle",
