@@ -48,6 +48,5 @@ export default class BetDetailBodyItem extends ObserverComponent {
         this.lblChoice.color = color;
         this.lblOdds.color = color;
         this.lblAmount.color = color;
-        this.lblWin.color = color;
     }
 }
