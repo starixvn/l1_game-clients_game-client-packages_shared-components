@@ -10,6 +10,7 @@
   "_techIdx": 0,
   "_defines": [
     {
+      "USE_PIXEL_ALIGNMENT": true,
       "USE_TEXTURE": true,
       "ENABLE_LIGHT": true,
       "ENABLE_2_LIGHT": true

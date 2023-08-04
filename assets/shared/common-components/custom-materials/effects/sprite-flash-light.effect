@@ -125,7 +125,7 @@ CCProgram sprite-fs %{
 
     vec4 finalLightColor = lightColor * a;
 
-    return textureColor * textureColor.a + finalLightColor;
+    return finalLightColor;
   }
 
   vec4 frag () {
@@ -139,17 +139,21 @@ CCProgram sprite-fs %{
       #endif
     #endif
 
-    o *= color;
-    ALPHA_TEST(o);
+    o.a *= color.a;
+
     #if ENABLE_LIGHT
     vec2 lightCenterPoint = lightInfo.xy;
     float lightAngle = lightInfo.z;
     float lightWidth = lightInfo.w;
-     o = addLightColor(o, lightColor, lightCenterPoint, lightAngle, lightWidth);
+    vec4 light = addLightColor(o, lightColor, lightCenterPoint, lightAngle, lightWidth);
       #if ENABLE_2_LIGHT
-      o = addLightColor(o, lightColor, lightCenterPoint, lightAngle + 90.0, lightWidth);
+      light += addLightColor(o, lightColor, lightCenterPoint, lightAngle + 90.0, lightWidth);
       #endif
+
+    o.rgb = (o * (1.0 - light.a) + light).rgb;
     #endif
+    ALPHA_TEST(o);
+
     return o;
   }
 }%
