@@ -33,7 +33,7 @@ export class AroundTablePlayers extends ObserverComponent {
     @property(BetItems)
     betItems: BetItems = null;
 
-    protected aroundTablePlayerChip = [];
+    protected aroundTablePlayerChips = [];
     protected isFlyChipSlow = true;
     protected hiddenPlayers: IHiddenPlayers = {};
     aroundTablePlayerComponents: AroundTablePlayerComponent[] = [];
@@ -124,6 +124,7 @@ export class AroundTablePlayers extends ObserverComponent {
         if (!playerChip) {
             return;
         }
+        this.aroundTablePlayerChips.push(aroundTablePlayerPlaceChip);
 
         const { betChoice, playerId } = playerChip;
         let startNode: Node;
@@ -180,15 +181,16 @@ export class AroundTablePlayers extends ObserverComponent {
                 }
             });
 
-            this.aroundTablePlayerChip.pop();
+            this.aroundTablePlayerChips.pop();
         }
     }
 
     protected calculateDelayTime() {
-        let delayTime = this.aroundTablePlayerChip.length * 0.01;
+        let delayTime = this.aroundTablePlayerChips.length * 0.01;
         if (this.isFlyChipSlow) {
-            delayTime = this.aroundTablePlayerChip.length * 0.07;
+            delayTime = this.aroundTablePlayerChips.length * 0.07;
         }
+
         return delayTime > 1 ? delayTime / 2 : delayTime;
     }
 

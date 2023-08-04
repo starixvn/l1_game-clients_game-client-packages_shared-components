@@ -1,4 +1,5 @@
 import { Component, TweenEasing, _decorator, math, tween, v3 } from "cc";
+import { AnimationUtils } from "../../../../shared/utils";
 const { ccclass, property } = _decorator;
 
 @ccclass("AroundTablePlayerBet")
@@ -15,13 +16,18 @@ export class AroundTablePlayerBet extends Component {
     protected durationAnimMove = 0.15;
     protected easingName: TweenEasing = "quintOut";
     protected originalPosition: math.Vec3 = null;
+    protected isRunning = false;
 
     protected onLoad(): void {
-        this.originalPosition = this.node.position;
+        this.originalPosition = v3(this.node.position.x, this.node.position.y, this.node.position.z);
     }
 
-    animMoveBet() {
+    async animMoveBet() {
+        this.isRunning && (await AnimationUtils.delayTime(this.durationAnimMove));
         tween(this.node)
+            .call(() => {
+                this.isRunning = true;
+            })
             .to(
                 this.durationAnimMove,
                 {
@@ -36,6 +42,9 @@ export class AroundTablePlayerBet extends Component {
                 },
                 { easing: this.easingName }
             )
+            .call(() => {
+                this.isRunning = false;
+            })
 
             .start();
     }
