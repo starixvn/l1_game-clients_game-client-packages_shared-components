@@ -32,23 +32,24 @@ export default class GameComponent extends GameComponentBase {
     containerOptions: gc.IContainerOptions;
 
     onLoad() {
-        const lblList = [];
-        lblList.push(this?.lblRoundId, this?.lblMinBet, this?.lblMaxBet);
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
         game.on(Game.EVENT_SHOW, this.onShowGame, this);
         this.initUserSettings();
         this.initPlayerSelections();
-        this.handleStaticNode(lblList);
-        ComponentUtils.firstLoadEmptyLabel(lblList);
+        this.handleStaticNodeAndSetEmptyLabels();
     }
 
-    protected handleStaticNode(lblList: Label[]) {
-        lblList?.forEach((label) => {
-            if (label) {
-                const component = label?.addComponent(StaticNode);
-                component && (component.groupId = StaticGroupId.TextContainer);
-            }
-        });
+    protected handleStaticNodeAndSetEmptyLabels() {
+        const lblList: Label[] = [this?.lblRoundId, this?.lblMinBet, this?.lblMaxBet];
+        if (lblList.length > 0) {
+            lblList?.forEach((label) => {
+                if (label) {
+                    const component = label?.addComponent(StaticNode);
+                    component && (component.groupId = StaticGroupId.TextContainer);
+                }
+            });
+            ComponentUtils.setEmptyLabels(lblList);
+        }
     }
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)

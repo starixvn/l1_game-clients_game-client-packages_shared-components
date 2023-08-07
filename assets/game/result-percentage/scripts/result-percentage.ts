@@ -44,7 +44,7 @@ export class ResultPercentage extends ObserverComponent {
                 }
             });
         }
-        ComponentUtils.firstLoadEmptyLabel(this.labels);
+        ComponentUtils.setEmptyLabels(this.labels);
     }
 
     generateOriginalChoices() {

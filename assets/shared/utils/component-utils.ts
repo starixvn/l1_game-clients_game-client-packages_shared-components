@@ -9,7 +9,7 @@ export namespace ComponentUtils {
         node.position = position;
     };
 
-    export const firstLoadEmptyLabel = (labels: Label[]) => {
+    export const setEmptyLabels = (labels: Label[]) => {
         labels?.forEach((label) => {
             if (label) {
                 label.string = "";

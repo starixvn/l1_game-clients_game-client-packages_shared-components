@@ -12,7 +12,7 @@ export class LedLightTooltip extends Component {
     roundId: Label = null;
 
     protected onLoad(): void {
-        ComponentUtils.firstLoadEmptyLabel([this.roundId]);
+        ComponentUtils.setEmptyLabels([this.roundId]);
     }
 
     public setTooltipInfo(ledLightInfo: gc.RoundHistories.RoundHistory) {
