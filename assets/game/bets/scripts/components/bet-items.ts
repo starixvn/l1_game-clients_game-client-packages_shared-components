@@ -18,6 +18,7 @@ type TContainerStatics = {
 export class BetItems extends ObserverComponent {
     betItemComponents: BetItem[] = [];
     settlementResult: gc.GameServiceMessage.TSettlementResult = null;
+    isJoinStartingRound = false;
 
     onLoad() {
         super.onLoad();
@@ -99,8 +100,20 @@ export class BetItems extends ObserverComponent {
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
     clearChipsAtStartRound(isStartRound: boolean) {
         if (isStartRound) {
-            this.betItemComponents.forEach((betItem) => betItem.clearChips());
+            this.clearChipsForAllBetItems();
         }
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
+    clearChipsWhenJoinStartingRound(isStartingRound: boolean) {
+        if (isStartingRound && !this.isJoinStartingRound) {
+            this.clearChipsForAllBetItems();
+            this.isJoinStartingRound = true;
+        }
+    }
+
+    protected clearChipsForAllBetItems() {
+        this.betItemComponents.forEach((betItem) => betItem.clearChips());
     }
 
     @render(Rounds.RoundStore, (store) => store.highLightAnim, { fireImmediately: false })
