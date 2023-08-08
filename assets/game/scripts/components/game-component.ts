@@ -11,7 +11,7 @@ import WebViewGuide from "../../game-guide/scripts/web-view-guide";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
 
-const { Rounds, Connection, HideGame, Settlements, FormatUtils, RoundHistories } = gc;
+const { Rounds, Connection, HideGame, Settlements, FormatUtils, RoundHistories, Notification } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -79,12 +79,17 @@ export default class GameComponent extends GameComponentBase {
         game.off(Game.EVENT_SHOW, this.onShowGame, this);
     }    
 
+    @handle(Notification.NotificationReloadHandlers.NotificationReload)
+    showNotificationReload(){
+    }
+
     @handle(HideGame.HideGameHandler)
     onHideGame() {
         // reload here will run when page appears from hidden
         // to fix issue on iOS that EVENT_SHOW are not triggered when phone active
         this.scheduleOnce(() => {
-            window.location.reload();
+            //window.location.reload();
+            this.showNotificationReload();
         }, 0.1);
     }
 
