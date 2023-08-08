@@ -77,13 +77,19 @@ export default class GameComponent extends GameComponentBase {
     protected onDestroy(): void {
         game.off(Game.EVENT_HIDE, this.onHideGame, this);
         game.off(Game.EVENT_SHOW, this.onShowGame, this);
-    }
+    }    
 
     @handle(HideGame.HideGameHandler)
-    onHideGame() {}
+    onHideGame() {
+        // reload here will run when page appears from hidden
+        // to fix issue on iOS that EVENT_SHOW are not triggered when phone active
+        this.scheduleOnce(() => {
+            window.location.reload();
+        }, 0.1);
+    }
 
-    onShowGame() {
-        window.location.reload();
+    onShowGame() {        
+        window.location.reload();        
     }
 
     @render(Connection.ConnectionStore, (store) => store.signedIn)
