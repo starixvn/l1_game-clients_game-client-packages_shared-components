@@ -87,10 +87,9 @@ export default class GameComponent extends GameComponentBase {
     onHideGame() {
         // reload here will run when page appears from hidden
         // to fix issue on iOS that EVENT_SHOW are not triggered when phone active
-        this.scheduleOnce(() => {
-            //window.location.reload();
-            this.showNotificationReload();
-        }, 0.1);
+        setTimeout(() => {
+            window.location.reload();
+        }, 100);        
     }
 
     onShowGame() {        
