@@ -8,7 +8,7 @@ import { ObserverComponent } from "./../../../../shared/common-components/observ
 import BetItem from "./bet-item";
 
 const { ccclass } = _decorator;
-const { render } = Observer;
+const { render, handle } = Observer;
 const { Settlements, Rounds, RoundHistories } = gc;
 
 type TContainerStatics = {
@@ -108,6 +108,7 @@ export class BetItems extends ObserverComponent {
     clearChipsWhenJoinStartingRound(isStartingRound: boolean) {
         if (isStartingRound && !this.isJoinStartingRound) {
             this.clearChipsForAllBetItems();
+            this.clearAllStake();
             this.isJoinStartingRound = true;
         }
     }
@@ -115,6 +116,9 @@ export class BetItems extends ObserverComponent {
     protected clearChipsForAllBetItems() {
         this.betItemComponents.forEach((betItem) => betItem.clearChips());
     }
+
+    @handle(Rounds.RoundUIHandlers.StartingRoundHandler)
+    protected clearAllStake() {}
 
     @render(Rounds.RoundStore, (store) => store.highLightAnim, { fireImmediately: false })
     handleHighlightAnim(highLightInfo: gc.Rounds.THighlightAnim) {

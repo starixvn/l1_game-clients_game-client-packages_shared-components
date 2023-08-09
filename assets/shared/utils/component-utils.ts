@@ -1,4 +1,4 @@
-import { Label, Node, UITransform, v3 } from "cc";
+import { Label, Node, Prefab, UITransform, instantiate, v3 } from "cc";
 
 export namespace ComponentUtils {
     export const moveToOtherNode = (node: Node, destNode: Node) => {
@@ -16,5 +16,12 @@ export namespace ComponentUtils {
                 label.cacheMode = Label.CacheMode.CHAR;
             }
         });
+    };
+
+    export const addChildFromPrefab = (prefab: Prefab, container: Node) => {
+        if (prefab && container) {
+            const toolTipNode = instantiate(prefab);
+            container.addChild(toolTipNode);
+        }
     };
 }

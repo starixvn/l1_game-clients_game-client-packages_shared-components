@@ -1,37 +1,44 @@
 import gc from "@sg/game-client-base";
-import { Component, Node, ProgressBar, _decorator, director } from "cc";
+import { Component, Label, Node, Prefab, ProgressBar, _decorator, director } from "cc";
 import Observer from "observer";
 import GameConnection from "../../../shared/common-components/game-connection";
-import { RandomWaitingMessage } from "../random-waiting-message";
+import { ComponentUtils } from "../../../shared/utils";
+import { ErrorMessage } from "../error-message";
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, App, Chips, sentryLogger, Configs } = gc;
+const { Auth, App, Chips, sentryLogger } = gc;
 @ccclass
 @observer
 export default class Splash extends Component {
     @property(ProgressBar)
     progressBar: ProgressBar = null;
 
-    @property(RandomWaitingMessage)
-    cpnMessage: RandomWaitingMessage = null;
-
-    @property(Node)
-    nodeSloganSG: Node = null;
-
-    @property(Node)
-    nodeSloganVG: Node = null;
+    @property(ErrorMessage)
+    cpnMessage: ErrorMessage = null;
 
     @property(Node)
     signNameContainer: Node = null;
+
+    @property(Node)
+    gameName: Node = null;
+
+    @property(Label)
+    percentResourceLoad: Label = null;
+
+    @property(Node)
+    containerCustomize: Node = null;
+
+    @property(Prefab)
+    prefabCustomize: Prefab = null;
 
     gameConnection: GameConnection = null;
 
     onLoad() {
         gc.initMobxLogger();
-        this.signNameContainer.active = false;
         this.initGameConnectionComponent();
         this.updateProgressBar(0);
         this.sso();
+        ComponentUtils.addChildFromPrefab(this.prefabCustomize, this.containerCustomize);
     }
 
     private initGameConnectionComponent() {
@@ -68,10 +75,15 @@ export default class Splash extends Component {
     renderMessage(message: string) {
         this.cpnMessage.reset();
         this.cpnMessage.setMessage(message);
+        this.gameName.active = false;
     }
 
     updateProgressBar(progress: number) {
-        this.progressBar && (this.progressBar.progress = progress);
+        if (this.progressBar) {
+            this.gameName.active = true;
+            this.percentResourceLoad.string = `${Math.round(progress * 100)}%`;
+            this.progressBar.progress = progress;
+        }
     }
 
     loadSceneGame() {
@@ -89,13 +101,6 @@ export default class Splash extends Component {
                 }
             }
         );
-    }
-
-    @render(Configs.SiteConfigs, (store) => store.systemType)
-    showSystemSlogan(systemType: string) {
-        const isSystemSG = systemType === Configs.SystemConfigs.SG.name;
-        this.nodeSloganSG.active = isSystemSG;
-        this.nodeSloganVG.active = !isSystemSG;
     }
 
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
