@@ -83,7 +83,7 @@ export default class GameComponent extends GameComponentBase {
     showNotificationReload(){
     }
 
-    @handle(HideGame.HideGameHandler)
+    //@handle(HideGame.HideGameHandler)
     onHideGame() {
         // reload here will run when page appears from hidden
         // to fix issue on iOS that EVENT_SHOW are not triggered when phone active
