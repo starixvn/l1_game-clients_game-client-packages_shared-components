@@ -78,11 +78,7 @@ export default class GameComponent extends GameComponentBase {
         game.off(Game.EVENT_HIDE, this.onHideGame, this);
         game.off(Game.EVENT_SHOW, this.onShowGame, this);
     }    
-
-    @handle(Notification.NotificationReloadHandlers.NotificationReload)
-    showNotificationReload(){
-    }
-
+    
     //@handle(HideGame.HideGameHandler)
     onHideGame() {
         // reload here will run when page appears from hidden
