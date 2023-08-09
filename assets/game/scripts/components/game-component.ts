@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Game, Label, _decorator, director, game } from "cc";
+import { Game, Label, _decorator, director, game, sys } from "cc";
 import Observer from "observer";
 import { InGameMenuEvents } from "../../../game/in-game-menu/scripts/stores/in-game-menu-events";
 import { InGameMenuStore } from "../../../game/in-game-menu/scripts/stores/in-game-menu-store";
@@ -83,9 +83,11 @@ export default class GameComponent extends GameComponentBase {
     onHideGame() {
         // reload here will run when page appears from hidden
         // to fix issue on iOS that EVENT_SHOW are not triggered when phone active
-        setTimeout(() => {
-            window.location.reload();
-        }, 100);        
+        if(sys.os === sys.OS.IOS){
+            setTimeout(() => {
+                window.location.reload();
+            }, 100);        
+        }        
     }
 
     onShowGame() {        
