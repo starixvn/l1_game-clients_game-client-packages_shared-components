@@ -770,10 +770,7 @@
       "__expectedType__": "cc.TTFFont"
     },
     "_cacheMode": 0,
-    "_imageAtlas": {
-      "__uuid__": "3e245686-88a4-4126-aa3e-6811d3b7b224",
-      "__expectedType__": "cc.SpriteAtlas"
-    },
+    "_imageAtlas": null,
     "_handleTouchEvent": true,
     "_id": ""
   },
