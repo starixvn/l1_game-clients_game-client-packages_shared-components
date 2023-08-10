@@ -1,5 +1,5 @@
 {
-  "ver": "1.0.25",
+  "ver": "1.0.26",
   "importer": "image",
   "imported": true,
   "uuid": "3cb769e0-a4c8-4d3a-8637-66616eef297c",
@@ -117,7 +117,7 @@
         "imageUuidOrDatabaseUri": "3cb769e0-a4c8-4d3a-8637-66616eef297c@6c48a",
         "atlasUuid": ""
       },
-      "ver": "1.0.11",
+      "ver": "1.0.12",
       "imported": true,
       "files": [
         ".json"
