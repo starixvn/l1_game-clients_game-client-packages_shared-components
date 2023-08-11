@@ -1,13 +1,11 @@
-import { _decorator, Component, Node } from "cc";
+import { _decorator, Component, Node, tween } from "cc";
 import Observer from "observer";
 import gc from "@sg/game-client-base";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { settings } from "../../../../../../assets/game/scripts/game-settings";
 
 const { ccclass, property } = _decorator;
-const { handle, observer } = Observer;
-
-const { BoostedOdds } = gc;
+const { handle, observer, render } = Observer;
 
 @ccclass("BoostedOddsComponent")
 @observer(settings.name)
@@ -17,29 +15,28 @@ export default class BoostedOddsComponent extends ObserverComponent {
 
     showPopup: boolean = false;
 
-    onLoad() {
-        // PromotionNotificationsHandler.getInstance().on(PromotionNotificationsEvent.OPEN_ANNOUNCEMENT, this.onClickBoostedOdds.bind(this));
-    }
-    handleBoostedOdds() {
-        // cc.tween(this.icon)
-        // .call(() => (this.icon.active = true))
-        // .delay(10)
-        // .call(() => (this.icon.active = false))
-        // .start();
-    }
     onDisable() {
         // this.node.stopAllActions();
     }
 
-    @handle(gc.BoostedOdds.BoostedOddsPopupHandlers, (handler, showPopup: boolean) => {
-        handler.handleShowPopup(showPopup);
+    @handle(gc.Notification.BoostedOddsPromotionsHandlers.PromotionHandlers, (handler) => {
+        handler.handleShowPopup(true);
     })
     hanldeShowPromotions() {
-        this.showPopup = !this.showPopup;
-        return this.showPopup;
+        // this.showPopup = !this.showPopup;
+        // return this.showPopup;
     }
 
     openPromotions() {
         this.hanldeShowPromotions();
+    }
+
+    @render(gc.Notification.BoostedOddsStore, (store) => store.counter, { fireImmediately: false })
+    showBoostedOddIcon() {
+        tween(this.icon)
+            .call(() => (this.icon.active = true))
+            .delay(10)
+            .call(() => (this.icon.active = false))
+            .start();
     }
 }

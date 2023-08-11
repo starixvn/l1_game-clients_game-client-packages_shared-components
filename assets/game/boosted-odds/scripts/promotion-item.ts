@@ -1,26 +1,14 @@
 import { _decorator, Button, color, Component, Label, LabelShadow, Node } from "cc";
 import gc from "@sg/game-client-base";
-import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import Observer from "observer";
+import { settings } from "../../../../../../assets/game/scripts/game-settings";
 
+const { handle, observer } = Observer;
+const { App } = gc;
 const { property, ccclass } = _decorator;
 
-// export class PromotionModelTest {
-//     _id: string;
-//     time: string;
-//     message: string;
-//     gameName: string;
-//     messages: object;
-//     title: object;
-//     startTime: string;
-//     endTime: string;
-//     promotionId: string;
-//     enabled: boolean;
-//     gameId: number;
-//     isActive: boolean;
-//     displayKind: number;
-// }
-
 @ccclass("PromotionItem")
+@observer(settings.name)
 export default class PromotionItem extends Component {
     @property(Label)
     title: Label | null = null;
@@ -37,7 +25,7 @@ export default class PromotionItem extends Component {
     @property(Node)
     content: Node | null = null;
 
-    setData(data: gc.BoostedOdds.PromotionModel) {
+    setData(data: gc.Notification.PromotionModel) {
         this.title.string = data.title["en-US"]; //NoticeUtil.getMessageByLocale(data.title);
         this.title.node.getComponent(LabelShadow).enabled = true;
         this.message.string = data.messages["en-US"]; // NoticeUtil.getMessageByLocale(data.messages);
@@ -50,7 +38,12 @@ export default class PromotionItem extends Component {
         this.joinButton.node.on("click", this.onClickJoinGame.bind(this, data.gameId));
     }
 
-    onClickJoinGame(gameId: number) {}
+    @handle(App.AppHandlers.BackToOperatorLobby, (handler, gameId: number) => {
+        handler.handleOpenGame(gameId);
+    })
+    onClickJoinGame(gameId: number) {
+        return gameId;
+    }
 
     getGameId(gameId: number) {}
 }

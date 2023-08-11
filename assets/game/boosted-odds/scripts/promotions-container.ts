@@ -15,7 +15,7 @@ export class PromotionsContainer extends NodeContainer {
     table: PromotionsTable = null;
 
     @render(
-        gc.BoostedOdds.BoostedOddsStore,
+        gc.Notification.BoostedOddsStore,
         (store) => {
             return {
                 showPopup: store.showPopup,
@@ -24,10 +24,10 @@ export class PromotionsContainer extends NodeContainer {
         },
         { fireImmediately: false }
     )
-    showPromotionsPopup(data: { showPopup: boolean; promotions: Array<gc.BoostedOdds.PromotionModel> }) {
-        // if (!data.showPopup) {
-        //     return;
-        // }
+    showPromotionsPopup(data: { showPopup: boolean; promotions: Array<gc.Notification.PromotionModel> }) {
+        if (!data.showPopup) {
+            return;
+        }
 
         if (!this.wrapperNode?.active) {
             this.wrapperNode = this.createNode();
