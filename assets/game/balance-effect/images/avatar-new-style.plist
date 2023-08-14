@@ -64,7 +64,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>THANG_zh-Hans.png</key>
+            <key>THANG_zh_cn.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -79,7 +79,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>THANG_zh-Hant.png</key>
+            <key>THANG_zh_tw.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>

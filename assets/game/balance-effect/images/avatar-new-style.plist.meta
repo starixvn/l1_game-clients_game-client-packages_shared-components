@@ -191,12 +191,12 @@
       ],
       "subMetas": {}
     },
-    "2b7e9": {
+    "eaee2": {
       "importer": "sprite-frame",
-      "uuid": "1ef4a92d-e610-4346-ae0b-27bcca850b1c@2b7e9",
+      "uuid": "1ef4a92d-e610-4346-ae0b-27bcca850b1c@eaee2",
       "displayName": "",
-      "id": "2b7e9",
-      "name": "THANG_zh-Hans",
+      "id": "eaee2",
+      "name": "THANG_zh_cn",
       "userData": {
         "trimType": "auto",
         "trimThreshold": 1,
@@ -237,12 +237,12 @@
       ],
       "subMetas": {}
     },
-    "9f9d8": {
+    "95cef": {
       "importer": "sprite-frame",
-      "uuid": "1ef4a92d-e610-4346-ae0b-27bcca850b1c@9f9d8",
+      "uuid": "1ef4a92d-e610-4346-ae0b-27bcca850b1c@95cef",
       "displayName": "",
-      "id": "9f9d8",
-      "name": "THANG_zh-Hant",
+      "id": "95cef",
+      "name": "THANG_zh_tw",
       "userData": {
         "trimType": "auto",
         "trimThreshold": 1,
