@@ -3,6 +3,7 @@
     "__type__": "cc.Prefab",
     "_name": "wait-timer",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "_native": "",
     "data": {
       "__id__": 1
@@ -69,6 +70,7 @@
     "__type__": "cc.Node",
     "_name": "SpriteSplash",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "_parent": {
       "__id__": 1
     },
@@ -118,6 +120,7 @@
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 2
     },
@@ -145,6 +148,7 @@
     "__type__": "cc.Sprite",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 2
     },
@@ -202,6 +206,7 @@
     "__type__": "cc.Node",
     "_name": "Label",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "_parent": {
       "__id__": 1
     },
@@ -251,6 +256,7 @@
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 8
     },
@@ -260,8 +266,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 27.95,
-      "height": 50.4
+      "width": 25.83,
+      "height": 40
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -278,6 +284,7 @@
     "__type__": "cc.Label",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 8
     },
@@ -305,8 +312,8 @@
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "0b9efa3d-c517-4301-af5b-ac67552528db",
-      "__expectedType__": "cc.TTFFont"
+      "__uuid__": "a8537839-a202-488b-8bb5-fdc265f2048a",
+      "__expectedType__": "cc.BitmapFont"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
@@ -314,7 +321,7 @@
     "_isBold": false,
     "_isUnderline": false,
     "_underlineHeight": 2,
-    "_cacheMode": 0,
+    "_cacheMode": 1,
     "_id": ""
   },
   {
@@ -338,6 +345,7 @@
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 1
     },
@@ -365,6 +373,7 @@
     "__type__": "c7121zR9elP5okH4/GpFxIP",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 1
     },

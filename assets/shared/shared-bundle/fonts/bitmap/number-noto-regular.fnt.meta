@@ -9,8 +9,8 @@
   "subMetas": {},
   "userData": {
     "_fntConfig": {
-      "commonHeight": 40,
-      "fontSize": 48,
+      "commonHeight": 30,
+      "fontSize": 30,
       "atlasName": "number-noto-regular.png",
       "fontDefDictionary": {
         "9": {
@@ -21,8 +21,8 @@
             "height": 0
           },
           "xOffset": 0,
-          "yOffset": 0,
-          "xAdvance": 0
+          "yOffset": -4,
+          "xAdvance": 12
         },
         "32": {
           "rect": {
@@ -32,222 +32,233 @@
             "height": 0
           },
           "xOffset": 0,
-          "yOffset": 0,
-          "xAdvance": 0
+          "yOffset": -4,
+          "xAdvance": 7
         },
         "35": {
           "rect": {
             "x": 0,
             "y": 72,
-            "width": 25,
-            "height": 34
+            "width": 16,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 6,
-          "xAdvance": 26
+          "yOffset": 5,
+          "xAdvance": 18
         },
         "36": {
           "rect": {
-            "x": 77,
+            "x": 36,
+            "y": 48,
+            "width": 14,
+            "height": 26
+          },
+          "xOffset": 0,
+          "yOffset": 2,
+          "xAdvance": 16.5
+        },
+        "37": {
+          "rect": {
+            "x": 0,
             "y": 0,
-            "width": 22,
-            "height": 40
+            "width": 25,
+            "height": 22
           },
           "xOffset": 0,
           "yOffset": 4,
-          "xAdvance": 23
+          "xAdvance": 27
         },
         "43": {
           "rect": {
-            "x": 0,
-            "y": 115,
-            "width": 21,
-            "height": 20
+            "x": 27,
+            "y": 0,
+            "width": 14,
+            "height": 13
           },
           "xOffset": 0,
-          "yOffset": 13,
-          "xAdvance": 22
+          "yOffset": 9,
+          "xAdvance": 16
         },
         "44": {
           "rect": {
-            "x": 23,
-            "y": 118,
-            "width": 9,
-            "height": 14
+            "x": 35,
+            "y": 76,
+            "width": 6,
+            "height": 9
           },
           "xOffset": 0,
-          "yOffset": 34,
-          "xAdvance": 10
+          "yOffset": 22,
+          "xAdvance": 9
         },
         "45": {
           "rect": {
-            "x": 0,
-            "y": 108,
-            "width": 13,
-            "height": 4
+            "x": 27,
+            "y": 15,
+            "width": 8,
+            "height": 2
           },
           "xOffset": 0,
-          "yOffset": 25,
-          "xAdvance": 14
+          "yOffset": 14,
+          "xAdvance": 10
         },
         "46": {
           "rect": {
-            "x": 23,
-            "y": 109,
-            "width": 6,
-            "height": 6
+            "x": 35,
+            "y": 87,
+            "width": 5,
+            "height": 4
           },
           "xOffset": 0,
-          "yOffset": 34,
-          "xAdvance": 7
+          "yOffset": 22,
+          "xAdvance": 8
         },
         "47": {
           "rect": {
-            "x": 123,
-            "y": 74,
-            "width": 14,
-            "height": 42
+            "x": 83,
+            "y": 48,
+            "width": 9,
+            "height": 28
           },
           "xOffset": 0,
-          "yOffset": 4,
-          "xAdvance": 15
+          "yOffset": 2,
+          "xAdvance": 9.5
         },
         "48": {
           "rect": {
-            "x": 36,
-            "y": 0,
-            "width": 23,
-            "height": 35
+            "x": 19,
+            "y": 48,
+            "width": 15,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 5,
-          "xAdvance": 24
+          "yOffset": 4,
+          "xAdvance": 17
         },
         "49": {
           "rect": {
-            "x": 101,
-            "y": 74,
-            "width": 20,
-            "height": 34
+            "x": 68,
+            "y": 48,
+            "width": 13,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 6,
-          "xAdvance": 21
+          "yOffset": 4,
+          "xAdvance": 16.8
         },
         "50": {
           "rect": {
-            "x": 101,
-            "y": 37,
-            "width": 22,
-            "height": 35
+            "x": 56,
+            "y": 0,
+            "width": 14,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 5,
-          "xAdvance": 23
+          "yOffset": 4,
+          "xAdvance": 16.5
         },
         "51": {
           "rect": {
-            "x": 101,
-            "y": 0,
-            "width": 22,
-            "height": 35
+            "x": 68,
+            "y": 24,
+            "width": 14,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 5,
-          "xAdvance": 23
+          "yOffset": 4,
+          "xAdvance": 16.5
         },
         "52": {
           "rect": {
             "x": 0,
-            "y": 36,
-            "width": 27,
-            "height": 34
+            "y": 48,
+            "width": 17,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 6,
-          "xAdvance": 28
+          "yOffset": 4,
+          "xAdvance": 17
         },
         "53": {
           "rect": {
-            "x": 77,
-            "y": 79,
-            "width": 22,
-            "height": 34
+            "x": 52,
+            "y": 39,
+            "width": 14,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 6,
-          "xAdvance": 23
+          "yOffset": 4,
+          "xAdvance": 16.5
         },
         "54": {
           "rect": {
-            "x": 27,
-            "y": 72,
-            "width": 23,
-            "height": 35
+            "x": 52,
+            "y": 63,
+            "width": 14,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 5,
-          "xAdvance": 24
+          "yOffset": 4,
+          "xAdvance": 16.5
         },
         "55": {
           "rect": {
-            "x": 52,
-            "y": 37,
-            "width": 23,
-            "height": 34
+            "x": 18,
+            "y": 72,
+            "width": 15,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 6,
-          "xAdvance": 24
+          "yOffset": 4,
+          "xAdvance": 17
         },
         "56": {
           "rect": {
-            "x": 52,
-            "y": 73,
-            "width": 23,
-            "height": 35
+            "x": 23,
+            "y": 24,
+            "width": 15,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 5,
-          "xAdvance": 24
+          "yOffset": 4,
+          "xAdvance": 17
         },
         "57": {
           "rect": {
-            "x": 77,
-            "y": 42,
-            "width": 22,
-            "height": 35
+            "x": 40,
+            "y": 15,
+            "width": 14,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 5,
-          "xAdvance": 23
+          "yOffset": 4,
+          "xAdvance": 16.5
         },
         "58": {
           "rect": {
-            "x": 29,
-            "y": 37,
-            "width": 7,
-            "height": 26
+            "x": 43,
+            "y": 76,
+            "width": 5,
+            "height": 17
           },
           "xOffset": 0,
-          "yOffset": 14,
+          "yOffset": 7,
           "xAdvance": 8
         },
         "75": {
           "rect": {
             "x": 0,
-            "y": 0,
-            "width": 34,
-            "height": 34
+            "y": 24,
+            "width": 21,
+            "height": 22
           },
           "xOffset": 0,
-          "yOffset": 6,
-          "xAdvance": 35
+          "yOffset": 4,
+          "xAdvance": 22
         }
       },
       "kerningDict": {}
     },
-    "fontSize": 48,
+    "fontSize": 30,
     "textureUuid": "2d2dca6f-5358-4f80-8c5c-db5ef029e588"
   }
 }

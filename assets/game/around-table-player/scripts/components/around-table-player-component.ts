@@ -85,7 +85,7 @@ export class AroundTablePlayerComponent extends ObserverComponent {
         let truncatedNickname = "";
         if (nickname) {
             if (nickname.length > 8) {
-                truncatedNickname = `${nickname.substring(0, 7)}...`;
+                truncatedNickname = `${nickname.substring(0, 5)}...`;
             } else {
                 truncatedNickname = nickname;
             }
