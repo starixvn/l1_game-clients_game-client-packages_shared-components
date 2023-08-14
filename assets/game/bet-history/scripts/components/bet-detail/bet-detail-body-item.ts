@@ -3,7 +3,7 @@ import gc from "@sg/game-client-base";
 import { ObserverComponent } from "../../../../../shared/common-components/observer-component/scripts/observer-component";
 
 const { property } = _decorator;
-const { DateTimeUtils, FormatUtils } = gc;
+const { DateTimeUtils, FormatUtils, Translator } = gc;
 
 export default class BetDetailBodyItem extends ObserverComponent {
     @property(Label)
@@ -24,8 +24,6 @@ export default class BetDetailBodyItem extends ObserverComponent {
     @property(Node)
     nodeBackground: Node = null;
 
-    choiceMapping = {};
-
     setData(
         betDetailsLog: gc.BetHistory.BetDetailsLog,
         index: number,
@@ -38,7 +36,7 @@ export default class BetDetailBodyItem extends ObserverComponent {
 
         this.nodeBackground.active = index % 2 > 0;
         this.lblTime.string = DateTimeUtils.formatDateTime(time);
-        this.lblChoice.string = this.choiceMapping[choice];
+        this.lblChoice.string = Translator.gameTranslate(`glossary_${choice}`);
         this.lblOdds.string = (fractionalOddsFormat ? FormatUtils.numberWithCommas(+odd - 1, 2) : odd).toString();
         this.lblAmount.string = FormatUtils.numberWithCommas(amount, 2);
     }
