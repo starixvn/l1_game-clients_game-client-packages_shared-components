@@ -4,7 +4,7 @@ import { remove, values } from "lodash-es";
 import Observer from "observer";
 import BetItem from "../../../bets/scripts/components/bet-item";
 import { BetItems } from "../../../bets/scripts/components/bet-items";
-import { placeChipToChipBox } from "../../../sliding-chip/scripts/components/actions";
+import { placeChipToChipBox } from "../../../chip-flying/scripts/components/actions";
 import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 import {
     AroundTablePlayersChipStore,

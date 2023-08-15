@@ -2,7 +2,7 @@ import gc from "@sg/game-client-base";
 import { Node } from "cc";
 import inversify from "inversify";
 import mobx from "mobx";
-import { getChipQuantity } from "../../../sliding-chip/scripts/components/actions";
+import { getChipQuantity } from "../../../chip-flying/scripts/components/actions";
 import { AroundTablePlayerComponent } from "../components/around-table-player-component";
 
 const { injectable, inject } = inversify;

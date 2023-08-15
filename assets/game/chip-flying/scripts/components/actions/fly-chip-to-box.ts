@@ -1,10 +1,10 @@
 import gc from "@sg/game-client-base";
 import { Node, UITransform } from "cc";
 import { AroundTablePlayerBet } from "../../../../around-table-player/scripts/components/around-table-player-bet";
-import { IMainPlayerChip } from "../../../../chip-flying/scripts/components/chip-flying";
 import { HiddenPlayersBet } from "../../../../hidden-players/scripts/components/hidden-players-bet";
-import { FlyChipUtils } from "../../utils/fly-chip-utils";
-import SlidingChip from "../sliding-chip";
+import SlidingChip from "../../../../sliding-chip/scripts/components/sliding-chip";
+import { FlyChipUtils } from "../../../../sliding-chip/scripts/utils/fly-chip-utils";
+import { IMainPlayerChip } from "../chip-flying";
 
 type TChips = {
     [value: number]: number;

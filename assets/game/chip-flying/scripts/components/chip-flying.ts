@@ -1,7 +1,6 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Node, tween } from "cc";
 import Observer from "observer";
-import * as actions from "../../.././sliding-chip/scripts/components/actions";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
 import { BetItems } from "../../../bets/scripts/components/bet-items";
@@ -10,7 +9,7 @@ import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { AroundTablePlayers } from "../../../around-table-player/scripts/components/around-table-players";
 import { AroundTablePlayerUtils } from "../../../around-table-player/scripts/utils";
-import { ActionChipFlying } from "./actions";
+import { ActionChipFlying, addChipsToChipBoxWhenJoinRoom, placeChipToChipBox } from "./actions";
 
 const { Auth, Chips, Settlements, Rounds } = gc;
 const { ccclass, property } = _decorator;
@@ -49,6 +48,9 @@ export class ChipFlying extends ObserverComponent {
     @property(BetItems)
     betItems: BetItems = null;
 
+    @property(Node)
+    chipContainer: Node = null;
+
     protected enablePlaceChips = true;
     protected isChipStack = false;
     protected payChipsDuration = 1.2;
@@ -64,7 +66,7 @@ export class ChipFlying extends ObserverComponent {
         for (const betItem of this.betItems.betItemComponents) {
             const chipGroup = chipsByMainPlayerRate.chips[betItem.betChoice];
             if (chipGroup) {
-                actions.addChipsToChipBoxWhenJoinRoom(betItem.chipBox, chipGroup, this.slidingChip);
+                addChipsToChipBoxWhenJoinRoom(betItem.chipBox, chipGroup, this.slidingChip);
             }
         }
     }
@@ -81,7 +83,7 @@ export class ChipFlying extends ObserverComponent {
             chipBox: betItem?.chipBox,
             chipValue: amount,
         };
-        actions.placeChipToChipBox(this.slidingChip, mainPlayerChip, null, null);
+        placeChipToChipBox(this.slidingChip, mainPlayerChip, null, null);
         this.playSoundSingleChip();
     }
 
@@ -230,7 +232,7 @@ export class ChipFlying extends ObserverComponent {
         collectChipsReBet.forEach((chipReBet) => {
             const { betChoice, amount } = chipReBet;
             const betItem = this.betItems?.betItemComponents.find((item) => betChoice === item.betChoice);
-            actions.placeChipToChipBox(
+            placeChipToChipBox(
                 this.slidingChip,
                 {
                     chipBox: betItem?.chipBox,
