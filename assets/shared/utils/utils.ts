@@ -73,7 +73,7 @@ export namespace AnimationUtils {
         });
     };
 
-    export const playSpine = (spine: sp.Skeleton, animationName: string, duration?: number) => {
+    export const playSpine = (spine: sp.Skeleton, animationName: string, isLoop = false, duration?: number) => {
         return new Promise<void>((resolve, reject) => {
             const animationDuration = spine.findAnimation(animationName).duration;
             if (duration) {
@@ -81,7 +81,7 @@ export namespace AnimationUtils {
             } else {
                 duration = animationDuration;
             }
-            spine.setAnimation(0, animationName, false);
+            spine.setAnimation(0, animationName, isLoop);
             tween(spine)
                 .delay(duration)
                 .call(() => resolve())
