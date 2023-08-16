@@ -4,8 +4,17 @@ import Observer from "observer";
 import { settings } from "../../../../../../assets/game/scripts/game-settings";
 
 const { handle, observer } = Observer;
-const { App } = gc;
+const { App, Translator } = gc;
 const { property, ccclass } = _decorator;
+
+const dict = {
+    vi: "vi-VN",
+    en: "en-US",
+    th: "th-TH",
+    id: "id-ID",
+    zh_cn: "zh-CN",
+    zh_tw: "zh-TW",
+};
 
 @ccclass("PromotionItem")
 @observer(settings.name)
@@ -26,9 +35,11 @@ export default class PromotionItem extends Component {
     content: Node | null = null;
 
     setData(data: gc.Notification.PromotionModel) {
-        this.title.string = data.title["en-US"]; //NoticeUtil.getMessageByLocale(data.title);
+        const lang = dict[Translator.getLanguageId()] || "en";
+
+        this.title.string = data.title[lang];
         this.title.node.getComponent(LabelShadow).enabled = true;
-        this.message.string = data.messages["en-US"]; // NoticeUtil.getMessageByLocale(data.messages);
+        this.message.string = data.messages[lang];
 
         this.joinButton.interactable = data.isActive;
         this.bgDisable.active = !data.isActive;

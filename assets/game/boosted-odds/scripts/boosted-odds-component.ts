@@ -15,23 +15,12 @@ export default class BoostedOddsComponent extends ObserverComponent {
 
     showPopup: boolean = false;
 
-    onDisable() {
-        // this.node.stopAllActions();
-    }
-
     @handle(gc.Notification.BoostedOddsPromotionsHandlers.PromotionHandlers, (handler) => {
-        handler.handleShowPopup(true);
+        handler.handleShowPopup();
     })
-    hanldeShowPromotions() {
-        // this.showPopup = !this.showPopup;
-        // return this.showPopup;
-    }
+    openPromotions() {}
 
-    openPromotions() {
-        this.hanldeShowPromotions();
-    }
-
-    @render(gc.Notification.BoostedOddsStore, (store) => store.counter, { fireImmediately: false })
+    @render(gc.Notification.BoostedOddsStore, (store) => store.boostedOddsCounter, { fireImmediately: false })
     showBoostedOddIcon() {
         tween(this.icon)
             .call(() => (this.icon.active = true))

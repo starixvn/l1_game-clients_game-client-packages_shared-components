@@ -13,22 +13,24 @@ const { render, observer } = Observer;
 export class PromotionsContainer extends NodeContainer {
     wrapperNode: Node = null;
     table: PromotionsTable = null;
+    popupCounter: number = 0;
 
     @render(
         gc.Notification.BoostedOddsStore,
         (store) => {
             return {
-                showPopup: store.showPopup,
+                popupCounter: store.popupCounter,
                 promotions: store.promotions,
             };
         },
         { fireImmediately: false }
     )
-    showPromotionsPopup(data: { showPopup: boolean; promotions: Array<gc.Notification.PromotionModel> }) {
-        if (!data.showPopup) {
+    showPromotionsPopup(data: { popupCounter: number; promotions: Array<gc.Notification.PromotionModel> }) {
+        if (data.popupCounter === this.popupCounter) {
             return;
         }
 
+        this.popupCounter = data.popupCounter;
         if (!this.wrapperNode?.active) {
             this.wrapperNode = this.createNode();
             this.table = this.wrapperNode.getComponent(PromotionsTable);
