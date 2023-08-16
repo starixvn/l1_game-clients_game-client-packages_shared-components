@@ -76,7 +76,7 @@ export namespace ActionChipFlying {
         }
 
         winBetItems?.forEach((item: BetItem) => {
-            if (settleStatus?.winningByChoices[item.node.name.toLowerCase()]) {
+            if (settleStatus?.winningByChoices[item.node.name]) {
                 const chipNode = !isChipStack ? item.chipBox : item.chipBox.children[0];
                 chipNode && slidingChip.moveChipsWithRandomAmount(chipNode, mainPlayerAvatarNode, payChipsDuration);
             }
