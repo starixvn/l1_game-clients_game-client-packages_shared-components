@@ -97,24 +97,12 @@ export class BetItems extends ObserverComponent {
         });
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
-    clearChipsAtStartRound(isStartRound: boolean) {
-        if (isStartRound) {
-            this.clearChipsForAllBetItems();
-        }
-    }
-
     @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
     clearChipsWhenJoinStartingRound(isStartingRound: boolean) {
         if (isStartingRound && !this.isJoinStartingRound) {
-            this.clearChipsForAllBetItems();
             this.clearAllStake();
             this.isJoinStartingRound = true;
         }
-    }
-
-    protected clearChipsForAllBetItems() {
-        this.betItemComponents.forEach((betItem) => betItem.clearChips());
     }
 
     @handle(Rounds.RoundUIHandlers.StartingRoundHandler)

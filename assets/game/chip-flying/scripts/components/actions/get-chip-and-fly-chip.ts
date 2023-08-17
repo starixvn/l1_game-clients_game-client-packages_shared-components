@@ -3,63 +3,69 @@ import { Node, UITransform, instantiate } from "cc";
 import BetItem from "../../../../bets/scripts/components/bet-item";
 import SlidingChip from "../../../../sliding-chip/scripts/components/sliding-chip";
 import { FlyChipUtils } from "../../../../sliding-chip/scripts/utils";
-import { IChipFlyingInfo } from "../chip-flying";
+import { ChipFlying, IChipFlyingInfo } from "../chip-flying";
 
 export namespace ActionChipFlying {
-    export const dealerGetChips = (dealerChipBox: Node, lostBetItems: BetItem[]) => {
+    export const dealerGetChips = (dealerChipBox: Node, lostBetItems: BetItem[], chipFlying: ChipFlying) => {
         lostBetItems.forEach((item: BetItem) => {
-            moveChips(item.chipBox, dealerChipBox);
+            const chipNodes = chipFlying.getChipsByChoice(item.betChoice);
+            moveChips(chipFlying.chipContainer, chipNodes, dealerChipBox);
         });
     };
 
-    const moveChips = (chipsBox: Node, destBox: Node) => {
+    const moveChips = (chipContainer: Node, chipNodes: Node[], destBox: Node) => {
+        const chipContainerTransform = chipContainer.getComponent(UITransform);
         const destBoxPosition = destBox.parent.getComponent(UITransform).convertToWorldSpaceAR(destBox.position);
-        const destBoxInChipBoxSpacePosition = chipsBox.getComponent(UITransform).convertToNodeSpaceAR(destBoxPosition);
+        const destBoxInChipBoxSpacePosition = chipContainerTransform.convertToNodeSpaceAR(destBoxPosition);
 
-        chipsBox?.children?.forEach((chip: Node) => {
+        chipNodes.forEach((chip: Node) => {
             FlyChipUtils.moveChipThenDestroy(chip, destBoxInChipBoxSpacePosition, SlidingChip.chipFlyingTime);
         });
     };
 
-    export const dealerPayChips = (dealerChipBox: Node, winBetItems: BetItem[]) => {
+    export const dealerPayChips = (dealerChipBox: Node, winBetItems: BetItem[], chipFlying: ChipFlying) => {
+        const chipContainer = chipFlying.chipContainer.getComponent(UITransform);
         winBetItems?.forEach((item: BetItem) => {
-            payChipsToWinningBetItem(item.chipBox, dealerChipBox);
+            const chipNodes = chipFlying.getChipsByChoice(item.betChoice);
+            const payChips = payChipsToWinningBetItem(item.chipBox, dealerChipBox, chipContainer, chipNodes);
+            chipFlying.addChipsToBoxWithChoice(payChips, item.betChoice);
         });
     };
 
-    const payChipsToWinningBetItem = (chipBox: Node, dealerChipBox: Node) => {
+    const payChipsToWinningBetItem = (chipBox: Node, dealerChipBox: Node, chipContainer: UITransform, chipNodes: Node[]) => {
         const dealerBoxPosition = dealerChipBox.parent.getComponent(UITransform).convertToWorldSpaceAR(dealerChipBox.position);
-        const dealerBoxInChipBoxSpacePosition = chipBox.getComponent(UITransform).convertToNodeSpaceAR(dealerBoxPosition);
+        const dealerBoxInChipBoxSpacePosition = chipContainer.convertToNodeSpaceAR(dealerBoxPosition);
 
-        chipBox?.children?.forEach((chip: Node) => {
+        const chipBoxTransform = chipBox.getComponent(UITransform);
+        const cloneChipNodes = [];
+        chipNodes.forEach((chip: Node) => {
             const cloneChip = instantiate(chip);
             cloneChip.position = dealerBoxInChipBoxSpacePosition;
-            chipBox.addChild(cloneChip);
-            const randomPosition = FlyChipUtils.getRandomPositionChip(cloneChip, chipBox);
-            FlyChipUtils.moveChipTo(cloneChip, randomPosition, SlidingChip.chipFlyingTime);
-        });
-    };
+            chipContainer.node.addChild(cloneChip);
 
-    export const removeChipStack = (winBetItems: BetItem[]) => {
-        winBetItems?.forEach((item: BetItem) => {
-            const stackNode = item.chipBox.children[0];
-            stackNode && item.chipBox.removeChild(stackNode);
-            stackNode?.destroy();
+            const randomPosition = chipContainer.convertToNodeSpaceAR(
+                chipBoxTransform.convertToWorldSpaceAR(FlyChipUtils.getRandomPositionChip(cloneChip, chipBox))
+            );
+
+            FlyChipUtils.moveChipTo(cloneChip, randomPosition, SlidingChip.chipFlyingTime);
+            cloneChipNodes.push(cloneChip);
         });
+        return cloneChipNodes;
     };
 
     export const payChipsToMainPlayer = (
         settleStatus: gc.GameServiceMessage.Status,
         chipFlyingInfo: IChipFlyingInfo,
-        winBetItems: BetItem[]
+        winBetItems: BetItem[],
+        chipFlying: ChipFlying
     ) => {
         const isHiddenPlayers = chipFlyingInfo?.hiddenPlayersNode !== null;
 
         if (settleStatus?.win) {
             if (isHiddenPlayers) {
-                moveChipWithRandomAmountToMainPlayer(settleStatus, chipFlyingInfo, winBetItems);
+                moveChipWithRandomAmountToMainPlayer(settleStatus, chipFlyingInfo, winBetItems, chipFlying);
             } else {
-                moveChipWithAmountToMainPlayer(settleStatus, chipFlyingInfo, winBetItems);
+                moveChipWithAmountToMainPlayer(settleStatus, chipFlyingInfo, winBetItems, chipFlying);
             }
         }
     };
@@ -67,28 +73,10 @@ export namespace ActionChipFlying {
     const moveChipWithRandomAmountToMainPlayer = (
         settleStatus: gc.GameServiceMessage.Status,
         chipFlyingInfo: IChipFlyingInfo,
-        winBetItems: BetItem[]
+        winBetItems: BetItem[],
+        chipFlying: ChipFlying
     ) => {
-        const { isChipStack, payChipsDuration, mainPlayerAvatarNode, slidingChip } = chipFlyingInfo;
-
-        if (!mainPlayerAvatarNode) {
-            return;
-        }
-
-        winBetItems?.forEach((item: BetItem) => {
-            if (settleStatus?.winningByChoices[item.node.name]) {
-                const chipNode = !isChipStack ? item.chipBox : item.chipBox.children[0];
-                chipNode && slidingChip.moveChipsWithRandomAmount(chipNode, mainPlayerAvatarNode, payChipsDuration);
-            }
-        });
-    };
-
-    const moveChipWithAmountToMainPlayer = (
-        settleStatus: gc.GameServiceMessage.Status,
-        chipFlyingInfo: IChipFlyingInfo,
-        winBetItems: BetItem[]
-    ) => {
-        const { isChipStack, mainPlayerAvatarNode } = chipFlyingInfo;
+        const { payChipsDuration, mainPlayerAvatarNode, slidingChip } = chipFlyingInfo;
 
         if (!mainPlayerAvatarNode) {
             return;
@@ -96,20 +84,40 @@ export namespace ActionChipFlying {
 
         winBetItems?.forEach((item: BetItem) => {
             if (settleStatus?.winningByChoices[item.betChoice]) {
-                const chipNode = !isChipStack ? item.chipBox : item.chipBox.children[0];
-                chipNode && moveChips(chipNode, mainPlayerAvatarNode);
+                const chipNodes = chipFlying.getChipsByChoice(item.betChoice);
+                chipFlying.moveChipsWithRandomAmount(chipNodes, mainPlayerAvatarNode, payChipsDuration);
             }
         });
     };
 
-    export const payChipsToHiddenPlayers = (hiddenPlayersNode: Node, isChipStack: boolean, winBetItems: BetItem[]) => {
+    const moveChipWithAmountToMainPlayer = (
+        settleStatus: gc.GameServiceMessage.Status,
+        chipFlyingInfo: IChipFlyingInfo,
+        winBetItems: BetItem[],
+        chipFlying: ChipFlying
+    ) => {
+        const { mainPlayerAvatarNode } = chipFlyingInfo;
+
+        if (!mainPlayerAvatarNode) {
+            return;
+        }
+
+        winBetItems?.forEach((item: BetItem) => {
+            if (settleStatus?.winningByChoices[item.betChoice]) {
+                const chipNodes = chipFlying.getChipsByChoice(item.betChoice);
+                moveChips(chipFlying.chipContainer, chipNodes, mainPlayerAvatarNode);
+            }
+        });
+    };
+
+    export const payChipsToHiddenPlayers = (hiddenPlayersNode: Node, winBetItems: BetItem[], chipFlying: ChipFlying) => {
         if (!hiddenPlayersNode) {
             return;
         }
 
         winBetItems?.forEach((item: BetItem) => {
-            const chipNode = !isChipStack ? item.chipBox : item.chipBox.children[0];
-            chipNode && moveChips(chipNode, hiddenPlayersNode);
+            const chipNodes = chipFlying.getChipsByChoice(item.betChoice);
+            moveChips(chipFlying.chipContainer, chipNodes, hiddenPlayersNode);
         });
     };
 }

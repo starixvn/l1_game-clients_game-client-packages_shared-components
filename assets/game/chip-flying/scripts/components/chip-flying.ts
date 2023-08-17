@@ -1,16 +1,23 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Node, tween } from "cc";
+import { _decorator, instantiate, Node, tween, UITransform, v3 } from "cc";
 import Observer from "observer";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
 import { BetItems } from "../../../bets/scripts/components/bet-items";
 import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 
+import { random, round } from "lodash-es";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { AroundTablePlayers } from "../../../around-table-player/scripts/components/around-table-players";
+import {
+    AroundTablePlayersChipStore,
+    IAroundTablePlayerChip,
+    IAroundTablePlayerPlaceChip,
+} from "../../../around-table-player/scripts/stores/around-table-players-chip-store";
 import { AroundTablePlayerUtils } from "../../../around-table-player/scripts/utils";
+import BetItem from "../../../bets/scripts/components/bet-item";
+import { FlyChipUtils } from "../../../sliding-chip/scripts/utils/fly-chip-utils";
 import { ActionChipFlying, addChipsToChipBoxWhenJoinRoom, placeChipToChipBox } from "./actions";
-
 const { Auth, Chips, Settlements, Rounds } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -19,7 +26,6 @@ export interface IChipFlyingInfo {
     slidingChip: SlidingChip;
     hiddenPlayersNode: Node;
     mainPlayerAvatarNode: Node;
-    isChipStack: boolean;
     payChipsDuration: number;
 }
 
@@ -52,10 +58,12 @@ export class ChipFlying extends ObserverComponent {
     chipContainer: Node = null;
 
     protected enablePlaceChips = true;
-    protected isChipStack = false;
     protected payChipsDuration = 1.2;
     protected chipDelayFlyingTime = 1.25;
     protected settlementStatus: gc.GameServiceMessage.Status = null;
+    protected aroundTablePlayerChips = [];
+    protected isFlyChipSlow = true;
+    protected chipStorage = {};
 
     @render(Chips.ChipStore, (store) => store.chipsByMainPlayerRate, { fireImmediately: false })
     flyChipJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {
@@ -66,7 +74,8 @@ export class ChipFlying extends ObserverComponent {
         for (const betItem of this.betItems.betItemComponents) {
             const chipGroup = chipsByMainPlayerRate.chips[betItem.betChoice];
             if (chipGroup) {
-                addChipsToChipBoxWhenJoinRoom(betItem.chipBox, chipGroup, this.slidingChip);
+                const nodes = addChipsToChipBoxWhenJoinRoom(this.chipContainer, betItem.chipBox, chipGroup, this.slidingChip);
+                this.addChipsToBoxWithChoice(nodes, betItem.betChoice);
             }
         }
     }
@@ -83,8 +92,21 @@ export class ChipFlying extends ObserverComponent {
             chipBox: betItem?.chipBox,
             chipValue: amount,
         };
-        placeChipToChipBox(this.slidingChip, mainPlayerChip, null, null);
+        this.placeChipToChipBox(betChoice, this.chipContainer, this.slidingChip, mainPlayerChip, null, null);
         this.playSoundSingleChip();
+    }
+
+    protected placeChipToChipBox(
+        betChoice: string,
+        chipContainer: Node,
+        slidingChip: SlidingChip,
+        mainPlayerChip: IMainPlayerChip,
+        startNode: Node,
+        onComplete: () => void,
+        isHiddenPlayer = false
+    ) {
+        const chipNode = placeChipToChipBox(chipContainer, slidingChip, mainPlayerChip, startNode, onComplete, isHiddenPlayer);
+        this.addChipsToBoxWithChoice([chipNode], betChoice);
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
@@ -99,23 +121,21 @@ export class ChipFlying extends ObserverComponent {
         }
 
         if (!this.node.activeInHierarchy) {
-            ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems);
-            ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems);
-            this.isChipStack && ActionChipFlying.removeChipStack(this.betItems?.winBetItems);
+            ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems, this);
+            ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems, this);
             this.payChipToAllPlayers(payChipInfo);
         } else {
             tween(this.node)
                 .delay(this.chipDelayFlyingTime)
                 .call(() => {
-                    ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems);
+                    ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems, this);
                 })
                 .delay(this.chipDelayFlyingTime)
                 .call(() => {
-                    ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems);
+                    ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems, this);
                 })
                 .delay(this.chipDelayFlyingTime)
                 .call(() => {
-                    this.isChipStack && ActionChipFlying.removeChipStack(this.betItems?.winBetItems);
                     this.payChipToAllPlayers(payChipInfo);
                 })
                 .start();
@@ -127,15 +147,14 @@ export class ChipFlying extends ObserverComponent {
             slidingChip: this.slidingChip,
             hiddenPlayersNode: this.hiddenPlayersNode,
             mainPlayerAvatarNode: this.mainPlayerAvatarNode,
-            isChipStack: this.isChipStack,
             payChipsDuration: this.payChipsDuration,
         };
 
-        ActionChipFlying.payChipsToMainPlayer(this.settlementStatus, chipFlyingInfo, this.betItems?.winBetItems);
+        ActionChipFlying.payChipsToMainPlayer(this.settlementStatus, chipFlyingInfo, this.betItems?.winBetItems, this);
         this.showPayoutForMainPlayer();
 
         if (this.hiddenPlayersNode) {
-            ActionChipFlying.payChipsToHiddenPlayers(this.hiddenPlayersNode, this.isChipStack, this.betItems?.winBetItems);
+            ActionChipFlying.payChipsToHiddenPlayers(this.hiddenPlayersNode, this.betItems?.winBetItems, this);
         }
 
         this.payChipsToAroundTablePlayers(payChipInfo);
@@ -162,7 +181,7 @@ export class ChipFlying extends ObserverComponent {
         return true;
     }
 
-    payChipsToAroundTablePlayers(payChipInfo: gc.Settlements.TPayChipInfo) {
+    protected payChipsToAroundTablePlayers(payChipInfo: gc.Settlements.TPayChipInfo) {
         const winningPlayers = payChipInfo.winningPlayers;
 
         if (!winningPlayers) {
@@ -186,10 +205,9 @@ export class ChipFlying extends ObserverComponent {
             const playerBetItems = winningPlayerData.winningByChoices;
 
             this.betItems.winBetItems.forEach((item) => {
+                const chipNodes = this.getChipsByChoice(item.betChoice);
                 if (playerBetItems && playerBetItems[item.betChoice] > 0) {
-                    const chipNode = !this.isChipStack ? item.chipBox : item.chipBox.children[0];
-                    chipNode &&
-                        this.slidingChip.moveChipsWithRandomAmount(chipNode, aroundTablePlayerSlot.avatar.node, this.payChipsDuration);
+                    this.moveChipsWithRandomAmount(chipNodes, aroundTablePlayerSlot.avatar.node, this.payChipsDuration);
                 }
             });
 
@@ -201,6 +219,32 @@ export class ChipFlying extends ObserverComponent {
 
         this.aroundTablePlayersShowWinningEffect(winningEffects);
         this.updateAroundTablePlayersIncreaseBalance(balanceEffects);
+    }
+
+    public moveChipsWithRandomAmount(chipNodes: Node[], destBox: Node, flyTime: number) {
+        const randomAmount = 3;
+        const destWorldPosition = destBox.parent.getComponent(UITransform).convertToWorldSpaceAR(destBox.position);
+        const cloneChipsBox = new Node();
+        const chipBoxTransform = cloneChipsBox.addComponent(UITransform);
+        this.chipContainer.addChild(cloneChipsBox);
+        const destPosition = chipBoxTransform.convertToNodeSpaceAR(destWorldPosition);
+        const chipsCount = round(random(1, randomAmount));
+        for (let i = 0; i < chipsCount; i++) {
+            const chip = chipNodes[i];
+            if (chip) {
+                const cloneChip = instantiate(chip);
+                const chipTransform = chip.getComponent(UITransform);
+                cloneChip.position = chipBoxTransform.convertToNodeSpaceAR(chipTransform.convertToWorldSpaceAR(v3(0)));
+                chipBoxTransform.node.addChild(cloneChip);
+                FlyChipUtils.moveChipThenDestroy(cloneChip, destPosition, flyTime);
+            }
+        }
+        tween(this.node)
+            .delay(flyTime * 1.5)
+            .call(() => {
+                cloneChipsBox.destroy();
+            })
+            .start();
     }
 
     @handle(BalanceEffectHandlers.AroundTablePlayersWinEffect)
@@ -232,7 +276,9 @@ export class ChipFlying extends ObserverComponent {
         collectChipsReBet.forEach((chipReBet) => {
             const { betChoice, amount } = chipReBet;
             const betItem = this.betItems?.betItemComponents.find((item) => betChoice === item.betChoice);
-            placeChipToChipBox(
+            this.placeChipToChipBox(
+                betChoice,
+                this.chipContainer,
                 this.slidingChip,
                 {
                     chipBox: betItem?.chipBox,
@@ -243,5 +289,119 @@ export class ChipFlying extends ObserverComponent {
             );
             this.playSoundSingleChip();
         });
+    }
+
+    @render(AroundTablePlayersChipStore, (store) => store.aroundTablePlayerChip, { fireImmediately: false })
+    handleAroundTablePlayerPlaceChip(aroundTablePlayerPlaceChip: IAroundTablePlayerChip) {
+        if (!this.aroundTablePlayers) {
+            return;
+        }
+        const { playerChip, chipValues } = aroundTablePlayerPlaceChip ?? {};
+        if (!playerChip) {
+            return;
+        }
+        this.aroundTablePlayerChips.push(aroundTablePlayerPlaceChip);
+
+        const { betChoice, playerId } = playerChip;
+        const betItem: BetItem = AroundTablePlayerUtils.getBetItem(this.betItems.betItemComponents, betChoice);
+
+        let startNode: Node;
+        let isHiddenPlayer = false;
+        const aroundTablePlayer = AroundTablePlayerUtils.getAroundTablePlayerSlot(
+            this.aroundTablePlayers.aroundTablePlayerComponents,
+            playerId
+        );
+
+        if (aroundTablePlayer) {
+            AroundTablePlayerUtils.updatePlayerSlotDataStorage(playerChip, aroundTablePlayer);
+            startNode = aroundTablePlayer.avatar.node;
+        } else {
+            startNode = this.hiddenPlayersNode;
+            isHiddenPlayer = true;
+            this.aroundTablePlayers.updateHiddenPlayerStorage(playerChip);
+        }
+
+        const aroundTablePlayerInfo = {
+            betChoice,
+            chipValues,
+            chipBox: betItem?.chipBox,
+            startNode,
+            isHiddenPlayer,
+        };
+
+        if (!this.node.activeInHierarchy) {
+            this.placeAroundTablePlayerChip(aroundTablePlayerInfo);
+        } else {
+            const delayTime = this.calculateDelayTime();
+            this.delayedPlaceChip(aroundTablePlayerInfo, delayTime);
+        }
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => ({ roundTime: store.roundTime, lockingBet: store.lockingBet }))
+    calculateDelayFlyChip({ roundTime, lockingBet }: { roundTime: number; lockingBet: number }) {
+        if (roundTime >= lockingBet + 2) {
+            this.isFlyChipSlow = true;
+        } else {
+            this.isFlyChipSlow = false;
+        }
+    }
+
+    protected calculateDelayTime() {
+        let delayTime = this.aroundTablePlayerChips.length * 0.01;
+        if (this.isFlyChipSlow) {
+            delayTime = this.aroundTablePlayerChips.length * 0.07;
+        }
+
+        return delayTime > 1 ? delayTime / 2 : delayTime;
+    }
+
+    protected delayedPlaceChip(aroundTablePlayerInfo: IAroundTablePlayerPlaceChip, delayTime: number) {
+        tween(this.node)
+            .delay(delayTime)
+            .call(() => {
+                this.placeAroundTablePlayerChip(aroundTablePlayerInfo);
+            })
+            .start();
+    }
+
+    protected placeAroundTablePlayerChip(visiblePlayerPlaceChip: IAroundTablePlayerPlaceChip) {
+        const { chipValues, chipBox, startNode, isHiddenPlayer, betChoice } = visiblePlayerPlaceChip ?? {};
+        if (chipValues) {
+            Object.keys(chipValues).forEach((chipValue) => {
+                let count = chipValues[chipValue];
+                for (; count > 0; count--) {
+                    const ownerChip = {
+                        chipBox,
+                        chipValue: +chipValue,
+                    };
+                    this.placeChipToChipBox(betChoice, this.chipContainer, this.slidingChip, ownerChip, startNode, null, isHiddenPlayer);
+                }
+            });
+
+            this.aroundTablePlayerChips.pop();
+        }
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => store.isStartRound || store.isStartingRound)
+    clearChipsAtStartRound(isStartRound: boolean) {
+        if (isStartRound) {
+            this.clearChipsForAllBetItems();
+        }
+    }
+
+    clearChipsForAllBetItems() {
+        this.chipStorage = {};
+        this.chipContainer.destroyAllChildren();
+    }
+
+    getChipsByChoice(choice: string): Node[] {
+        return this.chipStorage[choice] ?? [];
+    }
+
+    addChipsToBoxWithChoice(chips: Node[], betChoice: string) {
+        const list = this.chipStorage[betChoice] ?? [];
+        list.push(...chips);
+
+        this.chipStorage[betChoice] = list;
     }
 }

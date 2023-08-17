@@ -62,10 +62,6 @@ export default class BetItem extends ObserverComponent {
         this.lblTotalBet.string = totalBet;
     }
 
-    clearChips() {
-        this.chipBox?.destroyAllChildren();
-    }
-
     public handleHighlightAnim(isActive: boolean) {
         this.highlightAnim.active = isActive;
     }

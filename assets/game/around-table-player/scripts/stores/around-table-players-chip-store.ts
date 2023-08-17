@@ -28,6 +28,7 @@ export interface IAroundTablePlayerChip {
 }
 
 export interface IAroundTablePlayerPlaceChip {
+    betChoice: string;
     chipValues: {
         [value: number]: number;
     };

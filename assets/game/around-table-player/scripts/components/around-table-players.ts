@@ -1,18 +1,8 @@
 import gc from "@sg/game-client-base";
-import { Node, _decorator, tween } from "cc";
+import { _decorator } from "cc";
 import { remove, values } from "lodash-es";
 import Observer from "observer";
-import BetItem from "../../../bets/scripts/components/bet-item";
-import { BetItems } from "../../../bets/scripts/components/bet-items";
-import { placeChipToChipBox } from "../../../chip-flying/scripts/components/actions";
-import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
-import {
-    AroundTablePlayersChipStore,
-    IAroundTablePlayerChip,
-    IAroundTablePlayerPlaceChip,
-    IAroundTablePlayers,
-    IHiddenPlayers,
-} from "../stores/around-table-players-chip-store";
+import { IAroundTablePlayers, IHiddenPlayers } from "../stores/around-table-players-chip-store";
 import { AroundTablePlayerUtils } from "../utils";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
 import { AroundTablePlayerComponent } from "./around-table-player-component";
@@ -24,17 +14,6 @@ const { render } = Observer;
 
 @ccclass
 export class AroundTablePlayers extends ObserverComponent {
-    @property(SlidingChip)
-    slidingChip: SlidingChip = null;
-
-    @property(Node)
-    hiddenPlayersNode: Node = null;
-
-    @property(BetItems)
-    betItems: BetItems = null;
-
-    protected aroundTablePlayerChips = [];
-    protected isFlyChipSlow = true;
     protected hiddenPlayers: IHiddenPlayers = {};
     aroundTablePlayerComponents: AroundTablePlayerComponent[] = [];
 
@@ -109,54 +88,7 @@ export class AroundTablePlayers extends ObserverComponent {
         }
     }
 
-    @render(Rounds.RoundTimeStore, (store) => ({ roundTime: store.roundTime, lockingBet: store.lockingBet }))
-    calculateDelayFlyChip({ roundTime, lockingBet }: { roundTime: number; lockingBet: number }) {
-        if (roundTime >= lockingBet + 2) {
-            this.isFlyChipSlow = true;
-        } else {
-            this.isFlyChipSlow = false;
-        }
-    }
-
-    @render(AroundTablePlayersChipStore, (store) => store.aroundTablePlayerChip, { fireImmediately: false })
-    handleAroundTablePlayerPlaceChip(aroundTablePlayerPlaceChip: IAroundTablePlayerChip) {
-        const { playerChip, chipValues } = aroundTablePlayerPlaceChip ?? {};
-        if (!playerChip) {
-            return;
-        }
-        this.aroundTablePlayerChips.push(aroundTablePlayerPlaceChip);
-
-        const { betChoice, playerId } = playerChip;
-        let startNode: Node;
-        let isHiddenPlayer = false;
-        const aroundTablePlayer = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayerComponents, playerId);
-        const betItem: BetItem = AroundTablePlayerUtils.getBetItem(this.betItems.betItemComponents, betChoice);
-
-        if (aroundTablePlayer) {
-            AroundTablePlayerUtils.updatePlayerSlotDataStorage(playerChip, aroundTablePlayer);
-            startNode = aroundTablePlayer.avatar.node;
-        } else {
-            startNode = this.hiddenPlayersNode;
-            isHiddenPlayer = true;
-            this.updateHiddenPlayerStorage(playerChip);
-        }
-
-        const aroundTablePlayerInfo = {
-            chipValues,
-            chipBox: betItem?.chipBox,
-            startNode,
-            isHiddenPlayer,
-        };
-
-        if (!this.node.activeInHierarchy) {
-            this.placeAroundTablePlayerChip(aroundTablePlayerInfo);
-        } else {
-            const delayTime = this.calculateDelayTime();
-            this.delayedPlaceChip(aroundTablePlayerInfo, delayTime);
-        }
-    }
-
-    protected updateHiddenPlayerStorage(playerChip: gc.GameServiceMessage.PlayerChip) {
+    updateHiddenPlayerStorage(playerChip: gc.GameServiceMessage.PlayerChip) {
         const player = this.hiddenPlayers?.[playerChip?.playerId];
 
         if (player) {
@@ -165,42 +97,6 @@ export class AroundTablePlayers extends ObserverComponent {
             this.hiddenPlayers[playerChip.playerId] = player;
             AroundTablePlayerUtils.storePlayerToCache(player);
         }
-    }
-
-    protected placeAroundTablePlayerChip(visiblePlayerPlaceChip: IAroundTablePlayerPlaceChip) {
-        const { chipValues, chipBox, startNode, isHiddenPlayer } = visiblePlayerPlaceChip ?? {};
-        if (chipValues) {
-            Object.keys(chipValues).forEach((chipValue) => {
-                let count = chipValues[chipValue];
-                for (; count > 0; count--) {
-                    const ownerChip = {
-                        chipBox,
-                        chipValue: +chipValue,
-                    };
-                    placeChipToChipBox(this.slidingChip, ownerChip, startNode, null, isHiddenPlayer);
-                }
-            });
-
-            this.aroundTablePlayerChips.pop();
-        }
-    }
-
-    protected calculateDelayTime() {
-        let delayTime = this.aroundTablePlayerChips.length * 0.01;
-        if (this.isFlyChipSlow) {
-            delayTime = this.aroundTablePlayerChips.length * 0.07;
-        }
-
-        return delayTime > 1 ? delayTime / 2 : delayTime;
-    }
-
-    protected delayedPlaceChip(aroundTablePlayerInfo: IAroundTablePlayerPlaceChip, delayTime: number) {
-        tween(this.node)
-            .delay(delayTime)
-            .call(() => {
-                this.placeAroundTablePlayerChip(aroundTablePlayerInfo);
-            })
-            .start();
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)

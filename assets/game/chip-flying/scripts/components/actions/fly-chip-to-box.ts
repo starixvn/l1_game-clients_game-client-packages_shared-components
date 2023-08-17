@@ -11,21 +11,25 @@ type TChips = {
 };
 
 export const placeChipToChipBox = (
+    chipContainer: Node,
     slidingChip: SlidingChip,
     mainPlayerChip: IMainPlayerChip,
     startNode: Node,
     onComplete: () => void,
     isHiddenPlayer = false
 ) => {
+    const containerTransform = chipContainer.getComponent(UITransform);
     const { chipBox, chipValue } = mainPlayerChip;
+    const chipBoxTransform = chipBox.getComponent(UITransform);
     const flyingDuration = startNode == null ? SlidingChip.mainPlayerChipFlyingTime : SlidingChip.chipFlyingTime;
-    const chipPosition = chipBox
-        ?.getComponent(UITransform)
-        ?.convertToNodeSpaceAR(slidingChip.createStartNodeInfo(startNode, chipValue).worldPos);
+    const chipPosition = containerTransform.convertToNodeSpaceAR(slidingChip.createStartNodeInfo(startNode, chipValue).worldPos);
     const chipNode = slidingChip.createSmallChip(chipValue);
     chipNode.position = chipPosition;
-    const randomPosition = FlyChipUtils.getRandomPositionChip(chipNode, chipBox);
-    chipBox?.addChild(chipNode);
+    const randomPosition = containerTransform.convertToNodeSpaceAR(
+        chipBoxTransform.convertToWorldSpaceAR(FlyChipUtils.getRandomPositionChip(chipNode, chipBox))
+    );
+
+    chipContainer.addChild(chipNode);
 
     if (!chipNode.activeInHierarchy) {
         chipNode.position = randomPosition;
@@ -33,6 +37,8 @@ export const placeChipToChipBox = (
         chipNode && FlyChipUtils.moveChipTo(chipNode, randomPosition, flyingDuration, onComplete);
         handleAnimWhenPlayerBet(isHiddenPlayer, startNode);
     }
+
+    return chipNode;
 };
 
 const handleAnimWhenPlayerBet = (isHiddenPlayer: boolean, startNode: Node) => {
@@ -45,19 +51,27 @@ const handleAnimWhenPlayerBet = (isHiddenPlayer: boolean, startNode: Node) => {
     }
 };
 
-export const addChipsToChipBoxWhenJoinRoom = (chipBox: Node, chipGroup: gc.Chips.IChipGroup, slidingChip: SlidingChip) => {
+export const addChipsToChipBoxWhenJoinRoom = (
+    chipContainer: Node,
+    chipBox: Node,
+    chipGroup: gc.Chips.IChipGroup,
+    slidingChip: SlidingChip
+) => {
     if (!chipGroup) {
         return;
     }
 
+    const chipNodes = [];
     const chipValues = Object.keys(chipGroup);
     chipValues.forEach((chipValue) => {
         const chipCountOfBet = chipGroup[chipValue];
         const convertValues = getChipQuantity(+chipValue, slidingChip.chipValues);
         for (let i = 0; i < chipCountOfBet; i++) {
-            addChipsByChipsData(slidingChip, convertValues, chipBox);
+            const nodes = addChipsByChipsData(slidingChip, convertValues, chipBox, chipContainer);
+            chipNodes.push(...nodes);
         }
     });
+    return chipNodes;
 };
 
 export const getChipQuantity = (bet: number, options: number[]): TChips => {
@@ -84,13 +98,20 @@ const calculateChipValue = (list: number[], total: number) => {
     return { chips, chipTotal };
 };
 
-const addChipsByChipsData = (slidingChip: SlidingChip, chips: TChips, chipsBox: Node) => {
+const addChipsByChipsData = (slidingChip: SlidingChip, chips: TChips, chipsBox: Node, chipContainer: Node) => {
+    const chipNodes = [];
     Object.keys(chips).forEach((chipValue) => {
         const count = chips[chipValue];
+        const containerTransform = chipContainer.getComponent(UITransform);
+        const chipBoxTransform = chipsBox.getComponent(UITransform);
         for (let i = 0; i < count; i++) {
             const chip = slidingChip.createSmallChip(+chipValue);
-            chip.position = FlyChipUtils.getRandomPositionChip(chip, chipsBox);
-            chipsBox.addChild(chip);
+            const chipBoxLocalPosition = FlyChipUtils.getRandomPositionChip(chip, chipsBox);
+            chip.position = containerTransform.convertToNodeSpaceAR(chipBoxTransform.convertToWorldSpaceAR(chipBoxLocalPosition));
+            chipContainer.addChild(chip);
+            chipNodes.push(chip);
         }
     });
+
+    return chipNodes;
 };

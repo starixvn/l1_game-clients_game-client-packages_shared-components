@@ -16,13 +16,12 @@ import {
     tween,
     v3,
 } from "cc";
-import { random, round } from "lodash-es";
+import { random } from "lodash-es";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { SlidingChipHandler } from "../handlers/sliding-chip-handler";
 import { SlidingChipStore } from "../stores/sliding-chip-store";
 
-import { FlyChipUtils } from "../utils";
 import Chip, { ChipDisplayType } from "./chip";
 import { SnapScrollView } from "./snap-scroll-view";
 
@@ -353,38 +352,6 @@ export default class SlidingChip extends ObserverComponent {
 
     private getChipNode(bet: number): Node {
         return this.chips?.children?.find((child) => child.name === bet.toString());
-    }
-
-    public moveChipsWithRandomAmount(chipsBox: Node, destBox: Node, flyTime: number) {
-        if (chipsBox && destBox) {
-            const randomAmount = 3;
-            const destBoxPosition = destBox.parent.getComponent(UITransform).convertToWorldSpaceAR(destBox.position);
-            const cloneChipsBox = instantiate(chipsBox);
-            if (cloneChipsBox) {
-                cloneChipsBox.destroyAllChildren();
-                chipsBox.parent.addChild(cloneChipsBox);
-
-                const destBoxInChipBoxSpacePosition = cloneChipsBox.getComponent(UITransform).convertToNodeSpaceAR(destBoxPosition);
-                const chipsCount = round(random(1, randomAmount));
-
-                for (let i = 0; i < chipsCount; i++) {
-                    const chip = chipsBox.children[i];
-
-                    if (chip) {
-                        const cloneChip = instantiate(chip);
-                        cloneChipsBox.addChild(cloneChip);
-                        FlyChipUtils.moveChipThenDestroy(cloneChip, destBoxInChipBoxSpacePosition, flyTime);
-                    }
-                }
-
-                tween(this.node)
-                    .delay(flyTime * 1.5)
-                    .call(() => {
-                        cloneChipsBox.destroy();
-                    })
-                    .start();
-            }
-        }
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
