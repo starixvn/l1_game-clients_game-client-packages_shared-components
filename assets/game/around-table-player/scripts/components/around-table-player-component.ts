@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Label, Sprite, SpriteFrame, UIOpacity, _decorator } from "cc";
+import { CacheMode, Label, Sprite, SpriteFrame, UIOpacity, _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../../../shared/utils";
@@ -26,6 +26,9 @@ export class AroundTablePlayerComponent extends ObserverComponent {
 
     @property
     maxBalanceDisplay = 99999;
+
+    @property
+    fontSizeName = 28;
 
     static readonly maxIdleCount = 2;
     public aroundTablePlayer: IAroundTablePlayers = null;
@@ -85,7 +88,7 @@ export class AroundTablePlayerComponent extends ObserverComponent {
         let truncatedNickname = "";
         if (nickname) {
             if (nickname.length > 8) {
-                truncatedNickname = `${nickname.substring(0, 5)}...`;
+                truncatedNickname = `${nickname.substring(0, 7)}...`;
             } else {
                 truncatedNickname = nickname;
             }
@@ -96,6 +99,10 @@ export class AroundTablePlayerComponent extends ObserverComponent {
 
     private updateNicknameLabel(nickname: string) {
         this.lblNickname.string = nickname;
+
+        // Text is out of line or distorted when resizing and maximize window on desktop
+        this.lblNickname.cacheMode = CacheMode.NONE;
+        this.lblNickname.fontSize = this.fontSizeName;
     }
 
     private displayBalance(balance: number) {

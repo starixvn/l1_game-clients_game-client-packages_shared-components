@@ -743,8 +743,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 148.849609375,
-      "height": 39.8
+      "width": 2,
+      "height": 77.6
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -779,13 +779,13 @@
       "b": 255,
       "a": 255
     },
-    "_string": "PumKim...",
+    "_string": "",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 28,
     "_fontSize": 28,
     "_fontFamily": "Arial",
-    "_lineHeight": 30,
+    "_lineHeight": 60,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
@@ -1093,6 +1093,7 @@
       "__id__": 5
     },
     "maxBalanceDisplay": 99999,
+    "fontSizeName": 28,
     "_id": ""
   },
   {
