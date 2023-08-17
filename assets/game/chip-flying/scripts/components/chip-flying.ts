@@ -80,7 +80,7 @@ export class ChipFlying extends ObserverComponent {
         }
     }
 
-    @render(Chips.ChipStore, (store) => store.ownChip)
+    @render(Chips.ChipStore, (store) => store.ownChip, { fireImmediately: false })
     flyChip(ownChip: gc.GameServiceMessage.OwnChip) {
         const { betChoice, amount } = ownChip ?? {};
         if (!betChoice || !amount) {
@@ -114,7 +114,7 @@ export class ChipFlying extends ObserverComponent {
         return gc.Audios.AudioIds.SINGLE_CHIP;
     }
 
-    @render(Settlements.SettlementStore, (store) => store.payChipInfo)
+    @render(Settlements.SettlementStore, (store) => store.payChipInfo, { fireImmediately: false })
     payChips(payChipInfo: gc.Settlements.TPayChipInfo) {
         if (!this || !payChipInfo?.settlementResult || !this.enablePlaceChips || !this.node) {
             return;
