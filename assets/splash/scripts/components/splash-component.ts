@@ -6,7 +6,7 @@ import { ComponentUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, App, ChipSetting, sentryLogger } = gc;
+const { Auth, App, ChipSetting, sentryLogger, Configs, Translator } = gc;
 @ccclass
 @observer
 export default class Splash extends Component {
@@ -17,10 +17,16 @@ export default class Splash extends Component {
     cpnMessage: ErrorMessage = null;
 
     @property(Node)
-    signNameContainer: Node = null;
+    nodeSloganSG: Node = null;
 
     @property(Node)
-    gameName: Node = null;
+    nodeSloganVG: Node = null;
+
+    @property(Node)
+    signNameContainer: Node = null;
+
+    @property(Label)
+    gameName: Label = null;
 
     @property(Label)
     percentResourceLoad: Label = null;
@@ -38,6 +44,7 @@ export default class Splash extends Component {
         this.initGameConnectionComponent();
         this.updateProgressBar(0);
         this.sso();
+        this.gameName.string = Translator.gameTranslate("game_name").toUpperCase();
         ComponentUtils.addChildFromPrefab(this.prefabCustomize, this.containerCustomize);
     }
 
@@ -75,12 +82,12 @@ export default class Splash extends Component {
     renderMessage(message: string) {
         this.cpnMessage.reset();
         this.cpnMessage.setMessage(message);
-        this.gameName.active = false;
+        this.gameName.node.active = false;
     }
 
     updateProgressBar(progress: number) {
         if (this.progressBar) {
-            this.gameName.active = true;
+            this.gameName.node.active = true;
             this.percentResourceLoad.string = `${Math.round(progress * 100)}%`;
             this.progressBar.progress = progress;
         }
@@ -101,6 +108,13 @@ export default class Splash extends Component {
                 }
             }
         );
+    }
+
+    @render(Configs.SiteConfigs, (store) => store.systemType)
+    showSystemSlogan(systemType: string) {
+        const isSystemSG = systemType === Configs.SystemConfigs.SG.name;
+        this.nodeSloganSG.active = isSystemSG;
+        this.nodeSloganVG.active = !isSystemSG;
     }
 
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
