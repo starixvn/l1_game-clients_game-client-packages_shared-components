@@ -14,7 +14,7 @@ export class WarningCmp extends Component {
         const opacity = this.node.getComponent(UIOpacity);
         opacity.opacity = 1;
         const duration = 0.2;
-        const delay = 0.5;
+        const delay = 2.5;
         tween(opacity).to(duration, { opacity: 255 }).delay(delay).to(duration, { opacity: 0 }).start();
         tween(this.node)
             .to(duration, {
