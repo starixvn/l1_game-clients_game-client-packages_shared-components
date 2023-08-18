@@ -743,7 +743,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 2,
+      "width": 150,
       "height": 77.6
     },
     "_anchorPoint": {
@@ -779,14 +779,14 @@
       "b": 255,
       "a": 255
     },
-    "_string": "",
+    "_string": "mmmmmm...",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 28,
+    "_actualFontSize": 22,
     "_fontSize": 28,
     "_fontFamily": "Arial",
     "_lineHeight": 60,
-    "_overflow": 0,
+    "_overflow": 2,
     "_enableWrapText": true,
     "_font": {
       "__uuid__": "41a12541-a4db-4259-b803-4c477054c858",
