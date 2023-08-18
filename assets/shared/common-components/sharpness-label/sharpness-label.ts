@@ -5,7 +5,7 @@ const { ccclass, property } = _decorator;
 @ccclass("SharpnessLabel")
 export class SharpnessLabel extends Component {
     @property(CCBoolean)
-    isNoneCacheMode = false;
+    isBitmapCacheMode = false;
 
     private readonly weightFontSize = 2;
     private readonly weightScale = 0.5;
@@ -37,7 +37,7 @@ export class SharpnessLabel extends Component {
     protected transformChange(): void {
         [this.label, this.richText].forEach((component) => {
             if (component) {
-                this.isNoneCacheMode && (component.cacheMode = CacheMode.NONE);
+                this.isBitmapCacheMode && (component.cacheMode = CacheMode.BITMAP);
                 this.currentFontSize > 0 && (component.fontSize = this.currentFontSize);
             }
         });
