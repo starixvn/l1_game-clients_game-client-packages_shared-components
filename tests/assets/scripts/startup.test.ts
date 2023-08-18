@@ -9,6 +9,7 @@ import {
     sentryLogger,
     Notification,
     ConnectSite,
+    ChipSetting,
 } from "@sg/game-client-base";
 import mobx from "mobx";
 import { configure } from "observer";
@@ -119,6 +120,7 @@ describe(getSharedContainer.name, () => {
                         App.FEATURE_NAME,
                         Notification.FEATURE_NAME,
                         ConnectSite.FEATURE_NAME,
+                        ChipSetting.FEATURE_NAME,
                     ],
                 })
             );

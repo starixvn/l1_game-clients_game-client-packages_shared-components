@@ -6,7 +6,7 @@ import { ComponentUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, App, Chips, sentryLogger } = gc;
+const { Auth, App, ChipSetting, sentryLogger } = gc;
 @ccclass
 @observer
 export default class Splash extends Component {
@@ -106,7 +106,7 @@ export default class Splash extends Component {
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
     triggerRecheckIn() {}
 
-    @handle(Chips.ChipSettingHandler)
+    @handle(ChipSetting.ChipSettingHandler)
     loadChipSetting() {}
 
     @render(Auth.AuthStore, (store) => store.isShowSignName, { fireImmediately: false })

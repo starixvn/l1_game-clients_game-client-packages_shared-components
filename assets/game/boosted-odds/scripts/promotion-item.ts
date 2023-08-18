@@ -1,9 +1,9 @@
-import { _decorator, Button, color, Component, Label, LabelShadow, Node } from "cc";
+import { _decorator, Button, color, Label, LabelShadow, Node } from "cc";
 import gc from "@sg/game-client-base";
 import Observer from "observer";
-import { settings } from "../../../../../../assets/game/scripts/game-settings";
+import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 
-const { handle, observer } = Observer;
+const { handle } = Observer;
 const { App, Translator } = gc;
 const { property, ccclass } = _decorator;
 
@@ -17,8 +17,7 @@ const dict = {
 };
 
 @ccclass("PromotionItem")
-@observer(settings.name)
-export default class PromotionItem extends Component {
+export default class PromotionItem extends ObserverComponent {
     @property(Label)
     title: Label | null = null;
 

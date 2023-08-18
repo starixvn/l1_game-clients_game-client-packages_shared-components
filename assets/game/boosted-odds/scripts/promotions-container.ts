@@ -3,13 +3,11 @@ import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
 import { PromotionsTable } from "./promotions-table";
-import { settings } from "../../../../../../assets/game/scripts/game-settings";
 
 const { ccclass } = _decorator;
-const { render, observer } = Observer;
+const { render } = Observer;
 
 @ccclass("PromotionsContainer")
-@observer(settings.name)
 export class PromotionsContainer extends NodeContainer {
     wrapperNode: Node = null;
     table: PromotionsTable = null;

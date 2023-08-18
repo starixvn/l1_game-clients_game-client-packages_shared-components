@@ -26,7 +26,7 @@ import Chip, { ChipDisplayType } from "./chip";
 import { SnapScrollView } from "./snap-scroll-view";
 
 const { render, handle } = Observer;
-const { Chips, Rounds } = gc;
+const { Chips, Rounds, ChipSetting } = gc;
 
 const { ccclass, property } = _decorator;
 
@@ -63,7 +63,7 @@ export default class SlidingChip extends ObserverComponent {
     protected smallChipScale = 0.29;
     protected chipList: Node[] = [];
     private disabledBetChips = false;
-    protected chipSetting: gc.Chips.TChipSetting;
+    protected chipSetting: gc.ChipSetting.TChipSetting;
 
     static chipFlyingTime: number = 0.8;
     static mainPlayerChipFlyingTime = 0.5;
@@ -196,8 +196,8 @@ export default class SlidingChip extends ObserverComponent {
         return index > this.chipValues.length - 3 ? ChipDisplayType.VIP : ChipDisplayType.Normal;
     }
 
-    @render(Chips.ChipSettingStore, (store) => store.chipSetting)
-    updateChipSetting(chipSetting: gc.Chips.TChipSetting) {
+    @render(ChipSetting.ChipSettingStore, (store) => store.chipSetting)
+    updateChipSetting(chipSetting: gc.ChipSetting.TChipSetting) {
         this.chipSetting = chipSetting;
     }
 
