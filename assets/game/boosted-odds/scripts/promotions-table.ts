@@ -1,10 +1,13 @@
 import { _decorator, Color, Component, instantiate, Label, LabelShadow, Node, Prefab } from "cc";
 import gc from "@sg/game-client-base";
 import PromotionItem from "./promotion-item";
+import Observer from "observer";
 
 const { ccclass, property } = _decorator;
+const { render, observer } = Observer;
 
 @ccclass("PromotionsTable")
+@observer
 export class PromotionsTable extends Component {
     @property(Node)
     body: Node = null;
@@ -26,6 +29,12 @@ export class PromotionsTable extends Component {
 
     @property(Label)
     count: Label = null;
+
+    @property(Node)
+    nodeLoading: Node = null;
+
+    @property(Node)
+    backgroundCloseNode: Node = null;
 
     onPromotionClick() {
         this.onPromotionTab(true);
@@ -51,72 +60,17 @@ export class PromotionsTable extends Component {
         return bodyRow;
     }
 
+    @render(gc.Notification.BoostedOddsStore, (store) => store.isLoadingIcon, { fireImmediately: false })
+    showHideLoading(isLoadingIcon: boolean) {
+        this.nodeLoading.active = isLoadingIcon;
+        this.backgroundCloseNode.active = false;
+    }
+
     showPromotions(model: Array<gc.Notification.PromotionModel>) {
         this.count.string = model?.length.toString();
         this.count.node.parent.active = true;
 
-        const model2: Array<gc.Notification.PromotionModel> = [
-            {
-                _id: "64d1bb72b620ac67b14af695",
-                time: "2023-08-08T03:50:10.510Z",
-                message: null,
-                displayKind: 3,
-                gameName: "winthreecards",
-                messages: {
-                    "en-US": "WinThreeCards Promotions",
-                    "vi-VN": "WinThreeCards Promotions",
-                    "zh-CN": "WinThreeCards Promotions",
-                    "zh-TW": "WinThreeCards Promotions",
-                    "th-TH": "WinThreeCards Promotions",
-                    "id-ID": "WinThreeCards Promotions",
-                },
-                title: {
-                    "en-US": "WinThreeCards Promotions",
-                    "vi-VN": "WinThreeCards Promotions",
-                    "zh-CN": "WinThreeCards Promotions",
-                    "zh-TW": "WinThreeCards Promotions",
-                    "th-TH": "WinThreeCards Promotions",
-                    "id-ID": "WinThreeCards Promotions",
-                },
-                startTime: "2023-08-07T20:49:00.000Z",
-                endTime: "2023-08-10T20:49:00.000Z",
-                promotionId: "64d1bb4bb620ac67b14af694",
-                enabled: true,
-                gameId: 61,
-                isActive: true,
-            },
-            {
-                _id: "64d5f7feb620ac67b14af699",
-                time: "2023-08-11T08:57:34.399Z",
-                message: null,
-                displayKind: 3,
-                gameName: "minisedie",
-                messages: {
-                    "en-US": "mini sedie",
-                    "vi-VN": "mini sedie",
-                    "zh-CN": "mini sedie",
-                    "zh-TW": "mini sedie",
-                    "th-TH": "mini sedie",
-                    "id-ID": "mini sedie",
-                },
-                title: {
-                    "en-US": "mini sedie",
-                    "vi-VN": "mini sedie",
-                    "zh-CN": "mini sedie",
-                    "zh-TW": "mini sedie",
-                    "th-TH": "mini sedie",
-                    "id-ID": "mini sedie",
-                },
-                startTime: "2023-08-11T01:57:00.000Z",
-                endTime: "2023-08-12T04:00:00.000Z",
-                promotionId: "64d5f7d1b620ac67b14af698",
-                enabled: true,
-                gameId: 9,
-                isActive: true,
-            },
-        ];
-
-        model2.forEach((data) => {
+        model.forEach((data) => {
             this.body.addChild(this.buildBodyRow(data));
         });
     }

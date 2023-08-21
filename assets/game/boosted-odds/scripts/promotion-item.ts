@@ -3,7 +3,7 @@ import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 
-const { handle } = Observer;
+const { handle, observer } = Observer;
 const { App, Translator } = gc;
 const { property, ccclass } = _decorator;
 
@@ -17,6 +17,7 @@ const dict = {
 };
 
 @ccclass("PromotionItem")
+@observer
 export default class PromotionItem extends ObserverComponent {
     @property(Label)
     title: Label | null = null;
@@ -48,12 +49,12 @@ export default class PromotionItem extends ObserverComponent {
         this.joinButton.node.on("click", this.onClickJoinGame.bind(this, data.gameId));
     }
 
-    @handle(App.AppHandlers.BackToOperatorLobby, (handler, gameId: number) => {
-        handler.handleOpenGame(gameId);
-    })
+    @handle(gc.App.AppHandlers.BackToOperatorLobby, (handler, gameId: number) => handler.handleOpenGame(gameId))
     onClickJoinGame(gameId: number) {
+        this.showLoadingIcon();
         return gameId;
     }
 
-    getGameId(gameId: number) {}
+    @handle(gc.Notification.BoostedOddsStore, (store) => store.setIsLoadingIcon(true))
+    showLoadingIcon() {}
 }

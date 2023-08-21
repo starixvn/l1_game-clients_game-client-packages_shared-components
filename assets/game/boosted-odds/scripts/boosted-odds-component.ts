@@ -13,9 +13,7 @@ export default class BoostedOddsComponent extends ObserverComponent {
 
     showPopup: boolean = false;
 
-    @handle(gc.Notification.BoostedOddsPromotionsHandlers.PromotionHandlers, (handler) => {
-        handler.handleShowPopup();
-    })
+    @handle(gc.Notification.BoostedOddsStore, (store) => store.increasePopupCounter())
     openPromotions() {}
 
     @render(gc.Notification.BoostedOddsStore, (store) => store.boostedOddsCounter, { fireImmediately: false })
