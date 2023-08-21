@@ -9,6 +9,15 @@ const { Audios, UserSettings } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
+export type TAudioConfigs = {
+    [key: string]: TAudioValue;
+};
+export type TAudioValue = {
+    bundle: string;
+    path: string;
+    type: string;
+};
+
 @ccclass
 export class AudioContainer extends ObserverComponent {
     @property(JsonAsset)
@@ -25,6 +34,7 @@ export class AudioContainer extends ObserverComponent {
 
     audios = {};
     musicIds = [];
+    protected audioConfigs: TAudioConfigs = {};
 
     onLoad() {
         super.onLoad();
@@ -45,24 +55,32 @@ export class AudioContainer extends ObserverComponent {
     }
 
     async loadAudios() {
-        const config = {
+        const audioConfigs: TAudioConfigs = {
             ...this.sharedAudioConfig?.json,
             ...this.audioConfig?.json,
         };
-        const keys = Object.keys(config);
+        this.audioConfigs = audioConfigs;
+        const keys = Object.keys(audioConfigs);
         for (const key of keys) {
-            const value = config[key];
-            const bundle = value.bundle;
-            const path = `audios/${value.path ?? key}`;
-            const audioClip = await bundleManager.loadAssetsFromBundle(bundle, path, AudioClip, null);
-            this.audios[key] = audioClip;
-            if (value.type && value.type === "music") {
+            const value = audioConfigs[key];
+            if (value.type === "music") {
                 this.musicIds.push(key);
+            } else {
+                const audioClip = await this.loadAssets(value, key);
+                this.audios[key] = audioClip;
             }
         }
 
         this.registerMusicIds();
         this.audiosLoaded();
+    }
+
+    async loadAssets(audioValue: TAudioValue, key: string) {
+        const bundle = audioValue.bundle;
+        const path = `audios/${audioValue.path ?? key}`;
+        const audioClip = ((await bundleManager.loadAssetsFromBundle(bundle, path, AudioClip, null)) as AudioClip) || null;
+
+        return audioClip;
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
@@ -81,9 +99,15 @@ export class AudioContainer extends ObserverComponent {
         }
     }
 
-    playMusicAudio(id: string) {
-        if (this.audios[id]) {
-            this.musicSource.clip = this.audios[id];
+    async playMusicAudio(id: string) {
+        const audioValue = this.audioConfigs?.[id];
+        if (!audioValue) {
+            return;
+        }
+
+        const audioClip = await this.loadAssets(audioValue, id);
+        if (audioClip) {
+            this.musicSource.clip = audioClip;
             this.musicSource.play();
         }
     }
