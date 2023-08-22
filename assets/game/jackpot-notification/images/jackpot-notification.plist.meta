@@ -7,52 +7,6 @@
     ".json"
   ],
   "subMetas": {
-    "8805b": {
-      "importer": "sprite-frame",
-      "uuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f@8805b",
-      "displayName": "",
-      "id": "8805b",
-      "name": "txt-jackpot_vi",
-      "userData": {
-        "trimType": "auto",
-        "trimThreshold": 1,
-        "rotated": true,
-        "offsetX": 0,
-        "offsetY": 0,
-        "trimX": 198,
-        "trimY": 3,
-        "width": 72,
-        "height": 40,
-        "rawWidth": 72,
-        "rawHeight": 40,
-        "borderTop": 0,
-        "borderBottom": 0,
-        "borderLeft": 0,
-        "borderRight": 0,
-        "packable": true,
-        "pixelsToUnit": 100,
-        "pivotX": 0.5,
-        "pivotY": 0.5,
-        "meshType": 0,
-        "vertices": {
-          "rawPosition": [],
-          "indexes": [],
-          "uv": [],
-          "nuv": [],
-          "minPos": [],
-          "maxPos": []
-        },
-        "isUuid": true,
-        "imageUuidOrDatabaseUri": "a83ab598-b5f7-40e1-bbf1-bc22be7997e5@6c48a",
-        "atlasUuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f"
-      },
-      "ver": "1.0.12",
-      "imported": true,
-      "files": [
-        ".json"
-      ],
-      "subMetas": {}
-    },
     "7d53e": {
       "importer": "sprite-frame",
       "uuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f@7d53e",
@@ -117,6 +71,52 @@
         "height": 193,
         "rawWidth": 193,
         "rawHeight": 193,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "a83ab598-b5f7-40e1-bbf1-bc22be7997e5@6c48a",
+        "atlasUuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "8805b": {
+      "importer": "sprite-frame",
+      "uuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f@8805b",
+      "displayName": "",
+      "id": "8805b",
+      "name": "txt-jackpot_vi",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": true,
+        "offsetX": 0,
+        "offsetY": 0,
+        "trimX": 198,
+        "trimY": 3,
+        "width": 72,
+        "height": 40,
+        "rawWidth": 72,
+        "rawHeight": 40,
         "borderTop": 0,
         "borderBottom": 0,
         "borderLeft": 0,
