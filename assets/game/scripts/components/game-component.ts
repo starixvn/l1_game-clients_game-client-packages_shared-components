@@ -1,17 +1,13 @@
 import gc from "@sg/game-client-base";
 import { Game, Label, _decorator, director, game, sys } from "cc";
 import Observer from "observer";
-import { InGameMenuEvents } from "../../../game/in-game-menu/scripts/stores/in-game-menu-events";
-import { InGameMenuStore } from "../../../game/in-game-menu/scripts/stores/in-game-menu-store";
-import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
 import { StaticGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
 import { ComponentUtils } from "../../../shared/utils";
-import WebViewGuide from "../../game-guide/scripts/web-view-guide";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
 
-const { Rounds, Connection, HideGame, Settlements, FormatUtils, RoundHistories, Notification } = gc;
+const { Rounds, Connection, HideGame, Settlements, FormatUtils, RoundHistories } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -25,9 +21,6 @@ export default class GameComponent extends GameComponentBase {
 
     @property(Label)
     lblMaxBet: Label = null;
-
-    @property(NodeContainer)
-    guideContainer: NodeContainer = null;
 
     containerOptions: gc.IContainerOptions;
 
@@ -77,21 +70,21 @@ export default class GameComponent extends GameComponentBase {
     protected onDestroy(): void {
         game.off(Game.EVENT_HIDE, this.onHideGame, this);
         game.off(Game.EVENT_SHOW, this.onShowGame, this);
-    }    
-    
+    }
+
     @handle(HideGame.HideGameHandler)
     onHideGame() {
         // reload here will run when page appears from hidden
         // to fix issue on iOS that EVENT_SHOW are not triggered when phone active
-        if(sys.os === sys.OS.IOS){
+        if (sys.os === sys.OS.IOS) {
             setTimeout(() => {
                 window.location.reload();
-            }, 100);        
-        }        
+            }, 100);
+        }
     }
 
-    onShowGame() {        
-        window.location.reload();        
+    onShowGame() {
+        window.location.reload();
     }
 
     @render(Connection.ConnectionStore, (store) => store.signedIn)
@@ -141,14 +134,6 @@ export default class GameComponent extends GameComponentBase {
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
     handleStartRound(isStartRound: boolean) {}
-
-    @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
-    openGuide({ event }: { event: InGameMenuEvents }) {
-        if (event === InGameMenuEvents.OPEN_GUIDE) {
-            const guide = this.guideContainer.createNode();
-            guide.getComponent(WebViewGuide)?.initUrl();
-        }
-    }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
     startNewRound(isStartRound: boolean) {

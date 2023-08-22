@@ -99,12 +99,12 @@
       ],
       "subMetas": {}
     },
-    "2906b": {
+    "8805b": {
       "importer": "sprite-frame",
-      "uuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f@2906b",
+      "uuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f@8805b",
       "displayName": "",
-      "id": "2906b",
-      "name": "txt-jackpot",
+      "id": "8805b",
+      "name": "txt-jackpot_vi",
       "userData": {
         "trimType": "auto",
         "trimThreshold": 1,
@@ -145,12 +145,12 @@
       ],
       "subMetas": {}
     },
-    "392f4": {
+    "2906b": {
       "importer": "sprite-frame",
-      "uuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f@392f4",
+      "uuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f@2906b",
       "displayName": "",
-      "id": "392f4",
-      "name": "txt-jackpot_en",
+      "id": "2906b",
+      "name": "txt-jackpot",
       "userData": {
         "trimType": "auto",
         "trimThreshold": 1,
