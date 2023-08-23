@@ -42,9 +42,9 @@
             "width": 25,
             "height": 35
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 7,
-          "xAdvance": 29
+          "xAdvance": 28
         },
         "36": {
           "rect": {
@@ -53,7 +53,7 @@
             "width": 23,
             "height": 41
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 6,
           "xAdvance": 27
         },
@@ -64,9 +64,9 @@
             "width": 41,
             "height": 36
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 6,
-          "xAdvance": 43
+          "xAdvance": 44
         },
         "43": {
           "rect": {
@@ -75,7 +75,7 @@
             "width": 21,
             "height": 21
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 13,
           "xAdvance": 24
         },
@@ -97,9 +97,9 @@
             "width": 14,
             "height": 6
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 22,
-          "xAdvance": 24
+          "xAdvance": 17
         },
         "46": {
           "rect": {
@@ -108,9 +108,9 @@
             "width": 8,
             "height": 9
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 35,
-          "xAdvance": 10
+          "xAdvance": 11
         },
         "47": {
           "rect": {
@@ -121,7 +121,7 @@
           },
           "xOffset": -2,
           "yOffset": 4,
-          "xAdvance": 13
+          "xAdvance": 17
         },
         "48": {
           "rect": {
@@ -130,7 +130,7 @@
             "width": 24,
             "height": 36
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 6,
           "xAdvance": 27
         },
@@ -141,9 +141,9 @@
             "width": 23,
             "height": 35
           },
-          "xOffset": 1,
+          "xOffset": 0,
           "yOffset": 7,
-          "xAdvance": 27
+          "xAdvance": 26
         },
         "50": {
           "rect": {
@@ -152,7 +152,7 @@
             "width": 24,
             "height": 35
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 6,
           "xAdvance": 27
         },
@@ -176,7 +176,7 @@
           },
           "xOffset": 0,
           "yOffset": 7,
-          "xAdvance": 27
+          "xAdvance": 29
         },
         "53": {
           "rect": {
@@ -185,9 +185,9 @@
             "width": 23,
             "height": 36
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 7,
-          "xAdvance": 27
+          "xAdvance": 29
         },
         "54": {
           "rect": {
@@ -196,7 +196,7 @@
             "width": 24,
             "height": 36
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 6,
           "xAdvance": 27
         },
@@ -207,7 +207,7 @@
             "width": 24,
             "height": 35
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 7,
           "xAdvance": 27
         },
@@ -218,9 +218,9 @@
             "width": 25,
             "height": 36
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 6,
-          "xAdvance": 27
+          "xAdvance": 28
         },
         "57": {
           "rect": {
@@ -229,7 +229,7 @@
             "width": 24,
             "height": 36
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 6,
           "xAdvance": 27
         },
@@ -240,9 +240,9 @@
             "width": 9,
             "height": 27
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 12,
-          "xAdvance": 3
+          "xAdvance": 12
         },
         "75": {
           "rect": {
@@ -251,9 +251,9 @@
             "width": 35,
             "height": 35
           },
-          "xOffset": 2,
+          "xOffset": 0,
           "yOffset": 7,
-          "xAdvance": 36
+          "xAdvance": 38
         }
       },
       "kerningDict": {}
