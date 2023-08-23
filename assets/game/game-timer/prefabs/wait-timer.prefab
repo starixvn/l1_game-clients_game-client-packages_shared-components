@@ -269,7 +269,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 25.83,
+      "width": 26.04,
       "height": 40
     },
     "_anchorPoint": {
@@ -324,7 +324,7 @@
     "_isBold": false,
     "_isUnderline": false,
     "_underlineHeight": 2,
-    "_cacheMode": 1,
+    "_cacheMode": 2,
     "_id": ""
   },
   {
