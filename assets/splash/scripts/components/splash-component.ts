@@ -6,7 +6,7 @@ import { ComponentUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, App, ChipSetting, sentryLogger, Configs, Translator } = gc;
+const { Auth, ChipSetting, sentryLogger, Configs, Translator } = gc;
 @ccclass
 @observer
 export default class Splash extends Component {
@@ -71,11 +71,6 @@ export default class Splash extends Component {
 
     connectToGameService() {
         this.gameConnection?.connectToService();
-    }
-
-    @render(App.AppStore, (store) => store.isUM)
-    openUnderMaintenanceScreen(isUM: boolean) {
-        isUM && director.loadScene("under-maintenance");
     }
 
     @render(Auth.AuthStore, (store) => store.ssoErrorMessage, { fireImmediately: false })

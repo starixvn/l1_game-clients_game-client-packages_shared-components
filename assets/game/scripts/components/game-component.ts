@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Game, Label, _decorator, director, game, sys } from "cc";
+import { Game, Label, _decorator, game, sys } from "cc";
 import Observer from "observer";
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
 import { StaticGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
@@ -47,11 +47,6 @@ export default class GameComponent extends GameComponentBase {
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
     connectToService() {}
-
-    @render(gc.App.AppStore, (store) => store.isUM)
-    loadUMScene(isUM: boolean) {
-        isUM && director.loadScene("under-maintenance");
-    }
 
     @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.name)
     logLoadScene(gameName: string) {
