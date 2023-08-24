@@ -54,7 +54,7 @@
             "height": 41
           },
           "xOffset": 0,
-          "yOffset": 6,
+          "yOffset": 7,
           "xAdvance": 27
         },
         "37": {
@@ -65,7 +65,7 @@
             "height": 36
           },
           "xOffset": 0,
-          "yOffset": 6,
+          "yOffset": 7,
           "xAdvance": 44
         },
         "43": {
@@ -98,7 +98,7 @@
             "height": 6
           },
           "xOffset": 0,
-          "yOffset": 22,
+          "yOffset": 21,
           "xAdvance": 17
         },
         "46": {
@@ -109,7 +109,7 @@
             "height": 9
           },
           "xOffset": 0,
-          "yOffset": 35,
+          "yOffset": 34,
           "xAdvance": 11
         },
         "47": {
@@ -120,7 +120,7 @@
             "height": 43
           },
           "xOffset": -2,
-          "yOffset": 4,
+          "yOffset": 3,
           "xAdvance": 17
         },
         "48": {
@@ -131,7 +131,7 @@
             "height": 36
           },
           "xOffset": 0,
-          "yOffset": 6,
+          "yOffset": 7,
           "xAdvance": 27
         },
         "49": {
@@ -153,7 +153,7 @@
             "height": 35
           },
           "xOffset": 0,
-          "yOffset": 6,
+          "yOffset": 7,
           "xAdvance": 27
         },
         "51": {
@@ -164,7 +164,7 @@
             "height": 36
           },
           "xOffset": 0,
-          "yOffset": 6,
+          "yOffset": 7,
           "xAdvance": 27
         },
         "52": {
@@ -197,7 +197,7 @@
             "height": 36
           },
           "xOffset": 0,
-          "yOffset": 6,
+          "yOffset": 7,
           "xAdvance": 27
         },
         "55": {
@@ -219,7 +219,7 @@
             "height": 36
           },
           "xOffset": 0,
-          "yOffset": 6,
+          "yOffset": 7,
           "xAdvance": 28
         },
         "57": {
@@ -230,7 +230,7 @@
             "height": 36
           },
           "xOffset": 0,
-          "yOffset": 6,
+          "yOffset": 7,
           "xAdvance": 27
         },
         "58": {
@@ -241,7 +241,7 @@
             "height": 27
           },
           "xOffset": 0,
-          "yOffset": 12,
+          "yOffset": 11,
           "xAdvance": 12
         },
         "75": {

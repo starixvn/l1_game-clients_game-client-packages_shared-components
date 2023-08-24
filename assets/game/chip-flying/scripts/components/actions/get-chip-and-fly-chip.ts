@@ -76,14 +76,14 @@ export namespace ActionChipFlying {
         winBetItems: BetItem[],
         chipFlying: ChipFlying
     ) => {
-        const { payChipsDuration, mainPlayerAvatarNode, slidingChip } = chipFlyingInfo;
+        const { payChipsDuration, mainPlayerAvatarNode } = chipFlyingInfo;
 
         if (!mainPlayerAvatarNode) {
             return;
         }
 
         winBetItems?.forEach((item: BetItem) => {
-            if (settleStatus?.winningByChoices[item.betChoice]) {
+            if (settleStatus?.winningByChoices[item.betChoice] > 0) {
                 const chipNodes = chipFlying.getChipsByChoice(item.betChoice);
                 chipFlying.moveChipsWithRandomAmount(chipNodes, mainPlayerAvatarNode, payChipsDuration);
             }
