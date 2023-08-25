@@ -20,7 +20,7 @@ char id=47 x=69 y=0 width=14 height=43 xoffset=-2 yoffset=3 xadvance=17 page=0 c
 char id=35 x=0 y=150 width=25 height=35 xoffset=0 yoffset=7 xadvance=28 page=0 chnl=0 letter="#"
 char id=44 x=28 y=76 width=9 height=16 xoffset=0 yoffset=35 xadvance=12 page=0 chnl=0 letter=","
 char id=36 x=53 y=113 width=23 height=41 xoffset=0 yoffset=7 xadvance=27 page=0 chnl=0 letter="$"
-char id=58 x=23 y=225 width=9 height=27 xoffset=0 yoffset=11 xadvance=12 page=0 chnl=0 letter=":"
+char id=58 x=23 y=225 width=9 height=27 xoffset=2 yoffset=11 xadvance=14 page=0 chnl=0 letter=":"
 char id=46 x=28 y=94 width=8 height=9 xoffset=0 yoffset=34 xadvance=11 page=0 chnl=0 letter="."
 char id=32 x=0 y=0 width=0 height=0 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=0 letter=" "
 char id=9 x=0 y=0 width=0 height=0 xoffset=0 yoffset=0 xadvance=36 page=0 chnl=0 letter="	"
