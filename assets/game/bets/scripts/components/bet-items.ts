@@ -66,9 +66,10 @@ export class BetItems extends ObserverComponent {
     @render(Rounds.RoundStore, (store) => store.roundOdds)
     renderOdds(roundOdds: gc.Rounds.RoundOdds) {
         const { odds, fractional } = roundOdds;
+
         Object.keys(odds).forEach((choice) => {
             const betItem = this.filterBetItem(choice);
-            betItem.renderOdd(odds[choice], fractional);
+            betItem?.renderOdd(odds[choice], fractional);
         });
     }
 
