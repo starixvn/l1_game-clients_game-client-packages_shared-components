@@ -39,6 +39,6 @@ export class PromotionsContainer extends NodeContainer {
     }
 
     clearOldTable() {
-        this.table.body.destroyAllChildren();
+        this.table.promotionContent.destroyAllChildren();
     }
 }

@@ -4,7 +4,7 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 
 const { handle, observer } = Observer;
-const { App, Translator } = gc;
+const { Translator } = gc;
 const { property, ccclass } = _decorator;
 
 const dict = {
