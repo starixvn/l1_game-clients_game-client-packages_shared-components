@@ -1123,7 +1123,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "partern_chamtron",
+    "_name": "partern-chamtron",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -1287,7 +1287,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "light_bg_lop1",
+    "_name": "light-bg-lop",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -1451,7 +1451,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "light_bg_lop1 copy",
+    "_name": "light-bg-lop1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -1615,7 +1615,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "light_bg_lop1 copy",
+    "_name": "light-bg-lop2",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -1779,7 +1779,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "CloseButton",
+    "_name": "close-button",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -2058,7 +2058,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "table_bg",
+    "_name": "table-bg",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -2127,7 +2127,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "light_bg_lop2",
+    "_name": "light-bg-lop",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -2291,7 +2291,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "light_bg_lop2 copy",
+    "_name": "light-bg-lop1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -2455,7 +2455,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "light_bg_lop2 copy",
+    "_name": "light-bg-lop2",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -2927,7 +2927,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "headerTabs",
+    "_name": "header-tabs",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -5110,7 +5110,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "ScrollView",
+    "_name": "scroll-view",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -5233,7 +5233,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "content",
+    "_name": "promo-content",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -6158,7 +6158,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "tienvang_benphai",
+    "_name": "money-right",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -6322,7 +6322,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "tienvang_trai",
+    "_name": "money-left",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -6970,7 +6970,7 @@
     "__prefab": {
       "__id__": 347
     },
-    "body": {
+    "promotionContent": {
       "__id__": 244
     },
     "bodyPrefab": {
@@ -6997,6 +6997,9 @@
     },
     "backgroundCloseNode": {
       "__id__": 2
+    },
+    "dialog": {
+      "__id__": 348
     },
     "_id": ""
   },

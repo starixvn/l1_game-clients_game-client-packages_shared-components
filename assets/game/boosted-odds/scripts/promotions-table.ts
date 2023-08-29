@@ -1,16 +1,17 @@
-import { _decorator, Color, Component, instantiate, Label, LabelShadow, Node, Prefab } from "cc";
 import gc from "@sg/game-client-base";
-import PromotionItem from "./promotion-item";
+import { _decorator, Color, instantiate, Label, LabelShadow, Node, Prefab } from "cc";
 import Observer from "observer";
+import { Dialog } from "../../../shared/common-components/dialogs/dialog";
+import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import PromotionItem from "./promotion-item";
 
 const { ccclass, property } = _decorator;
-const { render, observer } = Observer;
+const { render } = Observer;
 
 @ccclass("PromotionsTable")
-@observer
-export class PromotionsTable extends Component {
+export class PromotionsTable extends ObserverComponent {
     @property(Node)
-    body: Node = null;
+    promotionContent: Node = null;
 
     @property(Prefab)
     bodyPrefab: Prefab = null;
@@ -35,6 +36,9 @@ export class PromotionsTable extends Component {
 
     @property(Node)
     backgroundCloseNode: Node = null;
+
+    @property(Dialog)
+    dialog: Dialog = null;
 
     onPromotionClick() {
         this.onPromotionTab(true);
@@ -71,7 +75,11 @@ export class PromotionsTable extends Component {
         this.count.node.parent.active = true;
 
         model.forEach((data) => {
-            this.body.addChild(this.buildBodyRow(data));
+            this.promotionContent.addChild(this.buildBodyRow(data));
         });
+    }
+    @render(gc.Notification.BoostedOddsStore, (store) => store.isLoadingIcon, { fireImmediately: false })
+    showBoostedOddIcon(isLoadingIcon: boolean) {
+        isLoadingIcon && this.dialog.hide();
     }
 }
