@@ -6,7 +6,7 @@ import { ComponentUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, ChipSetting, sentryLogger, Configs, Translator } = gc;
+const { Auth, ChipSetting, sentryLogger, Configs, Translator, BrowserDomUtils } = gc;
 @ccclass
 @observer
 export default class Splash extends Component {
@@ -46,6 +46,10 @@ export default class Splash extends Component {
         this.sso();
         this.gameName.string = Translator.gameTranslate("game_name").toUpperCase();
         ComponentUtils.addChildFromPrefab(this.prefabCustomize, this.containerCustomize);
+    }
+
+    protected onEnable(): void {
+        BrowserDomUtils.postMessageToParent({ splashEnabled: true });
     }
 
     private initGameConnectionComponent() {
