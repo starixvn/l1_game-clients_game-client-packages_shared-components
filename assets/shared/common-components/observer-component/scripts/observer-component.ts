@@ -13,7 +13,8 @@ export class ObserverComponent extends Component {
         this.dispose = useObserver(this, FunctionUtils.getNamespace());
     }
 
-    protected onDestroy(): void {
+    onDestroy(): void {
+        super.onDestroy();
         this.dispose();
     }
 }

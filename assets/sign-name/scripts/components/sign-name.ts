@@ -28,7 +28,7 @@ export class SignName extends Component {
     @property(AudioSource)
     soundClick: AudioSource = null;
 
-    protected onLoad(): void {
+    onLoad(): void {
         window.skipFullscreen = true;
     }
 
