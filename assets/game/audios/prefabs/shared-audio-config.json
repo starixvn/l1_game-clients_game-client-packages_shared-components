@@ -19,6 +19,56 @@
         "bundle": "shared-bundle",
         "path": "draw-single-card"
     },
+
+    "start-betting_en": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_en"
+    },
+    "stop-betting_en": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_en"
+    },
+    "start-betting_vi": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_vi"
+    },
+    "stop-betting_vi": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_vi"
+    },
+    "start-betting_id": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_id"
+    },
+    "stop-betting_id": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_id"
+    },
+    "start-betting_th": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_th"
+    },
+    "stop-betting_th": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_th"
+    },
+    "start-betting_zh_cn": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_zh_cn"
+    },
+    "stop-betting_zh_cn": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_zh_cn"
+    },
+    "start-betting_zh_tw": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_zh_tw"
+    },
+    "stop-betting_zh_tw": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_zh_tw"
+    },
+
     "bgm-song1": {
         "bundle": "shared-bundle",
         "path": "background-music/bgm-song1",

@@ -32,7 +32,7 @@ export class AudioContainer extends ObserverComponent {
     @property(AudioSource)
     sfxSource: AudioSource = null;
 
-    audios = {};
+    audios = [];
     musicIds = [];
     protected audioConfigs: TAudioConfigs = {};
 
@@ -66,8 +66,7 @@ export class AudioContainer extends ObserverComponent {
             if (value.type === "music") {
                 this.musicIds.push(key);
             } else {
-                const audioClip = await this.loadAssets(value, key);
-                this.audios[key] = audioClip;
+                this.audios.push(key);
             }
         }
 
@@ -86,29 +85,10 @@ export class AudioContainer extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
     audiosLoaded() {}
 
-    playSFXAudio(id: string) {
-        if (this.audios[id]) {
-            this.sfxSource.playOneShot(this.audios[id]);
-        }
-    }
-
     @render(UserSettings.UserSettingStore, (store) => store.musicEnable, { fireImmediately: false })
     enableMusic(musicEnable: boolean) {
         if (!musicEnable) {
             this.musicSource.stop();
-        }
-    }
-
-    async playMusicAudio(id: string) {
-        const audioValue = this.audioConfigs?.[id];
-        if (!audioValue) {
-            return;
-        }
-
-        const audioClip = await this.loadAssets(audioValue, id);
-        if (audioClip) {
-            this.musicSource.clip = audioClip;
-            this.musicSource.play();
         }
     }
 
@@ -119,10 +99,35 @@ export class AudioContainer extends ObserverComponent {
         }
     }
 
+    async playMusicAudio(id: string) {
+        this.playAudio(id, this.musicSource, (clip) => {
+            this.musicSource.play();
+        });
+    }
+
     @render(Audios.AudioStore, (store) => store.sfx, { fireImmediately: false })
     playSFX(data: gc.Audios.AudioData) {
         if (data.action === Audios.AudioAction.PLAY) {
             this.playSFXAudio(data.id);
+        }
+    }
+
+    async playSFXAudio(id: string) {
+        this.playAudio(id, this.sfxSource, (clip) => {
+            this.sfxSource.playOneShot(clip);
+        });
+    }
+
+    async playAudio(id: string, source: AudioSource, playFunction: (clip: AudioClip) => void) {
+        const audioValue = this.audioConfigs?.[id];
+        if (!audioValue) {
+            return;
+        }
+
+        const audioClip = await this.loadAssets(audioValue, id);
+        if (audioClip) {
+            source.clip = audioClip;
+            playFunction(audioClip);
         }
     }
 }
