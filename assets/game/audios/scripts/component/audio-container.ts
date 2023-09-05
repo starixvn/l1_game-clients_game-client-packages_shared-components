@@ -1,4 +1,4 @@
-import { _decorator, AudioClip, AudioSource, JsonAsset, log } from "cc";
+import { AudioClip, AudioSource, JsonAsset, _decorator, game, log } from "cc";
 import { bundleManager } from "../../../../shared/common-components/bundle-magager/bundle-manager";
 
 import gc from "@sg/game-client-base";
@@ -35,6 +35,7 @@ export class AudioContainer extends ObserverComponent {
     audios = [];
     musicIds = [];
     protected audioConfigs: TAudioConfigs = {};
+    protected isGesture = false;
 
     onLoad() {
         super.onLoad();
@@ -42,6 +43,19 @@ export class AudioContainer extends ObserverComponent {
         this.loadAudios().catch((error) => log(error));
         this.musicSource.node.on(AudioSource.EventType.STARTED, () => this.updateMusicState(Audios.MusicState.STARTED));
         this.musicSource.node.on(AudioSource.EventType.ENDED, () => this.updateMusicState(Audios.MusicState.ENDED));
+        this.initTouchBind();
+    }
+
+    initTouchBind() {
+        const touchend = "ontouchend" in window ? "touchend" : "mouseup";
+        const touchStart = "ontouchstart" in window ? "touchstart" : "mousedown";
+        game.canvas.addEventListener(touchStart, () => {
+            this.isGesture = true;
+        });
+
+        game.canvas.addEventListener(touchend, () => {
+            this.isGesture = true;
+        });
     }
 
     @handle(gc.Audios.AudioHandler, (handle, state: gc.Audios.MusicState) => handle.updateMusicState(state))
@@ -107,7 +121,7 @@ export class AudioContainer extends ObserverComponent {
 
     @render(Audios.AudioStore, (store) => store.sfx, { fireImmediately: false })
     playSFX(data: gc.Audios.AudioData) {
-        if (data.action === Audios.AudioAction.PLAY) {
+        if (data.action === Audios.AudioAction.PLAY && this.isGesture) {
             this.playSFXAudio(data.id);
         }
     }
