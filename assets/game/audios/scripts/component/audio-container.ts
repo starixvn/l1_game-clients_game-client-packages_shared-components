@@ -43,6 +43,8 @@ export class AudioContainer extends ObserverComponent {
         this.loadAudios().catch((error) => log(error));
         this.musicSource.node.on(AudioSource.EventType.STARTED, () => this.updateMusicState(Audios.MusicState.STARTED));
         this.musicSource.node.on(AudioSource.EventType.ENDED, () => this.updateMusicState(Audios.MusicState.ENDED));
+
+        // The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page
         this.initTouchBind();
     }
 
