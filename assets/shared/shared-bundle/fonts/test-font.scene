@@ -91,7 +91,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 699.0000000000001,
-      "y": 393.00000000000006,
+      "y": 392.99999999999994,
       "z": 0
     },
     "_lrot": {
@@ -176,7 +176,7 @@
     "_priority": 0,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 401.6937618147448,
+    "_orthoHeight": 507.1608832807571,
     "_near": 0,
     "_far": 1000,
     "_color": {
@@ -342,7 +342,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 2.297,
+      "y": 10.874,
       "z": 0
     },
     "_lrot": {
@@ -380,7 +380,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 106.67,
+      "width": 380,
       "height": 40
     },
     "_anchorPoint": {
@@ -410,7 +410,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "1:1.99",
+    "_string": "0123456789.,",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 40,
@@ -420,7 +420,7 @@
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "52227efe-f368-4706-a10e-03f3c6922e0c",
+      "__uuid__": "c42fc1e3-0f5f-4ba4-b1b2-e62b104c9d43",
       "__expectedType__": "cc.BitmapFont"
     },
     "_isSystemFontUsed": false,
@@ -484,8 +484,8 @@
     "_target": null,
     "_left": 1.1368683772161603e-13,
     "_right": 1.1368683772161603e-13,
-    "_top": 5.684341886080802e-14,
-    "_bottom": 5.684341886080802e-14,
+    "_top": -5.684341886080802e-14,
+    "_bottom": -5.684341886080802e-14,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
