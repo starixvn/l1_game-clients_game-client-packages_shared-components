@@ -5,7 +5,7 @@ import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 
-const { Audios, UserSettings } = gc;
+const { Audios, UserSettings, App } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -35,7 +35,7 @@ export class AudioContainer extends ObserverComponent {
     audios = [];
     musicIds = [];
     protected audioConfigs: TAudioConfigs = {};
-    protected isGesture = false;
+    protected isUserGesture = false;
 
     onLoad() {
         super.onLoad();
@@ -52,12 +52,17 @@ export class AudioContainer extends ObserverComponent {
         const touchend = "ontouchend" in window ? "touchend" : "mouseup";
         const touchStart = "ontouchstart" in window ? "touchstart" : "mousedown";
         game.canvas.addEventListener(touchStart, () => {
-            this.isGesture = true;
+            this.isUserGesture = true;
         });
 
         game.canvas.addEventListener(touchend, () => {
-            this.isGesture = true;
+            this.isUserGesture = true;
         });
+    }
+
+    @render(App.AppStore, (store) => store.isUserGesture)
+    setUserGesture(isUserGesture: boolean): void {
+        isUserGesture && (this.isUserGesture = true);
     }
 
     @handle(gc.Audios.AudioHandler, (handle, state: gc.Audios.MusicState) => handle.updateMusicState(state))
@@ -123,7 +128,7 @@ export class AudioContainer extends ObserverComponent {
 
     @render(Audios.AudioStore, (store) => store.sfx, { fireImmediately: false })
     playSFX(data: gc.Audios.AudioData) {
-        if (data.action === Audios.AudioAction.PLAY && this.isGesture) {
+        if (data.action === Audios.AudioAction.PLAY && this.isUserGesture) {
             this.playSFXAudio(data.id);
         }
     }
