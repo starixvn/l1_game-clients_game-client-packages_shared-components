@@ -5,7 +5,7 @@ import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 
-const { Audios, UserSettings, App } = gc;
+const { Audios, UserSettings, App, BrowserDomUtils } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -44,20 +44,26 @@ export class AudioContainer extends ObserverComponent {
         this.musicSource.node.on(AudioSource.EventType.STARTED, () => this.updateMusicState(Audios.MusicState.STARTED));
         this.musicSource.node.on(AudioSource.EventType.ENDED, () => this.updateMusicState(Audios.MusicState.ENDED));
 
-        // The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page
+        // The AudioContext was not allowed to start.
+        // It must be resumed (or created) after a user gesture on the page
         this.initTouchBind();
     }
 
-    initTouchBind() {
-        const touchend = "ontouchend" in window ? "touchend" : "mouseup";
-        const touchStart = "ontouchstart" in window ? "touchstart" : "mousedown";
-        game.canvas.addEventListener(touchStart, () => {
-            this.isUserGesture = true;
-        });
+    protected initTouchBind() {
+        const touchEvent = "ontouchend" in window ? ["touchstart", "touchend"] : ["mousedown", "mouseup"];
+        const [touchStartEvent, touchEndEvent] = touchEvent;
 
-        game.canvas.addEventListener(touchend, () => {
+        const handleTouchEvent = () => {
             this.isUserGesture = true;
-        });
+            this.postMessageUserGestureToParent();
+        };
+
+        game.canvas.addEventListener(touchStartEvent, handleTouchEvent);
+        game.canvas.addEventListener(touchEndEvent, handleTouchEvent);
+    }
+
+    protected postMessageUserGestureToParent() {
+        BrowserDomUtils.postMessageToParent({ isUserGesture: true });
     }
 
     @render(App.AppStore, (store) => store.isUserGesture)
