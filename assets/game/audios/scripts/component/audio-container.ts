@@ -47,6 +47,12 @@ export class AudioContainer extends ObserverComponent {
         // The AudioContext was not allowed to start.
         // It must be resumed (or created) after a user gesture on the page
         this.initTouchBind();
+        window.addEventListener("message", this.registerEventUserGesture.bind(this));
+    }
+
+    onDestroy(): void {
+        super.onDestroy();
+        window.removeEventListener("message", this.registerEventUserGesture.bind(this));
     }
 
     protected initTouchBind() {
@@ -64,6 +70,14 @@ export class AudioContainer extends ObserverComponent {
 
     protected postMessageUserGestureToParent() {
         BrowserDomUtils.postMessageToParent({ isUserGesture: true });
+    }
+
+    protected registerEventUserGesture(event: MessageEvent) {
+        console.log("micro receive post message -------------------------", event.data);
+        const isUserGesture = event.data?.isUserGesture;
+        if (isUserGesture) {
+            this.isUserGesture = true;
+        }
     }
 
     @render(App.AppStore, (store) => store.isUserGesture)
