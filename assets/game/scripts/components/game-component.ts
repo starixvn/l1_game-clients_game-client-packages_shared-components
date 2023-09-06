@@ -90,9 +90,9 @@ export default class GameComponent extends GameComponentBase {
     @handle(Connection.ConnectionHandlers.InGameHandler)
     inGame() {}
 
-    @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomShowResult)
-    handleJoinGameAndShowResult(joinRoomShowResult: gc.RoundHistories.IRoundHistoryInfo) {
-        const { roundHistory, isShow } = joinRoomShowResult ?? {};
+    @render(RoundHistories.RoundHistoryStore, (store) => store.joinGameHistory)
+    handleJoinGameAndShowResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
+        const { roundHistory, isShow } = joinGameHistory ?? {};
         if (roundHistory && isShow) {
             this.showResult(roundHistory?.result, false);
         }

@@ -115,9 +115,9 @@ export class BetItems extends ObserverComponent {
         }
     }
 
-    @render(RoundHistories.RoundHistoryStore, (store) => store.joinRoomShowResult)
-    handleHighlightStaticWhenJoinRoom(joinRoomShowResult: gc.RoundHistories.IRoundHistoryInfo) {
-        const { roundHistory, isShow } = joinRoomShowResult ?? {};
+    @render(RoundHistories.RoundHistoryStore, (store) => store.joinGameHistory)
+    handleHighlightStaticWhenJoinStageResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
+        const { roundHistory, isShow } = joinGameHistory ?? {};
         if (roundHistory?.settlementResult && isShow) {
             this.showHighlightStatic(roundHistory.settlementResult);
         }
