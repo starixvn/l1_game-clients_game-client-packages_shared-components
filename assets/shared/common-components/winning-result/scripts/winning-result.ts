@@ -52,5 +52,7 @@ export class WinningResult extends Component {
         if (winChoice) {
             this.label.string = gc.Translator.gameTranslate(`${winChoice}_win`);
         }
+
+        return winChoice;
     }
 }
