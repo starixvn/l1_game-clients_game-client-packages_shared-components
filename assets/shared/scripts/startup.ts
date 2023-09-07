@@ -18,9 +18,6 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) =>
             availableLanguages: languageCodes,
             onLoaded: () => {
                 console.log("started tolgee");
-                console.log(gc.Translator.t("Common.bet_choice"));
-                console.log(gc.Translator.gameTranslate("glossary_tie"));
-                console.log(gc.Translator.commonTranslate("copy_failed_md5"));
             },
             gameNamespace: gameNamespace,
         };
@@ -55,7 +52,7 @@ export function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
             gc.App.FEATURE_NAME,
             gc.Notification.FEATURE_NAME,
             gc.ConnectSite.FEATURE_NAME,
-            gc.ChipSetting.FEATURE_NAME
+            gc.ChipSetting.FEATURE_NAME,
         ],
     };
 
