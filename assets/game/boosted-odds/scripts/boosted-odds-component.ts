@@ -11,8 +11,6 @@ export default class BoostedOddsComponent extends ObserverComponent {
     @property(Node)
     icon: Node | null = null;
 
-    showPopup: boolean = false;
-
     @handle(gc.Notification.BoostedOddsStore, (store) => store.increasePopupCounter())
     openPromotions() {}
 

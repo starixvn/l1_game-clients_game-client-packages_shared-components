@@ -27,8 +27,9 @@ export default class BetDetailBodyItem extends ObserverComponent {
     setData(
         betDetailsLog: gc.BetHistory.BetDetailsLog,
         index: number,
-        odd: number,
+        odds: gc.BetHistory.DynamicObject<number>,
         settlementResult: gc.BetHistory.DynamicObject<boolean>,
+        result: gc.BetHistory.DynamicObject<object>,
         freeBet: boolean,
         fractionalOddsFormat: boolean
     ) {
@@ -37,7 +38,6 @@ export default class BetDetailBodyItem extends ObserverComponent {
         this.nodeBackground.active = index % 2 > 0;
         this.lblTime.string = DateTimeUtils.formatDateTime(time);
         this.lblChoice.string = Translator.gameTranslate(`glossary_${choice}`);
-        this.lblOdds.string = (fractionalOddsFormat ? FormatUtils.numberWithCommas(+odd - 1, 2) : odd).toString();
         this.lblAmount.string = FormatUtils.numberWithCommas(amount, 2);
     }
 

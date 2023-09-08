@@ -1,10 +1,14 @@
-import { _decorator, Button, Component, Label, Node } from "cc";
+import { _decorator, Button, Component, instantiate, Label, Node, Prefab } from "cc";
 import gc from "@sg/game-client-base";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import Observer from "observer";
 
-const { property } = _decorator;
+const { property, ccclass } = _decorator;
 const { DateTimeUtils, FormatUtils } = gc;
+const { BetHistory } = gc;
+const { handle } = Observer;
 
+@ccclass
 export default class BetHistoryBodyItem extends ObserverComponent {
     @property(Label)
     lblTime: Label = null;
@@ -30,8 +34,13 @@ export default class BetHistoryBodyItem extends ObserverComponent {
     @property(Button)
     btnRound: Button = null;
 
+    @property(Prefab)
+    resultPrefab: Prefab = null;
+
+    @property(Node)
+    result: Node = null;
+
     betHistoryLog: gc.BetHistory.BetHistoryLog = null;
-    fractionalOddsFormat: boolean = false;
 
     setData(betHistoryLog: gc.BetHistory.BetHistoryLog, index: number) {
         this.betHistoryLog = betHistoryLog;
@@ -43,6 +52,24 @@ export default class BetHistoryBodyItem extends ObserverComponent {
 
         this.lblWin.string = FormatUtils.numberWithCommas(betwin, 2);
         this.lblTotalStake.string = FormatUtils.numberWithCommas(totalAmount, 2);
+
+        const bodyRow = instantiate(this.resultPrefab);
+        const { result, settlementResult } = betHistoryLog;
+        bodyRow.getComponent(BaseResultBodyItem).setData(result as gc.BetHistory.DynamicObject<object>, settlementResult);
+        this.result.addChild(bodyRow);
+    }
+
+    @handle(BetHistory.BetDetailHitoryStore, (store, betHistoryLog: gc.BetHistory.BetHistoryLog) => {
+        store.setData(betHistoryLog);
+    })
+    openTicketDetail() {
+        this.playSoundClick();
+        return this.betHistoryLog;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }
 

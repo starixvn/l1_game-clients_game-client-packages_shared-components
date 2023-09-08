@@ -35,13 +35,14 @@ export class BetDetailTable extends Component {
         index: number,
         odds: gc.BetHistory.DynamicObject<number>,
         settlementResult: gc.BetHistory.DynamicObject<boolean>,
+        result: gc.BetHistory.DynamicObject<object>,
         freeBet: boolean,
         fractionalOddsFormat: boolean
     ): Node {
         const bodyRow = instantiate(this.bodyPrefab);
         const { choice } = betLogItem;
 
-        this.getBetDetailItemComponent(bodyRow)?.setData(betLogItem, index, odds[choice], settlementResult, freeBet, fractionalOddsFormat);
+        this.getBetDetailItemComponent(bodyRow)?.setData(betLogItem, index, odds, settlementResult, result, freeBet, fractionalOddsFormat);
 
         return bodyRow;
     }
@@ -56,7 +57,7 @@ export class BetDetailTable extends Component {
         this.lblRound.string = betHistoryLog.roundId.toString();
 
         betLogDetails.forEach((item, index) => {
-            this.body.addChild(this.buildBodyRow(item, index, odds, settlementResult, freeBet, fractionalOddsFormat));
+            this.body.addChild(this.buildBodyRow(item, index, odds, settlementResult, result, freeBet, fractionalOddsFormat));
         });
     }
 }
