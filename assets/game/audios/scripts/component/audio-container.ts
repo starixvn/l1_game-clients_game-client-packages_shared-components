@@ -1,4 +1,4 @@
-import { AudioClip, AudioSource, JsonAsset, _decorator, game, log } from "cc";
+import { AudioClip, AudioSource, JsonAsset, _decorator, game, log, sys } from "cc";
 import { bundleManager } from "../../../../shared/common-components/bundle-magager/bundle-manager";
 
 import gc from "@sg/game-client-base";
@@ -67,7 +67,9 @@ export class AudioContainer extends ObserverComponent {
 
     @render(App.AppStore, (store) => store.isUserGesture)
     setUserGesture(isUserGesture: boolean): void {
-        isUserGesture && (this.isUserGesture = true);
+        if (sys.os !== sys.OS.IOS && isUserGesture) {
+            this.isUserGesture = true;
+        }
     }
 
     @handle(gc.Audios.AudioHandler, (handle, state: gc.Audios.MusicState) => handle.updateMusicState(state))
