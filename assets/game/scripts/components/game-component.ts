@@ -118,14 +118,14 @@ export default class GameComponent extends GameComponentBase {
             return;
         }
         this.showResult(result, true).then(() => {
-            this.finishShowResult(settlementResult);
+            this.finishShowResult(result, settlementResult);
         });
         this.playSound(gc.Audios.AudioIds.RECEIVE_FINISH);
     }
     async showResult(result: gc.GameServiceMessage.TResult, hasAnimation: boolean) {}
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
-    finishShowResult(settlementResult: gc.GameServiceMessage.TSettlementResult) {}
+    finishShowResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {}
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
     handleStartRound(isStartRound: boolean) {}
