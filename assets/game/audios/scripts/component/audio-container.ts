@@ -18,6 +18,11 @@ export type TAudioValue = {
     type: string;
 };
 
+enum ECurrentPlayTime {
+    playMusic = "playMusic",
+    playSFX = "playSFX",
+}
+
 @ccclass
 export class AudioContainer extends ObserverComponent {
     @property(JsonAsset)
@@ -36,6 +41,12 @@ export class AudioContainer extends ObserverComponent {
     musicIds = [];
     protected audioConfigs: TAudioConfigs = {};
     protected isUserGesture = false;
+    protected isPlayMusic = false;
+    protected isPlaySFX = false;
+    protected currentPlayTime = {
+        [ECurrentPlayTime.playMusic]: 0,
+        [ECurrentPlayTime.playSFX]: 0,
+    };
 
     onLoad() {
         super.onLoad();
@@ -102,12 +113,12 @@ export class AudioContainer extends ObserverComponent {
         this.audiosLoaded();
     }
 
-    async loadAssets(audioValue: TAudioValue, key: string) {
+    async loadAssets(audioValue: TAudioValue, key: string, currentLoadAssetTime: number, isPlay: boolean) {
         const bundle = audioValue.bundle;
         const path = `audios/${audioValue.path ?? key}`;
         const audioClip = ((await bundleManager.loadAssetsFromBundle(bundle, path, AudioClip, null)) as AudioClip) || null;
 
-        return audioClip;
+        return { audioClip, currentLoadAssetTime, isPlay };
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
@@ -115,9 +126,15 @@ export class AudioContainer extends ObserverComponent {
 
     @render(UserSettings.UserSettingStore, (store) => store.musicEnable, { fireImmediately: false })
     enableMusic(musicEnable: boolean) {
+        this.isPlayMusic = musicEnable;
         if (!musicEnable) {
-            this.musicSource.stop();
+            this.stopMusic();
         }
+    }
+
+    @render(UserSettings.UserSettingStore, (store) => store.sfxEnable, { fireImmediately: false })
+    enableSFX(sfxEnable: boolean) {
+        this.isPlaySFX = sfxEnable;
     }
 
     @render(Audios.AudioStore, (store) => store.music, { fireImmediately: false })
@@ -128,9 +145,23 @@ export class AudioContainer extends ObserverComponent {
     }
 
     async playMusicAudio(id: string) {
-        this.playAudio(id, this.musicSource, (clip) => {
-            this.musicSource.play();
-        });
+        await this.playAudio(
+            id,
+            (clip, isPlay) => {
+                isPlay === this.isPlayMusic && this.playAudioClip(clip);
+            },
+            ECurrentPlayTime.playMusic,
+            this.isPlayMusic
+        );
+    }
+
+    protected playAudioClip(audioClip: AudioClip) {
+        this.musicSource.clip = audioClip;
+        this.musicSource.play();
+    }
+
+    protected stopMusic() {
+        this.musicSource.stop();
     }
 
     @render(Audios.AudioStore, (store) => store.sfx, { fireImmediately: false })
@@ -141,21 +172,37 @@ export class AudioContainer extends ObserverComponent {
     }
 
     async playSFXAudio(id: string) {
-        this.playAudio(id, this.sfxSource, (clip) => {
-            this.sfxSource.playOneShot(clip);
-        });
+        this.playAudio(
+            id,
+            (clip, isPlay) => {
+                isPlay === this.isPlaySFX && this.sfxSource.playOneShot(clip);
+            },
+            ECurrentPlayTime.playSFX,
+            this.isPlaySFX
+        );
     }
 
-    async playAudio(id: string, source: AudioSource, playFunction: (clip: AudioClip) => void) {
+    async playAudio(
+        id: string,
+        playFunction: (clip: AudioClip, isPlay: boolean) => void,
+        currentTimeField: string,
+        isCurrentPlaying: boolean
+    ) {
         const audioValue = this.audioConfigs?.[id];
         if (!audioValue) {
             return;
         }
 
-        const audioClip = await this.loadAssets(audioValue, id);
+        const currentTime = new Date().getTime();
+        this.currentPlayTime[currentTimeField] = currentTime;
+        const { audioClip, currentLoadAssetTime, isPlay } = await this.loadAssets(audioValue, id, currentTime, isCurrentPlaying);
+
         if (audioClip) {
-            source.clip = audioClip;
-            playFunction(audioClip);
+            if (this.currentPlayTime[currentTimeField] !== currentLoadAssetTime) {
+                return;
+            }
+
+            playFunction(audioClip, isPlay);
         }
     }
 }
