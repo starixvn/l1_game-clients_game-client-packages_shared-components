@@ -109,11 +109,10 @@ export default class GameComponent extends GameComponentBase {
         this.lblMaxBet && (this.lblMaxBet.string = FormatUtils.numberWithCommas(maxBet));
     }
 
-    @render(Settlements.SettlementStore, (store) => ({ result: store.result, settlementResult: store.settlementResult }), {
-        fireImmediately: false,
-    })
+    @render(Settlements.SettlementStore, (store) => ({ result: store.result, settlementResult: store.settlementResult }))
     handleResult(data: { result: gc.GameServiceMessage.TResult; settlementResult: gc.GameServiceMessage.TSettlementResult }) {
         const { result, settlementResult } = data;
+
         if (!result || !settlementResult) {
             return;
         }
@@ -122,6 +121,7 @@ export default class GameComponent extends GameComponentBase {
         });
         this.playSound(gc.Audios.AudioIds.RECEIVE_FINISH);
     }
+
     async showResult(result: gc.GameServiceMessage.TResult, hasAnimation: boolean) {}
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
