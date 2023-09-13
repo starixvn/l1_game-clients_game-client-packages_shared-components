@@ -48,7 +48,6 @@ export class AroundTablePlayers extends ObserverComponent {
 
         if (!playerSlot) {
             const emptySlot = AroundTablePlayerUtils.getEmptyPlayerSlot(this.aroundTablePlayerComponents);
-
             if (emptySlot && aroundTablePlayer.idleCount <= AroundTablePlayerComponent.maxIdleCount) {
                 AroundTablePlayerUtils.addAroundTablePlayerInfo({
                     playerComp: emptySlot,
@@ -63,12 +62,12 @@ export class AroundTablePlayers extends ObserverComponent {
     }
 
     @render(gc.AroundTablePlayers.AroundTablePlayersStore, (store) => store.outGamePlayerId)
-    handleRemoveAroundTablePlayer(outGamePlayerId: string) {
+    handleRemoveAroundTablePlayer(outGamePlayerId: gc.GameServiceMessage.RemoveAroundTablePlayer) {
         if (!outGamePlayerId) {
             return;
         }
 
-        const playerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayerComponents, outGamePlayerId);
+        const playerSlot = AroundTablePlayerUtils.getAroundTablePlayerSlot(this.aroundTablePlayerComponents, outGamePlayerId.id);
 
         if (playerSlot) {
             AroundTablePlayerUtils.addAroundTablePlayerInfo({
@@ -84,7 +83,7 @@ export class AroundTablePlayers extends ObserverComponent {
                 delete this.hiddenPlayers[newPlayerId];
             }
         } else {
-            delete this.hiddenPlayers[outGamePlayerId];
+            delete this.hiddenPlayers[outGamePlayerId.id];
         }
     }
 
