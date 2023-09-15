@@ -242,7 +242,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": -3,
       "z": 0
     },
     "_lrot": {
@@ -302,7 +302,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 2,
-      "y": 10,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -556,7 +556,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 324,
-      "height": 120
+      "height": 200
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -607,8 +607,8 @@
     "_target": null,
     "_left": 0,
     "_right": -4,
-    "_top": -20,
-    "_bottom": 0,
+    "_top": -50,
+    "_bottom": -50,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,

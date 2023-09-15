@@ -104,7 +104,8 @@ export default class Splash extends Component {
     }
 
     loadSceneGame() {
-        const sceneName = "game";
+        // const sceneName = "game";
+        const sceneName = "game-instant-landscape";
         director.preloadScene(
             sceneName,
             (completedCount: number, totalCount: number) => {
