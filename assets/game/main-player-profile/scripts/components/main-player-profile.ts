@@ -57,7 +57,7 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     @render(MainPlayerStore, (store) => store.balance)
     setBalance(value: number) {
-        this.lblBalance.string = FormatUtils.truncateFixedDecimals(value, 2).toString();
+        this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(value, 2).toString());
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
