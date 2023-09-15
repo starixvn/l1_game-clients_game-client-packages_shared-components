@@ -7,7 +7,10 @@ export namespace FunctionUtils {
 
         return namespace || window?.envConfig?.mainObserverNamespace || "default";
     };
-
+export const isIpad = (): boolean => {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        return /ipad/.test(userAgent);
+    };
     export const delay = async (milliseconds: number) => {
         let timeoutId: NodeJS.Timeout;
         return new Promise<void>((resolve) => {
