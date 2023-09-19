@@ -1,9 +1,9 @@
 import gc from "@sg/game-client-base";
-import { Game, Label, _decorator, game, sys } from "cc";
+import { Game, Label, ResolutionPolicy, Size, _decorator, game, macro, screen, sys, view } from "cc";
 import Observer from "observer";
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
 import { StaticGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
-import { ComponentUtils } from "../../../shared/utils";
+import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
 
@@ -23,6 +23,18 @@ export default class GameComponent extends GameComponentBase {
     lblMaxBet: Label = null;
 
     containerOptions: gc.IContainerOptions;
+    protected system: number = 1;
+
+    solutionSizesInstant = {
+        PORTRAIT: {
+            width: 448,
+            height: 664,
+        },
+        LANDSCAPE: {
+            width: 812,
+            height: 410,
+        },
+    };
 
     onLoad() {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
@@ -30,6 +42,18 @@ export default class GameComponent extends GameComponentBase {
         this.initUserSettings();
         this.initPlayerSelections();
         this.handleStaticNodeAndSetEmptyLabels();
+        this.system === gc.AppTypes.Instant && this.detectChangeSolutionSize();
+    }
+
+    detectChangeSolutionSize() {
+        const isPortrait = FunctionUtils.isPortraitMode();
+        const orientation = isPortrait ? macro.ORIENTATION_PORTRAIT : macro.ORIENTATION_LANDSCAPE;
+        const { width, height } = isPortrait ? this.solutionSizesInstant.PORTRAIT : this.solutionSizesInstant.LANDSCAPE;
+        const resolutionPolicy = isPortrait ? ResolutionPolicy.FIXED_HEIGHT : ResolutionPolicy.FIXED_WIDTH;
+
+        view.setOrientation(orientation);
+        screen.windowSize = new Size(width, height);
+        view.setDesignResolutionSize(width, height, resolutionPolicy);
     }
 
     protected handleStaticNodeAndSetEmptyLabels() {

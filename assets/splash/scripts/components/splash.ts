@@ -2,11 +2,11 @@ import gc from "@sg/game-client-base";
 import { Component, Label, Node, Prefab, ProgressBar, _decorator, director } from "cc";
 import Observer from "observer";
 import GameConnection from "../../../shared/common-components/game-connection";
-import { ComponentUtils } from "../../../shared/utils";
+import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, ChipSetting, sentryLogger, Configs, Translator, BrowserDomUtils, App } = gc;
+const { Auth, ChipSetting, sentryLogger, Configs, Translator, BrowserDomUtils, App, Shared } = gc;
 
 @ccclass
 @observer
@@ -39,6 +39,9 @@ export default class Splash extends Component {
     prefabCustomize: Prefab = null;
 
     gameConnection: GameConnection = null;
+
+    // hard code run instant
+    protected system: number = 3;
 
     onLoad() {
         gc.initMobxLogger();
@@ -75,9 +78,14 @@ export default class Splash extends Component {
         return new URLSearchParams(window.location.search);
     }
 
-    @render(Auth.AuthStore, (store) => store.isAuthorized)
-    openGame(isAuthorized: boolean) {
+    @render(Auth.AuthStore, (store) => ({
+        isAuthorized: store.isAuthorized,
+        system: store.system,
+    }))
+    openGame({ isAuthorized, system }) {
         if (isAuthorized) {
+            // this.system = system;
+            console.log("system----------", system);
             this.loadChipSetting();
             this.triggerRecheckIn();
             this.connectToGameService();
@@ -104,8 +112,7 @@ export default class Splash extends Component {
     }
 
     loadSceneGame() {
-        // const sceneName = "game";
-        const sceneName = "game-instant-landscape";
+        const sceneName = this.sceneName;
         director.preloadScene(
             sceneName,
             (completedCount: number, totalCount: number) => {
@@ -119,6 +126,14 @@ export default class Splash extends Component {
                 }
             }
         );
+    }
+
+    get sceneName() {
+        if (this.system === gc.AppTypes.Instant) {
+            return FunctionUtils.isPortraitMode() ? "game-instant-portrait" : "game-instant-landscape";
+        }
+
+        return "game";
     }
 
     @render(Configs.SiteConfigs, (store) => store.systemType)
