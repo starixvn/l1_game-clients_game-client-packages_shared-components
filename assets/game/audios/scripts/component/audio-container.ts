@@ -175,7 +175,10 @@ export class AudioContainer extends ObserverComponent {
         this.playAudio(
             id,
             (clip, isPlay) => {
-                isPlay === this.isPlaySFX && this.sfxSource.playOneShot(clip);
+                if (isPlay === this.isPlaySFX) {
+                    this.updateClipSfxInfo({ id, duration: clip.getDuration() });
+                    this.sfxSource.playOneShot(clip);
+                }
             },
             ECurrentPlayTime.playSFX,
             this.isPlaySFX
@@ -204,5 +207,12 @@ export class AudioContainer extends ObserverComponent {
 
             playFunction(audioClip, isPlay);
         }
+    }
+
+
+
+    @handle(gc.Audios.AudioHandler, (handle, clipInfo: gc.Audios.IClipSfxInfo) => handle.updateClipSfxInfo(clipInfo))
+    updateClipSfxInfo(clipInfo: gc.Audios.IClipSfxInfo) {
+        return clipInfo;
     }
 }
