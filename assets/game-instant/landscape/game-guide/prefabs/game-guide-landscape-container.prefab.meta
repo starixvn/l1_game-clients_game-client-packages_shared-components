@@ -2,12 +2,12 @@
   "ver": "1.1.45",
   "importer": "prefab",
   "imported": true,
-  "uuid": "a50d39a7-de5e-4f81-a958-467210eda48c",
+  "uuid": "22c73ca4-aef2-4085-be1a-9ca6697d416c",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "game-guide-instant-container"
+    "syncNodeName": "game-guide-landscape-container"
   }
 }
