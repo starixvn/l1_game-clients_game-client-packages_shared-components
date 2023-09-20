@@ -176,7 +176,7 @@ export class AudioContainer extends ObserverComponent {
             id,
             (clip, isPlay) => {
                 if (isPlay === this.isPlaySFX) {
-                    this.updateClipSfxInfo({ id, duration: clip.getDuration() });
+                    this.updateDurationPlayingSFX(clip.getDuration());
                     this.sfxSource.playOneShot(clip);
                 }
             },
@@ -209,10 +209,8 @@ export class AudioContainer extends ObserverComponent {
         }
     }
 
-
-
-    @handle(gc.Audios.AudioHandler, (handle, clipInfo: gc.Audios.IClipSfxInfo) => handle.updateClipSfxInfo(clipInfo))
-    updateClipSfxInfo(clipInfo: gc.Audios.IClipSfxInfo) {
-        return clipInfo;
+    @handle(gc.Audios.AudioHandler, (handle, duration: number) => handle.updateDurationPlayingSFX(duration))
+    updateDurationPlayingSFX(duration: number) {
+        return duration;
     }
 }
