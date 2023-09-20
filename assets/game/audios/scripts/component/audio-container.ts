@@ -53,6 +53,8 @@ export class AudioContainer extends ObserverComponent {
         this.loadAudios().catch((error) => log(error));
         this.musicSource.node.on(AudioSource.EventType.STARTED, () => this.updateMusicState(Audios.MusicState.STARTED));
         this.musicSource.node.on(AudioSource.EventType.ENDED, () => this.updateMusicState(Audios.MusicState.ENDED));
+        this.sfxSource.node.on(AudioSource.EventType.STARTED, () => this.updateSFXState(Audios.SFXState.STARTED));
+        this.sfxSource.node.on(AudioSource.EventType.ENDED, () => this.updateSFXState(Audios.SFXState.ENDED));
 
         // The AudioContext was not allowed to start.
         // It must be resumed (or created) after a user gesture on the page
@@ -128,13 +130,16 @@ export class AudioContainer extends ObserverComponent {
     enableMusic(musicEnable: boolean) {
         this.isPlayMusic = musicEnable;
         if (!musicEnable) {
-            this.stopMusic();
+            this.stopAudio(this.musicSource);
         }
     }
 
     @render(UserSettings.UserSettingStore, (store) => store.sfxEnable, { fireImmediately: false })
     enableSFX(sfxEnable: boolean) {
         this.isPlaySFX = sfxEnable;
+        if (!sfxEnable) {
+            this.stopAudio(this.sfxSource);
+        }
     }
 
     @render(Audios.AudioStore, (store) => store.music, { fireImmediately: false })
@@ -148,20 +153,15 @@ export class AudioContainer extends ObserverComponent {
         await this.playAudio(
             id,
             (clip, isPlay) => {
-                isPlay === this.isPlayMusic && this.playAudioClip(clip);
+                isPlay === this.isPlayMusic && this.playSourceClip(this.musicSource, clip);
             },
             ECurrentPlayTime.playMusic,
             this.isPlayMusic
         );
     }
 
-    protected playAudioClip(audioClip: AudioClip) {
-        this.musicSource.clip = audioClip;
-        this.musicSource.play();
-    }
-
-    protected stopMusic() {
-        this.musicSource.stop();
+    protected stopAudio(audioSource: AudioSource) {
+        audioSource.stop();
     }
 
     @render(Audios.AudioStore, (store) => store.sfx, { fireImmediately: false })
@@ -175,14 +175,16 @@ export class AudioContainer extends ObserverComponent {
         this.playAudio(
             id,
             (clip, isPlay) => {
-                if (isPlay === this.isPlaySFX) {
-                    this.updateDurationPlayingSFX(clip.getDuration());
-                    this.sfxSource.playOneShot(clip);
-                }
+                isPlay === this.isPlaySFX && this.playSourceClip(this.sfxSource, clip);
             },
             ECurrentPlayTime.playSFX,
             this.isPlaySFX
         );
+    }
+
+    protected playSourceClip(audioSource: AudioSource, audioClip: AudioClip) {
+        audioSource.clip = audioClip;
+        audioSource.play();
     }
 
     async playAudio(
@@ -209,8 +211,8 @@ export class AudioContainer extends ObserverComponent {
         }
     }
 
-    @handle(gc.Audios.AudioHandler, (handle, duration: number) => handle.updateDurationPlayingSFX(duration))
-    updateDurationPlayingSFX(duration: number) {
-        return duration;
+    @handle(gc.Audios.AudioHandler, (handle, sfxState: gc.Audios.ISFXState) => handle.updateSFXState(sfxState))
+    updateSFXState(state: gc.Audios.SFXState) {
+        return { id: this.sfxSource?.clip?.name || "", state };
     }
 }
