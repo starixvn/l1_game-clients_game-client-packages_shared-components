@@ -6,7 +6,7 @@ import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, ChipSetting, sentryLogger, Configs, Translator, BrowserDomUtils, App, Shared } = gc;
+const { Auth, ChipSetting, sentryLogger, Configs, Translator, BrowserDomUtils, App, AppTypes } = gc;
 
 @ccclass
 @observer
@@ -40,8 +40,7 @@ export default class Splash extends Component {
 
     gameConnection: GameConnection = null;
 
-    // hard code run instant
-    protected system: number = 3;
+    protected system: number = AppTypes.Club;
 
     onLoad() {
         gc.initMobxLogger();
@@ -84,8 +83,7 @@ export default class Splash extends Component {
     }))
     openGame({ isAuthorized, system }) {
         if (isAuthorized) {
-            // this.system = system;
-            console.log("system----------", system);
+            this.system = system;
             this.loadChipSetting();
             this.triggerRecheckIn();
             this.connectToGameService();
@@ -129,7 +127,7 @@ export default class Splash extends Component {
     }
 
     get sceneName() {
-        if (this.system === gc.AppTypes.Instant) {
+        if (this.system === AppTypes.Instant) {
             return FunctionUtils.isPortraitMode() ? "game-instant-portrait" : "game-instant-landscape";
         }
 
