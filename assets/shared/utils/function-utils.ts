@@ -8,13 +8,13 @@ export namespace FunctionUtils {
         return namespace || window?.envConfig?.mainObserverNamespace || "default";
     };
 
-    export const delayMilliseconds = async (ms: number) => {
+    export const delay = async (milliseconds: number) => {
         let timeoutId: NodeJS.Timeout;
         const promise = new Promise<void>((resolve) => {
             timeoutId = setTimeout(() => {
                 clearTimeout(timeoutId);
                 resolve();
-            }, ms);
+            }, milliseconds);
         });
 
         return promise;
@@ -25,6 +25,12 @@ export namespace FunctionUtils {
             const startTime = new Date().getTime();
             let timeoutId: NodeJS.Timeout;
 
+            const clearTimer = () => {
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                }
+            };
+
             const checkCondition = async () => {
                 try {
                     if (await condition()) {
@@ -32,6 +38,7 @@ export namespace FunctionUtils {
                     } else if (new Date().getTime() - startTime <= maxWait) {
                         timeoutId = setTimeout(checkCondition, interval);
                     } else {
+                        clearTimer();
                         resolve(); // Max wait time exceeded
                     }
                 } catch (e) {
@@ -39,7 +46,7 @@ export namespace FunctionUtils {
                 }
             };
 
-            checkCondition(); // Start checking immediately
+            checkCondition();
         });
     };
 }
