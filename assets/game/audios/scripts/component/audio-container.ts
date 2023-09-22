@@ -1,9 +1,9 @@
-import { AudioClip, AudioSource, JsonAsset, _decorator, game, log, sys } from "cc";
-import { bundleManager } from "../../../../shared/common-components/bundle-magager/bundle-manager";
+import { AudioClip, AudioSource, JsonAsset, _decorator, director, game, log, sys } from "cc";
 
 import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { AudioUtils } from "../../utils/audio-utils";
 
 const { Audios, UserSettings, App, BrowserDomUtils } = gc;
 const { ccclass, property } = _decorator;
@@ -12,6 +12,7 @@ const { render, handle } = Observer;
 export type TAudioConfigs = {
     [key: string]: TAudioValue;
 };
+
 export type TAudioValue = {
     bundle: string;
     path: string;
@@ -39,7 +40,7 @@ export class AudioContainer extends ObserverComponent {
 
     audios = [];
     musicIds = [];
-    protected audioConfigs: TAudioConfigs = {};
+    audioConfigs: TAudioConfigs = {};
     protected isUserGesture = false;
     protected isPlayMusic = false;
     protected isPlaySFX = false;
@@ -49,12 +50,12 @@ export class AudioContainer extends ObserverComponent {
     };
 
     onLoad() {
+        director.getScene().getComponent(AudioContainer);
         super.onLoad();
+        director.addPersistRootNode(this.node);
         this.loadAudios().catch((error) => log(error));
         this.musicSource.node.on(AudioSource.EventType.STARTED, () => this.updateMusicState(Audios.MusicState.STARTED));
         this.musicSource.node.on(AudioSource.EventType.ENDED, () => this.updateMusicState(Audios.MusicState.ENDED));
-        this.sfxSource.node.on(AudioSource.EventType.STARTED, () => this.updateSFXState(Audios.SFXState.STARTED));
-        this.sfxSource.node.on(AudioSource.EventType.ENDED, () => this.updateSFXState(Audios.SFXState.ENDED));
 
         // The AudioContext was not allowed to start.
         // It must be resumed (or created) after a user gesture on the page
@@ -115,14 +116,6 @@ export class AudioContainer extends ObserverComponent {
         this.audiosLoaded();
     }
 
-    async loadAssets(audioValue: TAudioValue, key: string, currentLoadAssetTime: number, isPlay: boolean) {
-        const bundle = audioValue.bundle;
-        const path = `audios/${audioValue.path ?? key}`;
-        const audioClip = ((await bundleManager.loadAssetsFromBundle(bundle, path, AudioClip, null)) as AudioClip) || null;
-
-        return { audioClip, currentLoadAssetTime, isPlay };
-    }
-
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
     audiosLoaded() {}
 
@@ -137,9 +130,6 @@ export class AudioContainer extends ObserverComponent {
     @render(UserSettings.UserSettingStore, (store) => store.sfxEnable, { fireImmediately: false })
     enableSFX(sfxEnable: boolean) {
         this.isPlaySFX = sfxEnable;
-        if (!sfxEnable) {
-            this.stopAudio(this.sfxSource);
-        }
     }
 
     @render(Audios.AudioStore, (store) => store.music, { fireImmediately: false })
@@ -175,7 +165,9 @@ export class AudioContainer extends ObserverComponent {
         this.playAudio(
             id,
             (clip, isPlay) => {
-                isPlay === this.isPlaySFX && this.playSourceClip(this.sfxSource, clip);
+                if (isPlay === this.isPlaySFX) {
+                    this.sfxSource.playOneShot(clip);
+                }
             },
             ECurrentPlayTime.playSFX,
             this.isPlaySFX
@@ -200,7 +192,7 @@ export class AudioContainer extends ObserverComponent {
 
         const currentTime = new Date().getTime();
         this.currentPlayTime[currentTimeField] = currentTime;
-        const { audioClip, currentLoadAssetTime, isPlay } = await this.loadAssets(audioValue, id, currentTime, isCurrentPlaying);
+        const { audioClip, currentLoadAssetTime, isPlay } = await AudioUtils.loadAssets(audioValue, id, currentTime, isCurrentPlaying);
 
         if (audioClip) {
             if (this.currentPlayTime[currentTimeField] !== currentLoadAssetTime) {
@@ -209,10 +201,5 @@ export class AudioContainer extends ObserverComponent {
 
             playFunction(audioClip, isPlay);
         }
-    }
-
-    @handle(gc.Audios.AudioHandler, (handle, sfxState: gc.Audios.ISFXState) => handle.updateSFXState(sfxState))
-    updateSFXState(state: gc.Audios.SFXState) {
-        return { id: this.sfxSource?.clip?.name || "", state };
     }
 }
