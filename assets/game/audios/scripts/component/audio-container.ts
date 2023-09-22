@@ -6,7 +6,7 @@ import { ObserverComponent } from "../../../../shared/common-components/observer
 import { AudioUtils } from "../../utils";
 import AudioManager from "../audio-manager";
 
-const { Audios, UserSettings, App, BrowserDomUtils } = gc;
+const { Audios, UserSettings, App, BrowserDomUtils, AppTypes, Auth } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -75,6 +75,13 @@ export class AudioContainer extends ObserverComponent {
 
         game.canvas.addEventListener(touchStartEvent, handleTouchEvent);
         game.canvas.addEventListener(touchEndEvent, handleTouchEvent);
+
+        window.addEventListener("message", this.handleSoundEventFromParent.bind(this));
+    }
+
+    @handle(gc.UserSettings.UserSettingHandlers, (handle, sfxEnable: boolean) => handle.setSfxEnable(sfxEnable))
+    handleSoundEventFromParent(event: MessageEvent) {
+        return event.data.sfxEnable;
     }
 
     protected postMessageUserGestureToParent() {

@@ -3,6 +3,7 @@
     "__type__": "cc.Prefab",
     "_name": "game-audio",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "_native": "",
     "data": {
       "__id__": 1
@@ -273,6 +274,7 @@
     "__type__": "cc.Node",
     "_name": "music-player",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "_parent": {
       "__id__": 1
     },
@@ -319,6 +321,7 @@
     "__type__": "cf6d9AgMNRGJZSHltDF//MT",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 19
     },
@@ -361,9 +364,6 @@
       },
       {
         "__id__": 27
-      },
-      {
-        "__id__": 30
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -381,43 +381,13 @@
       "__id__": 25
     },
     "propertyPath": [
-      "audioSource"
-    ],
-    "target": {
-      "__id__": 2
-    },
-    "targetInfo": {
-      "__id__": 26
-    }
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "a2uFKsCopFy6VpFnlChXRD"
-    ]
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "0be4ncmzRBWpRFKXetrRCH"
-    ]
-  },
-  {
-    "__type__": "cc.TargetOverrideInfo",
-    "source": {
-      "__id__": 2
-    },
-    "sourceInfo": {
-      "__id__": 28
-    },
-    "propertyPath": [
       "musicSource"
     ],
     "target": {
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 29
+      "__id__": 26
     }
   },
   {
@@ -438,7 +408,7 @@
       "__id__": 2
     },
     "sourceInfo": {
-      "__id__": 31
+      "__id__": 28
     },
     "propertyPath": [
       "sfxSource"
@@ -447,7 +417,7 @@
       "__id__": 2
     },
     "targetInfo": {
-      "__id__": 32
+      "__id__": 29
     }
   },
   {

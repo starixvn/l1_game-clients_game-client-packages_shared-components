@@ -308,7 +308,9 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
+    "target": {
+      "__id__": 1
+    },
     "component": "",
     "_componentId": "005bc0+TtJHraxrdPo4rGru",
     "handler": "hide",
@@ -1004,7 +1006,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 204.6362228032594,
+      "width": 204.66796875000003,
       "height": 70.56
     },
     "_anchorPoint": {
@@ -1043,7 +1045,7 @@
     "_string": "GAME GUIDES",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 40.08620689655173,
+    "_actualFontSize": 37.5,
     "_fontSize": 28,
     "_fontFamily": "Arial",
     "_lineHeight": 56,
