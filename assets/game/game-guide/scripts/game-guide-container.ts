@@ -13,8 +13,12 @@ export class GameGuideContainer extends NodeContainer {
     @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
     openGuide({ event }: { event: InGameMenuEvents }) {
         if (event === InGameMenuEvents.OPEN_GUIDE) {
-            const guide = this.createNode();
-            guide.getComponent(WebViewGuide)?.initUrl();
+            this.openDialog();
         }
+    }
+
+    protected openDialog() {
+        const guide = this.createNode();
+        guide.getComponent(WebViewGuide)?.initUrl();
     }
 }

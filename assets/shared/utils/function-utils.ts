@@ -1,4 +1,4 @@
-import { find , screen} from "cc";
+import { find, screen } from "cc";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 
 export namespace FunctionUtils {
@@ -7,15 +7,16 @@ export namespace FunctionUtils {
 
         return namespace || window?.envConfig?.mainObserverNamespace || "default";
     };
-export const isIpad = (): boolean => {
+    export const isIpad = (): boolean => {
         const userAgent = window.navigator.userAgent.toLowerCase();
         return /ipad/.test(userAgent);
     };
-    
-       export const isPortraitMode = (): boolean => {
+
+    export const isPortraitMode = (): boolean => {
         const frameSize = screen.windowSize;
         return frameSize.width < frameSize.height;
-        
+    };
+
     export const delay = async (milliseconds: number) => {
         let timeoutId: NodeJS.Timeout;
         const promise = new Promise<void>((resolve) => {
