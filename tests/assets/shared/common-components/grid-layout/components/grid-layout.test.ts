@@ -1,4 +1,4 @@
-import { AxisDirection, Layout, ScrollView, instantiate } from "cc";
+import { Layout, ScrollView, instantiate } from "cc";
 import { GridItem } from "db://shared-components/shared/common-components/grid-layout/scripts/components/grid-item";
 import { GridItemSettings } from "db://shared-components/shared/common-components/grid-layout/scripts/settings/grid-item-settings";
 import { GridLayoutSettings } from "db://shared-components/shared/common-components/grid-layout/scripts/settings/grid-layout-settings";
@@ -11,7 +11,7 @@ describe(GridLayout.name, () => {
     let fakeItem: FakeItem;
     const gridLayoutSettings: GridLayoutSettings = {
         column: 1,
-        direction: AxisDirection.HORIZONTAL,
+        direction: Layout.AxisDirection.HORIZONTAL,
         row: 1,
         itemPrefab: null,
         itemSize: 10,

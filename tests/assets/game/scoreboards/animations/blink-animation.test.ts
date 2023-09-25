@@ -1,4 +1,4 @@
-import { Tween, tween, tweenInstance } from "cc";
+import { Tween, tween } from "cc";
 import { BlinkAnimation } from "db://shared-components/shared/common-components/blink-animation/blink-animation";
 
 describe(BlinkAnimation.name, () => {
@@ -18,6 +18,7 @@ describe(BlinkAnimation.name, () => {
             it("should create tween as expected", () => {
                 // Act
                 component.onEnable();
+                const tweenInstance = tween();
 
                 // Assert
                 expect(tween).toBeCalledWith(uiOpacity);
