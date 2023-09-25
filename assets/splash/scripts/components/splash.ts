@@ -47,7 +47,7 @@ export default class Splash extends Component {
         this.initGameConnectionComponent();
         this.updateProgressBar(0);
         this.sso();
-        this.gameName.string = Translator.gameTranslate("game_name").toUpperCase();
+        this.gameName && (this.gameName.string = Translator.gameTranslate("game_name").toUpperCase());
         ComponentUtils.addChildFromPrefab(this.prefabCustomize, this.containerCustomize);
         window.addEventListener("message", this.registerEventUserGesturePage.bind(this));
     }
@@ -98,12 +98,12 @@ export default class Splash extends Component {
     renderMessage(message: string) {
         this.cpnMessage.reset();
         this.cpnMessage.setMessage(message);
-        this.gameName.node.active = false;
+        this.gameName && (this.gameName.node.active = false);
     }
 
     updateProgressBar(progress: number) {
         if (this.progressBar) {
-            this.gameName.node.active = true;
+            this.gameName && (this.gameName.node.active = true);
             this.percentResourceLoad.string = `${Math.round(progress * 100)}%`;
             this.progressBar.progress = progress;
         }
