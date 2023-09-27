@@ -1,12 +1,15 @@
-import { _decorator, Component } from "cc";
+import { _decorator } from "cc";
+import Observer from "observer";
 
-const { ccclass, property } = _decorator;
+import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { BetInputHandler } from "../handlers/bet-input-handlers";
 
-@ccclass("bet_item")
-export class BetAmountItem extends Component {
-    onBetAmountItemCallBack = (amount) => {};
-
+const { ccclass } = _decorator;
+const { handle } = Observer;
+@ccclass()
+export class BetAmountItem extends ObserverComponent {
+    @handle(BetInputHandler, (handler, value: number) => handler.handle(value))
     onBetAmountItemClick(event) {
-        this.onBetAmountItemCallBack(+event.target.name);
+        return +event.target.name;
     }
 }

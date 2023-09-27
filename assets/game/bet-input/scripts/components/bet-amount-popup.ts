@@ -1,8 +1,11 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Component, instantiate, Label, Node, Prefab } from "cc";
+import Observer from "observer";
 
-import { BetAmountItem } from "./bet-amount-item";
+import { BetAmountStore } from "../stores/bet-amount-store";
 
 const { ccclass, property } = _decorator;
+const { render } = Observer;
 
 @ccclass()
 export class BetAmountPopup extends Component {
@@ -16,39 +19,38 @@ export class BetAmountPopup extends Component {
     lblBetAmount: Label = null;
 
     betAmount = 0;
-    gameConfigs = null;
+    minBet = 0;
 
-    onBetAmountCallBack = (amount) => {};
-
-    initBetAmount() {
+    @render(gc.GameConfigs.GameConfigStore, (store) => store.chips)
+    initBetAmount(chips) {
         this.nodeBetContainer.destroyAllChildren();
-        this.gameConfigs.chips.forEach((chip) => {
+        chips.forEach((chip) => {
             const node = instantiate(this.prfBetAmount);
             node.name = chip;
             const value = node.getChildByName("value");
             value.getComponent(Label).string = `+${chip}`;
-            const cpnBetAmount = node.getComponent(BetAmountItem);
-            cpnBetAmount.onBetAmountItemCallBack = (amount) => {
-                this.updateBetAmount(this.betAmount + amount);
-            };
             this.nodeBetContainer.addChild(node);
         });
         this.updateBetAmount(this.betAmount);
     }
 
-    onClearClick() {
-        this.updateBetAmount(this.gameConfigs.minBet);
+    @render(gc.GameConfigs.GameConfigStore, (store) => store.minBet)
+    upateMinBet(minBet: number) {
+        this.minBet = minBet;
     }
 
+    onClearClick() {
+        this.updateBetAmount(this.minBet);
+    }
+
+    @render(BetAmountStore, (store) => store.betAmount)
     updateBetAmount(amount: number) {
-        const validatedAmount = amount > this.gameConfigs.maxBet ? this.gameConfigs.maxBet : amount;
-        this.betAmount = validatedAmount;
-        this.lblBetAmount.string = `${validatedAmount}`;
+        this.betAmount = amount;
+        this.lblBetAmount.string = `${amount}`;
     }
 
     onCloseClick() {
         this.hidePopup();
-        this.onBetAmountCallBack(this.betAmount);
     }
 
     hidePopup() {
