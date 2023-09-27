@@ -1,4 +1,4 @@
-import { Label, Node, Sprite, _decorator } from "cc";
+import { Label, Sprite, _decorator } from "cc";
 import MainPlayerProfile from "../../../../../game/main-player-profile/scripts/components/main-player-profile";
 
 const { ccclass, property } = _decorator;
@@ -13,7 +13,4 @@ export default class MainPlayerProfileInstant extends MainPlayerProfile {
 
     @property({ override: true, visible: false })
     sprAvatar: Sprite = null;
-
-    @property(Node)
-    containerEffect: Node = null;
 }
