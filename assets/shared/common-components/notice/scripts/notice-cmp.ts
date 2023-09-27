@@ -36,7 +36,7 @@ export class NoticeCmp extends Dialog {
         this.updateDisplay(data.type, data.showBtnConfirmButton);
     }
 
-    updateDisplay(type: NoticeType, showBtnConfirmButton?: boolean) {
+    updateDisplay(type: NoticeType, showBtnConfirmButton = false) {
         const isInfo = type === NoticeType.Info;
         this.setBackground(isInfo);
         this.btnConfirm.active = showBtnConfirmButton || isInfo;

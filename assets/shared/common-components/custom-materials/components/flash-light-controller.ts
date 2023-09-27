@@ -9,15 +9,15 @@ export class FlashLightController extends Component {
     @property
     lightCenterPoint: Vec2 = v2(0.5, 0.5);
     @property
-    lightAngle: number = 0;
+    lightAngle = 0;
     @property
-    lightWidth: number = 0.5;
+    lightWidth = 0.5;
     @property
-    enableGradient: boolean = true;
+    enableGradient = true;
     @property
-    cropAlpha: boolean = true;
+    cropAlpha = true;
     @property
-    enableFog: boolean = false;
+    enableFog = false;
 
     private uiRenderer: UIRenderer;
     init() {

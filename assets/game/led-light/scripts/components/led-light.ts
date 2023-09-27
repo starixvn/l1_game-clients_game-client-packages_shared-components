@@ -60,7 +60,7 @@ export class LedLight extends ObserverComponent {
         this.hideTooltip();
     }
 
-    private ledLightItemListener = {
+    private readonly ledLightItemListener = {
         onEnter: (node: Node) => {
             this.selectedLedLight = node;
             const ledLightInfo = node.getComponent(LedLightItem).ledLightItemInfo;

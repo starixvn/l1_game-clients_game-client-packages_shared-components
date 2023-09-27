@@ -58,7 +58,7 @@ export const addChipsToChipBoxWhenJoinRoom = (
     slidingChip: SlidingChip
 ) => {
     if (!chipGroup) {
-        return;
+        return [];
     }
 
     const chipNodes = [];

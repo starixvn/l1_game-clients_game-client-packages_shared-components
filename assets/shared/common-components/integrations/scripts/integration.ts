@@ -14,6 +14,8 @@ export class Integration {
         if (identifier.isLabel) {
             return identifier.label.string;
         }
+
+        return undefined;
     }
 
     static node(id: string): Node {

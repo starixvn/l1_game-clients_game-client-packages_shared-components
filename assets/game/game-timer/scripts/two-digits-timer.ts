@@ -14,7 +14,7 @@ export default class TwoDigitsTimer extends ObserverComponent {
     lblDigitSecond: Label = null;
 
     @property
-    heightOffset: number = 0;
+    heightOffset = 0;
 
     @property
     animated = true;
@@ -60,14 +60,9 @@ export default class TwoDigitsTimer extends ObserverComponent {
             tween(uiOpacity).to(0.2, { opacity: 255 }).start();
         }
     }
+
     setState(state: string) {
-        switch (state) {
-            case Rounds.ROUND_STATE.LOCKING_BET:
-                this.setColor(this.lockingColor);
-                break;
-            default:
-                this.setColor(this.normalColor);
-                break;
-        }
+        const color = state === Rounds.ROUND_STATE.LOCKING_BET ? this.lockingColor : this.normalColor;
+        this.setColor(color);
     }
 }

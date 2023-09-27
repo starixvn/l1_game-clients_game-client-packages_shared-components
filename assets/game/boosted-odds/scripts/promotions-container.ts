@@ -11,7 +11,7 @@ const { render } = Observer;
 export class PromotionsContainer extends NodeContainer {
     wrapperNode: Node = null;
     table: PromotionsTable = null;
-    popupCounter: number = 0;
+    popupCounter = 0;
 
     @render(
         gc.Notification.BoostedOddsStore,

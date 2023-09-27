@@ -142,7 +142,7 @@ export class ChipFlying extends ObserverComponent {
         }
     }
 
-    private payChipToAllPlayers = (payChipInfo: gc.Settlements.TPayChipInfo) => {
+    private readonly payChipToAllPlayers = (payChipInfo: gc.Settlements.TPayChipInfo) => {
         const chipFlyingInfo: IChipFlyingInfo = {
             slidingChip: this.slidingChip,
             hiddenPlayersNode: this.hiddenPlayersNode,

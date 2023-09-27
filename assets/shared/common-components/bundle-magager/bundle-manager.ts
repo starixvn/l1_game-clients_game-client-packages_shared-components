@@ -34,16 +34,16 @@ export class BundleManager {
         onProgress: ((finished: number, total: number) => void) | null
     ) {
         const bundle = await this.loadBundle(bundleName);
+
         if (bundle) {
             return new Promise<AssetType>((resolve) => {
                 bundle.load(assetPath, assetType, onProgress, (err, asset) => {
                     if (err) {
-                        log(`Can not load assset ${assetPath} from bundle ${bundleName}`);
+                        log(`Cannot load asset ${assetPath} from bundle ${bundleName}`);
                         resolve(null);
-                        return;
+                    } else {
+                        resolve(asset as AssetType);
                     }
-
-                    resolve(asset as AssetType);
                 });
             });
         }

@@ -10,14 +10,12 @@ export namespace FunctionUtils {
 
     export const delay = async (milliseconds: number) => {
         let timeoutId: NodeJS.Timeout;
-        const promise = new Promise<void>((resolve) => {
+        return new Promise<void>((resolve) => {
             timeoutId = setTimeout(() => {
                 clearTimeout(timeoutId);
                 resolve();
             }, milliseconds);
         });
-
-        return promise;
     };
 
     export const waitUntil = async (condition: Function, interval = 1000, maxWait = 5000): Promise<void> => {
