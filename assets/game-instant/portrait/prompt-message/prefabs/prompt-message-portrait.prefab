@@ -550,8 +550,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 257.9749272378643,
-      "height": 57.96
+      "width": 191.64174283488413,
+      "height": 45.36
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -589,10 +589,10 @@
     "_string": "Start Place Bet",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 45.58536585365854,
-    "_fontSize": 35,
+    "_actualFontSize": 33.863414634146345,
+    "_fontSize": 26,
     "_fontFamily": "Arial",
-    "_lineHeight": 46,
+    "_lineHeight": 36,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
