@@ -50,6 +50,7 @@ export class AudioContainer extends ObserverComponent {
     };
 
     onLoad() {
+        this.node.parent = null;
         director.getScene().getComponent(AudioContainer);
         super.onLoad();
         director.addPersistRootNode(this.node);
