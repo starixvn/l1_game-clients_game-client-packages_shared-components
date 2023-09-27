@@ -34,7 +34,7 @@ export namespace AudioUtils {
     const getAudioClip = async (bundle: string, path: string): Promise<AudioClip | null> => {
         try {
             const loadedClip = await bundleManager.loadAssetsFromBundle(bundle, path, AudioClip, null);
-            return loadedClip as AudioClip | null;
+            return loadedClip as AudioClip;
         } catch (error) {
             console.error(`Failed to load audio clip from bundle: ${error}`);
             return null;

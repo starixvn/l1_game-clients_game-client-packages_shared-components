@@ -34,7 +34,6 @@ export class BundleManager {
         onProgress: ((finished: number, total: number) => void) | null
     ) {
         const bundle = await this.loadBundle(bundleName);
-
         if (bundle) {
             return new Promise<AssetType>((resolve) => {
                 bundle.load(assetPath, assetType, onProgress, (err, asset) => {
@@ -47,6 +46,8 @@ export class BundleManager {
                 });
             });
         }
+
+        return null;
     }
 
     loadSharedAsset<AssetType extends Asset>(
