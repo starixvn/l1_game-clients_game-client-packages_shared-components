@@ -219,14 +219,14 @@
       "b": 73,
       "a": 255
     },
-    "_string": "Title",
+    "_string": "Title ",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
     "_actualFontSize": 23,
     "_fontSize": 23,
     "_fontFamily": "Arial",
     "_lineHeight": 25,
-    "_overflow": 0,
+    "_overflow": 3,
     "_enableWrapText": true,
     "_font": {
       "__uuid__": "0b9efa3d-c517-4301-af5b-ac67552528db",
@@ -335,7 +335,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 57.46,
+      "width": 313,
       "height": 27
     },
     "_anchorPoint": {
@@ -1207,7 +1207,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 236.26,
+      "width": 236.25,
       "height": 44
     },
     "_anchorPoint": {
