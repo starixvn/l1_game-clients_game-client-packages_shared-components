@@ -9,7 +9,7 @@ const { ccclass, property } = _decorator;
 @ccclass()
 export class BalanceContainer extends NodeContainer {
     @property(CCFloat)
-    duration: number = 1;
+    duration = 1;
 
     @property(BitmapFont)
     fontIncreaseBalance: BitmapFont = null;

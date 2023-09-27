@@ -40,7 +40,6 @@ export class BetDetailTable extends Component {
         fractionalOddsFormat: boolean
     ): Node {
         const bodyRow = instantiate(this.bodyPrefab);
-        const { choice } = betLogItem;
 
         this.getBetDetailItemComponent(bodyRow)?.setData(betLogItem, index, odds, settlementResult, result, freeBet, fractionalOddsFormat);
 

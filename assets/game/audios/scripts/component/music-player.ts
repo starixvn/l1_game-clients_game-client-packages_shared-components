@@ -11,7 +11,7 @@ const { render, handle } = Observer;
 export default class MusicPlayer extends ObserverComponent {
     @render(Audios.AudioStore, (store) => store.musicState, { fireImmediately: false })
     playNext(state: gc.Audios.MusicState) {
-        if (state == gc.Audios.MusicState.ENDED) {
+        if (state === gc.Audios.MusicState.ENDED) {
             this.callPlayMusic();
         }
     }

@@ -9,7 +9,7 @@ const { render } = Observer;
 @ccclass()
 export class WinningEffectContainer extends NodeContainer {
     @property(CCFloat)
-    duration: number = 3;
+    duration = 3;
 
     @render(BalanceEffectStore, (store) => store.winEffectMainPlayer, { fireImmediately: false })
     winEffectMainPlayer(playWinningEffectMainPlayer: TWinningEffect) {

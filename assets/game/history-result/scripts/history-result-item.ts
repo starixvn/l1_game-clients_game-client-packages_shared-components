@@ -17,7 +17,7 @@ export class HistoryResultItem extends Component {
     atlas: SpriteAtlas = null;
 
     @property(CCString)
-    defaultPrefix: string = "";
+    defaultPrefix = "";
 
     @property({ type: Enum(HighlightType) })
     highlightType: HighlightType = 0;
@@ -35,14 +35,14 @@ export class HistoryResultItem extends Component {
             return this.highlightType === HighlightType.ICons;
         },
     })
-    defaultHighlightIconPrefix: string = "";
+    defaultHighlightIconPrefix = "";
 
     @property({
         visible: function () {
             return this.highlightType === HighlightType.Outline;
         },
     })
-    highlightOutlinePrefix: string = "";
+    highlightOutlinePrefix = "";
 
     public round: any = null;
     private iconSpriteNames = [];

@@ -6,7 +6,7 @@ const { ccclass, property, menu } = _decorator;
 @menu("Integration/Identifier")
 export class Identifier extends Component {
     @property
-    id: string = "";
+    id = "";
 
     get isLabel() {
         return !!this.label;
