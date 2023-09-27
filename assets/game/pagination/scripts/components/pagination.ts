@@ -25,7 +25,7 @@ export default class Pagination extends ObserverComponent {
     @property(PaginationItem)
     pages: PaginationItem[] = [];
 
-    protected pageButtons: number = 5;
+    protected pageButtons = 5;
     protected control: any = null;
     protected totalPages = 0;
     protected currentPage = 1;
@@ -94,7 +94,7 @@ export default class Pagination extends ObserverComponent {
             return;
         }
 
-        let startedIndex = this.getStartedPageIndex();
+        const startedIndex = this.getStartedPageIndex();
 
         this.pages.forEach((page, index) => {
             const pageNumber = startedIndex + index;

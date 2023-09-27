@@ -65,7 +65,7 @@ export default class SlidingChip extends ObserverComponent {
     private disabledBetChips = false;
     protected chipSetting: gc.ChipSetting.TChipSetting;
 
-    static chipFlyingTime: number = 0.8;
+    static chipFlyingTime = 0.8;
     static mainPlayerChipFlyingTime = 0.5;
     private currentSelectChip = 0;
 
@@ -203,7 +203,7 @@ export default class SlidingChip extends ObserverComponent {
 
     getChipColor(value: number): Color {
         const hexStr = this.chipSetting[value];
-        let color: Color = new Color(0, 0, 0, 255);
+        const color: Color = new Color(0, 0, 0, 255);
         if (!hexStr) {
             console.error(`Missing color for chip ${value}`);
             Color.fromHEX(color, this.chipSetting[0]);

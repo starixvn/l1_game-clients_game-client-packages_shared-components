@@ -1,7 +1,7 @@
 import { CCBoolean, Component, Font, Label, _decorator } from "cc";
 import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
 import gc from "@sg/game-client-base";
-const {Translator} = gc;
+const { Translator } = gc;
 
 const { ccclass, property } = _decorator;
 
@@ -28,13 +28,14 @@ export class LocalizedFont extends Component {
     }
 
     initData() {
+        const notoRegular = "noto-serif-regular";
         this.fontBases = {
-            vi: "noto-serif-regular",
-            id: "noto-serif-regular",
-            en: "noto-serif-regular",
+            vi: notoRegular,
+            id: notoRegular,
+            en: notoRegular,
             th: "noto-serif-regular-thai",
-            "zh_cn": "noto-serif-regular-zhcn",
-            "zh_tw": "noto-serif-regular-zhtw",
+            zh_cn: "noto-serif-regular-zhcn",
+            zh_tw: "noto-serif-regular-zhtw",
         };
     }
 

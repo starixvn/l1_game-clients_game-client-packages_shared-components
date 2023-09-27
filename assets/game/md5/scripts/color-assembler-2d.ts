@@ -1,8 +1,7 @@
 // author: http://lamyoung.com/
 
-import { Component, _decorator, Node, Label, Button, Layout, UITransform, UIRenderer, Color, director, Director, RenderFlow, UI, Graphics  } from "cc";
-const { ccclass, property, executeInEditMode, requireComponent, menu} = _decorator;
-
+import { Component, _decorator, Node, UIRenderer, Color, director, Director, Graphics } from "cc";
+const { ccclass, property, executeInEditMode, requireComponent, menu } = _decorator;
 
 @ccclass
 @executeInEditMode
@@ -20,7 +19,6 @@ export default class ColorAssembler2D extends Component {
         this.updateColors();
     }
     onLoad() {
-        //this.node.on(Node.EventType.SCALE_CHANGED, this.updateColors, this);
         this.node.on(Node.EventType.SIZE_CHANGED, this.updateColors, this);
     }
 
@@ -30,7 +28,6 @@ export default class ColorAssembler2D extends Component {
 
     onDisable() {
         director.off(Director.EVENT_AFTER_DRAW, this.updateColors, this);
-        //this.node["_renderFlag"] |= cc["RenderFlow"].FLAG_COLOR;
     }
 
     updateColors() {

@@ -6,13 +6,14 @@ const { ccclass } = _decorator;
 @ccclass("LocalizedFontBold")
 export default class LocalizedFontBold extends LocalizedFont {
     initData() {
+        const notoBold = "noto-serif-bold";
         this.fontBases = {
-            vi: "noto-serif-bold",
-            id: "noto-serif-bold",
-            en: "noto-serif-bold",
+            vi: notoBold,
+            id: notoBold,
+            en: notoBold,
             th: "noto-serif-bold-thai",
-            "zh_cn": "noto-serif-bold-zhcn",
-            "zh_tw": "noto-serif-bold-zhtw",
+            zh_cn: "noto-serif-bold-zhcn",
+            zh_tw: "noto-serif-bold-zhtw",
         };
     }
 }

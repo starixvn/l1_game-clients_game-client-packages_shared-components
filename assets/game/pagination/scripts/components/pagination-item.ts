@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Label, EventHandler, Color } from "cc";
+import { _decorator, Component, Node, Label, Color } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("PaginationItem")

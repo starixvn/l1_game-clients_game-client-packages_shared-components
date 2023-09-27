@@ -41,7 +41,7 @@ export class ReBetButton extends StatusButton {
 
     private setBackground(color: string) {
         const renderer = this.background.getComponent(UIRenderer);
-        let colorComp: Color = new Color(0, 0, 0, 255);
+        const colorComp: Color = new Color(0, 0, 0, 255);
         renderer.color = Color.fromHEX(colorComp, color);
     }
 
