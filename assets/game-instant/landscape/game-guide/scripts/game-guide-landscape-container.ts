@@ -6,7 +6,6 @@ const { ccclass } = _decorator;
 
 @ccclass("GameGuideLandscapeContainer")
 export class GameGuideLandscapeContainer extends GameGuideContainer {
-    private isOpen = false;
     onLoad() {
         super.onLoad();
         window.addEventListener("message", this.handleEventFromParent.bind(this));
@@ -14,12 +13,13 @@ export class GameGuideLandscapeContainer extends GameGuideContainer {
 
     handleEventFromParent(event: MessageEvent) {
         if (event.data.openGameGuide) {
-            this.isOpen = !this.isOpen;
-            if (this.isOpen) {
-                this.openDialog();
-            } else {
-                this.node?.getComponentInChildren(Dialog)?.hide();
+            const dialogNode = this.node?.getComponentInChildren(Dialog);
+            if (dialogNode) {
+                dialogNode.hide();
+                return;
             }
+
+            this.openDialog();
         }
     }
 }
