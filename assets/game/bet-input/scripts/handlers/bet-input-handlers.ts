@@ -10,19 +10,30 @@ export class BetInputHandler implements gc.Shared.IHandler<number> {
     @inject(BetInputStore) private readonly betInputStore: BetInputStore;
     @inject(gc.GameConfigs.GameConfigStore) private readonly gameConfig: gc.GameConfigs.GameConfigStore;
 
-    handle(amount: number) {
-        const calcAmount = this.betInputStore.betAmount + amount;
+    handle() {
+        this.betInputStore.betAmount = this.betInputStore.betAmountTemp;
+        this.betInputStore.isOpenBetAmountPopup = false;
+        this.checkStatusDescreaseAndIncreaseButtons(this.betInputStore.betAmount);
+    }
+
+    setBetAmountTemp(amount: number) {
+        const calcAmount = this.betInputStore.betAmountTemp + amount;
         const validatedAmount = calcAmount > this.gameConfig.maxBet ? this.gameConfig.maxBet : calcAmount;
-        this.betInputStore.betAmount = validatedAmount;
-        this.checkStatusDescreaseAndIncreaseButtons(validatedAmount);
+
+        this.betInputStore.betAmountTemp = validatedAmount;
     }
 
-    resetBetAmount(amount: number) {
-        this.betInputStore.betAmount = amount;
+    resetBetAmount() {
+        this.betInputStore.betAmountTemp = 0;
     }
 
-    openBetAmountPopup(status: boolean) {
-        this.betInputStore.isOpenBetAmountPopup = status;
+    openBetAmountPopup() {
+        this.betInputStore.betAmountTemp = this.betInputStore.betAmount;
+        this.betInputStore.isOpenBetAmountPopup = true;
+    }
+
+    closeBetAmountPopup() {
+        this.betInputStore.isOpenBetAmountPopup = false;
     }
 
     quickChangeBetAmount(isIncrease: boolean) {

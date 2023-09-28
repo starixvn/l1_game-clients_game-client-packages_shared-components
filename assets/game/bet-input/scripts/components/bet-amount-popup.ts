@@ -40,21 +40,20 @@ export class BetAmountPopup extends ObserverComponent {
         this.node.active = status;
     }
 
-    @render(BetInputStore, (store) => store.betAmount)
+    @render(BetInputStore, (store) => store.betAmountTemp)
     updateBetAmount(amount: number) {
         this.lblBetAmount.string = `${amount}`;
         this.checkConfirmBtnStatus(amount > 0);
     }
 
-    @handle(BetInputHandler, (handle, status: boolean) => handle.openBetAmountPopup(status))
-    onCloseClick() {
-        return false;
-    }
+    @handle(BetInputHandler, (handle) => handle.closeBetAmountPopup())
+    onCloseClick() {}
 
-    @handle(BetInputHandler, (handler, amount: number) => handler.resetBetAmount(amount))
-    onClearClick() {
-        return 0;
-    }
+    @handle(BetInputHandler)
+    onConfirmClick() {}
+
+    @handle(BetInputHandler, (handler) => handler.resetBetAmount())
+    onClearClick() {}
 
     private checkConfirmBtnStatus(status: boolean) {
         this.btnConfirm.interactable = status;

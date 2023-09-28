@@ -1930,7 +1930,7 @@
     },
     "component": "",
     "_componentId": "8d831vh5oRJ65pgYid3r0wR",
-    "handler": "onCloseClick",
+    "handler": "onConfirmClick",
     "customEventData": ""
   },
   {

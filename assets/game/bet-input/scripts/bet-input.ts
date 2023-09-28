@@ -24,6 +24,9 @@ export class BetInput extends ObserverComponent {
     @property(Node)
     nodeBetAmountPopup: Node = null;
 
+    @property(Node)
+    nodeOverlay: Node = null;
+
     onLoad() {
         super.onLoad();
         this.initBetAmountPopup();
@@ -42,21 +45,27 @@ export class BetInput extends ObserverComponent {
         }
     }
 
-    @handle(BetInputHandler, (handle, status: boolean) => handle.openBetAmountPopup(status))
-    onStakeChange() {
-        return true;
+    @render(BetInputStore, (store) => store.betInputButtonStatus)
+    handleBetButtons(buttonStatus) {
+        this.handleStakeButtonQuickChange(this.btnDecrease, buttonStatus.descreaseStatus);
+        this.handleStakeButtonQuickChange(this.btnIncrease, buttonStatus.increaseStatus);
     }
+
+    @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
+    setOverlayVisibility(status: boolean) {
+        this.nodeOverlay.active = status;
+    }
+
+    @handle(BetInputHandler, (handle) => handle.openBetAmountPopup())
+    onStakeChange() {}
 
     @handle(BetInputHandler, (handle, isIncrease: boolean) => handle.quickChangeBetAmount(isIncrease))
     onStakeQuickChange(event) {
         return event.target.name === "increase";
     }
 
-    @render(BetInputStore, (store) => store.betInputButtonStatus)
-    handleBetButtons(buttonStatus) {
-        this.handleStakeButtonQuickChange(this.btnDecrease, buttonStatus.descreaseStatus);
-        this.handleStakeButtonQuickChange(this.btnIncrease, buttonStatus.increaseStatus);
-    }
+    @handle(BetInputHandler, (handle) => handle.closeBetAmountPopup())
+    onCloseClick(event) {}
 
     handleStakeButtonQuickChange(button: Button, status: boolean) {
         button.interactable = status;
