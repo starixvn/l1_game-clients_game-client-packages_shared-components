@@ -2,9 +2,8 @@ import { _decorator, Button, instantiate, Label, Node, Prefab, UIOpacity } from 
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
-import { BetAmountPopup } from "./components/bet-amount-popup";
 import { BetInputHandler } from "./handlers/bet-input-handlers";
-import { BetAmountStore } from "./stores/bet-amount-store";
+import { BetInputStore } from "./stores/bet-input-store";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -25,20 +24,9 @@ export class BetInput extends ObserverComponent {
     @property(Node)
     nodeBetAmountPopup: Node = null;
 
-    cpnBetAmountPopup: BetAmountPopup;
-    protected betAmount = 1;
-
     onLoad() {
         super.onLoad();
-        this.handleBetButtons();
         this.initBetAmountPopup();
-    }
-
-    @render(BetAmountStore, (store) => store.betAmount)
-    updateBetAmount(amount: number) {
-        this.betAmount = amount;
-        this.lblBetAmount.string = `${amount}`;
-        this.handleBetButtons();
     }
 
     initBetAmountPopup() {
@@ -47,8 +35,16 @@ export class BetInput extends ObserverComponent {
         this.nodeBetAmountPopup.children[0].active = false;
     }
 
+    @render(BetInputStore, (store) => store.betAmount)
+    updateBetAmount(amount: number) {
+        if (amount > 0) {
+            this.lblBetAmount.string = `${amount}`;
+        }
+    }
+
+    @handle(BetInputHandler, (handle, status: boolean) => handle.openBetAmountPopup(status))
     onStakeChange() {
-        this.nodeBetAmountPopup.children[0].active = true;
+        return true;
     }
 
     @handle(BetInputHandler, (handle, isIncrease: boolean) => handle.quickChangeBetAmount(isIncrease))
@@ -56,13 +52,14 @@ export class BetInput extends ObserverComponent {
         return event.target.name === "increase";
     }
 
-    handleBetButtons() {
-        // this.handleStakeButtonQuickChange(this.btnDecrease, this.betAmount > +this.gameConfigs.chips[0]);
-        // this.handleStakeButtonQuickChange(this.btnIncrease, this.betAmount < +this.gameConfigs.chips[this.gameConfigs.chips.length - 1]);
+    @render(BetInputStore, (store) => store.betInputButtonStatus)
+    handleBetButtons(buttonStatus) {
+        this.handleStakeButtonQuickChange(this.btnDecrease, buttonStatus.descreaseStatus);
+        this.handleStakeButtonQuickChange(this.btnIncrease, buttonStatus.increaseStatus);
     }
 
-    handleStakeButtonQuickChange(button: Button, condition: boolean) {
-        button.interactable = condition;
-        button.node.getComponent(UIOpacity).opacity = condition ? 255 : 100;
+    handleStakeButtonQuickChange(button: Button, status: boolean) {
+        button.interactable = status;
+        button.node.getComponent(UIOpacity).opacity = status ? 255 : 100;
     }
 }

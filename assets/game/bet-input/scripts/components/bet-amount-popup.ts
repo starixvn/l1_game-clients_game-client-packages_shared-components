@@ -1,10 +1,10 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Label, Node, Prefab } from "cc";
+import { _decorator, Button, instantiate, Label, Node, Prefab, UIOpacity } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { BetInputHandler } from "../handlers/bet-input-handlers";
-import { BetAmountStore } from "../stores/bet-amount-store";
+import { BetInputStore } from "../stores/bet-input-store";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -20,8 +20,8 @@ export class BetAmountPopup extends ObserverComponent {
     @property(Label)
     lblBetAmount: Label = null;
 
-    betAmount = 0;
-    minBet = 0;
+    @property(Button)
+    btnConfirm: Button = null;
 
     @render(gc.GameConfigs.GameConfigStore, (store) => store.chips)
     initBetAmount(chips) {
@@ -35,30 +35,29 @@ export class BetAmountPopup extends ObserverComponent {
         });
     }
 
-    @render(gc.GameConfigs.GameConfigStore, (store) => store.minBet)
-    upateMinBet(minBet: number) {
-        this.minBet = minBet;
+    @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
+    setBetAmountPopupVisibilty(status: boolean) {
+        this.node.active = status;
     }
 
-    @handle(BetInputHandler)
-    onClearClick() {
-        this.betAmount = 0;
-        return this.betAmount;
-    }
-
-    @render(BetAmountStore, (store) => store.betAmount)
+    @render(BetInputStore, (store) => store.betAmount)
     updateBetAmount(amount: number) {
-        this.betAmount = amount;
         this.lblBetAmount.string = `${amount}`;
+        this.checkConfirmBtnStatus(amount > 0);
     }
 
-    @handle(BetInputHandler)
+    @handle(BetInputHandler, (handle, status: boolean) => handle.openBetAmountPopup(status))
     onCloseClick() {
-        this.hidePopup();
-        return this.betAmount;
+        return false;
     }
 
-    hidePopup() {
-        this.node.active = false;
+    @handle(BetInputHandler, (handler, amount: number) => handler.resetBetAmount(amount))
+    onClearClick() {
+        return 0;
+    }
+
+    private checkConfirmBtnStatus(status: boolean) {
+        this.btnConfirm.interactable = status;
+        this.btnConfirm.node.getComponent(UIOpacity).opacity = status ? 255 : 100;
     }
 }
