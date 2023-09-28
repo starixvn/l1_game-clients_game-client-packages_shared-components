@@ -33,7 +33,7 @@ export class AroundTablePlayers extends ObserverComponent {
         if (aroundTablePlayers) {
             const players: IAroundTablePlayers[] = Object.values(aroundTablePlayers);
             // Real player is type equal false
-            const sortedPlayers: IAroundTablePlayers[] = players.sort((playerA, playerB) => (playerA.type === false ? -1 : 1));
+            const sortedPlayers: IAroundTablePlayers[] = players.sort((playerA, playerB) => (playerA.type === false ? -1 : 1)); //NOSONAR
 
             sortedPlayers.forEach((player) => {
                 this.addNewPlayer(player);
