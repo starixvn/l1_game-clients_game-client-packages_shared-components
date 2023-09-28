@@ -1,12 +1,12 @@
 import { _decorator, Button, Component, instantiate, Label, Node, Prefab, UIOpacity } from "cc";
-import Observer, { handle } from "observer";
+import Observer from "observer";
 
 import { BetAmountPopup } from "./components/bet-amount-popup";
 import { BetInputHandler } from "./handlers/bet-input-handlers";
 import { BetAmountStore } from "./stores/bet-amount-store";
 
 const { ccclass, property } = _decorator;
-const { render } = Observer;
+const { render, handle } = Observer;
 @ccclass()
 export class BetInput extends Component {
     @property(Label)
@@ -42,14 +42,11 @@ export class BetInput extends Component {
     initBetAmountPopup() {
         const node = instantiate(this.prfBetAmountPopup);
         this.nodeBetAmountPopup.addChild(node);
-
-        this.cpnBetAmountPopup = node.getComponent(BetAmountPopup);
-        this.cpnBetAmountPopup.node.active = false;
+        this.nodeBetAmountPopup.active = false;
     }
 
     onStakeChange() {
-        this.cpnBetAmountPopup.node.active = true;
-        this.cpnBetAmountPopup.updateBetAmount(this.betAmount);
+        this.nodeBetAmountPopup.active = true;
     }
 
     updateLabelBetAmount(amount: number) {

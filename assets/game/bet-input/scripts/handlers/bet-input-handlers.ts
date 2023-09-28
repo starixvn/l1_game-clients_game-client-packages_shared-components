@@ -13,7 +13,7 @@ export class BetInputHandler implements IHandler<number> {
         @inject(GameConfigStore) private readonly gameConfig: GameConfigStore
     ) {}
 
-    async handle(amount = 0) {
+    handle(amount = 0) {
         const calcAmount = this.betAmountStore.betAmount + amount;
         const validatedAmount = calcAmount > this.gameConfig.maxBet ? this.gameConfig.maxBet : calcAmount;
         this.betAmountStore.betAmount = validatedAmount;
