@@ -1,5 +1,4 @@
-import { GameConfigStore } from "@sg/game-client-base/dist/game/game-configs/game-config-store";
-import { IHandler } from "@sg/game-client-base/dist/shared";
+import gc from "@sg/game-client-base";
 import inversify from "inversify";
 
 import { BetAmountStore } from "../stores/bet-amount-store";
@@ -7,11 +6,9 @@ import { BetAmountStore } from "../stores/bet-amount-store";
 const { injectable, inject } = inversify;
 
 @injectable()
-export class BetInputHandler implements IHandler<number> {
-    constructor(
-        @inject(BetAmountStore) private readonly betAmountStore: BetAmountStore,
-        @inject(GameConfigStore) private readonly gameConfig: GameConfigStore
-    ) {}
+export class BetInputHandler implements gc.Shared.IHandler<number> {
+    @inject(BetAmountStore) private readonly betAmountStore: BetAmountStore;
+    @inject(gc.GameConfigs.GameConfigStore) private readonly gameConfig: gc.GameConfigs.GameConfigStore;
 
     handle(amount = 0) {
         const calcAmount = this.betAmountStore.betAmount + amount;
@@ -22,7 +19,9 @@ export class BetInputHandler implements IHandler<number> {
     quickChangeBetAmount(isIncrease: boolean) {
         const chips = this.gameConfig.chips;
         let index = chips.findIndex((chip) => +chip === this.betAmountStore.betAmount);
-        index += isIncrease ? 1 : -1;
+        index += isIncrease
+            ? this.betAmountStore.betAmount + this.gameConfig.minBet
+            : this.betAmountStore.betAmount - this.gameConfig.minBet;
         if (index < 0 || index > chips.length - 1) {
             return;
         }

@@ -8,7 +8,7 @@ const { ccclass } = _decorator;
 const { handle } = Observer;
 @ccclass()
 export class BetAmountItem extends ObserverComponent {
-    @handle(BetInputHandler, (handler, value: number) => handler.handle(value))
+    @handle(BetInputHandler)
     onBetAmountItemClick(event) {
         return +event.target.name;
     }

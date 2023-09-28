@@ -1,14 +1,16 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, instantiate, Label, Node, Prefab } from "cc";
+import { _decorator, instantiate, Label, Node, Prefab } from "cc";
 import Observer from "observer";
 
+import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { BetInputHandler } from "../handlers/bet-input-handlers";
 import { BetAmountStore } from "../stores/bet-amount-store";
 
 const { ccclass, property } = _decorator;
-const { render } = Observer;
+const { render, handle } = Observer;
 
 @ccclass()
-export class BetAmountPopup extends Component {
+export class BetAmountPopup extends ObserverComponent {
     @property(Node)
     nodeBetContainer: Node = null;
 
@@ -31,7 +33,6 @@ export class BetAmountPopup extends Component {
             value.getComponent(Label).string = `+${chip}`;
             this.nodeBetContainer.addChild(node);
         });
-        this.updateBetAmount(this.betAmount);
     }
 
     @render(gc.GameConfigs.GameConfigStore, (store) => store.minBet)
@@ -39,8 +40,10 @@ export class BetAmountPopup extends Component {
         this.minBet = minBet;
     }
 
+    @handle(BetInputHandler)
     onClearClick() {
-        this.updateBetAmount(this.minBet);
+        this.betAmount = 0;
+        return this.betAmount;
     }
 
     @render(BetAmountStore, (store) => store.betAmount)
@@ -49,8 +52,10 @@ export class BetAmountPopup extends Component {
         this.lblBetAmount.string = `${amount}`;
     }
 
+    @handle(BetInputHandler)
     onCloseClick() {
         this.hidePopup();
+        return this.betAmount;
     }
 
     hidePopup() {

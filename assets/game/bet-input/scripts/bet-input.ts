@@ -1,6 +1,7 @@
-import { _decorator, Button, Component, instantiate, Label, Node, Prefab, UIOpacity } from "cc";
+import { _decorator, Button, instantiate, Label, Node, Prefab, UIOpacity } from "cc";
 import Observer from "observer";
 
+import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { BetAmountPopup } from "./components/bet-amount-popup";
 import { BetInputHandler } from "./handlers/bet-input-handlers";
 import { BetAmountStore } from "./stores/bet-amount-store";
@@ -8,7 +9,7 @@ import { BetAmountStore } from "./stores/bet-amount-store";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 @ccclass()
-export class BetInput extends Component {
+export class BetInput extends ObserverComponent {
     @property(Label)
     lblBetAmount: Label = null;
 
@@ -28,6 +29,7 @@ export class BetInput extends Component {
     protected betAmount = 1;
 
     onLoad() {
+        super.onLoad();
         this.handleBetButtons();
         this.initBetAmountPopup();
     }
@@ -35,22 +37,18 @@ export class BetInput extends Component {
     @render(BetAmountStore, (store) => store.betAmount)
     updateBetAmount(amount: number) {
         this.betAmount = amount;
-        this.updateLabelBetAmount(amount);
+        this.lblBetAmount.string = `${amount}`;
         this.handleBetButtons();
     }
 
     initBetAmountPopup() {
         const node = instantiate(this.prfBetAmountPopup);
         this.nodeBetAmountPopup.addChild(node);
-        this.nodeBetAmountPopup.active = false;
+        this.nodeBetAmountPopup.children[0].active = false;
     }
 
     onStakeChange() {
-        this.nodeBetAmountPopup.active = true;
-    }
-
-    updateLabelBetAmount(amount: number) {
-        this.lblBetAmount.string = `${amount}`;
+        this.nodeBetAmountPopup.children[0].active = true;
     }
 
     @handle(BetInputHandler, (handle, isIncrease: boolean) => handle.quickChangeBetAmount(isIncrease))

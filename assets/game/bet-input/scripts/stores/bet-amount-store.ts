@@ -11,7 +11,7 @@ export class BetAmountStore {
     @inject(gc.GameConfigs.GameConfigStore) private readonly gameConfig: gc.GameConfigs.GameConfigStore;
 
     get betAmount(): number {
-        return this.betAmount > -1 ? this.betAmount : this.gameConfig.minBet;
+        return this._betAmount > -1 ? this._betAmount : this.gameConfig.minBet;
     }
 
     set betAmount(amount: number) {
