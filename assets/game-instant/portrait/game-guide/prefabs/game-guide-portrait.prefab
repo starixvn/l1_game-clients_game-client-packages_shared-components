@@ -440,7 +440,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -30,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -493,7 +493,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": -21.296,
       "z": 0
     },
     "_lrot": {
@@ -533,8 +533,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 408,
-      "height": 500
+      "width": 420,
+      "height": 580
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -619,6 +619,8 @@
       "__id__": 0
     },
     "fileId": "c7YIGYsJRFrKSbkkMyohdw",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -648,7 +650,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": -22.936000000000035,
       "z": 0
     },
     "_lrot": {
@@ -688,8 +690,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 380,
-      "height": 460
+      "width": 410,
+      "height": 570
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -736,10 +738,10 @@
     },
     "_alignFlags": 45,
     "_target": null,
-    "_left": 34,
-    "_right": 34,
-    "_top": 102,
-    "_bottom": 102,
+    "_left": 19,
+    "_right": 19,
+    "_top": 69.93600000000004,
+    "_bottom": 24.06399999999998,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -767,6 +769,8 @@
       "__id__": 0
     },
     "fileId": "8bjQAU30lO+Lo5XuwBVyrm",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -959,8 +963,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 281.16,
+      "x": -1.638,
+      "y": 300.818,
       "z": 0
     },
     "_lrot": {
@@ -1000,7 +1004,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 204.6362228032594,
+      "width": 204.66796875000003,
       "height": 70.56
     },
     "_anchorPoint": {
@@ -1039,7 +1043,7 @@
     "_string": "GAME GUIDES",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 40.08620689655173,
+    "_actualFontSize": 37.5,
     "_fontSize": 28,
     "_fontFamily": "Arial",
     "_lineHeight": 56,
@@ -1141,8 +1145,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 178.832,
-      "y": 284.073,
+      "x": 182.109,
+      "y": 300.455,
       "z": 0
     },
     "_lrot": {
@@ -1387,6 +1391,8 @@
       "__id__": 0
     },
     "fileId": "a5PTfr/AdO9ICgXLqubZIl",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
