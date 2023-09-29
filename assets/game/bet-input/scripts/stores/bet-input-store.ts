@@ -4,7 +4,7 @@ import mobx from "mobx";
 
 const { injectable, inject } = inversify;
 
-interface IBetInputButtonStatus {
+export interface IBetInputButtonStatus {
     descreaseStatus: boolean;
     increaseStatus: boolean;
 }

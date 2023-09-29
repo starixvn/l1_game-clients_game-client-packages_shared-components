@@ -1386,7 +1386,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "bet-amount-popup",
+    "_name": "bet-amount-popup-container",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {

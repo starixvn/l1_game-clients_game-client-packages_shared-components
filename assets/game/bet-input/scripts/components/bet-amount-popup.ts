@@ -9,7 +9,7 @@ import { BetInputStore } from "../stores/bet-input-store";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
-@ccclass()
+@ccclass
 export class BetAmountPopup extends ObserverComponent {
     @property(Node)
     nodeBetContainer: Node = null;

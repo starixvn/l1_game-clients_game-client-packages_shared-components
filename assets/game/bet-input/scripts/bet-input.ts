@@ -3,11 +3,11 @@ import Observer from "observer";
 
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { BetInputHandler } from "./handlers/bet-input-handlers";
-import { BetInputStore } from "./stores/bet-input-store";
+import { BetInputStore, IBetInputButtonStatus } from "./stores/bet-input-store";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
-@ccclass()
+@ccclass
 export class BetInput extends ObserverComponent {
     @property(Label)
     lblBetAmount: Label = null;
@@ -35,7 +35,6 @@ export class BetInput extends ObserverComponent {
     initBetAmountPopup() {
         const node = instantiate(this.prfBetAmountPopup);
         this.nodeBetAmountPopup.addChild(node);
-        this.nodeBetAmountPopup.children[0].active = false;
     }
 
     @render(BetInputStore, (store) => store.betAmount)
@@ -46,7 +45,7 @@ export class BetInput extends ObserverComponent {
     }
 
     @render(BetInputStore, (store) => store.betInputButtonStatus)
-    handleBetButtons(buttonStatus) {
+    handleBetButtons(buttonStatus: IBetInputButtonStatus) {
         this.handleStakeButtonQuickChange(this.btnDecrease, buttonStatus.descreaseStatus);
         this.handleStakeButtonQuickChange(this.btnIncrease, buttonStatus.increaseStatus);
     }

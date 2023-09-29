@@ -6,7 +6,7 @@ import { BetInputHandler } from "../handlers/bet-input-handlers";
 
 const { ccclass } = _decorator;
 const { handle } = Observer;
-@ccclass()
+@ccclass
 export class BetAmountItem extends ObserverComponent {
     @handle(BetInputHandler, (handle, amount: number) => handle.setBetAmountTemp(amount))
     onBetAmountItemClick(event) {
