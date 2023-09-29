@@ -30,7 +30,7 @@ export class NoticeCmp extends Dialog {
     onClose: () => void;
 
     setData(data: { title: string; message: string; type: NoticeType; onClose: () => void; showBtnConfirmButton?: boolean }) {
-        this.lblTitle.string = data.title.toUpperCase();
+        this.lblTitle && (this.lblTitle.string = data.title.toUpperCase());
         this.lblMessage.string = data.message;
         this.onClose = data.onClose;
         this.updateDisplay(data.type, data.showBtnConfirmButton);
