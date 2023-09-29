@@ -34,7 +34,10 @@ export class HistoryResult extends ObserverComponent {
         this.removeAllItems();
         this.createItems();
         this.historyResultItems[0]?.highlight();
-        this.node.getComponentInChildren(ScrollView)?.scrollToRight(0.5);
+        this.historyResultItems[0]?.setEndGrid();
+        setTimeout(() => {
+            this.node.getComponentInChildren(ScrollView)?.scrollToRight(0.5);
+        }, 0);
     }
 
     private removeAllItems() {

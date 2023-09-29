@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from "cc";
+import { _decorator, Component, Node, ScrollView } from "cc";
 import { AnimationUtils } from "../../utils/utils";
 
 const { bounceIn, bounceOut, fadeIn, fadeOut } = AnimationUtils;

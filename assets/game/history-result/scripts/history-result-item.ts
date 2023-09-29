@@ -6,6 +6,7 @@ export enum HighlightType {
     Grid = 0,
     ICons = 1,
     Outline = 2,
+    None = 3,
 }
 
 @ccclass("HistoryResultItem")
@@ -43,6 +44,17 @@ export class HistoryResultItem extends Component {
         },
     })
     highlightOutlinePrefix = "";
+
+    @property(Node)
+    nodeEndGrid: Node = null;
+
+    @property({
+        type: Node,
+        visible: function () {
+            return this.nodeEndGrid !== null;
+        },
+    })
+    nodeGrid: Node = null;
 
     public round: any = null;
     private iconSpriteNames = [];
@@ -157,5 +169,10 @@ export class HistoryResultItem extends Component {
 
     private getSpriteFrame(prefix: string, name: string): SpriteFrame {
         return name ? this.atlas?.getSpriteFrame(`${prefix}${name}`) : null;
+    }
+
+    setEndGrid() {
+        this.nodeGrid && (this.nodeGrid.active = false);
+        this.nodeEndGrid && (this.nodeEndGrid.active = true);
     }
 }

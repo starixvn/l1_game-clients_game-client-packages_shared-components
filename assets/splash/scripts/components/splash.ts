@@ -154,7 +154,7 @@ export default class Splash extends Component {
     }
 
     private toggleSignNameContainer(isActive: boolean) {
-        this.signNameContainer.active = isActive;
+        this.signNameContainer && (this.signNameContainer.active = isActive);
     }
 
     private updateContentUnderBackground(status: boolean) {
