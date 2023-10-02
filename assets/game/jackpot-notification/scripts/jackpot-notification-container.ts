@@ -17,7 +17,7 @@ export class JackpotNotificationContainer extends NodeContainer {
         window.addEventListener("message", this.registerEventGetGameName.bind(this));
     }
 
-    protected onDestroy(): void {
+    onDestroy(): void {
         super.onDestroy();
         window.removeEventListener("message", this.registerEventGetGameName.bind(this));
     }

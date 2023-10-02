@@ -1,6 +1,7 @@
-import { AudioClip, director } from "cc";
+import { AudioClip } from "cc";
 import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
-import { AudioContainer, TAudioValue } from "../scripts/component/audio-container";
+import { TAudioValue } from "../scripts/component/audio-container";
+import { TAudioConfigs } from "../scripts/stores/audio-configs-store";
 
 interface AudioInfo {
     bundle: string;
@@ -41,7 +42,7 @@ export namespace AudioUtils {
         }
     };
 
-    export const getDurationClip = async (soundId: string, maxWaitingTime = 1000): Promise<number> => {
+    export const getDurationClip = async (audioConfigs: TAudioConfigs, soundId: string, maxWaitingTime = 1000): Promise<number> => {
         let duration = 0;
         let isCancel = false;
 
@@ -50,14 +51,10 @@ export namespace AudioUtils {
         };
 
         const timeoutCancel = setTimeout(cancelTimeout, maxWaitingTime);
-
-        const audioContainer = director.getScene().getComponentInChildren(AudioContainer);
-
-        if (!audioContainer) {
+        if (!audioConfigs) {
             return duration;
         }
 
-        const audioConfigs = audioContainer.audioConfigs;
         const audioValue = audioConfigs?.[soundId];
 
         if (!audioValue) {

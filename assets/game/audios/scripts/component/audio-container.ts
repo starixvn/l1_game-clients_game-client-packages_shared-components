@@ -4,14 +4,12 @@ import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { AudioUtils } from "../../utils/audio-utils";
+import { AudioConfigsHandler } from "../handlers/audio-config-handler";
+import { AudioConfigsStore, TAudioConfigs } from "../stores/audio-configs-store";
 
 const { Audios, UserSettings, App, BrowserDomUtils } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
-
-export type TAudioConfigs = {
-    [key: string]: TAudioValue;
-};
 
 export type TAudioValue = {
     bundle: string;
@@ -40,7 +38,7 @@ export class AudioContainer extends ObserverComponent {
 
     audios = [];
     musicIds = [];
-    audioConfigs: TAudioConfigs = {};
+    protected audioConfigs: TAudioConfigs = {};
     protected isUserGesture = false;
     protected isPlayMusic = false;
     protected isPlaySFX = false;
@@ -51,7 +49,6 @@ export class AudioContainer extends ObserverComponent {
 
     onLoad() {
         this.node.parent = null;
-        director.getScene().getComponent(AudioContainer);
         super.onLoad();
         director.addPersistRootNode(this.node);
         this.loadAudios().catch((error) => log(error));
@@ -102,7 +99,7 @@ export class AudioContainer extends ObserverComponent {
             ...this.sharedAudioConfig?.json,
             ...this.audioConfig?.json,
         };
-        this.audioConfigs = audioConfigs;
+        this.updateAudioConfigs(audioConfigs);
         const keys = Object.keys(audioConfigs);
         for (const key of keys) {
             const value = audioConfigs[key];
@@ -115,6 +112,11 @@ export class AudioContainer extends ObserverComponent {
 
         this.registerMusicIds();
         this.audiosLoaded();
+    }
+
+    @handle(AudioConfigsHandler)
+    updateAudioConfigs(audioConfigs: TAudioConfigs) {
+        return audioConfigs;
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
@@ -202,5 +204,10 @@ export class AudioContainer extends ObserverComponent {
 
             playFunction(audioClip, isPlay);
         }
+    }
+
+    @render(AudioConfigsStore, (store) => store.audioConfigs, { fireImmediately: false })
+    public handleAudioConfigs(audioConfigs: TAudioConfigs) {
+        this.audioConfigs = audioConfigs;
     }
 }
