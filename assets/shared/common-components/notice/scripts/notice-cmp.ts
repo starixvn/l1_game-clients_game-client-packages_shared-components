@@ -39,10 +39,13 @@ export class NoticeCmp extends Dialog {
     updateDisplay(type: NoticeType, showBtnConfirmButton = false) {
         const isInfo = type === NoticeType.Info;
         this.setBackground(isInfo);
-        this.btnConfirm.active = showBtnConfirmButton || isInfo;
+        this.btnConfirm && (this.btnConfirm.active = showBtnConfirmButton || isInfo);
     }
 
     setBackground(isInfo: boolean) {
+        if (!this.containerBackground) {
+            return;
+        }
         if (isInfo) {
             this.containerBackground.spriteFrame = this.infoBackground;
         } else {

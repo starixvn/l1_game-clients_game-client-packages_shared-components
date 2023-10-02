@@ -142,8 +142,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 812,
-      "height": 456
+      "width": 415,
+      "height": 80
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -867,7 +867,7 @@
     "_string": "Có lỗi xảy ra!!!",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 24,
+    "_actualFontSize": 31.258536585365853,
     "_fontSize": 24,
     "_fontFamily": "Arial",
     "_lineHeight": 32,
@@ -1029,8 +1029,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 812,
-      "height": 456
+      "width": 415,
+      "height": 80
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1080,7 +1080,7 @@
     "fileId": "b6xKzuwl5OQYaOpf0DluYu"
   },
   {
-    "__type__": "89c31AsjCpFRo4I5Hp6GMif",
+    "__type__": "f8bf9siI6NDe7P1GtLht4hn",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -1102,20 +1102,14 @@
     "lblMessage": {
       "__id__": 34
     },
-    "errorBackground": {
-      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@72c4d",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "infoBackground": {
-      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@83af3",
-      "__expectedType__": "cc.SpriteFrame"
-    },
+    "errorBackground": null,
+    "infoBackground": null,
     "btnConfirm": null,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "aaTZoclSNEa6iiudFNoGU6"
+    "fileId": "74IY1iEeBC04lsANQZ8tY+"
   },
   {
     "__type__": "cc.PrefabInfo",

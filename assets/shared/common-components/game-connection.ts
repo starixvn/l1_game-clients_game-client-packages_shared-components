@@ -3,7 +3,7 @@ import { _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "./observer-component/scripts/observer-component";
 
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 const { handle, render } = Observer;
 
 @ccclass
@@ -15,6 +15,11 @@ export default class GameConnection extends ObserverComponent {
 
     @render(gc.JoinGame.JoinGameStore, (store) => store.toGame, { fireImmediately: false })
     requestOpenGame() {
+        this.openGameCallback();
+    }
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.startNewRound, { fireImmediately: false })
+    requestOpenGameWhenStartNewRound() {
         this.openGameCallback();
     }
 }
