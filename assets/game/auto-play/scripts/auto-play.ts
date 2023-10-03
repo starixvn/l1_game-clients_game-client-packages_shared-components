@@ -20,6 +20,9 @@ export class AutoPlay extends ObserverComponent {
     @property(Node)
     nodeAutoPlayPopup: Node = null;
 
+    @property(Node)
+    nodeOverlay: Node = null;
+
     onLoad() {
         super.onLoad();
         this.initAutoPlayPopup();
@@ -35,7 +38,7 @@ export class AutoPlay extends ObserverComponent {
     clickAutoPlay() {}
 
     @render(AutoPlayStore, (store) => store.isOpenAutoPlayPopup)
-    showPopup(status: boolean) {
-        this.nodeAutoPlayPopup.children[0].active = status;
+    nodeOverlayVisibility(status: boolean) {
+        this.nodeOverlay.active = status;
     }
 }

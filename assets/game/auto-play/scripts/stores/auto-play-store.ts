@@ -9,6 +9,8 @@ export class AutoPlayStore {
     public isShowIconAutoPlay = true;
     public isShowNoOfRound = false;
 
+    public isConfirmRound = false;
+
     constructor() {
         mobx.makeAutoObservable(this);
     }

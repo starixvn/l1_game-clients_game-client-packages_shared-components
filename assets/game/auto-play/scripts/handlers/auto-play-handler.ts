@@ -14,4 +14,8 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     openAutoPlayPopup() {
         this.autoPlayStore.isOpenAutoPlayPopup = true;
     }
+
+    closeAutoPlayPopup() {
+        this.autoPlayStore.isOpenAutoPlayPopup = false;
+    }
 }
