@@ -64,9 +64,11 @@ export class ChipFlying extends ObserverComponent {
     protected aroundTablePlayerChips = [];
     protected isFlyChipSlow = true;
     protected chipStorage = {};
+    protected isStartRunAnimPayChips = false;
+    protected winningPlayers: gc.GameServiceMessage.TWinningPlayers = {};
 
     @render(Chips.ChipStore, (store) => store.chipsByMainPlayerRate, { fireImmediately: false })
-    flyChipJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {
+    flyChipsWhenJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {
         if (!chipsByMainPlayerRate?.chips || !chipsByMainPlayerRate.isShow || !this.node.activeInHierarchy) {
             return;
         }
@@ -81,7 +83,7 @@ export class ChipFlying extends ObserverComponent {
     }
 
     @render(Chips.ChipStore, (store) => store.ownChip, { fireImmediately: false })
-    flyChip(ownChip: gc.GameServiceMessage.OwnChip) {
+    flyOwnChip(ownChip: gc.GameServiceMessage.OwnChip) {
         const { betChoice, amount } = ownChip ?? {};
         if (!betChoice || !amount) {
             return;
@@ -114,17 +116,18 @@ export class ChipFlying extends ObserverComponent {
         return gc.Audios.AudioIds.SINGLE_CHIP;
     }
 
-    @render(Settlements.SettlementStore, (store) => store.payChipInfo, { fireImmediately: false })
-    payChips(payChipInfo: gc.Settlements.TPayChipInfo) {
-        if (!this || !payChipInfo?.settlementResult || !this.enablePlaceChips || !this.node) {
+    @render(Settlements.SettlementStore, (store) => store.settlementResult, { fireImmediately: false })
+    payChipsWhenReceivingSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult) {
+        if (!this || !settlementResult || !this.enablePlaceChips || !this.node) {
             return;
         }
 
         if (!this.node.activeInHierarchy) {
             ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems, this);
             ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems, this);
-            this.payChipToAllPlayers(payChipInfo);
+            this.payChipToAllPlayers();
         } else {
+            this.isStartRunAnimPayChips = true;
             tween(this.node)
                 .delay(this.chipDelayFlyingTime)
                 .call(() => {
@@ -136,13 +139,13 @@ export class ChipFlying extends ObserverComponent {
                 })
                 .delay(this.chipDelayFlyingTime)
                 .call(() => {
-                    this.payChipToAllPlayers(payChipInfo);
+                    this.payChipToAllPlayers();
                 })
                 .start();
         }
     }
 
-    private readonly payChipToAllPlayers = (payChipInfo: gc.Settlements.TPayChipInfo) => {
+    private readonly payChipToAllPlayers = () => {
         const chipFlyingInfo: IChipFlyingInfo = {
             slidingChip: this.slidingChip,
             hiddenPlayersNode: this.hiddenPlayersNode,
@@ -157,7 +160,7 @@ export class ChipFlying extends ObserverComponent {
             ActionChipFlying.payChipsToHiddenPlayers(this.hiddenPlayersNode, this.betItems?.winBetItems, this);
         }
 
-        this.payChipsToAroundTablePlayers(payChipInfo);
+        this.payChipsToAroundTablePlayers();
     };
 
     private showPayoutForMainPlayer() {
@@ -182,14 +185,25 @@ export class ChipFlying extends ObserverComponent {
         return true;
     }
 
-    protected payChipsToAroundTablePlayers(payChipInfo: gc.Settlements.TPayChipInfo) {
-        const winningPlayers = payChipInfo.winningPlayers;
-
+    @render(Settlements.SettlementStore, (store) => store.winningPlayers, { fireImmediately: false })
+    handleWinningAroundTablePlayers(winningPlayers: gc.GameServiceMessage.TWinningPlayers) {
         if (!winningPlayers) {
             return;
         }
+        this.winningPlayers = winningPlayers;
 
-        const winningPlayerIds = Object.keys(winningPlayers);
+        if (!this.isStartRunAnimPayChips) {
+            this.payChipsToAroundTablePlayers();
+            this.isStartRunAnimPayChips = false;
+        }
+    }
+
+    protected payChipsToAroundTablePlayers() {
+        if (!this.winningPlayers) {
+            return;
+        }
+
+        const winningPlayerIds = Object.keys(this.winningPlayers);
         const winningEffects: TWinningEffect[] = [];
         const balanceEffects: TBalanceEffect[] = [];
 
@@ -202,7 +216,7 @@ export class ChipFlying extends ObserverComponent {
                 return;
             }
 
-            const winningPlayerData = winningPlayers[playerId];
+            const winningPlayerData = this.winningPlayers[playerId];
             const playerBetItems = winningPlayerData.winningByChoices;
 
             this.betItems.winBetItems.forEach((item) => {
@@ -270,10 +284,11 @@ export class ChipFlying extends ObserverComponent {
 
     protected resetSettlementStatus() {
         this.settlementStatus = null;
+        this.isStartRunAnimPayChips = false;
     }
 
     @render(Chips.ChipStore, (store) => store.collectChipsReBet, { fireImmediately: false })
-    flyChipReBet(collectChipsReBet: gc.Chips.TChipReBet[]) {
+    flyChipsReBet(collectChipsReBet: gc.Chips.TChipReBet[]) {
         if (collectChipsReBet.length === 0) {
             return;
         }
