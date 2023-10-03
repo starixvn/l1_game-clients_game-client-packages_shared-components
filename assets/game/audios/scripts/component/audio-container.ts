@@ -1,15 +1,17 @@
-import { AudioClip, AudioSource, JsonAsset, _decorator, director, game, log, sys } from "cc";
+import { AudioClip, AudioSource, JsonAsset, _decorator, game, log, sys } from "cc";
 
 import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { AudioUtils } from "../../utils/audio-utils";
-import { AudioConfigsHandler } from "../handlers/audio-config-handler";
-import { AudioConfigsStore, TAudioConfigs } from "../stores/audio-configs-store";
+import { AudioUtils } from "../../utils";
 
 const { Audios, UserSettings, App, BrowserDomUtils } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
+
+export type TAudioConfigs = {
+    [key: string]: TAudioValue;
+};
 
 export type TAudioValue = {
     bundle: string;
@@ -38,7 +40,7 @@ export class AudioContainer extends ObserverComponent {
 
     audios = [];
     musicIds = [];
-    protected audioConfigs: TAudioConfigs = {};
+    audioConfigs: TAudioConfigs = {};
     protected isUserGesture = false;
     protected isPlayMusic = false;
     protected isPlaySFX = false;
@@ -48,9 +50,7 @@ export class AudioContainer extends ObserverComponent {
     };
 
     onLoad() {
-        this.node.parent = null;
         super.onLoad();
-        director.addPersistRootNode(this.node);
         this.loadAudios().catch((error) => log(error));
         this.musicSource.node.on(AudioSource.EventType.STARTED, () => this.updateMusicState(Audios.MusicState.STARTED));
         this.musicSource.node.on(AudioSource.EventType.ENDED, () => this.updateMusicState(Audios.MusicState.ENDED));
@@ -58,6 +58,7 @@ export class AudioContainer extends ObserverComponent {
         // The AudioContext was not allowed to start.
         // It must be resumed (or created) after a user gesture on the page
         this.initTouchBind();
+        AudioUtils.audioContainer = this;
     }
 
     protected initTouchBind() {
@@ -99,7 +100,7 @@ export class AudioContainer extends ObserverComponent {
             ...this.sharedAudioConfig?.json,
             ...this.audioConfig?.json,
         };
-        this.updateAudioConfigs(audioConfigs);
+        this.audioConfigs = audioConfigs;
         const keys = Object.keys(audioConfigs);
         for (const key of keys) {
             const value = audioConfigs[key];
@@ -112,11 +113,6 @@ export class AudioContainer extends ObserverComponent {
 
         this.registerMusicIds();
         this.audiosLoaded();
-    }
-
-    @handle(AudioConfigsHandler)
-    updateAudioConfigs(audioConfigs: TAudioConfigs) {
-        return audioConfigs;
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
@@ -195,7 +191,7 @@ export class AudioContainer extends ObserverComponent {
 
         const currentTime = new Date().getTime();
         this.currentPlayTime[currentTimeField] = currentTime;
-        const { audioClip, currentLoadAssetTime, isPlay } = await AudioUtils.loadAssets(audioValue, id, currentTime, isCurrentPlaying);
+        const { audioClip, currentLoadAssetTime, isPlay } = await this.loadAssets(audioValue, id, currentTime, isCurrentPlaying);
 
         if (audioClip) {
             if (this.currentPlayTime[currentTimeField] !== currentLoadAssetTime) {
@@ -206,8 +202,20 @@ export class AudioContainer extends ObserverComponent {
         }
     }
 
-    @render(AudioConfigsStore, (store) => store.audioConfigs, { fireImmediately: false })
-    public handleAudioConfigs(audioConfigs: TAudioConfigs) {
-        this.audioConfigs = audioConfigs;
-    }
+    loadAssets = async (
+        audioValue: TAudioValue,
+        soundId: string,
+        currentLoadAssetTime: number,
+        isPlay: boolean
+    ): Promise<{ audioClip: AudioClip | null; currentLoadAssetTime: number; isPlay: boolean }> => {
+        const { bundle, path } = AudioUtils.getAudioInfo(audioValue, soundId);
+
+        if (!bundle || !path) {
+            return { audioClip: null, currentLoadAssetTime: 0, isPlay: false };
+        }
+
+        const audioClip = await AudioUtils.getAudioClip(bundle, path);
+
+        return { audioClip, currentLoadAssetTime, isPlay };
+    };
 }

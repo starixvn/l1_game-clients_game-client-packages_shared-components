@@ -4,7 +4,6 @@ import Observer from "observer";
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
 import { StaticGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
 import { ComponentUtils } from "../../../shared/utils";
-import { AudioConfigsStore, TAudioConfigs } from "../../audios/scripts/stores/audio-configs-store";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
 
@@ -24,7 +23,6 @@ export default class GameComponent extends GameComponentBase {
     lblMaxBet: Label = null;
 
     containerOptions: gc.IContainerOptions;
-    protected audioConfigs: TAudioConfigs = {};
 
     onLoad() {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
@@ -140,10 +138,5 @@ export default class GameComponent extends GameComponentBase {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSound(id: string) {
         return id;
-    }
-
-    @render(AudioConfigsStore, (store) => store.audioConfigs, { fireImmediately: false })
-    public handleAudioConfigs(audioConfigs: TAudioConfigs) {
-        this.audioConfigs = audioConfigs;
     }
 }

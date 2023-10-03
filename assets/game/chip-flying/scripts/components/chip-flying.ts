@@ -165,6 +165,7 @@ export class ChipFlying extends ObserverComponent {
             this.mainPlayerIncreaseBalance(this.settlementStatus?.bet);
             this.mainPlayerPlayWinningEffect();
             this.getBalance();
+            this.resetSettlementStatus();
         }
     }
 
@@ -264,7 +265,11 @@ export class ChipFlying extends ObserverComponent {
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
     startNewRound(isStartPlacingBet: boolean) {
-        isStartPlacingBet && (this.settlementStatus = null);
+        isStartPlacingBet && this.resetSettlementStatus();
+    }
+
+    protected resetSettlementStatus() {
+        this.settlementStatus = null;
     }
 
     @render(Chips.ChipStore, (store) => store.collectChipsReBet, { fireImmediately: false })
