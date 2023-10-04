@@ -24,10 +24,13 @@ export class AutoPlayPopup extends ObserverComponent {
 
     initContentRounds() {
         this.content.destroyAllChildren();
-        this.roundsList.forEach((round) => {
+        this.roundsList.forEach((round, index) => {
             const node = instantiate(this.prfNoOfRound);
+            node.name = round.toString();
             const roundNumber = node.getComponent(RoundNumberItem);
             roundNumber.setValue(round);
+            const selectedBg = index === 0;
+            roundNumber.setSelectedRound(selectedBg);
             this.content.addChild(node);
         });
     }

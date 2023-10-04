@@ -41,4 +41,9 @@ export class AutoPlay extends ObserverComponent {
     nodeOverlayVisibility(status: boolean) {
         this.nodeOverlay.active = status;
     }
+
+    @render(AutoPlayStore, (store) => store.noOfRounds)
+    setNoOfRound(rounds: number) {
+        console.log("no of rounds:" + rounds);
+    }
 }

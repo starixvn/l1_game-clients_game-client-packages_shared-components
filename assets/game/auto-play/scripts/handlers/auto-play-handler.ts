@@ -18,4 +18,8 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     closeAutoPlayPopup() {
         this.autoPlayStore.isOpenAutoPlayPopup = false;
     }
+
+    updateNoOfRounds(rounds: number) {
+        this.autoPlayStore.noOfRounds = rounds;
+    }
 }
