@@ -3,7 +3,7 @@ import { ScoreboardDataConverter } from "db://shared-components/game/scoreboards
 import { GridLayout } from "db://shared-components/shared/common-components/grid-layout/scripts/components/grid-layout";
 import { GridLayoutSettings } from "db://shared-components/shared/common-components/grid-layout/scripts/settings/grid-layout-settings";
 
-describe(ScoreboardBeadRoadAlgorithm.name, () => {
+describe("ScoreboardBeadRoadAlgorithm", () => {
     let component: ScoreboardBeadRoadAlgorithm;
     let converter: ScoreboardDataConverter;
     const settings: GridLayoutSettings = {
@@ -76,12 +76,16 @@ describe(ScoreboardBeadRoadAlgorithm.name, () => {
     describe("onFocusInEditor", () => {
         describe("when called", () => {
             it("should get ScoreboardDataConverter and GridLayout component", () => {
+                // Arrange
+                const converter = component.node.getComponent(ScoreboardDataConverter);
+                const grid = component.node.getComponent(GridLayout);
+
                 // Act
                 component.onFocusInEditor();
 
                 // Assert
-                expect(component.node.getComponent).toBeCalledWith(ScoreboardDataConverter);
-                expect(component.node.getComponent).toBeCalledWith(GridLayout);
+                expect(component["converter"]).toEqual(converter);
+                expect(component["grid"]).toEqual(grid);
             });
         });
     });

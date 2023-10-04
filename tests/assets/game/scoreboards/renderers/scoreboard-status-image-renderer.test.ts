@@ -1,8 +1,9 @@
+import { Sprite } from "cc";
 import { ScoreboardItemImage } from "db://shared-components/game/scoreboards/scripts/models/scoreboard-item-image";
 import { ScoreboardItemState } from "db://shared-components/game/scoreboards/scripts/models/scoreboard-item-state";
 import { ScoreboardStatusImageRenderer } from "db://shared-components/game/scoreboards/scripts/renderers/scoreboard-status-image-renderer";
 
-describe(ScoreboardStatusImageRenderer.name, () => {
+describe("ScoreboardStatusImageRenderer", () => {
     let component: ScoreboardStatusImageRenderer;
     const state = new ScoreboardItemState();
     const image = new ScoreboardItemImage();
@@ -15,8 +16,6 @@ describe(ScoreboardStatusImageRenderer.name, () => {
         describe("when exists Sprite and valid input", () => {
             it("should return true", () => {
                 // Arrange
-
-                (component.node.getComponent as jest.Mock).mockReturnValue({ component: true });
 
                 // Act
                 const actual = component.canRender(state, [image]);
@@ -35,13 +34,14 @@ describe(ScoreboardStatusImageRenderer.name, () => {
         describe("and can not render", () => {
             it("should do nothing", () => {
                 // Arrange
+                const sprite = component.node.getComponent(Sprite);
                 (component.canRender as jest.Mock).mockReturnValue(false);
 
                 // Act
                 component.render(state, [image]);
 
                 // Assert
-                expect(component.node.parent.getComponent).toBeCalledTimes(0);
+                expect(sprite.spriteFrame).toEqual({});
             });
         });
 
@@ -55,9 +55,8 @@ describe(ScoreboardStatusImageRenderer.name, () => {
 
         it("should update sprite", () => {
             // Arrange
-            const sprite = { spriteFrame: null };
+            const sprite = component.node.getComponent(Sprite);
 
-            (component.node.getComponent as jest.Mock).mockReturnValue(sprite);
             // @ts-ignore
             image.image = { image: true };
 

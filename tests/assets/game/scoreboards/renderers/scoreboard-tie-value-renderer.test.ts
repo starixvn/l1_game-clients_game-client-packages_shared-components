@@ -3,7 +3,7 @@ import { ScoreboardItemStatus } from "db://shared-components/game/scoreboards/sc
 import { ScoreboardItemState } from "db://shared-components/game/scoreboards/scripts/models/scoreboard-item-state";
 import { ScoreboardTieValueRenderer } from "db://shared-components/game/scoreboards/scripts/renderers/scoreboard-tie-value-renderer";
 
-describe(ScoreboardTieValueRenderer.name, () => {
+describe("ScoreboardTieValueRenderer", () => {
     let component: ScoreboardTieValueRenderer;
 
     beforeEach(() => {
@@ -25,8 +25,7 @@ describe(ScoreboardTieValueRenderer.name, () => {
     describe("reset", () => {
         it("should update label value", () => {
             // Arrange
-            const label = { string: "string" };
-            (component.node.getComponent as jest.Mock).mockReturnValue(label);
+            const label = component.node.getComponent(Label);
 
             // Act
             component.reset();
@@ -44,22 +43,21 @@ describe(ScoreboardTieValueRenderer.name, () => {
         let label: Label;
 
         beforeEach(() => {
-            label = { string: "string" } as any;
-
+            label = component.node.getComponent(Label);
             component.canRender = jest.fn().mockReturnValue(true);
-            (component.node.getComponent as jest.Mock).mockReturnValue(label);
         });
 
         describe("and can not render", () => {
             it("should do nothing", () => {
                 // Arrange
+                label.string = "";
                 (component.canRender as jest.Mock).mockReturnValue(false);
 
                 // Act
                 component.render(state);
 
                 // Assert
-                expect(component.node.parent.getComponent).toBeCalledTimes(0);
+                expect(label.string).toEqual("");
             });
         });
 

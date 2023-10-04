@@ -1,5 +1,7 @@
-import { Node, Tween, UIOpacity, tween } from "cc";
+import { Node, Tween, tween, UIOpacity } from "cc";
+
 import { ExpandableNode } from "../../../../../assets/shared/common-components/expandable-node/scripts/expandable-node";
+
 describe("ExpandableNode", () => {
     let expandableNode: ExpandableNode;
 
@@ -49,12 +51,13 @@ describe("ExpandableNode", () => {
 
         it("should grant for expandableOpacity", () => {
             // Arrange
+            const expandableOpacity = expandableNode.expandableNode.getComponent(UIOpacity);
 
             // Act
             expandableNode.onLoad();
 
             // Assert
-            expect(expandableNode.expandableNode.getComponent).toBeCalled();
+            expect(expandableNode["expandableOpacity"]).toEqual(expandableOpacity);
         });
 
         it("should call expand when defaultExpand is true", () => {

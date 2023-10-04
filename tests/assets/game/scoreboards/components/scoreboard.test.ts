@@ -4,7 +4,7 @@ import { ScoreboardDataConverter } from "db://shared-components/game/scoreboards
 import { ScoreboardGridItem } from "db://shared-components/game/scoreboards/scripts/components/scoreboard-grid-item";
 import { GridLayout } from "db://shared-components/shared/common-components/grid-layout/scripts/components/grid-layout";
 
-describe(Scoreboard.name, () => {
+describe("Scoreboard", () => {
     let component: Scoreboard;
     let converter: ScoreboardDataConverter;
     let algorithm: ScoreboardAlgorithm;
@@ -25,13 +25,18 @@ describe(Scoreboard.name, () => {
     describe("onFocusInEditor", () => {
         describe("when called", () => {
             it("should get components from node", () => {
+                // Arrange
+                const grid = component.node.getComponent(GridLayout);
+                const converter = component.node.getComponent(ScoreboardDataConverter);
+                const algorithm = component.node.getComponent(ScoreboardAlgorithm);
+
                 // Act
                 component.onFocusInEditor();
 
                 // Assert
-                expect(component.node.getComponent).toBeCalledWith(GridLayout);
-                expect(component.node.getComponent).toBeCalledWith(ScoreboardDataConverter);
-                expect(component.node.getComponent).toBeCalledWith(ScoreboardAlgorithm);
+                expect(component["grid"]).toEqual(grid);
+                expect(component["converter"]).toEqual(converter);
+                expect(component["algorithm"]).toEqual(algorithm);
             });
         });
     });

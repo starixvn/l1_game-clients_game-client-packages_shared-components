@@ -1,11 +1,12 @@
-import { Label, UITransform } from "cc";
+import { Label, Node, UITransform } from "cc";
 import { ScoreboardFontSizeRenderer } from "db://shared-components/game/scoreboards/scripts/renderers/scoreboard-font-size-renderer";
 
-describe(ScoreboardFontSizeRenderer.name, () => {
+describe("ScoreboardFontSizeRenderer", () => {
     let component: ScoreboardFontSizeRenderer;
 
     beforeEach(() => {
         component = new ScoreboardFontSizeRenderer();
+        component.node.parent = new Node();
     });
 
     describe("render", () => {
@@ -21,45 +22,32 @@ describe(ScoreboardFontSizeRenderer.name, () => {
             expect(component.canRender).toBeCalled();
         });
 
-        it("should get UITransform component", () => {
-            // Act
-            component.render();
-
-            // Assert
-            expect(component.node.parent.getComponent).toBeCalledWith(UITransform);
-        });
-
-        it("should get Label component", () => {
-            // Act
-            component.render();
-
-            // Assert
-            expect(component.node.parent.getComponent).toBeCalledWith(Label);
-        });
-
         it("should update font size", () => {
             // Arrange
-            const metadata = { width: 26, fontSize: 0 };
-
-            (component.node.getComponent as jest.Mock).mockReturnValue(metadata);
+            const uiTransform = component.node.parent.getComponent(UITransform);
+            uiTransform.width = 26;
+            const label = component.node.getComponent(Label);
+            label.fontSize = 40;
 
             // Act
             component.render();
 
             // Assert
-            expect(metadata.fontSize).toBe(20);
+            expect(label.fontSize).toEqual(20);
         });
 
         describe("and can not render", () => {
             it("should do nothing", () => {
                 // Arrange
                 (component.canRender as jest.Mock).mockReturnValue(false);
+                const label = component.node.getComponent(Label);
+                label.fontSize = 40;
 
                 // Act
                 component.render();
 
                 // Assert
-                expect(component.node.parent.getComponent).toBeCalledTimes(0);
+                expect(label.fontSize).toEqual(40);
             });
         });
     });
@@ -68,7 +56,6 @@ describe(ScoreboardFontSizeRenderer.name, () => {
         describe("when exists UITransform and Label component", () => {
             it("should return true", () => {
                 // Arrange
-                (component.node.getComponent as jest.Mock).mockReturnValue({ component: true });
 
                 // Act
                 const actual = component.canRender();

@@ -14,7 +14,7 @@ jest.mock("sc-scoreboards", () => ({
     },
 }));
 
-describe(ScoreboardBigRoadAlgorithm.name, () => {
+describe("ScoreboardBigRoadAlgorithm", () => {
     let algorithm: ScoreboardBigRoadAlgorithm;
     let grid: GridLayout;
 
@@ -32,12 +32,15 @@ describe(ScoreboardBigRoadAlgorithm.name, () => {
 
     describe("onFocusInEditor", () => {
         it("should get ScoreboardDataConverter and GridLayout component", () => {
+            const converter = algorithm.node.getComponent(ScoreboardDataConverter);
+            const grid = algorithm.node.getComponent(GridLayout);
+
             // Act
             algorithm.onFocusInEditor();
 
             // Assert
-            expect(algorithm.node.getComponent).toBeCalledWith(ScoreboardDataConverter);
-            expect(algorithm.node.getComponent).toBeCalledWith(GridLayout);
+            expect(algorithm["converter"]).toEqual(converter);
+            expect(algorithm["grid"]).toEqual(grid);
         });
     });
 
