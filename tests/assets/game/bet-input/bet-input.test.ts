@@ -121,19 +121,11 @@ describe("BetInput", () => {
             });
 
             it("should have event click on button", () => {
-                // Arrange
-
-                // Act
-
                 // Assert
                 expect(button.interactable).toEqual(true);
             });
 
             it("should show opacity is 255", () => {
-                // Arrange
-
-                // Act
-
                 // Assert
                 expect(button.node.getComponent(UIOpacity).opacity).toEqual(255);
             });
@@ -148,19 +140,11 @@ describe("BetInput", () => {
                 component.handleStakeButtonQuickChange(button, status);
             });
             it("should not have event click on button", () => {
-                // Arrange
-
-                // Act
-
                 // Assert
                 expect(button.interactable).toEqual(false);
             });
 
             it("should show opacity is 100", () => {
-                // Arrange
-
-                // Act
-
                 // Assert
                 expect(button.node.getComponent(UIOpacity).opacity).toEqual(100);
             });

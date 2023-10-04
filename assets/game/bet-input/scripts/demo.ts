@@ -10,7 +10,7 @@ const { ccclass, property } = _decorator;
 const { handle } = Observer;
 
 @ccclass
-export class Test extends ObserverComponent {
+export class Demo extends ObserverComponent {
     onLoad() {
         super.onLoad();
         gc.initMobxLogger();

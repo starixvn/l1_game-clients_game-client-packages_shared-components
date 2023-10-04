@@ -5,6 +5,7 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { BetInputHandler } from "../handlers/bet-input-handlers";
 import { BetInputStore } from "../stores/bet-input-store";
+import { BetAmountItem } from "./bet-amount-item";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -28,9 +29,8 @@ export class BetAmountPopup extends ObserverComponent {
         this.nodeBetContainer.destroyAllChildren();
         chips.forEach((chip) => {
             const node = instantiate(this.prfBetAmount);
-            node.name = chip;
-            const value = node.getChildByName("value");
-            value.getComponent(Label).string = `+${chip}`;
+            const comp = node.getComponent(BetAmountItem);
+            comp?.setBetAmountItem(chip);
             this.nodeBetContainer.addChild(node);
         });
     }

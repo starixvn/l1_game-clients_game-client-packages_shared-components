@@ -29,7 +29,6 @@ export class BetInput extends ObserverComponent {
 
     onLoad() {
         super.onLoad();
-        this.initBetAmountPopup();
     }
 
     initBetAmountPopup() {
@@ -56,7 +55,12 @@ export class BetInput extends ObserverComponent {
     }
 
     @handle(BetInputHandler, (handle) => handle.openBetAmountPopup())
-    onStakeChange() {}
+    onStakeChange() {
+        if (this.nodeBetAmountPopup.children.length > 0) {
+            return;
+        }
+        this.initBetAmountPopup();
+    }
 
     @handle(BetInputHandler, (handle, isIncrease: boolean) => handle.quickChangeBetAmount(isIncrease))
     onStakeQuickChange(event) {
