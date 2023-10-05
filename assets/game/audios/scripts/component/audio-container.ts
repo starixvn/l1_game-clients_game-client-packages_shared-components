@@ -4,6 +4,7 @@ import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { AudioUtils } from "../../utils";
+import AudioManager from "../audio-manager";
 
 const { Audios, UserSettings, App, BrowserDomUtils } = gc;
 const { ccclass, property } = _decorator;
@@ -40,7 +41,6 @@ export class AudioContainer extends ObserverComponent {
 
     audios = [];
     musicIds = [];
-    audioConfigs: TAudioConfigs = {};
     protected isUserGesture = false;
     protected isPlayMusic = false;
     protected isPlaySFX = false;
@@ -58,7 +58,6 @@ export class AudioContainer extends ObserverComponent {
         // The AudioContext was not allowed to start.
         // It must be resumed (or created) after a user gesture on the page
         this.initTouchBind();
-        AudioUtils.audioContainer = this;
     }
 
     protected initTouchBind() {
@@ -100,7 +99,8 @@ export class AudioContainer extends ObserverComponent {
             ...this.sharedAudioConfig?.json,
             ...this.audioConfig?.json,
         };
-        this.audioConfigs = audioConfigs;
+
+        AudioManager.audioConfigs(audioConfigs);
         const keys = Object.keys(audioConfigs);
         for (const key of keys) {
             const value = audioConfigs[key];
@@ -184,7 +184,7 @@ export class AudioContainer extends ObserverComponent {
         currentTimeField: string,
         isCurrentPlaying: boolean
     ) {
-        const audioValue = this.audioConfigs?.[id];
+        const audioValue = AudioManager?.audioConfigs()?.[id];
         if (!audioValue) {
             return;
         }

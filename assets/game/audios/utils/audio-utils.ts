@@ -1,13 +1,12 @@
 import { AudioClip } from "cc";
 import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
-import { AudioContainer, TAudioValue } from "../scripts/component/audio-container";
+import AudioManager from "../scripts/audio-manager";
+import { TAudioValue } from "../scripts/component/audio-container";
 
 interface AudioInfo {
     bundle: string;
     path: string;
 }
-
-export let audioContainer: AudioContainer = null; //NOSONAR
 
 export const getAudioInfo = (audioValue: TAudioValue, key: string): AudioInfo => {
     const bundle = audioValue.bundle;
@@ -34,8 +33,7 @@ export const getDurationClip = async (soundId: string, maxWaitingTime = 1000): P
     };
 
     const timeoutCancel = setTimeout(cancelTimeout, maxWaitingTime);
-
-    const audioValue = audioContainer?.audioConfigs?.[soundId];
+    const audioValue = AudioManager.getInstance()?.audioConfigs?.[soundId];
     if (!audioValue) {
         return duration;
     }
