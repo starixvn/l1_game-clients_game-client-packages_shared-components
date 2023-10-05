@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "play-count-button",
+    "_name": "round-number-item",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "play-count-button",
+    "_name": "round-number-item",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -526,7 +526,8 @@
     "sprSelectedBg": {
       "__id__": 11
     },
-    "noOfRoundTextColor": "#000000",
+    "noOfRoundSelectedTextColor": "000000",
+    "noOfRoundNormalTextColor": "ffffff",
     "_id": ""
   },
   {
