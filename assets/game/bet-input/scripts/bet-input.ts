@@ -1,4 +1,4 @@
-import { _decorator, Button, instantiate, Label, Node, Prefab, UIOpacity } from "cc";
+import { _decorator, Button, Label, UIOpacity } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
@@ -18,28 +18,9 @@ export class BetInput extends ObserverComponent {
     @property(Button)
     btnIncrease: Button = null;
 
-    @property(Prefab)
-    prfBetAmountPopup = null;
-
-    @property(Node)
-    nodeBetAmountPopupContainer: Node = null;
-
-    @property(Node)
-    nodeOverlay: Node = null;
-
-    private initBetAmountPopup() {
-        if (this.nodeBetAmountPopupContainer.children.length > 0) {
-            return;
-        }
-        const node = instantiate(this.prfBetAmountPopup);
-        this.nodeBetAmountPopupContainer.addChild(node);
-    }
-
     @render(BetInputStore, (store) => store.betAmount)
     private updateBetAmount(amount: number) {
-        if (amount > 0) {
-            this.lblBetAmount.string = `${amount}`;
-        }
+        this.lblBetAmount.string = `${amount}`;
     }
 
     @render(BetInputStore, (store) => store.increaseStatus)
@@ -52,12 +33,6 @@ export class BetInput extends ObserverComponent {
         this.handleStakeButtonQuickChange(this.btnDecrease, descreaseStatus);
     }
 
-    @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
-    private renderOpenBetAmountPopup(isOpenBetAmountPopup: boolean) {
-        this.nodeOverlay.active = isOpenBetAmountPopup;
-        this.initBetAmountPopup();
-    }
-
     @handle(BetInputHandler, (handle) => handle.openBetAmountPopup())
     private onClickOpenBetAmountPopup() {}
 
@@ -65,9 +40,6 @@ export class BetInput extends ObserverComponent {
     private onClickBetAmountQuickChange(event) {
         return event.target.name === "increase";
     }
-
-    @handle(BetInputHandler, (handle) => handle.closeBetAmountPopup())
-    private onClickCloseBetAmountPopup(event) {}
 
     private handleStakeButtonQuickChange(button: Button, status: boolean) {
         button.interactable = status;

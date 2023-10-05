@@ -1,4 +1,4 @@
-import { Button, instantiate, Label, Node, UIOpacity } from "cc";
+import { Button, Label, UIOpacity } from "cc";
 
 import { BetInput } from "../../../../assets/game/bet-input/scripts/bet-input";
 
@@ -6,68 +6,19 @@ describe("BetInput", () => {
     let component: BetInput;
     beforeEach(() => {
         component = new BetInput();
-        component.nodeBetAmountPopupContainer = new Node();
         component.lblBetAmount = new Label();
-        component.nodeOverlay = new Node();
-    });
-    describe("initBetAmountPopup", () => {
-        describe("when bet amount popup is added into nodeBetAmountPopupContainer", () => {
-            it("should call instantiate() and addChild()", () => {
-                // Arrange
-                // @ts-ignore
-                component.nodeBetAmountPopupContainer.children = [new Node()];
-
-                // Act
-                component["initBetAmountPopup"]();
-
-                // Assert
-                expect(instantiate).toBeCalledTimes(0);
-                expect(component.nodeBetAmountPopupContainer.addChild).toBeCalledTimes(0);
-            });
-        });
-        describe("when bet amount popup is not added into nodeBetAmountPopupContainer", () => {
-            it("should call instantiate() and addChild()", () => {
-                // Arrange
-                component.nodeBetAmountPopupContainer.destroyAllChildren();
-
-                // Act
-                component["initBetAmountPopup"]();
-
-                // Assert
-                expect(instantiate).toBeCalled();
-                expect(component.nodeBetAmountPopupContainer.addChild).toBeCalled();
-            });
-        });
     });
 
     describe("updateBetAmount", () => {
-        beforeEach(() => {
-            component.lblBetAmount.string = "20";
-        });
-        describe("when amount > 0", () => {
-            it("should update bet amount label", () => {
-                // Arrange
-                const amount = 10;
+        it("should update bet amount label", () => {
+            // Arrange
+            const amount = 10;
 
-                // Act
-                component["updateBetAmount"](amount);
+            // Act
+            component["updateBetAmount"](amount);
 
-                // Assert
-                expect(component.lblBetAmount.string).toEqual("10");
-            });
-        });
-
-        describe("when amount <= 0", () => {
-            it("should not update bet amount label", () => {
-                // Arrange
-                const amount = 0;
-
-                // Act
-                component["updateBetAmount"](amount);
-
-                // Assert
-                expect(component.lblBetAmount.string).toEqual("20");
-            });
+            // Assert
+            expect(component.lblBetAmount.string).toEqual("10");
         });
     });
 
@@ -94,34 +45,6 @@ describe("BetInput", () => {
 
             // Assert
             expect(component["handleStakeButtonQuickChange"]).toBeCalled();
-        });
-    });
-
-    describe("renderOpenBetAmountPopup", () => {
-        beforeEach(() => {
-            // Arrange
-            component["initBetAmountPopup"] = jest.fn();
-
-            // Act
-            component["renderOpenBetAmountPopup"](true);
-        });
-
-        it("should show nodeOverlay when isOpenBetAmountPopup = true", () => {
-            // Assert
-            expect(component.nodeOverlay.active).toEqual(true);
-        });
-
-        it("should hide nodeOverlay when isOpenBetAmountPopup = false", () => {
-            // Act
-            component["renderOpenBetAmountPopup"](false);
-
-            // Assert
-            expect(component.nodeOverlay.active).toEqual(false);
-        });
-
-        it("should call initBetAmountPopup()", () => {
-            // Assert
-            expect(component["initBetAmountPopup"]).toBeCalled();
         });
     });
 
