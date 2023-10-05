@@ -14,24 +14,31 @@ export class RoundNumberItem extends ObserverComponent {
     sprSelectedBg: Sprite = null;
 
     @property
-    noOfRoundTextColor = "000000";
+    noOfRoundSelectedTextColor = "000000";
+
+    @property
+    noOfRoundNormalTextColor = "ffffff";
+
+    get value() {
+        return +this.node.name;
+    }
 
     setValue(noOfRound: number) {
         this.lblNoOfRound.string = noOfRound.toString();
+        this.node.name = noOfRound.toString();
     }
 
     setSelectedRound(selected: boolean) {
         this.sprSelectedBg.node.active = selected;
-        selected && (this.lblNoOfRound.color = new Color().fromHEX(this.noOfRoundTextColor));
-    }
-
-    clearSelectBg() {
-        this.sprSelectedBg.node.active = false;
+        if (selected) {
+            this.lblNoOfRound.color = new Color().fromHEX(this.noOfRoundSelectedTextColor);
+        } else {
+            this.lblNoOfRound.color = new Color().fromHEX(this.noOfRoundNormalTextColor);
+        }
     }
 
     @handle(AutoPlayHandler, (handle, rounds: number) => handle.updateNoOfRounds(rounds))
     onRoundNumberItemClick(event) {
-        this.sprSelectedBg.node.active = false;
         this.setSelectedRound(true);
         return +event.target.name;
     }

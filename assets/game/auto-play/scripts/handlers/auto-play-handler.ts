@@ -15,11 +15,37 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
         this.autoPlayStore.isOpenAutoPlayPopup = true;
     }
 
+    checkAutoPlayClick() {
+        if (!this.autoPlayStore.isAutoPlay) {
+            this.autoPlayStore.isOpenAutoPlayPopup = true;
+        } else {
+            this.autoPlayStore.isAutoPlay = false;
+            this.autoPlayStore.autoPlayRounds = 0;
+        }
+    }
+
     closeAutoPlayPopup() {
         this.autoPlayStore.isOpenAutoPlayPopup = false;
     }
 
+    confirmRoundAndStart() {
+        this.autoPlayStore.isOpenAutoPlayPopup = false;
+        this.autoPlayStore.isAutoPlay = true;
+        this.autoPlayStore.autoPlayRounds = this.autoPlayStore.selectedRoundOnPopup;
+    }
+
     updateNoOfRounds(rounds: number) {
-        this.autoPlayStore.noOfRounds = rounds;
+        this.autoPlayStore.selectedRoundOnPopup = rounds;
+    }
+
+    decreaseAutoPlayRounds() {
+        this.updateAutoPlayRounds(this.autoPlayStore.autoPlayRounds - 1);
+    }
+
+    private updateAutoPlayRounds(rounds: number) {
+        this.autoPlayStore.autoPlayRounds = rounds;
+        if (this.autoPlayStore.autoPlayRounds < 0) {
+            this.autoPlayStore.isAutoPlay = false;
+        }
     }
 }

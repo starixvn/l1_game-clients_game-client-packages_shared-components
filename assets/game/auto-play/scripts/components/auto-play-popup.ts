@@ -15,23 +15,23 @@ export class AutoPlayPopup extends ObserverComponent {
     @property(Prefab)
     prfNoOfRound: Prefab = null;
 
-    private roundsList = [10, 30, 50, 80, 100, 200, 500, 1000];
-
-    onLoad() {
-        super.onLoad();
-        this.initContentRounds();
-    }
-
-    initContentRounds() {
+    @render(AutoPlayStore, (store) => store.roundsList)
+    initContentRounds(roundsList: number[]) {
         this.content.destroyAllChildren();
-        this.roundsList.forEach((round, index) => {
+        roundsList.forEach((round, index) => {
             const node = instantiate(this.prfNoOfRound);
-            node.name = round.toString();
             const roundNumber = node.getComponent(RoundNumberItem);
             roundNumber.setValue(round);
-            const selectedBg = index === 0;
-            roundNumber.setSelectedRound(selectedBg);
             this.content.addChild(node);
+        });
+    }
+
+    @render(AutoPlayStore, (store) => store.selectedRoundOnPopup)
+    clearSelectedBgRounds(noOfRounds: number) {
+        this.content.children.forEach((child, index) => {
+            const roundNumber = child.getComponent(RoundNumberItem);
+            const selectedBg = roundNumber.value === noOfRounds;
+            roundNumber.setSelectedRound(selectedBg);
         });
     }
 
@@ -40,8 +40,9 @@ export class AutoPlayPopup extends ObserverComponent {
         this.node.active = status;
     }
 
-    //@render(AutoPlayStore, (store) => store.isConfirmRound)
-
     @handle(AutoPlayHandler, (handle) => handle.closeAutoPlayPopup())
-    closePopup() {}
+    onClickclosePopup() {}
+
+    @handle(AutoPlayHandler, (handle) => handle.confirmRoundAndStart())
+    onClickStartButton() {}
 }

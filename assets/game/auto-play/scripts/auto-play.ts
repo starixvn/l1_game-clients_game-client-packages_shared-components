@@ -23,27 +23,28 @@ export class AutoPlay extends ObserverComponent {
     @property(Node)
     nodeOverlay: Node = null;
 
-    onLoad() {
-        super.onLoad();
-        this.initAutoPlayPopup();
-    }
+    @handle(AutoPlayHandler, (handle) => handle.checkAutoPlayClick())
+    onClickAutoPlay() {}
 
-    initAutoPlayPopup() {
-        const node = instantiate(this.prfautoPlayPopup);
-        this.nodeAutoPlayPopup.addChild(node);
-        this.nodeAutoPlayPopup.children[0].active = false;
-    }
-
-    @handle(AutoPlayHandler, (handle) => handle.openAutoPlayPopup())
-    clickAutoPlay() {}
-
-    @render(AutoPlayStore, (store) => store.isOpenAutoPlayPopup)
-    nodeOverlayVisibility(status: boolean) {
+    @render(AutoPlayStore, (store) => store.isOpenAutoPlayPopup, { fireImmediately: false })
+    openAutoPlayPopup(status: boolean) {
         this.nodeOverlay.active = status;
+        if (this.nodeAutoPlayPopup.children.length === 0) {
+            const node = instantiate(this.prfautoPlayPopup);
+            this.nodeAutoPlayPopup.addChild(node);
+        } else {
+            this.nodeAutoPlayPopup.active = status;
+        }
     }
 
-    @render(AutoPlayStore, (store) => store.noOfRounds)
+    @render(AutoPlayStore, (store) => store.autoPlayRounds)
     setNoOfRound(rounds: number) {
-        console.log("no of rounds:" + rounds);
+        this.lblnoOfRound.string = rounds.toString();
+    }
+
+    @render(AutoPlayStore, (store) => store.isAutoPlay)
+    confirmAndStartRounds(isAutoPlay: boolean) {
+        this.lblnoOfRound.node.active = isAutoPlay;
+        this.sprIconAutoPlay.node.active = !isAutoPlay;
     }
 }

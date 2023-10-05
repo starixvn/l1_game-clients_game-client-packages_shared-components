@@ -4,12 +4,12 @@ const { injectable, inject } = inversify;
 
 @injectable()
 export class AutoPlayStore {
+    public roundsList = [10, 30, 50, 80, 100, 200, 500, 1000];
     public isOpenAutoPlayPopup = false;
-    public noOfRounds = 0;
-    public isShowIconAutoPlay = true;
-    public isShowNoOfRound = false;
+    public selectedRoundOnPopup = this.roundsList[0];
+    public autoPlayRounds = 0;
 
-    public isConfirmRound = false;
+    public isAutoPlay = false;
 
     constructor() {
         mobx.makeAutoObservable(this);
