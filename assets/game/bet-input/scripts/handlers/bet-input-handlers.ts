@@ -13,7 +13,6 @@ export class BetInputHandler implements gc.Shared.IHandler<number> {
     handle() {
         this.betInputStore.betAmount = this.betInputStore.betAmountTemp;
         this.betInputStore.isOpenBetAmountPopup = false;
-        this.checkStatusDescreaseAndIncreaseButtons(this.betInputStore.betAmount);
     }
 
     setBetAmountTemp(amount: number) {
@@ -41,20 +40,10 @@ export class BetInputHandler implements gc.Shared.IHandler<number> {
             ? this.betInputStore.betAmount + this.gameConfig.minBet
             : this.betInputStore.betAmount - this.gameConfig.minBet;
 
-        this.checkStatusDescreaseAndIncreaseButtons(amount);
-
         if (amount < this.gameConfig.minBet || amount > this.gameConfig.maxBet) {
             return;
         }
 
         this.betInputStore.betAmount = amount;
-    }
-
-    private checkStatusDescreaseAndIncreaseButtons(amount: number) {
-        const isBtnDisabledDescrease = amount > this.gameConfig.minBet;
-        const isBtnDisabledIncrease = amount < this.gameConfig.maxBet;
-
-        this.betInputStore.descreaseStatus = isBtnDisabledDescrease;
-        this.betInputStore.increaseStatus = isBtnDisabledIncrease;
     }
 }

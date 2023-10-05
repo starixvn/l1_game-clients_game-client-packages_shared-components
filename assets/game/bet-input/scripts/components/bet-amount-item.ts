@@ -9,15 +9,15 @@ const { handle } = Observer;
 @ccclass
 export class BetAmountItem extends ObserverComponent {
     @property(Label)
-    betAmount: Label = null;
+    lblBetAmount: Label = null;
 
     setBetAmountItem(amount: string) {
         this.node.name = amount;
-        this.betAmount.string = `+${amount}`;
+        this.lblBetAmount.string = `+${amount}`;
     }
 
     @handle(BetInputHandler, (handle, amount: number) => handle.setBetAmountTemp(amount))
-    onBetAmountItemClick(event) {
+    private onClickBetAmountItem(event) {
         return +event.target.name;
     }
 }

@@ -18,7 +18,7 @@ describe("BetAmountPopup", () => {
             const setBetAmountItemSpy = jest.spyOn(BetAmountItem.prototype, "setBetAmountItem").mockImplementation(jest.fn());
 
             // Act
-            component.initBetAmount(chips);
+            component["initBetAmount"](chips);
 
             // Assert
             expect(setBetAmountItemSpy).toBeCalledTimes(chips.length);
@@ -30,7 +30,7 @@ describe("BetAmountPopup", () => {
             // Arrange
 
             // Act
-            component.setBetAmountPopupVisibilty(true);
+            component["setBetAmountPopupVisibilty"](true);
 
             // Assert
             expect(component.node.active).toEqual(true);
@@ -40,7 +40,7 @@ describe("BetAmountPopup", () => {
             // Arrange
 
             // Act
-            component.setBetAmountPopupVisibilty(false);
+            component["setBetAmountPopupVisibilty"](false);
 
             // Assert
             expect(component.node.active).toEqual(false);
@@ -54,7 +54,7 @@ describe("BetAmountPopup", () => {
             component["checkConfirmBtnStatus"] = jest.fn();
 
             // Act
-            component.updateBetAmount(amount);
+            component["updateBetAmount"](amount);
         });
 
         it("should update bet amount label", () => {

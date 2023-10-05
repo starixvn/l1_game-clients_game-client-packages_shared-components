@@ -331,7 +331,7 @@
     },
     "component": "",
     "_componentId": "4505dj5oplEYb4cbFY0TImG",
-    "handler": "onStakeChange",
+    "handler": "onClickOpenBetAmountPopup",
     "customEventData": ""
   },
   {
@@ -546,7 +546,7 @@
     },
     "component": "",
     "_componentId": "4505dj5oplEYb4cbFY0TImG",
-    "handler": "onStakeQuickChange",
+    "handler": "onClickBetAmountQuickChange",
     "customEventData": ""
   },
   {
@@ -916,7 +916,7 @@
     },
     "component": "",
     "_componentId": "4505dj5oplEYb4cbFY0TImG",
-    "handler": "onStakeQuickChange",
+    "handler": "onClickBetAmountQuickChange",
     "customEventData": ""
   },
   {
@@ -1368,7 +1368,7 @@
     },
     "component": "",
     "_componentId": "4505dj5oplEYb4cbFY0TImG",
-    "handler": "onCloseClick",
+    "handler": "onClickCloseBetAmountPopup",
     "customEventData": ""
   },
   {
@@ -1599,7 +1599,7 @@
       "__uuid__": "569d90da-018d-4aa7-984d-e897cb66b948",
       "__expectedType__": "cc.Prefab"
     },
-    "nodeBetAmountPopup": {
+    "nodeBetAmountPopupContainer": {
       "__id__": 62
     },
     "nodeOverlay": {

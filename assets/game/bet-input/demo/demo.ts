@@ -3,7 +3,7 @@ import { _decorator } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
-import { TestHandler } from "./handlers/test-handlers";
+import { DemoHandler } from "./demo-handlers";
 
 const { ccclass, property } = _decorator;
 
@@ -21,7 +21,7 @@ export class Demo extends ObserverComponent {
         this.setDemoGameConfigs(configs);
     }
 
-    @handle(TestHandler)
+    @handle(DemoHandler)
     setDemoGameConfigs(gameConfigs: gc.GameServiceMessage.GameConfigs) {
         return gameConfigs;
     }

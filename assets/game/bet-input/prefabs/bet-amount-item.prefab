@@ -290,7 +290,7 @@
     "__prefab": {
       "__id__": 13
     },
-    "betAmount": {
+    "lblBetAmount": {
       "__id__": 5
     },
     "_id": ""
@@ -369,7 +369,7 @@
     },
     "component": "",
     "_componentId": "f6ad1tS/wdKYZpQ05Mmjj3M",
-    "handler": "onBetAmountItemClick",
+    "handler": "onClickBetAmountItem",
     "customEventData": ""
   },
   {

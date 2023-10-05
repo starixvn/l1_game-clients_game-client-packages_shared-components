@@ -3,7 +3,7 @@ import Observer from "observer";
 
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { BetInputHandler } from "./handlers/bet-input-handlers";
-import { BetInputStore, IBetInputButtonStatus } from "./stores/bet-input-store";
+import { BetInputStore } from "./stores/bet-input-store";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -22,55 +22,54 @@ export class BetInput extends ObserverComponent {
     prfBetAmountPopup = null;
 
     @property(Node)
-    nodeBetAmountPopup: Node = null;
+    nodeBetAmountPopupContainer: Node = null;
 
     @property(Node)
     nodeOverlay: Node = null;
 
-    onLoad() {
-        super.onLoad();
-    }
-
-    initBetAmountPopup() {
+    private initBetAmountPopup() {
+        if (this.nodeBetAmountPopupContainer.children.length > 0) {
+            return;
+        }
         const node = instantiate(this.prfBetAmountPopup);
-        this.nodeBetAmountPopup.addChild(node);
+        this.nodeBetAmountPopupContainer.addChild(node);
     }
 
     @render(BetInputStore, (store) => store.betAmount)
-    updateBetAmount(amount: number) {
+    private updateBetAmount(amount: number) {
         if (amount > 0) {
             this.lblBetAmount.string = `${amount}`;
         }
     }
 
-    @render(BetInputStore, (store) => store.betInputButtonStatus)
-    handleBetButtons(buttonStatus: IBetInputButtonStatus) {
-        this.handleStakeButtonQuickChange(this.btnDecrease, buttonStatus.descreaseStatus);
-        this.handleStakeButtonQuickChange(this.btnIncrease, buttonStatus.increaseStatus);
+    @render(BetInputStore, (store) => store.increaseStatus)
+    private setIncreaseButtonStatus(increaseStatus: boolean) {
+        this.handleStakeButtonQuickChange(this.btnIncrease, increaseStatus);
+    }
+
+    @render(BetInputStore, (store) => store.descreaseStatus)
+    private setDecreaseButtonStatus(descreaseStatus: boolean) {
+        this.handleStakeButtonQuickChange(this.btnDecrease, descreaseStatus);
     }
 
     @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
-    setOverlayVisibility(status: boolean) {
-        this.nodeOverlay.active = status;
-    }
-
-    @handle(BetInputHandler, (handle) => handle.openBetAmountPopup())
-    onStakeChange() {
-        if (this.nodeBetAmountPopup.children.length > 0) {
-            return;
-        }
+    private renderOpenBetAmountPopup(isOpenBetAmountPopup: boolean) {
+        this.nodeOverlay.active = isOpenBetAmountPopup;
         this.initBetAmountPopup();
     }
 
+    @handle(BetInputHandler, (handle) => handle.openBetAmountPopup())
+    private onClickOpenBetAmountPopup() {}
+
     @handle(BetInputHandler, (handle, isIncrease: boolean) => handle.quickChangeBetAmount(isIncrease))
-    onStakeQuickChange(event) {
+    private onClickBetAmountQuickChange(event) {
         return event.target.name === "increase";
     }
 
     @handle(BetInputHandler, (handle) => handle.closeBetAmountPopup())
-    onCloseClick(event) {}
+    private onClickCloseBetAmountPopup(event) {}
 
-    handleStakeButtonQuickChange(button: Button, status: boolean) {
+    private handleStakeButtonQuickChange(button: Button, status: boolean) {
         button.interactable = status;
         button.node.getComponent(UIOpacity).opacity = status ? 255 : 100;
     }

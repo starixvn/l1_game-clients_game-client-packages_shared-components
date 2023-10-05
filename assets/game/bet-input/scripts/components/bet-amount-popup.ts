@@ -25,7 +25,7 @@ export class BetAmountPopup extends ObserverComponent {
     btnConfirm: Button = null;
 
     @render(gc.GameConfigs.GameConfigStore, (store) => store.chips)
-    initBetAmount(chips) {
+    private initBetAmount(chips) {
         this.nodeBetContainer.destroyAllChildren();
         chips.forEach((chip) => {
             const node = instantiate(this.prfBetAmount);
@@ -36,24 +36,24 @@ export class BetAmountPopup extends ObserverComponent {
     }
 
     @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
-    setBetAmountPopupVisibilty(status: boolean) {
+    private setBetAmountPopupVisibilty(status: boolean) {
         this.node.active = status;
     }
 
     @render(BetInputStore, (store) => store.betAmountTemp)
-    updateBetAmount(amount: number) {
+    private updateBetAmount(amount: number) {
         this.lblBetAmount.string = `${amount}`;
         this.checkConfirmBtnStatus(amount > 0);
     }
 
     @handle(BetInputHandler, (handle) => handle.closeBetAmountPopup())
-    onCloseClick() {}
+    private onCloseClick() {}
 
     @handle(BetInputHandler)
-    onConfirmClick() {}
+    private onConfirmClick() {}
 
     @handle(BetInputHandler, (handler) => handler.resetBetAmount())
-    onClearClick() {}
+    private onClearClick() {}
 
     private checkConfirmBtnStatus(status: boolean) {
         this.btnConfirm.interactable = status;
