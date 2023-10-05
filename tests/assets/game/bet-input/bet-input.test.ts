@@ -1,4 +1,4 @@
-import { Button, Label, UIOpacity } from "cc";
+import { Button, Label, Node, UIOpacity } from "cc";
 
 import { BetInput } from "../../../../assets/game/bet-input/scripts/bet-input";
 
@@ -7,6 +7,29 @@ describe("BetInput", () => {
     beforeEach(() => {
         component = new BetInput();
         component.lblBetAmount = new Label();
+        component.nodeDisabledLayer = new Node();
+    });
+
+    describe("setDisabledLayerVisibility", () => {
+        describe("when isDisabledBetInput=true", () => {
+            it("should show disabled layer", () => {
+                // Act
+                component["setDisabledLayerVisibility"](true);
+
+                // Assert
+                expect(component.nodeDisabledLayer.active).toEqual(true);
+            });
+        });
+
+        describe("when isDisabledBetInput=false", () => {
+            it("should hide disabled layer", () => {
+                // Act
+                component["setDisabledLayerVisibility"](false);
+
+                // Assert
+                expect(component.nodeDisabledLayer.active).toEqual(false);
+            });
+        });
     });
 
     describe("updateBetAmount", () => {

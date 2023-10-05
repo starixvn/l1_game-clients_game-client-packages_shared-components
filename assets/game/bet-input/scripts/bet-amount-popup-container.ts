@@ -13,16 +13,14 @@ export class BetAmountPopupContainer extends NodeContainer {
     @property(Node)
     nodeOverlay: Node = null;
 
-    createNode() {
-        if (this.node.children.length > 1) {
-            return;
-        }
-        return super.createNode();
-    }
-
     @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
     private renderOpenBetAmountPopup(isOpenBetAmountPopup: boolean) {
         this.nodeOverlay.active = isOpenBetAmountPopup;
+
+        if (this.node.children.length > 1) {
+            return;
+        }
+
         this.createNode();
     }
 

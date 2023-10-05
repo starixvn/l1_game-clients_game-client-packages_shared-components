@@ -1,4 +1,4 @@
-import { _decorator, Button, Label, UIOpacity } from "cc";
+import { _decorator, Button, Label, Node, UIOpacity } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
@@ -17,6 +17,14 @@ export class BetInput extends ObserverComponent {
 
     @property(Button)
     btnIncrease: Button = null;
+
+    @property(Node)
+    nodeDisabledLayer: Node = null;
+
+    @render(BetInputStore, (store) => store.isDisabledBetInput)
+    private setDisabledLayerVisibility(isDisabledBetInput: boolean) {
+        this.nodeDisabledLayer.active = isDisabledBetInput;
+    }
 
     @render(BetInputStore, (store) => store.betAmount)
     private updateBetAmount(amount: number) {

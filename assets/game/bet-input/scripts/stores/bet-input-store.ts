@@ -11,6 +11,7 @@ export class BetInputStore {
     private _betAmount = -1;
     isOpenBetAmountPopup = false;
     betAmountTemp = 0;
+    isDisabledBetInput = false;
 
     get betAmount(): number {
         return this._betAmount > -1 ? this._betAmount : this.gameConfig.minBet;
