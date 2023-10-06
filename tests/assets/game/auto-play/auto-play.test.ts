@@ -23,25 +23,25 @@ describe("AutoPlayPopup", () => {
         });
     });
 
-    describe("confirmAndStartRounds", () => {
-        it("should start auto play", () => {
+    describe("updateAutoPlayButton", () => {
+        it("should start auto play when isAutoPlay is true", () => {
             //Arrange
             const isAutoPlay = true;
 
             //Act
-            comp.confirmAndStartRounds(isAutoPlay);
+            comp.updateAutoPlayButton(isAutoPlay);
 
             //Assert
             expect(comp.lblnoOfRound.node.active).toEqual(true);
             expect(comp.sprIconAutoPlay.node.active).toEqual(false);
         });
 
-        it("should stop auto play", () => {
+        it("should stop auto play when isAutoPlay is false", () => {
             //Arrange
             const isAutoPlay = false;
 
             //Act
-            comp.confirmAndStartRounds(isAutoPlay);
+            comp.updateAutoPlayButton(isAutoPlay);
 
             //Assert
             expect(comp.lblnoOfRound.node.active).toEqual(false);

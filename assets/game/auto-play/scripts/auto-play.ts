@@ -26,7 +26,7 @@ export class AutoPlay extends ObserverComponent {
     }
 
     @render(AutoPlayStore, (store) => store.isAutoPlay)
-    confirmAndStartRounds(isAutoPlay: boolean) {
+    updateAutoPlayButton(isAutoPlay: boolean) {
         this.lblnoOfRound.node.active = isAutoPlay;
         this.sprIconAutoPlay.node.active = !isAutoPlay;
     }
