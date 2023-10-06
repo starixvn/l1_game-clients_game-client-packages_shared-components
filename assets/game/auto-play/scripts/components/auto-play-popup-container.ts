@@ -22,5 +22,5 @@ export class AutoPlayPopupContainer extends NodeContainer {
     }
 
     @handle(AutoPlayHandler, (handle) => handle.closeAutoPlayPopup())
-    private onClickclosePopup() {}
+    onClickclosePopup() {}
 }

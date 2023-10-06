@@ -18,17 +18,17 @@ export class AutoPlayPopup extends ObserverComponent {
     @render(AutoPlayStore, (store) => store.roundsList)
     initContentRounds(roundsList: number[]) {
         this.content.destroyAllChildren();
-        roundsList.forEach((round, index) => {
+        roundsList.forEach((round) => {
             const node = instantiate(this.prfNoOfRound);
             const roundNumber = node.getComponent(RoundNumberItem);
-            roundNumber.setValue(round);
+            roundNumber?.setValue(round);
             this.content.addChild(node);
         });
     }
 
     @render(AutoPlayStore, (store) => store.selectedRoundOnPopup)
-    clearSelectedBgRounds(noOfRounds: number) {
-        this.content.children.forEach((child, index) => {
+    renderSelectedRounds(noOfRounds: number) {
+        this.content.children.forEach((child) => {
             const roundNumber = child.getComponent(RoundNumberItem);
             const selectedBg = roundNumber.value === noOfRounds;
             roundNumber.setSelectedRound(selectedBg);
