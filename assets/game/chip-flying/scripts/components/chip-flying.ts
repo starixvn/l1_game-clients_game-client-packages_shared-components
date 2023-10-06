@@ -77,9 +77,9 @@ export class ChipFlying extends ObserverComponent {
     }
 
     fetchComponents() {
-        this.slidingChip = this.nodeSlidingChip.getComponent(SlidingChip);
-        this.aroundTablePlayers = this.nodeAroundTablePlayers.getComponent(AroundTablePlayers);
-        this.betItems = this.nodeBetItems.getComponent(BetItems);
+        this.slidingChip = this.nodeSlidingChip?.getComponent(SlidingChip);
+        this.aroundTablePlayers = this.nodeAroundTablePlayers?.getComponent(AroundTablePlayers);
+        this.betItems = this.nodeBetItems?.getComponent(BetItems);
     }
 
     @render(Chips.ChipStore, (store) => store.chipsByMainPlayerRate, { fireImmediately: false })
