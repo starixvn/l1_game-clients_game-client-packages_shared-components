@@ -10,25 +10,25 @@ const { render, handle } = Observer;
 @ccclass
 export class AutoPlayPopup extends ObserverComponent {
     @property(Node)
-    content: Node = null;
+    nodeContent: Node = null;
 
     @property(Prefab)
     prfNoOfRound: Prefab = null;
 
     @render(AutoPlayStore, (store) => store.roundsList)
     initContentRounds(roundsList: number[]) {
-        this.content.destroyAllChildren();
+        this.nodeContent.destroyAllChildren();
         roundsList.forEach((round) => {
             const node = instantiate(this.prfNoOfRound);
             const roundNumber = node.getComponent(RoundNumberItem);
             roundNumber?.setValue(round);
-            this.content.addChild(node);
+            this.nodeContent.addChild(node);
         });
     }
 
     @render(AutoPlayStore, (store) => store.selectedRoundOnPopup)
     renderSelectedRounds(noOfRounds: number) {
-        this.content.children.forEach((child) => {
+        this.nodeContent.children.forEach((child) => {
             const roundNumber = child.getComponent(RoundNumberItem);
             const selectedBg = roundNumber.value === noOfRounds;
             roundNumber.setSelectedRound(selectedBg);

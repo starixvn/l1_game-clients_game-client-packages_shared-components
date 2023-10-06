@@ -30,11 +30,8 @@ export class RoundNumberItem extends ObserverComponent {
 
     setSelectedRound(selected: boolean) {
         this.sprSelectedBg.node.active = selected;
-        if (selected) {
-            this.lblNoOfRound.color = new Color().fromHEX(this.noOfRoundSelectedTextColor);
-        } else {
-            this.lblNoOfRound.color = new Color().fromHEX(this.noOfRoundNormalTextColor);
-        }
+        const color = selected ? this.noOfRoundSelectedTextColor : this.noOfRoundNormalTextColor;
+        this.lblNoOfRound.color = new Color().fromHEX(color);
     }
 
     @handle(AutoPlayHandler, (handle, rounds: number) => handle.updateNoOfRounds(rounds))

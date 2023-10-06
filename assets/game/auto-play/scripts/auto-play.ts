@@ -9,25 +9,25 @@ const { render, handle } = Observer;
 @ccclass
 export class AutoPlay extends ObserverComponent {
     @property(Label)
-    lblnoOfRound: Label = null;
+    lblNoOfRound: Label = null;
 
     @property(Sprite)
     sprIconAutoPlay: Sprite = null;
 
     @property(Prefab)
-    prfautoPlayPopup: Prefab = null;
+    prfAutoPlayPopup: Prefab = null;
 
     @handle(AutoPlayHandler, (handle) => handle.checkAutoPlayClick())
     onClickAutoPlay() {}
 
     @render(AutoPlayStore, (store) => store.autoPlayRounds)
     setNoOfRound(rounds: number) {
-        this.lblnoOfRound.string = rounds.toString();
+        this.lblNoOfRound.string = rounds.toString();
     }
 
     @render(AutoPlayStore, (store) => store.isAutoPlay)
     updateAutoPlayButton(isAutoPlay: boolean) {
-        this.lblnoOfRound.node.active = isAutoPlay;
+        this.lblNoOfRound.node.active = isAutoPlay;
         this.sprIconAutoPlay.node.active = !isAutoPlay;
     }
 }

@@ -6,9 +6,9 @@ describe("AutoPlayPopup", () => {
 
     beforeEach(() => {
         comp = new AutoPlay();
-        comp.lblnoOfRound = new Label();
+        comp.lblNoOfRound = new Label();
         comp.sprIconAutoPlay = new Sprite();
-        comp.prfautoPlayPopup = new Prefab();
+        comp.prfAutoPlayPopup = new Prefab();
     });
     describe("setNoOfRound", () => {
         it("should assign label noOfRound is rounds", () => {
@@ -19,7 +19,7 @@ describe("AutoPlayPopup", () => {
             comp.setNoOfRound(rounds);
 
             //Assert
-            expect(comp.lblnoOfRound.string).toEqual("10");
+            expect(comp.lblNoOfRound.string).toEqual("10");
         });
     });
 
@@ -32,7 +32,7 @@ describe("AutoPlayPopup", () => {
             comp.updateAutoPlayButton(isAutoPlay);
 
             //Assert
-            expect(comp.lblnoOfRound.node.active).toEqual(true);
+            expect(comp.lblNoOfRound.node.active).toEqual(true);
             expect(comp.sprIconAutoPlay.node.active).toEqual(false);
         });
 
@@ -44,7 +44,7 @@ describe("AutoPlayPopup", () => {
             comp.updateAutoPlayButton(isAutoPlay);
 
             //Assert
-            expect(comp.lblnoOfRound.node.active).toEqual(false);
+            expect(comp.lblNoOfRound.node.active).toEqual(false);
             expect(comp.sprIconAutoPlay.node.active).toEqual(true);
         });
     });

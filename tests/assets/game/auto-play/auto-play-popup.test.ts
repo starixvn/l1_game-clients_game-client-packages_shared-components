@@ -6,7 +6,7 @@ describe("AutoPlayPopup", () => {
 
     beforeEach(() => {
         popup = new AutoPlayPopup();
-        popup.content = new Node();
+        popup.nodeContent = new Node();
     });
     describe("initContentRounds", () => {
         it("should initialize content rounds", () => {
@@ -29,7 +29,7 @@ describe("AutoPlayPopup", () => {
             const node = new Node();
             node.getComponent(RoundNumberItem);
             node.name = noOfRounds.toString();
-            popup.content.children.push(node);
+            popup.nodeContent.children.push(node);
 
             const setAutoPlayItemSpy = jest.spyOn(RoundNumberItem.prototype, "setSelectedRound").mockImplementation(jest.fn());
 
