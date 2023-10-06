@@ -2,6 +2,8 @@ import { Label, Node, Sprite, SpriteFrame, _decorator } from "cc";
 import { Dialog } from "../../dialogs/dialog";
 const { ccclass, property } = _decorator;
 
+import gc from "@sg/game-client-base";
+
 enum NoticeType {
     Info = 0,
     Error = 1,
@@ -27,13 +29,23 @@ export class NoticeCmp extends Dialog {
     @property(Node)
     btnConfirm: Node = null;
 
+    noticeInfo: gc.Notices.NoticeInfo;
+
     onClose: () => void;
 
-    setData(data: { title: string; message: string; type: NoticeType; onClose: () => void; showBtnConfirmButton?: boolean }) {
+    setData(data: {
+        title: string;
+        message: string;
+        type: NoticeType;
+        onClose: () => void;
+        showBtnConfirmButton?: boolean;
+        noticeInfo?: gc.Notices.NoticeInfo;
+    }) {
         this.lblTitle && (this.lblTitle.string = data.title.toUpperCase());
         this.lblMessage.string = data.message;
         this.onClose = data.onClose;
         this.updateDisplay(data.type, data.showBtnConfirmButton);
+        this.noticeInfo = data.noticeInfo;
     }
 
     updateDisplay(type: NoticeType, showBtnConfirmButton = false) {

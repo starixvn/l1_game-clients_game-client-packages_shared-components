@@ -12,7 +12,7 @@ const { ccclass } = _decorator;
 @ccclass("WarningContainer")
 export class WarningContainer extends NodeContainer {
     @render(Notices.NoticeStore, (store) => store.warning, { fireImmediately: false })
-    showWarning(warning) {
+    showWarning(warning: gc.Notices.Warning) {
         const node = this.createNode();
         const warningCmp = node.getComponent(WarningCmp);
         warningCmp.setData(warning.message);
