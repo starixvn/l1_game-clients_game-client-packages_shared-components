@@ -45,17 +45,21 @@ export class ChipFlying extends ObserverComponent {
     @property(Node)
     dealerChipBox: Node = null;
 
-    @property(SlidingChip)
-    slidingChip: SlidingChip = null;
-
-    @property(AroundTablePlayers)
-    aroundTablePlayers: AroundTablePlayers = null;
-
-    @property(BetItems)
-    betItems: BetItems = null;
-
     @property(Node)
     chipContainer: Node = null;
+
+    @property(Node)
+    nodeSlidingChip: Node = null;
+
+    @property(Node)
+    nodeAroundTablePlayers: Node = null;
+
+    @property(Node)
+    nodeBetItems: Node = null;
+
+    slidingChip: SlidingChip = null;
+    aroundTablePlayers: AroundTablePlayers = null;
+    betItems: BetItems = null;
 
     protected enablePlaceChips = true;
     protected payChipsDuration = 1.2;
@@ -66,6 +70,17 @@ export class ChipFlying extends ObserverComponent {
     protected chipStorage = {};
     protected isStartRunAnimPayChips = false;
     protected winningPlayers: gc.GameServiceMessage.TWinningPlayers = {};
+
+    onLoad(): void {
+        super.onLoad();
+        this.fetchComponents();
+    }
+
+    fetchComponents() {
+        this.slidingChip = this.nodeSlidingChip.getComponent(SlidingChip);
+        this.aroundTablePlayers = this.nodeAroundTablePlayers.getComponent(AroundTablePlayers);
+        this.betItems = this.nodeBetItems.getComponent(BetItems);
+    }
 
     @render(Chips.ChipStore, (store) => store.chipsByMainPlayerRate, { fireImmediately: false })
     flyChipsWhenJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {
