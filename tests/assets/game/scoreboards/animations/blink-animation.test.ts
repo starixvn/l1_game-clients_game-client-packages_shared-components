@@ -1,7 +1,7 @@
-import { Tween, tween } from "cc";
+import { Tween, tween, UIOpacity } from "cc";
 import { BlinkAnimation } from "db://shared-components/shared/common-components/blink-animation/blink-animation";
 
-describe(BlinkAnimation.name, () => {
+describe("BlinkAnimation", () => {
     let component: BlinkAnimation;
     const uiOpacity = {
         opacity: true,
@@ -9,13 +9,14 @@ describe(BlinkAnimation.name, () => {
 
     beforeEach(() => {
         component = new BlinkAnimation();
-
-        (component.node.getComponent as jest.Mock).mockReturnValue(uiOpacity);
     });
 
     describe("onEnable", () => {
         describe("when called", () => {
             it("should create tween as expected", () => {
+                // Arrange
+                const uiOpacity = component.node.getComponent(UIOpacity);
+
                 // Act
                 component.onEnable();
                 const tweenInstance = tween();
