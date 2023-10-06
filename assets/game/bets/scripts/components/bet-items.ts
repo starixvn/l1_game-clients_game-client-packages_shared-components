@@ -14,7 +14,7 @@ const { Settlements, Rounds, RoundHistories } = gc;
 type TContainerStatics = {
     [groupId: number]: Node[];
 };
-@ccclass()
+@ccclass
 export class BetItems extends ObserverComponent {
     betItemComponents: BetItem[] = [];
     settlementResult: gc.GameServiceMessage.TSettlementResult = null;
