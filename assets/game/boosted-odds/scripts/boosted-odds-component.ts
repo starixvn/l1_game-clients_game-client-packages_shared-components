@@ -14,11 +14,20 @@ export default class BoostedOddsComponent extends ObserverComponent {
     @handle(gc.Notification.BoostedOddsStore, (store) => store.increasePopupCounter())
     openPromotions() {}
 
-    @render(gc.Notification.BoostedOddsStore, (store) => store.boostedOddsCounter, { fireImmediately: false })
-    showBoostedOddIcon() {
+    @render(
+        gc.Notification.BoostedOddsStore,
+        (store) => {
+            return {
+                boostedOddsCounter: store.boostedOddsCounter,
+                boostedOddsIconShowedTimeInMiliseconds: store.boostedOddsIconShowedTimeInMiliseconds,
+            };
+        },
+        { fireImmediately: false }
+    )
+    showBoostedOddIcon(model: { boostedOddsCounter: number; boostedOddsIconShowedTimeInMiliseconds: number }) {
         tween(this.icon)
             .call(() => (this.icon.active = true))
-            .delay(10)
+            .delay(model.boostedOddsIconShowedTimeInMiliseconds)
             .call(() => (this.icon.active = false))
             .start();
     }
