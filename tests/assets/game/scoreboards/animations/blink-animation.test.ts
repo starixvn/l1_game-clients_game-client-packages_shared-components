@@ -9,6 +9,10 @@ describe("BlinkAnimation", () => {
 
     beforeEach(() => {
         component = new BlinkAnimation();
+
+        component.node.getComponent = jest.fn().mockImplementation(() => {
+            return uiOpacity;
+        });
     });
 
     describe("onEnable", () => {
