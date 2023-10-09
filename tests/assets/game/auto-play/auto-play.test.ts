@@ -1,11 +1,11 @@
 import { Label, Prefab, Sprite } from "cc";
-import { AutoPlay } from "./../../../../assets/game/auto-play/scripts/auto-play";
+import { AutoPlayButton } from "./../../../../assets/game/auto-play/scripts/auto-play-button";
 
 describe("AutoPlayPopup", () => {
-    let comp: AutoPlay;
+    let comp: AutoPlayButton;
 
     beforeEach(() => {
-        comp = new AutoPlay();
+        comp = new AutoPlayButton();
         comp.lblNoOfRound = new Label();
         comp.sprIconAutoPlay = new Sprite();
         comp.prfAutoPlayPopup = new Prefab();
