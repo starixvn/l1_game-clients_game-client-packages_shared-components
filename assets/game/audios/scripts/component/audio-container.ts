@@ -20,7 +20,7 @@ export type TAudioValue = {
     type: string;
 };
 
-enum ECurrentPlayTime {
+export enum ECurrentPlayTime {
     playMusic = "playMusic",
     playSFX = "playSFX",
 }
@@ -48,6 +48,10 @@ export class AudioContainer extends ObserverComponent {
         [ECurrentPlayTime.playMusic]: 0,
         [ECurrentPlayTime.playSFX]: 0,
     };
+
+    setIsUserGesture(isUserGesture: boolean) {
+        this.isUserGesture = isUserGesture;
+    }
 
     onLoad() {
         super.onLoad();
