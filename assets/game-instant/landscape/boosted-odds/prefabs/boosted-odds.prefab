@@ -42,7 +42,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 340.6,
+      "x": 328,
       "y": -314,
       "z": 0
     },
@@ -55,9 +55,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.8,
-      "y": 0.8,
-      "z": 0.8
+      "x": 1,
+      "y": 1,
+      "z": 1
     },
     "_mobility": 0,
     "_layer": 33554432,
@@ -178,9 +178,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.1,
-      "y": 1.1,
-      "z": 1.1
+      "x": 0.8,
+      "y": 0.8,
+      "z": 0.8
     },
     "_mobility": 0,
     "_layer": 33554432,
@@ -875,7 +875,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -41.3,
+      "y": -37.6,
       "z": 0
     },
     "_lrot": {
@@ -887,9 +887,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
+      "x": 1.4,
+      "y": 1.4,
+      "z": 1.4
     },
     "_mobility": 0,
     "_layer": 33554432,
@@ -1054,9 +1054,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
+      "x": 1.4,
+      "y": 1.4,
+      "z": 1.4
     },
     "_mobility": 0,
     "_layer": 33554432,
@@ -3751,12 +3751,12 @@
     "playOnLoad": true,
     "_clips": [
       {
-        "__uuid__": "5b9c745a-7925-4fb6-a68e-09d3ec6da540",
+        "__uuid__": "5cffecb9-034e-48dd-b691-1d2dfb4a2ea4",
         "__expectedType__": "cc.AnimationClip"
       }
     ],
     "_defaultClip": {
-      "__uuid__": "5b9c745a-7925-4fb6-a68e-09d3ec6da540",
+      "__uuid__": "5cffecb9-034e-48dd-b691-1d2dfb4a2ea4",
       "__expectedType__": "cc.AnimationClip"
     },
     "_id": ""

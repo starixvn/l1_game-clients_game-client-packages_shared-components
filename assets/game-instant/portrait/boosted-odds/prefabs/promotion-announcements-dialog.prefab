@@ -780,7 +780,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "0290b9d5-7d97-434c-b5d3-6960fa369ac3@cbc79",
+      "__uuid__": "0290b9d5-7d97-434c-b5d3-6960fa369ac3@fbb7a",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -838,8 +838,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 395,
-      "height": 104
+      "width": 374,
+      "height": 87
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3466,7 +3466,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "Điều Khoản Khuyến Mãi",
+    "_string": "Terms and Conditions",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 33.75,
@@ -4241,7 +4241,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "Khuyến Mãi",
+    "_string": "Promotions",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 33.75,
@@ -6030,11 +6030,11 @@
       "b": 255,
       "a": 255
     },
-    "_string": "- Tất cả người chơi đều có thể tham gia các chương trình khuyến mãi và có cơ hội giành được những giải thưởng hấp dẫn.\n- Tiền thắng được tính toán dựa theo quy định của chương trình khuyến mãi và tỷ lệ trả thưởng.\n- Chương trình khuyến mãi chỉ được áp dụng trong một khoảng thời gian nhất định do Công ty quy định. Khi chương trình khuyến mãi kết thúc, tỷ lệ trả thưởng sẽ được điều chỉnh trở về như ban đầu.\n- Trong một số tình huống, thể lệ chương trình có thể thay đổi mà không cần thông báo trước.\nTrong mọi trường hợp xảy ra tranh chấp, quyết định của Công ty sẽ là quyết định cuối cùng.",
+    "_string": "- All new and existing punters are eligible to join the promotions and take the chance to win bigger prizes. \n- The winning amount is paid according to the promotion rules and payouts. \n- The Promotion is applied for a certain period ruled by the Company. When the promotion expires, the betting odds will be set back to the previous values.\n- The Company reserves the right to vary any of the terms of entry applying to this promotion or to modify, terminate, suspend, or reschedule this promotion at any time.\n- Any dispute arising from or in the connection with this promotion shall be decided by the Company.",
     "_horizontalAlign": 0,
     "_verticalAlign": 0,
-    "_actualFontSize": 25,
-    "_fontSize": 25,
+    "_actualFontSize": 26,
+    "_fontSize": 26,
     "_fontFamily": "Arial",
     "_lineHeight": 32,
     "_overflow": 3,
@@ -6090,7 +6090,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 450,
-      "height": 608
+      "height": 630
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -6601,8 +6601,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 234.264,
-      "y": -222.12,
+      "x": 240.58,
+      "y": -236.794,
       "z": 0
     },
     "_lrot": {
@@ -6614,9 +6614,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.6,
-      "y": 0.6,
-      "z": 0.6
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
     },
     "_mobility": 0,
     "_layer": 33554432,
@@ -6765,8 +6765,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -221.543,
-      "y": -171.922,
+      "x": -232.522,
+      "y": -197.952,
       "z": 0
     },
     "_lrot": {
@@ -6778,9 +6778,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.6,
-      "y": 0.6,
-      "z": 0.6
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
     },
     "_mobility": 0,
     "_layer": 33554432,

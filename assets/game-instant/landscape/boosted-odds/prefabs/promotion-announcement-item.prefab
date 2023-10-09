@@ -109,7 +109,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 66.432,
-      "y": 3,
+      "y": 3.5,
       "z": 0
     },
     "_lrot": {
@@ -395,8 +395,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 187.371,
-      "y": -2.426,
+      "x": 194.371,
+      "y": -3.5,
       "z": 0
     },
     "_lrot": {
@@ -461,8 +461,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.02,
-      "y": 1.05,
+      "x": 1,
+      "y": 1,
       "z": 1
     },
     "_mobility": 0,
@@ -559,8 +559,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 170,
-      "height": 60
+      "width": 136,
+      "height": 50
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -670,11 +670,11 @@
       "b": 33,
       "a": 255
     },
-    "_string": "Gabung\nPermainan",
+    "_string": "Join Game",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 42,
-    "_fontSize": 42,
+    "_actualFontSize": 50,
+    "_fontSize": 40,
     "_fontFamily": "Arial",
     "_lineHeight": 44,
     "_overflow": 0,
@@ -689,7 +689,7 @@
     "_isBold": false,
     "_isUnderline": false,
     "_underlineHeight": 0,
-    "_cacheMode": 2,
+    "_cacheMode": 0,
     "_id": ""
   },
   {
@@ -755,8 +755,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 253.03,
-      "height": 92
+      "width": 200.62109375,
+      "height": 59.44
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -802,7 +802,7 @@
       "__id__": 36
     },
     "overrideFonts": [],
-    "enableCacheMode": true,
+    "enableCacheMode": false,
     "_id": ""
   },
   {
@@ -953,7 +953,7 @@
     "_top": 0,
     "_bottom": 0,
     "_horizontalCenter": 0,
-    "_verticalCenter": 0.5740000000000001,
+    "_verticalCenter": 0,
     "_isAbsLeft": true,
     "_isAbsRight": true,
     "_isAbsTop": true,
@@ -1003,8 +1003,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 155,
-      "height": 55
+      "width": 134,
+      "height": 50
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1322,7 +1322,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -270.399,
-      "y": -7,
+      "y": -6.5,
       "z": 0
     },
     "_lrot": {
@@ -1376,7 +1376,7 @@
     "_actualFontSize": 18,
     "_fontSize": 18,
     "_fontFamily": "Arial",
-    "_lineHeight": 21,
+    "_lineHeight": 22,
     "_overflow": 3,
     "_enableWrapText": true,
     "_font": {
@@ -1430,7 +1430,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 447.00200000000007,
-      "height": 21
+      "height": 22
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1579,7 +1579,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 680,
-      "height": 76
+      "height": 77
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
