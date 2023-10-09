@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "auto-play",
+    "_name": "auto-play-button",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "auto-play",
+    "_name": "auto-play-button",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -821,13 +821,13 @@
     "__prefab": {
       "__id__": 36
     },
-    "lblnoOfRound": {
+    "lblNoOfRound": {
       "__id__": 12
     },
     "sprIconAutoPlay": {
       "__id__": 18
     },
-    "prfautoPlayPopup": {
+    "prfAutoPlayPopup": {
       "__uuid__": "64c8c760-d297-4cfc-a5f6-1e6ab1a2dc97",
       "__expectedType__": "cc.Prefab"
     },

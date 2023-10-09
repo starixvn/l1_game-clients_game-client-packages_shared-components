@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
 @ccclass
-export class AutoPlay extends ObserverComponent {
+export class AutoPlayButton extends ObserverComponent {
     @property(Label)
     lblNoOfRound: Label = null;
 
