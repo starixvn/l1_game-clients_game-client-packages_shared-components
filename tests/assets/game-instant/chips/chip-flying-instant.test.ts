@@ -9,6 +9,10 @@ jest.mock("db://shared-components/game/chip-flying/scripts/components/actions", 
     getChipQuantity: jest.fn(),
 }));
 
+jest.mock("lodash-es", () => ({
+    isEmpty: jest.fn(),
+}));
+
 describe(ChipFlyingInstant.name, () => {
     let chipFlyingInstant: ChipFlyingInstant;
     beforeEach(() => {
