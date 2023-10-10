@@ -185,7 +185,7 @@
       "a": 255
     },
     "_normalSprite": {
-      "__uuid__": "23645dc8-79a8-4e5d-ac25-19b477732e47@0e81e",
+      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@0e81e",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_hoverSprite": null,
@@ -274,7 +274,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "23645dc8-79a8-4e5d-ac25-19b477732e47@0e81e",
+      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@0e81e",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -290,7 +290,7 @@
     "_isTrimmedMode": true,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "23645dc8-79a8-4e5d-ac25-19b477732e47",
+      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""
@@ -1312,7 +1312,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 4.408,
-      "y": 204.083,
+      "y": -275.563,
       "z": 0
     },
     "_lrot": {
@@ -1475,7 +1475,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -244.118,
+      "x": -251.63,
       "y": -16.796,
       "z": 0
     },
@@ -1639,7 +1639,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 242.905,
+      "x": 251.736,
       "y": -1.772,
       "z": 0
     },
@@ -2152,7 +2152,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -16.945,
-      "y": 235.438,
+      "y": -236.078,
       "z": 0
     },
     "_lrot": {
@@ -3500,7 +3500,7 @@
     "node": {
       "__id__": 153
     },
-    "_enabled": true,
+    "_enabled": false,
     "__prefab": {
       "__id__": 157
     },
