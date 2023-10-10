@@ -44,10 +44,10 @@ export class AutoResizeNode extends Component {
     heightPadding = 0;
 
     onLoad() {
-        this.target.on(Node.EventType.SIZE_CHANGED, this.resizeNode, this);
+        this.target?.on(Node.EventType.SIZE_CHANGED, this.resizeNode, this);
         this.resizeNode();
         if (this.syncPosition) {
-            this.target.on(Node.EventType.TRANSFORM_CHANGED, this.doSyncPosition, this);
+            this.target?.on(Node.EventType.TRANSFORM_CHANGED, this.doSyncPosition, this);
             this.doSyncPosition();
         }
     }
@@ -63,7 +63,7 @@ export class AutoResizeNode extends Component {
     }
 
     onDestroy() {
-        this.target.off(Node.EventType.SIZE_CHANGED, this.resizeNode, this);
+        this.target?.isValid && this.target.off(Node.EventType.SIZE_CHANGED, this.resizeNode, this);
     }
 
     resizeNode() {
