@@ -3,8 +3,8 @@ import { FunctionUtils } from "../../shared/utils";
 const { ccclass, property } = _decorator;
 
 @ccclass
-export default class GameComponent extends Component {
-    private resolutionSizesInstant = {
+export default class DetectResolutionSize extends Component {
+    private readonly resolutionSizesInstant = {
         PORTRAIT: {
             width: 448,
             height: 664,

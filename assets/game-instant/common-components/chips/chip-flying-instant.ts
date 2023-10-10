@@ -1,8 +1,8 @@
 import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import Observer from "observer";
-import { ChipFlying } from "../../../game/chip-flying/scripts/components/chip-flying";
 import { addChipsToChipBoxWhenJoinRoom, getChipQuantity } from "../../../game/chip-flying/scripts/components/actions";
+import { ChipFlying } from "../../../game/chip-flying/scripts/components/chip-flying";
 
 const { ccclass } = _decorator;
 const { render } = Observer;
@@ -11,7 +11,7 @@ const { Rounds } = gc;
 
 @ccclass("ChipFlyingInstant")
 export default class ChipFlyingInstant extends ChipFlying {
-    protected isShowChips: boolean = false;
+    protected isShowChips = false;
     private isFirstJoinGame = true;
 
     override flyChipsWhenJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {}
