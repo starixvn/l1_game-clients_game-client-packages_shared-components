@@ -17,54 +17,69 @@ describe("AudioCmp", () => {
 
     describe("renderMusicComp", () => {
         it("updates display when type is MUSIC", () => {
+            // Arrange
             const updateDisplay = jest.fn();
             component.updateDisplay = updateDisplay;
-
             component.type = Audios.AudioType.MUSIC;
+
+            // Act
             component.renderMusicComp(true);
 
+            // Assert
             expect(updateDisplay).toHaveBeenCalledWith(true);
         });
 
         it("does not update display when type is not MUSIC", () => {
+            // Arrange
             const updateDisplay = jest.fn();
             component.updateDisplay = updateDisplay;
-
             component.type = Audios.AudioType.SFX;
+
+            // Act
             component.renderMusicComp(true);
 
+            // Assert
             expect(updateDisplay).not.toHaveBeenCalled();
         });
     });
 
     describe("renderSfxComp", () => {
         it("updates display when type is SFX", () => {
+            // Arrange
             const updateDisplay = jest.fn();
             component.updateDisplay = updateDisplay;
-
             component.type = Audios.AudioType.SFX;
+
+            // Act
             component.renderSfxComp(true);
 
+            // Assert
             expect(updateDisplay).toHaveBeenCalledWith(true);
         });
 
         it("does not update display when type is not SFX", () => {
+            // Arrange
             const updateDisplay = jest.fn();
             component.updateDisplay = updateDisplay;
-
             component.type = Audios.AudioType.MUSIC;
+
+            // Act
             component.renderSfxComp(true);
 
+            // Assert
             expect(updateDisplay).not.toHaveBeenCalled();
         });
     });
 
     describe("onChangedAudio", () => {
         it("returns correct params", () => {
+            // Arrange
             component.type = Audios.AudioType.MUSIC;
 
+            // Act
             const result = component.onChangedAudio();
 
+            // Assert
             expect(result).toEqual({
                 type: Audios.AudioType.MUSIC,
                 enable: false,

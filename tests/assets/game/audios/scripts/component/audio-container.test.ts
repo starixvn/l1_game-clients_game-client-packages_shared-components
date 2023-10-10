@@ -48,6 +48,7 @@ describe("AudioContainer", () => {
                 type: "test",
             },
         };
+
         // Act
         AudioManager.audioConfigs(audioConfigsMock);
 
