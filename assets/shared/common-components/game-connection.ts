@@ -6,8 +6,12 @@ import { ObserverComponent } from "./observer-component/scripts/observer-compone
 const { ccclass } = _decorator;
 const { handle, render } = Observer;
 
+const { Auth, AppTypes } = gc;
+
 @ccclass
 export default class GameConnection extends ObserverComponent {
+    protected system: number = AppTypes.Club;
+
     openGameCallback = () => {};
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
@@ -20,6 +24,13 @@ export default class GameConnection extends ObserverComponent {
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.startNewRound, { fireImmediately: false })
     requestOpenGameWhenStartNewRound() {
-        this.openGameCallback();
+        if (this.system === AppTypes.Instant) {
+            this.openGameCallback();
+        }
+    }
+
+    @render(Auth.AuthStore, (store) => store.system)
+    openGame(system: number) {
+        this.system = system;
     }
 }
