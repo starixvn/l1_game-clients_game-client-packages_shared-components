@@ -79,9 +79,16 @@ export class AudioContainer extends ObserverComponent {
         window.addEventListener("message", this.handleSoundEventFromParent.bind(this));
     }
 
-    @handle(gc.UserSettings.UserSettingHandlers, (handle, sfxEnable: boolean) => handle.setSfxEnable(sfxEnable))
     handleSoundEventFromParent(event: MessageEvent) {
-        return event.data.sfxEnable;
+        const { sfxEnable } = event.data;
+        if (sfxEnable !== null && sfxEnable !== undefined) {
+            this.switchSound(sfxEnable);
+        }
+    }
+
+    @handle(gc.UserSettings.UserSettingHandlers, (handle, sfxEnable: boolean) => handle.setSfxEnable(sfxEnable))
+    private switchSound(sfxEnable: boolean) {
+        return sfxEnable;
     }
 
     protected postMessageUserGestureToParent() {
