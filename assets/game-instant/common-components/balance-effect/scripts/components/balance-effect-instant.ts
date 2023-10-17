@@ -1,9 +1,6 @@
 import gc from "@sg/game-client-base";
-import { BitmapFont, CCFloat, Label, Node, _decorator, tween, v3 } from "cc";
-
+import { Label, Node, _decorator, tween, v3 } from "cc";
 import { BalanceContainer } from "../../../../../game/balance-effect/scripts/components/balance-effect";
-import { TBalanceEffect } from "../../../../../game/balance-effect/scripts/stores/balance-effect-store";
-
 const { FormatUtils } = gc;
 const { ccclass, property } = _decorator;
 
