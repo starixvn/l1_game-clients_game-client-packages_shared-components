@@ -1,16 +1,9 @@
 import { _decorator } from "cc";
-import Observer from "observer";
-import { BalanceContainerInstant } from "./balance-effect-instant";
-import { BalanceEffectStore, TUpdateBalance } from "../../../../../game/balance-effect/scripts/stores/balance-effect-store";
+import { MainPlayerDecreaseBalanceEffect } from "../../../../../game/balance-effect/scripts/components/main-player-decrease-balance-effect";
 
 const { ccclass } = _decorator;
-const { render } = Observer;
 
 @ccclass()
-export class MainPlayerDecreaseBalanceEffectInstant extends BalanceContainerInstant {
-    isIncrease = false;
-    @render(BalanceEffectStore, (store) => store.decreaseBalanceMainPlayer, { fireImmediately: false })
-    decreaseBalanceMainPlayer(balanceWhenMainPlayerBet: TUpdateBalance) {
-        this.updateBalanceWhenPlayerBet(balanceWhenMainPlayerBet?.balanceEffect);
-    }
+export class MainPlayerDecreaseBalanceEffectInstant extends MainPlayerDecreaseBalanceEffect {
+    protected fontSize = 40;
 }
