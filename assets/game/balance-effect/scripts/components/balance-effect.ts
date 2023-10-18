@@ -25,6 +25,8 @@ export class BalanceContainer extends NodeContainer {
 
     isIncrease = true;
 
+    protected fontSize = 30;
+
     updateBalanceWhenPlayerBet(balanceEffect: TBalanceEffect) {
         if (balanceEffect?.effectNode && balanceEffect?.balance) {
             this.updateBalanceEffect(balanceEffect.effectNode, balanceEffect.balance);
@@ -37,7 +39,7 @@ export class BalanceContainer extends NodeContainer {
         lblBalance.string = `${this.isIncrease ? "+" : "-"}${FormatUtils.numberWithCommas(balance, 2)}`;
         lblBalance.font = this.isIncrease ? this.fontIncreaseBalance : this.fontDecreaseBalance;
         lblBalance.lineHeight = 130;
-        lblBalance.fontSize = 30;
+        lblBalance.fontSize = this.fontSize;
         lblBalance.node.position = v3(0, this.startY, 0);
         parent.addChild(balanceEffectNode);
         tween(balanceEffectNode)
