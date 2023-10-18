@@ -1,5 +1,5 @@
 import inversify from "inversify";
-import { makeAutoObservable } from "mobx";
+import mobx from "mobx";
 
 const { injectable } = inversify;
 @injectable()
@@ -8,7 +8,7 @@ export default class AutoCashOutStore {
     private multiplier: number = 0;
 
     constructor() {
-        makeAutoObservable(this);
+        mobx.makeAutoObservable(this);
     }
     get isEnable(): boolean {
         return this.enable;
