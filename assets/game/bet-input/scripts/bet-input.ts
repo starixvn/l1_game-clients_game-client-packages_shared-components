@@ -26,7 +26,7 @@ export class BetInput extends ObserverComponent {
         this.nodeDisabledLayer.active = isDisabledBetInput;
     }
 
-    @render(BetInputStore, (store) => store.betAmount)
+    @render(BetInputStore, (store) => store.betAmountRatio)
     private updateBetAmount(amount: number) {
         this.lblBetAmount.string = `${amount}`;
     }

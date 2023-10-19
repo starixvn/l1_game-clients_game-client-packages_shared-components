@@ -7,6 +7,7 @@ const { injectable, inject } = inversify;
 @injectable()
 export class BetInputStore {
     @inject(gc.GameConfigs.GameConfigStore) private readonly gameConfig: gc.GameConfigs.GameConfigStore;
+    @inject(gc.CrashCashOut.CrashCashoutStore) private readonly cashoutStore: gc.CrashCashOut.CrashCashoutStore;
 
     private _betAmount = -1;
     isOpenBetAmountPopup = false;
@@ -27,6 +28,10 @@ export class BetInputStore {
 
     get increaseStatus(): boolean {
         return this.betAmount < this.gameConfig.maxBet;
+    }
+
+    get betAmountRatio(): number {
+        return this.betAmount * this.cashoutStore.ratio;
     }
 
     constructor() {
