@@ -1,4 +1,4 @@
-import { Label, Node, Prefab, UITransform, instantiate, v3 } from "cc";
+import { Label, Node, Prefab, UIOpacity, UITransform, instantiate, math, tween, v3 } from "cc";
 
 export namespace ComponentUtils {
     export const moveToOtherNode = (node: Node, destNode: Node) => {
@@ -22,5 +22,27 @@ export namespace ComponentUtils {
             const toolTipNode = instantiate(prefab);
             container.addChild(toolTipNode);
         }
+    };
+
+    export const autoDisappear = (node: Node, isDetroy = true) => {
+        const opacity = node.getComponent(UIOpacity);
+        opacity.opacity = 1;
+        const duration = 0.2;
+        const delay = 2.5;
+        tween(opacity).to(duration, { opacity: 255 }).delay(delay).to(duration, { opacity: 0 }).start();
+        tween(node)
+            .to(duration, {
+                scale: math.Vec3.ONE,
+            })
+            .delay(delay)
+            .to(duration, {
+                scale: math.v3(1.5, 1.5),
+            })
+            .call(() => {
+                if (isDetroy) {
+                    node.destroy();
+                }
+            })
+            .start();
     };
 }
