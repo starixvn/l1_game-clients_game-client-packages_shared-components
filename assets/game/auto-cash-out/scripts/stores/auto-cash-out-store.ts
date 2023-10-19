@@ -5,7 +5,7 @@ const { injectable } = inversify;
 @injectable()
 export default class AutoCashOutStore {
     private _enable: boolean = false;
-    private _multiplier: number = 0;
+    private _multiplier: number = 1.01;
 
     constructor() {
         mobx.makeAutoObservable(this);
