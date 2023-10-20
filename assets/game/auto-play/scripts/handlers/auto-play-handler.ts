@@ -8,6 +8,7 @@ const { injectable, inject } = inversify;
 @injectable()
 export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     @inject(AutoPlayStore) private readonly autoPlayStore: AutoPlayStore;
+    @inject(gc.Rounds.RoundTimeStore) private readonly roundTimeStore: gc.Rounds.RoundTimeStore;
 
     handle() {}
 
@@ -39,13 +40,16 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     }
 
     decreaseAutoPlayRounds() {
-        this.updateAutoPlayRounds(this.autoPlayStore.autoPlayRounds - 1);
+        if (this.autoPlayStore.isAutoPlay) {
+            this.updateAutoPlayRounds(this.autoPlayStore.autoPlayRounds - 1);
+        }
     }
 
     private updateAutoPlayRounds(rounds: number) {
         this.autoPlayStore.autoPlayRounds = rounds;
         if (this.autoPlayStore.autoPlayRounds < 0) {
             this.autoPlayStore.isAutoPlay = false;
+            this.autoPlayStore.isOpenAutoPlayPopup = true;
         }
     }
 }
