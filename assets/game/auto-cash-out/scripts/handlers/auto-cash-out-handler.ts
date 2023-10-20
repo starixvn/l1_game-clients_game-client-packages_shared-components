@@ -1,5 +1,4 @@
 import inversify from "inversify";
-
 import AutoCashOutStore from "../stores/auto-cash-out-store";
 
 const { injectable, inject } = inversify;
@@ -9,6 +8,10 @@ export default class AutoCashOutHandler {
 
     handleEnable(enable: boolean) {
         this.autoCashoutStore.enable = enable;
+    }
+
+    handleMultiplier(multiplier: number) {
+        this.autoCashoutStore.multiplier = multiplier;
     }
 
     adjustMultiplier(value: number) {

@@ -1,7 +1,7 @@
 import inversify from "inversify";
 import mobx from "mobx";
 
-const { injectable } = inversify;
+const { injectable, inject } = inversify;
 @injectable()
 export default class AutoCashOutStore {
     private _enable: boolean = false;

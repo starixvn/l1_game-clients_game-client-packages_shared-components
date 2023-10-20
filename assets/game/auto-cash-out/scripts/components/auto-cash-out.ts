@@ -2,6 +2,7 @@ import { _decorator, Button, Label, Sprite, Toggle, UIOpacity } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import AutoCashOutHandler from "../handlers/auto-cash-out-handler";
+import AutoCashOutPopupHandler from "../handlers/auto-cash-out-popup-handler";
 import AutoCashOutStore from "../stores/auto-cash-out-store";
 
 const { ccclass, property } = _decorator;
@@ -33,9 +34,14 @@ export class AutoCashout extends ObserverComponent {
         return value;
     }
 
+    @handle(AutoCashOutPopupHandler, (handle, value: boolean) => handle.togglePopup(value))
+    openPopup() {
+        return true;
+    }
+
     @render(AutoCashOutStore, (store) => store.multiplier)
     private updateMultiplier(multiplier: number) {
-        this.multiplierLabel.string = `${multiplier}X`;
+        this.multiplierLabel.string = `${multiplier.toFixed(2)}X`;
         this.updateButtonStatus(this.decreaseButton, multiplier > 1.01);
     }
 
