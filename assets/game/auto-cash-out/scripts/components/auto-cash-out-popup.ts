@@ -1,9 +1,11 @@
+import gc from "@sg/game-client-base";
 import { Button, Color, Label, Node, _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import AutoCashOutHandler from "../handlers/auto-cash-out-handler";
 import AutoCashOutPopupHandler from "../handlers/auto-cash-out-popup-handler";
 import AutoCashOutPopupStore from "../stores/auto-cash-out-popup-store";
+
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -11,6 +13,9 @@ const { render, handle } = Observer;
 export class AutoCashoutPopup extends ObserverComponent {
     @property(Label)
     multiplierLabel: Label = null;
+
+    @property(Label)
+    multiplierRangeLabel: Label = null;
 
     @property(Node)
     nodeContent: Node = null;
@@ -41,8 +46,14 @@ export class AutoCashoutPopup extends ObserverComponent {
             this.multiplierLabel.string = newValue;
             return parseFloat(newValue);
         }
-        
+
         return parseFloat(this.multiplierLabel.string);
+    }
+
+    @render(gc.GameConfigs.GameConfigStore, (store) => store)
+    updateMultiplierRange(store: gc.CrashGameConfigStore) {
+        console.log(store);
+        this.multiplierRangeLabel.string = `1.01X - X`;
     }
 
     @render(AutoCashOutPopupStore, (store) => store.isValid)
