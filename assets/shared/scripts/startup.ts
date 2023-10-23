@@ -30,6 +30,7 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) =>
 };
 
 export function startGame(namespace: string, containerOptions: gc.IContainerOptions, siteConfigs: gc.Configs.SiteConfigs) {
+    gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey);
     loadI18n(siteConfigs, namespace);
 
     const container = gc.getContainer(containerOptions);
