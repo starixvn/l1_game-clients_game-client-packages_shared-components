@@ -550,7 +550,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 265.33273761192066,
+      "width": 265.3479386471105,
       "height": 57.96
     },
     "_anchorPoint": {
@@ -589,7 +589,7 @@
     "_string": "Start Place Bet",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 46.88780487804878,
+    "_actualFontSize": 37.064039408866996,
     "_fontSize": 36,
     "_fontFamily": "Arial",
     "_lineHeight": 46,

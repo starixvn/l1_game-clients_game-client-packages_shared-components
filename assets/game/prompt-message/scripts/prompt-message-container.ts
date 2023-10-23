@@ -10,7 +10,6 @@ const { ccclass, property } = _decorator;
 
 @ccclass("PromptMessageContainer")
 export class PromptMessageContainer extends NodeContainer {
-    @property(PromptMessageComponent)
     promptMessageComponent: PromptMessageComponent = null;
 
     @render(Rounds.RoundTimeStore, (store) => ({ roundState: store.roundState }))
