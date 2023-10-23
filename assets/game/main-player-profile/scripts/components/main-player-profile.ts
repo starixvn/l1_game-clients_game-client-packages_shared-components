@@ -45,6 +45,10 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     @render(MainPlayerStore, (store) => store.avatarId)
     async loadAvatar(avatarId: number) {
+        if (!this.sprAvatar) {
+            return;
+        }
+        
         const spriteFrame = await bundleManager.loadSharedAsset<SpriteFrame>(`images/avatars/${avatarId}/spriteFrame`, SpriteFrame);
         if (spriteFrame) {
             this.setAvatar(spriteFrame);
