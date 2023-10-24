@@ -27,6 +27,9 @@ export class AutoCashout extends ObserverComponent {
 
     maxMultiplier: number;
 
+    @property(Sprite)
+    disableNode: Sprite = null;
+
     @handle(AutoCashOutHandler, (handle, enable: boolean) => handle.handleEnable(enable))
     toggleCheck() {
         return this.toggle.isChecked;
@@ -58,6 +61,11 @@ export class AutoCashout extends ObserverComponent {
     private updateEnable(enable: boolean) {
         this.toggle.isChecked = enable;
         this.disableMultiplier.node.active = !enable;
+    }
+
+    @render(AutoCashOutStore, (store) => store.disable)
+    isVisibleNode(disable: boolean) {
+        this.disableNode.node.active = disable;
     }
 
     updateButtonStatus(button: Button, status: boolean) {

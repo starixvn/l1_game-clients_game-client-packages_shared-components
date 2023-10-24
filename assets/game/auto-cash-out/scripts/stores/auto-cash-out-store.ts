@@ -7,6 +7,8 @@ export default class AutoCashOutStore {
     private _enable: boolean = false;
     private _multiplier: number = 1.01;
 
+    private _disable: boolean = false;
+
     constructor() {
         mobx.makeAutoObservable(this);
     }
@@ -24,5 +26,13 @@ export default class AutoCashOutStore {
 
     set multiplier(multiplier: number) {
         this._multiplier = multiplier;
+    }
+
+    get disable(): boolean {
+        return this._disable;
+    }
+
+    set disable(trigger: boolean) {
+        this._disable = trigger;
     }
 }

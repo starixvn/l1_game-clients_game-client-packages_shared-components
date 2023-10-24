@@ -17,4 +17,8 @@ export default class AutoCashOutHandler {
     adjustMultiplier(value: number) {
         this.autoCashoutStore.multiplier = parseFloat((this.autoCashoutStore.multiplier + value).toFixed(2));
     }
+
+    handleDisableAuto(disable: boolean) {
+        this.autoCashoutStore.disable = disable;
+    }
 }
