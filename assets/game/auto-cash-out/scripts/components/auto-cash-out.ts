@@ -1,3 +1,4 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Button, Label, Sprite, Toggle, UIOpacity } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -24,6 +25,8 @@ export class AutoCashout extends ObserverComponent {
     @property(Button)
     decreaseButton: Button = null;
 
+    maxMultiplier: number;
+
     @handle(AutoCashOutHandler, (handle, enable: boolean) => handle.handleEnable(enable))
     toggleCheck() {
         return this.toggle.isChecked;
@@ -43,6 +46,12 @@ export class AutoCashout extends ObserverComponent {
     private updateMultiplier(multiplier: number) {
         this.multiplierLabel.string = `${multiplier.toFixed(2)}X`;
         this.updateButtonStatus(this.decreaseButton, multiplier > 1.01);
+        this.updateButtonStatus(this.increaseButton, multiplier < this.maxMultiplier);
+    }
+
+    @render(gc.GameConfigs.GameConfigStore, (store) => store.maxMultiplier)
+    updateMaxMultiplier(maxMultiplier: number) {
+        this.maxMultiplier = maxMultiplier;
     }
 
     @render(AutoCashOutStore, (store) => store.enable)

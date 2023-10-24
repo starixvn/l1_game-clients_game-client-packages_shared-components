@@ -59,6 +59,7 @@ export class AutoCashoutPopup extends ObserverComponent {
     updateMultiplierTextColor(isValid: boolean) {
         this.multiplierLabel.color = isValid ? Color.WHITE : Color.RED;
         this.confirmButton.interactable = isValid;
+        this.confirmButton.node.getChildByName("overlay").active = !isValid;
     }
 
     @handle(AutoCashOutPopupHandler, (handle, multiplier: number) => handle.handleMultiplier(multiplier))
