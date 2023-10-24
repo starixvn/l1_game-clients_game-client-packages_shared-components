@@ -20,9 +20,9 @@ export class AutoPlayButton extends ObserverComponent {
     @handle(AutoPlayHandler, (handle) => handle.checkAutoPlayClick())
     onClickAutoPlay() {}
 
-    @render(AutoPlayStore, (store) => store.autoPlayRounds)
-    setNoOfRound(rounds: number) {
-        this.lblNoOfRound.string = rounds.toString();
+    @render(AutoPlayStore, (store) => store.roundsAutoPlay)
+    setNoOfRound(roundsAutoPlay: number) {
+        this.lblNoOfRound.string = roundsAutoPlay.toString();
     }
 
     @render(AutoPlayStore, (store) => store.isAutoPlay)

@@ -21,7 +21,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
             this.autoPlayStore.isOpenAutoPlayPopup = true;
         } else {
             this.autoPlayStore.isAutoPlay = false;
-            this.autoPlayStore.autoPlayRounds = 0;
+            this.autoPlayStore.roundsAutoPlay = 0;
         }
     }
 
@@ -32,7 +32,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     confirmRoundAndStart() {
         this.autoPlayStore.isOpenAutoPlayPopup = false;
         this.autoPlayStore.isAutoPlay = true;
-        this.autoPlayStore.autoPlayRounds = this.autoPlayStore.selectedRoundOnPopup;
+        this.autoPlayStore.roundsAutoPlay = this.autoPlayStore.selectedRoundOnPopup;
     }
 
     updateNoOfRounds(rounds: number) {
@@ -41,15 +41,18 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
 
     decreaseAutoPlayRounds() {
         if (this.autoPlayStore.isAutoPlay) {
-            this.updateAutoPlayRounds(this.autoPlayStore.autoPlayRounds - 1);
+            this.updateAutoPlayRounds(this.autoPlayStore.roundsAutoPlay - 1);
         }
     }
 
     private updateAutoPlayRounds(rounds: number) {
-        this.autoPlayStore.autoPlayRounds = rounds;
-        if (this.autoPlayStore.autoPlayRounds < 0) {
-            this.autoPlayStore.isAutoPlay = false;
+        this.autoPlayStore.roundsAutoPlay = rounds;
+    }
+
+    checkFinishedPlayMode() {
+        if (this.autoPlayStore.roundsAutoPlay === 0 && this.autoPlayStore.isAutoPlay) {
             this.autoPlayStore.isOpenAutoPlayPopup = true;
+            this.autoPlayStore.isAutoPlay = false;
         }
     }
 }
