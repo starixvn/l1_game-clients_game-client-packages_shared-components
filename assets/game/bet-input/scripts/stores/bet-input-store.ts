@@ -6,7 +6,7 @@ const { injectable, inject } = inversify;
 
 @injectable()
 export class BetInputStore {
-    @inject(gc.CrashGameConfigStore) private readonly gameConfig: gc.CrashGameConfigStore;
+    @inject(gc.GameConfigs.GameConfigStore) private readonly gameConfig: gc.GameConfigs.GameConfigStore;
     @inject(gc.CrashCashOut.CrashCashoutStore) private readonly cashoutStore: gc.CrashCashOut.CrashCashoutStore;
 
     private _betAmount = -1;
