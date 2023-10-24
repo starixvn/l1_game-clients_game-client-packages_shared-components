@@ -8,6 +8,7 @@ import AutoCashOutStore from "../stores/auto-cash-out-store";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
+
 @ccclass
 export class AutoCashout extends ObserverComponent {
     @property(Label)
@@ -46,7 +47,7 @@ export class AutoCashout extends ObserverComponent {
     }
 
     @render(AutoCashOutStore, (store) => store.multiplier)
-    private updateMultiplier(multiplier: number) {
+    updateMultiplier(multiplier: number) {
         this.multiplierLabel.string = `${multiplier.toFixed(2)}X`;
         this.updateButtonStatus(this.decreaseButton, multiplier > 1.01);
         this.updateButtonStatus(this.increaseButton, multiplier < this.maxMultiplier);
@@ -58,7 +59,7 @@ export class AutoCashout extends ObserverComponent {
     }
 
     @render(AutoCashOutStore, (store) => store.enable)
-    private updateEnable(enable: boolean) {
+    updateEnable(enable: boolean) {
         this.toggle.isChecked = enable;
         this.disableMultiplier.node.active = !enable;
     }
@@ -74,10 +75,10 @@ export class AutoCashout extends ObserverComponent {
     }
 
     increaseMultiplier() {
-        return this.quickChangeMultiplier(0.01);
+        this.quickChangeMultiplier(0.01);
     }
 
     decreaseMultiplier() {
-        return this.quickChangeMultiplier(-0.01);
+        this.quickChangeMultiplier(-0.01);
     }
 }
