@@ -57,6 +57,14 @@ export class BundleManager {
     ) {
         return this.loadAssetsFromBundle<AssetType>("shared-bundle", assetPath, assetType, onProgress);
     }
+
+    loadInstantSharedAsset<AssetType extends Asset>(
+        assetPath: string,
+        assetType: any,
+        onProgress: ((finished: number, total: number) => void) | null = null
+    ) {
+        return this.loadAssetsFromBundle<AssetType>("shared-instant-bundle", assetPath, assetType, onProgress);
+    }
 }
 
 export const bundleManager = BundleManager.getInstance();

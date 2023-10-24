@@ -33,12 +33,7 @@ export default class SplashInstantVisibility extends Component {
         let splashInfoPrefab: Prefab = null;
 
         try {
-            splashInfoPrefab = await bundleManager.loadAssetsFromBundle<Prefab>(
-                "splash-instant-bundle",
-                `${assetPath}/splash-info`,
-                Prefab,
-                null
-            );
+            splashInfoPrefab = await bundleManager.loadInstantSharedAsset<Prefab>(`splash/${assetPath}/splash-info`, Prefab, null);
         } catch (error) {
             console.error("Failed to load splash info:", error);
         }

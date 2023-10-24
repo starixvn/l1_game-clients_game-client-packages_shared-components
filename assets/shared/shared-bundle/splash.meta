@@ -2,11 +2,10 @@
   "ver": "1.2.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "34d6f158-7a40-487f-a7ba-5d00a19d8ffa",
+  "uuid": "02ab282a-1a74-4315-b2fd-246400cfaed0",
   "files": [],
   "subMetas": {},
   "userData": {
-    "isBundle": true,
-    "bundleName": "splash-instant-bundle"
+    "bundleName": "splash-bundle"
   }
 }

@@ -144,8 +144,7 @@ export default class Splash extends Component {
 
     async loadSystemSlogan(assetPath: string, isSystemSG: boolean) {
         this.destroyAllChildrenSlogan();
-        const bundleName = "splash-bundle";
-        const slogan = await bundleManager.loadAssetsFromBundle<Prefab>(bundleName, assetPath, Prefab, null);
+        const slogan = await bundleManager.loadSharedAsset<Prefab>(`splash/${assetPath}`, Prefab, null);
         if (slogan) {
             const sloganNode = instantiate(slogan);
             if (isSystemSG) {
