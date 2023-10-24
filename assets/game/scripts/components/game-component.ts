@@ -1,11 +1,12 @@
 import gc from "@sg/game-client-base";
-import { Game, Label, _decorator, game, sys } from "cc";
+import { Game, Label, Prefab, _decorator, game, instantiate, sys } from "cc";
 import Observer from "observer";
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
 import { StaticGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
-import { ComponentUtils } from "../../../shared/utils";
+import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
+import { bundleManager } from "db://shared-components/shared/common-components/bundle-magager/bundle-manager";
 
 const { Rounds, Connection, HideGame, Settlements, FormatUtils, RoundHistories } = gc;
 const { ccclass, property } = _decorator;
@@ -139,4 +140,42 @@ export default class GameComponent extends GameComponentBase {
     playSound(id: string) {
         return id;
     }
+
+    @render(
+        gc.Notification.BoostedOddsStore,
+        (store) => {
+            return {
+                isInstantVersion: store.isInstantVersion,
+                shouldAddBoostedOddPrefab: store.shouldAddBoostedOddPrefab,
+            };
+        },
+        { fireImmediately: false }
+    )
+    async addBoostedOddIconPrefab(model: { isInstantVersion: boolean; shouldAddBoostedOddPrefab: boolean }) {
+        let prefabPath = "boosted-odds";
+        if (model.isInstantVersion) {
+            prefabPath += FunctionUtils.isPortraitMode() ? "-portrait" : "-landscape";
+        }
+
+        console.log(`%c gameVersion: ${prefabPath}`, "color: blue; font-size: larger");
+        if (model.shouldAddBoostedOddPrefab) {
+            console.log("%c Add boosted odds", "color: red; font-size: larger");
+            const prfBoostedOddIcon = await bundleManager.loadAssetsFromBundle<Prefab>(prefabPath, `prefabs/boosted-odds`, Prefab, null);
+
+            const prfBoostedOddContainer = await bundleManager.loadAssetsFromBundle<Prefab>(
+                prefabPath,
+                `prefabs/boosted-odds-container`,
+                Prefab,
+                null
+            );
+            this.node.addChild(instantiate(prfBoostedOddIcon));
+            this.node.addChild(instantiate(prfBoostedOddContainer));
+            setTimeout(() => {
+                this.handleSetBoostedOddsLoadedPrefab();
+            }, 1000);
+        }
+    }
+
+    @handle(gc.Notification.BoostedOddsPromotionsHandlers.BoostedOddsPopupHandlers, (handler) => handler.setIsLoadedPrefab(true))
+    handleSetBoostedOddsLoadedPrefab() {}
 }
