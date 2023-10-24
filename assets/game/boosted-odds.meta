@@ -7,6 +7,9 @@
   "subMetas": {},
   "userData": {
     "compressionType": {},
-    "isRemoteBundle": {}
+    "isRemoteBundle": {},
+    "isBundle": true,
+    "bundleName": "boosted-odds",
+    "bundleConfigID": "auto_8bFOikA/hLL66hmcYAmwpZ"
   }
 }

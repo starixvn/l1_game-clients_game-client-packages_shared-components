@@ -1,1 +1,15 @@
-{"ver":"1.2.0","importer":"directory","imported":true,"uuid":"12cfbc73-badf-4ba0-8262-d45396aa5df5","files":[],"subMetas":{},"userData":{"compressionType":{},"isRemoteBundle":{}}}
+{
+  "ver": "1.2.0",
+  "importer": "directory",
+  "imported": true,
+  "uuid": "12cfbc73-badf-4ba0-8262-d45396aa5df5",
+  "files": [],
+  "subMetas": {},
+  "userData": {
+    "compressionType": {},
+    "isRemoteBundle": {},
+    "isBundle": true,
+    "bundleName": "boosted-odds-portrait",
+    "bundleConfigID": "auto_8bFOikA/hLL66hmcYAmwpZ"
+  }
+}

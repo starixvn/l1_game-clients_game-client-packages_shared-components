@@ -18,17 +18,23 @@ export default class BoostedOddsComponent extends ObserverComponent {
         gc.Notification.BoostedOddsStore,
         (store) => {
             return {
+                isLoadedPrefab: store.isLoadedPrefab,
                 boostedOddsCounter: store.boostedOddsCounter,
                 boostedOddsIconShowedTimeInMiliseconds: store.boostedOddsIconShowedTimeInMiliseconds,
             };
         },
         { fireImmediately: false }
     )
-    showBoostedOddIcon(model: { boostedOddsCounter: number; boostedOddsIconShowedTimeInMiliseconds: number }) {
-        tween(this.icon)
-            .call(() => (this.icon.active = true))
-            .delay(model.boostedOddsIconShowedTimeInMiliseconds)
-            .call(() => (this.icon.active = false))
-            .start();
+    showBoostedOddIcon(model: { isLoadedPrefab: boolean; boostedOddsCounter: number; boostedOddsIconShowedTimeInMiliseconds: number }) {
+        console.log(`%c boostedOddsIconShowedTimeInMiliseconds : ${model.boostedOddsCounter}`, "color: green; font-size: larger");
+        console.log(`%c showBoostedOddIcon : ${model.boostedOddsIconShowedTimeInMiliseconds}`, "color: green; font-size: larger");
+        if (model.isLoadedPrefab) {
+            console.log(`%c isLoadedIconPrefab : ${model.isLoadedPrefab}`, "color: yellow; font-size: larger");
+            tween(this.icon)
+                .call(() => (this.icon.active = true))
+                .delay(model.boostedOddsIconShowedTimeInMiliseconds)
+                .call(() => (this.icon.active = false))
+                .start();
+        }
     }
 }
