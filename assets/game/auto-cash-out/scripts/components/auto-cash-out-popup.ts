@@ -34,7 +34,7 @@ export class AutoCashoutPopup extends ObserverComponent {
 
     @handle(AutoCashOutPopupHandler, (handle, multiplier: number) => handle.handleMultiplier(multiplier))
     addValue(event, value) {
-        if (this.multiplierLabel.string === "0") {
+        if (this.multiplierLabel.string === "0" && value !== ".") {
             this.multiplierLabel.string = value;
             return parseFloat(value);
         }
@@ -65,6 +65,10 @@ export class AutoCashoutPopup extends ObserverComponent {
     @handle(AutoCashOutPopupHandler, (handle, multiplier: number) => handle.handleMultiplier(multiplier))
     removeLastLetter() {
         this.multiplierLabel.string = this.multiplierLabel.string.slice(0, -1);
+        if (!this.multiplierLabel.string) {
+            this.multiplierLabel.string = "0";
+        }
+
         return parseFloat(this.multiplierLabel.string);
     }
 
