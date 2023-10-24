@@ -50,15 +50,13 @@ export class AutoCashoutPopup extends ObserverComponent {
         return parseFloat(this.multiplierLabel.string);
     }
 
-    @render(gc.GameConfigs.GameConfigStore, (store) => store)
-    updateMultiplierRange(store: gc.CrashGameConfigStore) {
-        console.log(store);
-        this.multiplierRangeLabel.string = `1.01X - X`;
+    @render(gc.CrashGameConfigStore, (store) => store.maxMultiplier)
+    updateMultiplierRangeLabel(maxMultiplier: number) {
+        this.multiplierRangeLabel.string = `1.01X - ${maxMultiplier.toFixed(2)}X`;
     }
 
     @render(AutoCashOutPopupStore, (store) => store.isValid)
     updateMultiplierTextColor(isValid: boolean) {
-        console.log(isValid);
         this.multiplierLabel.color = isValid ? Color.WHITE : Color.RED;
         this.confirmButton.interactable = isValid;
     }
