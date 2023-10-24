@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
-import { Component, Label, Node, Prefab, ProgressBar, _decorator, director } from "cc";
+import { Component, Label, Node, Prefab, ProgressBar, _decorator, director, instantiate } from "cc";
 import Observer from "observer";
+import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
 import GameConnection from "../../../shared/common-components/game-connection";
 import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
@@ -135,10 +136,29 @@ export default class Splash extends Component {
     }
 
     @render(Configs.SiteConfigs, (store) => store.systemType)
-    showSystemSlogan(systemType: string) {
+    async showSystemSlogan(systemType: string) {
         const isSystemSG = systemType === Configs.SystemConfigs.SG.name;
-        this.nodeSloganSG.active = isSystemSG;
-        this.nodeSloganVG.active = !isSystemSG;
+        const assetPath = isSystemSG ? "logo-SG" : "logo-VG";
+        await this.loadSystemSlogan(assetPath, isSystemSG);
+    }
+
+    async loadSystemSlogan(assetPath: string, isSystemSG: boolean) {
+        this.destroyAllChildrenSlogan();
+        const bundleName = "splash-bundle";
+        const slogan = await bundleManager.loadAssetsFromBundle<Prefab>(bundleName, assetPath, Prefab, null);
+        if (slogan) {
+            const sloganNode = instantiate(slogan);
+            if (isSystemSG) {
+                this.nodeSloganSG.addChild(sloganNode);
+            } else {
+                this.nodeSloganVG.addChild(sloganNode);
+            }
+        }
+    }
+
+    destroyAllChildrenSlogan() {
+        this.nodeSloganSG.destroyAllChildren();
+        this.nodeSloganVG.destroyAllChildren();
     }
 
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
