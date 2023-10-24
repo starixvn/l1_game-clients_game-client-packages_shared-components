@@ -8,7 +8,7 @@ const { injectable, inject } = inversify;
 @injectable()
 export class BetInputHandler implements gc.Shared.IHandler<number> {
     @inject(BetInputStore) private readonly betInputStore: BetInputStore;
-    @inject(gc.CrashGameConfigStore) private readonly gameConfig: gc.CrashGameConfigStore;
+    @inject(gc.GameConfigs.GameConfigStore) private readonly gameConfig: gc.GameConfigs.GameConfigStore;
 
     handle() {
         this.betInputStore.betAmount = this.betInputStore.betAmountTemp;

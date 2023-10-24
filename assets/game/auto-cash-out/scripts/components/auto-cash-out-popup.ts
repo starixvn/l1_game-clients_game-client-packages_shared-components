@@ -50,7 +50,7 @@ export class AutoCashoutPopup extends ObserverComponent {
         return parseFloat(this.multiplierLabel.string);
     }
 
-    @render(gc.CrashGameConfigStore, (store) => store.maxMultiplier)
+    @render(gc.GameConfigs.GameConfigStore, (store) => store.maxMultiplier)
     updateMultiplierRangeLabel(maxMultiplier: number) {
         this.multiplierRangeLabel.string = `1.01X - ${maxMultiplier.toFixed(2)}X`;
     }
