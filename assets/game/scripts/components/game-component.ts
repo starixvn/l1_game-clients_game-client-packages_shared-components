@@ -153,18 +153,26 @@ export default class GameComponent extends GameComponentBase {
         { fireImmediately: false }
     )
     async addBoostedOddIconPrefab(model: { isInstantVersion: boolean; boostedOddsCounter: number; shouldAddBoostedOddPrefab: boolean }) {
-        let prefabPath = "boosted-odds";
+        let prefabPath = model.isInstantVersion ? "shared-instant-bundle" : "shared-bundle";
+        let subpath = "";
         if (model.isInstantVersion) {
-            prefabPath += FunctionUtils.isPortraitMode() ? "-portrait" : "-landscape";
+            subpath += FunctionUtils.isPortraitMode() ? "/portrait" : "/landscape";
         }
 
-        console.log(`%c gameVersion: ${prefabPath}`, "color: blue; font-size: larger");
+        console.log(`%c gameVersion: ${subpath}`, "color: blue; font-size: larger");
         if (model.shouldAddBoostedOddPrefab) {
             console.log("%c Add boosted odds", "color: red; font-size: larger");
-            const prfBoostedOddIcon = await bundleManager.loadAssetsFromBundle<Prefab>(prefabPath, `prefabs/boosted-odds`, Prefab, null);
+
+            console.log(`%c prefabPath: ${prefabPath}`, "color: blue; font-size: larger");
+            const prfBoostedOddIcon = await bundleManager.loadAssetsFromBundle<Prefab>(
+                prefabPath,
+                `boosted-odds${subpath}/boosted-odds`,
+                Prefab,
+                null
+            );
             const prfBoostedOddContainer = await bundleManager.loadAssetsFromBundle<Prefab>(
                 prefabPath,
-                `prefabs/boosted-odds-container`,
+                `boosted-odds${subpath}/boosted-odds-container`,
                 Prefab,
                 null
             );
