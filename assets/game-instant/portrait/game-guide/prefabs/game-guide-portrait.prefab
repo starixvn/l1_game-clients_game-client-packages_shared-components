@@ -185,7 +185,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@0e81e",
+      "__uuid__": "6a61176f-ac37-45b6-912c-c358dde49b51@0e81e",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -201,7 +201,7 @@
     "_isTrimmedMode": false,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc",
+      "__uuid__": "6a61176f-ac37-45b6-912c-c358dde49b51",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""
@@ -293,10 +293,7 @@
       "b": 124,
       "a": 255
     },
-    "_normalSprite": {
-      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@0e81e",
-      "__expectedType__": "cc.SpriteFrame"
-    },
+    "_normalSprite": null,
     "_hoverSprite": null,
     "_pressedSprite": null,
     "_disabledSprite": null,
@@ -517,7 +514,7 @@
     "_string": "GAME GUIDES",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 37.5,
+    "_actualFontSize": 28,
     "_fontSize": 28,
     "_fontFamily": "Arial",
     "_lineHeight": 56,

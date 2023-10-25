@@ -483,7 +483,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 44.525882994729365,
+      "width": 44.5263671875,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -522,7 +522,7 @@
     "_string": "68%",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 22.65024630541872,
+    "_actualFontSize": 22,
     "_fontSize": 22,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
@@ -803,7 +803,7 @@
     "_string": "",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 45,
+    "_actualFontSize": 44,
     "_fontSize": 44,
     "_fontFamily": "Arial",
     "_lineHeight": 45,
@@ -1193,7 +1193,7 @@
       "__id__": 54
     },
     "asset": {
-      "__uuid__": "4e9c0950-56f5-48a4-90ce-78ab2f566b15",
+      "__uuid__": "280479ca-ec91-47bb-90a1-ae90113c5098",
       "__expectedType__": "cc.Prefab"
     },
     "fileId": "e22BwO1ihPxqLETz0GktMD",
@@ -1204,7 +1204,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "58CVbSNIFLtIY/B0J+lIVR",
+    "fileId": "64bQNEioZO0Kdo8iN+Oxmz",
     "prefabRootNode": {
       "__id__": 1
     },
@@ -1240,7 +1240,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "notice-container"
+    "value": "notice-container-instant"
   },
   {
     "__type__": "cc.TargetInfo",
