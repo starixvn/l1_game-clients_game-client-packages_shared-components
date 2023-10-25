@@ -8,8 +8,8 @@ import { FunctionUtils } from "../../../shared/utils";
 const { ccclass } = _decorator;
 const { handle, render } = Observer;
 
-@ccclass("LoadBoostedOddsPrefab")
-export default class LoadBoostedOddsPrefab extends ObserverComponent {
+@ccclass("LoadBoostedOddsContainerPrefab")
+export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
     @render(
         gc.Notification.BoostedOddsStore,
         (store) => {
@@ -21,27 +21,27 @@ export default class LoadBoostedOddsPrefab extends ObserverComponent {
         },
         { fireImmediately: false }
     )
-    async addBoostedOddIconPrefab(model: { isInstantVersion: boolean; boostedOddsCounter: number; shouldAddBoostedOddPrefab: boolean }) {
-        let prefabPath = model.isInstantVersion ? "shared-instant-bundle" : "shared-bundle";
-        let subpath = "";
-        if (model.isInstantVersion) {
-            subpath += FunctionUtils.isPortraitMode() ? "/portrait" : "/landscape";
-        }
-
-        console.log(`%c gameVersion: ${subpath}`, "color: blue; font-size: larger");
+    async addBoostedOddsContainerPrefab(model: {
+        isInstantVersion: boolean;
+        boostedOddsCounter: number;
+        shouldAddBoostedOddPrefab: boolean;
+    }) {
         if (model.shouldAddBoostedOddPrefab) {
-            console.log("%c Add boosted odds", "color: red; font-size: larger");
+            let prefabPath = model.isInstantVersion ? "shared-instant-bundle" : "shared-bundle";
+            let subpath = "";
+            if (model.isInstantVersion) {
+                subpath += FunctionUtils.isPortraitMode() ? "/portrait" : "/landscape";
+            }
 
-            console.log(`%c prefabPath: ${prefabPath}`, "color: blue; font-size: larger");
-            const prfBoostedOddIcon = await bundleManager.loadAssetsFromBundle<Prefab>(
-                prefabPath,
-                `boosted-odds${subpath}/boosted-odds`,
-                Prefab,
-                null
-            );
             const prfBoostedOddContainer = await bundleManager.loadAssetsFromBundle<Prefab>(
                 prefabPath,
                 `boosted-odds${subpath}/boosted-odds-container`,
+                Prefab,
+                null
+            );
+            const prfBoostedOddIcon = await bundleManager.loadAssetsFromBundle<Prefab>(
+                prefabPath,
+                `boosted-odds${subpath}/boosted-odds`,
                 Prefab,
                 null
             );
