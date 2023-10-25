@@ -1,4 +1,4 @@
-import { _decorator, CCString, Component, Layers, Node, Sprite, SpriteFrame, tween, UITransform, Vec3 } from "cc";
+import { _decorator, CCString, Component, Layers, Node, Sprite, SpriteFrame, tween, Vec3 } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("HistoryResultIcon")
@@ -20,7 +20,6 @@ export class HistoryResultIcon extends Component {
     setOutline(spriteFrame: SpriteFrame) {
         const outlineNode = new Node("outline");
         outlineNode.layer = Layers.Enum.UI_2D;
-        outlineNode.addComponent(UITransform);
         const outline = outlineNode.addComponent(Sprite);
         outline.spriteFrame = spriteFrame;
         this.node.addChild(outlineNode);
