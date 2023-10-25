@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import {
     Color,
     Component,
+    Layers,
     Layout,
     Node,
     Prefab,
@@ -323,6 +324,7 @@ export default class SlidingChip extends ObserverComponent {
 
     protected createLowValueChip() {
         const node = new Node();
+        node.layer = Layers.Enum.UI_2D;
         const sprite = node.addComponent(Sprite);
         sprite.sizeMode = Sprite.SizeMode.RAW;
         sprite.trim = false;

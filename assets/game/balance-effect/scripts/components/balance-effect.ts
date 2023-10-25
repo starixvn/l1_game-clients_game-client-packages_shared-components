@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { BitmapFont, CCFloat, Label, Node, _decorator, tween, v3 } from "cc";
+import { BitmapFont, CCFloat, Label, Layers, Node, _decorator, tween, v3 } from "cc";
 import { NodeContainer } from "../../../../shared/common-components/node-container/node-container";
 import { TBalanceEffect } from "../stores/balance-effect-store";
 
@@ -35,6 +35,7 @@ export class BalanceContainer extends NodeContainer {
 
     updateBalanceEffect(parent: Node, balance: number): void {
         const balanceEffectNode = new Node();
+        balanceEffectNode.layer = Layers.Enum.UI_2D;
         const lblBalance = balanceEffectNode.addComponent(Label);
         lblBalance.string = `${this.isIncrease ? "+" : "-"}${FormatUtils.numberWithCommas(balance, 2)}`;
         lblBalance.font = this.isIncrease ? this.fontIncreaseBalance : this.fontDecreaseBalance;

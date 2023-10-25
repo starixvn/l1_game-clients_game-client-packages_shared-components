@@ -1,4 +1,4 @@
-import { _decorator, Component, Layout, Mask, Node, ScrollView, Size, UITransform, Widget } from "cc";
+import { _decorator, Component, Layers, Layout, Mask, Node, ScrollView, Size, UITransform, Widget } from "cc";
 import { GridItemSettings } from "../settings/grid-item-settings";
 import { GridLayoutSettings } from "../settings/grid-layout-settings";
 import { GridLayout } from "./grid-layout";
@@ -92,7 +92,9 @@ export class GridLayoutBuilder extends Component {
 
         if (!this.node.getChildByName(containerName)) {
             const container = new Node(containerName);
+            container.layer = Layers.Enum.UI_2D;
             const content = new Node("content");
+            content.layer = Layers.Enum.UI_2D;
 
             container.addChild(content);
 
@@ -121,6 +123,7 @@ export class GridLayoutBuilder extends Component {
 
         if (!this.node.getChildByName(backgroundName)) {
             const node = new Node(backgroundName);
+            node.layer = Layers.Enum.UI_2D;
 
             this.addWidget(node);
 

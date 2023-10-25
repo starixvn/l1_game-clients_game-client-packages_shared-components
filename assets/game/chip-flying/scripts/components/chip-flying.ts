@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Node, tween, UITransform, v3 } from "cc";
+import { _decorator, instantiate, Layers, Node, tween, UITransform, v3 } from "cc";
 import Observer from "observer";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
@@ -255,6 +255,7 @@ export class ChipFlying extends ObserverComponent {
         const randomAmount = 3;
         const destWorldPosition = destBox.parent.getComponent(UITransform).convertToWorldSpaceAR(destBox.position);
         const cloneChipsBox = new Node();
+        cloneChipsBox.layer = Layers.Enum.UI_2D;
         const chipBoxTransform = cloneChipsBox.addComponent(UITransform);
         this.chipContainer.addChild(cloneChipsBox);
         const destPosition = chipBoxTransform.convertToNodeSpaceAR(destWorldPosition);
