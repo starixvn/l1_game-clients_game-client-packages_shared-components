@@ -146,12 +146,13 @@ export default class GameComponent extends GameComponentBase {
         (store) => {
             return {
                 isInstantVersion: store.isInstantVersion,
+                boostedOddsCounter: store.boostedOddsCounter,
                 shouldAddBoostedOddPrefab: store.shouldAddBoostedOddPrefab,
             };
         },
         { fireImmediately: false }
     )
-    async addBoostedOddIconPrefab(model: { isInstantVersion: boolean; shouldAddBoostedOddPrefab: boolean }) {
+    async addBoostedOddIconPrefab(model: { isInstantVersion: boolean; boostedOddsCounter: number; shouldAddBoostedOddPrefab: boolean }) {
         let prefabPath = "boosted-odds";
         if (model.isInstantVersion) {
             prefabPath += FunctionUtils.isPortraitMode() ? "-portrait" : "-landscape";
@@ -161,15 +162,16 @@ export default class GameComponent extends GameComponentBase {
         if (model.shouldAddBoostedOddPrefab) {
             console.log("%c Add boosted odds", "color: red; font-size: larger");
             const prfBoostedOddIcon = await bundleManager.loadAssetsFromBundle<Prefab>(prefabPath, `prefabs/boosted-odds`, Prefab, null);
-
             const prfBoostedOddContainer = await bundleManager.loadAssetsFromBundle<Prefab>(
                 prefabPath,
                 `prefabs/boosted-odds-container`,
                 Prefab,
                 null
             );
+
             this.node.addChild(instantiate(prfBoostedOddIcon));
             this.node.addChild(instantiate(prfBoostedOddContainer));
+
             setTimeout(() => {
                 this.handleSetBoostedOddsLoadedPrefab();
             }, 1000);
