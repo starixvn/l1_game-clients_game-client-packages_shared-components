@@ -3,6 +3,7 @@
     "__type__": "cc.Prefab",
     "_name": "warning-container",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "_native": "",
     "data": {
       "__id__": 1
@@ -49,7 +50,7 @@
       "z": 1
     },
     "_mobility": 0,
-    "_layer": 1073741824,
+    "_layer": 33554432,
     "_euler": {
       "__type__": "cc.Vec3",
       "x": 0,
@@ -62,6 +63,7 @@
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 1
     },
@@ -89,6 +91,7 @@
     "__type__": "6cee4i3xdRLFIt2CEO+u6E/",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 1
     },
@@ -100,7 +103,6 @@
       "__uuid__": "ca21ffb6-19ee-49fd-a712-aa08714c0309",
       "__expectedType__": "cc.Prefab"
     },
-    "namespaceObserver": "SeDie",
     "_id": ""
   },
   {
