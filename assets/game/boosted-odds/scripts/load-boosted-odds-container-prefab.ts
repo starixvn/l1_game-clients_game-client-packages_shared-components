@@ -8,6 +8,21 @@ import { FunctionUtils } from "../../../shared/utils";
 const { ccclass } = _decorator;
 const { handle, render } = Observer;
 
+const BoostedOddsBundleConstants = {
+    shareBundle: "shared-bundle",
+    shareInstantBundle: "shared-instant-bundle",
+    rootFolder: "boosted-odds",
+    subPath: {
+        portrait: "/portrait",
+        landscape: "/landscape",
+    },
+    prefabs: {
+        icon: "boosted-odds",
+        container: "boosted-odds-container",
+    },
+    delayTimeForLoadContainer: 1000,
+};
+
 @ccclass("LoadBoostedOddsContainerPrefab")
 export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
     @render(
@@ -27,32 +42,31 @@ export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
         shouldAddBoostedOddPrefab: boolean;
     }) {
         if (model.shouldAddBoostedOddPrefab) {
-            let prefabPath = model.isInstantVersion ? "shared-instant-bundle" : "shared-bundle";
-            let subpath = "";
-            if (model.isInstantVersion) {
-                subpath += FunctionUtils.isPortraitMode() ? "/portrait" : "/landscape";
-            }
+            console.log("%c Add boosted odds", "color: red; font-size: larger");
+            const { prefabs, delayTimeForLoadContainer } = BoostedOddsBundleConstants;
 
-            const prfBoostedOddContainer = await bundleManager.loadAssetsFromBundle<Prefab>(
-                prefabPath,
-                `boosted-odds${subpath}/boosted-odds-container`,
-                Prefab,
-                null
-            );
-            const prfBoostedOddIcon = await bundleManager.loadAssetsFromBundle<Prefab>(
-                prefabPath,
-                `boosted-odds${subpath}/boosted-odds`,
-                Prefab,
-                null
-            );
+            const prfBoostedOddContainer = await this.getPrefabs(model.isInstantVersion, prefabs.container);
+            const prfBoostedOddIcon = await this.getPrefabs(model.isInstantVersion, prefabs.icon);
 
             this.node.addChild(instantiate(prfBoostedOddIcon));
             this.node.addChild(instantiate(prfBoostedOddContainer));
 
             setTimeout(() => {
                 this.handleSetBoostedOddsLoadedPrefab();
-            }, 1000);
+            }, delayTimeForLoadContainer);
         }
+    }
+
+    async getPrefabs(isInstantVersion: boolean, prefabName: string) {
+        const { shareInstantBundle, shareBundle, subPath, rootFolder } = BoostedOddsBundleConstants;
+        const prefabPath = isInstantVersion ? shareInstantBundle : shareBundle;
+        let subpath = "";
+
+        if (isInstantVersion) {
+            subpath += FunctionUtils.isPortraitMode() ? subPath.portrait : subPath.landscape;
+        }
+
+        return bundleManager.loadAssetsFromBundle<Prefab>(prefabPath, `${rootFolder}${subpath}/${prefabName}`, Prefab, null);
     }
 
     @handle(gc.Notification.BoostedOddsPromotionsHandlers.BoostedOddsPopupHandlers, (handler) => handler.setIsLoadedPrefab(true))

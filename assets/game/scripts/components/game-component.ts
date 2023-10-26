@@ -3,7 +3,7 @@ import { Game, Label, _decorator, game, sys } from "cc";
 import Observer from "observer";
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
 import { StaticGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
-import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
+import { ComponentUtils } from "../../../shared/utils";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
 
