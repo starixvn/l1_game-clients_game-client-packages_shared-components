@@ -5,7 +5,8 @@ import MD5Tip from "./md5-tip";
 const { render } = Observer;
 const { Rounds, Settlements, Translator } = gc;
 
-import { Component, Label, Node, UIOpacity, _decorator, tween, v3 } from "cc";
+import { Label, Node, UIOpacity, _decorator, tween, v3 } from "cc";
+import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
 
 export type MD5Type = {
@@ -14,7 +15,7 @@ export type MD5Type = {
     hashValue: string;
 };
 @ccclass
-export default class MD5Component extends Component {
+export default class MD5Component extends ObserverComponent {
     @property(Label)
     lblCaption: Label = null;
 
@@ -41,13 +42,15 @@ export default class MD5Component extends Component {
     private isCopying = false;
 
     onLoad() {
+        super.onLoad();
         this.registerTouchEvents();
         this.hideTooltip();
         this.initHintAndCaption();
         window.addEventListener("message", this.registerEventCopyMD5.bind(this));
     }
 
-    protected onDestroy(): void {
+    onDestroy(): void {
+        super.onDestroy();
         window.removeEventListener("message", this.registerEventCopyMD5.bind(this));
     }
 
@@ -58,8 +61,10 @@ export default class MD5Component extends Component {
     }
 
     private initHintAndCaption() {
-        this.lblHint = this.nodeHintCopy.getChildByName("content").getComponent(Label);
-        this.lblHint.string = Translator.commonTranslate("copy_successfully_md5");
+        if (this.nodeHintCopy) {
+            this.lblHint = this.nodeHintCopy.getChildByName("content").getComponent(Label);
+            this.lblHint.string = Translator.commonTranslate("copy_successfully_md5");
+        }
         this.updateTextCaption(false);
     }
 
@@ -75,7 +80,7 @@ export default class MD5Component extends Component {
         this.md5Tip?.show(false);
     }
 
-    @render(Rounds.RoundStore, (store) => store.resultHash, { fireImmediately: false })
+    @render(Rounds.RoundStore, (store) => store.resultHash)
     private renderMd5(resultHash: gc.GameServiceMessage.ResultHash) {
         this.resultHash = resultHash;
         !this.lblMd5Value?.string && this.handleMD5Data(resultHash);
@@ -117,7 +122,7 @@ export default class MD5Component extends Component {
     }
 
     protected setDataTip(data: gc.GameServiceMessage.ResultHash) {
-        this.tipString = data.rawValue;
+        this.tipString = data.rawValue || data.hashValue;
     }
 
     onClickCopyButton() {
@@ -137,7 +142,9 @@ export default class MD5Component extends Component {
     }
 
     private showHint() {
-        tween(this.nodeHintCopy.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).delay(3).to(0.1, { opacity: 1 }).start();
+        if (this.nodeHintCopy) {
+            tween(this.nodeHintCopy.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).delay(3).to(0.1, { opacity: 1 }).start();
+        }
     }
 
     private updateTextCaption(isMD5Key: boolean) {
