@@ -5,6 +5,7 @@ import { ObserverComponent } from "../../../../shared/common-components/observer
 import AutoCashOutHandler from "../handlers/auto-cash-out-handler";
 import AutoCashOutPopupHandler from "../handlers/auto-cash-out-popup-handler";
 import AutoCashOutPopupStore from "../stores/auto-cash-out-popup-store";
+import AutoCashOutStore from "../stores/auto-cash-out-store";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -50,6 +51,11 @@ export class AutoCashoutPopup extends ObserverComponent {
         return parseFloat(this.multiplierLabel.string);
     }
 
+    @render(AutoCashOutStore, (store) => store.multiplier)
+    updateMultiplierLabel(multiplier: number) {
+        this.multiplierLabel.string = multiplier.toString();
+    }
+
     @render(gc.GameConfigs.GameConfigStore, (store) => store.maxMultiplier)
     updateMultiplierRangeLabel(maxMultiplier: number) {
         this.multiplierRangeLabel.string = `1.01X - ${maxMultiplier.toFixed(2)}X`;
@@ -57,7 +63,7 @@ export class AutoCashoutPopup extends ObserverComponent {
 
     @render(AutoCashOutPopupStore, (store) => store.isValid)
     updateMultiplierTextColor(isValid: boolean) {
-        this.multiplierLabel.color = isValid ? Color.WHITE : Color.RED;
+        this.multiplierLabel.color = isValid ? Color.fromHEX(this.multiplierLabel.color, "#4920A4") : Color.RED;
         this.confirmButton.interactable = isValid;
         this.confirmButton.node.getChildByName("overlay").active = !isValid;
     }

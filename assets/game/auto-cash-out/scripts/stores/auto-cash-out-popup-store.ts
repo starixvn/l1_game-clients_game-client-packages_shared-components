@@ -6,7 +6,7 @@ const { injectable } = inversify;
 export default class AutoCashOutPopupStore {
     private _enable: boolean = false;
     private _isValid: boolean = false;
-    private _multiplier: number;
+    private _multiplier: number = 1.01;
 
     constructor() {
         mobx.makeAutoObservable(this);

@@ -56,6 +56,9 @@ export class AutoCashout extends ObserverComponent {
     @render(gc.GameConfigs.GameConfigStore, (store) => store.maxMultiplier)
     updateMaxMultiplier(maxMultiplier: number) {
         this.maxMultiplier = maxMultiplier;
+        const currentMultiplier = parseFloat(this.multiplierLabel.string);
+        this.updateButtonStatus(this.decreaseButton, currentMultiplier > 1.01);
+        this.updateButtonStatus(this.increaseButton, currentMultiplier < this.maxMultiplier);
     }
 
     @render(AutoCashOutStore, (store) => store.enable)
