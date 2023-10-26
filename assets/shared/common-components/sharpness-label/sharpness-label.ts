@@ -1,4 +1,4 @@
-import { CCBoolean, CacheMode, Component, Label, Node, RichText, _decorator, v3 } from "cc";
+import { CCBoolean, Component, Label, RichText, _decorator, v3 } from "cc";
 
 const { ccclass, property } = _decorator;
 
@@ -7,39 +7,28 @@ export class SharpnessLabel extends Component {
     @property(CCBoolean)
     isBitmapCacheMode = false;
 
-    private readonly weightFontSize = 2;
-    private readonly weightScale = 0.5;
-    private currentFontSize = 0;
+    private readonly fontSizeWeight = 2;
+    private get weightScale() {
+        return 1 / this.fontSizeWeight;
+    }
     private label: Label = null;
     private richText: RichText = null;
 
     protected onLoad(): void {
-        this.node.on(Node.EventType.TRANSFORM_CHANGED, this.transformChange, this);
         this.label = this.node.getComponent(Label);
         this.richText = this.node.getComponent(RichText);
 
         [this.label, this.richText].forEach((component) => {
             if (component) {
-                component.fontSize *= this.weightFontSize;
-                component.lineHeight *= this.weightFontSize;
-                this.currentFontSize = component.fontSize;
+                component.fontSize *= this.fontSizeWeight;
+                component.lineHeight *= this.fontSizeWeight;
             }
 
             if (component instanceof RichText) {
-                this.richText.maxWidth *= this.weightFontSize;
+                this.richText.maxWidth *= this.fontSizeWeight;
             }
         });
 
         this.node.scale = v3(this.weightScale, this.weightScale, this.weightScale);
-    }
-
-    // Text is out of line or distorted when resizing and maximize window on desktop
-    protected transformChange(): void {
-        [this.label, this.richText].forEach((component) => {
-            if (component) {
-                this.isBitmapCacheMode && (component.cacheMode = CacheMode.BITMAP);
-                this.currentFontSize > 0 && (component.fontSize = this.currentFontSize);
-            }
-        });
     }
 }

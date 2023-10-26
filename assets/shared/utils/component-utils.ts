@@ -13,7 +13,6 @@ export namespace ComponentUtils {
         labels?.forEach((label) => {
             if (label) {
                 label.string = "";
-                label.cacheMode = Label.CacheMode.CHAR;
             }
         });
     };
