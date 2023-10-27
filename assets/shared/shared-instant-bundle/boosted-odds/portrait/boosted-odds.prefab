@@ -42,7 +42,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -211.649,
+      "x": -364,
       "y": 89,
       "z": 0
     },
@@ -3845,42 +3845,6 @@
     "nestedPrefabInstanceRoots": null
   },
   {
-    "__type__": "cc.Widget",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 186
-    },
-    "_alignFlags": 32,
-    "_target": null,
-    "_left": 1250,
-    "_right": 575.649,
-    "_top": 0,
-    "_bottom": 0,
-    "_horizontalCenter": 0,
-    "_verticalCenter": 0,
-    "_isAbsLeft": true,
-    "_isAbsRight": true,
-    "_isAbsTop": true,
-    "_isAbsBottom": true,
-    "_isAbsHorizontalCenter": true,
-    "_isAbsVerticalCenter": true,
-    "_originalWidth": 140,
-    "_originalHeight": 0,
-    "_alignMode": 2,
-    "_lockFlags": 0,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "2a8KAC4rBKD5DENEc0NaaY"
-  },
-  {
     "__type__": "cc.UIOpacity",
     "_name": "",
     "_objFlags": 0,
@@ -3890,7 +3854,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 188
+      "__id__": 186
     },
     "_opacity": 255,
     "_id": ""
@@ -3909,7 +3873,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 190
+      "__id__": 188
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -3937,7 +3901,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 192
+      "__id__": 190
     },
     "icon": {
       "__id__": 2
@@ -3949,6 +3913,42 @@
     "fileId": "3eP+KPVbxNzZtmcjm8QQX2"
   },
   {
+    "__type__": "cc.Widget",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 192
+    },
+    "_alignFlags": 8,
+    "_target": null,
+    "_left": 0,
+    "_right": 0,
+    "_top": 0,
+    "_bottom": 0,
+    "_horizontalCenter": 0,
+    "_verticalCenter": 0,
+    "_isAbsLeft": true,
+    "_isAbsRight": true,
+    "_isAbsTop": true,
+    "_isAbsBottom": true,
+    "_isAbsHorizontalCenter": true,
+    "_isAbsVerticalCenter": true,
+    "_originalWidth": 0,
+    "_originalHeight": 0,
+    "_alignMode": 2,
+    "_lockFlags": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "00N4lGeMZLEr5XyZKOsbHa"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -3957,7 +3957,6 @@
       "__id__": 0
     },
     "fileId": "4bcu09Jw9JJJC6x6gNYydt",
-    "instance": null,
     "targetOverrides": null
   }
 ]
