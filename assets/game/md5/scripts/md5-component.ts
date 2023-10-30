@@ -88,12 +88,12 @@ export default class MD5Component extends ObserverComponent {
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
     private updateMd5String(isStartPlacingBet: boolean) {
-        isStartPlacingBet && this.handleMD5Data(this.resultHash);
+        isStartPlacingBet && !this.resultHash && this.handleMD5Data(this.resultHash);
     }
 
     @render(Settlements.SettlementStore, (store) => store.isFinishedShowResult)
     private updateMd5Result(isFinishedShowResult: boolean) {
-        isFinishedShowResult && this.handleMD5Data(this.resultHash);
+        isFinishedShowResult && !this.resultHash && this.handleMD5Data(this.resultHash);
     }
 
     private handleMD5Data(data: gc.GameServiceMessage.ResultHash) {
