@@ -1,5 +1,7 @@
 import AudioManager from "db://shared-components/game/audios/scripts/audio-manager";
 import { AudioContainer, TAudioConfigs } from "db://shared-components/game/audios/scripts/component/audio-container";
+
+import { AudioUtils } from "db://shared-components/game/audios/utils";
 import { AudioClip } from "../../../../../../../../tests/cocos-testing/cc/audio-clip";
 import { AudioSource } from "../../../../../../../../tests/cocos-testing/cc/audio-source";
 
@@ -25,6 +27,12 @@ describe("AudioContainer", () => {
                 bundle: "123",
                 path: "test",
                 type: "test",
+            },
+            test2: {
+                bundle: "bundle2",
+                path: "path2",
+                type: "type2",
+                isFirstLoad: false,
             },
         };
 
@@ -143,6 +151,52 @@ describe("AudioContainer", () => {
 
             // Assert
             expect(component.sfxSource.playOneShot).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("start...", () => {
+        let audioConfigs: TAudioConfigs;
+        beforeEach(() => {
+            jest.clearAllMocks();
+            audioConfigs = {
+                audio1: {
+                    bundle: "bundle1",
+                    path: "path1",
+                    type: "type1",
+                },
+                audio2: {
+                    bundle: "bundle2",
+                    path: "path2",
+                    type: "type2",
+                    isFirstLoad: true,
+                },
+                audio3: {
+                    bundle: "bundle3",
+                    path: "path3",
+                    type: "type3",
+                    isFirstLoad: false,
+                },
+            };
+            jest.spyOn(AudioUtils, "getAudioInfo").mockImplementation((value, audioKey) => ({
+                bundle: value.bundle,
+                path: value.path,
+            }));
+            jest.spyOn(AudioUtils, "getAudioClip");
+        });
+        it("should call getAudioInfo and getAudioClip for audio with isFirstLoad true", () => {
+            // Arrange
+            AudioManager.audioConfigs = jest.fn(() => audioConfigs);
+
+            // Act
+            component.start();
+
+            // Assert
+            expect(AudioUtils.getAudioInfo).toHaveBeenCalledWith(audioConfigs.audio1, "audio1");
+            expect(AudioUtils.getAudioInfo).toHaveBeenCalledWith(audioConfigs.audio2, "audio2");
+            expect(AudioUtils.getAudioClip).toHaveBeenCalledWith("bundle1", "path1");
+            expect(AudioUtils.getAudioClip).toHaveBeenCalledWith("bundle2", "path2");
+            expect(AudioUtils.getAudioInfo).not.toHaveBeenCalledWith(audioConfigs.audio3, "audio3");
+            expect(AudioUtils.getAudioClip).not.toHaveBeenCalledWith("bundle3", "path3");
         });
     });
 });

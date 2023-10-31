@@ -18,6 +18,7 @@ export type TAudioValue = {
     bundle: string;
     path: string;
     type: string;
+    isFirstLoad?: boolean;
 };
 
 export enum ECurrentPlayTime {
@@ -64,6 +65,27 @@ export class AudioContainer extends ObserverComponent {
         this.initTouchBind();
     }
 
+    async loadAudios() {
+        const audioConfigs: TAudioConfigs = {
+            ...this.sharedAudioConfig?.json,
+            ...this.audioConfig?.json,
+        };
+
+        AudioManager.audioConfigs(audioConfigs);
+        const keys = Object.keys(audioConfigs);
+        for (const key of keys) {
+            const value = audioConfigs[key];
+            if (value.type === "music") {
+                this.musicIds.push(key);
+            } else {
+                this.audios.push(key);
+            }
+        }
+
+        this.registerMusicIds();
+        this.audiosLoaded();
+    }
+
     protected initTouchBind() {
         const touchEvent = "ontouchend" in window ? ["touchstart", "touchend"] : ["mousedown", "mouseup"];
         const [touchStartEvent, touchEndEvent] = touchEvent;
@@ -83,6 +105,16 @@ export class AudioContainer extends ObserverComponent {
         const { sfxEnable } = event.data;
         if (sfxEnable !== null && sfxEnable !== undefined) {
             this.switchSound(sfxEnable);
+        }
+    }
+
+    start() {
+        const audioConfigs = AudioManager?.audioConfigs() || {};
+        for (const [audioKey, value] of Object.entries(audioConfigs)) {
+            if (value?.isFirstLoad !== false) {
+                const { bundle, path } = AudioUtils.getAudioInfo(value, audioKey);
+                AudioUtils.getAudioClip(bundle, path);
+            }
         }
     }
 
@@ -110,27 +142,6 @@ export class AudioContainer extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle, ids: string[]) => handle.setMusicIds(ids))
     registerMusicIds() {
         return this.musicIds;
-    }
-
-    async loadAudios() {
-        const audioConfigs: TAudioConfigs = {
-            ...this.sharedAudioConfig?.json,
-            ...this.audioConfig?.json,
-        };
-
-        AudioManager.audioConfigs(audioConfigs);
-        const keys = Object.keys(audioConfigs);
-        for (const key of keys) {
-            const value = audioConfigs[key];
-            if (value.type === "music") {
-                this.musicIds.push(key);
-            } else {
-                this.audios.push(key);
-            }
-        }
-
-        this.registerMusicIds();
-        this.audiosLoaded();
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
