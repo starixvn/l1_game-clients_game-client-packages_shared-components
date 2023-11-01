@@ -5,7 +5,7 @@ const { injectable } = inversify;
 @injectable()
 export default class AutoCashOutPopupStore {
     private _enable: boolean = false;
-    private _isValid: boolean = false;
+    private _isValid: boolean = true;
     private _multiplier: number = 1.01;
 
     constructor() {
