@@ -16,10 +16,7 @@ export class BetHistoryTable extends Component {
     @property(Node)
     body: Node = null;
 
-    @property(Prefab)
     headerPrefab: Prefab = null;
-
-    @property(Prefab)
     bodyPrefab: Prefab = null;
 
     getHistoryItemComponent(node: Node) {

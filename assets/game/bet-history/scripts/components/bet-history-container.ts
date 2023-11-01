@@ -1,4 +1,4 @@
-import { Node, _decorator } from "cc";
+import { Node, Prefab, _decorator, instantiate } from "cc";
 import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { NodeContainer } from "../../../../shared/common-components/node-container/node-container";
@@ -6,7 +6,7 @@ import { BetHistoryTable } from "./bet-history-table";
 import { InGameMenuStore } from "../../../in-game-menu/scripts/stores/in-game-menu-store";
 import { InGameMenuEvents } from "../../../in-game-menu/scripts/stores/in-game-menu-events";
 
-const { ccclass } = _decorator;
+const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 const { BetHistory } = gc;
 
@@ -14,6 +14,12 @@ const { BetHistory } = gc;
 export class BetHistoryContainer extends NodeContainer {
     wrapperNode: Node = null;
     table: BetHistoryTable = null;
+
+    @property(Prefab)
+    headerPrefab: Prefab = null;
+
+    @property(Prefab)
+    bodyPrefab: Prefab = null;
 
     @handle(BetHistory.BetHistoryHandlers.BetHistoryCallServiceHandler, (handler) => handler.handle(1))
     hanldeShowBetHistory() {}
@@ -30,6 +36,8 @@ export class BetHistoryContainer extends NodeContainer {
         if (!this.wrapperNode?.active) {
             this.wrapperNode = this.createNode();
             this.table = this.wrapperNode.getComponent(BetHistoryTable);
+            this.table.headerPrefab = this.headerPrefab;
+            this.table.bodyPrefab = this.bodyPrefab;
         }
 
         this.table.showBetHistory(betHistoryModel);
