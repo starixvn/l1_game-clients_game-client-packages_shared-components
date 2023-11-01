@@ -26,13 +26,7 @@ export default class BoostedOddsComponent extends ObserverComponent {
         { fireImmediately: false }
     )
     showBoostedOddIcon(model: { isLoadedPrefab: boolean; boostedOddsCounter: number; boostedOddsIconShowedTimeInMiliseconds: number }) {
-        console.log(`%c boostedOddsCounter : ${model.boostedOddsCounter}`, "color: green; font-size: larger");
-        console.log(
-            `%c boostedOddsIconShowedTimeInMiliseconds : ${model.boostedOddsIconShowedTimeInMiliseconds}`,
-            "color: green; font-size: larger"
-        );
         if (model.isLoadedPrefab) {
-            console.log(`%c isLoadedIconPrefab : ${model.isLoadedPrefab}`, "color: yellow; font-size: larger");
             tween(this.icon)
                 .call(() => (this.icon.active = true))
                 .delay(model.boostedOddsIconShowedTimeInMiliseconds)

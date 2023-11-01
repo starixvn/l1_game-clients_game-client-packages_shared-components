@@ -42,7 +42,6 @@ export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
         shouldAddBoostedOddPrefab: boolean;
     }) {
         if (model.shouldAddBoostedOddPrefab) {
-            console.log("%c Add boosted odds", "color: red; font-size: larger");
             const { prefabs, delayTimeForLoadContainer } = BoostedOddsBundleConstants;
 
             const prfBoostedOddContainer = await this.getPrefabs(model.isInstantVersion, prefabs.container);
