@@ -27,7 +27,7 @@ export class BetInputHandler implements gc.Shared.IHandler<number> {
     }
 
     openBetAmountPopup() {
-        this.betInputStore.betAmountTemp = this.betInputStore.betAmount;
+        this.betInputStore.betAmountTemp = 0;
         this.betInputStore.isOpenBetAmountPopup = true;
     }
 
