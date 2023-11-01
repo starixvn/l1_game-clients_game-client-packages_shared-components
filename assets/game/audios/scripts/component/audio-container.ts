@@ -18,7 +18,7 @@ export type TAudioValue = {
     bundle: string;
     path: string;
     type: string;
-    isFirstLoad?: boolean;
+    isLazyLoad?: boolean;
 };
 
 export enum ECurrentPlayTime {
@@ -111,7 +111,7 @@ export class AudioContainer extends ObserverComponent {
     start() {
         const audioConfigs = AudioManager?.audioConfigs() || {};
         for (const [audioKey, value] of Object.entries(audioConfigs)) {
-            if (value?.isFirstLoad !== false) {
+            if (value?.isLazyLoad !== true) {
                 const { bundle, path } = AudioUtils.getAudioInfo(value, audioKey);
                 AudioUtils.getAudioClip(bundle, path);
             }

@@ -28,12 +28,6 @@ describe("AudioContainer", () => {
                 path: "test",
                 type: "test",
             },
-            test2: {
-                bundle: "bundle2",
-                path: "path2",
-                type: "type2",
-                isFirstLoad: false,
-            },
         };
 
         jest.spyOn(AudioManager, "audioConfigs").mockReturnValueOnce(audioConfigsMock);
@@ -168,13 +162,13 @@ describe("AudioContainer", () => {
                     bundle: "bundle2",
                     path: "path2",
                     type: "type2",
-                    isFirstLoad: true,
+                    isLazyLoad: false,
                 },
                 audio3: {
                     bundle: "bundle3",
                     path: "path3",
                     type: "type3",
-                    isFirstLoad: false,
+                    isLazyLoad: true,
                 },
             };
             jest.spyOn(AudioUtils, "getAudioInfo").mockImplementation((value, audioKey) => ({
@@ -183,7 +177,7 @@ describe("AudioContainer", () => {
             }));
             jest.spyOn(AudioUtils, "getAudioClip");
         });
-        it("should call getAudioInfo and getAudioClip for audio with isFirstLoad true", () => {
+        it("should call getAudioInfo and getAudioClip for audio with isLazyLoad true", () => {
             // Arrange
             AudioManager.audioConfigs = jest.fn(() => audioConfigs);
 
