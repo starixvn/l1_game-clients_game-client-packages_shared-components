@@ -1,5 +1,7 @@
 import { Node } from "cc";
-import { AutoPlayPopupContainer } from "./../../../../assets/game/auto-play/scripts/components/auto-play-popup-container";
+
+import { AutoPlayPopupContainer } from "../../../../assets/game-crash/auto-play/scripts/components/auto-play-popup-container";
+
 describe("AutoPlayPopupContainer", () => {
     let container: AutoPlayPopupContainer;
 

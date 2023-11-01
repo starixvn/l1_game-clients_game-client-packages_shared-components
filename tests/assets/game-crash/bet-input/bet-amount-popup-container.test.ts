@@ -1,6 +1,6 @@
 import { Node } from "cc";
 
-import { BetAmountPopupContainer } from "../../../../assets/game/bet-input/scripts/bet-amount-popup-container";
+import { BetAmountPopupContainer } from "../../../../assets/game-crash/bet-input/scripts/bet-amount-popup-container";
 
 describe("BetAmountPopupContainer", () => {
     let component: BetAmountPopupContainer;

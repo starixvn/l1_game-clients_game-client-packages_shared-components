@@ -1,5 +1,6 @@
 import { Color, Label, Sprite } from "cc";
-import { RoundNumberItem } from "./../../../../assets/game/auto-play/scripts/components/round-number-item";
+import { RoundNumberItem } from "db://shared-components/game-crash/auto-play/scripts/components/round-number-item";
+
 describe("RoundNumberItem", () => {
     let comp: RoundNumberItem;
     beforeEach(() => {

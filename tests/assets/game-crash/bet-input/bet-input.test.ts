@@ -1,6 +1,6 @@
 import { Button, Label, Node, UIOpacity } from "cc";
 
-import { BetInput } from "../../../../assets/game/bet-input/scripts/bet-input";
+import { BetInput } from "../../../../assets/game-crash/bet-input/scripts/bet-input";
 
 describe("BetInput", () => {
     let component: BetInput;

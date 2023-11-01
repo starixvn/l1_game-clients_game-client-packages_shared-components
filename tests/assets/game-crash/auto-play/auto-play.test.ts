@@ -1,5 +1,6 @@
 import { Label, Prefab, Sprite } from "cc";
-import { AutoPlayButton } from "./../../../../assets/game/auto-play/scripts/auto-play-button";
+
+import { AutoPlayButton } from "../../../../assets/game-crash/auto-play/scripts/auto-play-button";
 
 describe("AutoPlayPopup", () => {
     let comp: AutoPlayButton;

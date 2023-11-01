@@ -1,6 +1,6 @@
 import { Label } from "cc";
 
-import { BetAmountItem } from "../../../../assets/game/bet-input/scripts/components/bet-amount-item";
+import { BetAmountItem } from "../../../../assets/game-crash/bet-input/scripts/components/bet-amount-item";
 
 describe("BetAmountItem", () => {
     let component: BetAmountItem;
