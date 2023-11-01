@@ -1,8 +1,10 @@
 import { _decorator } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { AutoPlayHandler } from "./handlers/auto-play-handler";
 import { AutoPlayStore } from "./stores/auto-play-store";
+
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -14,13 +16,6 @@ export class DemoAutoPlay extends ObserverComponent {
     }
     @handle(AutoPlayHandler, (handle) => handle.decreaseAutoPlayRounds())
     checkNoOfRound() {}
-
-    @render(AutoPlayStore, (store) => store.autoPlayRounds)
-    displayRounds(rounds: number) {
-        if (rounds < 0) {
-            clearInterval(this.interval);
-        }
-    }
 
     runAutoPlay() {
         this.interval = setInterval(() => this.checkNoOfRound(), 1000);
