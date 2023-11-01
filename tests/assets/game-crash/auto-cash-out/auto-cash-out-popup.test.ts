@@ -1,5 +1,6 @@
 import { Button, Label } from "cc";
-import { AutoCashoutPopup } from "../../../../assets/game/auto-cash-out/scripts/components/auto-cash-out-popup";
+
+import { AutoCashoutPopup } from "../../../../assets/game-crash/auto-cash-out/scripts/components/auto-cash-out-popup";
 
 describe("AutoCashoutPopup", () => {
     let autoCashoutPopup: AutoCashoutPopup;

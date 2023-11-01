@@ -1,5 +1,6 @@
 import { Button, Label, Sprite, Toggle, UIOpacity } from "cc";
-import { AutoCashout } from "../../../../assets/game/auto-cash-out/scripts/components/auto-cash-out";
+
+import { AutoCashout } from "../../../../assets/game-crash/auto-cash-out/scripts/components/auto-cash-out";
 
 describe("AutoCashout", () => {
     let autoCashout: AutoCashout;

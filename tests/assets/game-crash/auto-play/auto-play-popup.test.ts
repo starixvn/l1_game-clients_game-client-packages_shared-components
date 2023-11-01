@@ -1,6 +1,8 @@
 import { Node } from "cc";
-import { RoundNumberItem } from "db://shared-components/game/auto-play/scripts/components/round-number-item";
-import { AutoPlayPopup } from "./../../../../assets/game/auto-play/scripts/components/auto-play-popup";
+import { RoundNumberItem } from "db://shared-components/game-crash/auto-play/scripts/components/round-number-item";
+
+import { AutoPlayPopup } from "../../../../assets/game-crash/auto-play/scripts/components/auto-play-popup";
+
 describe("AutoPlayPopup", () => {
     let popup: AutoPlayPopup;
 

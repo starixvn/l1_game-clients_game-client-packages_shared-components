@@ -1,7 +1,7 @@
 import { Button, Label, Node, UIOpacity } from "cc";
 
-import { BetAmountItem } from "../../../../assets/game/bet-input/scripts/components/bet-amount-item";
-import { BetAmountPopup } from "../../../../assets/game/bet-input/scripts/components/bet-amount-popup";
+import { BetAmountItem } from "../../../../assets/game-crash/bet-input/scripts/components/bet-amount-item";
+import { BetAmountPopup } from "../../../../assets/game-crash/bet-input/scripts/components/bet-amount-popup";
 
 describe("BetAmountPopup", () => {
     let component: BetAmountPopup;
