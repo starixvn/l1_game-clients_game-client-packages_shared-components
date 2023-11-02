@@ -1,7 +1,7 @@
-import { Animation, Node, UIOpacity, UITransform, Vec3, math, sp, tween } from "cc";
+import { Animation, math, Node, sp, tween, UIOpacity, UITransform, Vec3 } from "cc";
 
 export namespace AnimationUtils {
-    const getUiOpacity = (node: Node) => {
+    export const getUiOpacity = (node: Node) => {
         let uiOpacity = node.getComponent(UIOpacity);
         if (!uiOpacity) {
             uiOpacity = node.addComponent(UIOpacity);
@@ -23,6 +23,7 @@ export namespace AnimationUtils {
 
     export const fadeTo = (node: Node, duration: number, opacity: number) => {
         const uiOpacity = getUiOpacity(node);
+
         return new Promise<void>((resolve) => {
             if (uiOpacity) {
                 tween(uiOpacity)
