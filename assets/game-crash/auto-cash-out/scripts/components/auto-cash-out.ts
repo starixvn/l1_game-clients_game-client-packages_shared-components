@@ -45,7 +45,7 @@ export class AutoCashout extends ObserverComponent {
 
     @render(AutoCashOutStore, (store) => store.multiplier)
     updateMultiplier(multiplier: number) {
-        this.multiplierLabel.string = `${multiplier.toFixed(2)}X`;
+        this.multiplierLabel.string = `${multiplier.toFixed(2)}x`;
         this.updateButtonStatus(this.decreaseButton, multiplier > 1.01);
         this.updateButtonStatus(this.increaseButton, multiplier < this.maxMultiplier);
     }
