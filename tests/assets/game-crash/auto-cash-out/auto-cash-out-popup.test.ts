@@ -29,7 +29,7 @@ describe("AutoCashoutPopup", () => {
                     autoCashoutPopup.multiplierLabel.string = "0";
                     const result = autoCashoutPopup.addValue(null, ".");
 
-                    expect(result).toEqual(0);
+                    expect(result).toEqual("0");
                 });
             });
 
@@ -38,7 +38,7 @@ describe("AutoCashoutPopup", () => {
                     autoCashoutPopup.multiplierLabel.string = "0";
                     const result = autoCashoutPopup.addValue(null, 1);
 
-                    expect(result).toEqual(1);
+                    expect(result).toEqual("1");
                 });
             });
         });
@@ -48,7 +48,7 @@ describe("AutoCashoutPopup", () => {
                 autoCashoutPopup.multiplierLabel.string = "1";
                 const result = autoCashoutPopup.addValue(null, 1);
 
-                expect(result).toEqual(11);
+                expect(result).toEqual("11");
             });
         });
     });
@@ -61,26 +61,26 @@ describe("AutoCashoutPopup", () => {
     });
 
     describe("clear", () => {
-        it("should update multiplier label to 0", () => {
-            autoCashoutPopup.clear();
-            expect(autoCashoutPopup.multiplierLabel.string).toEqual("0");
+        it("should return  0", () => {
+            const result = autoCashoutPopup.clear();
+            expect(result).toEqual("0");
         });
     });
 
     describe("removeLastLetter", () => {
         describe("when multiplier label has 1 character", () => {
-            it("should update multiplier label to 0", () => {
+            it("should return 0", () => {
                 autoCashoutPopup.multiplierLabel.string = "1";
-                autoCashoutPopup.removeLastLetter();
-                expect(autoCashoutPopup.multiplierLabel.string).toEqual("0");
+                const result = autoCashoutPopup.removeLastLetter();
+                expect(result).toEqual("0");
             });
         });
 
         describe("when multiplier label has more than 1 character", () => {
             it("should remove last digit", () => {
                 autoCashoutPopup.multiplierLabel.string = "12";
-                autoCashoutPopup.removeLastLetter();
-                expect(autoCashoutPopup.multiplierLabel.string).toEqual("1");
+                const result = autoCashoutPopup.removeLastLetter();
+                expect(result).toEqual("1");
             });
         });
     });
