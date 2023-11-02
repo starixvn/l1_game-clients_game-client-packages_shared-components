@@ -1,6 +1,7 @@
 import { _decorator } from "cc";
 import inversify from "inversify";
 import mobx from "mobx";
+import { CrashRoundHistory } from "../../../../../../../assets/game/scripts/components/statistics-bar/statistics-bar";
 const { ccclass, property } = _decorator;
 const { injectable, inject } = inversify;
 
@@ -11,6 +12,8 @@ export class Md5PopupStore {
     } = null;
 
     private _isOpenPopupMd5: boolean = false;
+
+    private _data: CrashRoundHistory = null;
 
     get isCrashedGame() {
         return this._isCrashed;
@@ -26,6 +29,14 @@ export class Md5PopupStore {
 
     set isOpenPopupMd5(isOpen: boolean) {
         this._isOpenPopupMd5 = isOpen;
+    }
+
+    get roundHistoryData() {
+        return this._data;
+    }
+
+    set roundHistoryData(data: CrashRoundHistory) {
+        this._data = data;
     }
 
     constructor() {
