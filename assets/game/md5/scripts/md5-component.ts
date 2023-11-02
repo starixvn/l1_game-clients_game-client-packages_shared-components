@@ -80,20 +80,22 @@ export default class MD5Component extends ObserverComponent {
         this.md5Tip?.show(false);
     }
 
-    @render(Rounds.RoundStore, (store) => store.resultHash)
+    @render(Rounds.RoundStore, (store) => store.resultHash, { fireImmediately: false })
     private renderMd5(resultHash: gc.GameServiceMessage.ResultHash) {
-        this.resultHash = resultHash;
-        !this.lblMd5Value?.string && this.handleMD5Data(resultHash);
+        if (resultHash) {
+            this.resultHash = resultHash;
+            !this.lblMd5Value?.string && this.handleMD5Data(resultHash);
+        }
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
     private updateMd5String(isStartPlacingBet: boolean) {
-        isStartPlacingBet && !this.resultHash && this.handleMD5Data(this.resultHash);
+        isStartPlacingBet && this.resultHash && this.handleMD5Data(this.resultHash);
     }
 
     @render(Settlements.SettlementStore, (store) => store.isFinishedShowResult)
     private updateMd5Result(isFinishedShowResult: boolean) {
-        isFinishedShowResult && !this.resultHash && this.handleMD5Data(this.resultHash);
+        isFinishedShowResult && this.resultHash && this.handleMD5Data(this.resultHash);
     }
 
     private handleMD5Data(data: gc.GameServiceMessage.ResultHash) {
