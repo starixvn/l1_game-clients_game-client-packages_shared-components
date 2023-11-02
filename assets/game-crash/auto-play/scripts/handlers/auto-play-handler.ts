@@ -55,4 +55,9 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
             this.autoPlayStore.isAutoPlay = false;
         }
     }
+
+    cancelAutoPlay() {
+        this.autoPlayStore.roundsAutoPlay = 0;
+        this.autoPlayStore.isAutoPlay = false;
+    }
 }
