@@ -37,15 +37,16 @@ export class AutoCashoutPopup extends ObserverComponent {
 
     @handle(AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
     addValue(event, value) {
+        console.log(typeof value);
         if (this.multiplierLabel.string === "0" && value !== ".") {
-            return value;
+            return value.toString();
         }
 
         const regex = new RegExp(/^[1-9]\d{0,3}(\.\d{0,2})?$/);
         const newValue = `${this.multiplierLabel.string}${value}`;
 
         if (regex.test(newValue)) {
-            return newValue;
+            return newValue.toString();
         }
 
         return this.multiplierLabel.string;
@@ -78,6 +79,8 @@ export class AutoCashoutPopup extends ObserverComponent {
         return multiplierString;
     }
 
-    @handle(AutoCashOutPopupHandler, (handle) => handle.handleMultiplier("0"))
-    clear() {}
+    @handle(AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
+    clear() {
+        return "0";
+    }
 }

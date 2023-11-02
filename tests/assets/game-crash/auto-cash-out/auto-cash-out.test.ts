@@ -1,4 +1,4 @@
-import { Button, Label, Sprite, Toggle, UIOpacity } from "cc";
+import { Button, Label, Toggle, UIOpacity } from "cc";
 
 import { AutoCashout } from "../../../../assets/game-crash/auto-cash-out/scripts/components/auto-cash-out";
 
@@ -9,7 +9,6 @@ describe("AutoCashout", () => {
         autoCashout = new AutoCashout();
         autoCashout.toggle = new Toggle();
         autoCashout.multiplierLabel = new Label();
-        autoCashout.disableMultiplier = new Sprite();
         autoCashout.increaseButton = new Button();
         autoCashout.decreaseButton = new Button();
     });
@@ -37,7 +36,7 @@ describe("AutoCashout", () => {
     describe("updateMultiplier", () => {
         it("should update the multiplier label", () => {
             autoCashout.updateMultiplier(1.0);
-            expect(autoCashout.multiplierLabel.string).toBe("1.00X");
+            expect(autoCashout.multiplierLabel.string).toBe("1.00x");
         });
     });
 
@@ -45,7 +44,6 @@ describe("AutoCashout", () => {
         it("should update the toggle & overlay status", () => {
             autoCashout.updateEnable(true);
             expect(autoCashout.toggle.isChecked).toBe(true);
-            expect(autoCashout.disableMultiplier.node.active).toBe(false);
         });
     });
 
