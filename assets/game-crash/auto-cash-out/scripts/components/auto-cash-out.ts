@@ -17,9 +17,6 @@ export class AutoCashout extends ObserverComponent {
     @property(Toggle)
     toggle: Toggle = null;
 
-    @property(Sprite)
-    disableMultiplier: Sprite = null;
-
     @property(Button)
     increaseButton: Button = null;
 
@@ -64,7 +61,6 @@ export class AutoCashout extends ObserverComponent {
     @render(AutoCashOutStore, (store) => store.enable)
     updateEnable(enable: boolean) {
         this.toggle.isChecked = enable;
-        this.disableMultiplier.node.active = !enable;
     }
 
     @render(AutoCashOutStore, (store) => store.disable)

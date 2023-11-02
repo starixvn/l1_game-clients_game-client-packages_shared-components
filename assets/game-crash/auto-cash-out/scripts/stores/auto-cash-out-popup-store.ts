@@ -5,8 +5,8 @@ const { injectable } = inversify;
 @injectable()
 export default class AutoCashOutPopupStore {
     private _enable: boolean = false;
-    private _isValid: boolean = true;
-    private _multiplier: number = 1.01;
+    private _isValid: boolean = false;
+    private _multiplier: string = "0";
 
     constructor() {
         mobx.makeAutoObservable(this);
@@ -27,11 +27,11 @@ export default class AutoCashOutPopupStore {
         this._isValid = isValid;
     }
 
-    get multiplier(): number {
+    get multiplier(): string {
         return this._multiplier;
     }
 
-    set multiplier(multiplier: number) {
+    set multiplier(multiplier: string) {
         this._multiplier = multiplier;
     }
 }
