@@ -10,6 +10,7 @@ describe("BetAmountPopup", () => {
         component.nodeBetContainer = new Node();
         component.lblBetAmount = new Label();
         component.btnConfirm = new Button();
+        component.lblBetRange = new Label();
     });
     describe("initBetAmount", () => {
         it("should add bet amount item into betContainer node", () => {
@@ -21,7 +22,21 @@ describe("BetAmountPopup", () => {
             component["initBetAmount"](chips);
 
             // Assert
-            expect(setBetAmountItemSpy).toBeCalledTimes(chips.length);
+            expect(setBetAmountItemSpy).toBeCalledTimes(component["chipsLimit"]);
+        });
+    });
+
+    describe("updateBetRange", () => {
+        it("should display minBet and maxBet", () => {
+            // Arrange
+            const minBet = 1;
+            const maxBet = 500;
+
+            // Act
+            component["updateBetRange"]({ minBet, maxBet });
+
+            // Assert
+            expect(component.lblBetRange.string).toEqual(`${minBet} - ${maxBet}`);
         });
     });
 
@@ -93,16 +108,6 @@ describe("BetAmountPopup", () => {
 
                 // Assert
                 expect(component.btnConfirm.interactable).toEqual(false);
-            });
-
-            it("should set opacitty is 100", () => {
-                const btnOpacity = component.btnConfirm.node.getComponent(UIOpacity);
-
-                // Act
-                component["checkConfirmBtnStatus"](false);
-
-                // Assert
-                expect(btnOpacity.opacity).toEqual(100);
             });
         });
     });

@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Button, instantiate, Label, Node, Prefab, UIOpacity } from "cc";
+import { _decorator, Button, instantiate, Label, Node, Prefab } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -21,18 +21,32 @@ export class BetAmountPopup extends ObserverComponent {
     @property(Label)
     lblBetAmount: Label = null;
 
+    @property(Label)
+    lblBetRange: Label = null;
+
     @property(Button)
     btnConfirm: Button = null;
+
+    private readonly chipsLimit = 8;
 
     @render(gc.GameConfigs.GameConfigStore, (store) => store.chips)
     private initBetAmount(chips) {
         this.nodeBetContainer.destroyAllChildren();
+        chips = chips.slice(0, this.chipsLimit);
         chips.forEach((chip) => {
             const node = instantiate(this.prfBetAmount);
             const comp = node.getComponent(BetAmountItem);
             comp?.setBetAmountItem(chip);
             this.nodeBetContainer.addChild(node);
         });
+    }
+
+    @render(gc.Rounds.RoundStore, (store) => ({
+        minBet: store.minBet,
+        maxBet: store.maxBet,
+    }))
+    private updateBetRange({ minBet, maxBet }) {
+        this.lblBetRange.string = `${minBet} - ${maxBet}`;
     }
 
     @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
@@ -57,6 +71,6 @@ export class BetAmountPopup extends ObserverComponent {
 
     private checkConfirmBtnStatus(status: boolean) {
         this.btnConfirm.interactable = status;
-        this.btnConfirm.node.getComponent(UIOpacity).opacity = status ? 255 : 100;
+        this.btnConfirm.node.getChildByName("overlay").active = !status;
     }
 }
