@@ -1,8 +1,9 @@
-import { Node, _decorator } from "cc";
+import gc from "@sg/game-client-base";
+import { _decorator, Node } from "cc";
 import Observer from "observer";
+
 import { NodeContainer } from "../../../../../shared/common-components/node-container/node-container";
 import { BetDetailTable } from "./bet-detail-table";
-import gc from "@sg/game-client-base";
 
 const { ccclass } = _decorator;
 const { render } = Observer;
@@ -20,6 +21,6 @@ export class BetDetailContainer extends NodeContainer {
             this.table = this.wrapperNode.getComponent(BetDetailTable);
         }
 
-        this.table.showBetDetail(model);
+        this.table?.showBetDetail(model);
     }
 }
