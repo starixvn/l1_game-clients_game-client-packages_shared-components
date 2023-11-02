@@ -23,7 +23,6 @@ export class AutoCashoutPopupContainer extends NodeContainer {
 
     @handle(AutoCashOutPopupHandler, (handle) => handle.togglePopup(false))
     closePopup() {
-        console.log("close");
         this.node.active = false;
     }
 }

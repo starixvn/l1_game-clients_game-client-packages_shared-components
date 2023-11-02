@@ -12,8 +12,10 @@ export default class AutoCashOutPopupHandler {
         this.autoCashoutPopupStore.enable = enable;
     }
 
-    handleMultiplier(multiplier: number) {
-        this.autoCashoutPopupStore.multiplier = multiplier;
+    handleMultiplier(multiplierString: string) {
+        this.autoCashoutPopupStore.multiplier = multiplierString;
+
+        const multiplier = parseFloat(multiplierString);
         this.autoCashoutPopupStore.isValid = multiplier >= 1.01 && multiplier <= this.gameConfigStore.maxMultiplier;
     }
 }
