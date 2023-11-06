@@ -50,7 +50,7 @@ export class AutoCashout extends ObserverComponent {
         this.updateButtonStatus(this.increaseButton, multiplier < this.maxMultiplier);
     }
 
-    @render(gc.GameConfigs.GameConfigStore, (store) => store.maxMultiplier)
+    @render(gc.GameCrash.CrashGameConfigs.CrashGameConfigStore, (store) => store.maxMultiplier)
     updateMaxMultiplier(maxMultiplier: number) {
         this.maxMultiplier = maxMultiplier;
         const currentMultiplier = parseFloat(this.multiplierLabel.string);

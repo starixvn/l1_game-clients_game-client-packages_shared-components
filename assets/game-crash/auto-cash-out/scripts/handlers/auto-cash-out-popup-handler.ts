@@ -6,7 +6,7 @@ const { injectable, inject } = inversify;
 @injectable()
 export default class AutoCashOutPopupHandler {
     @inject(AutoCashOutPopupStore) private readonly autoCashoutPopupStore: AutoCashOutPopupStore;
-    @inject(gc.GameConfigs.GameConfigStore) private readonly gameConfigStore: gc.GameConfigs.GameConfigStore;
+    @inject(gc.GameCrash.CrashGameConfigs.CrashGameConfigStore) private readonly gameConfigStore: gc.GameCrash.CrashGameConfigs.CrashGameConfigStore;
 
     togglePopup(enable: boolean) {
         this.autoCashoutPopupStore.enable = enable;
