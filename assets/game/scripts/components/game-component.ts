@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
-import { Game, Label, _decorator, game, sys } from "cc";
+import { _decorator, Game, game, Label, sys } from "cc";
 import Observer from "observer";
+
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
 import { StaticGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
 import { ComponentUtils } from "../../../shared/utils";
@@ -115,7 +116,7 @@ export default class GameComponent extends GameComponentBase {
     handleResult(data: { result: gc.GameServiceMessage.TResult; settlementResult: gc.GameServiceMessage.TSettlementResult }) {
         const { result, settlementResult } = data;
 
-        if (!result || !settlementResult) {
+        if (!this.isValidResult(result, settlementResult)) {
             this.isReceiveFinishBeforeRoundHistory = false;
             return;
         }
@@ -130,7 +131,11 @@ export default class GameComponent extends GameComponentBase {
         result: gc.GameServiceMessage.TResult,
         hasAnimation: boolean,
         settlementResult: gc.GameServiceMessage.TSettlementResult
-    ) {}
+    ) { }
+
+    isValidResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {
+        return result && settlementResult;
+    }
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {}
