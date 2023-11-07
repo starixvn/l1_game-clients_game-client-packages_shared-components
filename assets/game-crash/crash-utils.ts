@@ -7,7 +7,7 @@ export class CrashUtils extends Component {
         if (multiplier <= 5) {
             sufix = "blue";
         } else if (multiplier <= 10) {
-            sufix = "yelow";
+            sufix = "yellow";
         } else {
             sufix = "red";
         }

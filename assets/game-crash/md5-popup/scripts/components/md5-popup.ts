@@ -66,7 +66,7 @@ export class Md5Popup extends ObserverComponent {
         this.lblResult.string = `<color=#4920a4>${roundHistoryData.md5Result.rawValue}</color>`;
         const multiplier = +roundHistoryData.result;
         this.lblMultiplier.string = `${multiplier.toString()}x`;
-        CrashUtils.SetSpriteFrameBg(multiplier, this.sprMultiplierBg, this.mainAtlas, "bg-title-md5");
+        CrashUtils.SetSpriteFrameBg(multiplier, this.sprMultiplierBg, this.mainAtlas, "md5-bg-multiplier");
     }
 
     updateMultiplier(isCrashedValue: number) {
