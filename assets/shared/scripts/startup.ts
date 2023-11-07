@@ -3,7 +3,7 @@ import mobx from "mobx";
 import Observer from "observer";
 import * as i18n from "db://i18n/LanguageData";
 
-const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) => {
+export const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) => {
     try {
         const isUseTolgeeRealTime = !!siteConfigs.tolgeeUrl;
         const languageId = gc.Translator.getLanguageId();

@@ -66,7 +66,7 @@ export default class Splash extends Component {
         return event.data?.isUserGesture || false;
     }
 
-    private initGameConnectionComponent() {
+    protected initGameConnectionComponent() {
         this.gameConnection = this.getComponent(GameConnection);
         if (this.gameConnection) {
             this.gameConnection.openGameCallback = () => this.loadSceneGame();
@@ -145,7 +145,7 @@ export default class Splash extends Component {
     async loadSystemSlogan(assetPath: string, isSystemSG: boolean) {
         this.destroyAllChildrenSlogan();
         const slogan = await bundleManager.loadSharedAsset<Prefab>(`splash/${assetPath}`, Prefab, null);
-        if (slogan) {
+        if (slogan && this.node?.isValid) {
             const sloganNode = instantiate(slogan);
             if (isSystemSG) {
                 this.nodeSloganSG.addChild(sloganNode);

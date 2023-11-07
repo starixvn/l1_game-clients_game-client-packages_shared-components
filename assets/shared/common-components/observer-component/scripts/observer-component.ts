@@ -7,10 +7,10 @@ const { useObserver } = Observer;
 
 @ccclass
 export class ObserverComponent extends Component {
-    private dispose: Function;
+    protected dispose: Function;
 
     onLoad(): void {
-        this.dispose = useObserver(this, FunctionUtils.getNamespace());
+        this.dispose = useObserver(this, FunctionUtils.getNamespace(this.node));
     }
 
     onDestroy(): void {

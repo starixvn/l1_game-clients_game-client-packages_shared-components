@@ -1,9 +1,20 @@
-import { find, screen } from "cc";
+import { find, screen, Node } from "cc";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 
 export namespace FunctionUtils {
-    export const getNamespace = () => {
-        const namespace = find("Canvas").getComponent(GameComponentBase)?.namespace;
+    export const getNamespace = (currentNode?: Node) => {
+        let gameNode: Node = null;
+        let temp = currentNode;
+        while (!gameNode && temp?.getParent()) {
+            const parentNode = temp.getParent();
+            if (parentNode.getComponent(GameComponentBase)) {
+                gameNode = parentNode;
+            } else {
+                temp = parentNode;
+            }
+        }
+        gameNode = gameNode ?? find("Canvas");
+        const namespace = gameNode?.getComponent(GameComponentBase)?.namespace;
 
         return namespace || window?.envConfig?.mainObserverNamespace || "default";
     };
