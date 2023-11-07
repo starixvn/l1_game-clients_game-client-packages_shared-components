@@ -4,6 +4,7 @@ import Observer from "observer";
 import { Md5PopupHandler } from "../../../../../extensions/shared-components/assets/game-crash/md5-popup/scripts/handlers/md5-popup-handlers";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 
+import { CrashUtils } from "../../../../../assets/game/scripts/crash-utils";
 import { CrashRoundHistory } from "./statistics-bar";
 const { ccclass, property } = _decorator;
 const { FormatUtils } = gc;
@@ -24,7 +25,7 @@ export class StatisticsButton extends ObserverComponent {
 
     setMultiplier(data: number) {
         this.lblMultiplier.string = `${FormatUtils.numberWithCommas(+data, 2, false)}x`;
-        this.setSpriteBg(+data);
+        CrashUtils.SetSpriteFrameBg(+data, this.nodeBg, this.mainAtlas);
     }
 
     setData(data: CrashRoundHistory) {
