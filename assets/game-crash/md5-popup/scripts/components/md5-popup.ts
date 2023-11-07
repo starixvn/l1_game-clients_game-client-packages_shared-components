@@ -1,7 +1,7 @@
 import { _decorator, Label, RichText, Sprite, SpriteAtlas } from "cc";
 import Observer from "observer";
 
-import { CrashUtils } from "../../../../../../../assets/game/scripts/components/crash-utils";
+import { CrashUtils } from "../../../crash-utils";
 import { CrashRoundHistory } from "../../../statistics-bar/statistics-bar";
 import { Md5PopupHandler } from "../handlers/md5-popup-handlers";
 import { Md5PopupStore } from "../stores/md5-popup-store";
@@ -66,7 +66,7 @@ export class Md5Popup extends ObserverComponent {
         this.lblResult.string = `<color=#4920a4>${roundHistoryData.md5Result.rawValue}</color>`;
         const multiplier = +roundHistoryData.result;
         this.lblMultiplier.string = `${multiplier.toString()}x`;
-        CrashUtils.SetSpriteFrameBg(multiplier, this.sprMultiplierBg, this.mainAtlas);
+        CrashUtils.SetSpriteFrameBg(multiplier, this.sprMultiplierBg, this.mainAtlas, "bg-title-md5");
     }
 
     updateMultiplier(isCrashedValue: number) {
