@@ -1,7 +1,7 @@
 import { _decorator, Label, RichText, Sprite, SpriteAtlas } from "cc";
 import Observer from "observer";
 
-import { CrashUtils } from "../../../../../../../assets/game/scripts/crash-utils";
+import { CrashUtils } from "../../../../../../../assets/game/scripts/components/crash-utils";
 import { CrashRoundHistory } from "../../../statistics-bar/statistics-bar";
 import { Md5PopupHandler } from "../handlers/md5-popup-handlers";
 import { Md5PopupStore } from "../stores/md5-popup-store";

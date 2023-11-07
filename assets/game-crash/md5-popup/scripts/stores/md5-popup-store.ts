@@ -1,7 +1,8 @@
 import { _decorator } from "cc";
 import inversify from "inversify";
 import mobx from "mobx";
-import { CrashRoundHistory } from "../../../../../../../assets/game/scripts/components/statistics-bar/statistics-bar";
+import { CrashRoundHistory } from "../../../statistics-bar/statistics-bar";
+
 const { ccclass, property } = _decorator;
 const { injectable, inject } = inversify;
 

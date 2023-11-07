@@ -4,7 +4,7 @@ import Observer from "observer";
 import { Md5PopupHandler } from "../../../../../extensions/shared-components/assets/game-crash/md5-popup/scripts/handlers/md5-popup-handlers";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 
-import { CrashUtils } from "../../../../../assets/game/scripts/crash-utils";
+import { CrashUtils } from "../../../../../assets/game/scripts/components/crash-utils";
 import { CrashRoundHistory } from "./statistics-bar";
 const { ccclass, property } = _decorator;
 const { FormatUtils } = gc;
@@ -30,18 +30,6 @@ export class StatisticsButton extends ObserverComponent {
 
     setData(data: CrashRoundHistory) {
         this.data = data;
-    }
-
-    setSpriteBg(multiplier: number) {
-        let sufix = "";
-        if (multiplier <= 5) {
-            sufix = "blue";
-        } else if (multiplier <= 10) {
-            sufix = "yelow";
-        } else {
-            sufix = "red";
-        }
-        this.nodeBg.spriteFrame = this.mainAtlas.getSpriteFrame(`statistics-bar-${sufix}`);
     }
 
     @handle(Md5PopupHandler, (handle, info: { isCrashed: number; isOpenPopupMd5: boolean; data: CrashRoundHistory }) =>

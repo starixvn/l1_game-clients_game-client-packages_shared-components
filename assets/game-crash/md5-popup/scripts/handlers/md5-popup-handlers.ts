@@ -1,5 +1,6 @@
 import inversify from "inversify";
-import { CrashRoundHistory } from "../../../../../../../assets/game/scripts/components/statistics-bar/statistics-bar";
+
+import { CrashRoundHistory } from "../../../statistics-bar/statistics-bar";
 import { Md5PopupStore } from "../stores/md5-popup-store";
 const { injectable, inject } = inversify;
 
@@ -10,7 +11,6 @@ export class Md5PopupHandler {
     handle() {}
     updateIsCrashedValue(isCrashed: number) {
         this.md5PopupStore.isCrashedGame = { value: isCrashed };
-        console.log("updateIsCrashedValue", this.md5PopupStore.isCrashedGame.value);
     }
 
     updateShowHidePopupMd5(isShow: boolean) {
