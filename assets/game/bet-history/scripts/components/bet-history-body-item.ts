@@ -70,14 +70,37 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         // if (betHistoryLog.betLogDetails?.length > 0) {
         //     store.setData(betHistoryLog);
         // }
+        const betLogDetails = [];
 
-        store.setData(betHistoryLog);
+        for (var i = 0; i < 20; i++) {
+            betLogDetails.push({
+                amount: 1 + i,
+                time: new Date(),
+                choice: "Cash Test",
+                rate: 15 + i,
+                rebet: false,
+            });
+        }
+
+        store.setData({
+            time: new Date().toDateString(),
+            roundId: 1569,
+            win: 5900,
+            betwin: 5900,
+            totalAmount: 10,
+            freeBet: false,
+            odds: {},
+            result: {},
+            settlementResult: {},
+            betLogDetails,
+        });
     })
     openTicketDetail() {
         if (this.betHistoryLog.betLogDetails?.length > 0) {
             this.playSoundClick();
         }
 
+        // TO DO
         return this.betHistoryLog;
     }
 

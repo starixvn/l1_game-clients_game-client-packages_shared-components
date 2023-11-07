@@ -1,11 +1,11 @@
-import { _decorator, Color, Component, Label, Node } from "cc";
+import { _decorator, Color, Label, Node } from "cc";
 import gc from "@sg/game-client-base";
-import { BetDetailLogItemType } from "../../../game/bet-history/scripts/components/bet-detail/bet-detail-log-item";
+import { BaseBetDetailLogItem, BetDetailLogItemType } from "../../../game/bet-history/scripts/components/bet-detail/bet-detail-log-item";
 
 const { property } = _decorator;
 const { DateTimeUtils, FormatUtils, Translator } = gc;
 
-export default class CrashGameBetDetailLogItem extends Component {
+export default class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
     @property(Label)
     lblTime: Label = null;
 
@@ -33,7 +33,7 @@ export default class CrashGameBetDetailLogItem extends Component {
 
         this.nodeBackground.active = index % 2 > 0;
         this.lblTime.string = DateTimeUtils.formatDateTime(time);
-        this.lblOption.string = Translator.gameTranslate(`glossary_${choice}`);
+        this.lblOption.string = "Cash"; // Translator.gameTranslate(`glossary_${choice}`);
         this.lblBet.string = FormatUtils.numberWithCommas(amount, 2);
     }
 
