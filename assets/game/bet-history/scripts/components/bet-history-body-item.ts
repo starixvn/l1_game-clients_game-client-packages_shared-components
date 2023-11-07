@@ -66,10 +66,18 @@ export default class BetHistoryBodyItem extends ObserverComponent {
     }
 
     @handle(BetHistory.BetDetailHitoryStore, (store, betHistoryLog: gc.BetHistory.BetHistoryLog) => {
+        // TO DO
+        // if (betHistoryLog.betLogDetails?.length > 0) {
+        //     store.setData(betHistoryLog);
+        // }
+
         store.setData(betHistoryLog);
     })
     openTicketDetail() {
-        this.playSoundClick();
+        if (this.betHistoryLog.betLogDetails?.length > 0) {
+            this.playSoundClick();
+        }
+
         return this.betHistoryLog;
     }
 
