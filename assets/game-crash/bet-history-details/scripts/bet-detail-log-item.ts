@@ -5,6 +5,15 @@ import { BaseBetDetailLogItem, BetDetailLogItemType } from "../../../game/bet-hi
 const { property } = _decorator;
 const { DateTimeUtils, FormatUtils, Translator } = gc;
 
+export interface CrashGameBetDetailsLog {
+    amount: number;
+    time: string;
+    choice: string;
+    rate: number;
+    rebet: boolean;
+    multiplier: number;
+}
+
 export default class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
     @property(Label)
     lblTime: Label = null;
@@ -29,12 +38,13 @@ export default class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
 
     setData(data: BetDetailLogItemType) {
         const { betDetailsLog, index } = data;
-        const { time, amount, choice } = betDetailsLog;
+        const { time, amount, multiplier } = betDetailsLog as CrashGameBetDetailsLog & gc.BetHistory.DynamicObject<object>;
 
         this.nodeBackground.active = index % 2 > 0;
         this.lblTime.string = DateTimeUtils.formatDateTime(time);
         this.lblOption.string = "Cash"; // Translator.gameTranslate(`glossary_${choice}`);
         this.lblBet.string = FormatUtils.numberWithCommas(amount, 2);
+        this.lblMultiplier.string = `${FormatUtils.numberWithCommas(multiplier, 2)}x`;
     }
 
     setHighlightTicketDetail(highlight: boolean) {
