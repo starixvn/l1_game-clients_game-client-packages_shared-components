@@ -1,10 +1,10 @@
 import gc from "@sg/game-client-base";
 import { Label, Sprite, SpriteAtlas, _decorator } from "cc";
 import Observer from "observer";
-import { Md5PopupHandler } from "../../../../../extensions/shared-components/assets/game-crash/md5-popup/scripts/handlers/md5-popup-handlers";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 
 import { CrashUtils } from "../crash-utils";
+import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handlers";
 import { CrashRoundHistory } from "./statistics-bar";
 const { ccclass, property } = _decorator;
 const { FormatUtils } = gc;
@@ -34,7 +34,7 @@ export class StatisticsButton extends ObserverComponent {
 
     @handle(
         Md5PopupHandler,
-        (handle, info: { isCrashed: number; isOpenPopupMd5: boolean; data: CrashRoundHistory; isCurrentRound: boolean }) =>
+        (handle, info: { isCrashed: number; isOpenPopupMd5: boolean; data: CrashRoundHistory; isPopupCurrRound: boolean }) =>
             handle.handleMd5Popup(info)
     )
     onClickStatisticsButton() {

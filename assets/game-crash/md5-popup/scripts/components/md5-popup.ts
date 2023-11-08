@@ -1,9 +1,9 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label, RichText, Sprite, SpriteAtlas } from "cc";
+import { Label, Node, RichText, _decorator } from "cc";
 import Observer from "observer";
 
-import { CrashUtils } from "../../../crash-utils";
 import { CrashRoundHistory } from "../../../statistics-bar/statistics-bar";
+import { StatusCurrentRound } from "../../../statistics-bar/status-current-round";
 import { Md5PopupHandler } from "../handlers/md5-popup-handlers";
 import { Md5PopupStore } from "../stores/md5-popup-store";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -13,9 +13,6 @@ const { Rounds, Settlements, Translator } = gc;
 @ccclass
 export class Md5Popup extends ObserverComponent {
     @property(Label)
-    lblMultiplier: Label = null;
-
-    @property(Label)
     lblRoundId: Label = null;
 
     @property(RichText)
@@ -24,11 +21,8 @@ export class Md5Popup extends ObserverComponent {
     @property(RichText)
     lblResult: RichText = null;
 
-    @property(Sprite)
-    sprMultiplierBg: Sprite = null;
-
-    @property(SpriteAtlas)
-    mainAtlas: SpriteAtlas = null;
+    @property(Node)
+    nodeCurrentRound: Node = null;
 
     public round = {} as CrashRoundHistory;
     private isCrashed: boolean;
@@ -46,7 +40,6 @@ export class Md5Popup extends ObserverComponent {
             this.isCrashed = crashValue;
             const value = crashValue === 2 ? this.round.md5Result.rawValue : "";
             this.lblResult.string = value;
-            //this.updateMultiplier(isCrashedGame.value);
         }
     }
 
@@ -59,14 +52,13 @@ export class Md5Popup extends ObserverComponent {
         }
     }
 
-    @render(Md5PopupStore, (store) => store.isPopupCurrRound)
+    @render(Md5PopupStore, (store) => store.isCurrRound)
     updatePopupCurrRound(isPopupCurrRound: boolean) {
         this.isPopupCurrRound = isPopupCurrRound;
     }
 
     @render(Rounds.RoundStore, (store) => store.clientRoundId)
     renderRoundId(roundId: number) {
-        //roundId > 0 && this.lblRoundId && (this.lblRoundId.string = `#${roundId}`);
         this.round.roundId = roundId;
     }
 
@@ -80,38 +72,9 @@ export class Md5Popup extends ObserverComponent {
     updateInfo(roundHistoryData: CrashRoundHistory) {
         this.lblMd5Key.string = `<color=#4920a4>${roundHistoryData.md5Result.hashValue}</color>`;
         this.lblRoundId.string = `#${roundHistoryData.roundId.toString()}`;
-        this.lblResult.string = `<color=#4920a4>${roundHistoryData.md5Result.rawValue}</color>`;
+        this.lblResult.string = `<color=#4920a4>${(roundHistoryData.md5Result.rawValue =
+            roundHistoryData.md5Result.rawValue || "")}</color>`;
         const multiplier = +roundHistoryData.result;
-        this.lblMultiplier.string = `${multiplier.toString()}x`;
-        CrashUtils.setSpriteFrameBg(multiplier, this.sprMultiplierBg, this.mainAtlas, "md5-bg-multiplier");
-    }
-
-    @render(gc.Rounds.RoundTimeStore, (store) => ({
-        countdownTimer: store.countdownTimer,
-        isPlacingBet: store.isPlacingBet,
-        isLockingBet: store.isLocking,
-    }))
-    updateLabelText({
-        countdownTimer,
-        isPlacingBet,
-        isLockingBet,
-    }: {
-        countdownTimer: number;
-        isPlacingBet: boolean;
-        isLockingBet: boolean;
-    }) {
-        if (countdownTimer < 11 && countdownTimer > 0 && (isPlacingBet || isLockingBet)) {
-            if (this.isPopupCurrRound) {
-                this.lblMultiplier.string = countdownTimer.toString();
-            }
-        }
-    }
-
-    @render(gc.Rounds.RoundTimeStore, (store) => store.remaining)
-    showHideLabelText(remaining: number) {
-        if (remaining === 0) {
-            this.lblMultiplier.string = "In Play";
-        }
     }
 
     @handle(Md5PopupHandler, (handle, value: boolean) => handle.updateShowHidePopupMd5(value))
@@ -123,7 +86,13 @@ export class Md5Popup extends ObserverComponent {
     private renderMd5(resultHash: gc.GameServiceMessage.ResultHash) {
         if (resultHash) {
             this.round.md5Result = resultHash;
+            this.updateData();
         }
+    }
+
+    @handle(Md5PopupHandler, (handle, data: CrashRoundHistory) => handle.handleData(data))
+    updateData() {
+        return this.round;
     }
 
     @render(Settlements.SettlementStore, (store) => store.isFinishedShowResult)
@@ -134,5 +103,10 @@ export class Md5Popup extends ObserverComponent {
     @handle(Md5PopupHandler, (handle, info: { isCrashed: number; data: CrashRoundHistory }) => handle.handleInfoCurrRound(info))
     updateResultHash() {
         return { data: this.round, isCrashed: 2 };
+    }
+
+    setMultiplierValue(multiplier: number) {
+        const currRoundComp = this.nodeCurrentRound.getComponent(StatusCurrentRound);
+        currRoundComp.updateMultiplierValue(multiplier, "md5-bg-multiplier");
     }
 }

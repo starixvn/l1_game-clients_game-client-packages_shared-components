@@ -1,9 +1,10 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, Prefab, SpriteAtlas, _decorator, instantiate } from "cc";
+import { Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handlers";
 import { StatisticsButton } from "./statistics-button";
+import { StatusCurrentRound } from "./status-current-round";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -21,17 +22,8 @@ export class StatisticsBar extends ObserverComponent {
     @property(Node)
     content: Node = null;
 
-    @property(Label)
-    lblCountdown: Label = null;
-
     @property(Node)
-    nodeMultiplier: Node = null;
-
-    @property(Node)
-    nodeInPlay: Node = null;
-
-    @property(SpriteAtlas)
-    mainAtlas: SpriteAtlas = null;
+    nodeCurrentRound = null;
 
     protected rounds: CrashRoundHistory[] = [];
     private isFirstLoad = false;
@@ -46,12 +38,14 @@ export class StatisticsBar extends ObserverComponent {
             this.updateStatisticsBarInfo(this.rounds);
             this.isFirstLoad = true;
         }
+        this.updateStatisticsBarInfo(this.rounds);
     }
 
     private updateStatisticsBarInfo(rounds: CrashRoundHistory[]) {
         if (this.rounds.length === 0) {
             return;
         }
+        console.log("rounds", rounds.length);
         this.content.destroyAllChildren();
         rounds.forEach((round, index) => {
             if (index > 9) {
@@ -64,12 +58,12 @@ export class StatisticsBar extends ObserverComponent {
             control.setMultiplier(+result);
             this.content.addChild(node);
         });
+        console.log("updateStatisticsBarInfo", this.content.children.length);
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.isPlacingBet)
     updatePlacingBet(isPlacingBet: boolean) {
         if (isPlacingBet) {
-            this.updateStatisticsBarInfo(this.rounds);
             this.isMd5Crashed = 0;
         }
     }
@@ -77,46 +71,14 @@ export class StatisticsBar extends ObserverComponent {
     @render(gc.Rounds.RoundTimeStore, (store) => store.remaining)
     showHideLabelText(remaining: number) {
         if (remaining === 0) {
-            this.showHideNode(false, false, true);
             this.isMd5Crashed = 1;
         }
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => ({
-        countdownTimer: store.countdownTimer,
-        isPlacingBet: store.isPlacingBet,
-        isLockingBet: store.isLocking,
-    }))
-    updateLabelText({
-        countdownTimer,
-        isPlacingBet,
-        isLockingBet,
-    }: {
-        countdownTimer: number;
-        isPlacingBet: boolean;
-        isLockingBet: boolean;
-    }) {
-        if (countdownTimer < 11 && countdownTimer > 0 && (isPlacingBet || isLockingBet)) {
-            this.updateCountDownValue(countdownTimer);
-        }
-    }
-
-    showHideNode(isShowMultiplier: boolean, isShowCountDown: boolean, isShowSprInPlay: boolean) {
-        this.nodeMultiplier.active = isShowMultiplier;
-        this.lblCountdown.node.active = isShowCountDown;
-        this.nodeInPlay.active = isShowSprInPlay;
-    }
-
-    updateCountDownValue(value: number) {
-        this.lblCountdown.string = `${value}s`;
-        this.showHideNode(false, true, false);
-    }
-
     updateMultiplierValue(value: number) {
-        const statisticsBtn = this.nodeMultiplier.getComponent(StatisticsButton);
-        statisticsBtn.setMultiplier(value);
-        this.showHideNode(true, false, false);
         this.isMd5Crashed = 2;
+        const currRoundComp = this.nodeCurrentRound.getComponent(StatusCurrentRound);
+        currRoundComp.updateMultiplierValue(value, "statistics-bar");
     }
 
     @handle(

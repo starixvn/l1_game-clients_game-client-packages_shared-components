@@ -22,12 +22,20 @@ export class Md5PopupHandler {
         this.updateIsCrashedValue(isCrashed);
         this.updateShowHidePopupMd5(isOpenPopupMd5);
         this.md5PopupStore.roundHistoryData = data;
-        this.md5PopupStore.isPopupCurrRound = isPopupCurrRound;
+        this.md5PopupStore.isCurrRound = isPopupCurrRound;
     }
 
     handleInfoCurrRound(info: { isCrashed: number; data: CrashRoundHistory }) {
         const { isCrashed, data } = info;
         this.updateIsCrashedValue(isCrashed);
+        this.md5PopupStore.roundHistoryData = data;
+    }
+
+    handleCurrentRound(isCurrentRound: boolean) {
+        this.md5PopupStore.isCurrRound = isCurrentRound;
+    }
+
+    handleData(data: CrashRoundHistory) {
         this.md5PopupStore.roundHistoryData = data;
     }
 }

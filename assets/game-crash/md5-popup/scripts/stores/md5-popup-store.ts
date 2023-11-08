@@ -42,11 +42,11 @@ export class Md5PopupStore {
         this._data = data;
     }
 
-    get isPopupCurrRound() {
+    get isCurrRound() {
         return this._isPopupCurrRound;
     }
 
-    set isPopupCurrRound(isCurrentRound: boolean) {
+    set isCurrRound(isCurrentRound: boolean) {
         this._isPopupCurrRound = isCurrentRound;
     }
 
