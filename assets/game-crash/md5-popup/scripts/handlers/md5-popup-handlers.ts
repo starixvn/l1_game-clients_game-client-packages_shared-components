@@ -9,7 +9,7 @@ export class Md5PopupHandler {
     @inject(Md5PopupStore) private readonly md5PopupStore: Md5PopupStore;
 
     handle() {}
-    updateIsCrashedValue(isCrashed: number) {
+    updateIsCrashedValue(isCrashed: boolean) {
         this.md5PopupStore.isCrashedGame = { value: isCrashed };
     }
 
@@ -17,7 +17,7 @@ export class Md5PopupHandler {
         this.md5PopupStore.isOpenPopupMd5 = isShow;
     }
 
-    handleMd5Popup(info: { isCrashed: number; isOpenPopupMd5: boolean; data: CrashRoundHistory; isPopupCurrRound: boolean }) {
+    handleMd5Popup(info: { isCrashed: boolean; isOpenPopupMd5: boolean; data: CrashRoundHistory; isPopupCurrRound: boolean }) {
         const { isCrashed, isOpenPopupMd5, data, isPopupCurrRound } = info;
         this.updateIsCrashedValue(isCrashed);
         this.updateShowHidePopupMd5(isOpenPopupMd5);
@@ -25,7 +25,7 @@ export class Md5PopupHandler {
         this.md5PopupStore.isCurrRound = isPopupCurrRound;
     }
 
-    handleInfoCurrRound(info: { isCrashed: number; data: CrashRoundHistory }) {
+    handleInfoCurrRound(info: { isCrashed: boolean; data: CrashRoundHistory }) {
         const { isCrashed, data } = info;
         this.updateIsCrashedValue(isCrashed);
         this.md5PopupStore.roundHistoryData = data;

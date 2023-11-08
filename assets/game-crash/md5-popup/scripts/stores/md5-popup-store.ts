@@ -9,7 +9,7 @@ const { injectable, inject } = inversify;
 @injectable()
 export class Md5PopupStore {
     private _isCrashed: {
-        value: number;
+        value: boolean;
     } = null;
 
     private _isOpenPopupMd5: boolean = false;

@@ -24,23 +24,12 @@ export class Md5Popup extends ObserverComponent {
     @property(Node)
     nodeCurrentRound: Node = null;
 
-    public round = {} as CrashRoundHistory;
+    public round = { roundId: 0, md5Result: {}, result: 0 } as CrashRoundHistory;
     private isCrashed: boolean;
     private isPopupCurrRound = false;
-    private resultHash = null;
 
     onLoad() {
         super.onLoad();
-    }
-
-    @render(Md5PopupStore, (store) => store.isCrashedGame)
-    updateMd5Result(isCrashedGame: any) {
-        if (isCrashedGame) {
-            const crashValue = isCrashedGame.value;
-            this.isCrashed = crashValue;
-            const value = crashValue === 2 ? this.round.md5Result.rawValue : "";
-            this.lblResult.string = value;
-        }
     }
 
     @render(Md5PopupStore, (store) => store.isOpenPopupMd5)
@@ -60,6 +49,7 @@ export class Md5Popup extends ObserverComponent {
     @render(Rounds.RoundStore, (store) => store.clientRoundId)
     renderRoundId(roundId: number) {
         this.round.roundId = roundId;
+        this.updateData();
     }
 
     @render(Md5PopupStore, (store) => store.roundHistoryData)
@@ -70,7 +60,8 @@ export class Md5Popup extends ObserverComponent {
     }
 
     updateInfo(roundHistoryData: CrashRoundHistory) {
-        this.lblMd5Key.string = `<color=#4920a4>${roundHistoryData.md5Result.hashValue}</color>`;
+        this.lblMd5Key.string = `<color=#4920a4>${(roundHistoryData.md5Result.hashValue =
+            roundHistoryData.md5Result.hashValue || "")}</color>`;
         this.lblRoundId.string = `#${roundHistoryData.roundId.toString()}`;
         this.lblResult.string = `<color=#4920a4>${(roundHistoryData.md5Result.rawValue =
             roundHistoryData.md5Result.rawValue || "")}</color>`;
@@ -85,7 +76,10 @@ export class Md5Popup extends ObserverComponent {
     @render(Rounds.RoundStore, (store) => store.resultHash)
     private renderMd5(resultHash: gc.GameServiceMessage.ResultHash) {
         if (resultHash) {
-            this.round.md5Result = resultHash;
+            if (resultHash.hashValue) {
+                this.round.md5Result["hashValue"] = resultHash.hashValue;
+            }
+            resultHash.rawValue && (this.round.md5Result["rawValue"] = resultHash.rawValue);
             this.updateData();
         }
     }
@@ -100,12 +94,13 @@ export class Md5Popup extends ObserverComponent {
         isFinishedShowResult && this.updateResultHash();
     }
 
-    @handle(Md5PopupHandler, (handle, info: { isCrashed: number; data: CrashRoundHistory }) => handle.handleInfoCurrRound(info))
+    @handle(Md5PopupHandler, (handle, info: { isCrashed: boolean; data: CrashRoundHistory }) => handle.handleInfoCurrRound(info))
     updateResultHash() {
-        return { data: this.round, isCrashed: 2 };
+        return { data: this.round, isCrashed: true };
     }
 
     setMultiplierValue(multiplier: number) {
+        this.isPopupCurrRound = false;
         const currRoundComp = this.nodeCurrentRound.getComponent(StatusCurrentRound);
         currRoundComp.updateMultiplierValue(multiplier, "md5-bg-multiplier");
     }

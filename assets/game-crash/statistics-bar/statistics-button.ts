@@ -34,7 +34,7 @@ export class StatisticsButton extends ObserverComponent {
 
     @handle(
         Md5PopupHandler,
-        (handle, info: { isCrashed: number; isOpenPopupMd5: boolean; data: CrashRoundHistory; isPopupCurrRound: boolean }) =>
+        (handle, info: { isCrashed: boolean; isOpenPopupMd5: boolean; data: CrashRoundHistory; isPopupCurrRound: boolean }) =>
             handle.handleMd5Popup(info)
     )
     onClickStatisticsButton() {

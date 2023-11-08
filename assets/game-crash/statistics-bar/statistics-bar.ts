@@ -10,7 +10,9 @@ const { render, handle } = Observer;
 
 const { FormatUtils, Rounds, Settlements } = gc;
 
-export interface CrashRoundHistory extends gc.RoundHistories.RoundHistory {
+export interface CrashRoundHistory {
+    roundId: number;
+    result: number;
     md5Result?: any;
 }
 
@@ -34,18 +36,19 @@ export class StatisticsBar extends ObserverComponent {
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories, { fireImmediately: false })
     setRoundsInfo(rounds: CrashRoundHistory[]) {
         this.rounds = [...rounds];
-        if (!this.isFirstLoad) {
-            this.updateStatisticsBarInfo(this.rounds);
-            this.isFirstLoad = true;
-        }
+        // if (!this.isFirstLoad) {
+        //     this.updateStatisticsBarInfo(this.rounds);
+        //     this.isFirstLoad = true;
+        // }
+
         this.updateStatisticsBarInfo(this.rounds);
     }
 
     private updateStatisticsBarInfo(rounds: CrashRoundHistory[]) {
+        console.log("updateStatisticsBarInfo", this.rounds);
         if (this.rounds.length === 0) {
             return;
         }
-        console.log("rounds", rounds.length);
         this.content.destroyAllChildren();
         rounds.forEach((round, index) => {
             if (index > 9) {
@@ -58,35 +61,19 @@ export class StatisticsBar extends ObserverComponent {
             control.setMultiplier(+result);
             this.content.addChild(node);
         });
-        console.log("updateStatisticsBarInfo", this.content.children.length);
-    }
-
-    @render(gc.Rounds.RoundTimeStore, (store) => store.isPlacingBet)
-    updatePlacingBet(isPlacingBet: boolean) {
-        if (isPlacingBet) {
-            this.isMd5Crashed = 0;
-        }
-    }
-
-    @render(gc.Rounds.RoundTimeStore, (store) => store.remaining)
-    showHideLabelText(remaining: number) {
-        if (remaining === 0) {
-            this.isMd5Crashed = 1;
-        }
     }
 
     updateMultiplierValue(value: number) {
-        this.isMd5Crashed = 2;
         const currRoundComp = this.nodeCurrentRound.getComponent(StatusCurrentRound);
         currRoundComp.updateMultiplierValue(value, "statistics-bar");
     }
 
     @handle(
         Md5PopupHandler,
-        (handle, info: { isCrashed: number; isOpenPopupMd5: boolean; data: CrashRoundHistory; isPopupCurrRound: boolean }) =>
+        (handle, info: { isCrashed: boolean; isOpenPopupMd5: boolean; data: CrashRoundHistory; isPopupCurrRound: boolean }) =>
             handle.handleMd5Popup(info)
     )
     onClickCurrRound() {
-        return { isCrashed: this.isMd5Crashed, isOpenPopupMd5: true, isPopupCurrRound: true };
+        return { isOpenPopupMd5: true, isPopupCurrRound: true };
     }
 }
