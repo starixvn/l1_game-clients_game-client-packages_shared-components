@@ -1,5 +1,5 @@
-import { _decorator, Color, Component, Label, Node } from "cc";
 import gc from "@sg/game-client-base";
+import { _decorator, Color, Component, Label, Node } from "cc";
 
 const { property } = _decorator;
 const { DateTimeUtils, FormatUtils, Translator } = gc;
