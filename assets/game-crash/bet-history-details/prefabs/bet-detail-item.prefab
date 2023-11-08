@@ -458,7 +458,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "lblOption",
+    "_name": "lblAction",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -897,7 +897,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "lblCashPoint",
+    "_name": "lblCrashPoint",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -1487,23 +1487,23 @@
     "lblTime": {
       "__id__": 11
     },
-    "lblOption": {
-      "__id__": 23
-    },
-    "lblMultiplier": {
-      "__id__": 37
-    },
-    "lblCashPoint": {
-      "__id__": 49
-    },
-    "lblBet": {
-      "__id__": 61
-    },
     "lblWin": {
       "__id__": 69
     },
     "nodeBackground": {
       "__id__": 2
+    },
+    "lblAction": {
+      "__id__": 23
+    },
+    "lblMultiplier": {
+      "__id__": 37
+    },
+    "lblCrashPoint": {
+      "__id__": 49
+    },
+    "lblBet": {
+      "__id__": 61
     },
     "_id": ""
   },
