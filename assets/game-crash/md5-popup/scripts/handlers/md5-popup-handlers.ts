@@ -17,10 +17,17 @@ export class Md5PopupHandler {
         this.md5PopupStore.isOpenPopupMd5 = isShow;
     }
 
-    handleMd5Popup(info: { isCrashed: number; isOpenPopupMd5: boolean; data: CrashRoundHistory }) {
-        const { isCrashed, isOpenPopupMd5, data } = info;
+    handleMd5Popup(info: { isCrashed: number; isOpenPopupMd5: boolean; data: CrashRoundHistory; isPopupCurrRound: boolean }) {
+        const { isCrashed, isOpenPopupMd5, data, isPopupCurrRound } = info;
         this.updateIsCrashedValue(isCrashed);
         this.updateShowHidePopupMd5(isOpenPopupMd5);
+        this.md5PopupStore.roundHistoryData = data;
+        this.md5PopupStore.isPopupCurrRound = isPopupCurrRound;
+    }
+
+    handleInfoCurrRound(info: { isCrashed: number; data: CrashRoundHistory }) {
+        const { isCrashed, data } = info;
+        this.updateIsCrashedValue(isCrashed);
         this.md5PopupStore.roundHistoryData = data;
     }
 }

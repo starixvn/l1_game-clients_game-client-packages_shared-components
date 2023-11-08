@@ -25,17 +25,19 @@ export class StatisticsButton extends ObserverComponent {
 
     setMultiplier(data: number) {
         this.lblMultiplier.string = `${FormatUtils.numberWithCommas(+data, 2, false)}x`;
-        CrashUtils.SetSpriteFrameBg(+data, this.nodeBg, this.mainAtlas, "statistics-bar");
+        CrashUtils.setSpriteFrameBg(+data, this.nodeBg, this.mainAtlas, "statistics-bar");
     }
 
     setData(data: CrashRoundHistory) {
         this.data = data;
     }
 
-    @handle(Md5PopupHandler, (handle, info: { isCrashed: number; isOpenPopupMd5: boolean; data: CrashRoundHistory }) =>
-        handle.handleMd5Popup(info)
+    @handle(
+        Md5PopupHandler,
+        (handle, info: { isCrashed: number; isOpenPopupMd5: boolean; data: CrashRoundHistory; isCurrentRound: boolean }) =>
+            handle.handleMd5Popup(info)
     )
     onClickStatisticsButton() {
-        return { isCrashed: 2, isOpenPopupMd5: true, data: this.data };
+        return { isCrashed: 2, isOpenPopupMd5: true, data: this.data, isPopupCurrRound: false };
     }
 }

@@ -38,7 +38,7 @@ export default class MD5Component extends ObserverComponent {
     protected lblHint: Label = null;
     protected tipString: string;
     private md5CopyString: string = null;
-    private resultHash: gc.GameServiceMessage.ResultHash = {};
+    private resultHash: gc.GameServiceMessage.ResultHash = null;
     private isCopying = false;
 
     onLoad() {

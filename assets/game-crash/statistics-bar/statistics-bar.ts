@@ -2,14 +2,15 @@ import gc from "@sg/game-client-base";
 import { Label, Node, Prefab, SpriteAtlas, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
+import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handlers";
 import { StatisticsButton } from "./statistics-button";
 const { ccclass, property } = _decorator;
-const { render } = Observer;
+const { render, handle } = Observer;
 
-const { FormatUtils } = gc;
+const { FormatUtils, Rounds, Settlements } = gc;
 
 export interface CrashRoundHistory extends gc.RoundHistories.RoundHistory {
-    md5Result: any;
+    md5Result?: any;
 }
 
 @ccclass
@@ -34,6 +35,9 @@ export class StatisticsBar extends ObserverComponent {
 
     protected rounds: CrashRoundHistory[] = [];
     private isFirstLoad = false;
+    private isMd5Crashed = 2;
+    private resultHash = null;
+    private lastRound: CrashRoundHistory = null;
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories, { fireImmediately: false })
     setRoundsInfo(rounds: CrashRoundHistory[]) {
@@ -66,6 +70,7 @@ export class StatisticsBar extends ObserverComponent {
     updatePlacingBet(isPlacingBet: boolean) {
         if (isPlacingBet) {
             this.updateStatisticsBarInfo(this.rounds);
+            this.isMd5Crashed = 0;
         }
     }
 
@@ -73,6 +78,7 @@ export class StatisticsBar extends ObserverComponent {
     showHideLabelText(remaining: number) {
         if (remaining === 0) {
             this.showHideNode(false, false, true);
+            this.isMd5Crashed = 1;
         }
     }
 
@@ -110,5 +116,15 @@ export class StatisticsBar extends ObserverComponent {
         const statisticsBtn = this.nodeMultiplier.getComponent(StatisticsButton);
         statisticsBtn.setMultiplier(value);
         this.showHideNode(true, false, false);
+        this.isMd5Crashed = 2;
+    }
+
+    @handle(
+        Md5PopupHandler,
+        (handle, info: { isCrashed: number; isOpenPopupMd5: boolean; data: CrashRoundHistory; isPopupCurrRound: boolean }) =>
+            handle.handleMd5Popup(info)
+    )
+    onClickCurrRound() {
+        return { isCrashed: this.isMd5Crashed, isOpenPopupMd5: true, isPopupCurrRound: true };
     }
 }

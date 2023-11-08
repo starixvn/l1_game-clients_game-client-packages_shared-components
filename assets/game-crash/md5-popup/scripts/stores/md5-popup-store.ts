@@ -16,6 +16,8 @@ export class Md5PopupStore {
 
     private _data: CrashRoundHistory = null;
 
+    private _isPopupCurrRound = false;
+
     get isCrashedGame() {
         return this._isCrashed;
     }
@@ -38,6 +40,14 @@ export class Md5PopupStore {
 
     set roundHistoryData(data: CrashRoundHistory) {
         this._data = data;
+    }
+
+    get isPopupCurrRound() {
+        return this._isPopupCurrRound;
+    }
+
+    set isPopupCurrRound(isCurrentRound: boolean) {
+        this._isPopupCurrRound = isCurrentRound;
     }
 
     constructor() {

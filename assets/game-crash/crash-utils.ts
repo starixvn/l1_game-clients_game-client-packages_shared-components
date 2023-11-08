@@ -2,7 +2,7 @@ import { _decorator, Component, Sprite, SpriteAtlas } from "cc";
 const { ccclass, property } = _decorator;
 
 export class CrashUtils extends Component {
-    static SetSpriteFrameBg(multiplier: number, nodeBg: Sprite, mainAtlas: SpriteAtlas, name: string) {
+    static setSpriteFrameBg(multiplier: number, nodeBg: Sprite, mainAtlas: SpriteAtlas, name: string) {
         let sufix = "";
         if (multiplier <= 5) {
             sufix = "blue";

@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Color, Label, UIOpacity } from "cc";
+import { Color, Label, Node, UIOpacity, _decorator } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
@@ -16,6 +16,12 @@ export class CurrentMultiplier extends ObserverComponent {
     @property(Label)
     lblMultiplierStroke: Label = null;
 
+    @property(Node)
+    nodeMultiplierText: Node = null;
+
+    @property(Node)
+    nodeCrashText: Node = null;
+
     levelColorList = ["#47d4fa", "#dba923", "#f6214c"];
     level1Multiplier = 5;
     level2Multiplier = 10;
@@ -29,6 +35,7 @@ export class CurrentMultiplier extends ObserverComponent {
     private setCurrentMultiplier(multiplier: number) {
         this.setVisibility(true);
         this.setCurrMultiplierValue(multiplier);
+        this.showHideBottomText(false);
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.isPlacingBet)
@@ -54,5 +61,10 @@ export class CurrentMultiplier extends ObserverComponent {
         }
 
         this.lblCurrentMultiplier.color = new Color().fromHEX(color);
+    }
+
+    showHideBottomText(isCrashed: boolean) {
+        this.nodeCrashText.active = isCrashed;
+        this.nodeMultiplierText.active = !isCrashed;
     }
 }
