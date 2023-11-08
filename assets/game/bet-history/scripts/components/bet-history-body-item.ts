@@ -8,6 +8,12 @@ const { DateTimeUtils, FormatUtils } = gc;
 const { BetHistory } = gc;
 const { handle } = Observer;
 
+export type BetHistoryBodyItemType = {
+    betHistoryLog: gc.BetHistory.BetHistoryLog;
+    index: number;
+    resultPrefab: Prefab;
+};
+
 @ccclass
 export default class BetHistoryBodyItem extends ObserverComponent {
     @property(Label)
@@ -34,15 +40,13 @@ export default class BetHistoryBodyItem extends ObserverComponent {
     @property(Button)
     btnRound: Button = null;
 
-    @property(Prefab)
-    resultPrefab: Prefab = null;
-
     @property(Node)
     result: Node = null;
 
     betHistoryLog: gc.BetHistory.BetHistoryLog = null;
 
-    setData(betHistoryLog: gc.BetHistory.BetHistoryLog, index: number) {
+    setData(data: BetHistoryBodyItemType) {
+        const { betHistoryLog, index, resultPrefab } = data;
         this.betHistoryLog = betHistoryLog;
         this.nodeBackground.active = index % 2 > 0;
         const { time, betwin, roundId, totalAmount } = betHistoryLog;
@@ -53,7 +57,7 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         this.lblWin.string = FormatUtils.numberWithCommas(betwin, 2);
         this.lblTotalStake.string = FormatUtils.numberWithCommas(totalAmount, 2);
 
-        const bodyRow = instantiate(this.resultPrefab);
+        const bodyRow = instantiate(resultPrefab);
         const { result, settlementResult } = betHistoryLog;
         bodyRow.getComponent(BaseResultBodyItem).setData(result as gc.BetHistory.DynamicObject<object>, settlementResult);
         this.result.addChild(bodyRow);

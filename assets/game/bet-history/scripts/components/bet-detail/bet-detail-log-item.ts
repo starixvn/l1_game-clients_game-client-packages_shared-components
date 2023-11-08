@@ -1,11 +1,32 @@
-import { _decorator, Color, Label, Node } from "cc";
+import { _decorator, Color, Component, Label, Node } from "cc";
 import gc from "@sg/game-client-base";
-import { ObserverComponent } from "../../../../../shared/common-components/observer-component/scripts/observer-component";
 
 const { property } = _decorator;
 const { DateTimeUtils, FormatUtils, Translator } = gc;
 
-export default class BetDetailBodyItem extends ObserverComponent {
+export interface GameRoundBetDetailsLog {
+    amount: number;
+    time: string;
+    choice: string;
+    rate: number;
+    rebet: boolean;
+}
+
+export type BetDetailLogItemType = {
+    betDetailsLog: gc.BetHistory.DynamicObject<object>;
+    index: number;
+    odds: gc.BetHistory.DynamicObject<number>;
+    settlementResult: gc.BetHistory.DynamicObject<boolean>;
+    result: gc.BetHistory.DynamicObject<object>;
+    freeBet: boolean;
+    fractionalOddsFormat: boolean;
+};
+
+export class BaseBetDetailLogItem extends Component {
+    setData(data: BetDetailLogItemType) {}
+}
+
+export default class BetDetailLogItem extends BaseBetDetailLogItem {
     @property(Label)
     lblTime: Label = null;
 
@@ -24,16 +45,9 @@ export default class BetDetailBodyItem extends ObserverComponent {
     @property(Node)
     nodeBackground: Node = null;
 
-    setData(
-        betDetailsLog: gc.BetHistory.BetDetailsLog,
-        index: number,
-        odds: gc.BetHistory.DynamicObject<number>,
-        settlementResult: gc.BetHistory.DynamicObject<boolean>,
-        result: gc.BetHistory.DynamicObject<object>,
-        freeBet: boolean,
-        fractionalOddsFormat: boolean
-    ) {
-        const { time, amount, choice } = betDetailsLog;
+    setData(data: BetDetailLogItemType) {
+        const { betDetailsLog, index } = data;
+        const { time, amount, choice } = betDetailsLog as GameRoundBetDetailsLog & gc.BetHistory.DynamicObject<object>;
 
         this.nodeBackground.active = index % 2 > 0;
         this.lblTime.string = DateTimeUtils.formatDateTime(time);
