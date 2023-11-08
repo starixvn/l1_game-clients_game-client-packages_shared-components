@@ -4,9 +4,12 @@ import gc from "@sg/game-client-base";
 
 const { ccclass, property } = _decorator;
 
-export interface IBetHistoryTable {
-    showBetHistory(model: gc.BetHistory.BetHistoryModel): void;
-}
+type BetHistoryTableType = {
+    data: gc.BetHistory.BetHistoryModel;
+    headerPrefab: Prefab;
+    bodyItemPrefab: Prefab;
+    resultPrefab: Prefab;
+};
 
 @ccclass()
 export class BetHistoryTable extends Component {
@@ -16,28 +19,27 @@ export class BetHistoryTable extends Component {
     @property(Node)
     body: Node = null;
 
-    @property(Prefab)
-    headerPrefab: Prefab = null;
-
-    @property(Prefab)
-    bodyPrefab: Prefab = null;
-
     getHistoryItemComponent(node: Node) {
         return node.getComponent(BetHistoryBodyItem);
     }
 
-    buildBodyRow(betLogItem: gc.BetHistory.BetHistoryLog, index: number): Node {
-        const bodyRow = instantiate(this.bodyPrefab);
-        this.getHistoryItemComponent(bodyRow)?.setData(betLogItem, index);
-        return bodyRow;
+    buildBodyRow(bodyItemPrefab: Prefab, betHistoryLog: gc.BetHistory.BetHistoryLog, index: number, resultPrefab: Prefab): Node {
+        const bodyItem = instantiate(bodyItemPrefab);
+        this.getHistoryItemComponent(bodyItem)?.setData({
+            betHistoryLog,
+            index,
+            resultPrefab,
+        });
+        return bodyItem;
     }
 
-    showBetHistory(model: gc.BetHistory.BetHistoryModel) {
+    showBetHistory(model: BetHistoryTableType) {
+        const { data, headerPrefab, bodyItemPrefab, resultPrefab } = model;
         this.clearOldTable();
 
-        this.header.addChild(instantiate(this.headerPrefab));
-        model.betLogs.forEach((betLogItem, index) => {
-            this.body.addChild(this.buildBodyRow(betLogItem, index));
+        this.header.addChild(instantiate(headerPrefab));
+        data.betLogs.forEach((betLogItem, index) => {
+            this.body.addChild(this.buildBodyRow(bodyItemPrefab, betLogItem, index, resultPrefab));
         });
     }
 
