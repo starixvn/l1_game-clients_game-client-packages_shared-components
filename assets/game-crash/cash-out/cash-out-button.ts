@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
-import { Label, Sprite, _decorator } from "cc";
+import { _decorator, Label, Sprite } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 import { PlayerActionStore } from "../player-actions/player-action-store";
@@ -70,12 +71,14 @@ export class CashOutButton extends ObserverComponent {
         CashOutComponent.showHideNode(this.node, isRocketFlyWithCashout, isShowPlaceBetNextRound);
     }
 
-    @handle(GameCrash.CrashCashOut.CrashCashOutUIHandlers, (cashOutHandler, cashOutValue: number) => cashOutHandler.handle(cashOutValue, false))
+    @handle(GameCrash.CrashCashOut.CrashCashOutUIHandlers, (cashOutHandler, cashOutValue: number) =>
+        cashOutHandler.handle(cashOutValue, false)
+    )
     onClickCashOut() {
         CashOutComponent.getCashOutValue(this.lblCashOut);
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashoutAmount)
+    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut.win)
     updateValueCashOut(cashOutValue: number) {
         CashOutComponent.updateValueCashOut(cashOutValue, this.lblCashOut);
     }

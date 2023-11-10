@@ -1,7 +1,8 @@
 // Compare this snippet from assets/game/scripts/components/cash-out/cash-out-half-button.ts:
 import gc from "@sg/game-client-base";
-import { Label, Sprite, _decorator } from "cc";
+import { _decorator, Label, Sprite } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { PlayerActionStore } from "../player-actions/player-action-store";
 import { CashOutComponent } from "./cash-out-component";
@@ -61,12 +62,14 @@ export class CashOutHalfButton extends ObserverComponent {
         CashOutComponent.showHideNode(this.node, isRocketFlyWithCashout, isShowPlaceBetNextRound);
     }
 
-    @handle(GameCrash.CrashCashOut.CrashCashOutUIHandlers, (cashOutHandler, cashOutValue: number) => cashOutHandler.handle(cashOutValue, true))
+    @handle(GameCrash.CrashCashOut.CrashCashOutUIHandlers, (cashOutHandler, cashOutValue: number) =>
+        cashOutHandler.handle(cashOutValue, true)
+    )
     onClickCashOutHalf() {
         CashOutComponent.getCashOutValue(this.lblCashOut);
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashoutHalfAmount)
+    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.halfCashOut.win)
     updateValueCashOut(cashOutValue: number) {
         CashOutComponent.updateValueCashOut(cashOutValue, this.lblCashOut);
     }
