@@ -31,14 +31,16 @@ export class LeaderBoardItem extends Component {
         this.lblName.string = name;
         isMainPlayer && (this.lblName.color = new Color().fromHEX("#52faf8"));
 
-        this.lblCashout.string = betAmount ? data.cashOut.toString() : "-";
+        this.lblCashout.string = betAmount ? betAmount.toString() : "-";
 
         if (halfCashOut) {
             this.lblMultiplierWhenHalfCashOut.string = halfCashOut.multiplier.toString();
             this.lblHalfCashout.string = halfCashOut.win.toString();
-        } else {
+        } else if (cashOut) {
             this.lblMultiplierWhenHalfCashOut.string = cashOut.multiplier.toString();
             this.lblHalfCashout.string = cashOut.win.toString();
+        } else {
+            this.lblMultiplierWhenHalfCashOut.string = "-";
         }
 
         if (halfCashOut && cashOut) {
