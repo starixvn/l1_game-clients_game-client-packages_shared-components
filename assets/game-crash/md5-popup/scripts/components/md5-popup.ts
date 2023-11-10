@@ -1,9 +1,10 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, RichText, _decorator } from "cc";
+import { Label, Node, Prefab, RichText, _decorator, instantiate } from "cc";
 import Observer from "observer";
 
-import { CrashRoundHistory } from "../../../statistics-bar/statistics-bar";
-import { StatusCurrentRound } from "../../../statistics-bar/status-current-round";
+import MD5Tip from "../../../../game/md5/scripts/md5-tip";
+import { CrashRoundHistory, CrashRoundHistoryStore } from "../../../crash-round-history/crash-round-history-store";
+import { RoundHistoryItem } from "../../../statistics-bar/round-history-item";
 import { Md5PopupHandler } from "../handlers/md5-popup-handlers";
 import { Md5PopupStore } from "../stores/md5-popup-store";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -21,12 +22,17 @@ export class Md5Popup extends ObserverComponent {
     @property(RichText)
     lblResult: RichText = null;
 
-    @property(Node)
-    nodeCurrentRound: Node = null;
+    @property(Prefab)
+    prfStatusRound: Prefab = null;
 
-    public round = { roundId: 0, md5Result: {}, result: 0 } as CrashRoundHistory;
-    private isCrashed: boolean;
-    private isPopupCurrRound = false;
+    @property(Node)
+    nodeStatusRound: Node = null;
+
+    @property(MD5Tip)
+    protected md5Tip: MD5Tip = null;
+
+    private md5keyCopyString = null;
+    private resultCopyString = null;
 
     onLoad() {
         super.onLoad();
@@ -41,31 +47,26 @@ export class Md5Popup extends ObserverComponent {
         }
     }
 
-    @render(Md5PopupStore, (store) => store.isCurrRound)
-    updatePopupCurrRound(isPopupCurrRound: boolean) {
-        this.isPopupCurrRound = isPopupCurrRound;
-    }
-
-    @render(Rounds.RoundStore, (store) => store.clientRoundId)
-    renderRoundId(roundId: number) {
-        this.round.roundId = roundId;
-        this.updateData();
-    }
-
-    @render(Md5PopupStore, (store) => store.roundHistoryData)
-    bindDataMd5(roundHistoryData: CrashRoundHistory) {
-        if (roundHistoryData) {
-            this.updateInfo(roundHistoryData);
-        }
+    @render(CrashRoundHistoryStore, (store) => store.md5PopupData, { fireImmediately: false })
+    bindDataMd5(roundItem: CrashRoundHistory) {
+        this.updateInfo(roundItem);
     }
 
     updateInfo(roundHistoryData: CrashRoundHistory) {
-        this.lblMd5Key.string = `<color=#4920a4>${(roundHistoryData.md5Result.hashValue =
-            roundHistoryData.md5Result.hashValue || "")}</color>`;
-        this.lblRoundId.string = `#${roundHistoryData.roundId.toString()}`;
-        this.lblResult.string = `<color=#4920a4>${(roundHistoryData.md5Result.rawValue =
-            roundHistoryData.md5Result.rawValue || "")}</color>`;
-        const multiplier = +roundHistoryData.result;
+        if (roundHistoryData) {
+            const hashValue = (roundHistoryData.md5Result.hashValue = roundHistoryData.md5Result.hashValue || "");
+            this.md5keyCopyString = hashValue;
+            const rawValue = (roundHistoryData.md5Result.rawValue = roundHistoryData.md5Result.rawValue || "");
+            this.resultCopyString = rawValue;
+            this.lblMd5Key.string = `<color=#4920a4>${hashValue}</color>`;
+            this.lblRoundId.string = `#${roundHistoryData.roundId.toString()}`;
+            this.lblResult.string = `<color=#4920a4>${rawValue}</color>`;
+            const nodeStatus = instantiate(this.prfStatusRound);
+            const cpnStatusRound = nodeStatus.getComponent(RoundHistoryItem);
+            cpnStatusRound.roundInfo = roundHistoryData;
+            cpnStatusRound.updateMultiplierValue(+roundHistoryData.result, "md5-bg-multiplier");
+            this.nodeStatusRound.addChild(nodeStatus);
+        }
     }
 
     @handle(Md5PopupHandler, (handle, value: boolean) => handle.updateShowHidePopupMd5(value))
@@ -73,35 +74,19 @@ export class Md5Popup extends ObserverComponent {
         return false;
     }
 
-    @render(Rounds.RoundStore, (store) => store.resultHash)
-    private renderMd5(resultHash: gc.GameServiceMessage.ResultHash) {
-        if (resultHash) {
-            if (resultHash.hashValue) {
-                this.round.md5Result["hashValue"] = resultHash.hashValue;
-            }
-            resultHash.rawValue && (this.round.md5Result["rawValue"] = resultHash.rawValue);
-            this.updateData();
-        }
+    @handle(Md5PopupHandler, (handle, isIncrease: boolean) => handle.quickChangeRoundIndex(isIncrease))
+    onClickRoundChange(event) {
+        return event.target.name === "increase";
     }
 
-    @handle(Md5PopupHandler, (handle, data: CrashRoundHistory) => handle.handleData(data))
-    updateData() {
-        return this.round;
+    onClickCopyButtonResult() {
+        console.log("onClickCopyButtonResult", this.resultCopyString);
+        gc.GameUtils.copyToClipboard(this.resultCopyString);
+        //this.md5Tip.show(false);
     }
 
-    @render(Settlements.SettlementStore, (store) => store.isFinishedShowResult)
-    private updateMd5ResultFinish(isFinishedShowResult: boolean) {
-        isFinishedShowResult && this.updateResultHash();
-    }
-
-    @handle(Md5PopupHandler, (handle, info: { isCrashed: boolean; data: CrashRoundHistory }) => handle.handleInfoCurrRound(info))
-    updateResultHash() {
-        return { data: this.round, isCrashed: true };
-    }
-
-    setMultiplierValue(multiplier: number) {
-        this.isPopupCurrRound = false;
-        const currRoundComp = this.nodeCurrentRound.getComponent(StatusCurrentRound);
-        currRoundComp.updateMultiplierValue(multiplier, "md5-bg-multiplier");
+    onClickCopyButtonKey() {
+        gc.GameUtils.copyToClipboard(this.md5keyCopyString);
+        //this.md5Tip.show(false);
     }
 }

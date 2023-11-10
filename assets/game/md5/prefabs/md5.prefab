@@ -807,6 +807,7 @@
     "__prefab": {
       "__id__": 30
     },
+    "isBitmapCacheMode": false,
     "_id": ""
   },
   {
@@ -2700,7 +2701,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "ea2ceKU5+ROYYczeAvaN999",
+    "_componentId": "98653qVhWxOubAiKRtmLqQa",
     "handler": "onClickCopyButton",
     "customEventData": ""
   },

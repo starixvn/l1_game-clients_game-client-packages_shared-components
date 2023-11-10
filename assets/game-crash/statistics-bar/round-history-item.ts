@@ -2,13 +2,15 @@ import gc from "@sg/game-client-base";
 import { _decorator, Label, Node, Sprite, SpriteAtlas } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
+import { CrashRoundHistory } from "../crash-round-history/crash-round-history-store";
 import { CrashUtils } from "../crash-utils";
+import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handlers";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 const { FormatUtils, Rounds, Settlements } = gc;
 
 @ccclass
-export class StatusCurrentRound extends ObserverComponent {
+export class RoundHistoryItem extends ObserverComponent {
     @property(Label)
     lblCountdown: Label = null;
 
@@ -24,7 +26,9 @@ export class StatusCurrentRound extends ObserverComponent {
     @property(SpriteAtlas)
     mainAtlas: SpriteAtlas = null;
 
-    public isCurrentRound = true;
+    public isLastRound = false;
+
+    public roundInfo: CrashRoundHistory = null;
 
     showHideNode(isShowMultiplier: boolean, isShowCountDown: boolean, isShowSprInPlay: boolean) {
         this.nodeMultiplier.node.active = isShowMultiplier;
@@ -47,7 +51,7 @@ export class StatusCurrentRound extends ObserverComponent {
         isLockingBet: boolean;
     }) {
         if (countdownTimer < 11 && countdownTimer > 0 && (isPlacingBet || isLockingBet)) {
-            if (this.isCurrentRound) {
+            if (!this.checkCrashedGame()) {
                 this.updateCountDownValue(countdownTimer);
             }
         }
@@ -59,7 +63,7 @@ export class StatusCurrentRound extends ObserverComponent {
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.remaining)
     showInPlayStatus(remaining: number) {
-        if (remaining === 0 && this.isCurrentRound) {
+        if (remaining === 0 && !this.checkCrashedGame()) {
             this.showHideNode(false, false, true);
         }
     }
@@ -68,5 +72,14 @@ export class StatusCurrentRound extends ObserverComponent {
         this.showHideNode(true, false, false);
         this.lblMultiplier.string = `${FormatUtils.numberWithCommas(value, 2, false)}x`;
         CrashUtils.setSpriteFrameBg(value, this.nodeMultiplier, this.mainAtlas, name);
+    }
+
+    checkCrashedGame() {
+        return this.roundInfo.md5Result.hashValue && this.roundInfo.md5Result.rawValue;
+    }
+
+    @handle(Md5PopupHandler, (handle, info: { isOpenPopupMd5: boolean; data: CrashRoundHistory }) => handle.handleMd5Popup(info))
+    onClickRoundItem() {
+        return { isOpenPopupMd5: true, roundId: this.roundInfo.roundId };
     }
 }

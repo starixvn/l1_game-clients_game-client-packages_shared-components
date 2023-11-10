@@ -1,6 +1,5 @@
 import inversify from "inversify";
 
-import { CrashRoundHistory } from "../../../statistics-bar/statistics-bar";
 import { Md5PopupStore } from "../stores/md5-popup-store";
 const { injectable, inject } = inversify;
 
@@ -8,34 +7,17 @@ const { injectable, inject } = inversify;
 export class Md5PopupHandler {
     @inject(Md5PopupStore) private readonly md5PopupStore: Md5PopupStore;
 
-    handle() {}
-    updateIsCrashedValue(isCrashed: boolean) {
-        this.md5PopupStore.isCrashedGame = { value: isCrashed };
-    }
-
     updateShowHidePopupMd5(isShow: boolean) {
         this.md5PopupStore.isOpenPopupMd5 = isShow;
     }
 
-    handleMd5Popup(info: { isCrashed: boolean; isOpenPopupMd5: boolean; data: CrashRoundHistory; isPopupCurrRound: boolean }) {
-        const { isCrashed, isOpenPopupMd5, data, isPopupCurrRound } = info;
-        this.updateIsCrashedValue(isCrashed);
+    handleMd5Popup(info: { isOpenPopupMd5: boolean; roundId: number }) {
+        const { isOpenPopupMd5, roundId } = info;
         this.updateShowHidePopupMd5(isOpenPopupMd5);
-        this.md5PopupStore.roundHistoryData = data;
-        this.md5PopupStore.isCurrRound = isPopupCurrRound;
+        this.md5PopupStore.roundId = roundId;
     }
 
-    handleInfoCurrRound(info: { isCrashed: boolean; data: CrashRoundHistory }) {
-        const { isCrashed, data } = info;
-        this.updateIsCrashedValue(isCrashed);
-        this.md5PopupStore.roundHistoryData = data;
-    }
-
-    handleCurrentRound(isCurrentRound: boolean) {
-        this.md5PopupStore.isCurrRound = isCurrentRound;
-    }
-
-    handleData(data: CrashRoundHistory) {
-        this.md5PopupStore.roundHistoryData = data;
+    quickChangeRoundIndex(isIncrease: boolean) {
+        this.md5PopupStore.roundId = isIncrease ? this.md5PopupStore.roundId + 1 : this.md5PopupStore.roundId - 1;
     }
 }

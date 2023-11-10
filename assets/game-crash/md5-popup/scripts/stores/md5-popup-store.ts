@@ -1,30 +1,20 @@
 import { _decorator } from "cc";
 import inversify from "inversify";
 import mobx from "mobx";
-import { CrashRoundHistory } from "../../../statistics-bar/statistics-bar";
+import { CrashRoundHistory } from "../../../crash-round-history/crash-round-history-store";
 
 const { ccclass, property } = _decorator;
 const { injectable, inject } = inversify;
 
 @injectable()
 export class Md5PopupStore {
-    private _isCrashed: {
-        value: boolean;
-    } = null;
-
     private _isOpenPopupMd5: boolean = false;
 
     private _data: CrashRoundHistory = null;
 
-    private _isPopupCurrRound = false;
+    private _roundId = 0;
 
-    get isCrashedGame() {
-        return this._isCrashed;
-    }
-
-    set isCrashedGame(isCrash: any) {
-        this._isCrashed = { value: isCrash };
-    }
+    private _index = 0;
 
     get isOpenPopupMd5() {
         return this._isOpenPopupMd5;
@@ -34,20 +24,20 @@ export class Md5PopupStore {
         this._isOpenPopupMd5 = isOpen;
     }
 
-    get roundHistoryData() {
-        return this._data;
+    get roundId() {
+        return this._roundId;
     }
 
-    set roundHistoryData(data: CrashRoundHistory) {
-        this._data = data;
+    set roundId(roundId: number) {
+        this._roundId = roundId;
     }
 
-    get isCurrRound() {
-        return this._isPopupCurrRound;
+    get indexRound() {
+        return this._index;
     }
 
-    set isCurrRound(isCurrentRound: boolean) {
-        this._isPopupCurrRound = isCurrentRound;
+    set indexRound(index: number) {
+        this._index = index;
     }
 
     constructor() {

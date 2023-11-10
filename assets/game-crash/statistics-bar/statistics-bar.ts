@@ -2,19 +2,12 @@ import gc from "@sg/game-client-base";
 import { Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
-import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handlers";
-import { StatisticsButton } from "./statistics-button";
-import { StatusCurrentRound } from "./status-current-round";
+import { CrashRoundHistory, CrashRoundHistoryStore } from "../crash-round-history/crash-round-history-store";
+import { RoundHistoryItem } from "./round-history-item";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
 const { FormatUtils, Rounds, Settlements } = gc;
-
-export interface CrashRoundHistory {
-    roundId: number;
-    result: number;
-    md5Result?: any;
-}
 
 @ccclass
 export class StatisticsBar extends ObserverComponent {
@@ -28,52 +21,27 @@ export class StatisticsBar extends ObserverComponent {
     nodeCurrentRound = null;
 
     protected rounds: CrashRoundHistory[] = [];
-    private isFirstLoad = false;
-    private isMd5Crashed = 2;
-    private resultHash = null;
-    private lastRound: CrashRoundHistory = null;
 
-    @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories, { fireImmediately: false })
+    @render(CrashRoundHistoryStore, (store) => store.roundHistories, { fireImmediately: false })
     setRoundsInfo(rounds: CrashRoundHistory[]) {
-        this.rounds = [...rounds];
-        // if (!this.isFirstLoad) {
-        //     this.updateStatisticsBarInfo(this.rounds);
-        //     this.isFirstLoad = true;
-        // }
-
-        this.updateStatisticsBarInfo(this.rounds);
+        this.rounds = rounds;
+        this.updateStatisticsBarInfo(rounds);
     }
 
     private updateStatisticsBarInfo(rounds: CrashRoundHistory[]) {
-        console.log("updateStatisticsBarInfo", this.rounds);
         if (this.rounds.length === 0) {
             return;
         }
         this.content.destroyAllChildren();
         rounds.forEach((round, index) => {
-            if (index > 9) {
+            if (index > 10) {
                 return;
             }
             const node = instantiate(this.prbStatisticsItem);
-            const control = node.getComponent(StatisticsButton);
-            const result = round.result;
-            control.setData(round);
-            control.setMultiplier(+result);
+            const control = node.getComponent(RoundHistoryItem);
+            control.roundInfo = round;
+            control.updateMultiplierValue(+round.result, "statistics-bar");
             this.content.addChild(node);
         });
-    }
-
-    updateMultiplierValue(value: number) {
-        const currRoundComp = this.nodeCurrentRound.getComponent(StatusCurrentRound);
-        currRoundComp.updateMultiplierValue(value, "statistics-bar");
-    }
-
-    @handle(
-        Md5PopupHandler,
-        (handle, info: { isCrashed: boolean; isOpenPopupMd5: boolean; data: CrashRoundHistory; isPopupCurrRound: boolean }) =>
-            handle.handleMd5Popup(info)
-    )
-    onClickCurrRound() {
-        return { isOpenPopupMd5: true, isPopupCurrRound: true };
     }
 }
