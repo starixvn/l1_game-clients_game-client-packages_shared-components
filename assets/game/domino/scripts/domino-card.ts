@@ -16,7 +16,7 @@ enum AnimationName {
     Pull_Card = "pull-domino-card",
 }
 
-@ccclass("Domino")
+@ccclass("DominoCard")
 export class DominoCard extends Component {
     @property(SpriteAtlas)
     atlas: SpriteAtlas = null;
