@@ -31,7 +31,7 @@ export class LeaderBoardItem extends Component {
         this.lblName.string = name;
         isMainPlayer && (this.lblName.color = new Color().fromHEX("#52faf8"));
 
-        this.lblCashout.string = betAmount ? betAmount.toString() : "-";
+        this.lblHalfCashout.string = betAmount ? betAmount.toString() : "-";
 
         if (halfCashOut) {
             this.lblMultiplierWhenHalfCashOut.string = halfCashOut.multiplier.toString();
