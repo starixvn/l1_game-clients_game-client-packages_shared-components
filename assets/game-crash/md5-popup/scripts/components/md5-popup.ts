@@ -3,7 +3,6 @@ import { Button, Label, Node, Prefab, RichText, UIOpacity, _decorator, instantia
 import Observer from "observer";
 
 import { Md5CopyButton } from "../../../../game/md5/scripts/md5-copy-button";
-import MD5Tip from "../../../../game/md5/scripts/md5-tip";
 import { CrashRoundHistory, CrashRoundHistoryStore } from "../../../crash-round-history/crash-round-history-store";
 import { RoundHistoryItem } from "../../../statistics-bar/round-history-item";
 import { Md5PopupHandler } from "../handlers/md5-popup-handlers";
@@ -30,7 +29,10 @@ export class Md5Popup extends ObserverComponent {
     nodeStatusRound: Node = null;
 
     @property(Node)
-    nodeCopyButton: Node = null;
+    nodeKeyCopyButton: Node = null;
+
+    @property(Node)
+    nodeResultCopyButton: Node = null;
 
     @property(Button)
     btnDecrease: Button = null;
@@ -38,17 +40,16 @@ export class Md5Popup extends ObserverComponent {
     @property(Button)
     btnIncrease: Button = null;
 
-    @property(MD5Tip)
-    protected md5Tip: MD5Tip = null;
-
     private md5keyCopyString = null;
     private resultCopyString = null;
 
-    private cpnCopyButton: Md5CopyButton = null;
+    private cpnKeyCopyButton: Md5CopyButton = null;
+    private cpnResultCopyButton: Md5CopyButton = null;
 
     onLoad() {
         super.onLoad();
-        this.cpnCopyButton = this.nodeCopyButton.getComponent(Md5CopyButton);
+        this.cpnKeyCopyButton = this.nodeKeyCopyButton.getComponent(Md5CopyButton);
+        this.cpnResultCopyButton = this.nodeResultCopyButton.getComponent(Md5CopyButton);
     }
 
     @render(Md5PopupStore, (store) => store.isOpenPopupMd5)
@@ -109,11 +110,11 @@ export class Md5Popup extends ObserverComponent {
 
     onClickCopyButtonResult() {
         GameUtils.copyToClipboard(this.resultCopyString);
-        this.cpnCopyButton.isCopying = true;
+        this.cpnResultCopyButton.isCopying = true;
     }
 
     onClickCopyButtonKey() {
         GameUtils.copyToClipboard(this.md5keyCopyString);
-        this.cpnCopyButton.isCopying = true;
+        this.cpnKeyCopyButton.isCopying = true;
     }
 }

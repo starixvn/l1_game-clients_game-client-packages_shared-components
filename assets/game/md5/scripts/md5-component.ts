@@ -40,7 +40,6 @@ export default class MD5Component extends ObserverComponent {
     protected tipString: string;
     private md5CopyString: string = null;
     private resultHash: gc.GameServiceMessage.ResultHash = null;
-    //private isCopying = false;
     private md5CopyButton: Md5CopyButton = null;
 
     onLoad() {
@@ -49,7 +48,6 @@ export default class MD5Component extends ObserverComponent {
         this.hideTooltip();
         this.updateTextCaption(false);
         this.nodeCopyButton && (this.md5CopyButton = this.nodeCopyButton.getComponent(Md5CopyButton));
-        //this.initHintAndCaption();
     }
 
     onDestroy(): void {
@@ -61,14 +59,6 @@ export default class MD5Component extends ObserverComponent {
         this.nodeContentContainer?.on(Node.EventType.MOUSE_LEAVE, this.hideTooltip, this);
         this.nodeContentContainer?.on(Node.EventType.TOUCH_START, this.showTooltip, this);
     }
-
-    // private initHintAndCaption() {
-    //     if (this.nodeHintCopy) {
-    //         this.lblHint = this.nodeHintCopy.getChildByName("content").getComponent(Label);
-    //         this.lblHint.string = Translator.commonTranslate("copy_successfully_md5");
-    //     }
-    //     this.updateTextCaption(false);
-    // }
 
     private showTooltip() {
         if (this.tipString) {
@@ -134,22 +124,6 @@ export default class MD5Component extends ObserverComponent {
         this.md5Tip.show(false);
         gc.GameUtils.copyToClipboard(this.md5CopyString);
     }
-
-    // private registerEventCopyMD5(event: MessageEvent) {
-    //     const success = event.data.copySuccessfully;
-    //     if (success !== undefined && this.isCopying) {
-    //         this.isCopying = false;
-    //         const key = success ? "copy_successfully_md5" : "copy_failed_md5";
-    //         this.lblHint.string = gc.Translator.commonTranslate(key);
-    //         this.showHint();
-    //     }
-    // }
-
-    // private showHint() {
-    //     if (this.nodeHintCopy) {
-    //         tween(this.nodeHintCopy.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).delay(3).to(0.1, { opacity: 1 }).start();
-    //     }
-    // }
 
     private updateTextCaption(isMD5Key: boolean) {
         this.lblCaption.string = Translator.commonTranslate(isMD5Key ? "md5_result" : "md5_key");
