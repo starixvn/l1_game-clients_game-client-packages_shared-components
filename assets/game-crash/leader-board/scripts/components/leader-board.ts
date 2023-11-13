@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Node, Prefab, Tween, tween, v3, Widget } from "cc";
+import { _decorator, instantiate, Node, Prefab, Tween, tween, UITransform, v3, Widget } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -26,8 +26,16 @@ export class LeaderBoard extends ObserverComponent {
     @property(Node)
     nodeArrowIcon: Node = null;
 
+    @property(Node)
+    nodeLeaderBoardMask: Node = null;
+
+    @property
+    collapsedBoardHeight = 100;
+
+    @property
+    expandedBoardHeight = 310;
+
     private readonly itemHeight = 30;
-    private readonly defaultOtherPlayerPos = v3(0, 136, 0);
     private otherPlayerList: ILeaderBoardItemData[] = [];
     private mainPlayer: ILeaderBoardItemData = {
         playerId: "",
@@ -158,11 +166,17 @@ export class LeaderBoard extends ObserverComponent {
     private scrollOtherPlayer(top: number, isAnimated = true) {
         if (isAnimated) {
             this.otherPlayerTween?.stop();
+            const contentWidget = this.nodeContent.getComponent(Widget);
             this.otherPlayerTween = tween(this.otherPlayerWidget)
-                .to(0.2, { editorTop: top }, { easing: "sineOut" })
-                .call(() => {
-                    this.nodeContent.getComponent(Widget).updateAlignment();
-                })
+                .to(
+                    0.2,
+                    { editorTop: top },
+                    {
+                        onUpdate() {
+                            contentWidget.updateAlignment();
+                        },
+                    }
+                )
                 .start();
         } else {
             this.otherPlayerWidget.editorTop = top;
@@ -172,8 +186,32 @@ export class LeaderBoard extends ObserverComponent {
     onClickCollapseButton(e) {
         if (this.isEpandedBoard) {
             this.isEpandedBoard = false;
+            this.nodeArrowIcon.eulerAngles = v3(0, 0, 0);
+
+            this.collapseAndExpandBoard(this.collapsedBoardHeight);
         } else {
             this.isEpandedBoard = true;
+            this.nodeArrowIcon.eulerAngles = v3(0, 0, 180);
+            this.collapseAndExpandBoard(this.expandedBoardHeight);
         }
+    }
+
+    private collapseAndExpandBoard(boardHeight: number) {
+        const leaderBoardSize = this.node.getComponent(UITransform);
+        const leaderBoardMaskWidget = this.nodeLeaderBoardMask.getComponent(Widget);
+        const arrowIconWidget = this.nodeArrowIcon.parent.getComponent(Widget);
+
+        tween(leaderBoardSize)
+            .to(
+                0.3,
+                { height: boardHeight },
+                {
+                    onUpdate() {
+                        arrowIconWidget.updateAlignment();
+                        leaderBoardMaskWidget.updateAlignment();
+                    },
+                }
+            )
+            .start();
     }
 }
