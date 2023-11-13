@@ -24,6 +24,10 @@ export class LeaderBoardItem extends Component {
     @property(Label)
     lblCashout: Label = null;
 
+    onLoad() {
+        this.nodeCashOutContainer.active = false;
+    }
+
     setData(data: ILeaderBoardItemData, isMainPlayer = false) {
         const { name, cashOut, halfCashOut, betAmount } = data;
 
@@ -33,25 +37,20 @@ export class LeaderBoardItem extends Component {
 
         this.lblHalfCashout.string = betAmount ? betAmount.toString() : "-";
 
-        if (halfCashOut) {
-            this.lblMultiplierWhenHalfCashOut.string = halfCashOut.multiplier.toString();
-            this.lblHalfCashout.string = halfCashOut.win.toString();
-        } else if (cashOut) {
-            this.lblMultiplierWhenHalfCashOut.string = cashOut.multiplier.toString();
-            this.lblHalfCashout.string = cashOut.win.toString();
+        if ((halfCashOut && !cashOut) || (cashOut && !halfCashOut)) {
+            const value = halfCashOut || cashOut;
+            this.lblMultiplierWhenHalfCashOut.string = `${value.multiplier}x`;
+            this.lblHalfCashout.string = value.win.toString();
+        } else if (halfCashOut && cashOut) {
+            this.nodeCashOutContainer.active = true;
+            this.lblMultiplier.string = `${cashOut.multiplier}x`;
+            this.lblCashout.string = cashOut.win.toString();
         } else {
             this.lblMultiplierWhenHalfCashOut.string = "-";
         }
-
-        if (halfCashOut && cashOut) {
-            this.nodeCashOutContainer.active = true;
-            this.lblMultiplier.string = cashOut.multiplier.toString();
-            this.lblCashout.string = cashOut.win.toString();
-        }
     }
 
-    resetMultiplierAndCashOut() {
-        this.lblMultiplierWhenHalfCashOut.string = "-";
+    setCashOutEmpty() {
         this.lblHalfCashout.string = "-";
     }
 }
