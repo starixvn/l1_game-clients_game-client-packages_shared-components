@@ -17,9 +17,6 @@ export class StatisticsBar extends ObserverComponent {
     @property(Node)
     content: Node = null;
 
-    @property(Node)
-    nodeCurrentRound = null;
-
     protected rounds: CrashRoundHistory[] = [];
 
     @render(CrashRoundHistoryStore, (store) => store.roundHistories, { fireImmediately: false })

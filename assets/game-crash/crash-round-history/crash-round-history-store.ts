@@ -70,6 +70,6 @@ export class CrashRoundHistoryStore {
     }
 
     get descreaseStatus(): boolean {
-        return this._roundIndex < this.roundHistories.length - 1;
+        return this._roundIndex < this.roundHistoryStore.histories.length - 1;
     }
 }
