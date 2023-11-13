@@ -1,7 +1,6 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Node } from "cc";
 import Observer from "observer";
-import { AutoPlayStore } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/stores/auto-play-store";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { EarlyBetStore } from "../bet/early-bet-store";
 import { PlayerActionStore } from "../player-actions/player-action-store";
@@ -19,11 +18,6 @@ export class BetAmount extends ObserverComponent {
 
     showHideDisabledNode(isShow: boolean) {
         this.nodeDisabledBetAmount.active = isShow;
-    }
-
-    @render(AutoPlayStore, (store) => store.isAutoPlay)
-    updateDisabledNode(autoPlay: boolean) {
-        this.showHideDisabledNode(autoPlay);
     }
 
     @render(Bet.BetStore, (store) => store.isReceivedBet)
@@ -50,7 +44,7 @@ export class BetAmount extends ObserverComponent {
     }))
     showPlaceBetNextRound(data: { rocketFlyWithoutCashout: boolean; showPlaceBetNextRound: boolean; isWaitingBet: boolean }) {
         const { rocketFlyWithoutCashout, showPlaceBetNextRound, isWaitingBet } = data;
-        if (rocketFlyWithoutCashout || (showPlaceBetNextRound && !isWaitingBet)) {
+        if ((rocketFlyWithoutCashout || showPlaceBetNextRound) && !isWaitingBet) {
             this.showHideDisabledNode(false);
         }
     }

@@ -89,7 +89,7 @@ export default class PlaceBetButton extends ObserverComponent {
         this.valueAutoCashOut = value;
     }
     onClickPlaceBet() {
-        if (!this.isBetAccepted) {
+        if (!this.isBetAccepted && !this.bgDisable.node.active) {
             this.sendBetRequest();
         }
     }
@@ -129,6 +129,7 @@ export default class PlaceBetButton extends ObserverComponent {
             this.setStatusBet(true);
         } else {
             this.setStatusBet(false);
+            this.enableAutoCashOut();
         }
     }
 
@@ -137,6 +138,9 @@ export default class PlaceBetButton extends ObserverComponent {
         this.sprPlaceBet.node.active = this.bgPlaceBet.node.active = !selected;
         this.handleBlockBet(false);
     }
+
+    @handle(AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
+    enableAutoCashOut() {}
 
     handleBlockBet(disable: boolean) {
         this.bgDisable.node.active = disable;

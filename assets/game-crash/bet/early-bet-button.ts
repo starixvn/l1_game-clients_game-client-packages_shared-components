@@ -1,8 +1,6 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Sprite } from "cc";
 import Observer from "observer";
-
-import AutoCashOutHandler from "../../../../../extensions/shared-components/assets/game-crash/auto-cash-out/scripts/handlers/auto-cash-out-handler";
 import AutoCashOutStore from "../../../../../extensions/shared-components/assets/game-crash/auto-cash-out/scripts/stores/auto-cash-out-store";
 import { AutoPlayHandler } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/handlers/auto-play-handler";
 import { AutoPlayStore } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/stores/auto-play-store";
@@ -67,11 +65,6 @@ export default class EarlyBetButton extends ObserverComponent {
         this.amount = betAmount;
     }
 
-    @handle(AutoCashOutHandler, (handle, enable: boolean) => handle.handleDisableAuto(!enable))
-    enableAutoCashout() {
-        return true;
-    }
-
     @handle(EarlyBetUIHandlers, (handle, enable: boolean) => handle.handle(enable))
     onClickEarlyBet() {
         if (this.isWaitingBet) {
@@ -130,7 +123,6 @@ export default class EarlyBetButton extends ObserverComponent {
 
     handleRocketFly() {
         this.node.active = true;
-        this.enableAutoCashout();
         this.setStatusButtons(false);
         this.setStatusWaiting(false);
         this.disableEarlyBet();
@@ -141,7 +133,6 @@ export default class EarlyBetButton extends ObserverComponent {
 
     handleWaitingCancelBet() {
         this.node.active = true;
-        this.enableAutoCashout();
         this.setStatusButtons(true);
     }
 

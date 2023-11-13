@@ -5,6 +5,7 @@ import { ObserverComponent } from "../../../../shared/common-components/observer
 import AutoCashOutHandler from "../handlers/auto-cash-out-handler";
 import AutoCashOutPopupHandler from "../handlers/auto-cash-out-popup-handler";
 import AutoCashOutStore from "../stores/auto-cash-out-store";
+import { PlayerActionStore } from "../../../player-actions/player-action-store";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -80,4 +81,18 @@ export class AutoCashout extends ObserverComponent {
     decreaseMultiplier() {
         this.quickChangeMultiplier(-0.01);
     }
+
+    @render(PlayerActionStore, (store) => ({
+        rocketFlyWithoutCashout: store.rocketFlyWithoutCashout,
+        showPlaceBetNextRound: store.showPlaceBetNextRound,
+    }))
+    showPlaceBetNextRound(data: { rocketFlyWithoutCashout: boolean; showPlaceBetNextRound: boolean }) {
+        const { rocketFlyWithoutCashout, showPlaceBetNextRound } = data;
+        if (rocketFlyWithoutCashout || showPlaceBetNextRound) {
+            this.enableAutoCashOut();
+        }
+    }
+
+    @handle(AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
+    enableAutoCashOut() {}
 }
