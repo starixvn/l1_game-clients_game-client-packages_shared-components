@@ -28,7 +28,7 @@ export class Md5CopyButton extends ObserverComponent {
         const success = event.data.copySuccessfully;
         if (success !== undefined && this.isCopying) {
             this.isCopying = false;
-            const key = this.isCopying ? "copy_successfully_md5" : "copy_failed_md5";
+            const key = success ? "copy_successfully_md5" : "copy_failed_md5";
             this.lblHint.string = gc.Translator.commonTranslate(key);
             this.showHint();
         }
