@@ -19,13 +19,11 @@ export class CrashRoundHistoryStore {
     @inject(gc.Settlements.SettlementStore) protected readonly settlementStore: gc.Settlements.SettlementStore;
     @inject(Md5PopupStore) protected readonly md5PopupStore: Md5PopupStore;
     private _lastRound: CrashRoundHistory = { roundId: 0, result: {}, md5Result: {}, settlementResult: {} };
-
+    private _roundIndex = 0;
     get roundHistories() {
         let roundHistoy = [];
-        let lastRoundId = this.lastRound.roundId;
-        if (this.roundHistoryStore.histories.length > 0) {
-            lastRoundId = this.roundHistoryStore.histories[0].roundId;
-        }
+
+        let lastRoundId = this.roundHistoryStore.histories[0]?.roundId;
         if (lastRoundId === this.lastRound.roundId) {
             roundHistoy = this.roundHistoryStore.histories as CrashRoundHistory[];
         } else {
@@ -43,6 +41,7 @@ export class CrashRoundHistoryStore {
         const roundItem = this.roundHistories.find((obj) => {
             return obj.roundId === this.md5PopupStore.roundId;
         });
+        this._roundIndex = this.roundHistories.findIndex((obj) => obj.roundId === this.md5PopupStore.roundId);
         return roundItem;
     }
 
@@ -65,5 +64,12 @@ export class CrashRoundHistoryStore {
             result: this._lastRound.result,
             roundId: this._lastRound.roundId,
         };
+    }
+    get increaseStatus(): boolean {
+        return this._roundIndex > 0;
+    }
+
+    get descreaseStatus(): boolean {
+        return this._roundIndex < this.roundHistories.length - 1;
     }
 }

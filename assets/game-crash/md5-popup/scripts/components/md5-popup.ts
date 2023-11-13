@@ -1,7 +1,8 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, Prefab, RichText, _decorator, instantiate } from "cc";
+import { Button, Label, Node, Prefab, RichText, UIOpacity, _decorator, instantiate } from "cc";
 import Observer from "observer";
 
+import { Md5CopyButton } from "../../../../game/md5/scripts/md5-copy-button";
 import MD5Tip from "../../../../game/md5/scripts/md5-tip";
 import { CrashRoundHistory, CrashRoundHistoryStore } from "../../../crash-round-history/crash-round-history-store";
 import { RoundHistoryItem } from "../../../statistics-bar/round-history-item";
@@ -10,7 +11,7 @@ import { Md5PopupStore } from "../stores/md5-popup-store";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
-const { Rounds, Settlements, Translator } = gc;
+const { Rounds, Settlements, Translator, GameUtils } = gc;
 @ccclass
 export class Md5Popup extends ObserverComponent {
     @property(Label)
@@ -28,14 +29,26 @@ export class Md5Popup extends ObserverComponent {
     @property(Node)
     nodeStatusRound: Node = null;
 
+    @property(Node)
+    nodeCopyButton: Node = null;
+
+    @property(Button)
+    btnDecrease: Button = null;
+
+    @property(Button)
+    btnIncrease: Button = null;
+
     @property(MD5Tip)
     protected md5Tip: MD5Tip = null;
 
     private md5keyCopyString = null;
     private resultCopyString = null;
 
+    private cpnCopyButton: Md5CopyButton = null;
+
     onLoad() {
         super.onLoad();
+        this.cpnCopyButton = this.nodeCopyButton.getComponent(Md5CopyButton);
     }
 
     @render(Md5PopupStore, (store) => store.isOpenPopupMd5)
@@ -79,14 +92,28 @@ export class Md5Popup extends ObserverComponent {
         return event.target.name === "increase";
     }
 
+    private handleRoundStatusQuickChange(button: Button, status: boolean) {
+        button.interactable = status;
+        button.node.getChildByName("icon").getComponent(UIOpacity).opacity = status ? 255 : 120;
+    }
+
+    @render(CrashRoundHistoryStore, (store) => store.increaseStatus)
+    private setIncreaseButtonStatus(increaseStatus: boolean) {
+        this.handleRoundStatusQuickChange(this.btnIncrease, increaseStatus);
+    }
+
+    @render(CrashRoundHistoryStore, (store) => store.descreaseStatus)
+    private setDecreaseButtonStatus(descreaseStatus: boolean) {
+        this.handleRoundStatusQuickChange(this.btnDecrease, descreaseStatus);
+    }
+
     onClickCopyButtonResult() {
-        console.log("onClickCopyButtonResult", this.resultCopyString);
-        gc.GameUtils.copyToClipboard(this.resultCopyString);
-        //this.md5Tip.show(false);
+        GameUtils.copyToClipboard(this.resultCopyString);
+        this.cpnCopyButton.isCopying = true;
     }
 
     onClickCopyButtonKey() {
-        gc.GameUtils.copyToClipboard(this.md5keyCopyString);
-        //this.md5Tip.show(false);
+        GameUtils.copyToClipboard(this.md5keyCopyString);
+        this.cpnCopyButton.isCopying = true;
     }
 }
