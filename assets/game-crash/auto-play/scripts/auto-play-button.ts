@@ -1,4 +1,4 @@
-import { _decorator, Label, Prefab, Sprite } from "cc";
+import { Label, Node, Prefab, Sprite, _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { AutoPlayHandler } from "./handlers/auto-play-handler";
@@ -17,6 +17,12 @@ export class AutoPlayButton extends ObserverComponent {
     @property(Prefab)
     prfAutoPlayPopup: Prefab = null;
 
+    @property(Node)
+    nodeTextAutoPlay: Node = null;
+
+    @property(Node)
+    nodeTextStopAutoPlay: Node = null;
+
     @handle(AutoPlayHandler, (handle) => handle.checkAutoPlayClick())
     onClickAutoPlay() {}
 
@@ -27,7 +33,7 @@ export class AutoPlayButton extends ObserverComponent {
 
     @render(AutoPlayStore, (store) => store.isAutoPlay)
     updateAutoPlayButton(isAutoPlay: boolean) {
-        this.lblNoOfRound.node.active = isAutoPlay;
-        this.sprIconAutoPlay.node.active = !isAutoPlay;
+        this.lblNoOfRound.node.active = this.nodeTextStopAutoPlay.active = isAutoPlay;
+        this.sprIconAutoPlay.node.active = this.nodeTextAutoPlay.active = !isAutoPlay;
     }
 }
