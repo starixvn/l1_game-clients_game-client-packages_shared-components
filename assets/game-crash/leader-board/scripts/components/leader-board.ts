@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Node, Prefab, Tween, tween, UITransform, v3, Widget } from "cc";
+import { _decorator, instantiate, Node, Prefab, ScrollView, Tween, tween, UITransform, v3, Widget } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -191,21 +191,18 @@ export class LeaderBoard extends ObserverComponent {
     }
 
     onClickCollapseButton(e) {
-        const leaderBoardSize = this.node.getComponent(UITransform);
-        const leaderBoardMaskWidget = this.nodeLeaderBoardMask.getComponent(Widget);
-        const arrowIconWidget = this.nodeArrowIcon.parent.getComponent(Widget);
-        const height = this.isEpandedBoard ? this.collapsedBoardHeight : this.expandedBoardHeight;
-        this.collapseAndExpandBoard(leaderBoardSize, leaderBoardMaskWidget, arrowIconWidget, height);
+        this.collapseAndExpandBoard();
         this.nodeArrowIcon.eulerAngles = this.isEpandedBoard ? v3(0, 0, 0) : v3(0, 0, 180);
         this.isEpandedBoard = !this.isEpandedBoard;
     }
 
-    private collapseAndExpandBoard(
-        leaderBoardSize: UITransform,
-        leaderBoardMaskWidget: Widget,
-        arrowIconWidget: Widget,
-        boardHeight: number
-    ) {
+    private collapseAndExpandBoard() {
+        const leaderBoardSize = this.node.getComponent(UITransform);
+        const leaderBoardMaskWidget = this.nodeLeaderBoardMask.getComponent(Widget);
+        const arrowIconWidget = this.nodeArrowIcon.parent.getComponent(Widget);
+        const boardHeight = this.isEpandedBoard ? this.collapsedBoardHeight : this.expandedBoardHeight;
+        const scrollView = this.nodeOtherPLayerContainer.parent.getComponent(ScrollView);
+
         tween(leaderBoardSize)
             .to(
                 0.3,
@@ -217,6 +214,9 @@ export class LeaderBoard extends ObserverComponent {
                     },
                 }
             )
+            .call(() => {
+                scrollView.enabled = this.isEpandedBoard;
+            })
             .start();
     }
 }
