@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Color, UIRenderer, _decorator, tween, v3 } from "cc";
+import { Node, Sprite, SpriteFrame, _decorator, tween, v3 } from "cc";
 import { random } from "lodash-es";
 import Observer from "observer";
 import { NodeContainer } from "../../shared/common-components/node-container/node-container";
@@ -7,11 +7,21 @@ import { AnimationUtils } from "../../shared/utils";
 const { render, handle } = Observer;
 const { ccclass, property } = _decorator;
 const { GameCrash } = gc;
+
+enum SpriteFrameIndex {
+    MAIN_PLAYER = 0,
+    OTHER_PLAYER = 1,
+}
+
 @ccclass
 export class CashOutPlayerAnimation extends NodeContainer {
+    @property({ type: SpriteFrame })
+    spriteFrames: SpriteFrame[] = [];
+
     @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer)
     renderOtherPlayerCashOut() {
-        this.createCashoutPlayer();
+        const node = this.createCashoutPlayer();
+        this.updateSpriteFrame(node, SpriteFrameIndex.OTHER_PLAYER);
     }
 
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut)
@@ -26,8 +36,12 @@ export class CashOutPlayerAnimation extends NodeContainer {
 
     createCashoutMainPlayer() {
         const node = this.createCashoutPlayer();
-        const render = node.getComponent(UIRenderer);
-        render.color = Color.YELLOW;
+        this.updateSpriteFrame(node, SpriteFrameIndex.MAIN_PLAYER);
+    }
+
+    private updateSpriteFrame(node: Node, index: number) {
+        const render = node.getComponent(Sprite);
+        render.spriteFrame = this.spriteFrames[index];
     }
 
     private createCashoutPlayer() {
