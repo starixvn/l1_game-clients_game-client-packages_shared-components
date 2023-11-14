@@ -26,9 +26,6 @@ export class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
     lblMultiplier: Label = null;
 
     @property(Label)
-    lblCrashPoint: Label = null;
-
-    @property(Label)
     lblBet: Label = null;
 
     setData(data: BetDetailLogItemType) {
@@ -41,7 +38,6 @@ export class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
         this.lblBet.string = FormatUtils.numberWithCommas(amount, 2);
         this.lblMultiplier.string = `${FormatUtils.numberWithCommas(multiplier, 2)}x`;
         this.lblWin.string = winAmount.toString();
-        this.lblCrashPoint.string = result.toString();
         this.setHighlightTicketDetail(winAmount > 0);
     }
     setHighlightTicketDetail(highlight: boolean) {
