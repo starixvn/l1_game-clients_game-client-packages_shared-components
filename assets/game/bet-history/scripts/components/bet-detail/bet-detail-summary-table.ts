@@ -21,8 +21,10 @@ export class BetDetailSummaryTable extends BaseBetDetailSummaryTable {
 
         this.lblRound.string = roundId.toString();
 
-        const bodyRow = instantiate(resultPrefab);
-        bodyRow.getComponent(BaseResultBodyItem).setData(result, settlementResult);
-        this.result.addChild(bodyRow);
+        if (resultPrefab) {
+            const bodyRow = instantiate(resultPrefab);
+            bodyRow.getComponent(BaseResultBodyItem)?.setData(result, settlementResult);
+            this.result.addChild(bodyRow);
+        }
     }
 }
