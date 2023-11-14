@@ -722,7 +722,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -191.039,
+      "x": -176.653,
       "y": -12,
       "z": 0
     },
@@ -771,7 +771,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "Spaceflight.option",
+    "_string": "Opton",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 21,
@@ -830,7 +830,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 194.44482421875,
+      "width": 65.45068359375,
       "height": 55.44
     },
     "_anchorPoint": {
@@ -2638,7 +2638,7 @@
     "fileId": "76aKfuOVdAN6h52P8Fxcv6"
   },
   {
-    "__type__": "02b44b3VmZCB6QcdqSLMpp0",
+    "__type__": "6a94eeX2v1CjI+PN3adyAl8",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -2656,7 +2656,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "9aM0SAK55FpLUMxcgEmO3X"
+    "fileId": "2bTBEjdkJMw4rJKeIr84/2"
   },
   {
     "__type__": "cc.PrefabInfo",

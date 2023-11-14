@@ -1,6 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Color, Label } from "cc";
-import { result } from "lodash";
+import { _decorator, Color, Label, Node } from "cc";
 
 import { BaseBetDetailLogItem, BetDetailLogItemType } from "../../../game/bet-history/scripts/components/bet-detail/bet-detail-log-item";
 
@@ -28,15 +27,30 @@ export class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
     @property(Label)
     lblBet: Label = null;
 
+    @property(Node)
+    nodeCrash: Node = null;
+
+    setCrashNodeVisibility(status: boolean) {
+        this.nodeCrash.active = status;
+        this.lblAction.node.active = !status;
+    }
+
     setData(data: BetDetailLogItemType) {
         super.setData(data);
-        const { betDetailsLog, result } = data;
-        const { amount, multiplier, winAmount, action } = betDetailsLog as CrashGameBetDetailsLog & gc.BetHistory.DynamicObject<object>;
+        const { amount, multiplier, winAmount, action } = data.betDetailsLog as CrashGameBetDetailsLog &
+            gc.BetHistory.DynamicObject<object>;
 
-        const actionName = action === "cashOut" ? "cashout" : "cashout_50%";
-        this.lblAction.string = Translator.gameTranslate(actionName);
+        if (action) {
+            this.setCrashNodeVisibility(false);
+            const actionName = action === "cashOut" ? "cashout" : "cashout_50%";
+            this.lblAction.string = Translator.gameTranslate(actionName);
+
+        } else {
+            this.setCrashNodeVisibility(true);
+        }
+
         this.lblBet.string = FormatUtils.numberWithCommas(amount, 2);
-        this.lblMultiplier.string = `${FormatUtils.numberWithCommas(multiplier, 2)}x`;
+        this.lblMultiplier.string = multiplier ? `${FormatUtils.numberWithCommas(multiplier, 2)}x` : "";
         this.lblWin.string = winAmount.toString();
         this.setHighlightTicketDetail(winAmount > 0);
     }
