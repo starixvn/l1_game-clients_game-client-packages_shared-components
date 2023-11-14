@@ -11,7 +11,7 @@ const { handle } = Observer;
 export type BetHistoryBodyItemType = {
     betHistoryLog: gc.BetHistory.BetHistoryLog;
     index: number;
-    resultPrefab: Prefab;
+    resultPrefab: Prefab | null;
 };
 
 @ccclass
@@ -57,10 +57,12 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         this.lblWin.string = FormatUtils.numberWithCommas(betwin, 2);
         this.lblTotalStake.string = FormatUtils.numberWithCommas(totalAmount, 2);
 
-        const bodyRow = instantiate(resultPrefab);
-        const { result, settlementResult } = betHistoryLog;
-        bodyRow.getComponent(BaseResultBodyItem).setData(result as gc.BetHistory.DynamicObject<object>, settlementResult);
-        this.result.addChild(bodyRow);
+        if (resultPrefab) {
+            const bodyRow = instantiate(resultPrefab);
+            const { result, settlementResult } = betHistoryLog;
+            bodyRow.getComponent(BaseResultBodyItem)?.setData(result as gc.BetHistory.DynamicObject<object>, settlementResult);
+            this.result.addChild(bodyRow);
+        }
     }
 
     @handle(BetHistory.BetDetailHitoryStore, (store, betHistoryLog: gc.BetHistory.BetHistoryLog) => {
