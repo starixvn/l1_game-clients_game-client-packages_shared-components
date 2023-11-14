@@ -18,18 +18,18 @@ export class CashOutPlayerAnimation extends NodeContainer {
     @property({ type: SpriteFrame })
     spriteFrames: SpriteFrame[] = [];
 
-    @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer)
+    @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
     renderOtherPlayerCashOut() {
         const node = this.createCashoutPlayer();
         this.updateSpriteFrame(node, SpriteFrameIndex.OTHER_PLAYER);
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut)
+    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })
     renderMainPlayerCashOutFull() {
         this.createCashoutMainPlayer();
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.halfCashOut)
+    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.halfCashOut, { fireImmediately: false })
     renderMainPlayerCashOutHalf() {
         this.createCashoutMainPlayer();
     }
