@@ -49,12 +49,20 @@ export class LeaderBoard extends ObserverComponent {
     onLoad() {
         super.onLoad();
         this.otherPlayerWidget = this.nodeOtherPLayerContainer.getComponent(Widget);
-        this.resetOtherPlayer();
+        this.resetOtherPlayers();
+        this.resetMaiPlayer();
     }
 
-    private resetOtherPlayer() {
+    private resetOtherPlayers() {
+        this.scrollOtherPlayer(0);
         this.otherPlayerList = [];
         this.nodeContent.removeAllChildren();
+    }
+
+    private resetMaiPlayer() {
+        this.mainPlayer.betAmount = null;
+        this.mainPlayer.cashOut = null;
+        this.mainPlayer.halfCashOut = null;
 
         if (!this.cpnMainPlayer) {
             return;
@@ -68,7 +76,7 @@ export class LeaderBoard extends ObserverComponent {
         const { playerId, name, cashOut, halfCashOut } = otherPlayer;
         const data: ILeaderBoardItemData = {
             playerId: playerId,
-            name: this.convertEncryptedName(name),
+            name: this.encryptedName(name),
             cashOut: cashOut ?? null,
             halfCashOut: halfCashOut ?? null,
         };
@@ -78,7 +86,7 @@ export class LeaderBoard extends ObserverComponent {
             const comp = playerNode?.getComponent(LeaderBoardItem);
             comp?.setData(data);
         } else {
-            this.createLeaderBoardItem(data);
+            this.createBoardItem(data);
         }
     }
 
@@ -98,7 +106,7 @@ export class LeaderBoard extends ObserverComponent {
         this.cpnMainPlayer?.setData(this.mainPlayer, true);
     }
 
-    private createLeaderBoardItem(data: ILeaderBoardItemData) {
+    private createBoardItem(data: ILeaderBoardItemData) {
         const node = instantiate(this.pfbItem);
         node.name = data.playerId;
         this.nodeContent.addChild(node);
@@ -111,7 +119,7 @@ export class LeaderBoard extends ObserverComponent {
         const { playerId, name, amount } = playerChip;
         const data: ILeaderBoardItemData = {
             playerId: playerId,
-            name: this.convertEncryptedName(name),
+            name: this.encryptedName(name),
             betAmount: amount,
         };
 
@@ -119,7 +127,7 @@ export class LeaderBoard extends ObserverComponent {
         this.otherPlayerList.sort((a, b) => b.betAmount - a.betAmount);
         this.nodeContent.removeAllChildren();
         this.otherPlayerList.forEach((data) => {
-            this.createLeaderBoardItem(data);
+            this.createBoardItem(data);
         });
     }
 
@@ -142,9 +150,8 @@ export class LeaderBoard extends ObserverComponent {
     @render(gc.Rounds.RoundTimeStore, (store) => store.startPlacingBet)
     private resetLeaderBoard(startPlacingBet: boolean) {
         if (startPlacingBet) {
-            this.scrollOtherPlayer(0);
-            this.mainPlayer.betAmount = null;
-            this.resetOtherPlayer();
+            this.resetMaiPlayer();
+            this.resetOtherPlayers();
         }
     }
 
@@ -159,7 +166,7 @@ export class LeaderBoard extends ObserverComponent {
         }
     }
 
-    private convertEncryptedName(name: string): string {
+    private encryptedName(name: string): string {
         return `${name.substring(0, 1)}***${name.substring(name.length - 3, name.length)}`;
     }
 
@@ -184,23 +191,21 @@ export class LeaderBoard extends ObserverComponent {
     }
 
     onClickCollapseButton(e) {
-        if (this.isEpandedBoard) {
-            this.isEpandedBoard = false;
-            this.nodeArrowIcon.eulerAngles = v3(0, 0, 0);
-
-            this.collapseAndExpandBoard(this.collapsedBoardHeight);
-        } else {
-            this.isEpandedBoard = true;
-            this.nodeArrowIcon.eulerAngles = v3(0, 0, 180);
-            this.collapseAndExpandBoard(this.expandedBoardHeight);
-        }
-    }
-
-    private collapseAndExpandBoard(boardHeight: number) {
         const leaderBoardSize = this.node.getComponent(UITransform);
         const leaderBoardMaskWidget = this.nodeLeaderBoardMask.getComponent(Widget);
         const arrowIconWidget = this.nodeArrowIcon.parent.getComponent(Widget);
+        const height = this.isEpandedBoard ? this.collapsedBoardHeight : this.expandedBoardHeight;
+        this.collapseAndExpandBoard(leaderBoardSize, leaderBoardMaskWidget, arrowIconWidget, height);
+        this.nodeArrowIcon.eulerAngles = this.isEpandedBoard ? v3(0, 0, 0) : v3(0, 0, 180);
+        this.isEpandedBoard = !this.isEpandedBoard;
+    }
 
+    private collapseAndExpandBoard(
+        leaderBoardSize: UITransform,
+        leaderBoardMaskWidget: Widget,
+        arrowIconWidget: Widget,
+        boardHeight: number
+    ) {
         tween(leaderBoardSize)
             .to(
                 0.3,
