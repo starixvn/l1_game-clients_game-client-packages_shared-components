@@ -90,7 +90,9 @@ export class LeaderBoard extends ObserverComponent {
             const comp = playerNode?.getComponent(LeaderBoardItem);
             comp?.setData(data);
         } else {
-            this.createBoardItem(data);
+            const node = this.createBoardItem(playerId);
+            const compleaderBoardItem = node.getComponent(LeaderBoardItem);
+            compleaderBoardItem?.setData(data);
         }
     }
 
@@ -110,17 +112,19 @@ export class LeaderBoard extends ObserverComponent {
         this.cpnMainPlayer?.setData(this.mainPlayer, true);
     }
 
-    private createBoardItem(data: ILeaderBoardItemData) {
+    private createBoardItem(playerId: string): Node {
         const node = instantiate(this.pfbItem);
-        node.name = data.playerId;
+        node.name = playerId;
         this.nodeContent.addChild(node);
-        const compleaderBoardItem = node.getComponent(LeaderBoardItem);
-        compleaderBoardItem?.setData(data);
+        return node;
     }
 
     @render(gc.Chips.ChipStore, (store) => store.playerChip, { fireImmediately: false })
     private addOtherPlayerPlacingBet(playerChip) {
         const { playerId, name, amount } = playerChip;
+
+        this.createBoardItem(playerId);
+
         const data: ILeaderBoardItemData = {
             playerId: playerId,
             name: this.encryptedName(name),
@@ -129,9 +133,11 @@ export class LeaderBoard extends ObserverComponent {
 
         this.otherPlayerList.push(data);
         this.otherPlayerList.sort((a, b) => b.betAmount - a.betAmount);
-        this.nodeContent.removeAllChildren();
-        this.otherPlayerList.forEach((data) => {
-            this.createBoardItem(data);
+
+        this.nodeContent.getComponentsInChildren(LeaderBoardItem).forEach((item, index) => {
+            const playerData = this.otherPlayerList[index];
+            item.setData(playerData);
+            item.node.name = playerData.playerId;
         });
     }
 
@@ -196,7 +202,7 @@ export class LeaderBoard extends ObserverComponent {
 
     onClickCollapseButton(e) {
         this.collapseAndExpandBoard();
-        this.nodeArrowIcon.eulerAngles = this.isEpandedBoard ? v3(0, 0, 0) : v3(0, 0, 180);
+        this.nodeArrowIcon.eulerAngles = this.isEpandedBoard ? v3(0, 0, 180) : v3(0, 0, 0);
         this.isEpandedBoard = !this.isEpandedBoard;
     }
 

@@ -556,8 +556,8 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 217,
-      "g": 236,
+      "r": 236,
+      "g": 185,
       "b": 10,
       "a": 255
     },
@@ -636,7 +636,7 @@
     "node": {
       "__id__": 3
     },
-    "_enabled": false,
+    "_enabled": true,
     "__prefab": {
       "__id__": 25
     },
@@ -1112,8 +1112,8 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 217,
-      "g": 236,
+      "r": 236,
+      "g": 185,
       "b": 10,
       "a": 255
     },
@@ -1192,7 +1192,7 @@
     "node": {
       "__id__": 27
     },
-    "_enabled": false,
+    "_enabled": true,
     "__prefab": {
       "__id__": 49
     },
@@ -1328,7 +1328,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 290,
+      "width": 300,
       "height": 30
     },
     "_anchorPoint": {
