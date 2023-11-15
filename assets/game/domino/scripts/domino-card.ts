@@ -1,5 +1,6 @@
 import gc from "@sg/game-client-base";
 import { Animation, Component, Node, Sprite, SpriteAtlas, _decorator } from "cc";
+import { AnimationUtils } from "../../../shared/utils";
 const { ccclass, property } = _decorator;
 
 const { Configs } = gc;
@@ -49,20 +50,19 @@ export class DominoCard extends Component {
     }
 
     async pullDominoCard(duration: number) {
-        // return AnimationUtils.playAnimation(this.animation, AnimationName.Pull_Card, duration);
+        return AnimationUtils.playAnimation(this.animation, AnimationName.Pull_Card, duration);
     }
 
     async drawDominoCard(duration: number) {
-        // return AnimationUtils.playAnimation(this.animation, AnimationName.Draw_Card, duration);
+        return AnimationUtils.playAnimation(this.animation, AnimationName.Draw_Card, duration);
     }
 
     async openDominoCard() {
-        // if (this.animation) {
-        //     await AnimationUtils.playAnimation(this.animation, AnimationName.Open_Card);
-        // } else {
-        //     this.faceUp();
-        // }
-        this.faceUp();
+        if (this.animation) {
+            await AnimationUtils.playAnimation(this.animation, AnimationName.Open_Card);
+        } else {
+            this.faceUp();
+        }
     }
 
     faceUp() {
