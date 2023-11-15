@@ -41,11 +41,11 @@ export class LeaderBoardItem extends Component {
         if ((halfCashOut && !cashOut) || (cashOut && !halfCashOut)) {
             const value = halfCashOut || cashOut;
             this.lblMultiplierWhenHalfCashOut.string = `${FormatUtils.numberWithCommas(value.multiplier, 2, false)}x`;
-            this.lblHalfCashout.string = value.win.toString();
+            this.lblHalfCashout.string = FormatUtils.numberWithCommas(value.win);
         } else if (halfCashOut && cashOut) {
             this.nodeCashOutContainer.active = true;
             this.lblMultiplier.string = `${FormatUtils.numberWithCommas(cashOut.multiplier, 2, false)}x`;
-            this.lblCashout.string = cashOut.win.toString();
+            this.lblCashout.string = FormatUtils.numberWithCommas(cashOut.win);
         } else {
             this.lblMultiplierWhenHalfCashOut.string = "-";
         }

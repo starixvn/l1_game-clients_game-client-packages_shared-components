@@ -11,6 +11,9 @@ const { render, handle } = Observer;
 
 @ccclass
 export class LeaderBoard extends ObserverComponent {
+    @property(ScrollView)
+    otherPlayersScrollView: ScrollView = null;
+
     @property(Node)
     nodeContent: Node = null;
 
@@ -57,6 +60,7 @@ export class LeaderBoard extends ObserverComponent {
         this.scrollOtherPlayer(0);
         this.otherPlayerList = [];
         this.nodeContent.removeAllChildren();
+        this.otherPlayersScrollView.scrollToTop(0.1);
     }
 
     private resetMaiPlayer() {
