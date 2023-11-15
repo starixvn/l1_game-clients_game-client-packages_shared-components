@@ -1,9 +1,10 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Color, Component, Label, Node } from "cc";
 
 import { ILeaderBoardItemData } from "../leader-board-data";
 
 const { ccclass, property } = _decorator;
-
+const { FormatUtils } = gc;
 @ccclass
 export class LeaderBoardItem extends Component {
     @property(Label)
@@ -39,11 +40,11 @@ export class LeaderBoardItem extends Component {
 
         if ((halfCashOut && !cashOut) || (cashOut && !halfCashOut)) {
             const value = halfCashOut || cashOut;
-            this.lblMultiplierWhenHalfCashOut.string = `${value.multiplier}x`;
+            this.lblMultiplierWhenHalfCashOut.string = `${FormatUtils.numberWithCommas(value.multiplier, 2, false)}x`;
             this.lblHalfCashout.string = value.win.toString();
         } else if (halfCashOut && cashOut) {
             this.nodeCashOutContainer.active = true;
-            this.lblMultiplier.string = `${cashOut.multiplier}x`;
+            this.lblMultiplier.string = `${FormatUtils.numberWithCommas(cashOut.multiplier, 2, false)}x`;
             this.lblCashout.string = cashOut.win.toString();
         } else {
             this.lblMultiplierWhenHalfCashOut.string = "-";
