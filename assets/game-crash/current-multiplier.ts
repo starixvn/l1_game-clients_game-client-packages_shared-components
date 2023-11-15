@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Color, Label, Node, UIOpacity, _decorator } from "cc";
+import { Label, Node, UIOpacity, _decorator } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
@@ -13,22 +13,15 @@ export class CurrentMultiplier extends ObserverComponent {
     @property(Label)
     lblCurrentMultiplier: Label = null;
 
-    @property(Label)
-    lblMultiplierStroke: Label = null;
-
     @property(Node)
     nodeMultiplierText: Node = null;
 
     @property(Node)
     nodeCrashText: Node = null;
 
-    levelColorList = ["#47d4fa", "#dba923", "#f6214c"];
-    level1Multiplier = 5;
-    level2Multiplier = 10;
-
     onLoad() {
-        super.onLoad();
         this.setVisibility(false);
+        super.onLoad();
     }
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.multiplier, { fireImmediately: false })
@@ -50,17 +43,7 @@ export class CurrentMultiplier extends ObserverComponent {
     }
 
     setCurrMultiplierValue(multiplier: number) {
-        this.lblCurrentMultiplier.string = this.lblMultiplierStroke.string = `${FormatUtils.numberWithCommas(multiplier, 2, false)}x`;
-        let color: string;
-        if (multiplier <= this.level1Multiplier) {
-            color = this.levelColorList[0];
-        } else if (multiplier <= this.level2Multiplier) {
-            color = this.levelColorList[1];
-        } else {
-            color = this.levelColorList[2];
-        }
-
-        this.lblCurrentMultiplier.color = new Color().fromHEX(color);
+        this.lblCurrentMultiplier.string = `${FormatUtils.numberWithCommas(multiplier, 2, false)}x`;
     }
 
     showHideBottomText(isCrashed: boolean) {
