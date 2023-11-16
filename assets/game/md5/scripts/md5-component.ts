@@ -1,13 +1,15 @@
 import gc from "@sg/game-client-base";
+import { _decorator, Label, Node, tween, UIOpacity, v3 } from "cc";
 import Observer from "observer";
+
+import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import EffectAppearanceLabel from "./effect-appearance-label";
 import { Md5CopyButton } from "./md5-copy-button";
 import MD5Tip from "./md5-tip";
+
 const { render } = Observer;
 const { Rounds, Settlements, Translator } = gc;
 
-import { Label, Node, UIOpacity, _decorator, tween, v3 } from "cc";
-import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
 
 export type MD5Type = {
@@ -62,7 +64,7 @@ export default class MD5Component extends ObserverComponent {
     }
 
     private showTooltip() {
-        if (this.tipString) {
+        if (this.tipString && this.md5Tip) {
             this.md5Tip.setData(this.tipString);
             this.md5Tip.show(true);
             tween(this.md5Tip.node.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).delay(2).to(0.1, { opacity: 0 }).start();
