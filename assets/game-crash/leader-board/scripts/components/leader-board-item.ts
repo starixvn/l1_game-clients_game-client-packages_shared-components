@@ -1,7 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Color, Component, Label, Node } from "cc";
 
-import { ILeaderBoardItemData } from "../leader-board-data";
+import { ICashOutData, ILeaderBoardItemData } from "../leader-board-data";
 
 const { ccclass, property } = _decorator;
 const { FormatUtils } = gc;
@@ -36,22 +36,29 @@ export class LeaderBoardItem extends Component {
         this.lblName.string = name;
         isMainPlayer && (this.lblName.color = new Color().fromHEX("#52faf8"));
 
-        this.lblHalfCashout.string = betAmount ? betAmount.toString() : "-";
-
         if ((halfCashOut && !cashOut) || (cashOut && !halfCashOut)) {
             const value = halfCashOut || cashOut;
-            this.lblMultiplierWhenHalfCashOut.string = `${FormatUtils.numberWithCommas(value.multiplier, 2, false)}x`;
-            this.lblHalfCashout.string = FormatUtils.numberWithCommas(value.win);
+            this.updateHalfCashout(value);
         } else if (halfCashOut && cashOut) {
-            this.nodeCashOutContainer.active = true;
-            this.lblMultiplier.string = `${FormatUtils.numberWithCommas(cashOut.multiplier, 2, false)}x`;
-            this.lblCashout.string = FormatUtils.numberWithCommas(cashOut.win);
+            this.updateFullCashOut(cashOut);
         } else {
             this.lblMultiplierWhenHalfCashOut.string = "-";
+            this.lblHalfCashout.string = betAmount.toString();
         }
     }
 
     setCashOutEmpty() {
         this.lblHalfCashout.string = "-";
+    }
+
+    private updateHalfCashout(data: ICashOutData) {
+        this.lblMultiplierWhenHalfCashOut.string = `${FormatUtils.numberWithCommas(data.multiplier, 2, false)}x`;
+        this.lblHalfCashout.string = FormatUtils.numberWithCommas(data.win, 2);
+    }
+
+    private updateFullCashOut(data: ICashOutData) {
+        this.nodeCashOutContainer.active = true;
+        this.lblMultiplier.string = `${FormatUtils.numberWithCommas(data.multiplier, 2, false)}x`;
+        this.lblCashout.string = FormatUtils.numberWithCommas(data.win, 2);
     }
 }

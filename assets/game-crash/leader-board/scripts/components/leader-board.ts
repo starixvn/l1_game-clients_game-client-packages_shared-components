@@ -44,6 +44,8 @@ export class LeaderBoard extends ObserverComponent {
         playerId: "",
         name: "",
         betAmount: null,
+        cashOut: null,
+        halfCashOut: null,
     };
     private otherPlayerTween: Tween<Widget> = null;
     private otherPlayerWidget: Widget = null;
