@@ -202,9 +202,6 @@ export class ChipFlying extends ObserverComponent {
 
     @render(Settlements.SettlementStore, (store) => store.winningPlayers, { fireImmediately: false })
     handleWinningAroundTablePlayers(winningPlayers: gc.GameServiceMessage.TWinningPlayers) {
-        if (!winningPlayers) {
-            return;
-        }
         this.winningPlayers = winningPlayers;
 
         if (!this.isStartRunAnimPayChips) {
@@ -214,7 +211,7 @@ export class ChipFlying extends ObserverComponent {
     }
 
     protected payChipsToAroundTablePlayers() {
-        if (!this.winningPlayers) {
+        if (this.winningPlayers == null || Object.keys(this.winningPlayers).length === 0) {
             return;
         }
 
