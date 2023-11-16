@@ -73,7 +73,7 @@ export default class ColMultipliers extends ObserverComponent {
                 })
                 .start();
         } else {
-            this.nodeMultipliersContainer.position.add(v3(0, offsetY, 0));
+            this.nodeMultipliersContainer.position = this.nodeMultipliersContainer.position.add(v3(0, offsetY, 0));
         }
     }
 
