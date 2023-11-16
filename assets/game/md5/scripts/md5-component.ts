@@ -35,7 +35,8 @@ export default class MD5Component extends ObserverComponent {
     @property(MD5Tip)
     protected md5Tip: MD5Tip = null;
 
-    protected maximumStringAllowed = 32;
+    @property
+    maximumStringAllowed = 32;
     protected lblHint: Label = null;
     protected tipString: string;
     private md5CopyString: string = null;
