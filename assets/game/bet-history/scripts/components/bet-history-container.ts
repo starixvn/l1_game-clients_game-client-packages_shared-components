@@ -1,4 +1,4 @@
-import { Node, Prefab, _decorator, instantiate } from "cc";
+import { Node, Prefab, _decorator } from "cc";
 import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { NodeContainer } from "../../../../shared/common-components/node-container/node-container";
