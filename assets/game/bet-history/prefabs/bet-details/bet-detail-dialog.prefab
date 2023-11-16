@@ -2266,7 +2266,12 @@
     },
     "groupId": 5,
     "dynamicRootNodes": [
-      null
+      {
+        "__id__": 95
+      },
+      {
+        "__id__": 101
+      }
     ],
     "_id": ""
   },
