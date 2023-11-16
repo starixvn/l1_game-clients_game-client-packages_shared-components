@@ -11,8 +11,8 @@ const { FormatUtils, Rounds, Settlements } = gc;
 
 @ccclass
 export class RoundHistoryItem extends ObserverComponent {
-    @property(Label)
-    lblCountdown: Label = null;
+    @property(Node)
+    nodeCountdown: Node = null;
 
     @property(Sprite)
     nodeMultiplier: Sprite = null;
@@ -32,7 +32,7 @@ export class RoundHistoryItem extends ObserverComponent {
 
     showHideNode(isShowMultiplier: boolean, isShowCountDown: boolean, isShowSprInPlay: boolean) {
         this.nodeMultiplier.node.active = isShowMultiplier;
-        this.lblCountdown.node.active = isShowCountDown;
+        this.nodeCountdown.active = isShowCountDown;
         this.nodeInPlay.active = isShowSprInPlay;
     }
 
@@ -57,7 +57,7 @@ export class RoundHistoryItem extends ObserverComponent {
         }
     }
     updateCountDownValue(value: number) {
-        this.lblCountdown.string = `${value}s`;
+        this.nodeCountdown.getChildByName("value").getComponent(Label).string = `${value}s`;
         this.showHideNode(false, true, false);
     }
 
