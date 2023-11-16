@@ -87,10 +87,12 @@ export class HistoryResultItem extends Component {
     private highlightGrid() {
         if (this.nodeHighlightGrid) {
             this.nodeHighlightGrid.active = true;
-            this.highlightAnimation = tween(this.nodeHighlightGrid.getComponent(UIOpacity))
-                .sequence(tween().to(0.7, { opacity: 100 }), tween().to(0.7, { opacity: 255 }))
-                .repeatForever()
-                .start();
+            if (this.nodeHighlightGrid.getComponent(UIOpacity)) {
+                this.highlightAnimation = tween(this.nodeHighlightGrid.getComponent(UIOpacity))
+                    .sequence(tween().to(0.7, { opacity: 100 }), tween().to(0.7, { opacity: 255 }))
+                    .repeatForever()
+                    .start();
+            }
         }
     }
 
