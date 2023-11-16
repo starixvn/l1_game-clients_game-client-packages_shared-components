@@ -18,7 +18,7 @@ export class RenderFakeData extends Component {
     }
 
     render() {
-        const value = (Math.random() * 9) >> 0;
+        const value = (Math.random() * 9) >> 0; //NOSONAR
         const isBanker = value < 2;
         const isTie = value >= 8;
 
