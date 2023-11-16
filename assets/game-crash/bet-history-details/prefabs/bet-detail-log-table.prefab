@@ -771,7 +771,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "Opton",
+    "_string": "Option",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 21,
@@ -830,7 +830,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 65.45068359375,
+      "width": 72.84375,
       "height": 55.44
     },
     "_anchorPoint": {
@@ -856,7 +856,7 @@
     "__prefab": {
       "__id__": 37
     },
-    "key": "Spaceflight.option",
+    "key": "Spaceflight.glossary_option",
     "format": 3,
     "_id": ""
   },
@@ -1229,7 +1229,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "Spaceflight.bet",
+    "_string": "Bet",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 21,
@@ -1288,7 +1288,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 159.37646484375,
+      "width": 34.5966796875,
       "height": 55.44
     },
     "_anchorPoint": {
@@ -1314,7 +1314,7 @@
     "__prefab": {
       "__id__": 65
     },
-    "key": "Spaceflight.bet",
+    "key": "Spaceflight.glossary_bet",
     "format": 3,
     "_id": ""
   },
