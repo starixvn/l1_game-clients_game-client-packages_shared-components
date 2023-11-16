@@ -6,7 +6,7 @@ import PromptMessageComponent from "./prompt-message-component";
 
 const { Rounds, Translator } = gc;
 const { render, handle } = Observer;
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 @ccclass("PromptMessageContainer")
 export class PromptMessageContainer extends NodeContainer {
@@ -20,7 +20,7 @@ export class PromptMessageContainer extends NodeContainer {
         }
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
+    @render(Rounds.RoundTimeStore, (store) => store.isShowStartBetMessage)
     showStartBetMessage(isStartingRound: boolean) {
         if (isStartingRound) {
             this.scheduleOnce(() => {
