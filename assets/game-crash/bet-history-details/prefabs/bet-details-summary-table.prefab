@@ -219,7 +219,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 69.357421875,
+      "x": 74.90087890625,
       "y": 0,
       "z": 0
     },
@@ -314,8 +314,8 @@
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 232,
-      "b": 0,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_string": ":",
@@ -403,8 +403,8 @@
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 232,
-      "b": 0,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_string": "Round",
@@ -562,7 +562,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 82.184,
+      "x": 89.90087890625,
       "y": 0,
       "z": 0
     },
@@ -757,7 +757,7 @@
     "__prefab": {
       "__id__": 35
     },
-    "_resizeMode": 1,
+    "_resizeMode": 2,
     "_layoutType": 1,
     "_cellSize": {
       "__type__": "cc.Size",
@@ -769,7 +769,7 @@
     "_paddingRight": 0,
     "_paddingTop": 0,
     "_paddingBottom": 0,
-    "_spacingX": 25,
+    "_spacingX": 15,
     "_spacingY": 0,
     "_verticalDirection": 1,
     "_horizontalDirection": 0,
@@ -889,7 +889,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 123.046875,
+      "x": 90.91748046875,
       "y": 0,
       "z": 0
     },
@@ -984,8 +984,8 @@
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 232,
-      "b": 0,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_string": ":",
@@ -1073,8 +1073,8 @@
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 232,
-      "b": 0,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_string": "Crash Point",
@@ -1232,7 +1232,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 135.873,
+      "x": 105.91748046875,
       "y": 0,
       "z": 0
     },
@@ -1427,7 +1427,7 @@
     "__prefab": {
       "__id__": 69
     },
-    "_resizeMode": 1,
+    "_resizeMode": 2,
     "_layoutType": 1,
     "_cellSize": {
       "__type__": "cc.Size",
@@ -1439,7 +1439,7 @@
     "_paddingRight": 0,
     "_paddingTop": 0,
     "_paddingBottom": 0,
-    "_spacingX": 25,
+    "_spacingX": 15,
     "_spacingY": 0,
     "_verticalDirection": 1,
     "_horizontalDirection": 0,
