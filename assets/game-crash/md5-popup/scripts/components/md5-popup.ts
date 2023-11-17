@@ -68,6 +68,7 @@ export class Md5Popup extends ObserverComponent {
 
     updateInfo(roundHistoryData: CrashRoundHistory) {
         if (roundHistoryData) {
+            this.nodeStatusRound.destroyAllChildren();
             const hashValue = (roundHistoryData.md5Result.hashValue = roundHistoryData.md5Result.hashValue || "");
             this.md5keyCopyString = hashValue;
             const rawValue = (roundHistoryData.md5Result.rawValue = roundHistoryData.md5Result.rawValue || "");
