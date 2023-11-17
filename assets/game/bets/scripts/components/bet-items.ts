@@ -103,7 +103,7 @@ export class BetItems extends ObserverComponent {
         if (highLightInfo?.settlementResult) {
             this.betItemComponents.forEach((betItem) => {
                 const choice = betItem.node.name;
-                betItem.handleHighlightAnim(settlementResult?.[choice] && isAnim);
+                betItem.handleHighlightAnim(this.isWinning(+settlementResult?.[choice]) && isAnim);
             });
         }
     }
@@ -126,7 +126,7 @@ export class BetItems extends ObserverComponent {
     protected showHighlightStatic(settlementResult: gc.GameServiceMessage.TSettlementResult) {
         this.betItemComponents.forEach((betItem) => {
             const choice = betItem.node.name;
-            betItem.handleHighlightStatic(settlementResult?.[choice]);
+            betItem.handleHighlightStatic(this.isWinning(+settlementResult?.[choice]));
         });
     }
 
@@ -137,5 +137,9 @@ export class BetItems extends ObserverComponent {
                 betItem.handleHighlightStatic(false);
             });
         }
+    }
+
+    isWinning(value: number, target = 1) {
+        return value === target;
     }
 }
