@@ -19,6 +19,10 @@
         "bundle": "shared-bundle",
         "path": "draw-single-card"
     },
+    "draw-single-domino-card": {
+        "bundle": "shared-bundle",
+        "path": "draw-single-domino-card"
+    },
 
     "start-betting_en": {
         "bundle": "shared-bundle",
