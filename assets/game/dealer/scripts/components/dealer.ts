@@ -30,7 +30,7 @@ export class Dealer extends ObserverComponent {
         this.playlistAnim();
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
+    @render(Rounds.RoundTimeStore, (store) => store.isShowStartBetMessage)
     async handleAnimStartBet(isStartRound: boolean) {
         if (isStartRound && this.spine) {
             this.isRunAnimStartBet = true;

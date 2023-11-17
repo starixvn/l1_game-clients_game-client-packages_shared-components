@@ -94,7 +94,7 @@ export default class GameComponent extends GameComponentBase {
     handleJoinGameAndShowResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
         const { roundHistory, isShow } = joinGameHistory ?? {};
         if (roundHistory && isShow) {
-            this.showResult(roundHistory?.result, false);
+            this.showResult(roundHistory?.result, false, roundHistory?.settlementResult);
         }
     }
 
@@ -116,13 +116,17 @@ export default class GameComponent extends GameComponentBase {
         if (!result || !settlementResult) {
             return;
         }
-        this.showResult(result, true).then(() => {
+        this.showResult(result, true, settlementResult).then(() => {
             this.finishShowResult(result, settlementResult);
         });
         this.playSound(gc.Audios.AudioIds.RECEIVE_FINISH);
     }
 
-    async showResult(result: gc.GameServiceMessage.TResult, hasAnimation: boolean) {}
+    async showResult(
+        result: gc.GameServiceMessage.TResult,
+        hasAnimation: boolean,
+        settlementResult: gc.GameServiceMessage.TSettlementResult
+    ) {}
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {}
