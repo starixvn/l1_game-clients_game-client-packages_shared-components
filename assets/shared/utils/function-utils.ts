@@ -1,4 +1,4 @@
-import { find, screen } from "cc";
+import { Node, find, screen, warn } from "cc";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 
 export namespace FunctionUtils {
@@ -54,6 +54,27 @@ export namespace FunctionUtils {
             };
 
             checkCondition();
+        });
+    };
+
+    export const asyncExecute = async <T>(node: Node, promiseValue: Promise<T>): Promise<T> => {
+        return new Promise<T>((resolve, reject) => {
+            const errorMessage = "Node is not valid!.";
+            if (!node?.isValid) {
+                reject(new Error(errorMessage));
+            } else {
+                promiseValue
+                    .then((result) => {
+                        if (!node?.isValid) {
+                            reject(new Error(errorMessage));
+                        } else {
+                            resolve(result);
+                        }
+                    })
+                    .catch((err) => {
+                        warn("----asyncExecute----:", err);
+                    });
+            }
         });
     };
 }

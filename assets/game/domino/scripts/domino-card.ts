@@ -1,6 +1,6 @@
 import gc from "@sg/game-client-base";
-import { Animation, Component, Node, Sprite, SpriteAtlas, _decorator } from "cc";
-import { AnimationUtils } from "../../../shared/utils";
+import { Animation, Component, Node, Sprite, SpriteAtlas, _decorator, warn } from "cc";
+import { AnimationUtils, FunctionUtils } from "../../../shared/utils";
 const { ccclass, property } = _decorator;
 
 const { Configs } = gc;
@@ -11,9 +11,9 @@ export interface DominoCardModel {
 }
 
 enum AnimationName {
-    Open_Card = "open-domino-card",
-    Draw_Card = "draw-domino-card",
-    Pull_Card = "pull-domino-card",
+    OpenDominoCard = "open-domino-card",
+    DrawDominoCard = "draw-domino-card",
+    PullDominoCard = "pull-domino-card",
 }
 
 @ccclass("DominoCard")
@@ -49,19 +49,36 @@ export class DominoCard extends Component {
         this.backCard.spriteFrame = this.atlas.getSpriteFrame(spriteFrameName);
     }
 
+    protected async playAnimationWithAsyncExecute(animationName: string, duration: number) {
+        return FunctionUtils.asyncExecute(this.node, AnimationUtils.playAnimation(this.animation, animationName, duration));
+    }
+
     async pullDominoCard(duration: number) {
-        return AnimationUtils.playAnimation(this.animation, AnimationName.Pull_Card, duration);
+        try {
+            return await this.playAnimationWithAsyncExecute(AnimationName.PullDominoCard, duration);
+        } catch (error) {
+            warn("Error in play anim pullDominoCard:", error);
+            throw error;
+        }
     }
 
     async drawDominoCard(duration: number) {
-        return AnimationUtils.playAnimation(this.animation, AnimationName.Draw_Card, duration);
+        try {
+            return await this.playAnimationWithAsyncExecute(AnimationName.DrawDominoCard, duration);
+        } catch (error) {
+            warn("Error in play anim drawDominoCard:", error);
+            throw error;
+        }
     }
 
-    async openDominoCard() {
+    async openDominoCardAnim() {
         if (this.animation) {
-            await AnimationUtils.playAnimation(this.animation, AnimationName.Open_Card);
-        } else {
-            this.faceUp();
+            try {
+                return await this.playAnimationWithAsyncExecute(AnimationName.OpenDominoCard, 0);
+            } catch (error) {
+                warn("An error occurred when play anim open domino", error);
+                return;
+            }
         }
     }
 
