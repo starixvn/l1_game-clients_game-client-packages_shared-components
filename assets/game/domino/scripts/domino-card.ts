@@ -71,11 +71,11 @@ export class DominoCard extends Component {
         }
     }
 
-    async openDominoCardAnim() {
+    async openDominoCardAnim(duration: number) {
         let result;
         if (this.animation) {
             try {
-                result = await this.playAnimationWithAsyncExecute(AnimationName.OpenDominoCard, 0);
+                result = await this.playAnimationWithAsyncExecute(AnimationName.OpenDominoCard, duration);
             } catch (error) {
                 warn("An error occurred when play anim open domino", error);
             }
