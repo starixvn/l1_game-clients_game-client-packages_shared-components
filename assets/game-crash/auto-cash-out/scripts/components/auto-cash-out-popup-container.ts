@@ -13,7 +13,7 @@ export class AutoCashoutPopupContainer extends NodeContainer {
 
     @render(AutoCashOutPopupStore, (store) => store.enable)
     openPopup(enable: boolean) {
-        this.node.active = enable;
+        this.nodeOverlay.active = enable;
         if (this.node.children.length > 1) {
             return;
         }
@@ -21,8 +21,8 @@ export class AutoCashoutPopupContainer extends NodeContainer {
         this.createNode();
     }
 
-    @handle(AutoCashOutPopupHandler, (handle) => handle.togglePopup(false))
+    @handle(AutoCashOutPopupHandler, (handle, enable: boolean) => handle.togglePopup(enable))
     closePopup() {
-        this.node.active = false;
+        return false;
     }
 }

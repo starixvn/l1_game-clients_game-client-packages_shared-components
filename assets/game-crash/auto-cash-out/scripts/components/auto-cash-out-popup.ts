@@ -83,4 +83,9 @@ export class AutoCashoutPopup extends ObserverComponent {
     clear() {
         return "0";
     }
+
+    @render(AutoCashOutPopupStore, (store) => store.enable)
+    showHideAutoCashoutPopup(enable: boolean) {
+        this.node.active = enable;
+    }
 }
