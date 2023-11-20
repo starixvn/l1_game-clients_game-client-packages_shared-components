@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Layers, Node, tween, UITransform, v3 } from "cc";
+import { CCFloat, Layers, Node, UITransform, _decorator, instantiate, tween, v3 } from "cc";
 import Observer from "observer";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
@@ -56,6 +56,9 @@ export class ChipFlying extends ObserverComponent {
 
     @property(Node)
     nodeBetItems: Node = null;
+
+    @property(CCFloat)
+    delayAnimPayChips = 1.25;
 
     slidingChip: SlidingChip = null;
     aroundTablePlayers: AroundTablePlayers = null;
@@ -144,7 +147,7 @@ export class ChipFlying extends ObserverComponent {
         } else {
             this.isStartRunAnimPayChips = true;
             tween(this.node)
-                .delay(this.chipDelayFlyingTime)
+                .delay(this.delayAnimPayChips)
                 .call(() => {
                     ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems, this);
                 })
