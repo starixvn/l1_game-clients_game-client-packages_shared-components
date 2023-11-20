@@ -45,7 +45,7 @@ export class LeaderBoardItem extends Component {
             this.updateCashOut(halfCashOut, false);
         } else {
             this.lblMultiplier.string = "-";
-            this.lblCashout.string = betAmount.toString();
+            this.lblCashout.string = FormatUtils.numberWithCommas(betAmount, 2);
         }
     }
 
