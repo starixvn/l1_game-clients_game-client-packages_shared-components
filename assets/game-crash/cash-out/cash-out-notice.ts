@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label } from "cc";
+import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../../../../extensions/shared-components/assets/shared/utils";
@@ -13,6 +13,9 @@ const { GameCrash, Rounds } = gc;
 export class CashOutNotice extends ObserverComponent {
     @property(Label)
     lblCashOut: Label = null;
+
+    @property({ type: Node })
+    othersNoticeNode: Node[] = [];
 
     onLoad(): void {
         super.onLoad();
@@ -28,6 +31,7 @@ export class CashOutNotice extends ObserverComponent {
     showNotice(isShow: boolean) {
         if (isShow) {
             this.node.active = true;
+            ComponentUtils.hideOtherNotices(this.othersNoticeNode);
             ComponentUtils.autoDisappear(this.node, false);
             setTimeout(() => {
                 this.showHideNotice(true);

@@ -1,4 +1,4 @@
-import { Label, Prefab, Sprite } from "cc";
+import { Label, Sprite } from "cc";
 
 import { AutoPlayButton } from "../../../../assets/game-crash/auto-play/scripts/auto-play-button";
 
@@ -9,7 +9,6 @@ describe("AutoPlayPopup", () => {
         comp = new AutoPlayButton();
         comp.lblNoOfRound = new Label();
         comp.sprIconAutoPlay = new Sprite();
-        comp.prfAutoPlayPopup = new Prefab();
     });
     describe("setNoOfRound", () => {
         it("should assign label noOfRound is rounds", () => {

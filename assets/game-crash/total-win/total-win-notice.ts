@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label } from "cc";
+import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../../../../extensions/shared-components/assets/shared/utils";
@@ -13,6 +13,9 @@ export class TotalWinNotice extends ObserverComponent {
     @property(Label)
     lblWinAmount: Label = null;
 
+    @property({ type: Node })
+    othersNoticeNode: Node[] = [];
+
     onLoad(): void {
         super.onLoad();
         this.node.active = false;
@@ -21,6 +24,7 @@ export class TotalWinNotice extends ObserverComponent {
     @render(Settlements.SettlementStatusStore, (store) => store.settlementStatus)
     updateCashoutAmount(settlementStatus: any) {
         if (settlementStatus?.win) {
+            ComponentUtils.hideOtherNotices(this.othersNoticeNode);
             this.showNotice(true);
             ComponentUtils.autoDisappear(this.node, false);
             this.updateTotalWinAmount(settlementStatus?.bet);

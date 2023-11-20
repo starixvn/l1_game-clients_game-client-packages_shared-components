@@ -45,4 +45,10 @@ export namespace ComponentUtils {
             })
             .start();
     };
+
+    export const hideOtherNotices = (nodes: Node[]) => {
+        nodes.forEach((node) => {
+            node.active = false;
+        });
+    };
 }
