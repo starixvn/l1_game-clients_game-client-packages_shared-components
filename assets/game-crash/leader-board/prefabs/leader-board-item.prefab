@@ -40,7 +40,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 95.102,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -68,7 +68,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Node",
+    "_name": "container",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -97,7 +97,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -15,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -125,7 +125,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "half-cashOut",
+    "_name": "cashOut",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -154,7 +154,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": -15,
       "z": 0
     },
     "_lrot": {
@@ -706,7 +706,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "cashOut-container",
+    "_name": "half-cashOut-container",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -867,7 +867,7 @@
     "_string": "",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
-    "_actualFontSize": 26,
+    "_actualFontSize": 14,
     "_fontSize": 13,
     "_fontFamily": "Arial",
     "_lineHeight": 15,
@@ -1028,7 +1028,7 @@
     "_string": "10.38X",
     "_horizontalAlign": 2,
     "_verticalAlign": 1,
-    "_actualFontSize": 22,
+    "_actualFontSize": 14,
     "_fontSize": 13,
     "_fontFamily": "Arial",
     "_lineHeight": 15,
@@ -1189,7 +1189,7 @@
     "_string": "100",
     "_horizontalAlign": 2,
     "_verticalAlign": 1,
-    "_actualFontSize": 26,
+    "_actualFontSize": 14,
     "_fontSize": 13,
     "_fontFamily": "Arial",
     "_lineHeight": 15,
@@ -1305,7 +1305,7 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0.5
+      "y": 1
     },
     "_id": ""
   },
@@ -1408,19 +1408,19 @@
       "__id__": 7
     },
     "lblMultiplierWhenHalfCashOut": {
-      "__id__": 15
+      "__id__": 43
     },
     "lblHalfCashout": {
-      "__id__": 23
+      "__id__": 51
     },
     "nodeCashOutContainer": {
       "__id__": 31
     },
     "lblMultiplier": {
-      "__id__": 43
+      "__id__": 15
     },
     "lblCashout": {
-      "__id__": 51
+      "__id__": 23
     },
     "_id": ""
   },

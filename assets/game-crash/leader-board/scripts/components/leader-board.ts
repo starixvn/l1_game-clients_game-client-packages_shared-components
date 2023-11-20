@@ -49,7 +49,7 @@ export class LeaderBoard extends ObserverComponent {
     };
     private otherPlayerTween: Tween<Widget> = null;
     private otherPlayerWidget: Widget = null;
-    private isEpandedBoard = true;
+    private isExpandedBoard = true;
 
     onLoad() {
         super.onLoad();
@@ -80,21 +80,19 @@ export class LeaderBoard extends ObserverComponent {
     @render(gc.GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
     private updateOtherPlayerCashout(otherPlayer) {
         const { playerId, name, cashOut, halfCashOut } = otherPlayer;
-        const data: ILeaderBoardItemData = {
-            playerId: playerId,
-            name: this.encryptedName(name),
-            cashOut: cashOut ?? null,
-            halfCashOut: halfCashOut ?? null,
-        };
+        const player = this.otherPlayerList.find((player) => player.playerId === playerId);
+        halfCashOut && (player.halfCashOut = halfCashOut);
+        cashOut && (player.cashOut = cashOut);
+        player.name = this.encryptedName(name);
 
         const playerNode = this.nodeContent.getChildByName(otherPlayer.playerId);
         if (playerNode) {
             const comp = playerNode?.getComponent(LeaderBoardItem);
-            comp?.setData(data);
+            comp?.setData(player);
         } else {
             const node = this.createBoardItem(playerId);
             const compleaderBoardItem = node.getComponent(LeaderBoardItem);
-            compleaderBoardItem?.setData(data);
+            compleaderBoardItem?.setData(player);
         }
     }
 
@@ -105,6 +103,7 @@ export class LeaderBoard extends ObserverComponent {
         if (this.mainPlayer.halfCashOut) {
             this.cpnMainPlayer.nodeCashOutContainer.active = true;
             this.scrollOtherPlayer(this.itemHeight * 2);
+            !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight + this.itemHeight);
         }
     }
 
@@ -164,6 +163,7 @@ export class LeaderBoard extends ObserverComponent {
         if (startPlacingBet) {
             this.resetMaiPlayer();
             this.resetOtherPlayers();
+            !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight);
         }
     }
 
@@ -203,16 +203,16 @@ export class LeaderBoard extends ObserverComponent {
     }
 
     onClickCollapseButton(e) {
-        this.collapseAndExpandBoard();
-        this.nodeArrowIcon.eulerAngles = this.isEpandedBoard ? v3(0, 0, 180) : v3(0, 0, 0);
-        this.isEpandedBoard = !this.isEpandedBoard;
+        const boardHeight = this.isExpandedBoard ? this.collapsedBoardHeight : this.expandedBoardHeight;
+        this.collapseAndExpandBoard(boardHeight);
+        this.nodeArrowIcon.eulerAngles = this.isExpandedBoard ? v3(0, 0, 180) : v3(0, 0, 0);
+        this.isExpandedBoard = !this.isExpandedBoard;
     }
 
-    private collapseAndExpandBoard() {
+    private collapseAndExpandBoard(boardHeight: number) {
         const leaderBoardSize = this.node.getComponent(UITransform);
         const leaderBoardMaskWidget = this.nodeLeaderBoardMask.getComponent(Widget);
         const arrowIconWidget = this.nodeArrowIcon.parent.getComponent(Widget);
-        const boardHeight = this.isEpandedBoard ? this.collapsedBoardHeight : this.expandedBoardHeight;
         const scrollView = this.nodeOtherPLayerContainer.parent.getComponent(ScrollView);
 
         tween(leaderBoardSize)
@@ -227,7 +227,7 @@ export class LeaderBoard extends ObserverComponent {
                 }
             )
             .call(() => {
-                scrollView.enabled = this.isEpandedBoard;
+                scrollView.enabled = this.isExpandedBoard;
             })
             .start();
     }

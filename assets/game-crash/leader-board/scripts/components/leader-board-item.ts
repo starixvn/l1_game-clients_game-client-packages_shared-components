@@ -38,12 +38,14 @@ export class LeaderBoardItem extends Component {
 
         if ((halfCashOut && !cashOut) || (cashOut && !halfCashOut)) {
             const value = halfCashOut || cashOut;
-            this.updateHalfCashout(value);
+            this.updateCashOut(value, true);
         } else if (halfCashOut && cashOut) {
-            this.updateFullCashOut(cashOut);
+            this.nodeCashOutContainer.active = true;
+            this.updateCashOut(cashOut, true);
+            this.updateCashOut(halfCashOut, false);
         } else {
-            this.lblMultiplierWhenHalfCashOut.string = "-";
-            this.lblHalfCashout.string = betAmount.toString();
+            this.lblMultiplier.string = "-";
+            this.lblCashout.string = betAmount.toString();
         }
     }
 
@@ -51,14 +53,10 @@ export class LeaderBoardItem extends Component {
         this.lblHalfCashout.string = "-";
     }
 
-    private updateHalfCashout(data: ICashOutData) {
-        this.lblMultiplierWhenHalfCashOut.string = `${FormatUtils.numberWithCommas(data.multiplier, 2, false)}x`;
-        this.lblHalfCashout.string = FormatUtils.numberWithCommas(data.win, 2);
-    }
-
-    private updateFullCashOut(data: ICashOutData) {
-        this.nodeCashOutContainer.active = true;
-        this.lblMultiplier.string = `${FormatUtils.numberWithCommas(data.multiplier, 2, false)}x`;
-        this.lblCashout.string = FormatUtils.numberWithCommas(data.win, 2);
+    private updateCashOut(data: ICashOutData, isFirstRow: boolean) {
+        const lblMultiplier = isFirstRow ? this.lblMultiplier : this.lblMultiplierWhenHalfCashOut;
+        const lblCashout = isFirstRow ? this.lblCashout : this.lblHalfCashout;
+        lblMultiplier.string = `${FormatUtils.numberWithCommas(data.multiplier, 2, false)}x`;
+        lblCashout.string = FormatUtils.numberWithCommas(data.win, 2);
     }
 }
