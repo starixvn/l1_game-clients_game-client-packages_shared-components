@@ -5,7 +5,7 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 
 const { ccclass, property } = _decorator;
-const { render } = Observer;
+const { render, handle } = Observer;
 const { FormatUtils, GameCrash } = gc;
 
 @ccclass("current_multiplier")
@@ -28,14 +28,24 @@ export class CurrentMultiplier extends ObserverComponent {
     private setCurrentMultiplier(multiplier: number) {
         this.setVisibility(true);
         this.setCurrMultiplierValue(multiplier);
-        this.showHideBottomText(false);
+    }
+
+    @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
+    updateBottomText(isCrashed: boolean) {
+        this.showHideBottomText(isCrashed);
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.isPlacingBet)
     hideCurrentMultiplier(isPlacingBet: boolean) {
         if (isPlacingBet) {
             this.setVisibility(false);
+            this.updateIsCrashed(false);
         }
+    }
+
+    @handle(GameCrash.CrashMultiplier.MultiplierHandlers, (handle, isCrashed: boolean) => handle.handleIsCrashed(isCrashed))
+    updateIsCrashed(isCrashed: boolean) {
+        return isCrashed;
     }
 
     setVisibility(status: boolean) {
