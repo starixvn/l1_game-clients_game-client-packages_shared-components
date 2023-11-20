@@ -1,4 +1,4 @@
-import { Label, Node, Prefab, Sprite, _decorator } from "cc";
+import { Label, Node, Sprite, _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { AutoPlayHandler } from "./handlers/auto-play-handler";
@@ -13,9 +13,6 @@ export class AutoPlayButton extends ObserverComponent {
 
     @property(Sprite)
     sprIconAutoPlay: Sprite = null;
-
-    @property(Prefab)
-    prfAutoPlayPopup: Prefab = null;
 
     @property(Node)
     nodeTextAutoPlay: Node = null;

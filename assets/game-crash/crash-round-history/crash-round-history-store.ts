@@ -26,6 +26,9 @@ export class CrashRoundHistoryStore {
         let lastRoundId = this.roundHistoryStore.histories[0]?.roundId;
         if (lastRoundId === this.lastRound.roundId) {
             roundHistoy = this.roundHistoryStore.histories as CrashRoundHistory[];
+            if (!this.settlementStore.currentFinish) {
+                roundHistoy = [this.lastRound, ...(this.roundHistoryStore.histories as CrashRoundHistory[])];
+            }
         } else {
             roundHistoy = [this.lastRound, ...(this.roundHistoryStore.histories as CrashRoundHistory[])];
         }
@@ -57,6 +60,7 @@ export class CrashRoundHistoryStore {
             }
         }
         this._lastRound.roundId = this.roundStore.clientRoundId;
+
         this.settlementStore.currentFinish && (this._lastRound.result = this.settlementStore.currentFinish.result);
 
         return {

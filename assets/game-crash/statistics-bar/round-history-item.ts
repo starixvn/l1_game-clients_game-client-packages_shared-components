@@ -75,7 +75,10 @@ export class RoundHistoryItem extends ObserverComponent {
     }
 
     checkCrashedGame() {
-        return this.roundInfo.md5Result.hashValue && this.roundInfo.md5Result.rawValue;
+        if (this.roundInfo.md5Result.hashValue && this.roundInfo.md5Result.rawValue) {
+            return true;
+        }
+        return false;
     }
 
     @handle(Md5PopupHandler, (handle, info: { isOpenPopupMd5: boolean; roundId: number }) => handle.handleMd5Popup(info))
