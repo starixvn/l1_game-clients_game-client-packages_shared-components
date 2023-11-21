@@ -16,12 +16,13 @@ export namespace AnimationUtils {
         return fadeTo(node, duration, opacity);
     };
 
+    export const fadeOutAndHide = async (node: Node, duration: number, opacity = 1) => {
+        await fadeTo(node, duration, opacity);
+        node.active = false;
+    };
+
     export const fadeTo = (node: Node, duration: number, opacity: number) => {
         const uiOpacity = getUiOpacity(node);
-        if (uiOpacity) {
-            tween(uiOpacity).to(duration, { opacity: opacity }).start();
-        }
-
         return new Promise<void>((resolve) => {
             if (uiOpacity) {
                 tween(uiOpacity)
