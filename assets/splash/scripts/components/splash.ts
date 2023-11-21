@@ -100,6 +100,7 @@ export default class Splash extends Component {
         this.cpnMessage.reset();
         this.cpnMessage.setMessage(message);
         this.gameName && (this.gameName.node.active = false);
+        console.log("error", message);
     }
 
     updateProgressBar(progress: number) {
@@ -120,6 +121,7 @@ export default class Splash extends Component {
             (error) => {
                 if (error) {
                     sentryLogger.logError(error);
+                    console.log(JSON.stringify(error));
                 } else {
                     director.loadScene(sceneName);
                 }
