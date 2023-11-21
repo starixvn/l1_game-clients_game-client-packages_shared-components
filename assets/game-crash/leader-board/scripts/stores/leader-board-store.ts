@@ -2,33 +2,28 @@ import gc from "@sg/game-client-base";
 import inversify from "inversify";
 import mobx from "mobx";
 
-import { ILeaderBoardItemData } from "../leader-board-data";
-
 const { injectable, inject } = inversify;
+
+const { Player, Bet, GameCrash } = gc;
 
 @injectable()
 export class LeaderBoardStore {
-    @inject(gc.Player.MainPlayerStore) private readonly mainPlayerStore: gc.Player.MainPlayerStore;
-    @inject(gc.Bet.BetStore) private readonly betStore: gc.Bet.BetStore;
-    @inject(gc.GameCrash.CrashCashOut.CrashCashoutStore) private readonly crashCashoutStore: gc.GameCrash.CrashCashOut.CrashCashoutStore;
+    @inject(Player.MainPlayerStore) private readonly mainPlayerStore: gc.Player.MainPlayerStore;
+    @inject(Bet.BetStore) private readonly betStore: gc.Bet.BetStore;
+    @inject(GameCrash.CrashCashOut.CrashCashoutStore) private readonly crashCashoutStore: gc.GameCrash.CrashCashOut.CrashCashoutStore;
 
-    private _otherPlayerList: ILeaderBoardItemData[] = [];
     private _isShowMainPlayerInfo = false;
 
-    set otherPlayerList(otherPlayers: ILeaderBoardItemData[]) {
-        this._otherPlayerList = otherPlayers;
+    constructor() {
+        mobx.makeAutoObservable(this);
     }
 
-    get otherPlayerList(): ILeaderBoardItemData[] {
-        return this._otherPlayerList.sort((a, b) => b.betAmount - a.betAmount);
-    }
-
-    get mainPlayer(): ILeaderBoardItemData {
+    get mainPlayer(): gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer {
         const bet = this.betStore.lastReceivedBet?.value;
         return {
             playerId: null,
             name: this.mainPlayerStore.name,
-            betAmount: bet !== -1 ? bet : null,
+            amount: bet !== -1 ? bet : null,
             cashOut: this.crashCashoutStore.cashOut,
             halfCashOut: this.crashCashoutStore.halfCashOut,
         };
@@ -40,9 +35,5 @@ export class LeaderBoardStore {
 
     get isShowMainPlayerInfo(): boolean {
         return this._isShowMainPlayerInfo;
-    }
-
-    constructor() {
-        mobx.makeAutoObservable(this);
     }
 }

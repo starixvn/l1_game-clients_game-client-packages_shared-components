@@ -10,9 +10,7 @@ export class LeaderBoardHandler implements gc.Shared.IHandler<number> {
     @inject(gc.Bet.BetStore) private readonly betStore: gc.Bet.BetStore;
     @inject(gc.GameCrash.CrashCashOut.CrashCashoutStore) private readonly crashCashoutStore: gc.GameCrash.CrashCashOut.CrashCashoutStore;
 
-    handle(data) {
-        this.leaderBoardStore.otherPlayerList = data;
-    }
+    handle(data) {}
 
     resetMainPlayer() {
         this.betStore.lastReceivedBet = { value: -1 };
@@ -21,7 +19,7 @@ export class LeaderBoardHandler implements gc.Shared.IHandler<number> {
         this.leaderBoardStore.isShowMainPlayerInfo = false;
     }
 
-    showMainPlayerInfo() {
+    handleMainPlayerDisplay() {
         this.leaderBoardStore.isShowMainPlayerInfo = true;
     }
 }

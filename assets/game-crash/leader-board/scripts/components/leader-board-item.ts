@@ -1,8 +1,6 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Color, Component, Label, Node } from "cc";
 
-import { ICashOutData, ILeaderBoardItemData } from "../leader-board-data";
-
 const { ccclass, property } = _decorator;
 const { FormatUtils } = gc;
 @ccclass
@@ -29,11 +27,11 @@ export class LeaderBoardItem extends Component {
         this.nodeCashOutContainer.active = false;
     }
 
-    setData(data: ILeaderBoardItemData, isMainPlayer = false) {
-        const { name, cashOut, halfCashOut, betAmount } = data;
+    setData(data: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer, isMainPlayer = false) {
+        const { name, cashOut, halfCashOut, amount } = data;
 
         this.nodeCashOutContainer.active = false;
-        this.lblName.string = name;
+        this.lblName.string = isMainPlayer ? name : this.encryptedName(name);
         isMainPlayer && (this.lblName.color = new Color().fromHEX("#52faf8"));
 
         if ((halfCashOut && !cashOut) || (cashOut && !halfCashOut)) {
@@ -45,15 +43,19 @@ export class LeaderBoardItem extends Component {
             this.updateCashOut(halfCashOut, false);
         } else {
             this.lblMultiplier.string = "-";
-            this.lblCashout.string = FormatUtils.numberWithCommas(betAmount, 2);
+            this.lblCashout.string = FormatUtils.numberWithCommas(amount, 2);
         }
+    }
+
+    private encryptedName(name: string): string {
+        return `${name.substring(0, 1)}***${name.substring(name.length - 3, name.length)}`;
     }
 
     setCashOutEmpty() {
         this.lblHalfCashout.string = "-";
     }
 
-    private updateCashOut(data: ICashOutData, isFirstRow: boolean) {
+    private updateCashOut(data: gc.GameCrash.GameCrashServiceMessage.CashOutReceive, isFirstRow: boolean) {
         const lblMultiplier = isFirstRow ? this.lblMultiplier : this.lblMultiplierWhenHalfCashOut;
         const lblCashout = isFirstRow ? this.lblCashout : this.lblHalfCashout;
         lblMultiplier.string = `${FormatUtils.numberWithCommas(data.multiplier, 2, false)}x`;
