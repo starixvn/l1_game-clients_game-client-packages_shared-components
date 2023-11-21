@@ -1,4 +1,4 @@
-import { Label, Sprite } from "cc";
+import { Label, Node, Sprite } from "cc";
 
 import { AutoPlayButton } from "../../../../assets/game-crash/auto-play/scripts/auto-play-button";
 
@@ -9,6 +9,8 @@ describe("AutoPlayPopup", () => {
         comp = new AutoPlayButton();
         comp.lblNoOfRound = new Label();
         comp.sprIconAutoPlay = new Sprite();
+        comp.nodeTextAutoPlay = new Node();
+        comp.nodeTextStopAutoPlay = new Node();
     });
     describe("setNoOfRound", () => {
         it("should assign label noOfRound is rounds", () => {
@@ -33,7 +35,9 @@ describe("AutoPlayPopup", () => {
 
             //Assert
             expect(comp.lblNoOfRound.node.active).toEqual(true);
+            expect(comp.nodeTextStopAutoPlay.node.active).toEqual(true);
             expect(comp.sprIconAutoPlay.node.active).toEqual(false);
+            expect(comp.nodeTextAutoPlay.node.active).toEqual(false);
         });
 
         it("should stop auto play when isAutoPlay is false", () => {
@@ -45,7 +49,9 @@ describe("AutoPlayPopup", () => {
 
             //Assert
             expect(comp.lblNoOfRound.node.active).toEqual(false);
+            expect(comp.nodeTextStopAutoPlay.node.active).toEqual(false);
             expect(comp.sprIconAutoPlay.node.active).toEqual(true);
+            expect(comp.nodeTextAutoPlay.node.active).toEqual(true);
         });
     });
 });
