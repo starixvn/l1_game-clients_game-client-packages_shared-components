@@ -3,7 +3,9 @@ import { _decorator, instantiate, Node, Prefab, ScrollView, Tween, tween, UITran
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { LeaderBoardHandler } from "../handlers/leader-board-handlers";
 import { ILeaderBoardItemData } from "../leader-board-data";
+import { LeaderBoardStore } from "../stores/leader-board-store";
 import { LeaderBoardItem } from "./leader-board-item";
 
 const { ccclass, property } = _decorator;
@@ -54,8 +56,8 @@ export class LeaderBoard extends ObserverComponent {
     onLoad() {
         super.onLoad();
         this.otherPlayerWidget = this.nodeOtherPLayerContainer.getComponent(Widget);
+        this.resetMainPlayer();
         this.resetOtherPlayers();
-        this.resetMaiPlayer();
     }
 
     private resetOtherPlayers() {
@@ -63,18 +65,6 @@ export class LeaderBoard extends ObserverComponent {
         this.otherPlayerList = [];
         this.nodeContent.removeAllChildren();
         this.otherPlayersScrollView.scrollToTop(0.1);
-    }
-
-    private resetMaiPlayer() {
-        this.mainPlayer.betAmount = null;
-        this.mainPlayer.cashOut = null;
-        this.mainPlayer.halfCashOut = null;
-
-        if (!this.cpnMainPlayer) {
-            return;
-        }
-        this.cpnMainPlayer.node.active = false;
-        this.cpnMainPlayer.nodeCashOutContainer.active = true;
     }
 
     @render(gc.GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
@@ -94,23 +84,6 @@ export class LeaderBoard extends ObserverComponent {
             const compleaderBoardItem = node.getComponent(LeaderBoardItem);
             compleaderBoardItem?.setData(player);
         }
-    }
-
-    @render(gc.GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })
-    private updateMainPlayerCashout(cashOut) {
-        this.mainPlayer.cashOut = cashOut;
-        this.cpnMainPlayer?.setData(this.mainPlayer, true);
-        if (this.mainPlayer.halfCashOut) {
-            this.cpnMainPlayer.nodeCashOutContainer.active = true;
-            this.scrollOtherPlayer(this.itemHeight * 2);
-            !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight + this.itemHeight);
-        }
-    }
-
-    @render(gc.GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.halfCashOut, { fireImmediately: false })
-    private updateMainPlayerHalfCashout(halfCashOut) {
-        this.mainPlayer.halfCashOut = halfCashOut;
-        this.cpnMainPlayer?.setData(this.mainPlayer, true);
     }
 
     private createBoardItem(playerId: string): Node {
@@ -142,26 +115,53 @@ export class LeaderBoard extends ObserverComponent {
         });
     }
 
-    @render(gc.Player.MainPlayerStore, (store) => store.name)
-    private updateMainPlayerName(name: string) {
-        this.mainPlayer["name"] = name;
+    @render(gc.GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })
+    private updateMainPlayerCashout(cashOut) {
+        this.mainPlayer.cashOut = cashOut;
+        this.cpnMainPlayer?.setData(this.mainPlayer, true);
+        if (this.mainPlayer.halfCashOut) {
+            this.cpnMainPlayer.nodeCashOutContainer.active = true;
+            this.scrollOtherPlayer(this.itemHeight * 2);
+            !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight + this.itemHeight);
+        }
     }
 
-    @render(gc.Bet.BetStore, (store) => store.lastReceivedBet, { fireImmediately: false })
-    private showMainPlayer(lastReceivedBet) {
-        if (lastReceivedBet.value === -1) {
-            return;
-        }
-        this.mainPlayer.betAmount = lastReceivedBet.value;
-        this.cpnMainPlayer.node.active = true;
+    @render(gc.GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.halfCashOut, { fireImmediately: false })
+    private updateMainPlayerHalfCashout(halfCashOut) {
+        this.mainPlayer.halfCashOut = halfCashOut;
         this.cpnMainPlayer?.setData(this.mainPlayer, true);
+    }
+
+    @handle(LeaderBoardHandler, (handler) => handler.showMainPlayerInfo())
+    private showMainPlayerInfo() {}
+
+    @handle(LeaderBoardHandler, (handler) => handler.resetMainPlayer())
+    private resetMainPlayer() {}
+
+    @render(LeaderBoardStore, (store) => store.isShowMainPlayerInfo)
+    setMainPlayerVisibility(isShowMainPlayerInfo: boolean) {
+        this.cpnMainPlayer.node.active = isShowMainPlayerInfo;
+    }
+
+    @render(LeaderBoardStore, (store) => store.mainPlayer, { fireImmediately: false })
+    updateMainPlayer(mainPlayer: ILeaderBoardItemData) {
+        const { betAmount, halfCashOut, cashOut } = mainPlayer;
+
+        betAmount && this.showMainPlayerInfo();
+        this.cpnMainPlayer?.setData(mainPlayer, true);
         this.scrollOtherPlayer(this.itemHeight);
+
+        if (halfCashOut && cashOut) {
+            this.cpnMainPlayer.nodeCashOutContainer.active = true;
+            this.scrollOtherPlayer(this.itemHeight * 2);
+            !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight + this.itemHeight);
+        }
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.startPlacingBet)
     private resetLeaderBoard(startPlacingBet: boolean) {
         if (startPlacingBet) {
-            this.resetMaiPlayer();
+            this.resetMainPlayer();
             this.resetOtherPlayers();
             !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight);
         }
