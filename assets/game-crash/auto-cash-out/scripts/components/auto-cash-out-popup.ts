@@ -6,7 +6,7 @@ import { PopupsHandlers } from "../../../popups/popups-handlers";
 import AutoCashOutHandler from "../handlers/auto-cash-out-handler";
 import AutoCashOutPopupHandler from "../handlers/auto-cash-out-popup-handler";
 import AutoCashOutPopupStore from "../stores/auto-cash-out-popup-store";
-
+const { FormatUtils } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -55,12 +55,12 @@ export class AutoCashoutPopup extends ObserverComponent {
 
     @render(AutoCashOutPopupStore, (store) => store.multiplier)
     updateMultiplierString(multiplier: string) {
-        this.multiplierLabel.string = multiplier;
+        this.multiplierLabel.string = FormatUtils.numberWithCommas(multiplier, 2);
     }
 
     @render(gc.GameCrash.CrashGameConfigs.CrashGameConfigStore, (store) => store.maxMultiplier)
     updateMultiplierRangeLabel(maxMultiplier: number) {
-        this.multiplierRangeLabel.string = `1.01x - ${maxMultiplier.toFixed(2)}x`;
+        this.multiplierRangeLabel.string = `1.01x - ${FormatUtils.numberWithCommas(maxMultiplier, 2)}x`;
     }
 
     @render(AutoCashOutPopupStore, (store) => store.isValid)

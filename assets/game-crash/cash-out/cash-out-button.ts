@@ -10,7 +10,7 @@ import { CashOutComponent } from "./cash-out-component";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
-const { GameCrash, Rounds, Bet } = gc;
+const { GameCrash, Rounds, Bet, FormatUtils } = gc;
 
 @ccclass
 export class CashOutButton extends ObserverComponent {
@@ -33,7 +33,7 @@ export class CashOutButton extends ObserverComponent {
     updateCashOut(multiplier: number) {
         if (!this.isCashedOut) {
             let cashOutValue = multiplier * this.bet;
-            this.lblCashOut.string = cashOutValue.toFixed(2);
+            this.lblCashOut.string = FormatUtils.numberWithCommas(cashOutValue, 2);
         }
     }
 

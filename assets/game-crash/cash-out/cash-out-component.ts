@@ -1,4 +1,6 @@
+import gc from "@sg/game-client-base";
 import { Label, Node, Sprite } from "cc";
+const { FormatUtils } = gc;
 export namespace CashOutComponent {
     export const showHideNode = (node: Node, isRocketFlyWithCashout: boolean, isShowPlaceBetNextRound: boolean) => {
         if (isRocketFlyWithCashout && !isShowPlaceBetNextRound) {
@@ -26,6 +28,6 @@ export namespace CashOutComponent {
     };
 
     export const updateValueCashOut = (cashOutValue: number, lblCashOut: Label) => {
-        lblCashOut.string = cashOutValue.toString();
+        lblCashOut.string = FormatUtils.numberWithCommas(cashOutValue, 2);
     };
 }

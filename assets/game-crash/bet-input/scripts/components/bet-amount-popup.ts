@@ -7,7 +7,7 @@ import { PopupsHandlers } from "../../../popups/popups-handlers";
 import { BetInputHandler } from "../handlers/bet-input-handlers";
 import { BetInputStore } from "../stores/bet-input-store";
 import { BetAmountItem } from "./bet-amount-item";
-
+const { FormatUtils } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -47,7 +47,7 @@ export class BetAmountPopup extends ObserverComponent {
         maxBet: store.maxBet,
     }))
     private updateBetRange({ minBet, maxBet }) {
-        this.lblBetRange.string = `${minBet} - ${maxBet}`;
+        this.lblBetRange.string = `${FormatUtils.numberWithCommas(minBet, 2)} - ${FormatUtils.numberWithCommas(maxBet, 2)}`;
     }
 
     @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
@@ -61,7 +61,7 @@ export class BetAmountPopup extends ObserverComponent {
 
     @render(BetInputStore, (store) => store.betAmountTemp)
     private updateBetAmount(amount: number) {
-        this.lblBetAmount.string = `${amount}`;
+        this.lblBetAmount.string = `${FormatUtils.numberWithCommas(amount, 2)}`;
         this.checkConfirmBtnStatus(amount > 0);
     }
 

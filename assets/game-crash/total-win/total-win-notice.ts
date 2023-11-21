@@ -6,7 +6,7 @@ import { ComponentUtils } from "../../../../../extensions/shared-components/asse
 const { ccclass, property } = _decorator;
 const { render } = Observer;
 
-const { Settlements } = gc;
+const { Settlements, FormatUtils } = gc;
 
 @ccclass
 export class TotalWinNotice extends ObserverComponent {
@@ -36,6 +36,6 @@ export class TotalWinNotice extends ObserverComponent {
     }
 
     updateTotalWinAmount(amount: number) {
-        this.lblWinAmount.string = amount.toString();
+        this.lblWinAmount.string = FormatUtils.numberWithCommas(amount, 2);
     }
 }

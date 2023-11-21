@@ -5,6 +5,7 @@ import { ObserverComponent } from "../../../../shared/common-components/observer
 import AutoCashOutHandler from "../handlers/auto-cash-out-handler";
 import AutoCashOutPopupHandler from "../handlers/auto-cash-out-popup-handler";
 import AutoCashOutStore from "../stores/auto-cash-out-store";
+const { FormatUtils } = gc;
 import { PlayerActionStore } from "../../../player-actions/player-action-store";
 
 const { ccclass, property } = _decorator;
@@ -46,7 +47,7 @@ export class AutoCashout extends ObserverComponent {
 
     @render(AutoCashOutStore, (store) => store.multiplier)
     updateMultiplier(multiplier: number) {
-        this.multiplierLabel.string = `${multiplier.toFixed(2)}x`;
+        this.multiplierLabel.string = `${FormatUtils.numberWithCommas(multiplier, 2)}x`;
         this.updateButtonStatus(this.decreaseButton, multiplier > 1.01);
         this.updateButtonStatus(this.increaseButton, multiplier < this.maxMultiplier);
     }

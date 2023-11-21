@@ -7,7 +7,7 @@ import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 const { ccclass, property } = _decorator;
 const { handle, render } = Observer;
 
-const { GameCrash, Rounds } = gc;
+const { GameCrash, Rounds, FormatUtils } = gc;
 
 @ccclass
 export class CashOutNotice extends ObserverComponent {
@@ -42,7 +42,7 @@ export class CashOutNotice extends ObserverComponent {
     }
 
     updateCashOutAmount(amount: number) {
-        this.lblCashOut.string = amount.toString();
+        this.lblCashOut.string = FormatUtils.numberWithCommas(amount, 2);
     }
 
     @handle(PlayerActionHandlers, (handle, flag: boolean) => handle.handleEndShowCashOutNotice(flag))
