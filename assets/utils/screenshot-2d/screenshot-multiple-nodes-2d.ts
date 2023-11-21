@@ -140,14 +140,14 @@ export class ScreenshotMultipleNodes2D extends Component {
         // });
     }
 
-    copyRenderTex(targetNode, rt) {
+    copyRenderTex(targetNode: Node, rt) {
         var width = targetNode.getComponent(UITransform).width;
         var height = targetNode.getComponent(UITransform).height;
         var worldPos = targetNode.getWorldPosition();
         const _buffer = rt.readPixels(Math.round(worldPos.x), Math.round(worldPos.y), width, height);
 
         // this.showImage(width, height, _buffer);
-        this.savaAsImage(width, height, _buffer);
+        this.savaAsImage(width, height, _buffer, targetNode.name);
     }
 
     showImage(width: number, height: number, _buffer: any) {
@@ -175,7 +175,7 @@ export class ScreenshotMultipleNodes2D extends Component {
         this.tips.string = `Screenshot Successful`;
     }
 
-    savaAsImage(width: number, height: number, arrayBuffer: any) {
+    savaAsImage(width: number, height: number, arrayBuffer: any, fileName: string) {
         console.log(`width: ${width}; height: ${height}; time:${Date.now()}`);
         this.clearCanvas();
 
@@ -200,7 +200,7 @@ export class ScreenshotMultipleNodes2D extends Component {
         }
 
         //@ts-ignore
-        this.canvas2image.saveAsPNG(this._canvas, width, height);
+        this.canvas2image.saveAsPNG(this._canvas, width, height, fileName);
         this.tips.string = `Save picture successfully`;
     }
 
