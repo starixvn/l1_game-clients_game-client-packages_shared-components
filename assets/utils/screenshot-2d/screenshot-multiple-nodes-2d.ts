@@ -59,14 +59,6 @@ export class ScreenshotMultipleNodes2D extends Component {
 
     start() {
         this.canvas2image = Canvas2Image.getInstance();
-
-        this.processItemsSequentially()
-            .then((message) => {
-                console.log(message);
-            })
-            .catch((error) => {
-                console.error("Error processing items:", error);
-            });
     }
 
     processItemsSequentially(index = 0) {
@@ -216,9 +208,13 @@ export class ScreenshotMultipleNodes2D extends Component {
         this._canvas = null;
     }
 
-    onSaveImageBtnClicked(_buffer: any) {
-        var width = this.targetNode.getComponent(UITransform).width;
-        var height = this.targetNode.getComponent(UITransform).height;
-        this.savaAsImage(width, height, _buffer);
+    onSaveImageBtnClicked() {
+        this.processItemsSequentially()
+            .then((message) => {
+                console.log(message);
+            })
+            .catch((error) => {
+                console.error("Error processing items:", error);
+            });
     }
 }
