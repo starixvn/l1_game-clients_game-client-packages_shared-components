@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { Button, Color, Label, Node, _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { PopupsHandlers } from "../../../popups/popups-handlers";
 import AutoCashOutHandler from "../handlers/auto-cash-out-handler";
 import AutoCashOutPopupHandler from "../handlers/auto-cash-out-popup-handler";
 import AutoCashOutPopupStore from "../stores/auto-cash-out-popup-store";
@@ -87,5 +88,9 @@ export class AutoCashoutPopup extends ObserverComponent {
     @render(AutoCashOutPopupStore, (store) => store.enable)
     showHideAutoCashoutPopup(enable: boolean) {
         this.node.active = enable;
+        enable && this.closeOtherPopups();
     }
+
+    @handle(PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutAutoCashOut())
+    closeOtherPopups() {}
 }

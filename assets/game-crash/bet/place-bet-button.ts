@@ -9,6 +9,7 @@ import { AutoPlayStore } from "../../../../../extensions/shared-components/asset
 import { BetInputStore } from "../../../../../extensions/shared-components/assets/game-crash/bet-input/scripts/stores/bet-input-store";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { PlayerActionStore } from "../player-actions/player-action-store";
+import { PopupsHandlers } from "../popups/popups-handlers";
 import { EarlyBetStore } from "./early-bet-store";
 
 const { handle, render } = Observer;
@@ -89,10 +90,14 @@ export default class PlaceBetButton extends ObserverComponent {
         this.valueAutoCashOut = value;
     }
     onClickPlaceBet() {
+        this.closeAllPopups();
         if (!this.isBetAccepted && !this.bgDisable.node.active) {
             this.sendBetRequest();
         }
     }
+
+    @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
+    closeAllPopups() {}
 
     @handle(GameCrash.CrashBet.CrashBetHandler, (handle, payload: { autoCashOut: number; amount: number }) => handle.handle(payload))
     sendBetRequest() {

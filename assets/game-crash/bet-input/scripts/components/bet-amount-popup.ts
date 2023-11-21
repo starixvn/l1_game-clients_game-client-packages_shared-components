@@ -3,6 +3,7 @@ import { _decorator, Button, instantiate, Label, Node, Prefab } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { PopupsHandlers } from "../../../popups/popups-handlers";
 import { BetInputHandler } from "../handlers/bet-input-handlers";
 import { BetInputStore } from "../stores/bet-input-store";
 import { BetAmountItem } from "./bet-amount-item";
@@ -52,7 +53,11 @@ export class BetAmountPopup extends ObserverComponent {
     @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
     private setBetAmountPopupVisibilty(status: boolean) {
         this.node.active = status;
+        status && this.closeOtherPopups();
     }
+
+    @handle(PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutBetInput())
+    closeOtherPopups() {}
 
     @render(BetInputStore, (store) => store.betAmountTemp)
     private updateBetAmount(amount: number) {

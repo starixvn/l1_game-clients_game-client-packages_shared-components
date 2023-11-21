@@ -1,6 +1,7 @@
 import { Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { PopupsHandlers } from "../../../popups/popups-handlers";
 import { AutoPlayHandler } from "../handlers/auto-play-handler";
 import { AutoPlayStore } from "../stores/auto-play-store";
 import { RoundNumberItem } from "./round-number-item";
@@ -38,7 +39,11 @@ export class AutoPlayPopup extends ObserverComponent {
     @render(AutoPlayStore, (store) => store.isOpenAutoPlayPopup)
     setAutoPlayPopupVisibility(status: boolean) {
         this.node.active = status;
+        status && this.closeOtherPopups();
     }
+
+    @handle(PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutAutoPlay())
+    closeOtherPopups() {}
 
     @handle(AutoPlayHandler, (handle) => handle.closeAutoPlayPopup())
     onClickclosePopup() {}

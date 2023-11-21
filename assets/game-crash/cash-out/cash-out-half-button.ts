@@ -5,6 +5,7 @@ import Observer from "observer";
 
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { PlayerActionStore } from "../player-actions/player-action-store";
+import { PopupsHandlers } from "../popups/popups-handlers";
 import { CashOutComponent } from "./cash-out-component";
 
 const { handle, render } = Observer;
@@ -66,6 +67,7 @@ export class CashOutHalfButton extends ObserverComponent {
         cashOutHandler.handle(cashOutValue, true)
     )
     onClickCashOutHalf() {
+        this.closeAllPopups();
         CashOutComponent.getCashOutValue(this.lblCashOut);
     }
 
@@ -73,4 +75,7 @@ export class CashOutHalfButton extends ObserverComponent {
     updateValueCashOut(halfCashOut) {
         CashOutComponent.updateValueCashOut(halfCashOut.win, this.lblCashOut);
     }
+
+    @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
+    closeAllPopups() {}
 }

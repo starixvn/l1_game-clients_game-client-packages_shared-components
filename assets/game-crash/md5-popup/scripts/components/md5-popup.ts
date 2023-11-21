@@ -4,6 +4,7 @@ import Observer from "observer";
 
 import { Md5CopyButton } from "../../../../game/md5/scripts/md5-copy-button";
 import { CrashRoundHistory, CrashRoundHistoryStore } from "../../../crash-round-history/crash-round-history-store";
+import { PopupsHandlers } from "../../../popups/popups-handlers";
 import { RoundHistoryItem } from "../../../statistics-bar/round-history-item";
 import { Md5PopupHandler } from "../handlers/md5-popup-handlers";
 import { Md5PopupStore } from "../stores/md5-popup-store";
@@ -56,10 +57,14 @@ export class Md5Popup extends ObserverComponent {
     showHidePopupMd5(isOpenPopupMd5: boolean) {
         if (isOpenPopupMd5) {
             this.node.active = true;
+            this.closeOtherPopups();
         } else {
             this.node.active = false;
         }
     }
+
+    @handle(PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutMd5())
+    closeOtherPopups() {}
 
     @render(CrashRoundHistoryStore, (store) => store.md5PopupData, { fireImmediately: false })
     bindDataMd5(roundItem: CrashRoundHistory) {
