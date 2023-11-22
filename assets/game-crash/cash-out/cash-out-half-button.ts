@@ -73,7 +73,7 @@ export class CashOutHalfButton extends ObserverComponent {
 
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.halfCashOut, { fireImmediately: false })
     updateValueCashOut(halfCashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
-        CashOutComponent.updateValueCashOut(halfCashOut.win, this.lblCashOut);
+        CashOutComponent.updateValueCashOut(halfCashOut?.win, this.lblCashOut);
     }
 
     @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
