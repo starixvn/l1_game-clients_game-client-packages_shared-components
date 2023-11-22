@@ -48,7 +48,7 @@ export class LeaderBoardItem extends Component {
     }
 
     setCashOutEmpty() {
-        this.lblHalfCashout.string = "-";
+        this.lblCashout.string = "-";
     }
 
     isShowHalfCashOutContainerNode(): boolean {
