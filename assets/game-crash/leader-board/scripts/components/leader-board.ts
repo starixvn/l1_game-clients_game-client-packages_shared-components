@@ -3,14 +3,12 @@ import { _decorator, instantiate, Node, Prefab, ScrollView, Tween, tween, UITran
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { LeaderBoardHandler } from "../handlers/leader-board-handlers";
-import { LeaderBoardStore } from "../stores/leader-board-store";
 import { LeaderBoardItem } from "./leader-board-item";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
-const { GameCrash, Chips, Rounds } = gc;
+const { GameCrash, Rounds } = gc;
 
 @ccclass
 export class LeaderBoard extends ObserverComponent {
@@ -61,6 +59,11 @@ export class LeaderBoard extends ObserverComponent {
         this.otherPlayersScrollView.scrollToTop(0.1);
     }
 
+    @handle(GameCrash.CrashBetList.CrashBetListHandlers, (handler) => handler.resetMainPlayer())
+    private resetMainPlayer() {
+        this.setMainPlayerVisibility(false);
+    }
+
     @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
     private updateOtherPlayerCashout(otherPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         const { playerId, cashOut, halfCashOut } = otherPlayer;
@@ -77,14 +80,7 @@ export class LeaderBoard extends ObserverComponent {
         }
     }
 
-    private createBoardItem(playerId = ""): Node {
-        const node = instantiate(this.pfbItem);
-        node.name = playerId;
-        this.nodeContent.addChild(node);
-        return node;
-    }
-
-    @render(gc.GameCrash.CrashBetList.CrashBetListStore, (store) => store.betList, { fireImmediately: false })
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.betList, { fireImmediately: false })
     updateOtherPlayers(betList: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayerList) {
         const { players } = betList;
 
@@ -115,23 +111,12 @@ export class LeaderBoard extends ObserverComponent {
         });
     }
 
-    @handle(LeaderBoardHandler, (handler) => handler.handleMainPlayerDisplay())
-    private handleMainPlayerDisplay() {}
-
-    @handle(LeaderBoardHandler, (handler) => handler.resetMainPlayer())
-    private resetMainPlayer() {}
-
-    @render(LeaderBoardStore, (store) => store.isShowMainPlayerInfo)
-    setMainPlayerVisibility(isShowMainPlayerInfo: boolean) {
-        this.cpnMainPlayer.node.active = isShowMainPlayerInfo;
-    }
-
-    @render(LeaderBoardStore, (store) => store.mainPlayer, { fireImmediately: false })
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.mainPlayer, { fireImmediately: false })
     updateMainPlayer(mainPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         const { amount, halfCashOut, cashOut } = mainPlayer;
 
         if (amount) {
-            this.handleMainPlayerDisplay();
+            this.setMainPlayerVisibility(true);
             this.cpnMainPlayer?.setData(mainPlayer, true);
             this.scrollOtherPlayer(this.itemHeight);
 
@@ -213,5 +198,16 @@ export class LeaderBoard extends ObserverComponent {
                 scrollView.enabled = this.isExpandedBoard;
             })
             .start();
+    }
+
+    private createBoardItem(playerId = ""): Node {
+        const node = instantiate(this.pfbItem);
+        node.name = playerId;
+        this.nodeContent.addChild(node);
+        return node;
+    }
+
+    private setMainPlayerVisibility(isShow: boolean) {
+        this.cpnMainPlayer.node.active = isShow;
     }
 }
