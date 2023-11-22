@@ -15,7 +15,7 @@ export class LeaderBoardItem extends Component {
     lblHalfCashout: Label = null;
 
     @property(Node)
-    nodeCashOutContainer: Node = null;
+    nodeHalfCashOutContainer: Node = null;
 
     @property(Label)
     lblMultiplier: Label = null;
@@ -24,13 +24,13 @@ export class LeaderBoardItem extends Component {
     lblCashout: Label = null;
 
     onLoad() {
-        this.nodeCashOutContainer.active = false;
+        this.setHalfCashOutVisibility(false);
     }
 
     setData(data: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer, isMainPlayer = false) {
         const { name, cashOut, halfCashOut, amount } = data;
 
-        this.nodeCashOutContainer.active = false;
+        this.nodeHalfCashOutContainer.active = false;
         this.lblName.string = isMainPlayer ? name : this.encryptedName(name);
         isMainPlayer && (this.lblName.color = new Color().fromHEX("#52faf8"));
 
@@ -38,7 +38,7 @@ export class LeaderBoardItem extends Component {
             const value = halfCashOut || cashOut;
             this.updateCashOut(value, true);
         } else if (halfCashOut && cashOut) {
-            this.nodeCashOutContainer.active = true;
+            this.setHalfCashOutVisibility(true);
             this.updateCashOut(cashOut, true);
             this.updateCashOut(halfCashOut, false);
         } else {
@@ -47,12 +47,16 @@ export class LeaderBoardItem extends Component {
         }
     }
 
-    private encryptedName(name: string): string {
-        return `${name.substring(0, 1)}***${name.substring(name.length - 3, name.length)}`;
-    }
-
     setCashOutEmpty() {
         this.lblHalfCashout.string = "-";
+    }
+
+    isShowHalfCashOutContainerNode(): boolean {
+        return this.nodeHalfCashOutContainer.active;
+    }
+
+    setHalfCashOutVisibility(status: boolean) {
+        this.nodeHalfCashOutContainer.active = status;
     }
 
     private updateCashOut(data: gc.GameCrash.GameCrashServiceMessage.CashOutReceive, isFirstRow: boolean) {
@@ -60,5 +64,9 @@ export class LeaderBoardItem extends Component {
         const lblCashout = isFirstRow ? this.lblCashout : this.lblHalfCashout;
         lblMultiplier.string = `${FormatUtils.numberWithCommas(data.multiplier, 2, false)}x`;
         lblCashout.string = FormatUtils.numberWithCommas(data.win, 2);
+    }
+
+    private encryptedName(name: string): string {
+        return `${name.substring(0, 1)}***${name.substring(name.length - 3, name.length)}`;
     }
 }

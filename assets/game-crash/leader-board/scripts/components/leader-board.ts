@@ -62,6 +62,7 @@ export class LeaderBoard extends ObserverComponent {
     @handle(GameCrash.CrashBetList.CrashBetListHandlers, (handler) => handler.resetMainPlayer())
     private resetMainPlayer() {
         this.setMainPlayerVisibility(false);
+        this.cpnMainPlayer.setHalfCashOutVisibility(false);
     }
 
     @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
@@ -121,7 +122,7 @@ export class LeaderBoard extends ObserverComponent {
             this.scrollOtherPlayer(this.itemHeight);
 
             if (halfCashOut && cashOut) {
-                this.cpnMainPlayer.nodeCashOutContainer.active = true;
+                this.cpnMainPlayer.nodeHalfCashOutContainer.active = true;
                 this.scrollOtherPlayer(this.itemHeight * 2);
                 !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight + this.itemHeight);
             }
@@ -170,7 +171,10 @@ export class LeaderBoard extends ObserverComponent {
     }
 
     onClickCollapseButton(e) {
-        const boardHeight = this.isExpandedBoard ? this.collapsedBoardHeight : this.expandedBoardHeight;
+        const collapseHeight = this.cpnMainPlayer.isShowHalfCashOutContainerNode()
+            ? this.collapsedBoardHeight + this.itemHeight
+            : this.collapsedBoardHeight;
+        const boardHeight = this.isExpandedBoard ? collapseHeight : this.expandedBoardHeight;
         this.collapseAndExpandBoard(boardHeight);
         this.nodeArrowIcon.eulerAngles = this.isExpandedBoard ? v3(0, 0, 180) : v3(0, 0, 0);
         this.isExpandedBoard = !this.isExpandedBoard;

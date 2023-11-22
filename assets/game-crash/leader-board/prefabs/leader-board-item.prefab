@@ -1413,7 +1413,7 @@
     "lblHalfCashout": {
       "__id__": 51
     },
-    "nodeCashOutContainer": {
+    "nodeHalfCashOutContainer": {
       "__id__": 31
     },
     "lblMultiplier": {

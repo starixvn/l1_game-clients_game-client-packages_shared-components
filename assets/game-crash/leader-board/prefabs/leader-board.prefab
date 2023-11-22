@@ -1406,7 +1406,7 @@
     "lblHalfCashout": {
       "__id__": 52
     },
-    "nodeCashOutContainer": {
+    "nodeHalfCashOutContainer": {
       "__id__": 32
     },
     "lblMultiplier": {
