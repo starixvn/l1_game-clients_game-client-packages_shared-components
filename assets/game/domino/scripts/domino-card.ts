@@ -71,7 +71,7 @@ export class DominoCard extends Component {
         }
     }
 
-    async openDominoCardAnim(duration: number) {
+    async openDominoCardAnim(duration: number): Promise<string | undefined> {
         let result;
         if (this.animation) {
             try {
