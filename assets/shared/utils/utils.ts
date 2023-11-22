@@ -16,7 +16,7 @@ export namespace AnimationUtils {
         return fadeTo(node, duration, opacity);
     };
 
-    export const fadeOutAndHide = async (node: Node, duration: number, opacity = 1) => {
+    export const fadeOutAndDeactivate = async (node: Node, duration: number, opacity = 1) => {
         await fadeTo(node, duration, opacity);
         node.active = false;
     };

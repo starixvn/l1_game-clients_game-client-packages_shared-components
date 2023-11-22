@@ -68,7 +68,7 @@ export class ResultPercentage extends ObserverComponent {
         });
     }
 
-    calculateWinPercentage(originalChoices: string[], roundHistory: any) {
+    calculateWinPercentage(originalChoices: string[], roundHistory: gc.RoundHistories.RoundHistory[]) {
         const count = this.calculateWin(originalChoices, roundHistory);
 
         const choices = [...originalChoices].sort((a, b) => count[a] - count[b]);
@@ -91,8 +91,8 @@ export class ResultPercentage extends ObserverComponent {
         return percentage;
     }
 
-    calculateWin(originalChoices: string[], roundHistory: any) {
-        return roundHistory.reduce((count: any, history) => {
+    calculateWin(originalChoices: string[], roundHistory: gc.RoundHistories.RoundHistory[]) {
+        return roundHistory.reduce((count: Record<string, number>, history) => {
             originalChoices.forEach((choice) => {
                 count[choice] = count[choice] ?? 0;
                 if (history.settlementResult[choice]) {
@@ -107,7 +107,7 @@ export class ResultPercentage extends ObserverComponent {
         const countChoices = this.calculateWin(this.originalChoices, histories);
         this.labels.forEach((label) => {
             const choice = label.node.name;
-            countChoices[choice] !== undefined && (label.string = countChoices[choice]);
+            countChoices[choice] !== undefined && (label.string = countChoices[choice].toString());
         });
     }
 }
