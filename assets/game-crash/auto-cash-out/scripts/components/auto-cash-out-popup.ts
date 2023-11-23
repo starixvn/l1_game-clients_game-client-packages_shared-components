@@ -1,11 +1,13 @@
 import gc from "@sg/game-client-base";
-import { Button, Color, Label, Node, _decorator } from "cc";
+import { _decorator, Button, Color, Label, Node } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { PopupsHandlers } from "../../../popups/popups-handlers";
 import AutoCashOutHandler from "../handlers/auto-cash-out-handler";
 import AutoCashOutPopupHandler from "../handlers/auto-cash-out-popup-handler";
 import AutoCashOutPopupStore from "../stores/auto-cash-out-popup-store";
+
 const { FormatUtils } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -33,29 +35,39 @@ export class AutoCashoutPopup extends ObserverComponent {
         handle.handleMultiplier("0");
     })
     confirm() {
-        return parseFloat(this.multiplierLabel.string);
+        return parseFloat(this.removeCommasMultiplier());
     }
 
     @handle(AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
     addValue(event, value) {
-        console.log(typeof value);
-        if (this.multiplierLabel.string === "0" && value !== ".") {
-            return value.toString();
+        const multiplier = this.removeCommasMultiplier();
+
+        if (multiplier === "0" && value !== ".") {
+            return value;
         }
 
         const regex = new RegExp(/^[1-9]\d{0,3}(\.\d{0,2})?$/);
-        const newValue = `${this.multiplierLabel.string}${value}`;
+        const newValue = `${multiplier}${value}`;
 
         if (regex.test(newValue)) {
-            return newValue.toString();
+            return newValue;
         }
 
-        return this.multiplierLabel.string;
+        return multiplier;
     }
 
     @render(AutoCashOutPopupStore, (store) => store.multiplier)
     updateMultiplierString(multiplier: string) {
-        this.multiplierLabel.string = FormatUtils.numberWithCommas(multiplier, 2);
+        let slitStr;
+        if (multiplier.split(".")[1] === "") {
+            slitStr = ".";
+        } else if (multiplier.split(".")[1] === "0") {
+            slitStr = ".0";
+        } else {
+            slitStr = "";
+        }
+
+        this.multiplierLabel.string = `${FormatUtils.numberWithCommas(+multiplier, 2)}${slitStr}`;
     }
 
     @render(gc.GameCrash.CrashGameConfigs.CrashGameConfigStore, (store) => store.maxMultiplier)
@@ -72,7 +84,7 @@ export class AutoCashoutPopup extends ObserverComponent {
 
     @handle(AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
     removeLastLetter() {
-        let multiplierString = this.multiplierLabel.string.slice(0, -1);
+        let multiplierString = this.removeCommasMultiplier().slice(0, -1);
         if (!multiplierString) {
             multiplierString = "0";
         }
@@ -93,4 +105,8 @@ export class AutoCashoutPopup extends ObserverComponent {
 
     @handle(PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutAutoCashOut())
     closeOtherPopups() {}
+
+    private removeCommasMultiplier(): string {
+        return this.multiplierLabel.string.replace(",", "");
+    }
 }
