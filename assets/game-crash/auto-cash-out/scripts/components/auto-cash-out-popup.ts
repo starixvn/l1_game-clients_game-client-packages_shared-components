@@ -59,10 +59,11 @@ export class AutoCashoutPopup extends ObserverComponent {
     @render(AutoCashOutPopupStore, (store) => store.multiplier)
     updateMultiplierString(multiplier: string) {
         let slitStr;
-        if (multiplier.split(".")[1] === "") {
+        const suffix = multiplier.split(".")[1];
+        if (suffix === "") {
             slitStr = ".";
-        } else if (multiplier.split(".")[1] === "0") {
-            slitStr = ".0";
+        } else if (suffix === "0" || suffix === "00") {
+            slitStr =  `.${suffix}`;
         } else {
             slitStr = "";
         }

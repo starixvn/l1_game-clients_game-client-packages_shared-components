@@ -1,13 +1,14 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Button, Label, Sprite, Toggle, UIOpacity } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { PlayerActionStore } from "../../../player-actions/player-action-store";
 import AutoCashOutHandler from "../handlers/auto-cash-out-handler";
 import AutoCashOutPopupHandler from "../handlers/auto-cash-out-popup-handler";
 import AutoCashOutStore from "../stores/auto-cash-out-store";
-const { FormatUtils } = gc;
-import { PlayerActionStore } from "../../../player-actions/player-action-store";
 
+const { FormatUtils } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -47,7 +48,7 @@ export class AutoCashout extends ObserverComponent {
 
     @render(AutoCashOutStore, (store) => store.multiplier)
     updateMultiplier(multiplier: number) {
-        this.multiplierLabel.string = `${FormatUtils.numberWithCommas(multiplier, 2)}x`;
+        this.multiplierLabel.string = `${FormatUtils.numberWithCommas(multiplier, 2, false)}x`;
         this.updateButtonStatus(this.decreaseButton, multiplier > 1.01);
         this.updateButtonStatus(this.increaseButton, multiplier < this.maxMultiplier);
     }
