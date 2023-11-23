@@ -77,7 +77,7 @@ export class CashOutButton extends ObserverComponent {
     )
     onClickCashOut() {
         this.closeAllPopups();
-        CashOutComponent.getCashOutValue(this.lblCashOut);
+        return CashOutComponent.getCashOutValue(this.lblCashOut);
     }
 
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })

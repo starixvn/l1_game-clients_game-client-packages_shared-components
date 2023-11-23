@@ -10,6 +10,15 @@ export class AutoPlayStore {
     public roundsAutoPlay = 0;
 
     public isAutoPlay = false;
+    private _hasEarlyBetBeforeAutoPlay = false;
+
+    set hasEarlyBetBeforeAutoPlay(value: boolean) {
+        this._hasEarlyBetBeforeAutoPlay = value;
+    }
+
+    get hasEarlyBetBeforeAutoPlay(): boolean {
+        return this._hasEarlyBetBeforeAutoPlay;
+    }
 
     constructor() {
         mobx.makeAutoObservable(this);
