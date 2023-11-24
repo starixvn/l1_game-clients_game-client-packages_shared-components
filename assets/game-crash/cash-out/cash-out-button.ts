@@ -87,4 +87,9 @@ export class CashOutButton extends ObserverComponent {
 
     @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
     closeAllPopups() {}
+
+    @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
+    updateStatusCashoutButton(isCrashed: boolean) {
+        CashOutComponent.updateCashOutButton(isCrashed, this.sprDisabled);
+    }
 }
