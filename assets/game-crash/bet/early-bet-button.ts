@@ -7,6 +7,7 @@ import { AutoPlayStore } from "../../../../../extensions/shared-components/asset
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 import { PlayerActionStore } from "../player-actions/player-action-store";
+import { PopupsHandlers } from "../popups/popups-handlers";
 import { EarlyBetStore } from "./early-bet-store";
 import { EarlyBetUIHandlers } from "./early-bet-ui-handlers";
 
@@ -69,11 +70,15 @@ export default class EarlyBetButton extends ObserverComponent {
 
     @handle(EarlyBetUIHandlers, (handle, enable: boolean) => handle.handle(enable))
     onClickEarlyBet() {
+        this.closeAllPopups();
         if (this.isWaitingBet) {
             this.cancelAutoPlay();
         }
         return !this.isWaitingBet;
     }
+
+    @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
+    closeAllPopups() {}
 
     @handle(AutoPlayHandler, (handle, enable: boolean) => handle.cancelAutoPlay())
     cancelAutoPlay() {}

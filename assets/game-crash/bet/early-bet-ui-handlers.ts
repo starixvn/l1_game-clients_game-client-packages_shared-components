@@ -24,7 +24,7 @@ export class EarlyBetUIHandlers implements IHandler<boolean> {
 
     validateBalance(enable: boolean) {
         if (this.earlyBetStore.betAmount > this.mainPlayerStore.balance && enable) {
-            this.noticeStore.addWarning(gc.Translator.commonTranslate("message_insufficient_fund"));
+            this.noticeStore.addWarning(gc.Translator.commonTranslate("not_enough_money"));
         } else {
             this.earlyBetStore.earlyBet = enable;
         }
