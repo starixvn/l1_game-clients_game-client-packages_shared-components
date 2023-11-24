@@ -53,6 +53,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
         this.autoPlayStore.isAutoPlay = true;
         if ((this.roundTimeStore.isPlacingBet || this.roundTimeStore.isLocking) && !this.betStore.isReceivedBet) {
             this.autoPlayStore.roundsAutoPlay = this.autoPlayStore.selectedRoundOnPopup - 1;
+            this.autoPlayStore.autoPlayWhenPlacingBet = true;
         } else {
             this.autoPlayStore.roundsAutoPlay = this.autoPlayStore.selectedRoundOnPopup;
         }
@@ -89,5 +90,9 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
 
     checkEarlyBetBeforeAutoPlay(value: boolean) {
         this.autoPlayStore.hasEarlyBetBeforeAutoPlay = value;
+    }
+
+    updatedAutoPlayWhenPlacingBet(value: boolean) {
+        this.autoPlayStore.autoPlayWhenPlacingBet = value;
     }
 }

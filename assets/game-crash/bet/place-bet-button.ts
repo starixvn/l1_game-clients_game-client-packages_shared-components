@@ -165,6 +165,7 @@ export default class PlaceBetButton extends ObserverComponent {
     @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
     renderPlacingBet(isPlacingBet: boolean) {
         if (isPlacingBet && this.isAutoPlayMode && !this.autoPlay && !this.hasEarlyBetBeforeAutoPlay) {
+            this.disabledAutoPlayWhenPlacingBet();
             this.onClickPlaceBet();
             this.decreaseAutoPlayRounds();
         }
@@ -176,5 +177,17 @@ export default class PlaceBetButton extends ObserverComponent {
     @render(AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
     updateHasEarlyBetBeforeAutoPlay(value: boolean) {
         this.hasEarlyBetBeforeAutoPlay = value;
+    }
+
+    @render(AutoPlayStore, (store) => store.autoPlayWhenPlacingBet)
+    checkAutoPlayWhenPlacingBet(autoPlayWhenPlacingBet: boolean) {
+        if (autoPlayWhenPlacingBet) {
+            this.onClickPlaceBet();
+        }
+    }
+
+    @handle(AutoPlayHandler, (handle, value: boolean) => handle.updatedAutoPlayWhenPlacingBet(value))
+    disabledAutoPlayWhenPlacingBet() {
+        return false;
     }
 }

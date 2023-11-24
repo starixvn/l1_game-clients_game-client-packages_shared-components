@@ -11,6 +11,7 @@ export class AutoPlayStore {
 
     public isAutoPlay = false;
     private _hasEarlyBetBeforeAutoPlay = false;
+    private _autoPlayWhenPlacingBet = false;
 
     set hasEarlyBetBeforeAutoPlay(value: boolean) {
         this._hasEarlyBetBeforeAutoPlay = value;
@@ -18,6 +19,14 @@ export class AutoPlayStore {
 
     get hasEarlyBetBeforeAutoPlay(): boolean {
         return this._hasEarlyBetBeforeAutoPlay;
+    }
+
+    set autoPlayWhenPlacingBet(value: boolean) {
+        this._autoPlayWhenPlacingBet = value;
+    }
+
+    get autoPlayWhenPlacingBet(): boolean {
+        return this._autoPlayWhenPlacingBet;
     }
 
     constructor() {
