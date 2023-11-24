@@ -68,7 +68,11 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
 
     decreaseAutoPlayRounds() {
         if (this.autoPlayStore.isAutoPlay) {
-            this.updateAutoPlayRounds(this.autoPlayStore.roundsAutoPlay - 1);
+            if (this.checkBalanceForAutoPlay()) {
+                this.updateAutoPlayRounds(this.autoPlayStore.roundsAutoPlay - 1);
+            } else {
+                this.autoPlayStore.isAutoPlay = false;
+            }
         }
     }
 
