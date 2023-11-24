@@ -7,6 +7,7 @@ import { PopupsHandlers } from "../../../popups/popups-handlers";
 import { BetInputHandler } from "../handlers/bet-input-handlers";
 import { BetInputStore } from "../stores/bet-input-store";
 import { BetAmountItem } from "./bet-amount-item";
+
 const { FormatUtils } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -30,24 +31,21 @@ export class BetAmountPopup extends ObserverComponent {
 
     private readonly chipsLimit = 8;
 
-    @render(gc.GameConfigs.GameConfigStore, (store) => store.chips)
-    private initBetAmount(chips) {
+    @render(BetInputStore, (store) => ({ chips: store.chips, minBet: store.minBet, maxBet: store.maxBet }), { fireImmediately: false })
+    private initBetAmount({ chips, minBet, maxBet }) {
         this.nodeBetContainer.destroyAllChildren();
-        chips = chips.slice(0, this.chipsLimit);
+        let count = 1;
         chips.forEach((chip) => {
+            if (+chip < minBet || +chip > maxBet || count > this.chipsLimit) {
+                return;
+            }
             const node = instantiate(this.prfBetAmount);
             const comp = node.getComponent(BetAmountItem);
             comp?.setBetAmountItem(chip);
             this.nodeBetContainer.addChild(node);
+            count += 1;
         });
-    }
-
-    @render(gc.Rounds.RoundStore, (store) => ({
-        minBet: store.minBet,
-        maxBet: store.maxBet,
-    }))
-    private updateBetRange({ minBet, maxBet }) {
-        this.lblBetRange.string = `${FormatUtils.numberWithCommas(minBet, 2)} - ${FormatUtils.numberWithCommas(maxBet, 2)}`;
+        this.updateBetRange({ minBet, maxBet });
     }
 
     @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
@@ -56,14 +54,14 @@ export class BetAmountPopup extends ObserverComponent {
         status && this.closeOtherPopups();
     }
 
-    @handle(PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutBetInput())
-    closeOtherPopups() {}
-
     @render(BetInputStore, (store) => store.betAmountTemp)
     private updateBetAmount(amount: number) {
         this.lblBetAmount.string = `${FormatUtils.numberWithCommas(amount, 2)}`;
         this.checkConfirmBtnStatus(amount > 0);
     }
+
+    @handle(PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutBetInput())
+    closeOtherPopups() {}
 
     @handle(BetInputHandler, (handle) => handle.closeBetAmountPopup())
     private onCloseClick() {}
@@ -77,5 +75,9 @@ export class BetAmountPopup extends ObserverComponent {
     private checkConfirmBtnStatus(status: boolean) {
         this.btnConfirm.interactable = status;
         this.btnConfirm.node.getChildByName("overlay").active = !status;
+    }
+
+    private updateBetRange({ minBet, maxBet }) {
+        this.lblBetRange.string = `${FormatUtils.numberWithCommas(minBet, 2)} - ${FormatUtils.numberWithCommas(maxBet, 2)}`;
     }
 }

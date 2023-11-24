@@ -6,6 +6,7 @@ const { injectable, inject } = inversify;
 
 @injectable()
 export class BetInputStore {
+    @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
     @inject(gc.GameConfigs.GameConfigStore) private readonly gameConfig: gc.GameConfigs.GameConfigStore;
     @inject(gc.GameCrash.CrashCashOut.CrashCashoutStore) private readonly cashoutStore: gc.GameCrash.CrashCashOut.CrashCashoutStore;
 
@@ -15,7 +16,7 @@ export class BetInputStore {
     isDisabledBetInput = false;
 
     get betAmount(): number {
-        return this._betAmount > -1 ? this._betAmount : this.gameConfig.minBet;
+        return this._betAmount > -1 ? this._betAmount : this.roundStore.minBet;
     }
 
     set betAmount(amount: number) {
@@ -23,15 +24,27 @@ export class BetInputStore {
     }
 
     get descreaseStatus(): boolean {
-        return this.betAmount > this.gameConfig.minBet;
+        return this.betAmount > this.roundStore.minBet;
     }
 
     get increaseStatus(): boolean {
-        return this.betAmount < this.gameConfig.maxBet;
+        return this.betAmount < this.roundStore.maxBet;
     }
 
     get betAmountRatio(): number {
         return this.betAmount * this.cashoutStore.ratio;
+    }
+
+    get minBet(): number {
+        return this.roundStore.minBet;
+    }
+
+    get maxBet(): number {
+        return this.roundStore.maxBet;
+    }
+
+    get chips(): string[] {
+        return this.gameConfig.chips;
     }
 
     constructor() {
