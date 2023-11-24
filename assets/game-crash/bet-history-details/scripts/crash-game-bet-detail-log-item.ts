@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Color, Label, Node } from "cc";
+import { _decorator, Color, Label } from "cc";
 
 import { BaseBetDetailLogItem, BetDetailLogItemType } from "../../../game/bet-history/scripts/components/bet-detail/bet-detail-log-item";
 
@@ -27,11 +27,11 @@ export class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
     @property(Label)
     lblBet: Label = null;
 
-    @property(Node)
-    nodeCrash: Node = null;
+    @property(Label)
+    lblOtherAction: Label = null;
 
     setCrashNodeVisibility(status: boolean) {
-        this.nodeCrash.active = status;
+        this.lblOtherAction.node.active = status;
         this.lblAction.node.active = !status;
     }
 
@@ -40,16 +40,29 @@ export class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
         const { amount, multiplier, winAmount, action } = data.betDetailsLog as CrashGameBetDetailsLog &
             gc.BetHistory.DynamicObject<object>;
 
-        if (action) {
-            this.setCrashNodeVisibility(false);
-            const actionName = action === "cashOut" ? "cashout" : "cashout_50%";
-            this.lblAction.string = Translator.gameTranslate(actionName);
-        } else {
-            this.setCrashNodeVisibility(true);
+        let actionName = "";
+        let isShowOtherAction = false;
+        switch (action) {
+            case "cashOut":
+                actionName = "cashout";
+                break;
+            case "halfCashOut":
+                actionName = "cashout_50%";
+                break;
+            case "crash":
+                actionName = "crash";
+                isShowOtherAction = true;
+                break;
+            default:
+                actionName = "bet_accepted";
+                isShowOtherAction = true;
+                break;
         }
 
+        const lblAction = isShowOtherAction ? this.lblOtherAction : this.lblAction;
+        lblAction.string = Translator.gameTranslate(actionName);
         this.lblBet.string = FormatUtils.numberWithCommas(amount, 2);
-        this.lblMultiplier.string = multiplier ? `${FormatUtils.numberWithCommas(multiplier, 2)}x` : "";
+        this.lblMultiplier.string = multiplier ? `${FormatUtils.numberWithCommas(multiplier, 2, false)}x` : "";
         this.lblWin.string = FormatUtils.numberWithCommas(winAmount, 2);
         this.setHighlightTicketDetail(winAmount > 0);
     }

@@ -4,6 +4,7 @@ import { _decorator, Label } from "cc";
 import { BaseBetDetailSummaryTable } from "../../../game/bet-history/scripts/components/bet-detail/bet-detail-summary-table";
 
 const { ccclass, property } = _decorator;
+const { FormatUtils } = gc;
 
 @ccclass()
 export class BetDetailSummaryTable extends BaseBetDetailSummaryTable {
@@ -16,6 +17,6 @@ export class BetDetailSummaryTable extends BaseBetDetailSummaryTable {
     renderResult(model: gc.BetHistory.BetDetailModel) {
         const { roundId, result } = model.betHistoryLog;
         this.lblRound.string = roundId.toString();
-        this.lblCrashPoint.string = `${result}x`;
+        this.lblCrashPoint.string = `${FormatUtils.numberWithCommas(+result, 2, false)}x`;
     }
 }
