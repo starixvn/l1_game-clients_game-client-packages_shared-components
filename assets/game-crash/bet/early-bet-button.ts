@@ -133,7 +133,7 @@ export default class EarlyBetButton extends ObserverComponent {
         this.disableEarlyBet();
         setTimeout(() => {
             this.autoClickEarlyBet();
-        }, 1000);
+        }, 200);
     }
 
     handleWaitingCancelBet() {
