@@ -44,14 +44,13 @@ export class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
             this.setCrashNodeVisibility(false);
             const actionName = action === "cashOut" ? "cashout" : "cashout_50%";
             this.lblAction.string = Translator.gameTranslate(actionName);
-
         } else {
             this.setCrashNodeVisibility(true);
         }
 
         this.lblBet.string = FormatUtils.numberWithCommas(amount, 2);
         this.lblMultiplier.string = multiplier ? `${FormatUtils.numberWithCommas(multiplier, 2)}x` : "";
-        this.lblWin.string = winAmount.toString();
+        this.lblWin.string = FormatUtils.numberWithCommas(winAmount, 2);
         this.setHighlightTicketDetail(winAmount > 0);
     }
     setHighlightTicketDetail(highlight: boolean) {

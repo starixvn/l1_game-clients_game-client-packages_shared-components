@@ -7,6 +7,7 @@ import { BetInputHandler } from "../handlers/bet-input-handlers";
 
 const { ccclass, property } = _decorator;
 const { handle } = Observer;
+const { FormatUtils } = gc;
 @ccclass
 export class BetAmountItem extends ObserverComponent {
     @property(Label)
@@ -14,7 +15,7 @@ export class BetAmountItem extends ObserverComponent {
 
     setBetAmountItem(amount: string) {
         this.node.name = amount;
-        this.lblBetAmount.string = `+${gc.FormatUtils.nFormatter(+amount)}`;
+        this.lblBetAmount.string = `+${FormatUtils.nFormatter(+amount)}`;
     }
 
     @handle(BetInputHandler, (handle, amount: number) => handle.setBetAmountTemp(amount))
