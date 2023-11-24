@@ -41,6 +41,9 @@ export class Md5Popup extends ObserverComponent {
     @property(Button)
     btnIncrease: Button = null;
 
+    @property(Node)
+    nodeDisabledCopyResult: Node = null;
+
     private md5keyCopyString = null;
     private resultCopyString = null;
 
@@ -78,6 +81,7 @@ export class Md5Popup extends ObserverComponent {
             this.md5keyCopyString = hashValue;
             const rawValue = (roundHistoryData.md5Result.rawValue = roundHistoryData.md5Result.rawValue || "");
             this.resultCopyString = rawValue;
+            this.nodeDisabledCopyResult.active = rawValue ? false : true;
             this.lblMd5Key.string = `<color=#4920a4>${hashValue}</color>`;
             this.lblRoundId.string = `#${roundHistoryData.roundId.toString()}`;
             this.lblResult.string = `<color=#4920a4>${rawValue}</color>`;
