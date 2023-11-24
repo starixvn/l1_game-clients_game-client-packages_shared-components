@@ -1,17 +1,22 @@
 import gc from "@sg/game-client-base";
 import inversify from "inversify";
 
+import { BetInputStore } from "../../../bet-input/scripts/stores/bet-input-store";
 import { EarlyBetStore } from "../../../bet/early-bet-store";
 import { AutoPlayStore } from "../stores/auto-play-store";
 
 const { injectable, inject } = inversify;
+const { Translator } = gc;
 
 @injectable()
 export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     @inject(AutoPlayStore) private readonly autoPlayStore: AutoPlayStore;
     @inject(gc.Rounds.RoundTimeStore) private readonly roundTimeStore: gc.Rounds.RoundTimeStore;
     @inject(EarlyBetStore) private readonly earlyBetStore: EarlyBetStore;
+    @inject(BetInputStore) private readonly betInputStore: BetInputStore;
     @inject(gc.Bet.BetStore) private readonly betStore: gc.Bet.BetStore;
+    @inject(gc.Player.MainPlayerStore) private readonly mainPlayerStore: gc.Player.MainPlayerStore;
+    @inject(gc.Notices.NoticeStore) private readonly noticeStore: gc.Notices.NoticeStore;
 
     handle() {}
 
@@ -20,11 +25,22 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     }
 
     checkAutoPlayClick() {
-        if (!this.autoPlayStore.isAutoPlay) {
+        if (!this.autoPlayStore.isAutoPlay && this.checkBalanceForAutoPlay()) {
             this.autoPlayStore.isOpenAutoPlayPopup = true;
         } else {
             this.autoPlayStore.isAutoPlay = false;
             this.autoPlayStore.roundsAutoPlay = 0;
+        }
+    }
+
+    private checkBalanceForAutoPlay() {
+        const { freebetEnabled } = this.betStore;
+        const availableBalance = freebetEnabled ? this.mainPlayerStore.scoin : this.mainPlayerStore.balance;
+        if (this.betInputStore.betAmount <= availableBalance) {
+            return true;
+        } else {
+            this.noticeStore.addWarning(Translator.commonTranslate("not_enough_money"));
+            return false;
         }
     }
 
