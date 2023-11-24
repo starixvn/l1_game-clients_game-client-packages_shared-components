@@ -44,11 +44,7 @@ export class BetInputStore {
     }
 
     get chips(): string[] {
-        const convertedChips = [];
-        this.gameConfig.chips.forEach((chip) => {
-            convertedChips.push(gc.FormatUtils.nFormatter(+chip));
-        });
-        return convertedChips;
+        return this.gameConfig.chips;
     }
 
     constructor() {

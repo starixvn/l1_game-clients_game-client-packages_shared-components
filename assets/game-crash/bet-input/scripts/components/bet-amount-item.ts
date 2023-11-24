@@ -1,3 +1,4 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Label } from "cc";
 import Observer from "observer";
 
@@ -13,7 +14,7 @@ export class BetAmountItem extends ObserverComponent {
 
     setBetAmountItem(amount: string) {
         this.node.name = amount;
-        this.lblBetAmount.string = `+${amount}`;
+        this.lblBetAmount.string = `+${gc.FormatUtils.nFormatter(+amount)}`;
     }
 
     @handle(BetInputHandler, (handle, amount: number) => handle.setBetAmountTemp(amount))
