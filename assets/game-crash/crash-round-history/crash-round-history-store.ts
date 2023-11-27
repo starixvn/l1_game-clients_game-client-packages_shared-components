@@ -70,10 +70,13 @@ export class CrashRoundHistoryStore {
         };
     }
     get increaseStatus(): boolean {
-        return this._roundIndex > 0;
+        return this._roundIndex > 0 || this._roundIndex === -1;
     }
 
     get descreaseStatus(): boolean {
+        if (this._roundIndex === -1) {
+            return false;
+        }
         return this._roundIndex < this.roundHistoryStore.histories.length - 1;
     }
 }
