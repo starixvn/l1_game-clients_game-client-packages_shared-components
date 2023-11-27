@@ -73,4 +73,9 @@ export class InGameMenu extends ObserverComponent {
         this.doCommons();
         this.handleEvent(InGameMenuEvents.CHANGE_SWAP_CARD);
     }
+
+    onOpenGuideScrollMd5() {
+        this.doCommons();
+        this.handleEvent(InGameMenuEvents.OPEN_GUIDE_SCROLL_MD5);
+    }
 }

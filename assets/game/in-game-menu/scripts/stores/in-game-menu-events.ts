@@ -8,4 +8,5 @@ export enum InGameMenuEvents {
     CHANGE_ORIENTATION = "change_orientation",
     CHANGE_SWAP_CARD = "change_swap_card",
     CHANGE_WINNING_NOTIFICATION = "change_winning_notification",
+    OPEN_GUIDE_SCROLL_MD5 = "open_guide_scroll_md5",
 }

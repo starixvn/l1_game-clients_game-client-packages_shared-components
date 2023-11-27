@@ -2,6 +2,8 @@ import gc from "@sg/game-client-base";
 import { Button, Label, Node, Prefab, RichText, UIOpacity, _decorator, instantiate } from "cc";
 import Observer from "observer";
 
+import { InGameMenuHandlers } from "../../../../game/in-game-menu/scripts/handlers/in-game-menu-handlers";
+import { InGameMenuEvents } from "../../../../game/in-game-menu/scripts/stores/in-game-menu-events";
 import { Md5CopyButton } from "../../../../game/md5/scripts/md5-copy-button";
 import { CrashRoundHistory, CrashRoundHistoryStore } from "../../../crash-round-history/crash-round-history-store";
 import { PopupsHandlers } from "../../../popups/popups-handlers";
@@ -126,5 +128,14 @@ export class Md5Popup extends ObserverComponent {
     onClickCopyButtonKey() {
         GameUtils.copyToClipboard(this.md5keyCopyString);
         this.cpnKeyCopyButton.isCopying = true;
+    }
+
+    @handle(InGameMenuHandlers)
+    protected handleEvent(event: string) {
+        return event;
+    }
+
+    onOpenGuide() {
+        this.handleEvent(InGameMenuEvents.OPEN_GUIDE_SCROLL_MD5);
     }
 }

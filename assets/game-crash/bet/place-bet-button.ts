@@ -133,7 +133,6 @@ export default class PlaceBetButton extends ObserverComponent {
         if (this.earlyBet || this.isBetAccepted) {
             this.isBetAccepted = true;
             this.setStatusBet(true);
-            this.closeAllPopups();
         } else {
             this.setStatusBet(false);
             this.enableAutoCashOut();
