@@ -59,7 +59,7 @@ export class Md5Popup extends ObserverComponent {
     private cpnKeyCopyButton: Md5CopyButton = null;
     private cpnResultCopyButton: Md5CopyButton = null;
     protected resultTipString: string;
-    private maximumStringAllowed = 36;
+    private maximumStringAllowed = 34;
 
     onLoad() {
         super.onLoad();
