@@ -25,13 +25,13 @@ export class CashOutPlayerAnimation extends NodeContainer {
     }
 
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })
-    renderMainPlayerCashOutFull() {
-        this.createCashoutMainPlayer();
+    renderMainPlayerCashOutFull(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
+        cashOut && this.createCashoutMainPlayer();
     }
 
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.halfCashOut, { fireImmediately: false })
-    renderMainPlayerCashOutHalf() {
-        this.createCashoutMainPlayer();
+    renderMainPlayerCashOutHalf(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
+        cashOut && this.createCashoutMainPlayer();
     }
 
     createCashoutMainPlayer() {
