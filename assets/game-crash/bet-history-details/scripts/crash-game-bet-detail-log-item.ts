@@ -53,6 +53,10 @@ export class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
                 actionName = "crash";
                 isShowOtherAction = true;
                 break;
+            case "refund":
+                actionName = "glossary_refund";
+                isShowOtherAction = true;
+                break;
             default:
                 actionName = "bet_accepted";
                 isShowOtherAction = true;

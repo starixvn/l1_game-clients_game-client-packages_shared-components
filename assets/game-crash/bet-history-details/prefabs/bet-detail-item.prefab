@@ -329,7 +329,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "12/07/2023",
+    "_string": "09:33 12/07/2023",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 19,
@@ -388,7 +388,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 93.81,
+      "width": 144.48,
       "height": 44
     },
     "_anchorPoint": {
@@ -466,7 +466,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -187.933,
+      "x": -60.636,
       "y": 0,
       "z": 0
     },
@@ -519,7 +519,7 @@
       "a": 255
     },
     "_string": "",
-    "_horizontalAlign": 0,
+    "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 19,
     "_fontSize": 19,
@@ -582,7 +582,7 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": 0.5,
       "y": 0.5
     },
     "_id": ""
