@@ -19,7 +19,9 @@ export class CrashGameBetDetailLogTable extends BetDetailLogTable {
         const { fractionalOddsFormat, betHistoryLog } = model;
         const { result, settlementResult, odds, freeBet, betLogDetails } = betHistoryLog;
 
-        reverse(betLogDetails).forEach((betDetailsLog, index) => {
+        const reversedLogs = reverse([...betLogDetails]);
+
+        reversedLogs.forEach((betDetailsLog, index) => {
             this.body.addChild(
                 this.buildBodyRow(bodyItemPrefab, {
                     betDetailsLog,

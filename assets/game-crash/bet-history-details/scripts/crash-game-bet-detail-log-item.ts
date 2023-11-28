@@ -16,6 +16,14 @@ export interface CrashGameBetDetailsLog {
     winAmount: number;
 }
 
+const ActionName = {
+    CASH_OUT: "cashOut",
+    HALF_CASH_OUT: "halfCashOut",
+    CRASH: "crash",
+    REFUND: "refund",
+    BET: "bet",
+};
+
 @ccclass
 export class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
     @property(Label)
@@ -43,17 +51,17 @@ export class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
         let actionName = "";
         let isShowOtherAction = false;
         switch (action) {
-            case "cashOut":
+            case ActionName.CASH_OUT:
                 actionName = "cashout";
                 break;
-            case "halfCashOut":
+            case ActionName.HALF_CASH_OUT:
                 actionName = "cashout_50%";
                 break;
-            case "crash":
+            case ActionName.CRASH:
                 actionName = "crash";
                 isShowOtherAction = true;
                 break;
-            case "refund":
+            case ActionName.REFUND:
                 actionName = "glossary_refund";
                 isShowOtherAction = true;
                 break;
@@ -68,6 +76,8 @@ export class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
         this.lblBet.string = FormatUtils.numberWithCommas(amount, 2);
         this.lblMultiplier.string = multiplier ? `${FormatUtils.numberWithCommas(multiplier, 2, false)}x` : "";
         this.lblWin.string = FormatUtils.numberWithCommas(winAmount, 2);
+        this.lblWin.node.active = action !== ActionName.BET;
+
         this.setHighlightTicketDetail(winAmount > 0);
     }
     setHighlightTicketDetail(highlight: boolean) {
