@@ -19,10 +19,10 @@ describe("BetAmountPopup", () => {
             const setBetAmountItemSpy = jest.spyOn(BetAmountItem.prototype, "setBetAmountItem").mockImplementation(jest.fn());
 
             // Act
-            component["initBetAmount"](chips);
+            component["initBetAmount"]({ chips, minBet: 1, maxBet: 500 });
 
             // Assert
-            expect(setBetAmountItemSpy).toBeCalledTimes(component["chipsLimit"]);
+            expect(setBetAmountItemSpy).toBeCalledTimes(7);
         });
     });
 

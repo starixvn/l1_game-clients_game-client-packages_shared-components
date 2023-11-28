@@ -38,7 +38,7 @@ describe("AutoCashoutPopup", () => {
                     autoCashoutPopup.multiplierLabel.string = "0";
                     const result = autoCashoutPopup.addValue(null, 1);
 
-                    expect(result).toEqual("1");
+                    expect(result).toEqual(1);
                 });
             });
         });
@@ -56,7 +56,7 @@ describe("AutoCashoutPopup", () => {
     describe("updateMultiplierRangeLabel", () => {
         it("should update multiplier range label", () => {
             autoCashoutPopup.updateMultiplierRangeLabel(3000);
-            expect(autoCashoutPopup.multiplierRangeLabel.string).toEqual("1.01X - 3000.00X");
+            expect(autoCashoutPopup.multiplierRangeLabel.string).toEqual("1.01x - 3,000.00x");
         });
     });
 

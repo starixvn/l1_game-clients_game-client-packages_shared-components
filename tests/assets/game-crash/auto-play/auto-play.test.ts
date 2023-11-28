@@ -35,9 +35,9 @@ describe("AutoPlayPopup", () => {
 
             //Assert
             expect(comp.lblNoOfRound.node.active).toEqual(true);
-            expect(comp.nodeTextStopAutoPlay.node.active).toEqual(true);
+            expect(comp.nodeTextStopAutoPlay.active).toEqual(true);
             expect(comp.sprIconAutoPlay.node.active).toEqual(false);
-            expect(comp.nodeTextAutoPlay.node.active).toEqual(false);
+            expect(comp.nodeTextAutoPlay.active).toEqual(false);
         });
 
         it("should stop auto play when isAutoPlay is false", () => {
@@ -49,9 +49,9 @@ describe("AutoPlayPopup", () => {
 
             //Assert
             expect(comp.lblNoOfRound.node.active).toEqual(false);
-            expect(comp.nodeTextStopAutoPlay.node.active).toEqual(false);
+            expect(comp.nodeTextStopAutoPlay.active).toEqual(false);
             expect(comp.sprIconAutoPlay.node.active).toEqual(true);
-            expect(comp.nodeTextAutoPlay.node.active).toEqual(true);
+            expect(comp.nodeTextAutoPlay.active).toEqual(true);
         });
     });
 });

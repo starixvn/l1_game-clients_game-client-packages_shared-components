@@ -63,7 +63,7 @@ export class AutoCashoutPopup extends ObserverComponent {
         if (suffix === "") {
             slitStr = ".";
         } else if (suffix === "0" || suffix === "00") {
-            slitStr =  `.${suffix}`;
+            slitStr = `.${suffix}`;
         } else {
             slitStr = "";
         }
@@ -73,7 +73,7 @@ export class AutoCashoutPopup extends ObserverComponent {
 
     @render(gc.GameCrash.CrashGameConfigs.CrashGameConfigStore, (store) => store.maxMultiplier)
     updateMultiplierRangeLabel(maxMultiplier: number) {
-        this.multiplierRangeLabel.string = `1.01x - ${FormatUtils.numberWithCommas(maxMultiplier, 2)}x`;
+        this.multiplierRangeLabel.string = `1.01x - ${FormatUtils.numberWithCommas(maxMultiplier, 2, false)}x`;
     }
 
     @render(AutoCashOutPopupStore, (store) => store.isValid)
