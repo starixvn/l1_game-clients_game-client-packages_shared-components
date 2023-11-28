@@ -103,6 +103,8 @@ export class Md5Popup extends ObserverComponent {
     @render(CrashRoundHistoryStore, (store) => store.md5PopupData, { fireImmediately: false })
     bindDataMd5(roundItem: CrashRoundHistory) {
         this.updateInfo(roundItem);
+        this.cpnKeyCopyButton.hideHint();
+        this.cpnResultCopyButton.hideHint();
     }
 
     updateInfo(roundHistoryData: CrashRoundHistory) {
@@ -141,8 +143,6 @@ export class Md5Popup extends ObserverComponent {
     private handleRoundStatusQuickChange(button: Button, status: boolean) {
         button.interactable = status;
         button.node.getChildByName("icon").getComponent(UIOpacity).opacity = status ? 255 : 120;
-        this.cpnKeyCopyButton.hideHint();
-        this.cpnResultCopyButton.hideHint();
     }
 
     @render(CrashRoundHistoryStore, (store) => store.increaseStatus)
