@@ -65,6 +65,8 @@ export class Md5Popup extends ObserverComponent {
         super.onLoad();
         this.cpnKeyCopyButton = this.nodeKeyCopyButton.getComponent(Md5CopyButton);
         this.cpnResultCopyButton = this.nodeResultCopyButton.getComponent(Md5CopyButton);
+        this.cpnKeyCopyButton.hideHint();
+        this.cpnResultCopyButton.hideHint();
         this.registerTouchEvents();
         this.hideTooltip();
     }
