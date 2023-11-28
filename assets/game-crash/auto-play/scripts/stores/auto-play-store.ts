@@ -12,6 +12,7 @@ export class AutoPlayStore {
     public isAutoPlay = false;
     private _hasEarlyBetBeforeAutoPlay = false;
     private _autoPlayWhenPlacingBet = false;
+    private _autoPlayWhenRocketFly = false;
 
     set hasEarlyBetBeforeAutoPlay(value: boolean) {
         this._hasEarlyBetBeforeAutoPlay = value;
@@ -27,6 +28,14 @@ export class AutoPlayStore {
 
     get autoPlayWhenPlacingBet(): boolean {
         return this._autoPlayWhenPlacingBet;
+    }
+
+    get autoPlayWhenRocketFly(): boolean {
+        return this._autoPlayWhenRocketFly;
+    }
+
+    set autoPlayWhenRocketFly(value: boolean) {
+        this._autoPlayWhenRocketFly = value;
     }
 
     constructor() {

@@ -47,6 +47,8 @@ export default class EarlyBetButton extends ObserverComponent {
 
     private hasEarlyBetBeforeAutoPlay = false;
 
+    private autoPlayWhenRocketFly = false;
+
     @render(AutoCashOutStore, (store) => store.enable)
     updateStatusAutoCashOut(isEnable: boolean) {
         this.isEnableAutoCashOut = isEnable;
@@ -102,6 +104,9 @@ export default class EarlyBetButton extends ObserverComponent {
             this.node.active = false;
             if (this.hasEarlyBetBeforeAutoPlay) {
                 this.disableEarlyBetBeforeAutoPlay();
+            }
+            if (this.autoPlayWhenRocketFly) {
+                this.disableAutoPlayWhenRocketFly();
             }
             if (this.isWaitingBet) {
                 this.autoPlaceBet();
@@ -195,8 +200,25 @@ export default class EarlyBetButton extends ObserverComponent {
         this.hasEarlyBetBeforeAutoPlay = value;
     }
 
+    @render(AutoPlayStore, (store) => store.autoPlayWhenRocketFly)
+    updateAutoPlayWhenRocketFly(value: boolean) {
+        this.autoPlayWhenRocketFly = value;
+    }
+
     @handle(AutoPlayHandler, (handle, value: boolean) => handle.checkEarlyBetBeforeAutoPlay(value))
     disableEarlyBetBeforeAutoPlay() {
         return false;
+    }
+
+    @handle(AutoPlayHandler, (handle, value: boolean) => handle.updatedAutoPlayWhenRocketFly(value))
+    disableAutoPlayWhenRocketFly() {
+        return false;
+    }
+
+    @render(AutoPlayStore, (store) => store.autoPlayWhenRocketFly)
+    checkAutoPlayWhenPlacingBet(autoPlayWhenRocketFly: boolean) {
+        if (autoPlayWhenRocketFly) {
+            this.onClickEarlyBet();
+        }
     }
 }
