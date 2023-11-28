@@ -1,3 +1,4 @@
+import gc from "@sg/game-client-base";
 import { Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -7,6 +8,8 @@ import { AutoPlayStore } from "../stores/auto-play-store";
 import { RoundNumberItem } from "./round-number-item";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
+
+const { GameCrash } = gc;
 
 @ccclass
 export class AutoPlayPopup extends ObserverComponent {
@@ -50,4 +53,14 @@ export class AutoPlayPopup extends ObserverComponent {
 
     @handle(AutoPlayHandler, (handle) => handle.confirmRoundAndStart())
     onClickStartButton() {}
+
+    @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
+    checkFinishedAutoPlay(isCrashed: boolean) {
+        if (isCrashed) {
+            this.updateAutoPlayMode();
+        }
+    }
+
+    @handle(AutoPlayHandler, (handle) => handle.checkFinishedPlayMode())
+    updateAutoPlayMode() {}
 }
