@@ -65,8 +65,6 @@ export class Md5Popup extends ObserverComponent {
         super.onLoad();
         this.cpnKeyCopyButton = this.nodeKeyCopyButton.getComponent(Md5CopyButton);
         this.cpnResultCopyButton = this.nodeResultCopyButton.getComponent(Md5CopyButton);
-        this.cpnKeyCopyButton.hideHint();
-        this.cpnResultCopyButton.hideHint();
         this.registerTouchEvents();
         this.hideTooltip();
     }
@@ -143,6 +141,8 @@ export class Md5Popup extends ObserverComponent {
     private handleRoundStatusQuickChange(button: Button, status: boolean) {
         button.interactable = status;
         button.node.getChildByName("icon").getComponent(UIOpacity).opacity = status ? 255 : 120;
+        this.cpnKeyCopyButton.hideHint();
+        this.cpnResultCopyButton.hideHint();
     }
 
     @render(CrashRoundHistoryStore, (store) => store.increaseStatus)
