@@ -103,6 +103,10 @@
       "__uuid__": "ca21ffb6-19ee-49fd-a712-aa08714c0309",
       "__expectedType__": "cc.Prefab"
     },
+    "processingWarningPrefab": {
+      "__uuid__": "8bd71546-9a3e-4d57-a19a-1d3b139451f8",
+      "__expectedType__": "cc.Prefab"
+    },
     "_id": ""
   },
   {
