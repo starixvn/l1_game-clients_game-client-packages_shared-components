@@ -4,13 +4,14 @@ import { _decorator, Label, Sprite } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
-import { PlayerActionStore } from "../player-actions/player-action-store";
+import { CASH_OUT_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 import { CashOutComponent } from "./cash-out-component";
+import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
-const { GameCrash, Rounds, Bet, FormatUtils } = gc;
+const { GameCrash, Bet, FormatUtils } = gc;
 
 @ccclass
 export class CashOutHalfButton extends ObserverComponent {
@@ -54,13 +55,14 @@ export class CashOutHalfButton extends ObserverComponent {
         return CashOutComponent.getBetValue(lastReceivedBet);
     }
 
-    @render(PlayerActionStore, (store) => ({
-        isRocketFlyWithCashout: store.rocketFlyWithCashout,
-        isShowPlaceBetNextRound: store.showPlaceBetNextRound,
-    }))
-    updateCashoutButtonStatus(data: { isRocketFlyWithCashout: boolean; isShowPlaceBetNextRound: boolean }) {
-        const { isRocketFlyWithCashout, isShowPlaceBetNextRound } = data;
-        CashOutComponent.showHideNode(this.node, isRocketFlyWithCashout, isShowPlaceBetNextRound);
+    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentCashOutSateInStore(action))
+    handleCashOutState() {
+        return CASH_OUT_STATE.HALF;
+    }
+
+    @render(PlayerActionStore, (store) => store.visibleCashOut)
+    updateCashoutButtonStatus(visibleCashOut: boolean) {
+        CashOutComponent.showHideNode(this.node, visibleCashOut);
     }
 
     @handle(GameCrash.CrashCashOut.CrashCashOutUIHandlers, (cashOutHandler, cashOutValue: number) =>
@@ -68,6 +70,7 @@ export class CashOutHalfButton extends ObserverComponent {
     )
     onClickCashOutHalf() {
         this.closeAllPopups();
+        this.handleCashOutState();
         return CashOutComponent.getCashOutValue(this.lblCashOut);
     }
 

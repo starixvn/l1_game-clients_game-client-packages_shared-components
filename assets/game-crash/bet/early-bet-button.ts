@@ -6,7 +6,7 @@ import { AutoPlayHandler } from "../../../../../extensions/shared-components/ass
 import { AutoPlayStore } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/stores/auto-play-store";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
-import { PlayerActionStore } from "../player-actions/player-action-store";
+import { EARLY_BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 import { EarlyBetStore } from "./early-bet-store";
 import { EarlyBetUIHandlers } from "./early-bet-ui-handlers";
@@ -63,6 +63,7 @@ export default class EarlyBetButton extends ObserverComponent {
     updateStatusButton(isEarlyBet: boolean) {
         this.setStatusButtons(isEarlyBet);
         this.setStatusWaiting(isEarlyBet);
+        this.handleEarlyStatusBetUI(isEarlyBet ? EARLY_BET_STATE.BET : EARLY_BET_STATE.NONE);
     }
 
     @render(EarlyBetStore, (store) => store.betAmount)
@@ -77,6 +78,11 @@ export default class EarlyBetButton extends ObserverComponent {
             this.cancelAutoPlay();
         }
         return !this.isWaitingBet;
+    }
+
+    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentEarlyBetSateInStore(action))
+    handleEarlyStatusBetUI(action: string) {
+        return action;
     }
 
     @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
@@ -115,23 +121,14 @@ export default class EarlyBetButton extends ObserverComponent {
     }
 
     @render(PlayerActionStore, (store) => ({
-        rocketFlyWithoutCashout: store.rocketFlyWithoutCashout,
-        showPlaceBetNextRound: store.showPlaceBetNextRound,
-        showWaitingCancelBet: store.showWaitingCancelBet,
-        withoutCashoutAll: store.withoutCashoutAll,
+        visibleBetNextRound: store.visibleBetNextRound,
+        visibleCashOut: store.visibleCashOut,
     }))
-    showPlaceBetNextRound(data: {
-        rocketFlyWithoutCashout: boolean;
-        showPlaceBetNextRound: boolean;
-        showWaitingCancelBet: boolean;
-        withoutCashoutAll: boolean;
-    }) {
-        const { rocketFlyWithoutCashout, showPlaceBetNextRound, showWaitingCancelBet, withoutCashoutAll } = data;
-        if (rocketFlyWithoutCashout || (showPlaceBetNextRound && !this.isWaitingBet)) {
+    showPlaceBetNextRound(data: { visibleBetNextRound: boolean; visibleCashOut: boolean }) {
+        const { visibleBetNextRound, visibleCashOut } = data;
+        if (visibleBetNextRound) {
             this.handleRocketFly();
-        } else if (showWaitingCancelBet) {
-            this.handleWaitingCancelBet();
-        } else if (withoutCashoutAll) {
+        } else if (visibleCashOut) {
             this.disableEarlyBet();
         }
     }
@@ -144,11 +141,6 @@ export default class EarlyBetButton extends ObserverComponent {
         setTimeout(() => {
             this.autoClickEarlyBet();
         }, 200);
-    }
-
-    handleWaitingCancelBet() {
-        this.node.active = true;
-        this.setStatusButtons(true);
     }
 
     @handle(GameCrash.CrashBet.CrashBetHandler, (handle, payload: { autoCashOut: number; amount: number }) => handle.handle(payload))
@@ -167,33 +159,17 @@ export default class EarlyBetButton extends ObserverComponent {
         this.handleWaitingBet(status);
     }
 
-    @render(AutoPlayStore, (store) => store.isAutoPlay)
-    updateAutoPlayMode(isAutoPlay: boolean) {
-        this.isAutoPlayMode = isAutoPlay;
-    }
-
     autoClickEarlyBet() {
         if (this.isAutoPlayMode) {
             this.onClickEarlyBet();
             !this.hasEarlyBetBeforeAutoPlay && this.decreaseAutoPlayRounds();
-            this.applyAutoPlay(true);
+            //this.applyAutoPlay(true);
         }
     }
 
     @handle(AutoPlayHandler, (handle) => handle.decreaseAutoPlayRounds())
     decreaseAutoPlayRounds() {}
 
-    @render(Rounds.RoundTimeStore, (store) => store.isLocking)
-    renderPlacingBet(isLocking: boolean) {
-        if (isLocking) {
-            this.applyAutoPlay(false);
-        }
-    }
-
-    @handle(PlayerActionHandlers, (handle, flag: boolean) => handle.handleAutoPlay(flag))
-    applyAutoPlay(flag: boolean) {
-        return flag;
-    }
 
     @render(AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
     updateHasEarlyBetBeforeAutoPlay(value: boolean) {

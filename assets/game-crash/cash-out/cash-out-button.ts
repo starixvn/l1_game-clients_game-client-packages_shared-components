@@ -4,13 +4,13 @@ import Observer from "observer";
 
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
-import { PlayerActionStore } from "../player-actions/player-action-store";
+import { CASH_OUT_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 import { CashOutComponent } from "./cash-out-component";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
-const { GameCrash, Rounds, Bet, FormatUtils } = gc;
+const { GameCrash, Bet, FormatUtils } = gc;
 
 @ccclass
 export class CashOutButton extends ObserverComponent {
@@ -42,11 +42,6 @@ export class CashOutButton extends ObserverComponent {
         this.bet = CashOutComponent.getBetValue(cashoutBet);
     }
 
-    @render(Bet.BetStore, (store) => store.isReceivedBet)
-    updateStatusReceivedBet(isReceivedBet: boolean) {
-        this.setCashoutBetValue(isReceivedBet);
-    }
-
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
     assignCashoutBetValue(lastReceivedBet: any) {
         this.updateCashoutBetValue(lastReceivedBet);
@@ -58,18 +53,19 @@ export class CashOutButton extends ObserverComponent {
         return CashOutComponent.getBetValue(lastReceivedBet);
     }
 
-    @handle(PlayerActionHandlers, (handle, isReceived: boolean) => handle.handleReceivedBet(isReceived))
-    setCashoutBetValue(isReceived: boolean) {
-        return isReceived;
+    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentCashOutSateInStore(action))
+    handleUICashOutState(action: string) {
+        return action;
     }
 
-    @render(PlayerActionStore, (store) => ({
-        isRocketFlyWithCashout: store.rocketFlyWithCashout,
-        isShowPlaceBetNextRound: store.showPlaceBetNextRound,
-    }))
-    updateCashoutButtonStatus(data: { isRocketFlyWithCashout: boolean; isShowPlaceBetNextRound: boolean }) {
-        const { isRocketFlyWithCashout, isShowPlaceBetNextRound } = data;
-        CashOutComponent.showHideNode(this.node, isRocketFlyWithCashout, isShowPlaceBetNextRound);
+    @render(Bet.BetStore, (store) => store.isReceivedBet)
+    setBetStatus(isReceivedBet: boolean) {
+        !isReceivedBet && this.handleUICashOutState(CASH_OUT_STATE.NONE);
+    }
+
+    @render(PlayerActionStore, (store) => store.visibleCashOut)
+    updateCashoutButtonStatus(visibleCashOut: boolean) {
+        CashOutComponent.showHideNode(this.node, visibleCashOut);
     }
 
     @handle(GameCrash.CrashCashOut.CrashCashOutUIHandlers, (cashOutHandler, cashOutValue: number) =>
@@ -77,6 +73,7 @@ export class CashOutButton extends ObserverComponent {
     )
     onClickCashOut() {
         this.closeAllPopups();
+        this.handleUICashOutState(CASH_OUT_STATE.FULL);
         return CashOutComponent.getCashOutValue(this.lblCashOut);
     }
 

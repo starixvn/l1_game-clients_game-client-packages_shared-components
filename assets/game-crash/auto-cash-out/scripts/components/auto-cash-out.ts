@@ -85,12 +85,11 @@ export class AutoCashout extends ObserverComponent {
     }
 
     @render(PlayerActionStore, (store) => ({
-        rocketFlyWithoutCashout: store.rocketFlyWithoutCashout,
-        showPlaceBetNextRound: store.showPlaceBetNextRound,
+        visibleAdjustSetting: store.visibleAutoCashOut,
     }))
-    showPlaceBetNextRound(data: { rocketFlyWithoutCashout: boolean; showPlaceBetNextRound: boolean }) {
-        const { rocketFlyWithoutCashout, showPlaceBetNextRound } = data;
-        if (rocketFlyWithoutCashout || showPlaceBetNextRound) {
+    showPlaceBetNextRound(data: { visibleAdjustSetting: boolean }) {
+        const { visibleAdjustSetting } = data;
+        if (visibleAdjustSetting) {
             this.enableAutoCashOut();
         }
     }

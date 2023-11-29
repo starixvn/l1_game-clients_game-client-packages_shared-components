@@ -8,9 +8,10 @@ import { AutoPlayHandler } from "../../../../../extensions/shared-components/ass
 import { AutoPlayStore } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/stores/auto-play-store";
 import { BetInputStore } from "../../../../../extensions/shared-components/assets/game-crash/bet-input/scripts/stores/bet-input-store";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
-import { PlayerActionStore } from "../player-actions/player-action-store";
+import { BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 import { EarlyBetStore } from "./early-bet-store";
+import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -74,6 +75,17 @@ export default class PlaceBetButton extends ObserverComponent {
         setTimeout(() => {
             this.placeBetNotice.active = false;
         }, 3000);
+    }
+
+
+    @render(Bet.BetStore, (store) => store.isReceivedBet)
+    setBetStatus(isReceivedBet: boolean) {
+        this.handleBetUIControl(isReceivedBet ? BET_STATE.BET : BET_STATE.NONE);
+    }
+
+    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetSateInStore(action))
+    handleBetUIControl(action: string) {
+        return action;
     }
 
     @handle(AutoCashOutHandler, (handle, disable: boolean) => handle.handleDisableAuto(disable))

@@ -6,6 +6,22 @@ import { AutoPlayStore } from "../../../../../extensions/shared-components/asset
 import { EarlyBetStore } from "../bet/early-bet-store";
 
 const { injectable, inject } = inversify;
+
+export const BET_STATE = {
+    NONE: "none",
+    BET: "bet",
+};
+
+export const EARLY_BET_STATE = {
+    NONE: "none",
+    BET: "bet",
+};
+
+export const CASH_OUT_STATE = {
+    NONE: "none",
+    HALF: "half",
+    FULL: "full",
+};
 @injectable()
 export class PlayerActionStore {
     @inject(gc.GameCrash.CrashCashOut.CrashCashoutStore)
@@ -31,16 +47,34 @@ export class PlayerActionStore {
 
     private _autoPlay = false;
 
-    get autoPlay(): boolean {
-        return this._autoPlay;
+    private _earlyBetState = EARLY_BET_STATE.NONE;
+
+    private _cashOutState = CASH_OUT_STATE.NONE;
+
+    private _betState = BET_STATE.NONE;
+
+    get earlyBetState() {
+        return this._earlyBetState;
     }
 
-    set autoPlay(flag: boolean) {
-        this._autoPlay = flag;
+    set earlyBetState(value: string) {
+        this._earlyBetState = value;
     }
 
-    get cashoutAll(): boolean {
-        return this.crashCashoutStore.isCashedOutFull;
+    get cashOutState() {
+        return this._cashOutState;
+    }
+
+    set cashOutState(value: string) {
+        this._cashOutState = value;
+    }
+
+    get betState() {
+        return this._betState;
+    }
+
+    set betState(value: string) {
+        this._betState = value;
     }
 
     get endShowCashoutNotice(): boolean {
@@ -51,36 +85,38 @@ export class PlayerActionStore {
         this._endShowCashoutNotice = flag;
     }
 
-    get isAutoPlay(): boolean {
-        return this.autoPlayStore.isAutoPlay;
+    get visibleBetNextRound() {
+        return (
+            (this.betState === BET_STATE.NONE && this.isFlyingTime) ||
+            (this.cashOutState === CASH_OUT_STATE.FULL && this.endShowCashoutNotice)
+        );
     }
 
-    get showPlaceBetNextRound(): boolean {
-        return this.endShowCashoutNotice && this.cashoutAll;
+    get isFlyingTime() {
+        return this.roundTimeStore.remaining <= 0;
     }
 
-    get showWaitingCancelBet(): boolean {
-        return this.waitingBet && this.roundTimeStore.isShowResult;
+    get rocketStart() {
+        return this.roundTimeStore.remaining === 0;
     }
 
-    get isReceivedBet(): boolean {
-        return this._isReceivedBet;
+    get visibleCashOut() {
+        return (
+            (this.betState === BET_STATE.BET && this.isFlyingTime && !this.visibleBetNextRound) ||
+            (this.betState === BET_STATE.BET &&
+                this.cashOutState !== CASH_OUT_STATE.FULL &&
+                (this.roundTimeStore.isShowResult || this.roundTimeStore.isStartRound))
+        );
     }
 
-    set isReceivedBet(isReceived: boolean) {
-        this._isReceivedBet = isReceived;
-    }
-    get rocketFlyWithoutCashout(): boolean {
-        return !this.isReceivedBet && this.roundTimeStore.remaining <= 0;
+    get visibleAutoCashOut() {
+        return this.visibleBetNextRound || !this.visibleCashOut;
     }
 
-    get rocketFlyWithCashout(): boolean {
-        return (this.isReceivedBet && this.roundTimeStore.remaining <= 0) || (this.roundTimeStore.isShowResult && this.withoutCashoutAll);
+    get visibleBetAmount() {
+        return this.earlyBetState === EARLY_BET_STATE.BET || this.visibleCashOut;
     }
 
-    get withoutCashoutAll() {
-        return !this.cashoutAll && this.isReceivedBet;
-    }
     get waitingBet(): boolean {
         return this._waitingBet;
     }

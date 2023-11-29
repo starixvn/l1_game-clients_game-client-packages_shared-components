@@ -2,8 +2,8 @@ import gc from "@sg/game-client-base";
 import { Label, Node, Sprite } from "cc";
 const { FormatUtils } = gc;
 export namespace CashOutComponent {
-    export const showHideNode = (node: Node, isRocketFlyWithCashout: boolean, isShowPlaceBetNextRound: boolean) => {
-        if (isRocketFlyWithCashout && !isShowPlaceBetNextRound) {
+    export const showHideNode = (node: Node, visibleCashOut: boolean) => {
+        if (visibleCashOut) {
             node.active = true;
         } else {
             node.active = false;
