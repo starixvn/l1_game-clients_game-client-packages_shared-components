@@ -40,10 +40,10 @@ export class LeaderBoard extends ObserverComponent {
     expandedBoardHeight = 310;
 
     private readonly itemHeight = 30;
-    private otherPlayerList: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer[] = [];
     private otherPlayerTween: Tween<Widget> = null;
     private leaderBoardTween: Tween<UITransform> = null;
     private isExpandedBoard = true;
+    private isOtherCashOut = false;
 
     onLoad() {
         this.resetOtherPlayers();
@@ -52,9 +52,13 @@ export class LeaderBoard extends ObserverComponent {
     }
 
     @handle(GameCrash.CrashBetList.CrashBetListHandlers, (handler) => handler.resetOtherPlayerList())
+    handleResetOtherPlayers() {
+        this.resetOtherPlayers();
+    }
+
     private resetOtherPlayers() {
+        this.isOtherCashOut = false;
         this.scrollOtherPlayer(0);
-        this.otherPlayerList = [];
         this.nodeContent.removeAllChildren();
         this.otherPlayersScrollView.scrollToTop(0.1);
     }
@@ -67,18 +71,7 @@ export class LeaderBoard extends ObserverComponent {
 
     @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
     private updateOtherPlayerCashout(otherPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
-        const { playerId, cashOut, halfCashOut } = otherPlayer;
-        const player = this.otherPlayerList.find((player) => player.playerId === playerId);
-        if (!player) {
-            return;
-        }
-        halfCashOut && (player["halfCashOut"] = halfCashOut);
-        cashOut && (player["cashOut"] = cashOut);
-        const playerNode = this.nodeContent.getChildByName(otherPlayer.playerId);
-        if (playerNode) {
-            const comp = playerNode.getComponent(LeaderBoardItem);
-            comp?.setData(player);
-        }
+        this.isOtherCashOut = true;
     }
 
     @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.betList, { fireImmediately: false })
@@ -89,7 +82,6 @@ export class LeaderBoard extends ObserverComponent {
             return;
         }
 
-        this.otherPlayerList = players;
         const itemList = this.nodeContent.getComponentsInChildren(LeaderBoardItem);
 
         if (itemList.length === 0) {
@@ -97,7 +89,7 @@ export class LeaderBoard extends ObserverComponent {
                 this.createBoardItem(player.playerId);
             });
         } else {
-            this.createBoardItem();
+            !this.isOtherCashOut && this.createBoardItem();
         }
 
         this.nodeContent.getComponentsInChildren(LeaderBoardItem).forEach((item, index) => {
@@ -132,7 +124,7 @@ export class LeaderBoard extends ObserverComponent {
     private resetLeaderBoard(startPlacingBet: boolean) {
         if (startPlacingBet) {
             this.resetMainPlayer();
-            this.resetOtherPlayers();
+            this.handleResetOtherPlayers();
             !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight);
         }
     }

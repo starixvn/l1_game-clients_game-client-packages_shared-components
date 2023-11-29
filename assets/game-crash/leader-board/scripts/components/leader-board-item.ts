@@ -34,7 +34,7 @@ export class LeaderBoardItem extends Component {
     }
 
     setCashOutEmpty() {
-        this.cpnHalfCashOut.setCashOutEmpty();
+        this.cpnFullCashOut.setCashOutEmpty();
     }
 
     setHalfCashOutVisibility(status: boolean) {
