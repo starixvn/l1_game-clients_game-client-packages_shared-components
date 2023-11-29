@@ -1,27 +1,16 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Color, Component, Label, Node } from "cc";
+import { _decorator, Component } from "cc";
+
+import { LeaderBoardCashOut } from "./leader-board-cash-out";
 
 const { ccclass, property } = _decorator;
-const { FormatUtils } = gc;
 @ccclass
 export class LeaderBoardItem extends Component {
-    @property(Label)
-    lblName: Label = null;
+    @property(LeaderBoardCashOut)
+    cpnFullCashOut: LeaderBoardCashOut = null;
 
-    @property(Label)
-    lblMultiplierWhenHalfCashOut: Label = null;
-
-    @property(Label)
-    lblHalfCashout: Label = null;
-
-    @property(Node)
-    nodeHalfCashOutContainer: Node = null;
-
-    @property(Label)
-    lblMultiplier: Label = null;
-
-    @property(Label)
-    lblCashout: Label = null;
+    @property(LeaderBoardCashOut)
+    cpnHalfCashOut: LeaderBoardCashOut = null;
 
     onLoad() {
         this.setHalfCashOutVisibility(false);
@@ -29,41 +18,31 @@ export class LeaderBoardItem extends Component {
 
     setData(data: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer, isMainPlayer = false) {
         const { name, cashOut, halfCashOut, amount } = data;
+        const customName = isMainPlayer ? name : this.encryptedName(name);
 
-        this.nodeHalfCashOutContainer.active = false;
-        this.lblName.string = isMainPlayer ? name : this.encryptedName(name);
-        isMainPlayer && (this.lblName.color = new Color().fromHEX("#52faf8"));
-
+        this.setHalfCashOutVisibility(false);
         if ((halfCashOut && !cashOut) || (cashOut && !halfCashOut)) {
             const value = halfCashOut || cashOut;
-            this.updateCashOut(value, true);
+            this.cpnFullCashOut.setData({ name: customName, multiplier: value.multiplier, win: value.win });
         } else if (halfCashOut && cashOut) {
             this.setHalfCashOutVisibility(true);
-            this.updateCashOut(cashOut, true);
-            this.updateCashOut(halfCashOut, false);
+            this.cpnHalfCashOut.setData({ name: customName, multiplier: halfCashOut.multiplier, win: halfCashOut.win });
+            this.cpnFullCashOut.setData({ name: customName, multiplier: cashOut.multiplier, win: cashOut.win });
         } else {
-            this.lblMultiplier.string = "-";
-            this.lblCashout.string = FormatUtils.numberWithCommas(amount, 2);
+            this.cpnFullCashOut.setData({ name: customName, multiplier: null, win: amount });
         }
     }
 
     setCashOutEmpty() {
-        this.lblCashout.string = "-";
-    }
-
-    isShowHalfCashOutContainerNode(): boolean {
-        return this.nodeHalfCashOutContainer.active;
+        this.cpnHalfCashOut.setCashOutEmpty();
     }
 
     setHalfCashOutVisibility(status: boolean) {
-        this.nodeHalfCashOutContainer.active = status;
+        this.cpnHalfCashOut.node.active = status;
     }
 
-    private updateCashOut(data: gc.GameCrash.GameCrashServiceMessage.CashOutReceive, isFirstRow: boolean) {
-        const lblMultiplier = isFirstRow ? this.lblMultiplier : this.lblMultiplierWhenHalfCashOut;
-        const lblCashout = isFirstRow ? this.lblCashout : this.lblHalfCashout;
-        lblMultiplier.string = `${FormatUtils.numberWithCommas(data.multiplier, 2, false)}x`;
-        lblCashout.string = FormatUtils.numberWithCommas(data.win, 2);
+    isShowFullCashOutNode(): boolean {
+        return this.cpnHalfCashOut.node.active;
     }
 
     private encryptedName(name: string): string {

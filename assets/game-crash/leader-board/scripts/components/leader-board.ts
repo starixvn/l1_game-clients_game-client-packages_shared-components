@@ -122,7 +122,6 @@ export class LeaderBoard extends ObserverComponent {
             this.scrollOtherPlayer(this.itemHeight);
 
             if (halfCashOut && cashOut) {
-                this.cpnMainPlayer.nodeHalfCashOutContainer.active = true;
                 this.scrollOtherPlayer(this.itemHeight * 2);
                 !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight + this.itemHeight);
             }
@@ -171,7 +170,7 @@ export class LeaderBoard extends ObserverComponent {
     }
 
     onClickCollapseButton(e) {
-        const collapseHeight = this.cpnMainPlayer.isShowHalfCashOutContainerNode()
+        const collapseHeight = this.cpnMainPlayer.isShowFullCashOutNode()
             ? this.collapsedBoardHeight + this.itemHeight
             : this.collapsedBoardHeight;
         const boardHeight = this.isExpandedBoard ? collapseHeight : this.expandedBoardHeight;
