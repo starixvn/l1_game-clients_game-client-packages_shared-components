@@ -169,11 +169,6 @@ export default class PlaceBetButton extends ObserverComponent {
         this.isAutoPlayMode = isAutoPlay;
     }
 
-    @render(PlayerActionStore, (store) => store.autoPlay)
-    updateStatusAutoPlay(autoPlay: boolean) {
-        this.autoPlay = autoPlay;
-    }
-
     @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
     renderPlacingBet(isPlacingBet: boolean) {
         if (isPlacingBet && this.isAutoPlayMode && !this.autoPlay && !this.hasEarlyBetBeforeAutoPlay) {
