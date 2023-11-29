@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, Label } from "cc";
+import { _decorator, Component, Label, v3 } from "cc";
 const { FormatUtils } = gc;
 const { ccclass, property } = _decorator;
 
@@ -10,5 +10,9 @@ export class ColMultiplierItem extends Component {
 
     setMultiplier(value: number) {
         this.lblMultiplier.string = FormatUtils.numberWithCommas(value, 2);
+    }
+
+    setPositionForMultiplier1() {
+        this.lblMultiplier.node.position = v3(35, 6, 0);
     }
 }

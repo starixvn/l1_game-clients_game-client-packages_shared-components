@@ -57,6 +57,7 @@ export default class ColMultipliers extends ObserverComponent {
         node.position = v3(0, itemPosY, 0);
         multiplierContainerTransform.height = this.multiplierItemHeight + itemPosY;
         const comp = node.getComponent(ColMultiplierItem);
+        multiplier === 1 && comp.setPositionForMultiplier1();
         comp.setMultiplier(multiplier);
     }
 
