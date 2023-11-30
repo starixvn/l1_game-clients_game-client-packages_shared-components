@@ -110,7 +110,6 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     }
 
     updatedAutoPlayWhenRocketFly(value: boolean) {
-        console.log("updatedAutoPlayWhenRocketFly", value);
         this.autoPlayStore.autoPlayWhenRocketFly = value;
     }
 }

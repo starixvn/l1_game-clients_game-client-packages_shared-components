@@ -49,7 +49,6 @@ export default class PlaceBetButton extends ObserverComponent {
 
     private isAutoPlayMode = false;
 
-    private autoPlay = false;
     private hasEarlyBetBeforeAutoPlay = false;
 
     @render(BetInputStore, (store) => store.betAmount)
@@ -117,50 +116,46 @@ export default class PlaceBetButton extends ObserverComponent {
         return { autoCashOut: this.isEnableAutoCashOut ? this.valueAutoCashOut : undefined, amount: this.amount };
     }
 
-    @render(Rounds.RoundTimeStore, (store) => ({
-        isPlacingBet: store.isPlacingBet,
-        remaining: store.remaining,
-        isLockingBet: store.isLocking,
-        isStartPlacingBet: store.isStartPlacingBet,
-    }))
-    showPlaceBet(data: { isPlacingBet: boolean; remaining: number; isLockingBet: boolean; isShowResult: boolean }) {
-        const { isPlacingBet, remaining, isLockingBet } = data;
-
-        if (remaining <= 0) {
-            this.handleNoRemaining();
-        } else if (isPlacingBet) {
-            this.handlePlacingBet();
-        } else if (isLockingBet && !this.isBetAccepted) {
-            this.handleBlockBet(true);
+    @render(PlayerActionStore, (store) => store.isFlyingTime)
+    renderLiveGame(isFlyingTime: boolean) {
+        if (isFlyingTime) {
+            this.isBetAccepted = false;
+            this.node.active = false;
+            this.setStatusBet(false);
         }
     }
-    handleNoRemaining() {
-        this.isBetAccepted = false;
-        this.node.active = false;
-        this.setStatusBet(false);
+
+    @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
+    renderPlacingBet(isPlacingBet: boolean) {
+        if (isPlacingBet) {
+            this.node.active = true;
+            if (this.earlyBet || this.isBetAccepted) {
+                this.isBetAccepted = true;
+                this.setStatusBet(true);
+            } else {
+                this.setStatusBet(false);
+                this.enableAutoCashOut();
+            }
+        }
     }
 
-    handlePlacingBet() {
-        this.node.active = true;
-        if (this.earlyBet || this.isBetAccepted) {
-            this.isBetAccepted = true;
-            this.setStatusBet(true);
-        } else {
-            this.setStatusBet(false);
-            this.enableAutoCashOut();
+    @render(Rounds.RoundTimeStore, (store) => store.isLocking)
+    renderLockBet(isLocking: boolean) {
+        if (isLocking && !this.isBetAccepted) {
+            this.disablePlaceBetButton(true);
         }
     }
 
     setStatusBet(selected: boolean) {
         this.bgWaiting.node.active = this.sprBetAccepted.node.active = selected;
         this.sprPlaceBet.node.active = this.bgPlaceBet.node.active = !selected;
-        this.handleBlockBet(selected);
+        this.disablePlaceBetButton(selected);
     }
 
     @handle(AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
     enableAutoCashOut() {}
 
-    handleBlockBet(disable: boolean) {
+    disablePlaceBetButton(disable: boolean) {
         this.bgDisable.node.active = disable;
     }
 
@@ -170,12 +165,17 @@ export default class PlaceBetButton extends ObserverComponent {
     }
 
     @render(PlayerActionStore, (store) => store.activeAutoPlayCurrentRound)
-    renderPlacingBet(activeAutoPlayCurrentRound: boolean) {
-        if (activeAutoPlayCurrentRound) {
+    effectAutoPlayInCurrentRound(activeAutoPlayCurrentRound: boolean) {
+        if (activeAutoPlayCurrentRound && !this.hasEarlyBetBeforeAutoPlay) {
             this.disabledAutoPlayWhenPlacingBet();
             this.onClickPlaceBet();
             this.decreaseAutoPlayRounds();
         }
+    }
+
+    @render(AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
+    updateHasEarlyBetBeforeAutoPlay(value: boolean) {
+        this.hasEarlyBetBeforeAutoPlay = value;
     }
 
     @handle(AutoPlayHandler, (handle) => handle.decreaseAutoPlayRounds())

@@ -147,7 +147,7 @@ export class PlayerActionStore {
     }
 
     get activeAutoPlayCurrentRound() {
-        return this.enableAutoPlay && !this.activeAutoPlay && this.roundTimeStore.isPlacingBet;
+        return this.enableAutoPlay && this.roundTimeStore.isPlacingBet;
     }
 
     constructor() {

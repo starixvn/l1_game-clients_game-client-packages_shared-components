@@ -4,7 +4,6 @@ import { ObserverComponent } from "../../../shared/common-components/observer-co
 import { AutoPlayHandler } from "./handlers/auto-play-handler";
 import { AutoPlayStore } from "./stores/auto-play-store";
 import { PlayerActionHandlers } from "../../player-actions/player-action-handlers";
-import { AUTO_PLAY_STATE } from "../../player-actions/player-action-store";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
