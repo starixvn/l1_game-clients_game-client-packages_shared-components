@@ -8,10 +8,10 @@ import { AutoPlayHandler } from "../../../../../extensions/shared-components/ass
 import { AutoPlayStore } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/stores/auto-play-store";
 import { BetInputStore } from "../../../../../extensions/shared-components/assets/game-crash/bet-input/scripts/stores/bet-input-store";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
-import { BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
+import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
+import { BET_STATE } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 import { EarlyBetStore } from "./early-bet-store";
-import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -76,7 +76,6 @@ export default class PlaceBetButton extends ObserverComponent {
             this.placeBetNotice.active = false;
         }, 3000);
     }
-
 
     @render(Bet.BetStore, (store) => store.isReceivedBet)
     setBetStatus(isReceivedBet: boolean) {
@@ -154,7 +153,7 @@ export default class PlaceBetButton extends ObserverComponent {
     setStatusBet(selected: boolean) {
         this.bgWaiting.node.active = this.sprBetAccepted.node.active = selected;
         this.sprPlaceBet.node.active = this.bgPlaceBet.node.active = !selected;
-        this.handleBlockBet(false);
+        this.handleBlockBet(selected);
     }
 
     @handle(AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
