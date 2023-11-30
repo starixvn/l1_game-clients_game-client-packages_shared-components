@@ -191,13 +191,6 @@ export default class PlaceBetButton extends ObserverComponent {
     @handle(PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(false))
     handleAutoPlayStatus() {}
 
-    @render(AutoPlayStore, (store) => store.autoPlayWhenPlacingBet)
-    checkAutoPlayWhenPlacingBet(autoPlayWhenPlacingBet: boolean) {
-        if (autoPlayWhenPlacingBet) {
-            this.onClickPlaceBet();
-        }
-    }
-
     @handle(AutoPlayHandler, (handle, value: boolean) => handle.updatedAutoPlayWhenPlacingBet(value))
     disabledAutoPlayWhenPlacingBet() {
         return false;

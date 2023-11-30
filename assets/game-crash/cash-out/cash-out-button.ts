@@ -7,6 +7,7 @@ import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 import { CASH_OUT_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 import { CashOutComponent } from "./cash-out-component";
+import { AutoPlayHandler } from "../auto-play/scripts/handlers/auto-play-handler";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -73,10 +74,12 @@ export class CashOutButton extends ObserverComponent {
     )
     onClickCashOut() {
         this.closeAllPopups();
-        this.handleUICashOutState(CASH_OUT_STATE.FULL);
+        setTimeout(() => {
+            this.handleUICashOutState(CASH_OUT_STATE.FULL);
+        }, 3000);
         return CashOutComponent.getCashOutValue(this.lblCashOut);
     }
-
+    
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })
     updateValueCashOut(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
         CashOutComponent.updateValueCashOut(cashOut?.win, this.lblCashOut);
