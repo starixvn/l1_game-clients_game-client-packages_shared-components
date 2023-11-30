@@ -9,7 +9,7 @@ import { AutoPlayStore } from "../../../../../extensions/shared-components/asset
 import { BetInputStore } from "../../../../../extensions/shared-components/assets/game-crash/bet-input/scripts/stores/bet-input-store";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
-import { BET_STATE } from "../player-actions/player-action-store";
+import { BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 import { EarlyBetStore } from "./early-bet-store";
 
