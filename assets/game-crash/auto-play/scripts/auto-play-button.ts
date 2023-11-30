@@ -3,6 +3,8 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { AutoPlayHandler } from "./handlers/auto-play-handler";
 import { AutoPlayStore } from "./stores/auto-play-store";
+import { PlayerActionHandlers } from "../../player-actions/player-action-handlers";
+import { AUTO_PLAY_STATE } from "../../player-actions/player-action-store";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -32,5 +34,11 @@ export class AutoPlayButton extends ObserverComponent {
     updateAutoPlayButton(isAutoPlay: boolean) {
         this.lblNoOfRound.node.active = this.nodeTextStopAutoPlay.active = isAutoPlay;
         this.sprIconAutoPlay.node.active = this.nodeTextAutoPlay.active = !isAutoPlay;
+        this.enableAutoPlay(isAutoPlay);
+    }
+
+    @handle(PlayerActionHandlers, (handle, flag: boolean) => handle.handleEnableAutoPlayInStore(flag))
+    enableAutoPlay(isAutoPlay: boolean) {
+        return isAutoPlay;
     }
 }

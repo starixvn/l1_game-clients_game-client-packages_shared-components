@@ -4,6 +4,7 @@ import inversify from "inversify";
 import { BetInputStore } from "../../../bet-input/scripts/stores/bet-input-store";
 import { EarlyBetStore } from "../../../bet/early-bet-store";
 import { AutoPlayStore } from "../stores/auto-play-store";
+import { PlayerActionStore } from "../../../player-actions/player-action-store";
 
 const { injectable, inject } = inversify;
 const { Translator } = gc;
@@ -17,6 +18,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     @inject(gc.Bet.BetStore) private readonly betStore: gc.Bet.BetStore;
     @inject(gc.Player.MainPlayerStore) private readonly mainPlayerStore: gc.Player.MainPlayerStore;
     @inject(gc.Notices.NoticeStore) private readonly noticeStore: gc.Notices.NoticeStore;
+    @inject(PlayerActionStore) private readonly playerActionStore: PlayerActionStore;
 
     handle() {}
 
@@ -46,6 +48,8 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
 
     closeAutoPlayPopup() {
         this.autoPlayStore.isOpenAutoPlayPopup = false;
+        this.autoPlayStore.autoPlayWhenRocketFly = false;
+        this.autoPlayStore.autoPlayWhenPlacingBet = false;
     }
 
     confirmRoundAndStart() {
@@ -54,7 +58,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
         if ((this.roundTimeStore.isPlacingBet || this.roundTimeStore.isLocking) && !this.betStore.isReceivedBet) {
             this.autoPlayStore.roundsAutoPlay = this.autoPlayStore.selectedRoundOnPopup - 1;
             this.autoPlayStore.autoPlayWhenPlacingBet = true;
-        } else if (this.roundTimeStore.isTimeOut && !this.earlyBetStore.earlyBet) {
+        } else if ((!this.playerActionStore.visibleCashOut || this.playerActionStore.visibleBetNextRound) && !this.earlyBetStore.earlyBet) {
             this.autoPlayStore.roundsAutoPlay = this.autoPlayStore.selectedRoundOnPopup - 1;
             this.autoPlayStore.autoPlayWhenRocketFly = true;
         } else {
@@ -71,7 +75,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
 
     decreaseAutoPlayRounds() {
         if (this.autoPlayStore.isAutoPlay) {
-            if (this.checkBalanceForAutoPlay()) {
+            if (this.checkBalanceForAutoPlay() && this.autoPlayStore.roundsAutoPlay > 0) {
                 this.updateAutoPlayRounds(this.autoPlayStore.roundsAutoPlay - 1);
             } else {
                 this.autoPlayStore.isAutoPlay = false;
@@ -93,6 +97,8 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     cancelAutoPlay() {
         this.autoPlayStore.roundsAutoPlay = 0;
         this.autoPlayStore.isAutoPlay = false;
+        this.autoPlayStore.autoPlayWhenRocketFly = false;
+        this.autoPlayStore.autoPlayWhenPlacingBet = false;
     }
 
     checkEarlyBetBeforeAutoPlay(value: boolean) {
@@ -104,6 +110,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     }
 
     updatedAutoPlayWhenRocketFly(value: boolean) {
+        console.log("updatedAutoPlayWhenRocketFly", value);
         this.autoPlayStore.autoPlayWhenRocketFly = value;
     }
 }

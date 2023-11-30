@@ -53,7 +53,7 @@ export class CashOutButton extends ObserverComponent {
         return CashOutComponent.getBetValue(lastReceivedBet);
     }
 
-    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentCashOutSateInStore(action))
+    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentCashOutStateInStore(action))
     handleUICashOutState(action: string) {
         return action;
     }

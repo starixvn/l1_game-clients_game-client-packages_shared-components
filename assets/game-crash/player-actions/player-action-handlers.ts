@@ -21,11 +21,11 @@ export class PlayerActionHandlers implements IHandler<boolean> {
         this.playerActionStore.endShowCashoutNotice = flag;
     }
 
-    handleCurrentBetSateInStore(action: string) {
+    handleCurrentBetStateInStore(action: string) {
         this.playerActionStore.betState = action;
     }
 
-    handleCurrentEarlyBetSateInStore(action: string) {
+    handleCurrentEarlyBetStateInStore(action: string) {
         this.playerActionStore.earlyBetState = action;
     }
 
@@ -33,7 +33,15 @@ export class PlayerActionHandlers implements IHandler<boolean> {
         this.playerActionStore.waitingBet = flag;
     }
 
-    handleCurrentCashOutSateInStore(action: string) {
+    handleCurrentCashOutStateInStore(action: string) {
         this.playerActionStore.cashOutState = action;
+    }
+
+    handleActiveAutoPlayInStore(flag: boolean) {
+        this.playerActionStore.activeAutoPlay = flag;
+    }
+
+    handleEnableAutoPlayInStore(flag: boolean) {
+        this.playerActionStore.enableAutoPlay = flag;
     }
 }

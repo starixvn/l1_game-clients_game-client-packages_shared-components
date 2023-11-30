@@ -82,7 +82,7 @@ export default class PlaceBetButton extends ObserverComponent {
         this.handleBetUIControl(isReceivedBet ? BET_STATE.BET : BET_STATE.NONE);
     }
 
-    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetSateInStore(action))
+    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
     handleBetUIControl(action: string) {
         return action;
     }
@@ -101,6 +101,7 @@ export default class PlaceBetButton extends ObserverComponent {
     updateValueAutoCashOut(value: number) {
         this.valueAutoCashOut = value;
     }
+
     onClickPlaceBet() {
         this.closeAllPopups();
         if (!this.isBetAccepted && !this.bgDisable.node.active) {
@@ -168,9 +169,9 @@ export default class PlaceBetButton extends ObserverComponent {
         this.isAutoPlayMode = isAutoPlay;
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
-    renderPlacingBet(isPlacingBet: boolean) {
-        if (isPlacingBet && this.isAutoPlayMode && !this.autoPlay && !this.hasEarlyBetBeforeAutoPlay) {
+    @render(PlayerActionStore, (store) => store.activeAutoPlayCurrentRound)
+    renderPlacingBet(activeAutoPlayCurrentRound: boolean) {
+        if (activeAutoPlayCurrentRound) {
             this.disabledAutoPlayWhenPlacingBet();
             this.onClickPlaceBet();
             this.decreaseAutoPlayRounds();
@@ -180,10 +181,15 @@ export default class PlaceBetButton extends ObserverComponent {
     @handle(AutoPlayHandler, (handle) => handle.decreaseAutoPlayRounds())
     decreaseAutoPlayRounds() {}
 
-    @render(AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
-    updateHasEarlyBetBeforeAutoPlay(value: boolean) {
-        this.hasEarlyBetBeforeAutoPlay = value;
+    @render(Rounds.RoundTimeStore, (store) => store.isLocking)
+    disableAutoPlay(isLocking: boolean) {
+        if (isLocking) {
+            this.handleAutoPlayStatus();
+        }
     }
+
+    @handle(PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(false))
+    handleAutoPlayStatus() {}
 
     @render(AutoPlayStore, (store) => store.autoPlayWhenPlacingBet)
     checkAutoPlayWhenPlacingBet(autoPlayWhenPlacingBet: boolean) {

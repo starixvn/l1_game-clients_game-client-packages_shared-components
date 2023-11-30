@@ -22,6 +22,7 @@ export const CASH_OUT_STATE = {
     HALF: "half",
     FULL: "full",
 };
+
 @injectable()
 export class PlayerActionStore {
     @inject(gc.GameCrash.CrashCashOut.CrashCashoutStore)
@@ -39,19 +40,35 @@ export class PlayerActionStore {
     @inject(gc.Rounds.RoundTimeStore)
     protected readonly roundTimeStore: gc.Rounds.RoundTimeStore;
 
-    private _endShowCashoutNotice = false;
-
-    private _isReceivedBet: boolean;
+    private _endShowCashOutNotice = false;
 
     private _waitingBet = false;
 
-    private _autoPlay = false;
+    private _activeAutoPlay = false;
+
+    private _enableAutoPlay = false;
 
     private _earlyBetState = EARLY_BET_STATE.NONE;
 
     private _cashOutState = CASH_OUT_STATE.NONE;
 
     private _betState = BET_STATE.NONE;
+
+    get enableAutoPlay() {
+        return this._enableAutoPlay;
+    }
+
+    set enableAutoPlay(value: boolean) {
+        this._enableAutoPlay = value;
+    }
+
+    get activeAutoPlay() {
+        return this._activeAutoPlay;
+    }
+
+    set activeAutoPlay(value: boolean) {
+        this._activeAutoPlay = value;
+    }
 
     get earlyBetState() {
         return this._earlyBetState;
@@ -78,11 +95,11 @@ export class PlayerActionStore {
     }
 
     get endShowCashoutNotice(): boolean {
-        return this._endShowCashoutNotice;
+        return this._endShowCashOutNotice;
     }
 
     set endShowCashoutNotice(flag: boolean) {
-        this._endShowCashoutNotice = flag;
+        this._endShowCashOutNotice = flag;
     }
 
     get visibleBetNextRound() {
@@ -90,6 +107,10 @@ export class PlayerActionStore {
             (this.betState === BET_STATE.NONE && this.isFlyingTime) ||
             (this.cashOutState === CASH_OUT_STATE.FULL && this.endShowCashoutNotice)
         );
+    }
+
+    get permissionAutoPlay() {
+        return this.cashOutState === CASH_OUT_STATE.FULL && this.betState === BET_STATE.BET;
     }
 
     get isFlyingTime() {
@@ -123,6 +144,10 @@ export class PlayerActionStore {
 
     set waitingBet(enable: boolean) {
         this._waitingBet = enable;
+    }
+
+    get activeAutoPlayCurrentRound() {
+        return this.enableAutoPlay && !this.activeAutoPlay && this.roundTimeStore.isPlacingBet;
     }
 
     constructor() {

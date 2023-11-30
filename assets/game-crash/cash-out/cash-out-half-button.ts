@@ -55,7 +55,7 @@ export class CashOutHalfButton extends ObserverComponent {
         return CashOutComponent.getBetValue(lastReceivedBet);
     }
 
-    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentCashOutSateInStore(action))
+    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentCashOutStateInStore(action))
     handleCashOutState() {
         return CASH_OUT_STATE.HALF;
     }
