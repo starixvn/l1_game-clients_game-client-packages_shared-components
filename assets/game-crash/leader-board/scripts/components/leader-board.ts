@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, instantiate, Node, Prefab, ScrollView, Tween, tween, UITransform, v3, Widget } from "cc";
 import Observer from "observer";
 
+import { settings } from "../../../../../../../assets/game/scripts/game-settings";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { LeaderBoardItem } from "./leader-board-item";
 
@@ -33,17 +34,12 @@ export class LeaderBoard extends ObserverComponent {
     @property(Node)
     nodeLeaderBoardMask: Node = null;
 
-    @property
-    collapsedBoardHeight = 100;
-
-    @property
-    expandedBoardHeight = 310;
-
+    private readonly collapsedBoardHeight = 61;
+    private readonly expandedBoardHeight = 210;
     private readonly itemHeight = 30;
     private otherPlayerTween: Tween<Widget> = null;
     private leaderBoardTween: Tween<UITransform> = null;
     private isExpandedBoard = true;
-    private isOtherCashOut = false;
 
     onLoad() {
         this.resetOtherPlayers();
@@ -57,7 +53,6 @@ export class LeaderBoard extends ObserverComponent {
     }
 
     private resetOtherPlayers() {
-        this.isOtherCashOut = false;
         this.scrollOtherPlayer(0);
         this.nodeContent.removeAllChildren();
         this.otherPlayersScrollView.scrollToTop(0.1);
@@ -69,48 +64,36 @@ export class LeaderBoard extends ObserverComponent {
         this.cpnMainPlayer.setHalfCashOutVisibility(false);
     }
 
-    @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
-    private updateOtherPlayerCashout(otherPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
-        this.isOtherCashOut = true;
-    }
-
-    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.betList, { fireImmediately: false })
-    updateOtherPlayers(betList: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayerList) {
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => ({ betList: store.betList, roundTime: store.roundTime }), {
+        fireImmediately: false,
+    })
+    private updateOtherPlayers({ betList, roundTime }) {
         const { players } = betList;
 
         if (players.length === 0) {
             return;
         }
 
-        const itemList = this.nodeContent.getComponentsInChildren(LeaderBoardItem);
+        players.forEach((player, index) => {
+            let node = this.nodeContent.children[index];
 
-        if (itemList.length === 0) {
-            players.forEach((player) => {
-                this.createBoardItem(player.playerId);
-            });
-        } else {
-            !this.isOtherCashOut && this.createBoardItem();
-        }
-
-        this.nodeContent.getComponentsInChildren(LeaderBoardItem).forEach((item, index) => {
-            const playerData = players[index];
-            if (!playerData) {
-                item.destroy();
-                return;
+            if (!node) {
+                node = this.createBoardItem();
             }
-
-            item.setData(playerData);
-            item.node.name = playerData.playerId;
+            const comp = node.getComponent(LeaderBoardItem);
+            comp?.setData(player, false, this.checkNeedEmptyBetAmount(roundTime));
         });
     }
 
-    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.mainPlayer, { fireImmediately: false })
-    updateMainPlayer(mainPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => ({ mainPlayer: store.mainPlayer, roundTime: store.roundTime }), {
+        fireImmediately: false,
+    })
+    private updateMainPlayer({ mainPlayer, roundTime }) {
         const { amount, halfCashOut, cashOut } = mainPlayer;
 
         if (amount) {
             this.setMainPlayerVisibility(true);
-            this.cpnMainPlayer?.setData(mainPlayer, true);
+            this.cpnMainPlayer?.setData(mainPlayer, true, this.checkNeedEmptyBetAmount(roundTime));
             this.scrollOtherPlayer(this.itemHeight);
 
             if (halfCashOut && cashOut) {
@@ -129,15 +112,8 @@ export class LeaderBoard extends ObserverComponent {
         }
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isTimeOut)
-    private setBetAmountEmpty(isTimeOut: boolean) {
-        if (isTimeOut) {
-            this.nodeContent.children.forEach((playerNode) => {
-                const comp = playerNode.getComponent(LeaderBoardItem);
-                comp.setCashOutEmpty();
-            });
-            this.cpnMainPlayer.setCashOutEmpty();
-        }
+    private checkNeedEmptyBetAmount(roundTime): boolean {
+        return roundTime <= 0 || (roundTime <= settings.durations.wholeRound && roundTime > settings.durations.placingBet);
     }
 
     private scrollOtherPlayer(top: number, isAnimated = true) {
@@ -195,9 +171,8 @@ export class LeaderBoard extends ObserverComponent {
             .start();
     }
 
-    private createBoardItem(playerId = ""): Node {
+    private createBoardItem(): Node {
         const node = instantiate(this.pfbItem);
-        node.name = playerId;
         this.nodeContent.addChild(node);
         return node;
     }

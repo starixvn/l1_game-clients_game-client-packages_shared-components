@@ -8,6 +8,8 @@ interface ILeaderBoardCashOutData {
     name: string;
     multiplier: number;
     win: number;
+    amount: number;
+    isEmptyAmount: boolean;
 }
 
 @ccclass
@@ -21,14 +23,23 @@ export class LeaderBoardCashOut extends Component {
     @property(Label)
     lblCashout: Label = null;
 
+    @property(Label)
+    lblBetAmount: Label = null;
+
     setData(data: ILeaderBoardCashOutData) {
-        const { name, multiplier, win } = data;
+        const { name, multiplier, win, amount, isEmptyAmount } = data;
         this.lblName.string = name;
         this.lblMultiplier.string = multiplier ? `${FormatUtils.numberWithCommas(multiplier, 2, false)}x` : "-";
-        this.lblCashout.string = FormatUtils.numberWithCommas(win, 2);
-    }
 
-    setCashOutEmpty() {
-        this.lblCashout.string = "-";
+        this.lblCashout.node.active = false;
+        this.lblBetAmount.node.active = false;
+
+        if (win) {
+            this.lblCashout.node.active = true;
+            this.lblCashout.string = FormatUtils.numberWithCommas(win, 2);
+        } else {
+            this.lblBetAmount.node.active = true;
+            this.lblBetAmount.string = isEmptyAmount ? "-" : FormatUtils.numberWithCommas(amount, 2);
+        }
     }
 }
