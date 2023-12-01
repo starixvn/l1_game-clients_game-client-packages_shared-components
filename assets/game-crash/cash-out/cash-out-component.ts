@@ -11,12 +11,7 @@ export namespace CashOutComponent {
     };
 
     export const getBetValue = (lastReceivedBet: any) => {
-        if (lastReceivedBet) {
-            const lastestBet = lastReceivedBet.value;
-            if (lastestBet >= 0) {
-                return lastestBet;
-            }
-        }
+        return lastReceivedBet && lastReceivedBet.value >= 0 ? lastReceivedBet.value : undefined;
     };
 
     export const updateCashOutButton = (isCashedOut: boolean, sprDisabled: Sprite) => {

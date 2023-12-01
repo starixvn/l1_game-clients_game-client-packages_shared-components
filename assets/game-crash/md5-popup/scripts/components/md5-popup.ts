@@ -14,7 +14,7 @@ import { Md5PopupStore } from "../stores/md5-popup-store";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
-const { Rounds, Settlements, Translator, GameUtils } = gc;
+const { GameUtils } = gc;
 @ccclass
 export class Md5Popup extends ObserverComponent {
     @property(Label)
@@ -59,7 +59,7 @@ export class Md5Popup extends ObserverComponent {
     private cpnKeyCopyButton: Md5CopyButton = null;
     private cpnResultCopyButton: Md5CopyButton = null;
     protected resultTipString: string;
-    private maximumStringAllowed = 34;
+    private readonly maximumStringAllowed = 34;
 
     onLoad() {
         super.onLoad();

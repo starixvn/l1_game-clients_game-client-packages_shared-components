@@ -7,7 +7,6 @@ import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 import { CASH_OUT_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 import { CashOutComponent } from "./cash-out-component";
-import { AutoPlayHandler } from "../auto-play/scripts/handlers/auto-play-handler";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -37,7 +36,7 @@ export class CashOutButton extends ObserverComponent {
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.multiplier)
     updateCashOut(multiplier: number) {
         if (!this.isCashedOut) {
-            let cashOutValue = multiplier * this.bet;
+            const cashOutValue = multiplier * this.bet;
             this.lblCashOut.string = FormatUtils.numberWithCommas(cashOutValue, 2);
         }
     }

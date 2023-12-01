@@ -18,12 +18,12 @@ export class CrashRoundHistoryStore {
     @inject(gc.Rounds.RoundStore) protected readonly roundStore: gc.Rounds.RoundStore;
     @inject(gc.Settlements.SettlementStore) protected readonly settlementStore: gc.Settlements.SettlementStore;
     @inject(Md5PopupStore) protected readonly md5PopupStore: Md5PopupStore;
-    private _lastRound: CrashRoundHistory = { roundId: 0, result: {}, md5Result: {}, settlementResult: {} };
+    private readonly _lastRound: CrashRoundHistory = { roundId: 0, result: {}, md5Result: {}, settlementResult: {} };
     private _roundIndex = 0;
     get roundHistories() {
         let roundHistoy = [];
 
-        let lastRoundId = this.roundHistoryStore.histories[0]?.roundId;
+        const lastRoundId = this.roundHistoryStore.histories[0]?.roundId;
         if (lastRoundId === this.lastRound.roundId) {
             roundHistoy = this.roundHistoryStore.histories as CrashRoundHistory[];
             if (!this.settlementStore.currentFinish) {

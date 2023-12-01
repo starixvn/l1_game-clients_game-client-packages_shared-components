@@ -37,7 +37,7 @@ export class CashOutHalfButton extends ObserverComponent {
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.multiplier)
     updateCashOut(multiplier: number) {
         if (!this.isCashedOutHalf) {
-            let cashOutValue = (multiplier * this.bet) / 2;
+            const cashOutValue = (multiplier * this.bet) / 2;
             this.lblCashOut.string = FormatUtils.numberWithCommas(cashOutValue, 2);
         }
     }

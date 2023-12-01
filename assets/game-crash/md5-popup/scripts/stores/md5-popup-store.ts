@@ -7,7 +7,7 @@ const { injectable, inject } = inversify;
 
 @injectable()
 export class Md5PopupStore {
-    private _isOpenPopupMd5: boolean = false;
+    private _isOpenPopupMd5 = false;
 
     private _roundId = 0;
 

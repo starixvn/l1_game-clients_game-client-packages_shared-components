@@ -6,7 +6,7 @@ const { injectable, inject } = inversify;
 
 @injectable()
 export class PopupsGameStore {
-    private _enabledOverlay: boolean = false;
+    private _enabledOverlay = false;
     constructor() {
         mobx.makeAutoObservable(this);
     }

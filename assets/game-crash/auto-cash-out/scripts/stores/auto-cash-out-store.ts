@@ -4,10 +4,10 @@ import mobx from "mobx";
 const { injectable, inject } = inversify;
 @injectable()
 export default class AutoCashOutStore {
-    private _enable: boolean = false;
-    private _multiplier: number = 1.01;
+    private _enable = false;
+    private _multiplier = 1.01;
 
-    private _disable: boolean = false;
+    private _disable = false;
 
     constructor() {
         mobx.makeAutoObservable(this);
