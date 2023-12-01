@@ -26,6 +26,10 @@ export class CashOutButton extends ObserverComponent {
 
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.isCashedOutFull)
     updateCashOutFullButton(isCashedOut: boolean) {
+        isCashedOut &&
+            setTimeout(() => {
+                this.handleUICashOutState(CASH_OUT_STATE.FULL);
+            }, 3000);
         CashOutComponent.updateCashOutButton(isCashedOut, this.sprDisabled);
         this.isCashedOut = isCashedOut;
     }
@@ -74,12 +78,9 @@ export class CashOutButton extends ObserverComponent {
     )
     onClickCashOut() {
         this.closeAllPopups();
-        setTimeout(() => {
-            this.handleUICashOutState(CASH_OUT_STATE.FULL);
-        }, 3000);
         return CashOutComponent.getCashOutValue(this.lblCashOut);
     }
-    
+
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })
     updateValueCashOut(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
         CashOutComponent.updateValueCashOut(cashOut?.win, this.lblCashOut);
