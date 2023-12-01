@@ -4,10 +4,10 @@ import { _decorator, Label, Sprite } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
+import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 import { CASH_OUT_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 import { CashOutComponent } from "./cash-out-component";
-import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -23,6 +23,10 @@ export class CashOutHalfButton extends ObserverComponent {
 
     private bet = 0;
     private isCashedOutHalf = false;
+
+    private halfCashoutData = null;
+
+    private cashOutData = null;
 
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.isCashedOutHalf)
     updateCashOutHalfButton(isCashedOut: boolean) {
@@ -76,7 +80,13 @@ export class CashOutHalfButton extends ObserverComponent {
 
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.halfCashOut, { fireImmediately: false })
     updateValueCashOut(halfCashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
+        this.halfCashoutData = halfCashOut;
         CashOutComponent.updateValueCashOut(halfCashOut?.win, this.lblCashOut);
+    }
+
+    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })
+    assignCashoutData(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
+        this.cashOutData = cashOut;
     }
 
     @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
@@ -85,5 +95,12 @@ export class CashOutHalfButton extends ObserverComponent {
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
     updateStatusCashoutHalfButton(isCrashed: boolean) {
         CashOutComponent.updateCashOutButton(isCrashed, this.sprDisabled);
+    }
+
+    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.isCashedOutFull)
+    updateValueHalfButton(isCashedOutFull: boolean) {
+        if (isCashedOutFull && !this.halfCashoutData) {
+            CashOutComponent.updateValueCashOut(this.cashOutData?.win / 2, this.lblCashOut);
+        }
     }
 }
