@@ -398,7 +398,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -106.502,
+      "y": -103.5,
       "z": 0
     },
     "_lrot": {
@@ -458,7 +458,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 97.057,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -511,7 +511,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": 94.5,
       "z": 0
     },
     "_lrot": {
@@ -667,12 +667,12 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 270,
-      "height": 194.114
+      "height": 189
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 1
+      "y": 0.5
     },
     "_id": ""
   },
@@ -812,7 +812,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 270,
-      "height": 194.114
+      "height": 189
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -868,12 +868,12 @@
     "__prefab": {
       "__id__": 46
     },
-    "_alignFlags": 40,
+    "_alignFlags": 45,
     "_target": null,
     "_left": 2.6645352591003757e-15,
     "_right": -2.6645352591003757e-15,
-    "_top": -1.578999999999965,
-    "_bottom": 38.421000000000014,
+    "_top": 9,
+    "_bottom": 2,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -883,7 +883,7 @@
     "_isAbsHorizontalCenter": true,
     "_isAbsVerticalCenter": true,
     "_originalWidth": 240,
-    "_originalHeight": 273.28999999999996,
+    "_originalHeight": 194.114,
     "_alignMode": 2,
     "_lockFlags": 0,
     "_id": ""
@@ -1589,12 +1589,35 @@
     "targetOverrides": [
       {
         "__id__": 83
+      },
+      {
+        "__id__": 85
       }
     ],
     "nestedPrefabInstanceRoots": [
       {
         "__id__": 3
       }
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": null,
+    "sourceInfo": null,
+    "propertyPath": [
+      "cpnMainPlayer"
+    ],
+    "target": {
+      "__id__": 3
+    },
+    "targetInfo": {
+      "__id__": 84
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "00UC3BSGtPprr5l7MdCCvp"
     ]
   },
   {
@@ -1610,7 +1633,7 @@
       "__id__": 3
     },
     "targetInfo": {
-      "__id__": 84
+      "__id__": 86
     }
   },
   {
