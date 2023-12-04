@@ -24,11 +24,8 @@ export class CrashRoundHistoryStore {
         let roundHistoy = [];
 
         const lastRoundId = this.roundHistoryStore.histories[0]?.roundId;
-        if (lastRoundId === this.lastRound.roundId) {
+        if (lastRoundId === this.lastRound.roundId || this.roundTimeStore.isStartRound) {
             roundHistoy = this.roundHistoryStore.histories as CrashRoundHistory[];
-            if (!this.settlementStore.currentFinish) {
-                roundHistoy = [this.lastRound, ...(this.roundHistoryStore.histories as CrashRoundHistory[])];
-            }
         } else {
             roundHistoy = [this.lastRound, ...(this.roundHistoryStore.histories as CrashRoundHistory[])];
         }
