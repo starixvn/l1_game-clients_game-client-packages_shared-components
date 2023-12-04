@@ -84,7 +84,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     }
 
     checkFinishedPlayMode() {
-        if (this.autoPlayStore.roundsAutoPlay === 0 && this.autoPlayStore.isAutoPlay) {
+        if (this.autoPlayStore.roundsAutoPlay === 0 && this.autoPlayStore.isAutoPlay && !this.autoPlayStore.hasEarlyBetBeforeAutoPlay) {
             this.autoPlayStore.isOpenAutoPlayPopup = true;
             this.autoPlayStore.isAutoPlay = false;
         }

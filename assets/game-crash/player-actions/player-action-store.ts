@@ -104,7 +104,8 @@ export class PlayerActionStore {
 
     get visibleBetNextRound() {
         return (
-            (this.betState === BET_STATE.NONE && this.isFlyingTime) ||
+            (this.betState === BET_STATE.NONE &&
+                (this.isFlyingTime || this.roundTimeStore.isShowResult || this.roundTimeStore.isStartRound)) ||
             (this.cashOutState === CASH_OUT_STATE.FULL && this.endShowCashoutNotice)
         );
     }

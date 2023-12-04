@@ -57,7 +57,9 @@ export class AutoPlayPopup extends ObserverComponent {
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
     checkFinishedAutoPlay(isCrashed: boolean) {
         if (isCrashed) {
-            this.updateAutoPlayMode();
+            setTimeout(() => {
+                this.updateAutoPlayMode();
+            }, 4000);
         }
     }
 

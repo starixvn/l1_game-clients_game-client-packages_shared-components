@@ -101,15 +101,18 @@ export default class EarlyBetButton extends ObserverComponent {
         return flag;
     }
 
-    @render(PlayerActionStore, (store) => ({
-        visibleBetNextRound: store.visibleBetNextRound,
-        visibleCashOut: store.visibleCashOut,
-    }))
-    showPlaceBetNextRound(data: { visibleBetNextRound: boolean; visibleCashOut: boolean }) {
-        const { visibleBetNextRound, visibleCashOut } = data;
+    @render(PlayerActionStore, (store) => store.visibleBetNextRound)
+    showPlaceBetNextRound(visibleBetNextRound: boolean) {
         if (visibleBetNextRound) {
             this.handleRocketFly();
-        } else if (visibleCashOut) {
+        } else {
+            this.node.active = false;
+        }
+    }
+
+    @render(PlayerActionStore, (store) => store.visibleCashOut)
+    cancelEarlyBet(visibleCashOut: boolean) {
+        if (visibleCashOut) {
             this.disableEarlyBet();
         }
     }
@@ -148,7 +151,7 @@ export default class EarlyBetButton extends ObserverComponent {
         if (isPlacingBet) {
             this.node.active = false;
             if (this.hasEarlyBetBeforeAutoPlay) {
-                this.disableEarlyBetBeforeAutoPlay();
+                this.handleEarlyBetBeforeAutoPlay(false);
             }
             if (this.isWaitingBet) {
                 this.autoPlaceBet();
@@ -169,6 +172,7 @@ export default class EarlyBetButton extends ObserverComponent {
             this.onClickEarlyBet();
             this.decreaseAutoPlayRounds();
             this.handleAutoPlayStatus();
+            this.handleEarlyBetBeforeAutoPlay(true);
         }
     }
 
@@ -176,6 +180,7 @@ export default class EarlyBetButton extends ObserverComponent {
     checkAutoPlayWhenPlacingBet(autoPlayWhenRocketFly: boolean) {
         if (autoPlayWhenRocketFly) {
             this.onClickEarlyBet();
+            this.handleEarlyBetBeforeAutoPlay(true);
         }
     }
 
@@ -193,8 +198,10 @@ export default class EarlyBetButton extends ObserverComponent {
     @handle(AutoPlayHandler, (handle) => handle.updatedAutoPlayWhenRocketFly(false))
     disableAutoPlayWhenRocketFly() {}
 
-    @handle(AutoPlayHandler, (handle) => handle.checkEarlyBetBeforeAutoPlay(false))
-    disableEarlyBetBeforeAutoPlay() {}
+    @handle(AutoPlayHandler, (handle, flag: boolean) => handle.checkEarlyBetBeforeAutoPlay(flag))
+    handleEarlyBetBeforeAutoPlay(flag: boolean) {
+        return flag;
+    }
 
     @render(AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
     updateHasEarlyBetBeforeAutoPlay(value: boolean) {
