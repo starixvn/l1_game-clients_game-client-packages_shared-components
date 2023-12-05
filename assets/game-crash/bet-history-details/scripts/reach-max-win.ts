@@ -10,10 +10,11 @@ export class ReachMaxWin extends Component {
     lblReachMaxWin: Label = null;
 
     setData(betLogDetails) {
-        const reachMaxWinLogs = betLogDetails.filter((log) => log.reachMaxWin === true);
-        this.node.active = reachMaxWinLogs.length > 0;
+        const reachMaxWinLogs = betLogDetails.find((log) => log.reachMaxWin === true);
+        this.node.active = !!reachMaxWinLogs;
+
         let totalWin = 0;
-        reachMaxWinLogs.forEach((log) => {
+        betLogDetails.forEach((log) => {
             totalWin += log.winAmount;
         });
         this.lblReachMaxWin.string = FormatUtils.numberWithCommas(totalWin, 2);
