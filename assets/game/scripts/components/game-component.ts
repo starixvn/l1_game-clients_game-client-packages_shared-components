@@ -23,6 +23,7 @@ export default class GameComponent extends GameComponentBase {
     lblMaxBet: Label = null;
 
     containerOptions: gc.IContainerOptions;
+    protected isReceiveFinishBeforeRoundHistory = true;
 
     onLoad() {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
@@ -94,6 +95,7 @@ export default class GameComponent extends GameComponentBase {
     handleJoinGameAndShowResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
         const { roundHistory, isShow } = joinGameHistory ?? {};
         if (roundHistory && isShow) {
+            this.isReceiveFinishBeforeRoundHistory = false;
             this.showResult(roundHistory?.result, false, roundHistory?.settlementResult);
         }
     }
@@ -114,8 +116,10 @@ export default class GameComponent extends GameComponentBase {
         const { result, settlementResult } = data;
 
         if (!result || !settlementResult) {
+            this.isReceiveFinishBeforeRoundHistory = false;
             return;
         }
+
         this.showResult(result, true, settlementResult).then(() => {
             this.finishShowResult(result, settlementResult);
         });
