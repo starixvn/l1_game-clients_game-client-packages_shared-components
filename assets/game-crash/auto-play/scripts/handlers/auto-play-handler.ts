@@ -56,6 +56,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
         this.autoPlayStore.roundsAutoPlay = this.autoPlayStore.selectedRoundOnPopup;
         this.autoPlayStore.isOpenAutoPlayPopup = false;
         this.autoPlayStore.isAutoPlay = true;
+        this.updateStatusLatestRoundAccepted();
         if (!this.playerActionStore.visibleCashOut && this.playerActionStore.visibleBetNextRound && !this.earlyBetStore.earlyBet) {
             this.autoPlayStore.roundsAutoPlay = this.autoPlayStore.selectedRoundOnPopup - 1;
             this.autoPlayStore.autoPlayWhenRocketFly = true;
@@ -107,5 +108,9 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
 
     updatedAutoPlayWhenRocketFly(value: boolean) {
         this.autoPlayStore.autoPlayWhenRocketFly = value;
+    }
+
+    updateStatusLatestRoundAccepted() {
+        this.autoPlayStore.latestRoundAccepted = this.autoPlayStore.roundsAutoPlay === 0;
     }
 }

@@ -50,7 +50,6 @@ export default class PlaceBetButton extends ObserverComponent {
     private isAutoPlayMode = false;
 
     private hasEarlyBetBeforeAutoPlay = false;
-    
 
     @render(BetInputStore, (store) => store.betAmount)
     updateBetAmount(betAmount: number) {
@@ -72,10 +71,14 @@ export default class PlaceBetButton extends ObserverComponent {
         this.isBetAccepted = true;
         this.placeBetNotice.active = true;
         this.disableAutoCashout(true);
+        this.checkStatusLatestRound();
         setTimeout(() => {
             this.placeBetNotice.active = false;
         }, 3000);
     }
+
+    @handle(AutoPlayHandler, (handle) => handle.updateStatusLatestRoundAccepted())
+    checkStatusLatestRound() {}
 
     @render(Bet.BetStore, (store) => store.isReceivedBet)
     setBetStatus(isReceivedBet: boolean) {

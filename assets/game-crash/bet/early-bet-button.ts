@@ -124,7 +124,7 @@ export default class EarlyBetButton extends ObserverComponent {
         this.disableEarlyBet();
         setTimeout(() => {
             this.autoClickEarlyBet();
-        }, 200);
+        }, 100);
     }
 
     @handle(GameCrash.CrashBet.CrashBetHandler, (handle, payload: { autoCashOut: number; amount: number }) => handle.handle(payload))

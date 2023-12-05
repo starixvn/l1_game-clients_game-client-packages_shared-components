@@ -136,7 +136,7 @@ export class PlayerActionStore {
     }
 
     get visibleBetAmount() {
-        return this.earlyBetState === EARLY_BET_STATE.BET || this.visibleCashOut;
+        return this.earlyBetState === EARLY_BET_STATE.BET || this.visibleCashOut || this.autoPlayStore.roundsAutoPlay > 0;
     }
 
     get waitingBet(): boolean {

@@ -14,6 +14,8 @@ export class AutoPlayStore {
     private _autoPlayWhenPlacingBet = false;
     private _autoPlayWhenRocketFly = false;
 
+    private _latestRoundAccepted = false;
+
     set hasEarlyBetBeforeAutoPlay(value: boolean) {
         this._hasEarlyBetBeforeAutoPlay = value;
     }
@@ -36,6 +38,18 @@ export class AutoPlayStore {
 
     set autoPlayWhenRocketFly(value: boolean) {
         this._autoPlayWhenRocketFly = value;
+    }
+
+    get latestRoundAccepted(): boolean {
+        return this._latestRoundAccepted;
+    }
+
+    set latestRoundAccepted(status: boolean) {
+        this._latestRoundAccepted = status;
+    }
+
+    get showHideArrowIcon() {
+        return this.isAutoPlay && !this.latestRoundAccepted;
     }
 
     constructor() {

@@ -9,7 +9,7 @@ import { RoundNumberItem } from "./round-number-item";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
-const { GameCrash } = gc;
+const { GameCrash, Notices } = gc;
 
 @ccclass
 export class AutoPlayPopup extends ObserverComponent {
@@ -65,4 +65,17 @@ export class AutoPlayPopup extends ObserverComponent {
 
     @handle(AutoPlayHandler, (handle) => handle.checkFinishedPlayMode())
     updateAutoPlayMode() {}
+
+    @render(Notices.NoticeStore, (store) => store.notice)
+    withExcludedGameInfo(notice: any) {
+        const isExcludedGameOrApiError =
+            notice?.noticeInfo === Notices.NoticeInfo.ExcludedGame || notice?.noticeInfo === Notices.NoticeInfo.ApiError;
+
+        if (isExcludedGameOrApiError) {
+            this.handleAutoPlay();
+        }
+    }
+
+    @handle(AutoPlayHandler, (handle) => handle.cancelAutoPlay())
+    handleAutoPlay() {}
 }

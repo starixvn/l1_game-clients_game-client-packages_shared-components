@@ -29,11 +29,11 @@ export class AutoPlayButton extends ObserverComponent {
         this.lblNoOfRound.string = roundsAutoPlay.toString();
     }
 
-    @render(AutoPlayStore, (store) => store.isAutoPlay)
-    updateAutoPlayButton(isAutoPlay: boolean) {
-        this.lblNoOfRound.node.active = this.nodeTextStopAutoPlay.active = isAutoPlay;
-        this.sprIconAutoPlay.node.active = this.nodeTextAutoPlay.active = !isAutoPlay;
-        this.enableAutoPlay(isAutoPlay);
+    @render(AutoPlayStore, (store) => store.showHideArrowIcon)
+    updateAutoPlayButton(showHideArrowIcon: boolean) {
+        this.lblNoOfRound.node.active = this.nodeTextStopAutoPlay.active = showHideArrowIcon;
+        this.sprIconAutoPlay.node.active = this.nodeTextAutoPlay.active = !showHideArrowIcon;
+        this.enableAutoPlay(showHideArrowIcon);
     }
 
     @handle(PlayerActionHandlers, (handle, flag: boolean) => handle.handleEnableAutoPlayInStore(flag))
