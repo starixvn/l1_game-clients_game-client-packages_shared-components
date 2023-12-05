@@ -1,7 +1,8 @@
-import { _decorator, Button, Component, instantiate, Label, Node, Prefab } from "cc";
 import gc from "@sg/game-client-base";
-import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { _decorator, Button, Component, instantiate, Label, Node, Prefab } from "cc";
 import Observer from "observer";
+
+import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 
 const { property, ccclass } = _decorator;
 const { DateTimeUtils, FormatUtils } = gc;
@@ -65,42 +66,9 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         }
     }
 
-    @handle(BetHistory.BetDetailHitoryStore, (store, betHistoryLog: gc.BetHistory.BetHistoryLog) => {
-        // TO DO
-        // if (betHistoryLog.betLogDetails?.length > 0) {
-        //     store.setData(betHistoryLog);
-        // }
-        const betLogDetails = [];
-
-        for (var i = 0; i < 20; i++) {
-            betLogDetails.push({
-                amount: 1 + i,
-                time: new Date(),
-                choice: "Cash Test",
-                rate: 15 + i,
-                rebet: false,
-            });
-        }
-
-        store.setData({
-            time: new Date().toDateString(),
-            roundId: 1569,
-            win: 5900,
-            betwin: 5900,
-            totalAmount: 10,
-            freeBet: false,
-            odds: {},
-            result: {},
-            settlementResult: {},
-            betLogDetails,
-        });
-    })
+    @handle(BetHistory.BetDetailsHandlers)
     openTicketDetail() {
-        if (this.betHistoryLog.betLogDetails?.length > 0) {
-            this.playSoundClick();
-        }
-
-        // TO DO
+        this.playSoundClick();
         return this.betHistoryLog;
     }
 
