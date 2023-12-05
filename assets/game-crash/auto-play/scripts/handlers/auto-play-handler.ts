@@ -3,8 +3,8 @@ import inversify from "inversify";
 
 import { BetInputStore } from "../../../bet-input/scripts/stores/bet-input-store";
 import { EarlyBetStore } from "../../../bet/early-bet-store";
-import { AutoPlayStore } from "../stores/auto-play-store";
 import { PlayerActionStore } from "../../../player-actions/player-action-store";
+import { AutoPlayStore } from "../stores/auto-play-store";
 
 const { injectable, inject } = inversify;
 const { Translator } = gc;
@@ -24,11 +24,12 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
 
     openAutoPlayPopup() {
         this.autoPlayStore.isOpenAutoPlayPopup = true;
+        this.autoPlayStore.selectedRoundOnPopup = this.autoPlayStore.roundsList[0];
     }
 
     checkAutoPlayClick() {
         if (!this.autoPlayStore.isAutoPlay && this.checkBalanceForAutoPlay()) {
-            this.autoPlayStore.isOpenAutoPlayPopup = true;
+            this.openAutoPlayPopup();
         } else {
             this.autoPlayStore.isAutoPlay = false;
             this.autoPlayStore.roundsAutoPlay = 0;
