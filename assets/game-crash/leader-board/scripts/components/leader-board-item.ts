@@ -73,7 +73,7 @@ export class LeaderBoardItem extends Component {
         let truncatedNickname = "";
         if (nickname) {
             if (nickname.length > 10) {
-                truncatedNickname = `${nickname.substring(0, 6)}...`;
+                truncatedNickname = `${nickname.substring(0, 7)}...`;
             } else {
                 truncatedNickname = nickname;
             }
