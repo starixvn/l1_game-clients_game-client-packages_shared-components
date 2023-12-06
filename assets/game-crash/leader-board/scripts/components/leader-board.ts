@@ -112,6 +112,7 @@ export class LeaderBoard extends ObserverComponent {
         if (startPlacingBet) {
             this.hideMainPlayer();
             this.handleResetOtherPlayers();
+            this.resetMainPlayer();
             !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight);
         }
     }

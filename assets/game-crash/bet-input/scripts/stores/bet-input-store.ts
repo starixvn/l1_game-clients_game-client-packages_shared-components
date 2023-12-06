@@ -20,7 +20,7 @@ export class BetInputStore {
     }
 
     set betAmount(amount: number) {
-        this._betAmount = amount;
+        this._betAmount = this._betAmount < this.roundStore.minBet ? this.roundStore.minBet : this._betAmount;
     }
 
     get decreaseStatus(): boolean {
