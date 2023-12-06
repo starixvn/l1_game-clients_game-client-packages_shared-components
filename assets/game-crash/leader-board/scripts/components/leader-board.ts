@@ -60,6 +60,10 @@ export class LeaderBoard extends ObserverComponent {
 
     @handle(GameCrash.CrashBetList.CrashBetListHandlers, (handler) => handler.resetMainPlayer())
     private resetMainPlayer() {
+        this.hideMainPlayer();
+    }
+
+    private hideMainPlayer() {
         this.setMainPlayerVisibility(false);
         this.cpnMainPlayer.setHalfCashOutVisibility(false);
     }
@@ -106,7 +110,7 @@ export class LeaderBoard extends ObserverComponent {
     @render(Rounds.RoundTimeStore, (store) => store.startPlacingBet)
     private resetLeaderBoard(startPlacingBet: boolean) {
         if (startPlacingBet) {
-            this.resetMainPlayer();
+            this.hideMainPlayer();
             this.handleResetOtherPlayers();
             !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight);
         }
