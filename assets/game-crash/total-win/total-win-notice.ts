@@ -13,6 +13,9 @@ export class TotalWinNotice extends ObserverComponent {
     @property(Label)
     lblWinAmount: Label = null;
 
+    @property(Label)
+    lblReachMaxWin: Label = null;
+
     @property({ type: Node })
     othersNoticeNode: Node[] = [];
 
@@ -25,9 +28,10 @@ export class TotalWinNotice extends ObserverComponent {
     updateCashoutAmount(settlementStatus: any) {
         if (settlementStatus?.win) {
             ComponentUtils.hideOtherNotices(this.othersNoticeNode);
+            this.updateTotalWinAmount(settlementStatus?.bet);
+            this.lblReachMaxWin.node.active = settlementStatus?.reachMaxWin;
             this.showNotice(true);
             ComponentUtils.autoDisappear(this.node, false);
-            this.updateTotalWinAmount(settlementStatus?.bet);
         }
     }
 

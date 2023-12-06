@@ -81,7 +81,7 @@ export class CashOutHalfButton extends ObserverComponent {
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.halfCashOut, { fireImmediately: false })
     updateValueCashOut(halfCashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
         this.halfCashoutData = halfCashOut;
-        CashOutComponent.updateValueCashOut(halfCashOut?.win, this.lblCashOut);
+        CashOutComponent.updateValueCashOut(halfCashOut?.cashOutWin, this.lblCashOut);
     }
 
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })
@@ -100,7 +100,7 @@ export class CashOutHalfButton extends ObserverComponent {
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.isCashedOutFull)
     updateValueHalfButton(isCashedOutFull: boolean) {
         if (isCashedOutFull && !this.halfCashoutData) {
-            CashOutComponent.updateValueCashOut(this.cashOutData?.win / 2, this.lblCashOut);
+            CashOutComponent.updateValueCashOut(this.cashOutData?.cashOutWin / 2, this.lblCashOut);
         }
     }
 }

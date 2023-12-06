@@ -14,6 +14,9 @@ export class CashOutNotice extends ObserverComponent {
     @property(Label)
     lblCashOut: Label = null;
 
+    @property(Label)
+    lblReachMaxWin: Label = null;
+
     @property({ type: Node })
     othersNoticeNode: Node[] = [];
 
@@ -23,9 +26,10 @@ export class CashOutNotice extends ObserverComponent {
     }
 
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOutNotice, { fireImmediately: false })
-    updateCashoutAmount(amount: any) {
+    updateCashoutNotice(cashOutNotice: any) {
+        this.updateCashOutAmount(cashOutNotice);
+        this.lblReachMaxWin.node.active = cashOutNotice?.reachMaxWin;
         this.showNotice(true);
-        this.updateCashOutAmount(amount.value);
     }
 
     showNotice(isShow: boolean) {
@@ -41,8 +45,9 @@ export class CashOutNotice extends ObserverComponent {
         }
     }
 
-    updateCashOutAmount(amount: number) {
-        this.lblCashOut.string = FormatUtils.numberWithCommas(amount, 2);
+    updateCashOutAmount(cashOutNotice: any) {
+        const win = cashOutNotice?.reachMaxWin ? cashOutNotice.win : cashOutNotice.cashOutWin;
+        this.lblCashOut.string = FormatUtils.numberWithCommas(win, 2);
     }
 
     @handle(PlayerActionHandlers, (handle, flag: boolean) => handle.handleEndShowCashOutNotice(flag))
