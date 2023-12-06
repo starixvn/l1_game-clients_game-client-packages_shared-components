@@ -20,22 +20,22 @@ export class CashOutPlayerAnimation extends NodeContainer {
 
     @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
     renderOtherPlayerCashOut() {
-        const node = this.createCashoutPlayer();
+        const node = this.createCashOutPlayer();
         this.updateSpriteFrame(node, SpriteFrameIndex.OTHER_PLAYER);
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })
-    renderMainPlayerCashOutFull(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
-        cashOut && this.createCashoutMainPlayer();
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOut, { fireImmediately: false })
+    renderMainPlayerCashOutFull(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
+        cashOut && this.createCashOutMainPlayer();
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.halfCashOut, { fireImmediately: false })
-    renderMainPlayerCashOutHalf(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
-        cashOut && this.createCashoutMainPlayer();
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.halfCashOut, { fireImmediately: false })
+    renderMainPlayerCashOutHalf(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
+        cashOut && this.createCashOutMainPlayer();
     }
 
-    createCashoutMainPlayer() {
-        const node = this.createCashoutPlayer();
+    createCashOutMainPlayer() {
+        const node = this.createCashOutPlayer();
         this.updateSpriteFrame(node, SpriteFrameIndex.MAIN_PLAYER);
     }
 
@@ -44,7 +44,7 @@ export class CashOutPlayerAnimation extends NodeContainer {
         render.spriteFrame = this.spriteFrames[index];
     }
 
-    private createCashoutPlayer() {
+    private createCashOutPlayer() {
         const node = this.createNode();
         const randomPosition = v3(random(-100, 100), -random(200, 300));
         const duration = 2;

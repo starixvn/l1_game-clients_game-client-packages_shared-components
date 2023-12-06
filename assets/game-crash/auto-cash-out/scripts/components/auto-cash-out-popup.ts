@@ -13,7 +13,7 @@ const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
 @ccclass
-export class AutoCashoutPopup extends ObserverComponent {
+export class AutoCashOutPopup extends ObserverComponent {
     @property(Label)
     multiplierLabel: Label = null;
 

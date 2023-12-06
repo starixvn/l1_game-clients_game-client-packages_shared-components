@@ -25,8 +25,8 @@ export const CASH_OUT_STATE = {
 
 @injectable()
 export class PlayerActionStore {
-    @inject(gc.GameCrash.CrashCashOut.CrashCashoutStore)
-    protected readonly crashCashoutStore: gc.GameCrash.CrashCashOut.CrashCashoutStore;
+    @inject(gc.GameCrash.CrashCashOut.CrashCashOutStore)
+    protected readonly crashCashoutStore: gc.GameCrash.CrashCashOut.CrashCashOutStore;
 
     @inject(AutoPlayStore)
     protected readonly autoPlayStore: AutoPlayStore;

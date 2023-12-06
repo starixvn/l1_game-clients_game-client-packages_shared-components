@@ -25,7 +25,7 @@ export class CashOutNotice extends ObserverComponent {
         this.node.active = false;
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOutNotice, { fireImmediately: false })
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOutNotice, { fireImmediately: false })
     updateCashoutNotice(cashOutNotice: any) {
         this.updateCashOutAmount(cashOutNotice);
         this.lblReachMaxWin.string = `(${Translator.gameTranslate("total_cashout_amount_reach_max")})`;

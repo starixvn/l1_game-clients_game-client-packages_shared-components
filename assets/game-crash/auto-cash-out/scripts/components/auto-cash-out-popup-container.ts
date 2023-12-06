@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
 @ccclass
-export class AutoCashoutPopupContainer extends NodeContainer {
+export class AutoCashOutPopupContainer extends NodeContainer {
     @property(Node)
     nodeOverlay: Node = null;
 

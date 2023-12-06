@@ -8,7 +8,7 @@ const { injectable, inject } = inversify;
 export class BetInputStore {
     @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
     @inject(gc.GameConfigs.GameConfigStore) private readonly gameConfig: gc.GameConfigs.GameConfigStore;
-    @inject(gc.GameCrash.CrashCashOut.CrashCashoutStore) private readonly cashoutStore: gc.GameCrash.CrashCashOut.CrashCashoutStore;
+    @inject(gc.GameCrash.CrashCashOut.CrashCashOutStore) private readonly cashOutStore: gc.GameCrash.CrashCashOut.CrashCashOutStore;
 
     private _betAmount = -1;
     isOpenBetAmountPopup = false;
@@ -23,7 +23,7 @@ export class BetInputStore {
         this._betAmount = amount;
     }
 
-    get descreaseStatus(): boolean {
+    get decreaseStatus(): boolean {
         return this.betAmount > this.roundStore.minBet;
     }
 
@@ -32,7 +32,7 @@ export class BetInputStore {
     }
 
     get betAmountRatio(): number {
-        return this.betAmount * this.cashoutStore.ratio;
+        return this.betAmount * this.cashOutStore.ratio;
     }
 
     get minBet(): number {

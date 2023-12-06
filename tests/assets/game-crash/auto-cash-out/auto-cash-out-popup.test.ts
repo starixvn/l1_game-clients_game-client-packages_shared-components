@@ -1,12 +1,12 @@
 import { Button, Label } from "cc";
 
-import { AutoCashoutPopup } from "../../../../assets/game-crash/auto-cash-out/scripts/components/auto-cash-out-popup";
+import { AutoCashOutPopup } from "../../../../assets/game-crash/auto-cash-out/scripts/components/auto-cash-out-popup";
 
 describe("AutoCashoutPopup", () => {
-    let autoCashoutPopup: AutoCashoutPopup;
+    let autoCashoutPopup: AutoCashOutPopup;
 
     beforeEach(() => {
-        autoCashoutPopup = new AutoCashoutPopup();
+        autoCashoutPopup = new AutoCashOutPopup();
         autoCashoutPopup.multiplierLabel = new Label();
         autoCashoutPopup.multiplierRangeLabel = new Label();
         autoCashoutPopup.confirmButton = new Button();

@@ -24,11 +24,11 @@ export class CashOutHalfButton extends ObserverComponent {
     private bet = 0;
     private isCashedOutHalf = false;
 
-    private halfCashoutData = null;
+    private halfCashOutData = null;
 
     private cashOutData = null;
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.isCashedOutHalf)
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutHalf)
     updateCashOutHalfButton(isCashedOut: boolean) {
         CashOutComponent.updateCashOutButton(isCashedOut, this.sprDisabled);
         this.isCashedOutHalf = isCashedOut;
@@ -42,20 +42,20 @@ export class CashOutHalfButton extends ObserverComponent {
         }
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashoutBet)
-    updateBetValue(cashoutBet: any) {
-        this.bet = CashOutComponent.getBetValue(cashoutBet);
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOutBet)
+    updateBetValue(cashOutBet: any) {
+        this.bet = CashOutComponent.getBetValue(cashOutBet);
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
-    assignCashoutBetValue(lastReceivedBet: any) {
-        this.updateCashoutBetValue(lastReceivedBet);
+    assignCashOutBetValue(lastReceivedBet: any) {
+        this.updateCashOutBetValue(lastReceivedBet);
     }
 
     @handle(GameCrash.CrashCashOut.CrashCashOutUIHandlers, (cashOutHandler, cashOutBetValue: number) =>
-        cashOutHandler.updateCashoutBetValue(cashOutBetValue)
+        cashOutHandler.updateCashOutBetValue(cashOutBetValue)
     )
-    updateCashoutBetValue(lastReceivedBet: any) {
+    updateCashOutBetValue(lastReceivedBet: any) {
         return CashOutComponent.getBetValue(lastReceivedBet);
     }
 
@@ -65,7 +65,7 @@ export class CashOutHalfButton extends ObserverComponent {
     }
 
     @render(PlayerActionStore, (store) => store.visibleCashOut)
-    updateCashoutButtonStatus(visibleCashOut: boolean) {
+    updateCashOutButtonStatus(visibleCashOut: boolean) {
         CashOutComponent.showHideNode(this.node, visibleCashOut);
     }
 
@@ -78,14 +78,14 @@ export class CashOutHalfButton extends ObserverComponent {
         return CashOutComponent.getCashOutValue(this.lblCashOut);
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.halfCashOut, { fireImmediately: false })
-    updateValueCashOut(halfCashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
-        this.halfCashoutData = halfCashOut;
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.halfCashOut, { fireImmediately: false })
+    updateValueCashOut(halfCashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
+        this.halfCashOutData = halfCashOut;
         CashOutComponent.updateValueCashOut(halfCashOut?.cashOutWin, this.lblCashOut);
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })
-    assignCashoutData(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOut, { fireImmediately: false })
+    assignCashOutData(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
         this.cashOutData = cashOut;
     }
 
@@ -93,13 +93,13 @@ export class CashOutHalfButton extends ObserverComponent {
     closeAllPopups() {}
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
-    updateStatusCashoutHalfButton(isCrashed: boolean) {
+    updateStatusCashOutHalfButton(isCrashed: boolean) {
         CashOutComponent.updateCashOutButton(isCrashed, this.sprDisabled);
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.isCashedOutFull)
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutFull)
     updateValueHalfButton(isCashedOutFull: boolean) {
-        if (isCashedOutFull && !this.halfCashoutData) {
+        if (isCashedOutFull && !this.halfCashOutData) {
             CashOutComponent.updateValueCashOut(this.cashOutData?.cashOutWin / 2, this.lblCashOut);
         }
     }

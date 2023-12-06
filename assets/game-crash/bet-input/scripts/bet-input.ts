@@ -37,9 +37,9 @@ export class BetInput extends ObserverComponent {
         this.handleStakeButtonQuickChange(this.btnIncrease, increaseStatus);
     }
 
-    @render(BetInputStore, (store) => store.descreaseStatus)
-    private setDecreaseButtonStatus(descreaseStatus: boolean) {
-        this.handleStakeButtonQuickChange(this.btnDecrease, descreaseStatus);
+    @render(BetInputStore, (store) => store.decreaseStatus)
+    private setDecreaseButtonStatus(decreaseStatus: boolean) {
+        this.handleStakeButtonQuickChange(this.btnDecrease, decreaseStatus);
     }
 
     @handle(BetInputHandler, (handle) => handle.openBetAmountPopup())

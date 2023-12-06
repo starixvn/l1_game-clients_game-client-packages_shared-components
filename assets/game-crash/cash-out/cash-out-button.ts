@@ -23,7 +23,7 @@ export class CashOutButton extends ObserverComponent {
     private bet = 0;
     private isCashedOut = false;
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.isCashedOutFull)
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutFull)
     updateCashOutFullButton(isCashedOut: boolean) {
         isCashedOut &&
             setTimeout(() => {
@@ -41,19 +41,19 @@ export class CashOutButton extends ObserverComponent {
         }
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashoutBet)
-    updateBetValue(cashoutBet: any) {
-        this.bet = CashOutComponent.getBetValue(cashoutBet);
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOutBet)
+    updateBetValue(cashOutBet: any) {
+        this.bet = CashOutComponent.getBetValue(cashOutBet);
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
     assignCashoutBetValue(lastReceivedBet: any) {
-        this.updateCashoutBetValue(lastReceivedBet);
+        this.updateCashOutBetValue(lastReceivedBet);
     }
     @handle(GameCrash.CrashCashOut.CrashCashOutUIHandlers, (cashOutHandler, cashOutBetValue: number) =>
-        cashOutHandler.updateCashoutBetValue(cashOutBetValue)
+        cashOutHandler.updateCashOutBetValue(cashOutBetValue)
     )
-    updateCashoutBetValue(lastReceivedBet: any) {
+    updateCashOutBetValue(lastReceivedBet: any) {
         return CashOutComponent.getBetValue(lastReceivedBet);
     }
 
@@ -80,8 +80,8 @@ export class CashOutButton extends ObserverComponent {
         return CashOutComponent.getCashOutValue(this.lblCashOut);
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOut, { fireImmediately: false })
-    updateValueCashOut(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashout) {
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOut, { fireImmediately: false })
+    updateValueCashOut(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
         CashOutComponent.updateValueCashOut(cashOut?.cashOutWin, this.lblCashOut);
     }
 
@@ -89,7 +89,7 @@ export class CashOutButton extends ObserverComponent {
     closeAllPopups() {}
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
-    updateStatusCashoutButton(isCrashed: boolean) {
+    updateStatusCashOutButton(isCrashed: boolean) {
         CashOutComponent.updateCashOutButton(isCrashed, this.sprDisabled);
     }
 }
