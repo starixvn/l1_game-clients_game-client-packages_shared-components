@@ -1336,7 +1336,7 @@
       }
     ],
     "_interactable": true,
-    "_transition": 0,
+    "_transition": 3,
     "_normalColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -1661,7 +1661,7 @@
       }
     ],
     "_interactable": true,
-    "_transition": 0,
+    "_transition": 3,
     "_normalColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -2094,15 +2094,13 @@
     "toggle": {
       "__id__": 20
     },
-    "disableMultiplier": {
-      "__id__": 80
-    },
     "increaseButton": {
       "__id__": 51
     },
     "decreaseButton": {
       "__id__": 66
     },
+    "disableNode": null,
     "_id": ""
   },
   {
