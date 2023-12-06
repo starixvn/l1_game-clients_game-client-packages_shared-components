@@ -7,7 +7,7 @@ import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 const { ccclass, property } = _decorator;
 const { handle, render } = Observer;
 
-const { GameCrash, Rounds, FormatUtils } = gc;
+const { GameCrash, Rounds, FormatUtils, Translator } = gc;
 
 @ccclass
 export class CashOutNotice extends ObserverComponent {
@@ -28,6 +28,7 @@ export class CashOutNotice extends ObserverComponent {
     @render(GameCrash.CrashCashOut.CrashCashoutStore, (store) => store.cashOutNotice, { fireImmediately: false })
     updateCashoutNotice(cashOutNotice: any) {
         this.updateCashOutAmount(cashOutNotice);
+        this.lblReachMaxWin.string = `(${Translator.gameTranslate("total_cashout_amount_reach_max")})`;
         this.lblReachMaxWin.node.active = cashOutNotice?.reachMaxWin;
         this.showNotice(true);
     }

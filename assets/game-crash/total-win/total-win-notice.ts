@@ -6,7 +6,7 @@ import { ComponentUtils } from "../../../../../extensions/shared-components/asse
 const { ccclass, property } = _decorator;
 const { render } = Observer;
 
-const { Settlements, FormatUtils } = gc;
+const { Settlements, FormatUtils, Translator } = gc;
 
 @ccclass
 export class TotalWinNotice extends ObserverComponent {
@@ -29,6 +29,7 @@ export class TotalWinNotice extends ObserverComponent {
         if (settlementStatus?.win) {
             ComponentUtils.hideOtherNotices(this.othersNoticeNode);
             this.updateTotalWinAmount(settlementStatus?.bet);
+            this.lblReachMaxWin.string = `(${Translator.gameTranslate("reach_max_win")})`;
             this.lblReachMaxWin.node.active = settlementStatus?.reachMaxWin;
             this.showNotice(true);
             ComponentUtils.autoDisappear(this.node, false);
