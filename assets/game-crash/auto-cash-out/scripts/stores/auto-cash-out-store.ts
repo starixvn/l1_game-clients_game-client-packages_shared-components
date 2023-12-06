@@ -1,9 +1,12 @@
+import gc from "@sg/game-client-base";
 import inversify from "inversify";
 import mobx from "mobx";
 
 const { injectable, inject } = inversify;
 @injectable()
 export default class AutoCashOutStore {
+    @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
+
     private _enable = false;
     private _multiplier = 1.01;
 
@@ -25,7 +28,7 @@ export default class AutoCashOutStore {
     }
 
     set multiplier(multiplier: number) {
-        this._multiplier = multiplier;
+        this._multiplier = this.roundStore.ownBets.autoCashOut ?? multiplier;
     }
 
     get disable(): boolean {
@@ -34,5 +37,9 @@ export default class AutoCashOutStore {
 
     set disable(trigger: boolean) {
         this._disable = trigger;
+    }
+
+    private updateMultiplierFromOwnBets() {
+        this.multiplier = this.roundStore.ownBets.autoCashOut;
     }
 }

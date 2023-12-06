@@ -47,6 +47,10 @@ export class BetInputStore {
         return this.gameConfig.chips;
     }
 
+    updateBetAmountFromOwnBets() {
+        this.betAmount = this.roundStore.ownBets.amount;
+    }
+
     constructor() {
         mobx.makeAutoObservable(this);
     }
