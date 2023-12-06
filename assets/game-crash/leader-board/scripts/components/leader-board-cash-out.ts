@@ -34,7 +34,7 @@ export class LeaderBoardCashOut extends Component {
         this.lblCashout.node.active = false;
         this.lblBetAmount.node.active = false;
 
-        if (win) {
+        if (win !==-1) {
             this.lblCashout.node.active = true;
             this.lblCashout.string = FormatUtils.numberWithCommas(win, 2);
         } else {

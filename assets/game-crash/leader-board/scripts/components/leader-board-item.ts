@@ -50,7 +50,7 @@ export class LeaderBoardItem extends Component {
             this.cpnFullCashOut.setData({
                 name: customName,
                 multiplier: null,
-                win: null,
+                win: -1,
                 amount,
                 isEmptyAmount: isNeedEmptyAmount,
             });
