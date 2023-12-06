@@ -23,6 +23,8 @@ export class CashOutButton extends ObserverComponent {
     private bet = 0;
     private isCashedOut = false;
 
+    private cashOutSound = "cash_out";
+
     @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutFull)
     updateCashOutFullButton(isCashedOut: boolean) {
         isCashedOut &&
@@ -76,6 +78,7 @@ export class CashOutButton extends ObserverComponent {
         cashOutHandler.handle(cashOutValue, false)
     )
     onClickCashOut() {
+        this.playSoundCashOut();
         this.closeAllPopups();
         return CashOutComponent.getCashOutValue(this.lblCashOut);
     }
@@ -91,5 +94,10 @@ export class CashOutButton extends ObserverComponent {
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
     updateStatusCashOutButton(isCrashed: boolean) {
         CashOutComponent.updateCashOutButton(isCrashed, this.sprDisabled);
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundCashOut() {
+        return this.cashOutSound;
     }
 }

@@ -51,6 +51,8 @@ export default class PlaceBetButton extends ObserverComponent {
 
     private hasEarlyBetBeforeAutoPlay = false;
 
+    private placeBetSound = "place_bet";
+
     @render(BetInputStore, (store) => store.betAmount)
     updateBetAmount(betAmount: number) {
         this.amount = betAmount;
@@ -106,6 +108,7 @@ export default class PlaceBetButton extends ObserverComponent {
     }
 
     onClickPlaceBet() {
+        this.playSoundPlaceBet();
         this.closeAllPopups();
         if (!this.isBetAccepted && !this.bgDisable.node.active) {
             this.sendBetRequest();
@@ -199,5 +202,10 @@ export default class PlaceBetButton extends ObserverComponent {
     @handle(AutoPlayHandler, (handle, value: boolean) => handle.updatedAutoPlayWhenPlacingBet(value))
     disabledAutoPlayWhenPlacingBet() {
         return false;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundPlaceBet() {
+        return this.placeBetSound;
     }
 }

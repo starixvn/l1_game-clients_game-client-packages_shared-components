@@ -4,7 +4,7 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../../../../extensions/shared-components/assets/shared/utils";
 const { ccclass, property } = _decorator;
-const { render } = Observer;
+const { render, handle } = Observer;
 
 const { Settlements, FormatUtils, Translator } = gc;
 
@@ -19,6 +19,8 @@ export class TotalWinNotice extends ObserverComponent {
     @property({ type: Node })
     othersNoticeNode: Node[] = [];
 
+    private winningSound = "show_winning";
+
     onLoad(): void {
         super.onLoad();
         this.node.active = false;
@@ -27,6 +29,7 @@ export class TotalWinNotice extends ObserverComponent {
     @render(Settlements.SettlementStatusStore, (store) => store.settlementStatus)
     updateCashoutAmount(settlementStatus: any) {
         if (settlementStatus?.win) {
+            this.addSoundWinning();
             ComponentUtils.hideOtherNotices(this.othersNoticeNode);
             this.updateTotalWinAmount(settlementStatus?.bet);
             this.lblReachMaxWin.string = `(${Translator.gameTranslate("reach_max_win")})`;
@@ -42,5 +45,10 @@ export class TotalWinNotice extends ObserverComponent {
 
     updateTotalWinAmount(amount: number) {
         this.lblWinAmount.string = FormatUtils.numberWithCommas(amount, 2);
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    addSoundWinning() {
+        return this.winningSound;
     }
 }

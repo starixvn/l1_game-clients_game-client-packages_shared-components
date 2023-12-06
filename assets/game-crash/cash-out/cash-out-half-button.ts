@@ -1,4 +1,3 @@
-// Compare this snippet from assets/game/scripts/components/cash-out/cash-out-half-button.ts:
 import gc from "@sg/game-client-base";
 import { _decorator, Label, Sprite } from "cc";
 import Observer from "observer";
@@ -27,6 +26,8 @@ export class CashOutHalfButton extends ObserverComponent {
     private halfCashOutData = null;
 
     private cashOutData = null;
+
+    private cashOutSound = "cash_out";
 
     @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutHalf)
     updateCashOutHalfButton(isCashedOut: boolean) {
@@ -73,6 +74,7 @@ export class CashOutHalfButton extends ObserverComponent {
         cashOutHandler.handle(cashOutValue, true)
     )
     onClickCashOutHalf() {
+        this.playSoundCashOut();
         this.closeAllPopups();
         this.handleCashOutState();
         return CashOutComponent.getCashOutValue(this.lblCashOut);
@@ -102,5 +104,10 @@ export class CashOutHalfButton extends ObserverComponent {
         if (isCashedOutFull && !this.halfCashOutData) {
             CashOutComponent.updateValueCashOut(this.cashOutData?.cashOutWin / 2, this.lblCashOut);
         }
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundCashOut() {
+        return this.cashOutSound;
     }
 }

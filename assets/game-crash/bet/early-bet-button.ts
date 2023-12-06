@@ -48,6 +48,7 @@ export default class EarlyBetButton extends ObserverComponent {
     private hasEarlyBetBeforeAutoPlay = false;
 
     private autoPlayWhenRocketFly = false;
+    private placeBetSound = "place_bet";
 
     @render(AutoCashOutStore, (store) => store.enable)
     updateStatusAutoCashOut(isEnable: boolean) {
@@ -78,6 +79,7 @@ export default class EarlyBetButton extends ObserverComponent {
 
     @handle(EarlyBetUIHandlers, (handle, enable: boolean) => handle.handle(enable))
     onClickEarlyBet() {
+        this.playSoundPlaceBet();
         this.closeAllPopups();
         if (this.isWaitingBet) {
             this.cancelAutoPlay();
@@ -206,5 +208,10 @@ export default class EarlyBetButton extends ObserverComponent {
     @render(AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
     updateHasEarlyBetBeforeAutoPlay(value: boolean) {
         this.hasEarlyBetBeforeAutoPlay = value;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundPlaceBet() {
+        return this.placeBetSound;
     }
 }

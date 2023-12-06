@@ -19,6 +19,8 @@ export class CurrentMultiplier extends ObserverComponent {
     @property(Node)
     nodeCrashText: Node = null;
 
+    private crashSound = "plane_explose";
+
     onLoad() {
         this.setVisibility(false);
         super.onLoad();
@@ -32,6 +34,7 @@ export class CurrentMultiplier extends ObserverComponent {
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
     updateBottomText(isCrashed: boolean) {
+        isCrashed && this.playSoundCrash();
         this.showHideBottomText(isCrashed);
     }
 
@@ -59,5 +62,10 @@ export class CurrentMultiplier extends ObserverComponent {
     showHideBottomText(isCrashed: boolean) {
         this.nodeCrashText.active = isCrashed;
         this.nodeMultiplierText.active = !isCrashed;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundCrash() {
+        return this.crashSound;
     }
 }
