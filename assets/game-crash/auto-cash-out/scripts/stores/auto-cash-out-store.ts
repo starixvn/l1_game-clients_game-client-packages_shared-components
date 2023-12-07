@@ -11,10 +11,34 @@ export default class AutoCashOutStore {
     private _multiplier = 1.01;
 
     private _disable = false;
+    private readonly autoCashOutKey = "auto_cash_out";
 
     constructor() {
         mobx.makeAutoObservable(this);
+        this.handleMultiplierFromStorageAndOwnBets();
     }
+
+    private handleMultiplierFromStorageAndOwnBets() {
+        this.loadMultiplierFromStorage();
+        mobx.reaction(
+            () => this.roundStore?.ownBets,
+            (ownBets) => {
+                this.setMultiplierFromOwnBets(ownBets);
+            }
+        );
+    }
+
+    private loadMultiplierFromStorage() {
+        const multiplierFromStorage = +gc.Shared.utils.StorageManager.get(this.autoCashOutKey);
+        multiplierFromStorage > 0 && (this.multiplier = multiplierFromStorage);
+    }
+
+    private setMultiplierFromOwnBets(ownBets: gc.GameServiceMessage.OwnBets) {
+        if (ownBets && ownBets.autoCashOut > 0) {
+            this.multiplier = +ownBets.autoCashOut;
+        }
+    }
+
     get enable(): boolean {
         return this._enable;
     }
@@ -28,7 +52,8 @@ export default class AutoCashOutStore {
     }
 
     set multiplier(multiplier: number) {
-        this._multiplier = this.roundStore.ownBets.autoCashOut ?? multiplier;
+        gc.Shared.utils.StorageManager.set(this.autoCashOutKey, multiplier.toString());
+        this._multiplier = multiplier;
     }
 
     get disable(): boolean {
@@ -37,9 +62,5 @@ export default class AutoCashOutStore {
 
     set disable(trigger: boolean) {
         this._disable = trigger;
-    }
-
-    private updateMultiplierFromOwnBets() {
-        this.multiplier = this.roundStore.ownBets.autoCashOut;
     }
 }
