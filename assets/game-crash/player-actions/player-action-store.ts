@@ -136,7 +136,12 @@ export class PlayerActionStore {
     }
 
     get visibleBetAmount() {
-        return this.earlyBetState === EARLY_BET_STATE.BET || this.visibleCashOut || this.autoPlayStore.roundsAutoPlay > 0;
+        return (
+            this.earlyBetState === EARLY_BET_STATE.BET ||
+            this.visibleCashOut ||
+            this.autoPlayStore.roundsAutoPlay > 0 ||
+            (this.betState === BET_STATE.BET && (this.roundTimeStore.isPlacingBet || this.roundTimeStore.isLocking))
+        );
     }
 
     get waitingBet(): boolean {
@@ -149,6 +154,10 @@ export class PlayerActionStore {
 
     get activeAutoPlayCurrentRound() {
         return this.enableAutoPlay && this.roundTimeStore.isPlacingBet && !this.roundTimeStore.isLocking && !this.activeAutoPlay;
+    }
+
+    get autoEarlyBet() {
+        return this.autoPlayStore.isAutoPlay && this.autoPlayStore.roundsAutoPlay > 0;
     }
 
     constructor() {

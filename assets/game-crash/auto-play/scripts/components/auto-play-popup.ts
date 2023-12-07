@@ -67,7 +67,7 @@ export class AutoPlayPopup extends ObserverComponent {
     updateAutoPlayMode() {}
 
     @render(Notices.NoticeStore, (store) => store.notice)
-    withExcludedGameInfo(notice: any) {
+    withNoticesGameInfo(notice: any) {
         const isExcludedGameOrApiError =
             notice?.noticeInfo === Notices.NoticeInfo.ExcludedGame || notice?.noticeInfo === Notices.NoticeInfo.ApiError;
 

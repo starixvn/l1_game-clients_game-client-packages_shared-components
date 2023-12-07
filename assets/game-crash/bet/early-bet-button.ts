@@ -186,9 +186,9 @@ export default class EarlyBetButton extends ObserverComponent {
         }
     }
 
-    @render(AutoPlayStore, (store) => store.roundsAutoPlay)
-    updateAutoPlayMode(roundsAutoPlay: number) {
-        this.isAutoPlayMode = roundsAutoPlay > 0;
+    @render(PlayerActionStore, (store) => store.autoEarlyBet)
+    updateAutoPlayMode(autoEarlyBet: boolean) {
+        this.isAutoPlayMode = autoEarlyBet ;
     }
 
     @handle(PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(true))

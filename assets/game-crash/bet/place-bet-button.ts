@@ -12,6 +12,8 @@ import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 import { BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 import { EarlyBetStore } from "./early-bet-store";
+import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handlers";
+import AutoCashOutPopupHandler from "../auto-cash-out/scripts/handlers/auto-cash-out-popup-handler";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -47,8 +49,6 @@ export default class PlaceBetButton extends ObserverComponent {
 
     private earlyBet = false;
 
-    private isAutoPlayMode = false;
-
     private hasEarlyBetBeforeAutoPlay = false;
 
     private placeBetSound = "place_bet";
@@ -74,10 +74,24 @@ export default class PlaceBetButton extends ObserverComponent {
         this.placeBetNotice.active = true;
         this.disableAutoCashout(true);
         this.checkStatusLatestRound();
+        this.hideAutoPlayPopup();
+        this.hideMD5Popup();
+        this.hideAutoCashOutPopup();
         setTimeout(() => {
             this.placeBetNotice.active = false;
         }, 3000);
     }
+
+    @handle(AutoPlayHandler, (handle) => handle.closeAutoPlayPopup())
+    hideAutoPlayPopup() {}
+
+    @handle(Md5PopupHandler, (handle, value: boolean) => handle.updateShowHidePopupMd5(value))
+    hideMD5Popup() {
+        return false;
+    }
+
+    @handle(AutoCashOutPopupHandler, (handle) => handle.togglePopup(false))
+    hideAutoCashOutPopup() {}
 
     @handle(AutoPlayHandler, (handle) => handle.updateStatusLatestRoundAccepted())
     checkStatusLatestRound() {}
@@ -165,11 +179,6 @@ export default class PlaceBetButton extends ObserverComponent {
 
     disablePlaceBetButton(disable: boolean) {
         this.bgDisable.node.active = disable;
-    }
-
-    @render(AutoPlayStore, (store) => store.isAutoPlay)
-    updateAutoPlayMode(isAutoPlay: boolean) {
-        this.isAutoPlayMode = isAutoPlay;
     }
 
     @render(PlayerActionStore, (store) => store.activeAutoPlayCurrentRound)

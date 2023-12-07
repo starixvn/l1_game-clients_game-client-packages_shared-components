@@ -87,7 +87,7 @@ export class AutoCashout extends ObserverComponent {
     @render(PlayerActionStore, (store) => ({
         visibleAdjustSetting: store.visibleAutoCashOut,
     }))
-    showPlaceBetNextRound(data: { visibleAdjustSetting: boolean }) {
+    showAutoCashOutButton(data: { visibleAdjustSetting: boolean }) {
         const { visibleAdjustSetting } = data;
         if (visibleAdjustSetting) {
             this.enableAutoCashOut();
