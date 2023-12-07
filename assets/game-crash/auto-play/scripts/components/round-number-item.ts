@@ -1,3 +1,4 @@
+import gc from "@sg/game-client-base";
 import { Color, Label, Sprite, _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -36,7 +37,13 @@ export class RoundNumberItem extends ObserverComponent {
 
     @handle(AutoPlayHandler, (handle, rounds: number) => handle.updateNoOfRounds(rounds))
     onRoundNumberItemClick(event) {
+        this.playSoundClick();
         this.setSelectedRound(true);
         return +event.target.name;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }

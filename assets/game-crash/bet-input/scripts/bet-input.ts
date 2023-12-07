@@ -43,15 +43,24 @@ export class BetInput extends ObserverComponent {
     }
 
     @handle(BetInputHandler, (handle) => handle.openBetAmountPopup())
-    private onClickOpenBetAmountPopup() {}
+    private onClickOpenBetAmountPopup() {
+        this.playSoundClick();
+    }
 
     @handle(BetInputHandler, (handle, isIncrease: boolean) => handle.quickChangeBetAmount(isIncrease))
     private onClickBetAmountQuickChange(event) {
+        this.playSoundClick();
         return event.target.name === "increase";
     }
 
     private handleStakeButtonQuickChange(button: Button, status: boolean) {
+        this.playSoundClick();
         button.interactable = status;
         button.node.getComponent(UIOpacity).opacity = status ? 255 : 100;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }

@@ -27,7 +27,9 @@ export class AutoCashOutPopup extends ObserverComponent {
     confirmButton: Button = null;
 
     @handle(AutoCashOutPopupHandler, (handle) => handle.togglePopup(false))
-    close() {}
+    close() {
+        this.playSoundClick();
+    }
 
     @handle(AutoCashOutHandler, (handle, multiplier: number) => handle.handleMultiplier(multiplier))
     @handle(AutoCashOutPopupHandler, (handle) => {
@@ -35,11 +37,13 @@ export class AutoCashOutPopup extends ObserverComponent {
         handle.handleMultiplier("0");
     })
     confirm() {
+        this.playSoundClick();
         return parseFloat(this.removeCommasMultiplier());
     }
 
     @handle(AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
     addValue(event, value) {
+        this.playSoundClick();
         const multiplier = this.removeCommasMultiplier();
 
         if (multiplier === "0" && value !== ".") {
@@ -85,6 +89,7 @@ export class AutoCashOutPopup extends ObserverComponent {
 
     @handle(AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
     removeLastLetter() {
+        this.playSoundClick();
         let multiplierString = this.removeCommasMultiplier().slice(0, -1);
         if (!multiplierString) {
             multiplierString = "0";
@@ -95,6 +100,7 @@ export class AutoCashOutPopup extends ObserverComponent {
 
     @handle(AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
     clear() {
+        this.playSoundClick();
         return "0";
     }
 
@@ -109,5 +115,10 @@ export class AutoCashOutPopup extends ObserverComponent {
 
     private removeCommasMultiplier(): string {
         return this.multiplierLabel.string.replace(",", "");
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }

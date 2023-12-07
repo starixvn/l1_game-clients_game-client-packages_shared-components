@@ -64,13 +64,19 @@ export class BetAmountPopup extends ObserverComponent {
     closeOtherPopups() {}
 
     @handle(BetInputHandler, (handle) => handle.closeBetAmountPopup())
-    private onCloseClick() {}
+    private onCloseClick() {
+        this.playSoundClick();
+    }
 
     @handle(BetInputHandler)
-    private onConfirmClick() {}
+    private onConfirmClick() {
+        this.playSoundClick();
+    }
 
     @handle(BetInputHandler, (handler) => handler.resetBetAmount())
-    private onClearClick() {}
+    private onClearClick() {
+        this.playSoundClick();
+    }
 
     private checkConfirmBtnStatus(status: boolean) {
         this.btnConfirm.interactable = status;
@@ -79,5 +85,10 @@ export class BetAmountPopup extends ObserverComponent {
 
     private updateBetRange({ minBet, maxBet }) {
         this.lblBetRange.string = `${FormatUtils.numberWithCommas(minBet, 2)} - ${FormatUtils.numberWithCommas(maxBet, 2)}`;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }

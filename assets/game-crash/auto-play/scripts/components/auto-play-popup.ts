@@ -49,10 +49,14 @@ export class AutoPlayPopup extends ObserverComponent {
     closeOtherPopups() {}
 
     @handle(AutoPlayHandler, (handle) => handle.closeAutoPlayPopup())
-    onClickclosePopup() {}
+    onClickclosePopup() {
+        this.playSoundClick();
+    }
 
     @handle(AutoPlayHandler, (handle) => handle.confirmRoundAndStart())
-    onClickStartButton() {}
+    onClickStartButton() {
+        this.playSoundClick();
+    }
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
     checkFinishedAutoPlay(isCrashed: boolean) {
@@ -78,4 +82,9 @@ export class AutoPlayPopup extends ObserverComponent {
 
     @handle(AutoPlayHandler, (handle) => handle.cancelAutoPlay())
     handleAutoPlay() {}
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
+    }
 }

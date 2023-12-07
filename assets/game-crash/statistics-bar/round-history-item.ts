@@ -83,6 +83,12 @@ export class RoundHistoryItem extends ObserverComponent {
 
     @handle(Md5PopupHandler, (handle, info: { isOpenPopupMd5: boolean; roundId: number }) => handle.handleMd5Popup(info))
     onClickRoundItem() {
+        this.playSoundClick();
         return { isOpenPopupMd5: true, roundId: this.roundInfo.roundId };
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }

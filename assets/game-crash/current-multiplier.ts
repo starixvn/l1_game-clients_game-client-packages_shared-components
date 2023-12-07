@@ -20,6 +20,7 @@ export class CurrentMultiplier extends ObserverComponent {
     nodeCrashText: Node = null;
 
     private crashSound = "plane_explose";
+    private rocketFlySound = "sfx_extra";
 
     onLoad() {
         this.setVisibility(false);
@@ -34,7 +35,10 @@ export class CurrentMultiplier extends ObserverComponent {
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
     updateBottomText(isCrashed: boolean) {
-        isCrashed && this.playSoundCrash();
+        if (isCrashed) {
+            this.stopSoundRocketFly();
+            //this.playSoundCrash();
+        }
         this.showHideBottomText(isCrashed);
     }
 
@@ -67,5 +71,10 @@ export class CurrentMultiplier extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundCrash() {
         return this.crashSound;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.stopSFX(id))
+    stopSoundRocketFly() {
+        return this.rocketFlySound;
     }
 }

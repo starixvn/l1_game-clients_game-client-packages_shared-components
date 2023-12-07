@@ -132,11 +132,13 @@ export class Md5Popup extends ObserverComponent {
 
     @handle(Md5PopupHandler, (handle, value: boolean) => handle.updateShowHidePopupMd5(value))
     onClickCloseButton() {
+        this.playSoundClick();
         return false;
     }
 
     @handle(Md5PopupHandler, (handle, isIncrease: boolean) => handle.quickChangeRoundIndex(isIncrease))
     onClickRoundChange(event) {
+        this.playSoundClick();
         return event.target.name === "increase";
     }
 
@@ -147,20 +149,24 @@ export class Md5Popup extends ObserverComponent {
 
     @render(CrashRoundHistoryStore, (store) => store.increaseStatus)
     private setIncreaseButtonStatus(increaseStatus: boolean) {
+        this.playSoundClick();
         this.handleRoundStatusQuickChange(this.btnIncrease, increaseStatus);
     }
 
     @render(CrashRoundHistoryStore, (store) => store.descreaseStatus)
     private setDecreaseButtonStatus(descreaseStatus: boolean) {
+        this.playSoundClick();
         this.handleRoundStatusQuickChange(this.btnDecrease, descreaseStatus);
     }
 
     onClickCopyButtonResult() {
+        this.playSoundClick();
         GameUtils.copyToClipboard(this.resultCopyString);
         this.cpnResultCopyButton.isCopying = true;
     }
 
     onClickCopyButtonKey() {
+        this.playSoundClick();
         GameUtils.copyToClipboard(this.md5keyCopyString);
         this.cpnKeyCopyButton.isCopying = true;
     }
@@ -171,6 +177,12 @@ export class Md5Popup extends ObserverComponent {
     }
 
     onOpenGuide() {
+        this.playSoundClick();
         this.handleEvent(InGameMenuEvents.OPEN_GUIDE_SCROLL_MD5);
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }

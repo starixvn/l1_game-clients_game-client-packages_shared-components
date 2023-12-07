@@ -20,6 +20,12 @@ export class BetAmountItem extends ObserverComponent {
 
     @handle(BetInputHandler, (handle, amount: number) => handle.setBetAmountTemp(amount))
     private onClickBetAmountItem(event) {
+        this.playSoundClick();
         return +event.target.name;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }

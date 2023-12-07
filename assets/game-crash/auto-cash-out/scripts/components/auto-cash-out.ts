@@ -38,11 +38,13 @@ export class AutoCashout extends ObserverComponent {
 
     @handle(AutoCashOutHandler, (handle, value: number) => handle.adjustMultiplier(value))
     quickChangeMultiplier(value: number) {
+        this.playSoundClick();
         return value;
     }
 
     @handle(AutoCashOutPopupHandler, (handle, value: boolean) => handle.togglePopup(value))
     openPopup() {
+        this.playSoundClick();
         return true;
     }
 
@@ -63,6 +65,7 @@ export class AutoCashout extends ObserverComponent {
 
     @render(AutoCashOutStore, (store) => store.enable)
     updateEnable(enable: boolean) {
+        this.playSoundClick();
         this.toggle.isChecked = enable;
     }
 
@@ -96,4 +99,9 @@ export class AutoCashout extends ObserverComponent {
 
     @handle(AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
     enableAutoCashOut() {}
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
+    }
 }
