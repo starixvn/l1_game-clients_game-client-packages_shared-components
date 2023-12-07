@@ -17,14 +17,21 @@ export class EarlyBetUIHandlers implements IHandler<boolean> {
 
     @inject(BetInputStore) private readonly betInputStore: BetInputStore;
 
+    @inject(gc.Bet.BetStore) private readonly betStore: gc.Bet.BetStore;
+
     handle(enable: boolean) {
         this.earlyBetStore.betAmount = this.betInputStore.betAmount;
         this.validateBalance(enable);
     }
 
     validateBalance(enable: boolean) {
-        if (this.earlyBetStore.betAmount > this.mainPlayerStore.balance && enable) {
-            this.noticeStore.addWarning(gc.Translator.commonTranslate("not_enough_money"));
+        const { freebetEnabled } = this.betStore;
+        const availableBalance = freebetEnabled ? this.mainPlayerStore.scoin : this.mainPlayerStore.balance;
+        if (this.earlyBetStore.betAmount > availableBalance && enable) {
+            const message = freebetEnabled
+                ? gc.Translator.commonTranslate("not_enough_scoin")
+                : gc.Translator.commonTranslate("not_enough_money");
+            this.noticeStore.addWarning(message);
         } else {
             this.earlyBetStore.earlyBet = enable;
         }
