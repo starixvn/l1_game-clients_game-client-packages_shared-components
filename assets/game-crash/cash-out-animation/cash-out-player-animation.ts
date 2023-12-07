@@ -20,8 +20,7 @@ export class CashOutPlayerAnimation extends NodeContainer {
 
     @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
     async renderOtherPlayerCashOut() {
-        const node = await this.createCashOutPlayer();
-        this.updateSpriteFrame(node, SpriteFrameIndex.OTHER_PLAYER);
+        await this.createCashOutPlayer(true);
     }
 
     @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOut, { fireImmediately: false })
@@ -35,7 +34,8 @@ export class CashOutPlayerAnimation extends NodeContainer {
     }
 
     async createCashOutMainPlayer() {
-        await this.createCashOutPlayer(true);
+        const node = await this.createCashOutPlayer(true);
+        this.updateSpriteFrame(node, SpriteFrameIndex.MAIN_PLAYER);
     }
 
     private updateSpriteFrame(node: Node, index: number) {
