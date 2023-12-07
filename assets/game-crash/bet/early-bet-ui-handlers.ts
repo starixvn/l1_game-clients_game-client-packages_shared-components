@@ -1,9 +1,8 @@
 import gc from "@sg/game-client-base";
 import inversify from "inversify";
 import { IHandler } from "observer";
-
-import { BetInputStore } from "../../../../../extensions/shared-components/assets/game-crash/bet-input/scripts/stores/bet-input-store";
 import { EarlyBetStore } from "./early-bet-store";
+import { BetInputStore } from "../bet-input/scripts/stores/bet-input-store";
 
 const { injectable, inject } = inversify;
 
