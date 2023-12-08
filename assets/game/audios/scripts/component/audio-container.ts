@@ -18,6 +18,7 @@ export type TAudioValue = {
     bundle: string;
     path: string;
     type: string;
+    isMusicGame?: boolean;
     isLazyLoad?: boolean;
 };
 
@@ -45,6 +46,7 @@ export class AudioContainer extends ObserverComponent {
 
     audios = [];
     musicIds = [];
+    musicGameIds = [];
     protected isUserGesture = false;
     protected isPlayMusic = false;
     protected isPlaySFX = false;
@@ -52,6 +54,8 @@ export class AudioContainer extends ObserverComponent {
         [ECurrentPlayTime.playMusic]: 0,
         [ECurrentPlayTime.playSFX]: 0,
     };
+
+    private sfxExtra: gc.Audios.AudioData = null;
 
     setIsUserGesture(isUserGesture: boolean) {
         this.isUserGesture = isUserGesture;
@@ -83,9 +87,13 @@ export class AudioContainer extends ObserverComponent {
             } else {
                 this.audios.push(key);
             }
+            if (value?.isMusicGame) {
+                this.musicGameIds.push(key);
+            }
         }
 
         this.registerMusicIds();
+        this.registerMusicGameIds();
         this.audiosLoaded();
     }
 
@@ -96,12 +104,25 @@ export class AudioContainer extends ObserverComponent {
         const handleTouchEvent = () => {
             this.isUserGesture = true;
             this.postMessageUserGestureToParent();
+            this.updateTouchedScreen();
         };
 
         game.canvas.addEventListener(touchStartEvent, handleTouchEvent);
         game.canvas.addEventListener(touchEndEvent, handleTouchEvent);
 
         window.addEventListener("message", this.handleSoundEventFromParent.bind(this));
+    }
+
+    @handle(gc.App.AppHandlers.UserGesturePage, (handle, value: boolean) => handle.handleTouchScreen(value))
+    updateTouchedScreen() {
+        return true;
+    }
+
+    @render(App.AppStore, (store) => store.isTouchedScreen, { fireImmediately: false })
+    playSFXExtra(isTouchedScreen: boolean) {
+        if (isTouchedScreen && this.sfxExtra && this.sfxExtra.action === Audios.AudioAction.PLAY) {
+            this.playSFXExtraAudio(this.sfxExtra.id);
+        }
     }
 
     handleSoundEventFromParent(event: MessageEvent) {
@@ -147,6 +168,11 @@ export class AudioContainer extends ObserverComponent {
         return this.musicIds;
     }
 
+    @handle(gc.Audios.AudioHandler, (handle, ids: string[]) => handle.setMusicGameIds(ids))
+    registerMusicGameIds() {
+        return this.musicGameIds;
+    }
+
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
     audiosLoaded() {}
 
@@ -188,6 +214,9 @@ export class AudioContainer extends ObserverComponent {
     @render(Audios.AudioStore, (store) => store.sfx, { fireImmediately: false })
     handleSFX(data: gc.Audios.AudioData) {
         console.log("handleSFX", data.id);
+        if (data.id === "sfx_extra") {
+            this.sfxExtra = data;
+        }
         if (data.action === Audios.AudioAction.PLAY && this.isUserGesture) {
             if (data.id === "sfx_extra") {
                 this.playSFXExtraAudio(data.id);
@@ -275,4 +304,9 @@ export class AudioContainer extends ObserverComponent {
 
         return { audioClip, currentLoadAssetTime, isPlay };
     };
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundSFXExtra() {
+        return "sfx_extra";
+    }
 }
