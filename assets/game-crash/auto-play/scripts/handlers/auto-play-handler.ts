@@ -77,6 +77,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
                 this.updateAutoPlayRounds(this.autoPlayStore.roundsAutoPlay - 1);
             } else {
                 this.autoPlayStore.isAutoPlay = false;
+                this.autoPlayStore.roundsAutoPlay = 0;
             }
         }
     }

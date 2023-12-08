@@ -134,11 +134,12 @@ export class PlayerActionStore {
         return this.visibleBetNextRound || !this.visibleCashOut;
     }
 
-    get visibleBetAmount() {
+    get disableBetAmount() {
         return (
             this.earlyBetState === EARLY_BET_STATE.BET ||
             this.visibleCashOut ||
             this.autoPlayStore.roundsAutoPlay > 0 ||
+            (this.latestRound && this.roundTimeStore.isStartPlacingBet) ||
             (this.betState === BET_STATE.BET && (this.roundTimeStore.isPlacingBet || this.roundTimeStore.isLocking))
         );
     }
@@ -157,6 +158,10 @@ export class PlayerActionStore {
 
     get autoEarlyBet() {
         return this.autoPlayStore.isAutoPlay && this.autoPlayStore.roundsAutoPlay > 0;
+    }
+
+    get latestRound() {
+        return this.autoPlayStore.isAutoPlay && this.autoPlayStore.roundsAutoPlay === 0;
     }
 
     constructor() {

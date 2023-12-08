@@ -15,7 +15,7 @@ export class BetAmount extends ObserverComponent {
         this.nodeDisabledBetAmount.active = isShow;
     }
 
-    @render(PlayerActionStore, (store) => store.visibleBetAmount)
+    @render(PlayerActionStore, (store) => store.disableBetAmount)
     adjustBetAmount(visibleBetAmount: boolean) {
         this.showHideDisabledNode(visibleBetAmount);
     }
