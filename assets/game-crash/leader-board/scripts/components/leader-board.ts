@@ -143,6 +143,7 @@ export class LeaderBoard extends ObserverComponent {
     }
 
     onClickCollapseButton(e) {
+        this.playSoundClick();
         const collapseHeight = this.cpnMainPlayer.isShowFullCashOutNode()
             ? this.collapsedBoardHeight + this.itemHeight
             : this.collapsedBoardHeight;
@@ -184,5 +185,10 @@ export class LeaderBoard extends ObserverComponent {
 
     private setMainPlayerVisibility(isShow: boolean) {
         this.cpnMainPlayer.node.active = isShow;
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }
