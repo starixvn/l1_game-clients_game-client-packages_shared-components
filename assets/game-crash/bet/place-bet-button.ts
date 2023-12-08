@@ -8,12 +8,12 @@ import { AutoPlayHandler } from "../../../../../extensions/shared-components/ass
 import { AutoPlayStore } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/stores/auto-play-store";
 import { BetInputStore } from "../../../../../extensions/shared-components/assets/game-crash/bet-input/scripts/stores/bet-input-store";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
+import AutoCashOutPopupHandler from "../auto-cash-out/scripts/handlers/auto-cash-out-popup-handler";
+import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handlers";
 import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 import { BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 import { EarlyBetStore } from "./early-bet-store";
-import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handlers";
-import AutoCashOutPopupHandler from "../auto-cash-out/scripts/handlers/auto-cash-out-popup-handler";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -51,7 +51,7 @@ export default class PlaceBetButton extends ObserverComponent {
 
     private hasEarlyBetBeforeAutoPlay = false;
 
-    private placeBetSound = "place_bet";
+    private readonly placeBetSound = "place_bet";
 
     @render(BetInputStore, (store) => store.betAmount)
     updateBetAmount(betAmount: number) {

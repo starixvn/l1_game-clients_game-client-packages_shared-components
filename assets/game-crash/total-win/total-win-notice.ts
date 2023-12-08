@@ -19,7 +19,7 @@ export class TotalWinNotice extends ObserverComponent {
     @property({ type: Node })
     othersNoticeNode: Node[] = [];
 
-    private winningSound = "show_winning";
+    private readonly winningSound = "show_winning";
 
     onLoad(): void {
         super.onLoad();

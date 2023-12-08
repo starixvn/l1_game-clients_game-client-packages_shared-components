@@ -48,7 +48,7 @@ export default class EarlyBetButton extends ObserverComponent {
     private hasEarlyBetBeforeAutoPlay = false;
 
     private autoPlayWhenRocketFly = false;
-    private placeBetSound = "place_bet";
+    private readonly placeBetSound = "place_bet";
 
     @render(AutoCashOutStore, (store) => store.enable)
     updateStatusAutoCashOut(isEnable: boolean) {
@@ -188,7 +188,7 @@ export default class EarlyBetButton extends ObserverComponent {
 
     @render(PlayerActionStore, (store) => store.autoEarlyBet)
     updateAutoPlayMode(autoEarlyBet: boolean) {
-        this.isAutoPlayMode = autoEarlyBet ;
+        this.isAutoPlayMode = autoEarlyBet;
     }
 
     @handle(PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(true))

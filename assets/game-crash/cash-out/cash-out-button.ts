@@ -23,7 +23,7 @@ export class CashOutButton extends ObserverComponent {
     private bet = 0;
     private isCashedOut = false;
 
-    private cashOutSound = "cash_out";
+    private readonly cashOutSound = "cash_out";
 
     @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutFull)
     updateCashOutFullButton(isCashedOut: boolean) {

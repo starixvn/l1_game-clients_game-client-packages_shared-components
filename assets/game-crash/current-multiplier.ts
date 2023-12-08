@@ -19,8 +19,8 @@ export class CurrentMultiplier extends ObserverComponent {
     @property(Node)
     nodeCrashText: Node = null;
 
-    private crashSound = "plane_explose";
-    private rocketFlySound = "sfx_extra";
+    private readonly crashSound = "plane_explose";
+    private readonly rocketFlySound = "sfx_extra";
 
     onLoad() {
         this.setVisibility(false);
@@ -37,7 +37,6 @@ export class CurrentMultiplier extends ObserverComponent {
     updateBottomText(isCrashed: boolean) {
         if (isCrashed) {
             this.stopSoundRocketFly();
-            //this.playSoundCrash();
         }
         this.showHideBottomText(isCrashed);
     }

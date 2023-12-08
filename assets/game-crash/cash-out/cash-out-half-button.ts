@@ -27,7 +27,7 @@ export class CashOutHalfButton extends ObserverComponent {
 
     private cashOutData = null;
 
-    private cashOutSound = "cash_out";
+    private readonly cashOutSound = "cash_out";
 
     @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutHalf)
     updateCashOutHalfButton(isCashedOut: boolean) {
