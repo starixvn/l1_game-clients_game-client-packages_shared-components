@@ -1,11 +1,11 @@
 import gc from "@sg/game-client-base";
-import { SpriteFrame, _decorator, sp, tween, v3 } from "cc";
+import { _decorator, sp, tween, v3 } from "cc";
 import { random } from "lodash-es";
 import Observer from "observer";
 import { NodeContainer } from "../../shared/common-components/node-container/node-container";
 import { AnimationUtils } from "../../shared/utils";
 const { render } = Observer;
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 const { GameCrash } = gc;
 
 export const CashOutAnim = {
@@ -15,9 +15,6 @@ export const CashOutAnim = {
 
 @ccclass
 export class CashOutPlayerAnimation extends NodeContainer {
-    @property({ type: SpriteFrame })
-    spriteFrames: SpriteFrame[] = [];
-
     @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
     async renderOtherPlayerCashOut() {
         await this.createCashOutPlayer(false);
