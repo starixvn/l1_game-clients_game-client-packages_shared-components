@@ -328,8 +328,8 @@
     "_overflow": 0,
     "_enableWrapText": false,
     "_font": {
-      "__uuid__": "41a12541-a4db-4259-b803-4c477054c858",
-      "__expectedType__": "cc.TTFFont"
+      "__uuid__": "52227efe-f368-4706-a10e-03f3c6922e0c",
+      "__expectedType__": "cc.BitmapFont"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
@@ -358,8 +358,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 12.7763671875,
-      "height": 55.44
+      "width": 9.63,
+      "height": 44
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -623,8 +623,8 @@
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "41a12541-a4db-4259-b803-4c477054c858",
-      "__expectedType__": "cc.TTFFont"
+      "__uuid__": "52227efe-f368-4706-a10e-03f3c6922e0c",
+      "__expectedType__": "cc.BitmapFont"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
@@ -653,8 +653,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 70.4443359375,
-      "height": 55.44
+      "width": 70.44,
+      "height": 44
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1000,8 +1000,8 @@
     "_overflow": 0,
     "_enableWrapText": false,
     "_font": {
-      "__uuid__": "41a12541-a4db-4259-b803-4c477054c858",
-      "__expectedType__": "cc.TTFFont"
+      "__uuid__": "52227efe-f368-4706-a10e-03f3c6922e0c",
+      "__expectedType__": "cc.BitmapFont"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
@@ -1030,8 +1030,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 12.7763671875,
-      "height": 55.44
+      "width": 9.63,
+      "height": 44
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1295,8 +1295,8 @@
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "41a12541-a4db-4259-b803-4c477054c858",
-      "__expectedType__": "cc.TTFFont"
+      "__uuid__": "52227efe-f368-4706-a10e-03f3c6922e0c",
+      "__expectedType__": "cc.BitmapFont"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
@@ -1325,8 +1325,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 48.7880859375,
-      "height": 55.44
+      "width": 49.44,
+      "height": 44
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
