@@ -22,30 +22,31 @@ export class CashOutHalfButton extends ObserverComponent {
 
     private bet = 0;
     private isCashedOutHalf = false;
-
+    private isCashedOutFull = false;
     private halfCashOutData = null;
-
-    private cashOutData = null;
-
     private readonly cashOutSound = "cash_out";
 
-    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutHalf)
-    updateCashOutHalfButton(isCashedOut: boolean) {
-        CashOutComponent.updateCashOutButtonStatus(isCashedOut, this.sprDisabled);
-        this.isCashedOutHalf = isCashedOut;
+    @render(gc.Rounds.RoundTimeStore, (store) => store.isStartRound)
+    reset() {
+        this.bet = 0;
+        this.halfCashOutData = null;
+        this.isCashedOutHalf = false;
+        this.isCashedOutHalf = false;
     }
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.multiplier)
-    updateCashOut(multiplier: number) {
-        if (!this.isCashedOutHalf) {
+    updateCashOutByMultiplier(multiplier: number) {
+        if (!this.isCashedOutHalf && this.bet > 0) {
             const cashOutValue = (multiplier * this.bet) / 2;
-            this.lblCashOut.string = FormatUtils.numberWithCommas(cashOutValue, 2);
+            CashOutComponent.updateValueCashOut(cashOutValue, this.lblCashOut);
         }
     }
 
     @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOutBet, { fireImmediately: false })
     updateBetValue(cashOutBet: any) {
-        this.bet = CashOutComponent.getBetValue(cashOutBet);
+        if (cashOutBet && cashOutBet.value > 0) {
+            this.bet = CashOutComponent.getBetValue(cashOutBet);
+        }
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
@@ -80,15 +81,32 @@ export class CashOutHalfButton extends ObserverComponent {
         return CashOutComponent.getCashOutValue(this.lblCashOut);
     }
 
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutHalf)
+    updateCashOutHalfButton(isCashedOut: boolean) {
+        CashOutComponent.updateCashOutButtonStatus(isCashedOut, this.sprDisabled);
+        this.isCashedOutHalf = isCashedOut;
+    }
+
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutFull)
+    checkCashOutFull(isCashedOutFull: boolean) {
+        this.isCashedOutFull = isCashedOutFull;
+    }
+
     @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.halfCashOut, { fireImmediately: false })
     updateValueCashOut(halfCashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
         this.halfCashOutData = halfCashOut;
         CashOutComponent.updateValueCashOut(halfCashOut?.cashOutWin, this.lblCashOut);
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOut, { fireImmediately: false })
-    assignCashOutData(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
-        this.cashOutData = cashOut;
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOut, {
+        fireImmediately: false,
+    })
+    updateValueWhenCashOutFull(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
+        if (cashOut) {
+            if (this.isCashedOutFull && !this.halfCashOutData && cashOut && cashOut.cashOutWin > 0) {
+                CashOutComponent.updateValueCashOut(cashOut.cashOutWin / 2, this.lblCashOut);
+            }
+        }
     }
 
     @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
@@ -97,13 +115,6 @@ export class CashOutHalfButton extends ObserverComponent {
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
     updateStatusCashOutHalfButton(isCrashed: boolean) {
         CashOutComponent.updateCashOutButtonStatus(isCrashed, this.sprDisabled);
-    }
-
-    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutFull)
-    updateValueHalfButton(isCashedOutFull: boolean) {
-        if (isCashedOutFull && !this.halfCashOutData) {
-            CashOutComponent.updateValueCashOut(this.cashOutData?.cashOutWin / 2, this.lblCashOut);
-        }
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))

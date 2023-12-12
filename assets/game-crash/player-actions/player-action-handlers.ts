@@ -1,7 +1,9 @@
-import inversify from "inversify";
 import gc from "@sg/game-client-base";
+import inversify from "inversify";
 import { IHandler } from "observer";
+
 import { PlayerActionStore } from "./player-action-store";
+
 const { injectable, inject } = inversify;
 
 @injectable()
@@ -18,7 +20,7 @@ export class PlayerActionHandlers implements IHandler<boolean> {
     handle(flag: boolean) {}
 
     handleEndShowCashOutNotice(flag: boolean) {
-        this.playerActionStore.endShowCashoutNotice = flag;
+        this.playerActionStore.endShowCashOutNotice = flag;
     }
 
     handleCurrentBetStateInStore(action: string) {

@@ -13,7 +13,6 @@ import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handler
 import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 import { BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
-import { EarlyBetStore } from "./early-bet-store";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -47,8 +46,6 @@ export default class PlaceBetButton extends ObserverComponent {
 
     private valueAutoCashOut = 1.01;
 
-    private earlyBet = false;
-
     private hasEarlyBetBeforeAutoPlay = false;
 
     private placeBetSound = "place_bet";
@@ -58,22 +55,16 @@ export default class PlaceBetButton extends ObserverComponent {
         this.amount = betAmount;
     }
 
-    @render(EarlyBetStore, (store) => store.earlyBet)
-    enableEarlyBet(enable: boolean) {
-        this.earlyBet = enable;
-    }
-
-    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOutBet)
-    @render(Bet.BetStore, (store) => store.lastReceivedBet)
-    updateStatusPlaceBet(lastReceivedBet: any) {
-        if (!lastReceivedBet || lastReceivedBet.value <= 0 || lastReceivedBet.value !== this.amount) {
+    @render(Bet.BetStore, (store) => store.isReceivedBet)
+    updateStatusPlaceBet(isReceivedBet: any) {
+        if (!isReceivedBet) {
+            this.isBetAccepted = false;
             return;
         }
-        console.log("updateStatusPlaceBet");
+        this.isBetAccepted = true;
         this.setBetAcceptedBetStatus(true);
         this.placeBetNotice.active = true;
-        this.isBetAccepted = true;
-        this.disableAutoCashout(true);
+        this.disableAutoCashOut(true);
         this.checkStatusLatestRound();
         this.hideAutoPlayPopup();
         this.hideMD5Popup();
@@ -108,7 +99,7 @@ export default class PlaceBetButton extends ObserverComponent {
     }
 
     @handle(AutoCashOutHandler, (handle, disable: boolean) => handle.handleDisableAuto(disable))
-    disableAutoCashout(disable: boolean) {
+    disableAutoCashOut(disable: boolean) {
         return disable;
     }
 
@@ -151,9 +142,7 @@ export default class PlaceBetButton extends ObserverComponent {
     renderPlacingBet(isPlacingBet: boolean) {
         if (isPlacingBet) {
             this.setBetButtonVisibility(true);
-            if (this.earlyBet && !this.isBetAccepted) {
-                console.log("renderPlacingBet - earlyBet & isBetAccepted=false");
-                this.isBetAccepted = true;
+            if (this.isBetAccepted) {
                 this.setBetAcceptedBetStatus(true);
             } else {
                 this.setBetAcceptedBetStatus(false);
@@ -167,10 +156,10 @@ export default class PlaceBetButton extends ObserverComponent {
     }
 
     @render(Rounds.RoundTimeStore, (store) => ({ isLocking: store.isLocking, roundTime: store.roundTime }))
-    renderLockBet(isLocking: boolean, roundTime) {
-        if (isLocking && this.isBetAccepted && roundTime >= 0) {
+    renderLockBet({ isLocking, roundTime }) {
+        if (isLocking && roundTime >= 0) {
             this.setBetButtonVisibility(true);
-            this.disablePlaceBetButton(true);
+            this.disablePlaceBetButton(this.isBetAccepted);
         }
     }
 

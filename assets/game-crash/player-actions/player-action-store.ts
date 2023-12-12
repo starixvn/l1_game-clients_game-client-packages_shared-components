@@ -97,23 +97,20 @@ export class PlayerActionStore {
         this._betState = value;
     }
 
-    get endShowCashoutNotice(): boolean {
+    get endShowCashOutNotice(): boolean {
         return this._endShowCashOutNotice;
     }
 
-    set endShowCashoutNotice(flag: boolean) {
+    set endShowCashOutNotice(flag: boolean) {
         this._endShowCashOutNotice = flag;
     }
 
     get visibleBetNextRound() {
-        const isVisible =
+        return (
             (this.betState === BET_STATE.NONE &&
                 (this.isFlyingTime || this.roundTimeStore.isShowResult || this.roundTimeStore.isStartRound)) ||
-            (this.cashOutState === CASH_OUT_STATE.FULL && this.endShowCashoutNotice);
-        console.log(
-            `visibleBetNextRound: ${isVisible} - betState: ${this.betState},isFlyingTime: ${this.isFlyingTime}, cashOutState: ${this.cashOutState}, isShowResult: ${this.roundTimeStore.isShowResult}, isStartRound: ${this.roundTimeStore.isStartRound}, endShowCashoutNotice: ${this.endShowCashoutNotice}`
+            (this.cashOutState === CASH_OUT_STATE.FULL && this.endShowCashOutNotice)
         );
-        return isVisible;
     }
 
     get permissionAutoPlay() {
@@ -129,15 +126,12 @@ export class PlayerActionStore {
     }
 
     get visibleCashOut() {
-        const isVisible =
+        return (
             (this.betState === BET_STATE.BET && this.isFlyingTime && !this.visibleBetNextRound) ||
             (this.betState === BET_STATE.BET &&
                 this.cashOutState !== CASH_OUT_STATE.FULL &&
-                (this.roundTimeStore.isShowResult || this.roundTimeStore.isStartRound));
-        console.log(
-            `visibleCashOut: ${isVisible} - betState: ${this.betState},isFlyingTime: ${this.isFlyingTime}, visibleBetNextRound: ${this.visibleBetNextRound}, cashOutState: ${this.cashOutState}, isShowResult: ${this.roundTimeStore.isShowResult}, isStartRound: ${this.roundTimeStore.isStartRound}`
+                (this.roundTimeStore.isShowResult || this.roundTimeStore.isStartRound))
         );
-        return isVisible;
     }
 
     get visibleAutoCashOut() {
