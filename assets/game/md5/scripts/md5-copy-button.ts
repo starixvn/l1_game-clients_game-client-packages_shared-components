@@ -36,7 +36,7 @@ export class Md5CopyButton extends ObserverComponent {
 
     private showHint() {
         if (this.nodeHintCopy) {
-            tween(this.nodeHintCopy.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).delay(3).to(0.1, { opacity: 1 }).start();
+            tween(this.nodeHintCopy.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).delay(1.5).to(0.1, { opacity: 1 }).start();
         }
     }
 
