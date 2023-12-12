@@ -1,5 +1,6 @@
 import gc from "@sg/game-client-base";
 import { Label, Node, Sprite } from "cc";
+
 const { FormatUtils } = gc;
 export namespace CashOutComponent {
     export const showHideNode = (node: Node, visibleCashOut: boolean) => {
@@ -14,7 +15,7 @@ export namespace CashOutComponent {
         return lastReceivedBet && lastReceivedBet.value >= 0 ? lastReceivedBet.value : undefined;
     };
 
-    export const updateCashOutButton = (isCashedOut: boolean, sprDisabled: Sprite) => {
+    export const updateCashOutButtonStatus = (isCashedOut: boolean, sprDisabled: Sprite) => {
         sprDisabled.node.active = isCashedOut;
     };
 

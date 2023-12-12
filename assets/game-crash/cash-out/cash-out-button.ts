@@ -31,7 +31,7 @@ export class CashOutButton extends ObserverComponent {
             setTimeout(() => {
                 this.handleUICashOutState(CASH_OUT_STATE.FULL);
             }, 3000);
-        CashOutComponent.updateCashOutButton(isCashedOut, this.sprDisabled);
+        CashOutComponent.updateCashOutButtonStatus(isCashedOut, this.sprDisabled);
         this.isCashedOut = isCashedOut;
     }
 
@@ -49,9 +49,10 @@ export class CashOutButton extends ObserverComponent {
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
-    assignCashoutBetValue(lastReceivedBet: any) {
+    assignCashOutBetValue(lastReceivedBet: any) {
         this.updateCashOutBetValue(lastReceivedBet);
     }
+
     @handle(GameCrash.CrashCashOut.CrashCashOutUIHandlers, (cashOutHandler, cashOutBetValue: number) =>
         cashOutHandler.updateCashOutBetValue(cashOutBetValue)
     )
@@ -93,7 +94,7 @@ export class CashOutButton extends ObserverComponent {
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
     updateStatusCashOutButton(isCrashed: boolean) {
-        CashOutComponent.updateCashOutButton(isCrashed, this.sprDisabled);
+        CashOutComponent.updateCashOutButtonStatus(isCrashed, this.sprDisabled);
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))

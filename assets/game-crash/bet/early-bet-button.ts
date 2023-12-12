@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Sprite } from "cc";
 import Observer from "observer";
+
 import AutoCashOutStore from "../../../../../extensions/shared-components/assets/game-crash/auto-cash-out/scripts/stores/auto-cash-out-store";
 import { AutoPlayHandler } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/handlers/auto-play-handler";
 import { AutoPlayStore } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/stores/auto-play-store";
@@ -117,6 +118,11 @@ export default class EarlyBetButton extends ObserverComponent {
         if (visibleCashOut) {
             this.disableEarlyBet();
         }
+    }
+
+    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
+    handleBetUIControl(action: string) {
+        return action;
     }
 
     handleRocketFly() {

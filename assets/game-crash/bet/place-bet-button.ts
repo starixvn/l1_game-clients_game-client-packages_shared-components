@@ -13,6 +13,7 @@ import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handler
 import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 import { BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
+import { EarlyBetStore } from "./early-bet-store";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -46,24 +47,32 @@ export default class PlaceBetButton extends ObserverComponent {
 
     private valueAutoCashOut = 1.01;
 
+    private earlyBet = false;
+
     private hasEarlyBetBeforeAutoPlay = false;
 
-    private readonly placeBetSound = "place_bet";
+    private placeBetSound = "place_bet";
 
     @render(BetInputStore, (store) => store.betAmount)
     updateBetAmount(betAmount: number) {
         this.amount = betAmount;
     }
 
+    @render(EarlyBetStore, (store) => store.earlyBet)
+    enableEarlyBet(enable: boolean) {
+        this.earlyBet = enable;
+    }
+
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOutBet)
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
     updateStatusPlaceBet(lastReceivedBet: any) {
         if (!lastReceivedBet || lastReceivedBet.value <= 0 || lastReceivedBet.value !== this.amount) {
             return;
         }
-
-        this.setStatusBet(true);
-        this.isBetAccepted = true;
+        console.log("updateStatusPlaceBet");
+        this.setBetAcceptedBetStatus(true);
         this.placeBetNotice.active = true;
+        this.isBetAccepted = true;
         this.disableAutoCashout(true);
         this.checkStatusLatestRound();
         this.hideAutoPlayPopup();
@@ -133,33 +142,39 @@ export default class PlaceBetButton extends ObserverComponent {
     renderLiveGame(isFlyingTime: boolean) {
         if (isFlyingTime) {
             this.isBetAccepted = false;
-            this.node.active = false;
-            this.setStatusBet(false);
+            this.setBetButtonVisibility(false);
+            this.setBetAcceptedBetStatus(false);
         }
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
     renderPlacingBet(isPlacingBet: boolean) {
         if (isPlacingBet) {
-            this.node.active = true;
-            if (this.isBetAccepted) {
-                this.setStatusBet(true);
+            this.setBetButtonVisibility(true);
+            if (this.earlyBet && !this.isBetAccepted) {
+                console.log("renderPlacingBet - earlyBet & isBetAccepted=false");
+                this.isBetAccepted = true;
+                this.setBetAcceptedBetStatus(true);
             } else {
-                this.setStatusBet(false);
+                this.setBetAcceptedBetStatus(false);
                 this.enableAutoCashOut();
             }
         }
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isLocking)
-    renderLockBet(isLocking: boolean) {
-        if (isLocking && !this.isBetAccepted) {
-            this.node.active = true;
+    private setBetButtonVisibility(status: boolean) {
+        this.node.active = status;
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => ({ isLocking: store.isLocking, roundTime: store.roundTime }))
+    renderLockBet(isLocking: boolean, roundTime) {
+        if (isLocking && this.isBetAccepted && roundTime >= 0) {
+            this.setBetButtonVisibility(true);
             this.disablePlaceBetButton(true);
         }
     }
 
-    setStatusBet(selected: boolean) {
+    setBetAcceptedBetStatus(selected: boolean) {
         this.bgWaiting.node.active = this.sprBetAccepted.node.active = selected;
         this.sprPlaceBet.node.active = this.bgPlaceBet.node.active = !selected;
         this.disablePlaceBetButton(selected);

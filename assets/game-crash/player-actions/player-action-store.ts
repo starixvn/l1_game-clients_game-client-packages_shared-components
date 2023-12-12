@@ -1,8 +1,9 @@
 import gc from "@sg/game-client-base";
 import inversify from "inversify";
 import mobx from "mobx";
-import { EarlyBetStore } from "../bet/early-bet-store";
+
 import { AutoPlayStore } from "../auto-play/scripts/stores/auto-play-store";
+import { EarlyBetStore } from "../bet/early-bet-store";
 
 const { injectable, inject } = inversify;
 
@@ -38,6 +39,9 @@ export class PlayerActionStore {
 
     @inject(gc.Rounds.RoundTimeStore)
     protected readonly roundTimeStore: gc.Rounds.RoundTimeStore;
+
+    @inject(gc.Rounds.RoundStore)
+    protected readonly roundStore: gc.Rounds.RoundStore;
 
     private _endShowCashOutNotice = false;
 
@@ -102,11 +106,14 @@ export class PlayerActionStore {
     }
 
     get visibleBetNextRound() {
-        return (
+        const isVisible =
             (this.betState === BET_STATE.NONE &&
                 (this.isFlyingTime || this.roundTimeStore.isShowResult || this.roundTimeStore.isStartRound)) ||
-            (this.cashOutState === CASH_OUT_STATE.FULL && this.endShowCashoutNotice)
+            (this.cashOutState === CASH_OUT_STATE.FULL && this.endShowCashoutNotice);
+        console.log(
+            `visibleBetNextRound: ${isVisible} - betState: ${this.betState},isFlyingTime: ${this.isFlyingTime}, cashOutState: ${this.cashOutState}, isShowResult: ${this.roundTimeStore.isShowResult}, isStartRound: ${this.roundTimeStore.isStartRound}, endShowCashoutNotice: ${this.endShowCashoutNotice}`
         );
+        return isVisible;
     }
 
     get permissionAutoPlay() {
@@ -114,7 +121,7 @@ export class PlayerActionStore {
     }
 
     get isFlyingTime() {
-        return this.roundTimeStore.remaining <= 0;
+        return this.roundTimeStore.remaining < 0 || (this.roundStore.ownBets && this.roundTimeStore.roundTime <= 0);
     }
 
     get rocketStart() {
@@ -122,12 +129,15 @@ export class PlayerActionStore {
     }
 
     get visibleCashOut() {
-        return (
+        const isVisible =
             (this.betState === BET_STATE.BET && this.isFlyingTime && !this.visibleBetNextRound) ||
             (this.betState === BET_STATE.BET &&
                 this.cashOutState !== CASH_OUT_STATE.FULL &&
-                (this.roundTimeStore.isShowResult || this.roundTimeStore.isStartRound))
+                (this.roundTimeStore.isShowResult || this.roundTimeStore.isStartRound));
+        console.log(
+            `visibleCashOut: ${isVisible} - betState: ${this.betState},isFlyingTime: ${this.isFlyingTime}, visibleBetNextRound: ${this.visibleBetNextRound}, cashOutState: ${this.cashOutState}, isShowResult: ${this.roundTimeStore.isShowResult}, isStartRound: ${this.roundTimeStore.isStartRound}`
         );
+        return isVisible;
     }
 
     get visibleAutoCashOut() {
