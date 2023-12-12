@@ -13,7 +13,6 @@ import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handler
 import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
 import { BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
-import { EarlyBetStore } from "./early-bet-store";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -47,8 +46,6 @@ export default class PlaceBetButton extends ObserverComponent {
 
     private valueAutoCashOut = 1.01;
 
-    private earlyBet = false;
-
     private hasEarlyBetBeforeAutoPlay = false;
 
     private readonly placeBetSound = "place_bet";
@@ -56,11 +53,6 @@ export default class PlaceBetButton extends ObserverComponent {
     @render(BetInputStore, (store) => store.betAmount)
     updateBetAmount(betAmount: number) {
         this.amount = betAmount;
-    }
-
-    @render(EarlyBetStore, (store) => store.earlyBet)
-    enableEarlyBet(enable: boolean) {
-        this.earlyBet = enable;
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
@@ -150,8 +142,7 @@ export default class PlaceBetButton extends ObserverComponent {
     renderPlacingBet(isPlacingBet: boolean) {
         if (isPlacingBet) {
             this.node.active = true;
-            if (this.earlyBet || this.isBetAccepted) {
-                this.isBetAccepted = true;
+            if (this.isBetAccepted) {
                 this.setStatusBet(true);
             } else {
                 this.setStatusBet(false);
