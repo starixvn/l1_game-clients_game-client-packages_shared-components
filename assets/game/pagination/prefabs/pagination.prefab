@@ -247,7 +247,10 @@
       "b": 124,
       "a": 255
     },
-    "_normalSprite": null,
+    "_normalSprite": {
+      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@fca29",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_hoverSprite": null,
     "_pressedSprite": null,
     "_disabledSprite": null,
@@ -484,7 +487,10 @@
       "b": 124,
       "a": 255
     },
-    "_normalSprite": null,
+    "_normalSprite": {
+      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@63594",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_hoverSprite": null,
     "_pressedSprite": null,
     "_disabledSprite": null,
@@ -1045,7 +1051,7 @@
     "_actualFontSize": 18,
     "_fontSize": 18,
     "_fontFamily": "Arial",
-    "_lineHeight": 47,
+    "_lineHeight": 32,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
@@ -1058,7 +1064,7 @@
     "_isBold": false,
     "_isUnderline": false,
     "_underlineHeight": 0,
-    "_cacheMode": 2,
+    "_cacheMode": 0,
     "_id": ""
   },
   {
@@ -1099,7 +1105,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 0,
-      "height": 47
+      "height": 32
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1795,7 +1801,7 @@
     "_actualFontSize": 18,
     "_fontSize": 18,
     "_fontFamily": "Arial",
-    "_lineHeight": 47,
+    "_lineHeight": 32,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
@@ -1808,7 +1814,7 @@
     "_isBold": false,
     "_isUnderline": false,
     "_underlineHeight": 0,
-    "_cacheMode": 2,
+    "_cacheMode": 0,
     "_id": ""
   },
   {
@@ -1849,7 +1855,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 0,
-      "height": 47
+      "height": 32
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -2543,7 +2549,7 @@
     "_actualFontSize": 18,
     "_fontSize": 18,
     "_fontFamily": "Arial",
-    "_lineHeight": 47,
+    "_lineHeight": 32,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
@@ -2556,7 +2562,7 @@
     "_isBold": false,
     "_isUnderline": false,
     "_underlineHeight": 0,
-    "_cacheMode": 2,
+    "_cacheMode": 0,
     "_id": ""
   },
   {
@@ -2597,7 +2603,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 0,
-      "height": 47
+      "height": 32
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3291,7 +3297,7 @@
     "_actualFontSize": 18,
     "_fontSize": 18,
     "_fontFamily": "Arial",
-    "_lineHeight": 47,
+    "_lineHeight": 32,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
@@ -3304,7 +3310,7 @@
     "_isBold": false,
     "_isUnderline": false,
     "_underlineHeight": 0,
-    "_cacheMode": 2,
+    "_cacheMode": 0,
     "_id": ""
   },
   {
@@ -3345,7 +3351,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 0,
-      "height": 47
+      "height": 32
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -4039,7 +4045,7 @@
     "_actualFontSize": 18,
     "_fontSize": 18,
     "_fontFamily": "Arial",
-    "_lineHeight": 47,
+    "_lineHeight": 32,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
@@ -4052,7 +4058,7 @@
     "_isBold": false,
     "_isUnderline": false,
     "_underlineHeight": 0,
-    "_cacheMode": 2,
+    "_cacheMode": 0,
     "_id": ""
   },
   {
@@ -4093,7 +4099,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 0,
-      "height": 47
+      "height": 32
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -4463,7 +4469,10 @@
       "b": 124,
       "a": 255
     },
-    "_normalSprite": null,
+    "_normalSprite": {
+      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@63594",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_hoverSprite": null,
     "_pressedSprite": null,
     "_disabledSprite": null,
@@ -4700,7 +4709,10 @@
       "b": 124,
       "a": 255
     },
-    "_normalSprite": null,
+    "_normalSprite": {
+      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@fca29",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_hoverSprite": null,
     "_pressedSprite": null,
     "_disabledSprite": null,
