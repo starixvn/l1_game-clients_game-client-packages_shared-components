@@ -24,7 +24,11 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
 
     openAutoPlayPopup() {
         this.autoPlayStore.isOpenAutoPlayPopup = true;
-        this.autoPlayStore.selectedRoundOnPopup = this.autoPlayStore.roundsList[0];
+        if (this.autoPlayStore.roundConfirmedOnPopup !== 0) {
+            this.autoPlayStore.selectedRoundOnPopup = this.autoPlayStore.roundConfirmedOnPopup;
+        } else {
+            this.autoPlayStore.selectedRoundOnPopup = this.autoPlayStore.roundsList[0];
+        }
     }
 
     checkAutoPlayClick() {
@@ -54,7 +58,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     }
 
     confirmRoundAndStart() {
-        this.autoPlayStore.roundsAutoPlay = this.autoPlayStore.selectedRoundOnPopup;
+        this.autoPlayStore.roundsAutoPlay = this.autoPlayStore.roundConfirmedOnPopup = this.autoPlayStore.selectedRoundOnPopup;
         this.autoPlayStore.isOpenAutoPlayPopup = false;
         this.autoPlayStore.isAutoPlay = true;
         this.updateStatusLatestRoundAccepted();
