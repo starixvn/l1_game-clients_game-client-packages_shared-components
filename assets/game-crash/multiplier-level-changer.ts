@@ -19,9 +19,9 @@ export class MultiplierLevelChanger extends ObserverComponent {
         this.updateMultiplierLevel(multiplier);
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.isStartRound)
-    startNewRound(isStartRound: boolean) {
-        if (!isStartRound) {
+    @render(gc.Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
+    startNewRound(isStartPlacingBet: boolean) {
+        if (!isStartPlacingBet) {
             return;
         }
         this.resetMultiplierNodes();
