@@ -12,7 +12,7 @@ const { Translator } = gc;
 @injectable()
 export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     @inject(AutoPlayStore) private readonly autoPlayStore: AutoPlayStore;
-    @inject(gc.Rounds.RoundTimeStore) private readonly roundTimeStore: gc.Rounds.RoundTimeStore;
+    @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
     @inject(EarlyBetStore) private readonly earlyBetStore: EarlyBetStore;
     @inject(BetInputStore) private readonly betInputStore: BetInputStore;
     @inject(gc.Bet.BetStore) private readonly betStore: gc.Bet.BetStore;
@@ -51,6 +51,13 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
         }
     }
 
+    checkBetAmountVsMinBet() {
+        if (this.roundStore.minBet <= this.betInputStore.betAmount) {
+            return true;
+        }
+        return false;
+    }
+
     closeAutoPlayPopup() {
         this.autoPlayStore.isOpenAutoPlayPopup = false;
         this.autoPlayStore.autoPlayWhenRocketFly = false;
@@ -77,7 +84,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
 
     decreaseAutoPlayRounds() {
         if (this.autoPlayStore.isAutoPlay) {
-            if (this.checkBalanceForAutoPlay() && this.autoPlayStore.roundsAutoPlay > 0) {
+            if (this.checkBalanceForAutoPlay() && this.checkBetAmountVsMinBet() && this.autoPlayStore.roundsAutoPlay > 0) {
                 this.updateAutoPlayRounds(this.autoPlayStore.roundsAutoPlay - 1);
             } else {
                 this.autoPlayStore.isAutoPlay = false;
