@@ -12,6 +12,7 @@ export class Md5CopyButton extends ObserverComponent {
     protected lblHint: Label = null;
 
     onLoad() {
+        super.onLoad();
         if (this.nodeHintCopy) {
             this.lblHint = this.nodeHintCopy.getChildByName("content").getComponent(Label);
             this.lblHint.string = Translator.commonTranslate("copy_successfully_md5");
