@@ -16,7 +16,7 @@ export class BetInputStore {
     isDisabledBetInput = false;
 
     get betAmount(): number {
-        return this._betAmount > -1 ? this._betAmount : this.roundStore.minBet;
+        return this._betAmount;
     }
 
     set betAmount(amount: number) {

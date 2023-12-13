@@ -9,6 +9,8 @@ const { injectable, inject } = inversify;
 export class BetInputHandler implements gc.Shared.IHandler<number> {
     @inject(BetInputStore) private readonly betInputStore: BetInputStore;
 
+    @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
+
     handle() {
         this.betInputStore.betAmount = this.betInputStore.betAmountTemp;
         this.betInputStore.isOpenBetAmountPopup = false;
@@ -19,6 +21,10 @@ export class BetInputHandler implements gc.Shared.IHandler<number> {
         const validatedAmount = calcAmount > this.betInputStore.maxBet ? this.betInputStore.maxBet : calcAmount;
 
         this.betInputStore.betAmountTemp = validatedAmount;
+    }
+
+    setBetAmount() {
+        this.betInputStore.betAmount = this.roundStore.minBet;
     }
 
     resetBetAmount() {
