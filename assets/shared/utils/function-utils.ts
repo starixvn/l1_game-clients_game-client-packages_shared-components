@@ -73,6 +73,7 @@ export namespace FunctionUtils {
                     })
                     .catch((err) => {
                         warn("----asyncExecute----:", err);
+                        reject(new Error(errorMessage));
                     });
             }
         });
