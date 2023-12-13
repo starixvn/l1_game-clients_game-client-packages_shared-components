@@ -102,10 +102,8 @@ export class CashOutHalfButton extends ObserverComponent {
         fireImmediately: false,
     })
     updateValueWhenCashOutFull(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
-        if (cashOut) {
-            if (this.isCashedOutFull && !this.halfCashOutData && cashOut && cashOut.cashOutWin > 0) {
-                CashOutComponent.updateValueCashOut(cashOut.cashOutWin / 2, this.lblCashOut);
-            }
+        if (cashOut && cashOut.cashOutWin > 0 && this.isCashedOutFull && !this.halfCashOutData) {
+            CashOutComponent.updateValueCashOut(cashOut.cashOutWin / 2, this.lblCashOut);
         }
     }
 
