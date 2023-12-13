@@ -213,7 +213,6 @@ export class AudioContainer extends ObserverComponent {
 
     @render(Audios.AudioStore, (store) => store.sfx, { fireImmediately: false })
     handleSFX(data: gc.Audios.AudioData) {
-        console.log("handleSFX", data.id);
         if (data.id === "sfx_extra") {
             this.sfxExtra = data;
         }
