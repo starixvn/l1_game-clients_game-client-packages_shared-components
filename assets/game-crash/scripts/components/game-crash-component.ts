@@ -4,13 +4,22 @@ import Observer from "observer";
 
 import { BalanceEffectHandlers } from "../../../game/balance-effect/scripts/handlers/balance-effect-handlers";
 import GameComponent from "../../../game/scripts/components/game-component";
+import AutoCashOutStore from "../../auto-cash-out/scripts/stores/auto-cash-out-store";
 import { BetInputHandler } from "../../bet-input/scripts/handlers/bet-input-handlers";
+import { BetInputStore } from "../../bet-input/scripts/stores/bet-input-store";
 import { PopupsHandlers } from "../../popups/popups-handlers";
 
-const { Settlements, Auth, Rounds, Translator, GameCrash } = gc;
+const { Settlements, Auth, Rounds, StorageManager, localStorageKeys, GameCrash, HideGame, GameConfigs } = gc;
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
+
+export interface IGameCrashUserSettings {
+    betAmount: number;
+    enableAutoCashOut: boolean;
+    autoCashOutMultiplier: number;
+}
+
 @ccclass
 export default class GameCrashComponent extends GameComponent {
     @property({ type: Label, override: true, visible: false })
@@ -20,10 +29,47 @@ export default class GameCrashComponent extends GameComponent {
     lblMaxBet: Label = null;
 
     private readonly countDownSound = "count_down";
+    private betAmount = 0;
+    private autoCashOutMultiplier = 0;
+    private enableAutoCashOut = false;
 
     onLoad() {
         super.onLoad();
         this.initBetAmount();
+        window.addEventListener("message", this.registerEvents.bind(this));
+    }
+
+    registerEvents(event: MessageEvent) {
+        if (event?.data?.isClearUserSetting) {
+            StorageManager.remove(gc.Shared.utils.localStorageKeys.userSetting);
+        }
+    }
+
+    @render(BetInputStore, (store) => store.betAmount)
+    updateBetAmount(betAmount: number) {
+        this.betAmount = betAmount;
+    }
+
+    @render(AutoCashOutStore, (store) => ({ multiplier: store.multiplier, enable: store.enable }), { fireImmediately: false })
+    updateAutoCashOut({ multiplier, enable }) {
+        this.autoCashOutMultiplier = multiplier;
+        this.enableAutoCashOut = enable;
+    }
+
+    @handle(HideGame.HideGameHandler)
+    onHideGame() {
+        super.onHideGame();
+        this.saveUserSetting();
+    }
+
+    saveUserSetting() {
+        const currentSetting: IGameCrashUserSettings = {
+            betAmount: this.betAmount,
+            enableAutoCashOut: this.enableAutoCashOut,
+            autoCashOutMultiplier: this.autoCashOutMultiplier,
+        };
+
+        gc.Shared.utils.StorageManager.set(gc.Shared.utils.localStorageKeys.userSetting, currentSetting);
     }
 
     @handle(BetInputHandler, (handle) => handle.setBetAmount())

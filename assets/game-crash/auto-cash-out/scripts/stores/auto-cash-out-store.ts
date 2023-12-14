@@ -48,7 +48,6 @@ export default class AutoCashOutStore {
     }
 
     set multiplier(multiplier: number) {
-        gc.Shared.utils.StorageManager.set(this.autoCashOutKey, multiplier.toString());
         this._multiplier = multiplier;
     }
 

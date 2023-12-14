@@ -47,7 +47,6 @@ export class BetInputStore {
     }
 
     set betAmount(amount: number) {
-        gc.Shared.utils.StorageManager.set(this.betAmountKey, amount.toString());
         this._betAmount = amount;
     }
 
