@@ -25,18 +25,6 @@ export default class EarlyBetButton extends ObserverComponent {
     @property(Sprite)
     bgPlaceBet: Sprite = null;
 
-    @property(Sprite)
-    sprPlaceBet: Sprite = null;
-
-    @property(Sprite)
-    sprNextRound: Sprite = null;
-
-    @property(Sprite)
-    sprWaiting: Sprite = null;
-
-    @property(Sprite)
-    sprCancel: Sprite = null;
-
     private amount: number;
 
     private isWaitingBet = false;
@@ -160,8 +148,8 @@ export default class EarlyBetButton extends ObserverComponent {
     }
 
     setStatusButtons(selected: boolean) {
-        this.bgWaiting.node.active = this.sprWaiting.node.active = this.sprCancel.node.active = selected;
-        this.sprPlaceBet.node.active = this.bgPlaceBet.node.active = this.sprNextRound.node.active = !selected;
+        this.bgWaiting.node.active = selected;
+        this.bgPlaceBet.node.active = !selected;
     }
 
     setStatusWaiting(status: boolean) {
