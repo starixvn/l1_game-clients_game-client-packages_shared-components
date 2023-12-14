@@ -14,7 +14,7 @@ import { EarlyBetUIHandlers } from "./early-bet-ui-handlers";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
-const { GameCrash, Rounds } = gc;
+const { GameCrash, Rounds, Translator } = gc;
 
 @ccclass
 export default class EarlyBetButton extends ObserverComponent {
@@ -50,6 +50,8 @@ export default class EarlyBetButton extends ObserverComponent {
 
     private autoPlayWhenRocketFly = false;
     private readonly placeBetSound = "place_bet";
+    private betAmountGreaterMinBet = false;
+    private minBet = 0;
 
     @render(AutoCashOutStore, (store) => store.enable)
     updateStatusAutoCashOut(isEnable: boolean) {
@@ -80,6 +82,11 @@ export default class EarlyBetButton extends ObserverComponent {
 
     @handle(EarlyBetUIHandlers, (handle, enable: boolean) => handle.handle(enable))
     onClickEarlyBet() {
+        if (!this.betAmountGreaterMinBet) {
+            this.showMsgMinBet(this.minBet);
+            this.cancelAutoPlay();
+            return;
+        }
         this.playSoundPlaceBet();
         this.closeAllPopups();
         if (this.isWaitingBet) {
@@ -104,6 +111,11 @@ export default class EarlyBetButton extends ObserverComponent {
         return flag;
     }
 
+    @handle(PlayerActionHandlers, (handle, minBet: number) => handle.showMsgMinBet(minBet))
+    showMsgMinBet(minBet: number) {
+        return minBet;
+    }
+
     @render(PlayerActionStore, (store) => store.visibleBetNextRound)
     showPlaceBetNextRound(visibleBetNextRound: boolean) {
         if (visibleBetNextRound) {
@@ -111,6 +123,11 @@ export default class EarlyBetButton extends ObserverComponent {
         } else {
             this.node.active = false;
         }
+    }
+
+    @render(PlayerActionStore, (store) => store.betAmountGreaterMinBet)
+    checkBetAmountGreaterMinBet(betAmountGreaterMinBet: boolean) {
+        this.betAmountGreaterMinBet = betAmountGreaterMinBet;
     }
 
     @render(PlayerActionStore, (store) => store.visibleCashOut)
@@ -219,5 +236,10 @@ export default class EarlyBetButton extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundPlaceBet() {
         return this.placeBetSound;
+    }
+
+    @render(gc.Rounds.RoundStore, (store) => store.minBet)
+    setMinBet(minBet: number) {
+        this.minBet = minBet;
     }
 }

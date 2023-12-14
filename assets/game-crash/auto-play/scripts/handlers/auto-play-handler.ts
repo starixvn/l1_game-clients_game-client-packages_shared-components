@@ -3,7 +3,7 @@ import inversify from "inversify";
 
 import { BetInputStore } from "../../../bet-input/scripts/stores/bet-input-store";
 import { EarlyBetStore } from "../../../bet/early-bet-store";
-import { PlayerActionStore } from "../../../player-actions/player-action-store";
+import { BET_STATE, EARLY_BET_STATE, PlayerActionStore } from "../../../player-actions/player-action-store";
 import { AutoPlayStore } from "../stores/auto-play-store";
 
 const { injectable, inject } = inversify;
@@ -32,7 +32,7 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     }
 
     checkAutoPlayClick() {
-        if (!this.autoPlayStore.isAutoPlay && this.checkBalanceForAutoPlay()) {
+        if (!this.autoPlayStore.isAutoPlay && this.checkBalanceForAutoPlay() && this.checkBetAmountVsMinBet()) {
             this.openAutoPlayPopup();
         } else {
             this.autoPlayStore.isAutoPlay = false;
@@ -52,10 +52,15 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     }
 
     checkBetAmountVsMinBet() {
-        if (this.roundStore.minBet <= this.betInputStore.betAmount) {
+        const minBet = this.roundStore.minBet;
+        if (minBet <= this.betInputStore.betAmount) {
             return true;
+        } else {
+            this.noticeStore.addWarning(Translator.commonTranslate("message_min_bet_notice", { minBet: minBet }));
+            this.playerActionStore.betState = BET_STATE.NONE;
+            this.playerActionStore.earlyBetState = EARLY_BET_STATE.NONE;
+            return false;
         }
-        return false;
     }
 
     closeAutoPlayPopup() {

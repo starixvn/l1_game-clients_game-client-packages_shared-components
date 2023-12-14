@@ -5,6 +5,7 @@ import { IHandler } from "observer";
 import { PlayerActionStore } from "./player-action-store";
 
 const { injectable, inject } = inversify;
+const { Translator } = gc;
 
 @injectable()
 export class PlayerActionHandlers implements IHandler<boolean> {
@@ -16,6 +17,8 @@ export class PlayerActionHandlers implements IHandler<boolean> {
 
     @inject(gc.Rounds.RoundTimeStore)
     protected readonly roundTimeStore: gc.Rounds.RoundTimeStore;
+
+    @inject(gc.Notices.NoticeStore) private readonly noticeStore: gc.Notices.NoticeStore;
 
     handle(flag: boolean) {}
 
@@ -45,5 +48,9 @@ export class PlayerActionHandlers implements IHandler<boolean> {
 
     handleEnableAutoPlayInStore(flag: boolean) {
         this.playerActionStore.enableAutoPlay = flag;
+    }
+
+    showMsgMinBet(minBet: number) {
+        this.noticeStore.addWarning(Translator.commonTranslate("message_min_bet_notice", { minBet: minBet }));
     }
 }

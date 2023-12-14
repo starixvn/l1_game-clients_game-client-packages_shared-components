@@ -3,6 +3,7 @@ import inversify from "inversify";
 import mobx from "mobx";
 
 import { AutoPlayStore } from "../auto-play/scripts/stores/auto-play-store";
+import { BetInputStore } from "../bet-input/scripts/stores/bet-input-store";
 import { EarlyBetStore } from "../bet/early-bet-store";
 
 const { injectable, inject } = inversify;
@@ -42,6 +43,8 @@ export class PlayerActionStore {
 
     @inject(gc.Rounds.RoundStore)
     protected readonly roundStore: gc.Rounds.RoundStore;
+
+    @inject(BetInputStore) private readonly betInputStore: BetInputStore;
 
     private _endShowCashOutNotice = false;
 
@@ -166,6 +169,10 @@ export class PlayerActionStore {
 
     get latestRound() {
         return this.autoPlayStore.isAutoPlay && this.autoPlayStore.roundsAutoPlay === 0;
+    }
+
+    get betAmountGreaterMinBet() {
+        return this.roundStore.minBet <= this.betInputStore.betAmount;
     }
 
     constructor() {
