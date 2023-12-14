@@ -11,7 +11,7 @@ import { ObserverComponent } from "../../../../../extensions/shared-components/a
 import AutoCashOutPopupHandler from "../auto-cash-out/scripts/handlers/auto-cash-out-popup-handler";
 import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handlers";
 import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
-import { BET_STATE, EARLY_BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
+import { BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
 import { PopupsHandlers } from "../popups/popups-handlers";
 
 const { handle, render } = Observer;
@@ -147,7 +147,6 @@ export default class PlaceBetButton extends ObserverComponent {
             } else {
                 this.setBetAcceptedBetStatus(false);
                 this.enableAutoCashOut();
-                //this.resetStateEarlyBet();
             }
         }
     }
@@ -168,11 +167,6 @@ export default class PlaceBetButton extends ObserverComponent {
         this.bgWaiting.node.active = this.sprBetAccepted.node.active = selected;
         this.sprPlaceBet.node.active = this.bgPlaceBet.node.active = !selected;
         this.disablePlaceBetButton(selected);
-    }
-
-    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentEarlyBetStateInStore(action))
-    resetStateEarlyBet() {
-        return EARLY_BET_STATE.NONE;
     }
 
     @handle(AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))

@@ -86,7 +86,7 @@ export default class EarlyBetButton extends ObserverComponent {
         if (!this.betAmountGreaterMinBet) {
             this.showMsgMinBet(this.minBet);
             this.cancelAutoPlay();
-            return;
+            return false;
         }
         this.playSoundPlaceBet();
         this.closeAllPopups();
