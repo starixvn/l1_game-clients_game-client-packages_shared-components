@@ -7,26 +7,22 @@ const { injectable, inject } = inversify;
 export default class AutoCashOutStore {
     @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
 
+    constructor() {
+        mobx.makeAutoObservable(this);
+        this.loadMultiplierFromStorage();
+        mobx.when(
+            () => !!this.roundStore?.ownBets,
+            () => {
+                this.setMultiplierFromOwnBets(this.roundStore.ownBets);
+            }
+        );
+    }
+
     private _enable = false;
     private _multiplier = 1.01;
 
     private _disable = false;
     private readonly autoCashOutKey = "auto_cash_out";
-
-    constructor() {
-        mobx.makeAutoObservable(this);
-        this.handleMultiplierFromStorageAndOwnBets();
-    }
-
-    private handleMultiplierFromStorageAndOwnBets() {
-        this.loadMultiplierFromStorage();
-        mobx.reaction(
-            () => this.roundStore?.ownBets,
-            (ownBets) => {
-                this.setMultiplierFromOwnBets(ownBets);
-            }
-        );
-    }
 
     private loadMultiplierFromStorage() {
         const multiplierFromStorage = +gc.Shared.utils.StorageManager.get(this.autoCashOutKey);

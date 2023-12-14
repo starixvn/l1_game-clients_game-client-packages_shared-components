@@ -23,10 +23,10 @@ export class BetInputStore {
 
     private handleBetAmountFromStorageAndOwnBets() {
         this.loadBetAmountFromStorage();
-        mobx.reaction(
-            () => this.roundStore?.ownBets,
-            (ownBets) => {
-                this.setBetAmountFromOwnBets(ownBets);
+        mobx.when(
+            () => !!this.roundStore?.ownBets,
+            () => {
+                this.setBetAmountFromOwnBets(this.roundStore.ownBets);
             }
         );
     }
