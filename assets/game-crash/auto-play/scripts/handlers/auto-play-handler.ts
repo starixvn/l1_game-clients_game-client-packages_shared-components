@@ -12,7 +12,6 @@ const { Translator } = gc;
 @injectable()
 export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     @inject(AutoPlayStore) private readonly autoPlayStore: AutoPlayStore;
-    @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
     @inject(EarlyBetStore) private readonly earlyBetStore: EarlyBetStore;
     @inject(BetInputStore) private readonly betInputStore: BetInputStore;
     @inject(gc.Bet.BetStore) private readonly betStore: gc.Bet.BetStore;
@@ -52,15 +51,13 @@ export class AutoPlayHandler implements gc.Shared.IHandler<number> {
     }
 
     checkBetAmountVsMinBet() {
-        const minBet = this.roundStore.minBet;
-        if (minBet <= this.betInputStore.betAmount) {
-            return true;
-        } else {
+        const minBet = this.betInputStore.minBet;
+        if (!this.betInputStore.betAmountGreaterMinBet) {
             this.noticeStore.addWarning(Translator.commonTranslate("message_min_bet_notice", { minBet: minBet }));
             this.playerActionStore.betState = BET_STATE.NONE;
             this.playerActionStore.earlyBetState = EARLY_BET_STATE.NONE;
-            return false;
         }
+        return this.betInputStore.betAmountGreaterMinBet;
     }
 
     closeAutoPlayPopup() {

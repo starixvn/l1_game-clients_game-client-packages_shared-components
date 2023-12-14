@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Sprite } from "cc";
 import Observer from "observer";
+import { BetInputStore } from "./../bet-input/scripts/stores/bet-input-store";
 
 import AutoCashOutStore from "../../../../../extensions/shared-components/assets/game-crash/auto-cash-out/scripts/stores/auto-cash-out-store";
 import { AutoPlayHandler } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/handlers/auto-play-handler";
@@ -125,7 +126,7 @@ export default class EarlyBetButton extends ObserverComponent {
         }
     }
 
-    @render(PlayerActionStore, (store) => store.betAmountGreaterMinBet)
+    @render(BetInputStore, (store) => store.betAmountGreaterMinBet)
     checkBetAmountGreaterMinBet(betAmountGreaterMinBet: boolean) {
         this.betAmountGreaterMinBet = betAmountGreaterMinBet;
     }
@@ -238,7 +239,7 @@ export default class EarlyBetButton extends ObserverComponent {
         return this.placeBetSound;
     }
 
-    @render(gc.Rounds.RoundStore, (store) => store.minBet)
+    @render(BetInputStore, (store) => store.minBet)
     setMinBet(minBet: number) {
         this.minBet = minBet;
     }

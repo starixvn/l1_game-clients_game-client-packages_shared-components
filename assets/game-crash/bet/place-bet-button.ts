@@ -49,8 +49,6 @@ export default class PlaceBetButton extends ObserverComponent {
     private hasEarlyBetBeforeAutoPlay = false;
 
     private readonly placeBetSound = "place_bet";
-    private betAmountGreaterMinBet = false;
-    private minBet = 0;
 
     @render(BetInputStore, (store) => store.betAmount)
     updateBetAmount(betAmount: number) {
