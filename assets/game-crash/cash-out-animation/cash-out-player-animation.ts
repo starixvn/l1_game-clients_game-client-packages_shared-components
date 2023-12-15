@@ -6,7 +6,7 @@ import { NodeContainer } from "../../shared/common-components/node-container/nod
 import { AnimationUtils } from "../../shared/utils";
 const { render } = Observer;
 const { ccclass } = _decorator;
-const { GameCrash } = gc;
+const { GameCrash, FormatUtils } = gc;
 
 export const CashOutAnim = {
     mainPlayer: "main",
@@ -24,7 +24,7 @@ export class CashOutPlayerAnimation extends NodeContainer {
     async renderOtherPlayerCashOut(otherPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         if (otherPlayer) {
             const player = otherPlayer?.cashOut || otherPlayer?.halfCashOut;
-            const winAmount = player?.win?.toString() || "0";
+            const winAmount = player?.win || 0;
             await this.createCashOutPlayer(winAmount);
         }
     }
@@ -40,10 +40,10 @@ export class CashOutPlayerAnimation extends NodeContainer {
     }
 
     async createCashOutMainPlayer(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
-        await this.createCashOutPlayer(cashOut?.win?.toString() || "", true);
+        await this.createCashOutPlayer(cashOut?.win || 0, true);
     }
 
-    private async createCashOutPlayer(winValue: string, isMainPlayer = false) {
+    private async createCashOutPlayer(winValue: number, isMainPlayer = false) {
         const node = this.createNode();
         const randomPosition = v3(random(-100, 100), -random(200, 300));
         const animationName = isMainPlayer ? CashOutAnim.mainPlayer : CashOutAnim.otherPlayer;
@@ -52,7 +52,7 @@ export class CashOutPlayerAnimation extends NodeContainer {
             const animationDuration = spine?.findAnimation(animationName).duration;
             const lblWin = spine.node?.getComponentInChildren(Label);
             if (lblWin) {
-                lblWin.string = winValue;
+                lblWin.string = FormatUtils.numberWithCommas(winValue, 2);
                 lblWin.color = new Color().fromHEX(isMainPlayer ? ColorWinValue.mainPlayer : ColorWinValue.otherPlayer);
             }
             tween(node)
