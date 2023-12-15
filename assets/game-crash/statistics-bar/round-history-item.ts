@@ -57,7 +57,7 @@ export class RoundHistoryItem extends ObserverComponent {
         }
     }
     updateCountDownValue(value: number) {
-        this.nodeCountdown.getChildByName("value").getComponent(Label).string = `${value}s`;
+        this.nodeCountdown.getChildByName("value").getComponent(Label).string = value.toString();
         this.showHideNode(false, true, false);
     }
 
