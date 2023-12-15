@@ -1,13 +1,15 @@
 import gc from "@sg/game-client-base";
-import { Component, Label, Node, Prefab, ProgressBar, _decorator, director, instantiate } from "cc";
+import { _decorator, Component, director, instantiate, Label, Node, Prefab, ProgressBar } from "cc";
 import Observer from "observer";
+
 import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
 import GameConnection from "../../../shared/common-components/game-connection";
 import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
+
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, ChipSetting, sentryLogger, Configs, Translator, BrowserDomUtils, App, AppTypes } = gc;
+const { Auth, ChipSetting, StorageManager, sentryLogger, Configs, Translator, BrowserDomUtils, App, AppTypes } = gc;
 
 @ccclass
 @observer
@@ -50,7 +52,7 @@ export default class Splash extends Component {
         this.sso();
         this.gameName && (this.gameName.string = Translator.gameTranslate("game_name").toUpperCase());
         ComponentUtils.addChildFromPrefab(this.prefabCustomize, this.containerCustomize);
-        window.addEventListener("message", this.registerEventUserGesturePage.bind(this));
+        window.addEventListener("message", this.registerEvents.bind(this));
     }
 
     onDestroy(): void {
@@ -59,6 +61,17 @@ export default class Splash extends Component {
 
     protected onEnable(): void {
         BrowserDomUtils.postMessageToParent({ splashEnabled: true });
+    }
+
+    protected registerEvents(event: MessageEvent) {
+        this.removeUserSetting(event);
+        this.registerEventUserGesturePage(event);
+    }
+
+    removeUserSetting(event) {
+        if (event?.data?.isClearUserSetting) {
+            StorageManager.remove(gc.Shared.utils.localStorageKeys.userSetting);
+        }
     }
 
     @handle(App.AppHandlers.UserGesturePage)

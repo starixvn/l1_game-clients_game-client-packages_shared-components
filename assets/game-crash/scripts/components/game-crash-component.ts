@@ -31,14 +31,7 @@ export default class GameCrashComponent extends GameComponent {
     onLoad() {
         super.onLoad();
         const userSetting = gc.Shared.utils.StorageManager.get(gc.Shared.utils.localStorageKeys.userSetting) as IGameCrashUserSettings;
-        !userSetting.betAmount && this.initBetAmount();
-        window.addEventListener("message", this.registerEvents.bind(this));
-    }
-
-    registerEvents(event: MessageEvent) {
-        if (event?.data?.isClearUserSetting) {
-            StorageManager.remove(gc.Shared.utils.localStorageKeys.userSetting);
-        }
+        !userSetting?.betAmount && this.initBetAmount();
     }
 
     @render(BetInputStore, (store) => store.betAmount)
