@@ -2,6 +2,8 @@ import gc from "@sg/game-client-base";
 import inversify from "inversify";
 import mobx from "mobx";
 
+import { IGameCrashUserSettings } from "../../../scripts/components/game-crash-data";
+
 const { injectable, inject } = inversify;
 @injectable()
 export default class AutoCashOutStore {
@@ -22,11 +24,13 @@ export default class AutoCashOutStore {
     private _multiplier = 1.01;
 
     private _disable = false;
-    private readonly autoCashOutKey = "auto_cash_out";
 
     private loadMultiplierFromStorage() {
-        const multiplierFromStorage = +gc.Shared.utils.StorageManager.get(this.autoCashOutKey);
-        multiplierFromStorage > 0 && (this.multiplier = multiplierFromStorage);
+        const userSetting = gc.Shared.utils.StorageManager.get(gc.Shared.utils.localStorageKeys.userSetting) as IGameCrashUserSettings;
+        if (userSetting) {
+            userSetting.autoCashOutMultiplier && (this.multiplier = userSetting.autoCashOutMultiplier);
+            userSetting.enableAutoCashOut && (this.enable = userSetting.enableAutoCashOut);
+        }
     }
 
     private setMultiplierFromOwnBets(ownBets: gc.GameServiceMessage.OwnBets) {

@@ -2,6 +2,8 @@ import gc from "@sg/game-client-base";
 import inversify from "inversify";
 import mobx from "mobx";
 
+import { IGameCrashUserSettings } from "../../../scripts/components/game-crash-data";
+
 const { injectable, inject } = inversify;
 
 @injectable()
@@ -11,7 +13,6 @@ export class BetInputStore {
     @inject(gc.GameCrash.CrashCashOut.CrashCashOutStore) private readonly cashOutStore: gc.GameCrash.CrashCashOut.CrashCashOutStore;
 
     private _betAmount = -1;
-    private readonly betAmountKey = "bet_amount";
     isOpenBetAmountPopup = false;
     betAmountTemp = 0;
     isDisabledBetInput = false;
@@ -38,8 +39,8 @@ export class BetInputStore {
     }
 
     private loadBetAmountFromStorage() {
-        const betAmountFromStorage = +gc.Shared.utils.StorageManager.get(this.betAmountKey);
-        betAmountFromStorage > 0 && (this.betAmount = betAmountFromStorage);
+        const userSetting = gc.Shared.utils.StorageManager.get(gc.Shared.utils.localStorageKeys.userSetting) as IGameCrashUserSettings;
+        userSetting?.betAmount && (this.betAmount = userSetting.betAmount);
     }
 
     get betAmount(): number {

@@ -8,17 +8,12 @@ import AutoCashOutStore from "../../auto-cash-out/scripts/stores/auto-cash-out-s
 import { BetInputHandler } from "../../bet-input/scripts/handlers/bet-input-handlers";
 import { BetInputStore } from "../../bet-input/scripts/stores/bet-input-store";
 import { PopupsHandlers } from "../../popups/popups-handlers";
+import { IGameCrashUserSettings } from "./game-crash-data";
 
 const { Settlements, Auth, Rounds, StorageManager, localStorageKeys, GameCrash, HideGame, GameConfigs } = gc;
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
-
-export interface IGameCrashUserSettings {
-    betAmount: number;
-    enableAutoCashOut: boolean;
-    autoCashOutMultiplier: number;
-}
 
 @ccclass
 export default class GameCrashComponent extends GameComponent {
@@ -35,7 +30,8 @@ export default class GameCrashComponent extends GameComponent {
 
     onLoad() {
         super.onLoad();
-        this.initBetAmount();
+        const userSetting = gc.Shared.utils.StorageManager.get(gc.Shared.utils.localStorageKeys.userSetting) as IGameCrashUserSettings;
+        !userSetting.betAmount && this.initBetAmount();
         window.addEventListener("message", this.registerEvents.bind(this));
     }
 
