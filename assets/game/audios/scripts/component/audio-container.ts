@@ -56,6 +56,7 @@ export class AudioContainer extends ObserverComponent {
     };
 
     private sfxExtra: gc.Audios.AudioData = null;
+    private sfxExtraSound = "sfx_extra";
 
     setIsUserGesture(isUserGesture: boolean) {
         this.isUserGesture = isUserGesture;
@@ -184,9 +185,14 @@ export class AudioContainer extends ObserverComponent {
         }
     }
 
-    @render(UserSettings.UserSettingStore, (store) => store.sfxEnable, { fireImmediately: false })
+    @render(UserSettings.UserSettingStore, (store) => store.sfxEnable)
     enableSFX(sfxEnable: boolean) {
         this.isPlaySFX = sfxEnable;
+        if (sfxEnable) {
+            this.sfxExtra && this.sfxExtra.action === Audios.AudioAction.PLAY && this.playSFXExtraAudio(this.sfxExtraSound);
+        } else {
+            this.sfxExtraSource && this.stopSourceClip(this.sfxExtraSource, this.sfxExtraSource.clip);
+        }
     }
 
     @render(Audios.AudioStore, (store) => store.music, { fireImmediately: false })
@@ -213,12 +219,12 @@ export class AudioContainer extends ObserverComponent {
 
     @render(Audios.AudioStore, (store) => store.sfx, { fireImmediately: false })
     handleSFX(data: gc.Audios.AudioData) {
-        if (data.id === "sfx_extra") {
+        if (data.id === this.sfxExtraSound) {
             this.sfxExtra = data;
         }
         if (data.action === Audios.AudioAction.PLAY && this.isUserGesture) {
-            if (data.id === "sfx_extra") {
-                this.playSFXExtraAudio(data.id);
+            if (data.id === this.sfxExtraSound) {
+                this.isPlaySFX && this.playSFXExtraAudio(data.id);
             } else {
                 this.playSFXAudio(data.id);
             }
@@ -306,6 +312,6 @@ export class AudioContainer extends ObserverComponent {
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundSFXExtra() {
-        return "sfx_extra";
+        return this.sfxExtraSound;
     }
 }
