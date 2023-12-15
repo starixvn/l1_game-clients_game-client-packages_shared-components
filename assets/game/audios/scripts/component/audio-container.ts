@@ -56,7 +56,7 @@ export class AudioContainer extends ObserverComponent {
     };
 
     private sfxExtra: gc.Audios.AudioData = null;
-    private sfxExtraSound = "sfx_extra";
+    private readonly sfxExtraSound = "sfx_extra";
 
     setIsUserGesture(isUserGesture: boolean) {
         this.isUserGesture = isUserGesture;
@@ -121,7 +121,7 @@ export class AudioContainer extends ObserverComponent {
 
     @render(App.AppStore, (store) => store.isTouchedScreen, { fireImmediately: false })
     playSFXExtra(isTouchedScreen: boolean) {
-        if (isTouchedScreen && this.sfxExtra && this.sfxExtra.action === Audios.AudioAction.PLAY) {
+        if (this.isPlaySFX && isTouchedScreen && this.sfxExtra && this.sfxExtra.action === Audios.AudioAction.PLAY) {
             this.playSFXExtraAudio(this.sfxExtra.id);
         }
     }
