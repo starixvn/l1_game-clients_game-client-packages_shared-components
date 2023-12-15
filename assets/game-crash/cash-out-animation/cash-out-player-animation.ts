@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Label, _decorator, sp, tween, v3 } from "cc";
+import { Color, Label, _decorator, sp, tween, v3 } from "cc";
 import { random } from "lodash-es";
 import Observer from "observer";
 import { NodeContainer } from "../../shared/common-components/node-container/node-container";
@@ -11,6 +11,11 @@ const { GameCrash } = gc;
 export const CashOutAnim = {
     mainPlayer: "main",
     otherPlayer: "user",
+};
+
+export const ColorWinValue = {
+    mainPlayer: "ECB90A",
+    otherPlayer: "4d7fb6",
 };
 
 @ccclass
@@ -48,6 +53,7 @@ export class CashOutPlayerAnimation extends NodeContainer {
             const lblWin = spine.node?.getComponentInChildren(Label);
             if (lblWin) {
                 lblWin.string = winValue;
+                lblWin.color = new Color().fromHEX(isMainPlayer ? ColorWinValue.mainPlayer : ColorWinValue.otherPlayer);
             }
             tween(node)
                 .parallel(
