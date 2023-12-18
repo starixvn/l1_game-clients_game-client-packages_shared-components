@@ -34,9 +34,9 @@ export class LeaderBoard extends ObserverComponent {
     @property(Node)
     nodeLeaderBoardMask: Node = null;
 
-    private readonly collapsedBoardHeight = 61;
-    private readonly expandedBoardHeight = 210;
-    private readonly itemHeight = 30;
+    private readonly collapsedBoardHeight = 70;
+    private readonly expandedBoardHeight = 187;
+    private readonly itemHeight = 27;
     private otherPlayerTween: Tween<Widget> = null;
     private leaderBoardTween: Tween<UITransform> = null;
     private isExpandedBoard = true;
@@ -85,7 +85,7 @@ export class LeaderBoard extends ObserverComponent {
                 node = this.createBoardItem();
             }
             const comp = node.getComponent(LeaderBoardItem);
-            comp?.setData(player, false, this.checkNeedEmptyBetAmount(roundTime));
+            comp?.setData(player, this.checkNeedEmptyBetAmount(roundTime));
         });
     }
 
@@ -97,7 +97,7 @@ export class LeaderBoard extends ObserverComponent {
 
         if (amount) {
             this.setMainPlayerVisibility(true);
-            this.cpnMainPlayer?.setData(mainPlayer, true, this.checkNeedEmptyBetAmount(roundTime));
+            this.cpnMainPlayer?.setData(mainPlayer, this.checkNeedEmptyBetAmount(roundTime));
             this.scrollOtherPlayer(this.itemHeight);
 
             if (halfCashOut && cashOut) {

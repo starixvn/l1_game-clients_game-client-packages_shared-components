@@ -16,9 +16,9 @@ export class LeaderBoardItem extends Component {
         this.setHalfCashOutVisibility(false);
     }
 
-    setData(data: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer, isMainPlayer = false, isNeedEmptyAmount = false) {
+    setData(data: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer, isNeedEmptyAmount = false) {
         const { name, cashOut, halfCashOut, amount } = data;
-        const customName = isMainPlayer ? this.truncatedNickname(name) : this.encryptedName(name);
+        const customName = this.encryptedName(name);
 
         this.setHalfCashOutVisibility(false);
         if ((halfCashOut && !cashOut) || (cashOut && !halfCashOut)) {
@@ -67,18 +67,5 @@ export class LeaderBoardItem extends Component {
 
     private encryptedName(name: string): string {
         return `${name.substring(0, 1)}***${name.substring(name.length - 3, name.length)}`;
-    }
-
-    private truncatedNickname(nickname: string) {
-        let truncatedNickname = "";
-        if (nickname) {
-            if (nickname.length > 10) {
-                truncatedNickname = `${nickname.substring(0, 7)}...`;
-            } else {
-                truncatedNickname = nickname;
-            }
-        }
-
-        return truncatedNickname;
     }
 }
