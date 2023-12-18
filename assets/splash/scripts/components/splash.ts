@@ -69,6 +69,7 @@ export default class Splash extends Component {
     }
 
     removeUserSetting(event) {
+        console.log("removeUserSetting", event);
         if (event?.data?.isClearUserSetting) {
             StorageManager.remove(gc.Shared.utils.localStorageKeys.userSetting);
         }
