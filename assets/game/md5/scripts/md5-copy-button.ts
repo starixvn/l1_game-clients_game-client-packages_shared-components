@@ -1,6 +1,8 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, UIOpacity, _decorator, tween } from "cc";
+import { _decorator, Label, Node, tween, UIOpacity } from "cc";
+
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+
 const { ccclass, property } = _decorator;
 const { Translator } = gc;
 
@@ -17,15 +19,15 @@ export class Md5CopyButton extends ObserverComponent {
             this.lblHint = this.nodeHintCopy.getChildByName("content").getComponent(Label);
             this.lblHint.string = Translator.commonTranslate("copy_successfully_md5");
         }
-        window.addEventListener("message", this.registerEventCopyMD5.bind(this));
+        window.addEventListener("message", this.registerEventCopyMD5);
     }
 
     onDestroy(): void {
         super.onDestroy();
-        window.removeEventListener("message", this.registerEventCopyMD5.bind(this));
+        window.removeEventListener("message", this.registerEventCopyMD5);
     }
 
-    private registerEventCopyMD5(event: MessageEvent) {
+    private registerEventCopyMD5 = (event: MessageEvent) => {
         const success = event.data.copySuccessfully;
         if (success !== undefined && this.isCopying) {
             this.isCopying = false;
@@ -33,7 +35,7 @@ export class Md5CopyButton extends ObserverComponent {
             this.lblHint.string = gc.Translator.commonTranslate(key);
             this.showHint();
         }
-    }
+    };
 
     private showHint() {
         if (this.nodeHintCopy) {

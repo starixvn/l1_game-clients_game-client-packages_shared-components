@@ -1,7 +1,7 @@
-import { AudioClip, AudioSource, JsonAsset, _decorator, game, log, sys } from "cc";
-
 import gc from "@sg/game-client-base";
+import { _decorator, AudioClip, AudioSource, game, JsonAsset, log, sys } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { AudioUtils } from "../../utils";
 import AudioManager from "../audio-manager";
@@ -73,6 +73,11 @@ export class AudioContainer extends ObserverComponent {
         this.initTouchBind();
     }
 
+    onDestroy(): void {
+        super.onDestroy();
+        window.removeEventListener("message", this.handleSoundEventFromParent);
+    }
+
     async loadAudios() {
         const audioConfigs: TAudioConfigs = {
             ...this.sharedAudioConfig?.json,
@@ -111,7 +116,7 @@ export class AudioContainer extends ObserverComponent {
         game.canvas.addEventListener(touchStartEvent, handleTouchEvent);
         game.canvas.addEventListener(touchEndEvent, handleTouchEvent);
 
-        window.addEventListener("message", this.handleSoundEventFromParent.bind(this));
+        window.addEventListener("message", this.handleSoundEventFromParent);
     }
 
     @handle(gc.App.AppHandlers.UserGesturePage, (handle, value: boolean) => handle.handleTouchScreen(value))
@@ -126,12 +131,12 @@ export class AudioContainer extends ObserverComponent {
         }
     }
 
-    handleSoundEventFromParent(event: MessageEvent) {
+    handleSoundEventFromParent = (event: MessageEvent) => {
         const { sfxEnable } = event.data;
         if (sfxEnable !== null && sfxEnable !== undefined) {
             this.switchSound(sfxEnable);
         }
-    }
+    };
 
     start() {
         const audioConfigs = AudioManager?.audioConfigs() || {};

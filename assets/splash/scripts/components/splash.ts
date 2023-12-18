@@ -52,24 +52,23 @@ export default class Splash extends Component {
         this.sso();
         this.gameName && (this.gameName.string = Translator.gameTranslate("game_name").toUpperCase());
         ComponentUtils.addChildFromPrefab(this.prefabCustomize, this.containerCustomize);
-        window.addEventListener("message", this.registerEvents.bind(this));
+        window.addEventListener("message", this.registerEvents);
     }
 
     onDestroy(): void {
-        window.removeEventListener("message", this.registerEventUserGesturePage.bind(this));
+        window.removeEventListener("message", this.registerEvents);
     }
 
     protected onEnable(): void {
         BrowserDomUtils.postMessageToParent({ splashEnabled: true });
     }
 
-    protected registerEvents(event: MessageEvent) {
+    protected registerEvents = (event: MessageEvent) => {
         this.removeUserSetting(event);
         this.registerEventUserGesturePage(event);
-    }
+    };
 
     removeUserSetting(event) {
-        console.log("removeUserSetting", event);
         if (event?.data?.isClearUserSetting) {
             StorageManager.remove(gc.Shared.utils.localStorageKeys.userSetting);
         }
