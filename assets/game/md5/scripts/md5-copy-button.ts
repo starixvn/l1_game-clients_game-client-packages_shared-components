@@ -27,7 +27,7 @@ export class Md5CopyButton extends ObserverComponent {
         window.removeEventListener("message", this.registerEventCopyMD5);
     }
 
-    private registerEventCopyMD5 = (event: MessageEvent) => {
+    private readonly registerEventCopyMD5 = (event: MessageEvent) => {
         const success = event.data.copySuccessfully;
         if (success !== undefined && this.isCopying) {
             this.isCopying = false;
