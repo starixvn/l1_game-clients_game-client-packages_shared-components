@@ -48,22 +48,30 @@ export default class PlaceBetButton extends ObserverComponent {
 
     private hasEarlyBetBeforeAutoPlay = false;
 
+    private isClickPlaceBet = false;
+
     private readonly placeBetSound = "place_bet";
+    onLoad(): void {
+        super.onLoad();
+        this.placeBetNotice.active = false;
+    }
 
     @render(BetInputStore, (store) => store.betAmount)
     updateBetAmount(betAmount: number) {
         this.amount = betAmount;
     }
 
-    @render(Bet.BetStore, (store) => store.isReceivedBet)
+    @render(Bet.BetStore, (store) => store.isReceivedBet, { fireImmediately: false })
     updateStatusPlaceBet(isReceivedBet: any) {
         if (!isReceivedBet) {
             this.isBetAccepted = false;
             return;
         }
+
+        console.log("updateStatusPlaceBet-----", isReceivedBet);
         this.isBetAccepted = true;
         this.setBetAcceptedBetStatus(true);
-        this.placeBetNotice.active = true;
+        this.isClickPlaceBet && (this.placeBetNotice.active = true);
         this.disableAutoCashOut(true);
         this.checkStatusLatestRound();
         this.hideAutoPlayPopup();
@@ -71,6 +79,7 @@ export default class PlaceBetButton extends ObserverComponent {
         this.hideAutoCashOutPopup();
         setTimeout(() => {
             this.placeBetNotice.active = false;
+            this.isClickPlaceBet = false;
         }, 3000);
     }
 
@@ -116,6 +125,7 @@ export default class PlaceBetButton extends ObserverComponent {
     onClickPlaceBet() {
         this.playSoundPlaceBet();
         this.closeAllPopups();
+        this.isClickPlaceBet = true;
         if (!this.isBetAccepted && !this.bgDisable.node.active) {
             this.sendBetRequest();
         }
