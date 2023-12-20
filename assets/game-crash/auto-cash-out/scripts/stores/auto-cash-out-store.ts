@@ -16,7 +16,7 @@ export default class AutoCashOutStore {
         mobx.when(
             () => this.roundStore && Object.keys(this.roundStore.ownBets).length > 0,
             () => {
-                this.setMultiplierFromOwnBets(this.roundStore.ownBets);
+                this.setMultiplierFromOwnBets(this.roundStore.ownBets as gc.GameCrash.GameCrashServiceMessage.CrashOwnBets);
             }
         );
     }
@@ -34,7 +34,7 @@ export default class AutoCashOutStore {
         }
     }
 
-    private setMultiplierFromOwnBets(ownBets: gc.GameServiceMessage.OwnBets) {
+    private setMultiplierFromOwnBets(ownBets: gc.GameCrash.GameCrashServiceMessage.CrashOwnBets) {
         if (ownBets && ownBets.autoCashOut >= 0) {
             this.enable = false;
             const autoCashOut = +ownBets.autoCashOut;
