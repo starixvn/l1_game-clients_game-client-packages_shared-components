@@ -25,7 +25,7 @@ export class BetInputStore {
     private handleBetAmountFromStorageAndOwnBets() {
         this.loadBetAmountFromStorage();
         mobx.when(
-            () => !!this.roundStore?.ownBets,
+            () => this.roundStore && Object.keys(this.roundStore.ownBets).length > 0,
             () => {
                 this.setBetAmountFromOwnBets(this.roundStore.ownBets);
             }
