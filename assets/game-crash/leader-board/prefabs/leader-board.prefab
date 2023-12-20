@@ -620,7 +620,7 @@
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 2,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -1710,7 +1710,10 @@
       "b": 124,
       "a": 255
     },
-    "_normalSprite": null,
+    "_normalSprite": {
+      "__uuid__": "e92eba13-f4bd-4f33-91bb-92d787976d75@8ed8c",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_hoverSprite": null,
     "_pressedSprite": null,
     "_disabledSprite": null,
@@ -1781,7 +1784,7 @@
     "__prefab": {
       "__id__": 91
     },
-    "_opacity": 140,
+    "_opacity": 180,
     "_id": ""
   },
   {
