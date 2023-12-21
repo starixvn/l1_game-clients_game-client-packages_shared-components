@@ -32,7 +32,7 @@ export default class GameCrashComponent extends GameComponent {
         this.betAmount = betAmount;
     }
 
-    @render(AutoCashOutStore, (store) => ({ multiplier: store.multiplier, enable: store.enable }), { fireImmediately: false })
+    @render(AutoCashOutStore, (store) => ({ multiplier: store.multiplier, enable: store.enable }))
     updateAutoCashOut({ multiplier, enable }) {
         this.autoCashOutMultiplier = multiplier;
         this.enableAutoCashOut = enable;
