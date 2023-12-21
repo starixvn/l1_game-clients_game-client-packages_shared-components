@@ -30,7 +30,7 @@ export class BetInputStore {
             }
         );
         mobx.when(
-            () => this.roundStore && Object.keys(this.roundStore.ownBets).length > 0,
+            () => !!this.roundStore && !!this.roundStore.ownBets,
             () => {
                 this.setBetAmountFromOwnBets(this.roundStore.ownBets as gc.GameCrash.GameCrashServiceMessage.CrashOwnBets);
             }

@@ -14,7 +14,7 @@ export default class AutoCashOutStore {
         this.loadMultiplierFromStorage();
 
         mobx.when(
-            () => this.roundStore && Object.keys(this.roundStore.ownBets).length > 0,
+            () => !!this.roundStore && !!this.roundStore.ownBets,
             () => {
                 this.setMultiplierFromOwnBets(this.roundStore.ownBets as gc.GameCrash.GameCrashServiceMessage.CrashOwnBets);
             }

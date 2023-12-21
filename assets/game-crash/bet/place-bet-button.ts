@@ -61,8 +61,15 @@ export default class PlaceBetButton extends ObserverComponent {
         this.amount = betAmount;
     }
 
+    @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
+    updateBetAccepted(isStartRound: boolean) {
+        isStartRound && (this.isBetAccepted = false);
+    }
+
     @render(Bet.BetStore, (store) => store.isReceivedBet, { fireImmediately: false })
     updateStatusPlaceBet(isReceivedBet: any) {
+        this.handleBetUIControl(isReceivedBet ? BET_STATE.BET : BET_STATE.NONE);
+
         if (!isReceivedBet) {
             this.isBetAccepted = false;
             return;
@@ -95,11 +102,6 @@ export default class PlaceBetButton extends ObserverComponent {
 
     @handle(AutoPlayHandler, (handle) => handle.updateStatusLatestRoundAccepted())
     checkStatusLatestRound() {}
-
-    @render(Bet.BetStore, (store) => store.isReceivedBet)
-    setBetStatus(isReceivedBet: boolean) {
-        this.handleBetUIControl(isReceivedBet ? BET_STATE.BET : BET_STATE.NONE);
-    }
 
     @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
     handleBetUIControl(action: string) {
