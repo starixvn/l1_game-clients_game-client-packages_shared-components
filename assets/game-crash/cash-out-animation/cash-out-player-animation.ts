@@ -1,11 +1,11 @@
 import gc from "@sg/game-client-base";
-import { Color, Label, _decorator, sp, tween, v3 } from "cc";
+import { Color, Label, Node, _decorator, sp, toDegree, tween, v3 } from "cc";
 import { random } from "lodash-es";
 import Observer from "observer";
 import { NodeContainer } from "../../shared/common-components/node-container/node-container";
-import { AnimationUtils } from "../../shared/utils";
+import { AnimationUtils, ComponentUtils } from "../../shared/utils";
 const { render } = Observer;
-const { ccclass } = _decorator;
+const { ccclass, property } = _decorator;
 const { GameCrash, FormatUtils } = gc;
 
 export const CashOutAnim = {
@@ -20,6 +20,9 @@ export const ColorWinValue = {
 
 @ccclass
 export class CashOutPlayerAnimation extends NodeContainer {
+    @property(Node)
+    containerSpaceman: Node = null;
+
     @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
     async renderOtherPlayerCashOut(otherPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         if (otherPlayer) {
@@ -45,8 +48,11 @@ export class CashOutPlayerAnimation extends NodeContainer {
 
     private async createCashOutPlayer(winValue: number, isMainPlayer = false) {
         const node = this.createNode();
-        const randomPosition = v3(random(-100, 100), -random(200, 300));
+        const degreeRocket = toDegree(Math.atan2(this.node.parent.position.y, this.node.parent.position.x));
+        ComponentUtils.moveToOtherNode(node, this.containerSpaceman);
+        const randomPosition = v3(random(-500, 100), -random(100, 500));
         const animationName = isMainPlayer ? CashOutAnim.mainPlayer : CashOutAnim.otherPlayer;
+
         if (node?.children[0]) {
             const spine = node?.getComponentInChildren(sp.Skeleton);
             const animationDuration = spine?.findAnimation(animationName).duration;
@@ -62,7 +68,8 @@ export class CashOutPlayerAnimation extends NodeContainer {
                     }),
                     tween(node).to(animationDuration, {
                         position: randomPosition,
-                        scale: v3(1, 1).multiplyScalar(0.5),
+                        scale: v3(1, 1, 1).multiplyScalar(0.5),
+                        eulerAngles: v3(0, 0, degreeRocket),
                     }),
                     tween(node).delay(animationDuration).destroySelf()
                 )
