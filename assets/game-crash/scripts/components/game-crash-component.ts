@@ -5,7 +5,6 @@ import Observer from "observer";
 import { BalanceEffectHandlers } from "../../../game/balance-effect/scripts/handlers/balance-effect-handlers";
 import GameComponent from "../../../game/scripts/components/game-component";
 import AutoCashOutStore from "../../auto-cash-out/scripts/stores/auto-cash-out-store";
-import { BetInputHandler } from "../../bet-input/scripts/handlers/bet-input-handlers";
 import { BetInputStore } from "../../bet-input/scripts/stores/bet-input-store";
 import { PopupsHandlers } from "../../popups/popups-handlers";
 import { IGameCrashUserSettings } from "./game-crash-data";
@@ -27,12 +26,6 @@ export default class GameCrashComponent extends GameComponent {
     private betAmount = 0;
     private autoCashOutMultiplier = 0;
     private enableAutoCashOut = false;
-
-    onLoad() {
-        super.onLoad();
-        const userSetting = gc.Shared.utils.StorageManager.get(gc.Shared.utils.localStorageKeys.userSetting) as IGameCrashUserSettings;
-        !userSetting?.betAmount && this.initBetAmount();
-    }
 
     @render(BetInputStore, (store) => store.betAmount)
     updateBetAmount(betAmount: number) {
@@ -60,9 +53,6 @@ export default class GameCrashComponent extends GameComponent {
 
         gc.Shared.utils.StorageManager.set(gc.Shared.utils.localStorageKeys.userSetting, currentSetting);
     }
-
-    @handle(BetInputHandler, (handle) => handle.setBetAmount())
-    initBetAmount() {}
 
     override isValidResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {
         return result;

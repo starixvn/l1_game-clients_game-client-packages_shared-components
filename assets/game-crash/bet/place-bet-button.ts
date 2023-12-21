@@ -68,7 +68,6 @@ export default class PlaceBetButton extends ObserverComponent {
             return;
         }
 
-        console.log("updateStatusPlaceBet-----", isReceivedBet);
         this.isBetAccepted = true;
         this.setBetAcceptedBetStatus(true);
         this.isClickPlaceBet && (this.placeBetNotice.active = true);

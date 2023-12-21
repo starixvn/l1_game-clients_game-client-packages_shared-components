@@ -23,7 +23,12 @@ export class BetInputStore {
     }
 
     private handleBetAmountFromStorageAndOwnBets() {
-        this.loadBetAmountFromStorage();
+        mobx.when(
+            () => this.gameConfig && this.gameConfig.minBet > 0,
+            () => {
+                this.initBetAmount();
+            }
+        );
         mobx.when(
             () => this.roundStore && Object.keys(this.roundStore.ownBets).length > 0,
             () => {
@@ -38,9 +43,9 @@ export class BetInputStore {
         }
     }
 
-    private loadBetAmountFromStorage() {
+    private initBetAmount() {
         const userSetting = gc.Shared.utils.StorageManager.get(gc.Shared.utils.localStorageKeys.userSetting) as IGameCrashUserSettings;
-        userSetting?.betAmount && (this.betAmount = userSetting.betAmount);
+        this.betAmount = userSetting?.betAmount ? userSetting.betAmount : this.roundStore.minBet;
     }
 
     get betAmount(): number {

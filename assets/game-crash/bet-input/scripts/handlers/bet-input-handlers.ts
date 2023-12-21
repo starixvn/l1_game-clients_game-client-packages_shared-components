@@ -23,10 +23,6 @@ export class BetInputHandler implements gc.Shared.IHandler<number> {
         this.betInputStore.betAmountTemp = validatedAmount;
     }
 
-    setBetAmount() {
-        this.betInputStore.betAmount = this.roundStore.minBet;
-    }
-
     resetBetAmount() {
         this.betInputStore.betAmountTemp = 0;
     }
