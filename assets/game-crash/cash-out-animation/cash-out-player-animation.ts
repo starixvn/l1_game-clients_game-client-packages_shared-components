@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Color, Label, Node, _decorator, sp, toDegree, tween, v3 } from "cc";
+import { CCString, Color, Label, Node, _decorator, sp, toDegree, tween, v3 } from "cc";
 import { random } from "lodash-es";
 import Observer from "observer";
 import { NodeContainer } from "../../shared/common-components/node-container/node-container";
@@ -18,10 +18,18 @@ export const ColorWinValue = {
     otherPlayer: "4d7fb6",
 };
 
+enum PathBonesIndex {
+    main = 0,
+    player = 1,
+}
+
 @ccclass
 export class CashOutPlayerAnimation extends NodeContainer {
     @property(Node)
     containerSpaceman: Node = null;
+
+    @property(CCString)
+    pathBones = [];
 
     @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
     async renderOtherPlayerCashOut(otherPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
@@ -55,6 +63,8 @@ export class CashOutPlayerAnimation extends NodeContainer {
 
         if (node?.children[0]) {
             const spine = node?.getComponentInChildren(sp.Skeleton);
+            spine.sockets[0].path =
+                isMainPlayer && this.pathBones.length > 0 ? this.pathBones[PathBonesIndex.main] : this.pathBones[PathBonesIndex.player];
             const animationDuration = spine?.findAnimation(animationName).duration;
             const lblWin = spine.node?.getComponentInChildren(Label);
             if (lblWin) {
