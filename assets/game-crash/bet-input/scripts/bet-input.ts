@@ -5,6 +5,7 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { BetInputHandler } from "./handlers/bet-input-handlers";
 import { BetInputStore } from "./stores/bet-input-store";
+
 const { FormatUtils } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -29,7 +30,7 @@ export class BetInput extends ObserverComponent {
 
     @render(BetInputStore, (store) => store.betAmountRatio)
     private updateBetAmount(amount: number) {
-        this.lblBetAmount.string = `${FormatUtils.numberWithCommas(amount, 2)}`;
+        this.lblBetAmount.string = amount > 0 ? `${FormatUtils.numberWithCommas(amount, 2)}` : "";
     }
 
     @render(BetInputStore, (store) => store.increaseStatus)
