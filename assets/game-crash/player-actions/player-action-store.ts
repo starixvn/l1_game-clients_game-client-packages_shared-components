@@ -118,7 +118,7 @@ export class PlayerActionStore {
     }
 
     get isFlyingTime() {
-        return this.roundTimeStore.remaining < 0 || (this.roundStore.ownBets && this.roundTimeStore.roundTime <= 0);
+        return this.roundTimeStore.remaining < 0 || (!!this.roundStore.ownBets && this.roundTimeStore.roundTime <= 0);
     }
 
     get rocketStart() {
