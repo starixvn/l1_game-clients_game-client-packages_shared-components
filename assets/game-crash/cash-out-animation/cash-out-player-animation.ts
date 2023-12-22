@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { CCString, Color, Label, Node, _decorator, sp, tween, v3 } from "cc";
+import { CCString, Color, Label, Node, UITransform, _decorator, sp, tween, v3 } from "cc";
 import { random } from "lodash-es";
 import Observer from "observer";
 import { NodeContainer } from "../../shared/common-components/node-container/node-container";
@@ -56,11 +56,13 @@ export class CashOutPlayerAnimation extends NodeContainer {
 
     private async createCashOutPlayer(winValue: number, isMainPlayer = false) {
         const node = this.createNode();
+        const currentPosition = this.containerSpaceman
+            .getComponent(UITransform)
+            .convertToNodeSpaceAR(node.getComponent(UITransform).convertToWorldSpaceAR(v3(0, 0, 0)));
+        const randomPosition = v3(currentPosition.x + random(-200, 100), -random(20, 50));
         ComponentUtils.moveToOtherNode(node, this.containerSpaceman);
-        const randomPosition = v3(random(-200, 100), -random(50, 150));
-        const animationName = isMainPlayer ? CashOutAnim.mainPlayer : CashOutAnim.otherPlayer;
-
         if (node?.children[0]) {
+            const animationName = isMainPlayer ? CashOutAnim.mainPlayer : CashOutAnim.otherPlayer;
             const spine = node?.getComponentInChildren(sp.Skeleton);
             spine.sockets[0].path =
                 isMainPlayer && this.pathBones.length > 0 ? this.pathBones[PathBonesIndex.main] : this.pathBones[PathBonesIndex.player];
