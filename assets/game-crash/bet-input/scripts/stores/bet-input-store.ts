@@ -38,7 +38,7 @@ export class BetInputStore {
     }
 
     private setBetAmountFromOwnBets(ownBets: gc.GameCrash.GameCrashServiceMessage.CrashOwnBets) {
-        if (ownBets && ownBets.amount > 0) {
+        if (ownBets && !ownBets.cashOut && ownBets.amount > 0) {
             this.betAmount = +ownBets.amount;
         }
     }

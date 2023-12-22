@@ -35,7 +35,7 @@ export default class AutoCashOutStore {
     }
 
     private setMultiplierFromOwnBets(ownBets: gc.GameCrash.GameCrashServiceMessage.CrashOwnBets) {
-        if (ownBets && ownBets.autoCashOut >= 0) {
+        if (ownBets && !ownBets.cashOut && ownBets.autoCashOut >= 0) {
             this.enable = false;
             const autoCashOut = +ownBets.autoCashOut;
             if (autoCashOut > 0) {
