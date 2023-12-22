@@ -1,12 +1,13 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Node, Prefab } from "cc";
+import { Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
-
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
+import { CrashRoundHistory, CrashRoundHistoryStore } from "../crash-round-history/crash-round-history-store";
 import { RoundHistoryItem } from "./round-history-item";
-
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
+
+const { FormatUtils, Rounds, Settlements } = gc;
 
 @ccclass
 export class StatisticsBar extends ObserverComponent {
@@ -16,15 +17,15 @@ export class StatisticsBar extends ObserverComponent {
     @property(Node)
     content: Node = null;
 
-    protected rounds: gc.RoundHistories.RoundHistory[] = [];
+    protected rounds: CrashRoundHistory[] = [];
 
-    @render(gc.GameCrash.RoundHistory.CrashRoundHistoryStore, (store) => store.roundHistories, { fireImmediately: false })
-    setRoundsInfo(rounds: gc.RoundHistories.RoundHistory[]) {
+    @render(CrashRoundHistoryStore, (store) => store.roundHistories, { fireImmediately: false })
+    setRoundsInfo(rounds: CrashRoundHistory[]) {
         this.rounds = rounds;
         this.updateStatisticsBarInfo(rounds);
     }
 
-    private updateStatisticsBarInfo(rounds: gc.RoundHistories.RoundHistory[]) {
+    private updateStatisticsBarInfo(rounds: CrashRoundHistory[]) {
         if (this.rounds.length === 0) {
             return;
         }
