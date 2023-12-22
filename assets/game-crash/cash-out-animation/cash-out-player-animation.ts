@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { CCString, Color, Label, Node, _decorator, sp, toDegree, tween, v3 } from "cc";
+import { CCString, Color, Label, Node, _decorator, sp, tween, v3 } from "cc";
 import { random } from "lodash-es";
 import Observer from "observer";
 import { NodeContainer } from "../../shared/common-components/node-container/node-container";
@@ -56,9 +56,8 @@ export class CashOutPlayerAnimation extends NodeContainer {
 
     private async createCashOutPlayer(winValue: number, isMainPlayer = false) {
         const node = this.createNode();
-        const degreeRocket = toDegree(Math.atan2(this.node.parent.position.y, this.node.parent.position.x));
         ComponentUtils.moveToOtherNode(node, this.containerSpaceman);
-        const randomPosition = v3(random(-500, 100), -random(100, 500));
+        const randomPosition = v3(random(-200, 100), -random(50, 150));
         const animationName = isMainPlayer ? CashOutAnim.mainPlayer : CashOutAnim.otherPlayer;
 
         if (node?.children[0]) {
@@ -79,7 +78,6 @@ export class CashOutPlayerAnimation extends NodeContainer {
                     tween(node).to(animationDuration, {
                         position: randomPosition,
                         scale: v3(1, 1, 1).multiplyScalar(0.5),
-                        eulerAngles: v3(0, 0, degreeRocket),
                     }),
                     tween(node).delay(animationDuration).destroySelf()
                 )
