@@ -1,9 +1,8 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Node } from "cc";
 import Observer from "observer";
 
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
-import { BetInputHandler } from "./handlers/bet-input-handlers";
-import { BetInputStore } from "./stores/bet-input-store";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -13,7 +12,7 @@ export class BetAmountPopupContainer extends NodeContainer {
     @property(Node)
     nodeOverlay: Node = null;
 
-    @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
+    @render(gc.GameCrash.BetInput.BetInputStore, (store) => store.isOpenBetAmountPopup)
     private renderOpenBetAmountPopup(isOpenBetAmountPopup: boolean) {
         this.nodeOverlay.active = isOpenBetAmountPopup;
 
@@ -24,6 +23,6 @@ export class BetAmountPopupContainer extends NodeContainer {
         this.createNode();
     }
 
-    @handle(BetInputHandler, (handle) => handle.closeBetAmountPopup())
+    @handle(gc.GameCrash.BetInput.BetInputHandler, (handle) => handle.closeBetAmountPopup())
     private onClickCloseBetAmountPopup(event) {}
 }

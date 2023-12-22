@@ -1,20 +1,17 @@
 import gc from "@sg/game-client-base";
-import { Button, Label, Node, Prefab, RichText, UIOpacity, _decorator, instantiate, tween } from "cc";
+import { _decorator, Button, instantiate, Label, Node, Prefab, RichText, tween, UIOpacity } from "cc";
 import Observer from "observer";
 
 import { InGameMenuHandlers } from "../../../../game/in-game-menu/scripts/handlers/in-game-menu-handlers";
 import { InGameMenuEvents } from "../../../../game/in-game-menu/scripts/stores/in-game-menu-events";
 import { Md5CopyButton } from "../../../../game/md5/scripts/md5-copy-button";
 import MD5Tip from "../../../../game/md5/scripts/md5-tip";
-import { CrashRoundHistory, CrashRoundHistoryStore } from "../../../crash-round-history/crash-round-history-store";
-import { PopupsHandlers } from "../../../popups/popups-handlers";
 import { RoundHistoryItem } from "../../../statistics-bar/round-history-item";
-import { Md5PopupHandler } from "../handlers/md5-popup-handlers";
-import { Md5PopupStore } from "../stores/md5-popup-store";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
+
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
-const { GameUtils } = gc;
+const { GameUtils, GameCrash } = gc;
 @ccclass
 export class Md5Popup extends ObserverComponent {
     @property(Label)
@@ -87,7 +84,7 @@ export class Md5Popup extends ObserverComponent {
         this.resultHashTip?.show(false);
     }
 
-    @render(Md5PopupStore, (store) => store.isOpenPopupMd5)
+    @render(GameCrash.Md5Popup.Md5PopupStore, (store) => store.isOpenPopupMd5)
     showHidePopupMd5(isOpenPopupMd5: boolean) {
         if (isOpenPopupMd5) {
             this.node.active = true;
@@ -97,17 +94,17 @@ export class Md5Popup extends ObserverComponent {
         }
     }
 
-    @handle(PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutMd5())
+    @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutMd5())
     closeOtherPopups() {}
 
-    @render(CrashRoundHistoryStore, (store) => store.md5PopupData, { fireImmediately: false })
-    bindDataMd5(roundItem: CrashRoundHistory) {
+    @render(GameCrash.RoundHistory.CrashRoundHistoryStore, (store) => store.md5PopupData, { fireImmediately: false })
+    bindDataMd5(roundItem: gc.RoundHistories.RoundHistory) {
         this.updateInfo(roundItem);
         this.cpnKeyCopyButton.hideHint();
         this.cpnResultCopyButton.hideHint();
     }
 
-    updateInfo(roundHistoryData: CrashRoundHistory) {
+    updateInfo(roundHistoryData: gc.RoundHistories.RoundHistory) {
         if (roundHistoryData) {
             this.nodeStatusRound.destroyAllChildren();
             const hashValue = (roundHistoryData.md5Result.hashValue = roundHistoryData.md5Result.hashValue || "");
@@ -130,13 +127,13 @@ export class Md5Popup extends ObserverComponent {
         }
     }
 
-    @handle(Md5PopupHandler, (handle, value: boolean) => handle.updateShowHidePopupMd5(value))
+    @handle(GameCrash.Md5Popup.Md5PopupHandler, (handle, value: boolean) => handle.updateShowHidePopupMd5(value))
     onClickCloseButton() {
         this.playSoundClick();
         return false;
     }
 
-    @handle(Md5PopupHandler, (handle, isIncrease: boolean) => handle.quickChangeRoundIndex(isIncrease))
+    @handle(GameCrash.Md5Popup.Md5PopupHandler, (handle, isIncrease: boolean) => handle.quickChangeRoundIndex(isIncrease))
     onClickRoundChange(event) {
         this.playSoundClick();
         return event.target.name === "increase";
@@ -147,13 +144,13 @@ export class Md5Popup extends ObserverComponent {
         button.node.getChildByName("icon").getComponent(UIOpacity).opacity = status ? 255 : 120;
     }
 
-    @render(CrashRoundHistoryStore, (store) => store.increaseStatus)
+    @render(GameCrash.RoundHistory.CrashRoundHistoryStore, (store) => store.increaseStatus)
     private setIncreaseButtonStatus(increaseStatus: boolean) {
         this.playSoundClick();
         this.handleRoundStatusQuickChange(this.btnIncrease, increaseStatus);
     }
 
-    @render(CrashRoundHistoryStore, (store) => store.descreaseStatus)
+    @render(GameCrash.RoundHistory.CrashRoundHistoryStore, (store) => store.descreaseStatus)
     private setDecreaseButtonStatus(descreaseStatus: boolean) {
         this.playSoundClick();
         this.handleRoundStatusQuickChange(this.btnDecrease, descreaseStatus);

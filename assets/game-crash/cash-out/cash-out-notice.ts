@@ -1,9 +1,10 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../../../../extensions/shared-components/assets/shared/utils";
-import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
+
 const { ccclass, property } = _decorator;
 const { handle, render } = Observer;
 
@@ -51,7 +52,7 @@ export class CashOutNotice extends ObserverComponent {
         this.lblCashOut.string = FormatUtils.numberWithCommas(win, 2);
     }
 
-    @handle(PlayerActionHandlers, (handle, flag: boolean) => handle.handleEndShowCashOutNotice(flag))
+    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, flag: boolean) => handle.handleEndShowCashOutNotice(flag))
     showHideNotice(flag: boolean) {
         return flag;
     }

@@ -3,12 +3,8 @@ import { _decorator, Button, Label, Sprite, Toggle, UIOpacity } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { PlayerActionStore } from "../../../player-actions/player-action-store";
-import AutoCashOutHandler from "../handlers/auto-cash-out-handler";
-import AutoCashOutPopupHandler from "../handlers/auto-cash-out-popup-handler";
-import AutoCashOutStore from "../stores/auto-cash-out-store";
 
-const { FormatUtils } = gc;
+const { FormatUtils, GameCrash } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -31,24 +27,24 @@ export class AutoCashout extends ObserverComponent {
     @property(Sprite)
     disableNode: Sprite = null;
 
-    @handle(AutoCashOutHandler, (handle, enable: boolean) => handle.handleEnable(enable))
+    @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle, enable: boolean) => handle.handleEnable(enable))
     toggleCheck() {
         return this.toggle.isChecked;
     }
 
-    @handle(AutoCashOutHandler, (handle, value: number) => handle.adjustMultiplier(value))
+    @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle, value: number) => handle.adjustMultiplier(value))
     quickChangeMultiplier(value: number) {
         this.playSoundClick();
         return value;
     }
 
-    @handle(AutoCashOutPopupHandler, (handle, value: boolean) => handle.togglePopup(value))
+    @handle(GameCrash.AutoCashOut.AutoCashOutPopupHandler, (handle, value: boolean) => handle.togglePopup(value))
     openPopup() {
         this.playSoundClick();
         return true;
     }
 
-    @render(AutoCashOutStore, (store) => store.multiplier)
+    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.multiplier)
     updateMultiplier(multiplier: number) {
         this.multiplierLabel.string = `${FormatUtils.numberWithCommas(multiplier, 2, false)}x`;
         this.updateButtonStatus(this.decreaseButton, multiplier > 1.01);
@@ -63,13 +59,13 @@ export class AutoCashout extends ObserverComponent {
         this.updateButtonStatus(this.increaseButton, currentMultiplier < this.maxMultiplier);
     }
 
-    @render(AutoCashOutStore, (store) => store.enable)
+    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.enable)
     updateEnable(enable: boolean) {
         this.playSoundClick();
         this.toggle.isChecked = enable;
     }
 
-    @render(AutoCashOutStore, (store) => store.disable)
+    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.disable)
     isVisibleNode(disable: boolean) {
         this.disableNode.node.active = disable;
     }
@@ -87,7 +83,7 @@ export class AutoCashout extends ObserverComponent {
         this.quickChangeMultiplier(-0.01);
     }
 
-    @render(PlayerActionStore, (store) => ({
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => ({
         visibleAdjustSetting: store.visibleAutoCashOut,
     }))
     showAutoCashOutButton(data: { visibleAdjustSetting: boolean }) {
@@ -97,7 +93,7 @@ export class AutoCashout extends ObserverComponent {
         }
     }
 
-    @handle(AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
+    @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
     enableAutoCashOut() {}
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))

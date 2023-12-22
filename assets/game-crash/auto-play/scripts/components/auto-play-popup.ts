@@ -1,11 +1,10 @@
 import gc from "@sg/game-client-base";
-import { Node, Prefab, _decorator, instantiate } from "cc";
+import { _decorator, instantiate, Node, Prefab } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { PopupsHandlers } from "../../../popups/popups-handlers";
-import { AutoPlayHandler } from "../handlers/auto-play-handler";
-import { AutoPlayStore } from "../stores/auto-play-store";
 import { RoundNumberItem } from "./round-number-item";
+
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -19,7 +18,7 @@ export class AutoPlayPopup extends ObserverComponent {
     @property(Prefab)
     prfNoOfRound: Prefab = null;
 
-    @render(AutoPlayStore, (store) => store.roundsList)
+    @render(GameCrash.AutoPlay.AutoPlayStore, (store) => store.roundsList)
     initContentRounds(roundsList: number[]) {
         this.nodeContent.destroyAllChildren();
         roundsList.forEach((round) => {
@@ -30,7 +29,7 @@ export class AutoPlayPopup extends ObserverComponent {
         });
     }
 
-    @render(AutoPlayStore, (store) => store.selectedRoundOnPopup)
+    @render(GameCrash.AutoPlay.AutoPlayStore, (store) => store.selectedRoundOnPopup)
     renderSelectedRounds(noOfRounds: number) {
         this.nodeContent.children.forEach((child) => {
             const roundNumber = child.getComponent(RoundNumberItem);
@@ -39,21 +38,21 @@ export class AutoPlayPopup extends ObserverComponent {
         });
     }
 
-    @render(AutoPlayStore, (store) => store.isOpenAutoPlayPopup)
+    @render(GameCrash.AutoPlay.AutoPlayStore, (store) => store.isOpenAutoPlayPopup)
     setAutoPlayPopupVisibility(status: boolean) {
         this.node.active = status;
         status && this.closeOtherPopups();
     }
 
-    @handle(PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutAutoPlay())
+    @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutAutoPlay())
     closeOtherPopups() {}
 
-    @handle(AutoPlayHandler, (handle) => handle.closeAutoPlayPopup())
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.closeAutoPlayPopup())
     onClickclosePopup() {
         this.playSoundClick();
     }
 
-    @handle(AutoPlayHandler, (handle) => handle.confirmRoundAndStart())
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.confirmRoundAndStart())
     onClickStartButton() {
         this.playSoundClick();
     }
@@ -67,7 +66,7 @@ export class AutoPlayPopup extends ObserverComponent {
         }
     }
 
-    @handle(AutoPlayHandler, (handle) => handle.checkFinishedPlayMode())
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.checkFinishedPlayMode())
     updateAutoPlayMode() {}
 
     @render(Notices.NoticeStore, (store) => store.notice)
@@ -80,7 +79,7 @@ export class AutoPlayPopup extends ObserverComponent {
         }
     }
 
-    @handle(AutoPlayHandler, (handle) => handle.cancelAutoPlay())
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.cancelAutoPlay())
     handleAutoPlay() {}
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))

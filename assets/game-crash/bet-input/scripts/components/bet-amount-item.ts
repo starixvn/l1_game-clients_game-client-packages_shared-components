@@ -3,11 +3,10 @@ import { _decorator, Label } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { BetInputHandler } from "../handlers/bet-input-handlers";
 
 const { ccclass, property } = _decorator;
 const { handle } = Observer;
-const { FormatUtils } = gc;
+const { FormatUtils, GameCrash } = gc;
 @ccclass
 export class BetAmountItem extends ObserverComponent {
     @property(Label)
@@ -18,7 +17,7 @@ export class BetAmountItem extends ObserverComponent {
         this.lblBetAmount.string = `+${FormatUtils.nFormatter(+amount)}`;
     }
 
-    @handle(BetInputHandler, (handle, amount: number) => handle.setBetAmountTemp(amount))
+    @handle(GameCrash.BetInput.BetInputHandler, (handle, amount: number) => handle.setBetAmountTemp(amount))
     private onClickBetAmountItem(event) {
         this.playSoundClick();
         return +event.target.name;

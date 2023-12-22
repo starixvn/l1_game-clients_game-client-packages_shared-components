@@ -1,13 +1,13 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Label, Node, Sprite, SpriteAtlas } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
-import { CrashRoundHistory } from "../crash-round-history/crash-round-history-store";
 import { CrashUtils } from "../crash-utils";
-import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handlers";
+
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
-const { FormatUtils, Rounds, Settlements } = gc;
+const { FormatUtils, GameCrash } = gc;
 
 @ccclass
 export class RoundHistoryItem extends ObserverComponent {
@@ -28,7 +28,7 @@ export class RoundHistoryItem extends ObserverComponent {
 
     public isLastRound = false;
 
-    public roundInfo: CrashRoundHistory = null;
+    public roundInfo: gc.RoundHistories.RoundHistory = null;
 
     showHideNode(isShowMultiplier: boolean, isShowCountDown: boolean, isShowSprInPlay: boolean) {
         this.nodeMultiplier.node.active = isShowMultiplier;
@@ -81,7 +81,7 @@ export class RoundHistoryItem extends ObserverComponent {
         return false;
     }
 
-    @handle(Md5PopupHandler, (handle, info: { isOpenPopupMd5: boolean; roundId: number }) => handle.handleMd5Popup(info))
+    @handle(GameCrash.Md5Popup.Md5PopupHandler, (handle, info: { isOpenPopupMd5: boolean; roundId: number }) => handle.handleMd5Popup(info))
     onClickRoundItem() {
         this.playSoundClick();
         return { isOpenPopupMd5: true, roundId: this.roundInfo.roundId };

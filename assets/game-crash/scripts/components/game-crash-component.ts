@@ -4,9 +4,6 @@ import Observer from "observer";
 
 import { BalanceEffectHandlers } from "../../../game/balance-effect/scripts/handlers/balance-effect-handlers";
 import GameComponent from "../../../game/scripts/components/game-component";
-import AutoCashOutStore from "../../auto-cash-out/scripts/stores/auto-cash-out-store";
-import { BetInputStore } from "../../bet-input/scripts/stores/bet-input-store";
-import { PopupsHandlers } from "../../popups/popups-handlers";
 import { IGameCrashUserSettings } from "./game-crash-data";
 
 const { Settlements, Auth, Rounds, StorageManager, localStorageKeys, GameCrash, HideGame, GameConfigs } = gc;
@@ -27,12 +24,12 @@ export default class GameCrashComponent extends GameComponent {
     private autoCashOutMultiplier = 0;
     private enableAutoCashOut = false;
 
-    @render(BetInputStore, (store) => store.betAmount)
+    @render(gc.GameCrash.BetInput.BetInputStore, (store) => store.betAmount)
     updateBetAmount(betAmount: number) {
         this.betAmount = betAmount;
     }
 
-    @render(AutoCashOutStore, (store) => ({ multiplier: store.multiplier, enable: store.enable }))
+    @render(gc.GameCrash.AutoCashOut.AutoCashOutStore, (store) => ({ multiplier: store.multiplier, enable: store.enable }))
     updateAutoCashOut({ multiplier, enable }) {
         this.autoCashOutMultiplier = multiplier;
         this.enableAutoCashOut = enable;
@@ -109,7 +106,7 @@ export default class GameCrashComponent extends GameComponent {
     @handle(GameCrash.CrashBetList.CrashBetListHandlers, (handler) => handler.resetMainPlayer())
     resetValueCashOutBetList() {}
 
-    @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
+    @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeAllPopups())
     closeAllPopups() {}
 
     @render(Rounds.RoundTimeStore, (store) => store.roundTime)

@@ -1,8 +1,9 @@
 import gc from "@sg/game-client-base";
-import { Color, Label, Sprite, _decorator } from "cc";
+import { _decorator, Color, Label, Sprite } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { AutoPlayHandler } from "../handlers/auto-play-handler";
+
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -35,7 +36,7 @@ export class RoundNumberItem extends ObserverComponent {
         this.lblNoOfRound.color = new Color().fromHEX(color);
     }
 
-    @handle(AutoPlayHandler, (handle, rounds: number) => handle.updateNoOfRounds(rounds))
+    @handle(gc.GameCrash.AutoPlay.AutoPlayHandler, (handle, rounds: number) => handle.updateNoOfRounds(rounds))
     onRoundNumberItemClick(event) {
         this.playSoundClick();
         this.setSelectedRound(true);

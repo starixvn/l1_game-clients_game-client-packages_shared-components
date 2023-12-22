@@ -1,17 +1,8 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Sprite } from "cc";
 import Observer from "observer";
-import { BetInputStore } from "./../bet-input/scripts/stores/bet-input-store";
 
-import AutoCashOutStore from "../../../../../extensions/shared-components/assets/game-crash/auto-cash-out/scripts/stores/auto-cash-out-store";
-import { AutoPlayHandler } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/handlers/auto-play-handler";
-import { AutoPlayStore } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/stores/auto-play-store";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
-import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
-import { EARLY_BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
-import { PopupsHandlers } from "../popups/popups-handlers";
-import { EarlyBetStore } from "./early-bet-store";
-import { EarlyBetUIHandlers } from "./early-bet-ui-handlers";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -42,34 +33,34 @@ export default class EarlyBetButton extends ObserverComponent {
     private betAmountGreaterMinBet = false;
     private minBet = 0;
 
-    @render(AutoCashOutStore, (store) => store.enable)
+    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.enable)
     updateStatusAutoCashOut(isEnable: boolean) {
         this.isEnableAutoCashOut = isEnable;
     }
 
-    @render(AutoCashOutStore, (store) => store.multiplier)
+    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.multiplier)
     updateValueAutoCashOut(value: number) {
         this.valueAutoCashOut = value;
     }
 
-    @render(EarlyBetStore, (store) => store.earlyBet)
+    @render(GameCrash.CrashBet.EarlyBetStore, (store) => store.earlyBet)
     updateStatusButton(isEarlyBet: boolean) {
         this.setStatusButtons(isEarlyBet);
         this.setStatusWaiting(isEarlyBet);
-        this.handleEarlyStatusBetUI(isEarlyBet ? EARLY_BET_STATE.BET : EARLY_BET_STATE.NONE);
+        this.handleEarlyStatusBetUI(isEarlyBet ? GameCrash.EARLY_BET_STATE.BET : GameCrash.EARLY_BET_STATE.NONE);
     }
 
-    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentEarlyBetStateInStore(action))
+    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentEarlyBetStateInStore(action))
     handleEarlyStatusBetUI(action: string) {
         return action;
     }
 
-    @render(EarlyBetStore, (store) => store.betAmount)
+    @render(GameCrash.CrashBet.EarlyBetStore, (store) => store.betAmount)
     updateAmount(betAmount: number) {
         this.amount = betAmount;
     }
 
-    @handle(EarlyBetUIHandlers, (handle, enable: boolean) => handle.handle(enable))
+    @handle(GameCrash.CrashBet.EarlyBetUIHandlers, (handle, enable: boolean) => handle.handle(enable))
     onClickEarlyBet() {
         if (!this.betAmountGreaterMinBet) {
             this.showMsgMinBet(this.minBet);
@@ -84,28 +75,28 @@ export default class EarlyBetButton extends ObserverComponent {
         return !this.isWaitingBet;
     }
 
-    @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
+    @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeAllPopups())
     closeAllPopups() {}
 
-    @handle(AutoPlayHandler, (handle, enable: boolean) => handle.cancelAutoPlay())
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle, enable: boolean) => handle.cancelAutoPlay())
     cancelAutoPlay() {}
 
-    @handle(EarlyBetUIHandlers, (handle, enable: boolean) => handle.handle(enable))
+    @handle(GameCrash.CrashBet.EarlyBetUIHandlers, (handle, enable: boolean) => handle.handle(enable))
     disableEarlyBet() {
         return false;
     }
 
-    @handle(PlayerActionHandlers, (handle, flag: boolean) => handle.handleWaitingBet(flag))
+    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, flag: boolean) => handle.handleWaitingBet(flag))
     handleWaitingBet(flag: boolean) {
         return flag;
     }
 
-    @handle(PlayerActionHandlers, (handle, minBet: number) => handle.showMsgMinBet(minBet))
+    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, minBet: number) => handle.showMsgMinBet(minBet))
     showMsgMinBet(minBet: number) {
         return minBet;
     }
 
-    @render(PlayerActionStore, (store) => store.visibleBetNextRound)
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.visibleBetNextRound)
     showPlaceBetNextRound(visibleBetNextRound: boolean) {
         if (visibleBetNextRound) {
             this.handleRocketFly();
@@ -114,19 +105,19 @@ export default class EarlyBetButton extends ObserverComponent {
         }
     }
 
-    @render(BetInputStore, (store) => store.betAmountGreaterMinBet)
+    @render(GameCrash.BetInput.BetInputStore, (store) => store.betAmountGreaterMinBet)
     checkBetAmountGreaterMinBet(betAmountGreaterMinBet: boolean) {
         this.betAmountGreaterMinBet = betAmountGreaterMinBet;
     }
 
-    @render(PlayerActionStore, (store) => store.visibleCashOut)
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.visibleCashOut)
     cancelEarlyBet(visibleCashOut: boolean) {
         if (visibleCashOut) {
             this.disableEarlyBet();
         }
     }
 
-    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
+    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
     handleBetUIControl(action: string) {
         return action;
     }
@@ -176,7 +167,7 @@ export default class EarlyBetButton extends ObserverComponent {
         }
     }
 
-    @render(AutoPlayStore, (store) => store.autoPlayWhenRocketFly)
+    @render(GameCrash.AutoPlay.AutoPlayStore, (store) => store.autoPlayWhenRocketFly)
     updateAutoPlayWhenRocketFly(value: boolean) {
         this.autoPlayWhenRocketFly = value;
     }
@@ -190,7 +181,7 @@ export default class EarlyBetButton extends ObserverComponent {
         }
     }
 
-    @render(AutoPlayStore, (store) => store.autoPlayWhenRocketFly)
+    @render(GameCrash.AutoPlay.AutoPlayStore, (store) => store.autoPlayWhenRocketFly)
     checkAutoPlayWhenPlacingBet(autoPlayWhenRocketFly: boolean) {
         if (autoPlayWhenRocketFly) {
             this.onClickEarlyBet();
@@ -198,26 +189,26 @@ export default class EarlyBetButton extends ObserverComponent {
         }
     }
 
-    @render(PlayerActionStore, (store) => store.autoEarlyBet)
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.autoEarlyBet)
     updateAutoPlayMode(autoEarlyBet: boolean) {
         this.isAutoPlayMode = autoEarlyBet;
     }
 
-    @handle(PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(true))
+    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(true))
     handleAutoPlayStatus() {}
 
-    @handle(AutoPlayHandler, (handle) => handle.decreaseAutoPlayRounds())
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.decreaseAutoPlayRounds())
     decreaseAutoPlayRounds() {}
 
-    @handle(AutoPlayHandler, (handle) => handle.updatedAutoPlayWhenRocketFly(false))
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.updatedAutoPlayWhenRocketFly(false))
     disableAutoPlayWhenRocketFly() {}
 
-    @handle(AutoPlayHandler, (handle, flag: boolean) => handle.checkEarlyBetBeforeAutoPlay(flag))
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle, flag: boolean) => handle.checkEarlyBetBeforeAutoPlay(flag))
     handleEarlyBetBeforeAutoPlay(flag: boolean) {
         return flag;
     }
 
-    @render(AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
+    @render(GameCrash.AutoPlay.AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
     updateHasEarlyBetBeforeAutoPlay(value: boolean) {
         this.hasEarlyBetBeforeAutoPlay = value;
     }
@@ -227,7 +218,7 @@ export default class EarlyBetButton extends ObserverComponent {
         return this.placeBetSound;
     }
 
-    @render(BetInputStore, (store) => store.minBet)
+    @render(GameCrash.BetInput.BetInputStore, (store) => store.minBet)
     setMinBet(minBet: number) {
         this.minBet = minBet;
     }

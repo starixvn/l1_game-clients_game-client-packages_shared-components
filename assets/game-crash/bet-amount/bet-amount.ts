@@ -1,7 +1,8 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Node } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
-import { PlayerActionStore } from "../player-actions/player-action-store";
 
 const { ccclass, property } = _decorator;
 const { render } = Observer;
@@ -15,7 +16,7 @@ export class BetAmount extends ObserverComponent {
         this.nodeDisabledBetAmount.active = isShow;
     }
 
-    @render(PlayerActionStore, (store) => store.disableBetAmount)
+    @render(gc.GameCrash.PlayerActions.PlayerActionStore, (store) => store.disableBetAmount)
     adjustBetAmount(visibleBetAmount: boolean) {
         this.showHideDisabledNode(visibleBetAmount);
     }

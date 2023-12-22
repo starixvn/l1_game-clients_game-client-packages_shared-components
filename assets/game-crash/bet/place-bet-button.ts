@@ -2,17 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, Node, Sprite } from "cc";
 import Observer from "observer";
 
-import AutoCashOutHandler from "../../../../../extensions/shared-components/assets/game-crash/auto-cash-out/scripts/handlers/auto-cash-out-handler";
-import AutoCashOutStore from "../../../../../extensions/shared-components/assets/game-crash/auto-cash-out/scripts/stores/auto-cash-out-store";
-import { AutoPlayHandler } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/handlers/auto-play-handler";
-import { AutoPlayStore } from "../../../../../extensions/shared-components/assets/game-crash/auto-play/scripts/stores/auto-play-store";
-import { BetInputStore } from "../../../../../extensions/shared-components/assets/game-crash/bet-input/scripts/stores/bet-input-store";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
-import AutoCashOutPopupHandler from "../auto-cash-out/scripts/handlers/auto-cash-out-popup-handler";
-import { Md5PopupHandler } from "../md5-popup/scripts/handlers/md5-popup-handlers";
-import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
-import { BET_STATE, PlayerActionStore } from "../player-actions/player-action-store";
-import { PopupsHandlers } from "../popups/popups-handlers";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
@@ -56,7 +46,7 @@ export default class PlaceBetButton extends ObserverComponent {
         this.placeBetNotice.active = false;
     }
 
-    @render(BetInputStore, (store) => store.betAmount)
+    @render(GameCrash.BetInput.BetInputStore, (store) => store.betAmount)
     updateBetAmount(betAmount: number) {
         this.amount = betAmount;
     }
@@ -68,7 +58,7 @@ export default class PlaceBetButton extends ObserverComponent {
 
     @render(Bet.BetStore, (store) => store.isReceivedBet, { fireImmediately: false })
     updateStatusPlaceBet(isReceivedBet: any) {
-        this.handleBetUIControl(isReceivedBet ? BET_STATE.BET : BET_STATE.NONE);
+        this.handleBetUIControl(isReceivedBet ? GameCrash.BET_STATE.BET : GameCrash.BET_STATE.NONE);
 
         if (!isReceivedBet) {
             this.isBetAccepted = false;
@@ -89,36 +79,36 @@ export default class PlaceBetButton extends ObserverComponent {
         }, 3000);
     }
 
-    @handle(AutoPlayHandler, (handle) => handle.closeAutoPlayPopup())
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.closeAutoPlayPopup())
     hideAutoPlayPopup() {}
 
-    @handle(Md5PopupHandler, (handle, value: boolean) => handle.updateShowHidePopupMd5(value))
+    @handle(GameCrash.Md5Popup.Md5PopupHandler, (handle, value: boolean) => handle.updateShowHidePopupMd5(value))
     hideMD5Popup() {
         return false;
     }
 
-    @handle(AutoCashOutPopupHandler, (handle) => handle.togglePopup(false))
+    @handle(GameCrash.AutoCashOut.AutoCashOutPopupHandler, (handle) => handle.togglePopup(false))
     hideAutoCashOutPopup() {}
 
-    @handle(AutoPlayHandler, (handle) => handle.updateStatusLatestRoundAccepted())
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.updateStatusLatestRoundAccepted())
     checkStatusLatestRound() {}
 
-    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
+    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
     handleBetUIControl(action: string) {
         return action;
     }
 
-    @handle(AutoCashOutHandler, (handle, disable: boolean) => handle.handleDisableAuto(disable))
+    @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle, disable: boolean) => handle.handleDisableAuto(disable))
     disableAutoCashOut(disable: boolean) {
         return disable;
     }
 
-    @render(AutoCashOutStore, (store) => store.enable)
+    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.enable)
     updateStatusAutoCashOut(isEnable: boolean) {
         this.isEnableAutoCashOut = isEnable;
     }
 
-    @render(AutoCashOutStore, (store) => store.multiplier)
+    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.multiplier)
     updateValueAutoCashOut(value: number) {
         this.valueAutoCashOut = value;
     }
@@ -132,7 +122,7 @@ export default class PlaceBetButton extends ObserverComponent {
         }
     }
 
-    @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
+    @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeAllPopups())
     closeAllPopups() {}
 
     @handle(GameCrash.CrashBet.CrashBetHandler, (handle, payload: { autoCashOut: number; amount: number }) => handle.handle(payload))
@@ -140,7 +130,7 @@ export default class PlaceBetButton extends ObserverComponent {
         return { autoCashOut: this.isEnableAutoCashOut ? this.valueAutoCashOut : undefined, amount: this.amount };
     }
 
-    @render(PlayerActionStore, (store) => store.isFlyingTime)
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.isFlyingTime)
     renderLiveGame(isFlyingTime: boolean) {
         if (isFlyingTime) {
             this.isBetAccepted = false;
@@ -180,14 +170,14 @@ export default class PlaceBetButton extends ObserverComponent {
         this.disablePlaceBetButton(selected);
     }
 
-    @handle(AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
+    @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
     enableAutoCashOut() {}
 
     disablePlaceBetButton(disable: boolean) {
         this.bgDisable.node.active = disable;
     }
 
-    @render(PlayerActionStore, (store) => store.activeAutoPlayCurrentRound)
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.activeAutoPlayCurrentRound)
     effectAutoPlayInCurrentRound(activeAutoPlayCurrentRound: boolean) {
         if (activeAutoPlayCurrentRound && !this.hasEarlyBetBeforeAutoPlay && !this.isBetAccepted) {
             this.disabledAutoPlayWhenPlacingBet();
@@ -196,12 +186,12 @@ export default class PlaceBetButton extends ObserverComponent {
         }
     }
 
-    @render(AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
+    @render(GameCrash.AutoPlay.AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
     updateHasEarlyBetBeforeAutoPlay(value: boolean) {
         this.hasEarlyBetBeforeAutoPlay = value;
     }
 
-    @handle(AutoPlayHandler, (handle) => handle.decreaseAutoPlayRounds())
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.decreaseAutoPlayRounds())
     decreaseAutoPlayRounds() {}
 
     @render(Rounds.RoundTimeStore, (store) => store.isLocking)
@@ -211,10 +201,10 @@ export default class PlaceBetButton extends ObserverComponent {
         }
     }
 
-    @handle(PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(false))
+    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(false))
     handleAutoPlayStatus() {}
 
-    @handle(AutoPlayHandler, (handle, value: boolean) => handle.updatedAutoPlayWhenPlacingBet(value))
+    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle, value: boolean) => handle.updatedAutoPlayWhenPlacingBet(value))
     disabledAutoPlayWhenPlacingBet() {
         return false;
     }

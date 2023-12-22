@@ -3,9 +3,6 @@ import { _decorator, Label, Sprite } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
-import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
-import { CASH_OUT_STATE, PlayerActionStore } from "../player-actions/player-action-store";
-import { PopupsHandlers } from "../popups/popups-handlers";
 import { CashOutComponent } from "./cash-out-component";
 
 const { handle, render } = Observer;
@@ -29,7 +26,7 @@ export class CashOutButton extends ObserverComponent {
     updateCashOutFullButton(isCashedOut: boolean) {
         isCashedOut &&
             setTimeout(() => {
-                this.handleUICashOutState(CASH_OUT_STATE.FULL);
+                this.handleUICashOutState(GameCrash.CASH_OUT_STATE.FULL);
             }, 3000);
         CashOutComponent.updateCashOutButtonStatus(isCashedOut, this.sprDisabled);
         this.isCashedOut = isCashedOut;
@@ -60,17 +57,17 @@ export class CashOutButton extends ObserverComponent {
         return CashOutComponent.getBetValue(lastReceivedBet);
     }
 
-    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentCashOutStateInStore(action))
+    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentCashOutStateInStore(action))
     handleUICashOutState(action: string) {
         return action;
     }
 
     @render(Bet.BetStore, (store) => store.isReceivedBet)
     setBetStatus(isReceivedBet: boolean) {
-        !isReceivedBet && this.handleUICashOutState(CASH_OUT_STATE.NONE);
+        !isReceivedBet && this.handleUICashOutState(GameCrash.CASH_OUT_STATE.NONE);
     }
 
-    @render(PlayerActionStore, (store) => store.visibleCashOut)
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.visibleCashOut)
     updateCashoutButtonStatus(visibleCashOut: boolean) {
         CashOutComponent.showHideNode(this.node, visibleCashOut);
     }
@@ -89,7 +86,7 @@ export class CashOutButton extends ObserverComponent {
         CashOutComponent.updateValueCashOut(cashOut?.cashOutWin, this.lblCashOut);
     }
 
-    @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
+    @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeAllPopups())
     closeAllPopups() {}
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)

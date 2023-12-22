@@ -3,9 +3,6 @@ import { _decorator, Label, Sprite } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
-import { PlayerActionHandlers } from "../player-actions/player-action-handlers";
-import { CASH_OUT_STATE, PlayerActionStore } from "../player-actions/player-action-store";
-import { PopupsHandlers } from "../popups/popups-handlers";
 import { CashOutComponent } from "./cash-out-component";
 
 const { handle, render } = Observer;
@@ -61,12 +58,12 @@ export class CashOutHalfButton extends ObserverComponent {
         return CashOutComponent.getBetValue(lastReceivedBet);
     }
 
-    @handle(PlayerActionHandlers, (handle, action: string) => handle.handleCurrentCashOutStateInStore(action))
+    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentCashOutStateInStore(action))
     handleCashOutState() {
-        return CASH_OUT_STATE.HALF;
+        return GameCrash.CASH_OUT_STATE.HALF;
     }
 
-    @render(PlayerActionStore, (store) => store.visibleCashOut)
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.visibleCashOut)
     updateCashOutButtonStatus(visibleCashOut: boolean) {
         CashOutComponent.showHideNode(this.node, visibleCashOut);
     }
@@ -107,7 +104,7 @@ export class CashOutHalfButton extends ObserverComponent {
         }
     }
 
-    @handle(PopupsHandlers, (handle) => handle.closeAllPopups())
+    @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeAllPopups())
     closeAllPopups() {}
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)

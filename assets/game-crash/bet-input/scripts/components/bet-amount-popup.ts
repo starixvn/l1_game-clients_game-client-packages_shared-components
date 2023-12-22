@@ -3,12 +3,9 @@ import { _decorator, Button, instantiate, Label, Node, Prefab } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { PopupsHandlers } from "../../../popups/popups-handlers";
-import { BetInputHandler } from "../handlers/bet-input-handlers";
-import { BetInputStore } from "../stores/bet-input-store";
 import { BetAmountItem } from "./bet-amount-item";
 
-const { FormatUtils } = gc;
+const { FormatUtils, GameCrash } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -31,7 +28,9 @@ export class BetAmountPopup extends ObserverComponent {
 
     private readonly chipsLimit = 8;
 
-    @render(BetInputStore, (store) => ({ chips: store.chips, minBet: store.minBet, maxBet: store.maxBet }), { fireImmediately: false })
+    @render(GameCrash.BetInput.BetInputStore, (store) => ({ chips: store.chips, minBet: store.minBet, maxBet: store.maxBet }), {
+        fireImmediately: false,
+    })
     private initBetAmount({ chips, minBet, maxBet }) {
         this.nodeBetContainer.destroyAllChildren();
         let count = 1;
@@ -48,32 +47,32 @@ export class BetAmountPopup extends ObserverComponent {
         this.updateBetRange({ minBet, maxBet });
     }
 
-    @render(BetInputStore, (store) => store.isOpenBetAmountPopup)
+    @render(GameCrash.BetInput.BetInputStore, (store) => store.isOpenBetAmountPopup)
     private setBetAmountPopupVisibilty(status: boolean) {
         this.node.active = status;
         status && this.closeOtherPopups();
     }
 
-    @render(BetInputStore, (store) => store.betAmountTemp)
+    @render(GameCrash.BetInput.BetInputStore, (store) => store.betAmountTemp)
     private updateBetAmount(amount: number) {
         this.lblBetAmount.string = `${FormatUtils.numberWithCommas(amount, 2)}`;
         this.checkConfirmBtnStatus(amount > 0);
     }
 
-    @handle(PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutBetInput())
+    @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutBetInput())
     closeOtherPopups() {}
 
-    @handle(BetInputHandler, (handle) => handle.closeBetAmountPopup())
+    @handle(GameCrash.BetInput.BetInputHandler, (handle) => handle.closeBetAmountPopup())
     private onCloseClick() {
         this.playSoundClick();
     }
 
-    @handle(BetInputHandler)
+    @handle(GameCrash.BetInput.BetInputHandler)
     private onConfirmClick() {
         this.playSoundClick();
     }
 
-    @handle(BetInputHandler, (handler) => handler.resetBetAmount())
+    @handle(GameCrash.BetInput.BetInputHandler, (handler) => handler.resetBetAmount())
     private onClearClick() {
         this.playSoundClick();
     }

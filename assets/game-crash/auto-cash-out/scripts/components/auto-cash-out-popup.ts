@@ -3,12 +3,8 @@ import { _decorator, Button, Color, Label, Node } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { PopupsHandlers } from "../../../popups/popups-handlers";
-import AutoCashOutHandler from "../handlers/auto-cash-out-handler";
-import AutoCashOutPopupHandler from "../handlers/auto-cash-out-popup-handler";
-import AutoCashOutPopupStore from "../stores/auto-cash-out-popup-store";
 
-const { FormatUtils } = gc;
+const { FormatUtils, GameCrash } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -26,13 +22,13 @@ export class AutoCashOutPopup extends ObserverComponent {
     @property(Button)
     confirmButton: Button = null;
 
-    @handle(AutoCashOutPopupHandler, (handle) => handle.togglePopup(false))
+    @handle(GameCrash.AutoCashOut.AutoCashOutPopupHandler, (handle) => handle.togglePopup(false))
     close() {
         this.playSoundClick();
     }
 
-    @handle(AutoCashOutHandler, (handle, multiplier: number) => handle.handleMultiplier(multiplier))
-    @handle(AutoCashOutPopupHandler, (handle) => {
+    @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle, multiplier: number) => handle.handleMultiplier(multiplier))
+    @handle(GameCrash.AutoCashOut.AutoCashOutPopupHandler, (handle) => {
         handle.togglePopup(false);
         handle.handleMultiplier("0");
     })
@@ -41,7 +37,7 @@ export class AutoCashOutPopup extends ObserverComponent {
         return parseFloat(this.removeCommasMultiplier());
     }
 
-    @handle(AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
+    @handle(GameCrash.AutoCashOut.AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
     addValue(event, value) {
         this.playSoundClick();
         const multiplier = this.removeCommasMultiplier();
@@ -60,7 +56,7 @@ export class AutoCashOutPopup extends ObserverComponent {
         return multiplier;
     }
 
-    @render(AutoCashOutPopupStore, (store) => store.multiplier)
+    @render(GameCrash.AutoCashOut.AutoCashOutPopupStore, (store) => store.multiplier)
     updateMultiplierString(multiplier: string) {
         let slitStr;
         const suffix = multiplier.split(".")[1];
@@ -75,19 +71,19 @@ export class AutoCashOutPopup extends ObserverComponent {
         this.multiplierLabel.string = `${FormatUtils.numberWithCommas(+multiplier, 2)}${slitStr}`;
     }
 
-    @render(gc.GameCrash.CrashGameConfigs.CrashGameConfigStore, (store) => store.maxMultiplier)
+    @render(GameCrash.CrashGameConfigs.CrashGameConfigStore, (store) => store.maxMultiplier)
     updateMultiplierRangeLabel(maxMultiplier: number) {
         this.multiplierRangeLabel.string = `1.01x - ${FormatUtils.numberWithCommas(maxMultiplier, 2, false)}x`;
     }
 
-    @render(AutoCashOutPopupStore, (store) => store.isValid)
+    @render(GameCrash.AutoCashOut.AutoCashOutPopupStore, (store) => store.isValid)
     updateMultiplierTextColor(isValid: boolean) {
         this.multiplierLabel.color = isValid ? Color.fromHEX(this.multiplierLabel.color, "#4920A4") : Color.RED;
         this.confirmButton.interactable = isValid;
         this.confirmButton.node.getChildByName("overlay").active = !isValid;
     }
 
-    @handle(AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
+    @handle(GameCrash.AutoCashOut.AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
     removeLastLetter() {
         this.playSoundClick();
         let multiplierString = this.removeCommasMultiplier().slice(0, -1);
@@ -98,19 +94,19 @@ export class AutoCashOutPopup extends ObserverComponent {
         return multiplierString;
     }
 
-    @handle(AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
+    @handle(GameCrash.AutoCashOut.AutoCashOutPopupHandler, (handle, multiplier: string) => handle.handleMultiplier(multiplier))
     clear() {
         this.playSoundClick();
         return "0";
     }
 
-    @render(AutoCashOutPopupStore, (store) => store.enable)
+    @render(GameCrash.AutoCashOut.AutoCashOutPopupStore, (store) => store.enable)
     showHideAutoCashoutPopup(enable: boolean) {
         this.node.active = enable;
         enable && this.closeOtherPopups();
     }
 
-    @handle(PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutAutoCashOut())
+    @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeOtherPopupsWithoutAutoCashOut())
     closeOtherPopups() {}
 
     private removeCommasMultiplier(): string {
