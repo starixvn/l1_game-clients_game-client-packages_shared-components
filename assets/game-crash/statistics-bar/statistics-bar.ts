@@ -1,12 +1,12 @@
 import gc from "@sg/game-client-base";
-import { Node, Prefab, _decorator, instantiate } from "cc";
+import { _decorator, instantiate, Node, Prefab } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 import { RoundHistoryItem } from "./round-history-item";
+
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
-
-const { FormatUtils, Rounds, Settlements } = gc;
 
 @ccclass
 export class StatisticsBar extends ObserverComponent {

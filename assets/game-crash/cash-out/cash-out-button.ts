@@ -34,7 +34,7 @@ export class CashOutButton extends ObserverComponent {
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.multiplier)
     updateCashOut(multiplier: number) {
-        if (!this.isCashedOut) {
+        if (!this.isCashedOut && this.bet > 0) {
             const cashOutValue = multiplier * this.bet;
             this.lblCashOut.string = FormatUtils.numberWithCommas(cashOutValue, 2);
         }
@@ -83,6 +83,9 @@ export class CashOutButton extends ObserverComponent {
 
     @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOut, { fireImmediately: false })
     updateValueCashOut(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
+        if (!cashOut?.cashOutWin) {
+            return;
+        }
         CashOutComponent.updateValueCashOut(cashOut?.cashOutWin, this.lblCashOut);
     }
 
