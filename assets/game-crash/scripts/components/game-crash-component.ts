@@ -5,7 +5,7 @@ import Observer from "observer";
 import { BalanceEffectHandlers } from "../../../game/balance-effect/scripts/handlers/balance-effect-handlers";
 import GameComponent from "../../../game/scripts/components/game-component";
 
-const { Settlements, Auth, Rounds, GameCrash, HideGame } = gc;
+const { Settlements, Auth, Rounds, GameCrash } = gc;
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -19,35 +19,10 @@ export default class GameCrashComponent extends GameComponent {
     lblMaxBet: Label = null;
 
     private readonly countDownSound = "count_down";
-    private betAmount = 0;
-    private autoCashOutMultiplier = 0;
-    private enableAutoCashOut = false;
 
-    @render(gc.GameCrash.BetInput.BetInputStore, (store) => store.betAmount)
-    updateBetAmount(betAmount: number) {
-        this.betAmount = betAmount;
-    }
-
-    @render(gc.GameCrash.AutoCashOut.AutoCashOutStore, (store) => ({ multiplier: store.multiplier, enable: store.enable }))
-    updateAutoCashOut({ multiplier, enable }) {
-        this.autoCashOutMultiplier = multiplier;
-        this.enableAutoCashOut = enable;
-    }
-
-    @handle(HideGame.HideGameHandler)
+    @handle(GameCrash.HideGameCrash.HideGameCrashHandler)
     onHideGame() {
         super.onHideGame();
-        this.saveUserSetting();
-    }
-
-    saveUserSetting() {
-        const currentSetting: gc.GameCrash.IGameCrashUserSettings = {
-            betAmount: this.betAmount,
-            enableAutoCashOut: this.enableAutoCashOut,
-            autoCashOutMultiplier: this.autoCashOutMultiplier,
-        };
-
-        gc.Shared.utils.StorageManager.set(gc.Shared.utils.localStorageKeys.userSetting, currentSetting);
     }
 
     override isValidResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {
