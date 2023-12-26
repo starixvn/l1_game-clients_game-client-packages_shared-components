@@ -70,12 +70,8 @@ export default class Splash extends Component {
 
     removeUserSetting(event: MessageEvent) {
         if (event?.data?.isClearUserSetting) {
-            this.handleClearUserSetting();
+            StorageManager.remove(gc.Shared.utils.localStorageKeys.userSetting);
         }
-    }
-    @handle(App.AppHandlers.ClearGameSetting)
-    handleClearUserSetting() {
-        //handle
     }
 
     @handle(App.AppHandlers.UserGesturePage)

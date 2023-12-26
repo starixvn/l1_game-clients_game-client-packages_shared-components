@@ -17,32 +17,27 @@ export class CashOutButton extends ObserverComponent {
     @property(Sprite)
     sprDisabled: Sprite = null;
 
-    private bet = 0;
-    private isCashedOut = false;
-
     private readonly cashOutSound = "cash_out";
 
-    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isCashedOutFull)
-    updateCashOutFullButton(isCashedOut: boolean) {
-        isCashedOut &&
+    onLoad() {
+        super.onLoad();
+        this.lblCashOut.string = "";
+    }
+
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isFullCashedOut)
+    updateCashOutFullButton(isFullCashedOut: boolean) {
+        isFullCashedOut &&
             setTimeout(() => {
                 this.handleUICashOutState(GameCrash.CASH_OUT_STATE.FULL);
             }, 3000);
-        CashOutComponent.updateCashOutButtonStatus(isCashedOut, this.sprDisabled);
-        this.isCashedOut = isCashedOut;
+        CashOutComponent.updateCashOutButtonStatus(isFullCashedOut, this.sprDisabled);
     }
 
-    @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.multiplier)
-    updateCashOut(multiplier: number) {
-        if (!this.isCashedOut && this.bet > 0) {
-            const cashOutValue = multiplier * this.bet;
-            this.lblCashOut.string = FormatUtils.numberWithCommas(cashOutValue, 2);
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.fullCashOutValue, { fireImmediately: false })
+    updateCashOut(fullCashOutValue: number) {
+        if (fullCashOutValue > 0) {
+            this.lblCashOut.string = FormatUtils.numberWithCommas(fullCashOutValue, 2);
         }
-    }
-
-    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOutBet)
-    updateBetValue(cashOutBet: any) {
-        this.bet = CashOutComponent.getBetValue(cashOutBet);
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
@@ -79,14 +74,6 @@ export class CashOutButton extends ObserverComponent {
         this.playSoundCashOut();
         this.closeAllPopups();
         return CashOutComponent.getCashOutValue(this.lblCashOut);
-    }
-
-    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOut, { fireImmediately: false })
-    updateValueCashOut(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
-        if (!cashOut?.cashOutWin) {
-            return;
-        }
-        CashOutComponent.updateValueCashOut(cashOut?.cashOutWin, this.lblCashOut);
     }
 
     @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeAllPopups())
