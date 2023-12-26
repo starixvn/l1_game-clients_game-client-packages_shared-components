@@ -4,9 +4,8 @@ import Observer from "observer";
 
 import { BalanceEffectHandlers } from "../../../game/balance-effect/scripts/handlers/balance-effect-handlers";
 import GameComponent from "../../../game/scripts/components/game-component";
-import { IGameCrashUserSettings } from "./game-crash-data";
 
-const { Settlements, Auth, Rounds, StorageManager, localStorageKeys, GameCrash, HideGame, GameConfigs } = gc;
+const { Settlements, Auth, Rounds, GameCrash, HideGame } = gc;
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -42,7 +41,7 @@ export default class GameCrashComponent extends GameComponent {
     }
 
     saveUserSetting() {
-        const currentSetting: IGameCrashUserSettings = {
+        const currentSetting: gc.GameCrash.IGameCrashUserSettings = {
             betAmount: this.betAmount,
             enableAutoCashOut: this.enableAutoCashOut,
             autoCashOutMultiplier: this.autoCashOutMultiplier,
