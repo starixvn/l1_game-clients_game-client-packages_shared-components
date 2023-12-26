@@ -48,7 +48,7 @@ export default class MainPlayerProfile extends ObserverComponent {
         if (!this.sprAvatar) {
             return;
         }
-        
+
         const spriteFrame = await bundleManager.loadSharedAsset<SpriteFrame>(`images/avatars/${avatarId}/spriteFrame`, SpriteFrame);
         if (spriteFrame) {
             this.setAvatar(spriteFrame);
@@ -66,7 +66,7 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
     endBetInfo(lastReceivedBet: gc.Bet.ILastReceivedBet) {
-        if (lastReceivedBet && lastReceivedBet.value > 0) {
+        if (lastReceivedBet && lastReceivedBet.value > 0 && lastReceivedBet.isAnimated) {
             this.mainPlayerDecreaseBalance(lastReceivedBet.value);
         }
     }

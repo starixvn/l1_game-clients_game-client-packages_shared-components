@@ -158,9 +158,9 @@ export default class PlaceBetButton extends ObserverComponent {
 
     @render(Rounds.RoundTimeStore, (store) => ({ isLocking: store.isLocking, roundTime: store.roundTime }))
     renderLockBet({ isLocking, roundTime }) {
-        if (isLocking && !this.isBetAccepted && roundTime >= 0) {
+        if (isLocking && roundTime >= 0) {
             this.setBetButtonVisibility(true);
-            this.disablePlaceBetButton(true);
+            this.isBetAccepted ? this.setBetAcceptedBetStatus(true) : this.disablePlaceBetButton(true);
         }
     }
 
