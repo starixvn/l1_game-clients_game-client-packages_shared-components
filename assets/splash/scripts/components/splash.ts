@@ -68,7 +68,7 @@ export default class Splash extends Component {
         this.registerEventUserGesturePage(event);
     };
 
-    removeUserSetting(event) {
+    removeUserSetting(event: MessageEvent) {
         if (event?.data?.isClearUserSetting) {
             StorageManager.remove(gc.Shared.utils.localStorageKeys.userSetting);
         }
