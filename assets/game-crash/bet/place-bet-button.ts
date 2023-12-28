@@ -60,7 +60,7 @@ export default class PlaceBetButton extends ObserverComponent {
         }
 
         this.isBetAccepted = true;
-        this.setBetAcceptedBetStatus(true);
+        this.disablePlaceBetButton(true);
         this.isClickPlaceBet && (this.placeBetNotice.active = true);
         this.disableAutoCashOut(true);
         this.checkStatusLatestRound();
@@ -128,19 +128,17 @@ export default class PlaceBetButton extends ObserverComponent {
     renderLiveGame(isFlyingTime: boolean) {
         if (isFlyingTime) {
             this.isBetAccepted = false;
-            // this.setBetButtonVisibility(false);
-            this.setBetAcceptedBetStatus(false);
+            this.disablePlaceBetButton(false);
         }
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
     renderPlacingBet(isPlacingBet: boolean) {
         if (isPlacingBet) {
-            // this.setBetButtonVisibility(true);
             if (this.isBetAccepted) {
-                this.setBetAcceptedBetStatus(true);
+                this.disablePlaceBetButton(true);
             } else {
-                this.setBetAcceptedBetStatus(false);
+                this.disablePlaceBetButton(false);
                 this.enableAutoCashOut();
             }
         }
@@ -153,24 +151,17 @@ export default class PlaceBetButton extends ObserverComponent {
         this.showPlaceBetButton(roundState === GameCrash.RoundState.PLACE_BET);
     }
 
-    setBetAcceptedBetStatus(selected: boolean) {
-        // this.bgWaiting.node.active = this.sprBetAccepted.node.active = selected;
-        // this.sprPlaceBet.node.active = this.bgPlaceBet.node.active = !selected;
-        this.disablePlaceBetButton(selected);
+    showPlaceBetButton(status: boolean) {
+        this.bgPlaceBet.node.active = status;
     }
 
-    showPlaceBetButton(selected: boolean) {
-        this.bgPlaceBet.node.active = !selected;
-    }
-
-    showAcceptedBetButton(selected: boolean) {
-        this.bgAcceptedBet.node.active = selected;
+    showAcceptedBetButton(status: boolean) {
+        this.bgAcceptedBet.node.active = status;
     }
 
     @render(Rounds.RoundTimeStore, (store) => ({ isLocking: store.isLocking, roundTime: store.roundTime }))
     renderLockBet({ isLocking, roundTime }) {
         if (isLocking && roundTime >= 0) {
-            // this.setBetButtonVisibility(true);
             this.disablePlaceBetButton(true);
         }
     }
