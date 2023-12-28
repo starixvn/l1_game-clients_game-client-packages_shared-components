@@ -143,7 +143,7 @@ export default class PlaceBetButton extends ObserverComponent {
         const isAcceptedBet = roundState === GameCrash.RoundState.BET_ACCEPTED;
         this.node.active = isPlaceBet || isAcceptedBet;
         this.handlePlaceBetButton(isPlaceBet);
-        this.handlePlaceBetButton(isAcceptedBet);
+        this.handleAcceptedBetButton(isAcceptedBet);
     }
 
     handlePlaceBetButton(isPlaceBet: boolean) {
