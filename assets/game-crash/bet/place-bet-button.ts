@@ -11,19 +11,13 @@ const { GameCrash, Bet, Rounds } = gc;
 @ccclass
 export default class PlaceBetButton extends ObserverComponent {
     @property(Sprite)
-    bgWaiting: Sprite = null;
+    bgAcceptedBet: Sprite = null;
 
     @property(Sprite)
     bgPlaceBet: Sprite = null;
 
     @property(Sprite)
     bgDisable: Sprite = null;
-
-    @property(Sprite)
-    sprPlaceBet: Sprite = null;
-
-    @property(Sprite)
-    sprBetAccepted: Sprite = null;
 
     @property(Node)
     placeBetNotice: Node = null;
@@ -134,7 +128,7 @@ export default class PlaceBetButton extends ObserverComponent {
     renderLiveGame(isFlyingTime: boolean) {
         if (isFlyingTime) {
             this.isBetAccepted = false;
-            this.setBetButtonVisibility(false);
+            // this.setBetButtonVisibility(false);
             this.setBetAcceptedBetStatus(false);
         }
     }
@@ -142,7 +136,7 @@ export default class PlaceBetButton extends ObserverComponent {
     @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
     renderPlacingBet(isPlacingBet: boolean) {
         if (isPlacingBet) {
-            this.setBetButtonVisibility(true);
+            // this.setBetButtonVisibility(true);
             if (this.isBetAccepted) {
                 this.setBetAcceptedBetStatus(true);
             } else {
@@ -152,22 +146,33 @@ export default class PlaceBetButton extends ObserverComponent {
         }
     }
 
-    private setBetButtonVisibility(status: boolean) {
-        this.node.active = status;
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.roundState)
+    private setBetButtonVisibility(roundState: string) {
+        this.node.active = roundState === GameCrash.RoundState.PLACE_BET || roundState === GameCrash.RoundState.BET_ACCEPTED;
+        this.showAcceptedBetButton(roundState === GameCrash.RoundState.BET_ACCEPTED);
+        this.showPlaceBetButton(roundState === GameCrash.RoundState.PLACE_BET);
+    }
+
+    setBetAcceptedBetStatus(selected: boolean) {
+        // this.bgWaiting.node.active = this.sprBetAccepted.node.active = selected;
+        // this.sprPlaceBet.node.active = this.bgPlaceBet.node.active = !selected;
+        this.disablePlaceBetButton(selected);
+    }
+
+    showPlaceBetButton(selected: boolean) {
+        this.bgPlaceBet.node.active = !selected;
+    }
+
+    showAcceptedBetButton(selected: boolean) {
+        this.bgAcceptedBet.node.active = selected;
     }
 
     @render(Rounds.RoundTimeStore, (store) => ({ isLocking: store.isLocking, roundTime: store.roundTime }))
     renderLockBet({ isLocking, roundTime }) {
         if (isLocking && roundTime >= 0) {
-            this.setBetButtonVisibility(true);
-            this.isBetAccepted ? this.setBetAcceptedBetStatus(true) : this.disablePlaceBetButton(true);
+            // this.setBetButtonVisibility(true);
+            this.disablePlaceBetButton(true);
         }
-    }
-
-    setBetAcceptedBetStatus(selected: boolean) {
-        this.bgWaiting.node.active = this.sprBetAccepted.node.active = selected;
-        this.sprPlaceBet.node.active = this.bgPlaceBet.node.active = !selected;
-        this.disablePlaceBetButton(selected);
     }
 
     @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))

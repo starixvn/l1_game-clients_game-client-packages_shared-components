@@ -96,9 +96,10 @@ export default class EarlyBetButton extends ObserverComponent {
         return minBet;
     }
 
-    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.visibleBetNextRound)
-    showPlaceBetNextRound(visibleBetNextRound: boolean) {
-        if (visibleBetNextRound) {
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.roundState)
+    showPlaceBetNextRound(roundState: string) {
+        if (roundState === GameCrash.RoundState.BET_NEXT_ROUND || roundState === GameCrash.RoundState.CANCEL_BET) {
+            this.node.active = true;
             this.handleRocketFly();
         } else {
             this.node.active = false;
@@ -123,7 +124,6 @@ export default class EarlyBetButton extends ObserverComponent {
     }
 
     handleRocketFly() {
-        this.node.active = true;
         this.setStatusButtons(false);
         this.setStatusWaiting(false);
         this.disableEarlyBet();
