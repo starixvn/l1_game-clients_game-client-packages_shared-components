@@ -60,7 +60,6 @@ export default class PlaceBetButton extends ObserverComponent {
         }
 
         this.isBetAccepted = true;
-        this.disablePlaceBetButton(true);
         this.isClickPlaceBet && (this.placeBetNotice.active = true);
         this.disableAutoCashOut(true);
         this.checkStatusLatestRound();
@@ -128,27 +127,33 @@ export default class PlaceBetButton extends ObserverComponent {
     renderLiveGame(isFlyingTime: boolean) {
         if (isFlyingTime) {
             this.isBetAccepted = false;
-            this.disablePlaceBetButton(false);
         }
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
     renderPlacingBet(isPlacingBet: boolean) {
         if (isPlacingBet) {
-            if (this.isBetAccepted) {
-                this.disablePlaceBetButton(true);
-            } else {
-                this.disablePlaceBetButton(false);
-                this.enableAutoCashOut();
-            }
+            !this.isBetAccepted && this.enableAutoCashOut();
         }
     }
 
     @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.roundState)
     private setBetButtonVisibility(roundState: string) {
-        this.node.active = roundState === GameCrash.RoundState.PLACE_BET || roundState === GameCrash.RoundState.BET_ACCEPTED;
-        this.showAcceptedBetButton(roundState === GameCrash.RoundState.BET_ACCEPTED);
-        this.showPlaceBetButton(roundState === GameCrash.RoundState.PLACE_BET);
+        const isPlaceBet = roundState === GameCrash.RoundState.PLACE_BET;
+        const isAcceptedBet = roundState === GameCrash.RoundState.BET_ACCEPTED;
+        this.node.active = isPlaceBet || isAcceptedBet;
+        this.handlePlaceBetButton(isPlaceBet);
+        this.handlePlaceBetButton(isAcceptedBet);
+    }
+
+    handlePlaceBetButton(isPlaceBet: boolean) {
+        this.showPlaceBetButton(isPlaceBet);
+        isPlaceBet && this.showDisabledPlayer(false);
+    }
+
+    handleAcceptedBetButton(isAcceptedBet: boolean) {
+        this.showAcceptedBetButton(isAcceptedBet);
+        isAcceptedBet && this.showDisabledPlayer(true);
     }
 
     showPlaceBetButton(status: boolean) {
@@ -162,14 +167,14 @@ export default class PlaceBetButton extends ObserverComponent {
     @render(Rounds.RoundTimeStore, (store) => ({ isLocking: store.isLocking, roundTime: store.roundTime }))
     renderLockBet({ isLocking, roundTime }) {
         if (isLocking && roundTime >= 0) {
-            this.disablePlaceBetButton(true);
+            this.showDisabledPlayer(true);
         }
     }
 
     @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
     enableAutoCashOut() {}
 
-    disablePlaceBetButton(disable: boolean) {
+    showDisabledPlayer(disable: boolean) {
         this.bgDisable.node.active = disable;
     }
 
