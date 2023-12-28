@@ -26,10 +26,6 @@ export class CashOutButton extends ObserverComponent {
 
     @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isFullCashedOut)
     updateCashOutFullButton(isFullCashedOut: boolean) {
-        isFullCashedOut &&
-            setTimeout(() => {
-                this.handleUICashOutState(GameCrash.CASH_OUT_STATE.FULL);
-            }, 3000);
         CashOutComponent.updateCashOutButtonStatus(isFullCashedOut, this.sprDisabled);
     }
 
