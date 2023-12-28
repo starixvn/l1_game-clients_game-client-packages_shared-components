@@ -45,7 +45,6 @@ export default class EarlyBetButton extends ObserverComponent {
 
     @render(GameCrash.CrashBet.EarlyBetStore, (store) => store.earlyBet)
     updateStatusButton(isEarlyBet: boolean) {
-        this.setStatusButtons(isEarlyBet);
         this.setStatusWaiting(isEarlyBet);
         this.handleEarlyStatusBetUI(isEarlyBet ? GameCrash.EARLY_BET_STATE.BET : GameCrash.EARLY_BET_STATE.NONE);
     }
@@ -97,12 +96,13 @@ export default class EarlyBetButton extends ObserverComponent {
     }
 
     @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.roundState)
-    showPlaceBetNextRound(roundState: string) {
-        if (roundState === GameCrash.RoundState.BET_NEXT_ROUND || roundState === GameCrash.RoundState.CANCEL_BET) {
-            this.node.active = true;
+    renderRoundState(roundState: string) {
+        this.bgWaiting.node.active = roundState === GameCrash.RoundState.CANCEL_BET;
+        this.bgPlaceBet.node.active = roundState === GameCrash.RoundState.BET_NEXT_ROUND;
+        this.node.active = this.bgWaiting.node.active || this.bgPlaceBet.node.active;
+
+        if (this.bgPlaceBet.node.active) {
             this.handleRocketFly();
-        } else {
-            this.node.active = false;
         }
     }
 
@@ -111,20 +111,12 @@ export default class EarlyBetButton extends ObserverComponent {
         this.betAmountGreaterMinBet = betAmountGreaterMinBet;
     }
 
-    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.visibleCashOut)
-    cancelEarlyBet(visibleCashOut: boolean) {
-        if (visibleCashOut) {
-            this.disableEarlyBet();
-        }
-    }
-
     @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
     handleBetUIControl(action: string) {
         return action;
     }
 
     handleRocketFly() {
-        this.setStatusButtons(false);
         this.setStatusWaiting(false);
         this.disableEarlyBet();
         setTimeout(() => {
@@ -138,11 +130,6 @@ export default class EarlyBetButton extends ObserverComponent {
         return { autoCashOut: this.isEnableAutoCashOut ? this.valueAutoCashOut : undefined, amount: this.amount };
     }
 
-    setStatusButtons(selected: boolean) {
-        this.bgWaiting.node.active = selected;
-        this.bgPlaceBet.node.active = !selected;
-    }
-
     setStatusWaiting(status: boolean) {
         this.isWaitingBet = status;
         this.handleWaitingBet(status);
@@ -154,7 +141,6 @@ export default class EarlyBetButton extends ObserverComponent {
     acceptedEarlyBet(data: { isPlacingBet: boolean }) {
         const { isPlacingBet } = data;
         if (isPlacingBet) {
-            this.node.active = false;
             if (this.hasEarlyBetBeforeAutoPlay) {
                 this.handleEarlyBetBeforeAutoPlay(false);
             }
