@@ -76,7 +76,6 @@ export default class Splash extends Component {
 
     @handle(App.AppHandlers.ClearStorage)
     handleClearStorage() {
-        console.log("component clear storage");
         return true;
     }
 
