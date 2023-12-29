@@ -16,157 +16,35 @@ export default class EarlyBetButton extends ObserverComponent {
     @property(Sprite)
     bgPlaceBet: Sprite = null;
 
-    private amount: number;
-    private isWaitingBet = false;
-    private isEnableAutoCashOut = false;
-    private valueAutoCashOut = 1.01;
-    private isAutoPlayMode = false;
-    private hasEarlyBetBeforeAutoPlay = false;
-    private autoPlayWhenRocketFly = false;
     private readonly placeBetSound = "place_bet";
-    private betAmountGreaterMinBet = false;
-    private minBet = 0;
 
-    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.enable)
-    updateStatusAutoCashOut(isEnable: boolean) {
-        this.isEnableAutoCashOut = isEnable;
-    }
-
-    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.multiplier)
-    updateValueAutoCashOut(value: number) {
-        this.valueAutoCashOut = value;
-    }
-
-    @render(GameCrash.CrashBet.EarlyBetStore, (store) => store.earlyBet)
-    updateStatusButton(isEarlyBet: boolean) {
-        this.setStatusWaiting(isEarlyBet);
-        this.handleEarlyStatusBetUI(isEarlyBet ? GameCrash.EARLY_BET_STATE.BET : GameCrash.EARLY_BET_STATE.NONE);
-    }
-
-    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentEarlyBetStateInStore(action))
-    handleEarlyStatusBetUI(action: string) {
-        return action;
-    }
-
-    @render(GameCrash.CrashBet.EarlyBetStore, (store) => store.betAmount)
-    updateAmount(betAmount: number) {
-        this.amount = betAmount;
-    }
-
-    @handle(GameCrash.CrashBet.EarlyBetUIHandlers, (handle, enable: boolean) => handle.handle(enable))
+    @handle(GameCrash.CrashBet.EarlyBetUIHandlers, (handle) => handle.handle())
     onClickEarlyBet() {
-        if (!this.betAmountGreaterMinBet) {
-            this.showMsgMinBet(this.minBet);
-            this.cancelAutoPlay();
-            return false;
-        }
-        this.playSoundPlaceBet();
         this.closeAllPopups();
-        if (this.isWaitingBet) {
-            this.cancelAutoPlay();
-        }
-        return !this.isWaitingBet;
     }
 
     @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeAllPopups())
     closeAllPopups() {}
 
-    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle, enable: boolean) => handle.cancelAutoPlay())
-    cancelAutoPlay() {}
-
-    @handle(GameCrash.CrashBet.EarlyBetUIHandlers, (handle, enable: boolean) => handle.handle(enable))
-    disableEarlyBet() {
-        return false;
-    }
-
-    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, minBet: number) => handle.showMsgMinBet(minBet))
-    showMsgMinBet(minBet: number) {
-        return minBet;
+    @render(GameCrash.CrashBet.EarlyBetStore, (store) => store.earlyBetEnable)
+    renderEarlyBetStore(enable: boolean) {
+        if (enable) {
+            this.playSoundPlaceBet();
+        }
     }
 
     @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.buttonState)
     renderButtonState(buttonState: string) {
         const isBetNextRound = buttonState === GameCrash.ButtonState.BET_NEXT_ROUND;
-        this.bgWaiting.node.active = buttonState === GameCrash.ButtonState.CANCEL_BET;
+        const isWaitingBet = buttonState === GameCrash.ButtonState.CANCEL_BET;
+        this.bgWaiting.node.active = isWaitingBet;
         this.bgPlaceBet.node.active = isBetNextRound;
-        this.node.active = this.bgWaiting.node.active || this.bgPlaceBet.node.active;
-
-        if (isBetNextRound) {
-            this.handleEarlyBet();
-        }
-    }
-
-    @render(GameCrash.BetInput.BetInputStore, (store) => store.betAmountGreaterMinBet)
-    checkBetAmountGreaterMinBet(betAmountGreaterMinBet: boolean) {
-        this.betAmountGreaterMinBet = betAmountGreaterMinBet;
+        this.node.active = isWaitingBet || isBetNextRound;
     }
 
     @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
     handleBetUIControl(action: string) {
         return action;
-    }
-
-    handleEarlyBet() {
-        this.setStatusWaiting(false);
-        // this.disableEarlyBet();
-        setTimeout(() => {
-            this.autoClickEarlyBet();
-        }, 100);
-    }
-
-    @handle(GameCrash.CrashBet.CrashBetHandler, (handle, payload: { autoCashOut: number; amount: number }) => handle.handle(payload))
-    autoPlaceBet() {
-        this.setStatusWaiting(false);
-        return { autoCashOut: this.isEnableAutoCashOut ? this.valueAutoCashOut : undefined, amount: this.amount };
-    }
-
-    setStatusWaiting(status: boolean) {
-        this.isWaitingBet = status;
-    }
-
-    @render(Rounds.RoundTimeStore, (store) => ({
-        isPlacingBet: store.isPlacingBet,
-    }))
-    acceptedEarlyBet(data: { isPlacingBet: boolean }) {
-        const { isPlacingBet } = data;
-        if (isPlacingBet) {
-            if (this.hasEarlyBetBeforeAutoPlay) {
-                this.handleEarlyBetBeforeAutoPlay(false);
-            }
-            if (this.isWaitingBet) {
-                this.autoPlaceBet();
-            }
-            if (this.autoPlayWhenRocketFly) {
-                this.disableAutoPlayWhenRocketFly();
-            }
-        }
-    }
-
-    @render(GameCrash.AutoPlay.AutoPlayStore, (store) => store.autoPlayWhenRocketFly)
-    updateAutoPlayWhenRocketFly(value: boolean) {
-        this.autoPlayWhenRocketFly = value;
-    }
-
-    autoClickEarlyBet() {
-        if (this.isAutoPlayMode) {
-            this.onClickEarlyBet();
-            this.decreaseAutoPlayRounds();
-            this.handleAutoPlayStatus();
-            this.handleEarlyBetBeforeAutoPlay(true);
-        }
-    }
-
-    @render(GameCrash.AutoPlay.AutoPlayStore, (store) => store.autoPlayWhenRocketFly)
-    checkAutoPlayWhenPlacingBet(autoPlayWhenRocketFly: boolean) {
-        if (autoPlayWhenRocketFly) {
-            this.onClickEarlyBet();
-            this.handleEarlyBetBeforeAutoPlay(true);
-        }
-    }
-
-    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.autoEarlyBet)
-    updateAutoPlayMode(autoEarlyBet: boolean) {
-        this.isAutoPlayMode = autoEarlyBet;
     }
 
     @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(true))
@@ -183,18 +61,8 @@ export default class EarlyBetButton extends ObserverComponent {
         return flag;
     }
 
-    @render(GameCrash.AutoPlay.AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
-    updateHasEarlyBetBeforeAutoPlay(value: boolean) {
-        this.hasEarlyBetBeforeAutoPlay = value;
-    }
-
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundPlaceBet() {
         return this.placeBetSound;
-    }
-
-    @render(GameCrash.BetInput.BetInputStore, (store) => store.minBet)
-    setMinBet(minBet: number) {
-        this.minBet = minBet;
     }
 }
