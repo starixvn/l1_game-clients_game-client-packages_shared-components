@@ -139,8 +139,8 @@ export default class PlaceBetButton extends ObserverComponent {
 
     @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.roundState)
     private setBetButtonVisibility(roundState: string) {
-        const isPlaceBet = roundState === GameCrash.RoundState.PLACE_BET;
-        const isAcceptedBet = roundState === GameCrash.RoundState.BET_ACCEPTED;
+        const isPlaceBet = roundState === GameCrash.ButtonState.PLACE_BET;
+        const isAcceptedBet = roundState === GameCrash.ButtonState.BET_ACCEPTED;
         this.node.active = isPlaceBet || isAcceptedBet;
         this.handlePlaceBetButton(isPlaceBet);
         this.handleAcceptedBetButton(isAcceptedBet);

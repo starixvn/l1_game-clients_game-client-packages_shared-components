@@ -97,8 +97,8 @@ export default class EarlyBetButton extends ObserverComponent {
 
     @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.roundState)
     renderRoundState(roundState: string) {
-        this.bgWaiting.node.active = roundState === GameCrash.RoundState.CANCEL_BET;
-        this.bgPlaceBet.node.active = roundState === GameCrash.RoundState.BET_NEXT_ROUND;
+        this.bgWaiting.node.active = roundState === GameCrash.ButtonState.CANCEL_BET;
+        this.bgPlaceBet.node.active = roundState === GameCrash.ButtonState.BET_NEXT_ROUND;
         this.node.active = this.bgWaiting.node.active || this.bgPlaceBet.node.active;
 
         if (this.bgPlaceBet.node.active) {
@@ -118,7 +118,7 @@ export default class EarlyBetButton extends ObserverComponent {
 
     handleRocketFly() {
         this.setStatusWaiting(false);
-        this.disableEarlyBet();
+        // this.disableEarlyBet();
         setTimeout(() => {
             this.autoClickEarlyBet();
         }, 100);
