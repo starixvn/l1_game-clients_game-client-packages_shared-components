@@ -17,17 +17,11 @@ export default class EarlyBetButton extends ObserverComponent {
     bgPlaceBet: Sprite = null;
 
     private amount: number;
-
     private isWaitingBet = false;
-
     private isEnableAutoCashOut = false;
-
     private valueAutoCashOut = 1.01;
-
     private isAutoPlayMode = false;
-
     private hasEarlyBetBeforeAutoPlay = false;
-
     private autoPlayWhenRocketFly = false;
     private readonly placeBetSound = "place_bet";
     private betAmountGreaterMinBet = false;
@@ -85,24 +79,20 @@ export default class EarlyBetButton extends ObserverComponent {
         return false;
     }
 
-    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, flag: boolean) => handle.handleWaitingBet(flag))
-    handleWaitingBet(flag: boolean) {
-        return flag;
-    }
-
     @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, minBet: number) => handle.showMsgMinBet(minBet))
     showMsgMinBet(minBet: number) {
         return minBet;
     }
 
-    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.roundState)
-    renderRoundState(roundState: string) {
-        this.bgWaiting.node.active = roundState === GameCrash.ButtonState.CANCEL_BET;
-        this.bgPlaceBet.node.active = roundState === GameCrash.ButtonState.BET_NEXT_ROUND;
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.buttonState)
+    renderButtonState(buttonState: string) {
+        const isBetNextRound = buttonState === GameCrash.ButtonState.BET_NEXT_ROUND;
+        this.bgWaiting.node.active = buttonState === GameCrash.ButtonState.CANCEL_BET;
+        this.bgPlaceBet.node.active = isBetNextRound;
         this.node.active = this.bgWaiting.node.active || this.bgPlaceBet.node.active;
 
-        if (this.bgPlaceBet.node.active) {
-            this.handleRocketFly();
+        if (isBetNextRound) {
+            this.handleEarlyBet();
         }
     }
 
@@ -116,7 +106,7 @@ export default class EarlyBetButton extends ObserverComponent {
         return action;
     }
 
-    handleRocketFly() {
+    handleEarlyBet() {
         this.setStatusWaiting(false);
         // this.disableEarlyBet();
         setTimeout(() => {
@@ -132,7 +122,6 @@ export default class EarlyBetButton extends ObserverComponent {
 
     setStatusWaiting(status: boolean) {
         this.isWaitingBet = status;
-        this.handleWaitingBet(status);
     }
 
     @render(Rounds.RoundTimeStore, (store) => ({

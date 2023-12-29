@@ -123,13 +123,6 @@ export default class PlaceBetButton extends ObserverComponent {
         return { autoCashOut: this.isEnableAutoCashOut ? this.valueAutoCashOut : undefined, amount: this.amount };
     }
 
-    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.isFlyingTime)
-    renderLiveGame(isFlyingTime: boolean) {
-        if (isFlyingTime) {
-            this.isBetAccepted = false;
-        }
-    }
-
     @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
     renderPlacingBet(isPlacingBet: boolean) {
         if (isPlacingBet) {
@@ -137,10 +130,10 @@ export default class PlaceBetButton extends ObserverComponent {
         }
     }
 
-    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.roundState)
-    private setBetButtonVisibility(roundState: string) {
-        const isPlaceBet = roundState === GameCrash.ButtonState.PLACE_BET;
-        const isAcceptedBet = roundState === GameCrash.ButtonState.BET_ACCEPTED;
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.buttonState)
+    private setBetButtonVisibility(buttonState: string) {
+        const isPlaceBet = buttonState === GameCrash.ButtonState.PLACE_BET;
+        const isAcceptedBet = buttonState === GameCrash.ButtonState.BET_ACCEPTED;
         this.node.active = isPlaceBet || isAcceptedBet;
         this.handlePlaceBetButton(isPlaceBet);
         this.handleAcceptedBetButton(isAcceptedBet);
