@@ -30,27 +30,15 @@ export class RoundHistoryItem extends ObserverComponent {
 
     public roundInfo: gc.RoundHistories.RoundHistory = null;
 
-    showHideNode(isShowMultiplier: boolean, isShowCountDown: boolean, isShowSprInPlay: boolean) {
+    private setDisplay(isShowMultiplier: boolean, isShowCountDown: boolean, isShowSprInPlay: boolean) {
         this.nodeMultiplier.node.active = isShowMultiplier;
         this.nodeCountdown.active = isShowCountDown;
         this.nodeInPlay.active = isShowSprInPlay;
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => ({
-        countdownTimer: store.countdownTimer,
-        isPlacingBet: store.isPlacingBet,
-        isLockingBet: store.isLocking,
-    }))
-    updateLabelText({
-        countdownTimer,
-        isPlacingBet,
-        isLockingBet,
-    }: {
-        countdownTimer: number;
-        isPlacingBet: boolean;
-        isLockingBet: boolean;
-    }) {
-        if (countdownTimer < 11 && countdownTimer > 0 && (isPlacingBet || isLockingBet)) {
+    @render(gc.Rounds.RoundTimeStore, (store) => store.countdownTimer)
+    updateLabelText(countdownTimer: number) {
+        if (countdownTimer < 11 && countdownTimer > 0) {
             if (!this.checkCrashedGame()) {
                 this.updateCountDownValue(countdownTimer);
             }
@@ -58,18 +46,18 @@ export class RoundHistoryItem extends ObserverComponent {
     }
     updateCountDownValue(value: number) {
         this.nodeCountdown.getChildByName("value").getComponent(Label).string = value.toString();
-        this.showHideNode(false, true, false);
+        this.setDisplay(false, true, false);
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.remaining)
     showInPlayStatus(remaining: number) {
         if (remaining === 0 && !this.checkCrashedGame()) {
-            this.showHideNode(false, false, true);
+            this.setDisplay(false, false, true);
         }
     }
 
     updateMultiplierValue(value: number, name: string) {
-        this.showHideNode(true, false, false);
+        this.setDisplay(true, false, false);
         this.lblMultiplier.string = `${FormatUtils.numberWithCommas(value, 2, false)}x`;
         CrashUtils.setSpriteFrameBg(value, this.nodeMultiplier, this.mainAtlas, name);
     }
