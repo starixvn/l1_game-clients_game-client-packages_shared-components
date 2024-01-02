@@ -30,8 +30,6 @@ export default class PlaceBetButton extends ObserverComponent {
 
     private valueAutoCashOut = 1.01;
 
-    private hasEarlyBetBeforeAutoPlay = false;
-
     private isClickPlaceBet = false;
 
     private readonly placeBetSound = "place_bet";
@@ -171,32 +169,23 @@ export default class PlaceBetButton extends ObserverComponent {
         this.bgDisable.node.active = disable;
     }
 
-    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.activeAutoPlayCurrentRound)
-    effectAutoPlayInCurrentRound(activeAutoPlayCurrentRound: boolean) {
-        if (activeAutoPlayCurrentRound && !this.hasEarlyBetBeforeAutoPlay && !this.isBetAccepted) {
-            this.disabledAutoPlayWhenPlacingBet();
-            this.onClickPlaceBet();
-            this.decreaseAutoPlayRounds();
-        }
-    }
+    // @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.activeAutoPlayCurrentRound)
+    // effectAutoPlayInCurrentRound(activeAutoPlayCurrentRound: boolean) {
+    //     if (activeAutoPlayCurrentRound && !this.isBetAccepted) {
+    //         this.disabledAutoPlayWhenPlacingBet();
+    //         this.onClickPlaceBet();
+    //     }
+    // }
 
-    @render(GameCrash.AutoPlay.AutoPlayStore, (store) => store.hasEarlyBetBeforeAutoPlay)
-    updateHasEarlyBetBeforeAutoPlay(value: boolean) {
-        this.hasEarlyBetBeforeAutoPlay = value;
-    }
+    // @render(Rounds.RoundTimeStore, (store) => store.isLocking)
+    // disableAutoPlay(isLocking: boolean) {
+    //     if (isLocking) {
+    //         this.handleAutoPlayStatus();
+    //     }
+    // }
 
-    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.decreaseAutoPlayRounds())
-    decreaseAutoPlayRounds() {}
-
-    @render(Rounds.RoundTimeStore, (store) => store.isLocking)
-    disableAutoPlay(isLocking: boolean) {
-        if (isLocking) {
-            this.handleAutoPlayStatus();
-        }
-    }
-
-    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(false))
-    handleAutoPlayStatus() {}
+    // @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(false))
+    // handleAutoPlayStatus() {}
 
     @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle, value: boolean) => handle.updatedAutoPlayWhenPlacingBet(value))
     disabledAutoPlayWhenPlacingBet() {
