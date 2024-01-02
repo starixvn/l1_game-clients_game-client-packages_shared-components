@@ -14,6 +14,9 @@ export class RoundHistoryItem extends ObserverComponent {
     @property(Node)
     nodeCountdown: Node = null;
 
+    @property(Label)
+    lblCountdown: Label = null;
+
     @property(Sprite)
     nodeMultiplier: Sprite = null;
 
@@ -29,29 +32,28 @@ export class RoundHistoryItem extends ObserverComponent {
     public isLastRound = false;
 
     public roundInfo: gc.RoundHistories.RoundHistory = null;
+    readonly START_BET_TIMER = 10;
+    readonly END_BET_TIMER = 0;
 
-    private setDisplay(isShowMultiplier: boolean, isShowCountDown: boolean, isShowSprInPlay: boolean) {
+    setDisplay(isShowMultiplier: boolean, isShowCountDown: boolean, isShowSprInPlay: boolean) {
         this.nodeMultiplier.node.active = isShowMultiplier;
         this.nodeCountdown.active = isShowCountDown;
         this.nodeInPlay.active = isShowSprInPlay;
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.countdownTimer)
-    updateLabelText(countdownTimer: number) {
-        if (countdownTimer < 11 && countdownTimer > 0) {
+    updateCountDownValue(countdownTimer: number) {
+        if (countdownTimer <= this.START_BET_TIMER && countdownTimer > this.END_BET_TIMER) {
             if (!this.checkCrashedGame()) {
-                this.updateCountDownValue(countdownTimer);
+                this.lblCountdown.string = countdownTimer.toString();
+                this.setDisplay(false, true, false);
             }
         }
     }
-    updateCountDownValue(value: number) {
-        this.nodeCountdown.getChildByName("value").getComponent(Label).string = value.toString();
-        this.setDisplay(false, true, false);
-    }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.remaining)
-    showInPlayStatus(remaining: number) {
-        if (remaining === 0 && !this.checkCrashedGame()) {
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundTime)
+    showInPlayStatus(roundTime: number) {
+        if (roundTime === 0 && !this.checkCrashedGame()) {
             this.setDisplay(false, false, true);
         }
     }

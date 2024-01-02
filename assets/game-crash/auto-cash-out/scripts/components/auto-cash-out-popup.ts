@@ -101,7 +101,7 @@ export class AutoCashOutPopup extends ObserverComponent {
     }
 
     @render(GameCrash.AutoCashOut.AutoCashOutPopupStore, (store) => store.enable)
-    showHideAutoCashoutPopup(enable: boolean) {
+    setDisplayAutoCashoutPopup(enable: boolean) {
         this.node.active = enable;
         enable && this.closeOtherPopups();
     }
