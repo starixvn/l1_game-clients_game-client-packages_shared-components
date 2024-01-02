@@ -31,11 +31,11 @@ export class AutoPlayButton extends ObserverComponent {
         this.lblNoOfRound.string = roundsAutoPlay.toString();
     }
 
-    @render(gc.GameCrash.AutoPlay.AutoPlayStore, (store) => store.showHideArrowIcon)
-    updateAutoPlayButton(showHideArrowIcon: boolean) {
-        this.lblNoOfRound.node.active = this.nodeTextStopAutoPlay.active = showHideArrowIcon;
-        this.sprIconAutoPlay.node.active = this.nodeTextAutoPlay.active = !showHideArrowIcon;
-        this.enableAutoPlay(showHideArrowIcon);
+    @render(gc.GameCrash.AutoPlay.AutoPlayStore, (store) => store.hideArrowIcon)
+    updateAutoPlayButton(hideArrowIcon: boolean) {
+        this.lblNoOfRound.node.active = this.nodeTextStopAutoPlay.active = hideArrowIcon;
+        this.sprIconAutoPlay.node.active = this.nodeTextAutoPlay.active = !hideArrowIcon;
+        this.enableAutoPlay(hideArrowIcon);
     }
 
     @handle(gc.GameCrash.PlayerActions.PlayerActionHandlers, (handle, flag: boolean) => handle.handleEnableAutoPlayInStore(flag))
