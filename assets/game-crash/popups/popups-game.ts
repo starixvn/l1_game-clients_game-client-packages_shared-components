@@ -10,7 +10,7 @@ const { render, handle } = Observer;
 @ccclass
 export class PopupsGame extends ObserverComponent {
     @render(gc.GameCrash.Popups.PopupsGameStore, (store) => store.enabledOverlay)
-    showHideOverlayBg(enabledOverlay: boolean) {
+    setDisplayOverlayBg(enabledOverlay: boolean) {
         this.node.active = enabledOverlay;
     }
 }

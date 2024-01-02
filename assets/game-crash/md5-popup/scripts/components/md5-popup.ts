@@ -85,7 +85,7 @@ export class Md5Popup extends ObserverComponent {
     }
 
     @render(GameCrash.Md5Popup.Md5PopupStore, (store) => store.isOpenPopupMd5)
-    showHidePopupMd5(isOpenPopupMd5: boolean) {
+    setDisplayPopupMd5(isOpenPopupMd5: boolean) {
         if (isOpenPopupMd5) {
             this.node.active = true;
             this.closeOtherPopups();
@@ -127,7 +127,7 @@ export class Md5Popup extends ObserverComponent {
         }
     }
 
-    @handle(GameCrash.Md5Popup.Md5PopupHandler, (handle, value: boolean) => handle.updateShowHidePopupMd5(value))
+    @handle(GameCrash.Md5Popup.Md5PopupHandler, (handle, value: boolean) => handle.setDisplayPopupMd5(value))
     onClickCloseButton() {
         this.playSoundClick();
         return false;

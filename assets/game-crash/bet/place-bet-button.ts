@@ -75,7 +75,7 @@ export default class PlaceBetButton extends ObserverComponent {
     @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.closeAutoPlayPopup())
     hideAutoPlayPopup() {}
 
-    @handle(GameCrash.Md5Popup.Md5PopupHandler, (handle, value: boolean) => handle.updateShowHidePopupMd5(value))
+    @handle(GameCrash.Md5Popup.Md5PopupHandler, (handle, value: boolean) => handle.setDisplayPopupMd5(value))
     hideMD5Popup() {
         return false;
     }

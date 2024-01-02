@@ -40,7 +40,7 @@ export class CashOutNotice extends ObserverComponent {
             ComponentUtils.hideOtherNotices(this.othersNoticeNode);
             ComponentUtils.autoDisappear(this.node, false);
             setTimeout(() => {
-                this.showHideNotice(true);
+                this.setDisplayNotice(true);
             }, 3000);
         } else {
             this.node.active = false;
@@ -53,14 +53,14 @@ export class CashOutNotice extends ObserverComponent {
     }
 
     @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, flag: boolean) => handle.handleEndShowCashOutNotice(flag))
-    showHideNotice(flag: boolean) {
+    setDisplayNotice(flag: boolean) {
         return flag;
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
     hideNotice(isPlacingBet: boolean) {
         if (isPlacingBet) {
-            this.showHideNotice(false);
+            this.setDisplayNotice(false);
         }
     }
 }

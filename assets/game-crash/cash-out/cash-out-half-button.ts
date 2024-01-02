@@ -49,7 +49,7 @@ export class CashOutHalfButton extends ObserverComponent {
 
     @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.visibleCashOut)
     updateCashOutButtonStatus(visibleCashOut: boolean) {
-        CashOutComponent.showHideNode(this.node, visibleCashOut);
+        CashOutComponent.setDisplayNode(this.node, visibleCashOut);
     }
 
     @handle(GameCrash.CrashCashOut.CrashCashOutUIHandlers, (cashOutHandler, cashOutValue: number) =>

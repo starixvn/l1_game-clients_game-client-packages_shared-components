@@ -38,7 +38,7 @@ export class CurrentMultiplier extends ObserverComponent {
         if (isCrashed) {
             this.stopSoundRocketFly();
         }
-        this.showHideBottomText(isCrashed);
+        this.setDisplayBottomText(isCrashed);
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.isPlacingBet)
@@ -62,7 +62,7 @@ export class CurrentMultiplier extends ObserverComponent {
         this.lblCurrentMultiplier.string = `${FormatUtils.numberWithCommas(multiplier, 2, false)}x`;
     }
 
-    showHideBottomText(isCrashed: boolean) {
+    setDisplayBottomText(isCrashed: boolean) {
         this.nodeCrashText.active = isCrashed;
         this.nodeMultiplierText.active = !isCrashed;
     }
