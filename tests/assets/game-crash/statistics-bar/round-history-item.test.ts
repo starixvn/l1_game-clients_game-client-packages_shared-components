@@ -69,4 +69,58 @@ describe("RoundHistoryItem", () => {
             expect(comp.nodeCountdown.active).toEqual(true);
         });
     });
+
+    describe("checkCrashedGame", () => {
+        it("should return true", () => {
+            //Arrange
+            comp.roundInfo = {
+                md5Result: {
+                    hashValue: "abc",
+                    rawValue: "xyz",
+                },
+                roundId: 123,
+                result: [1.23],
+                settlementResult: null,
+            };
+
+            //Act
+            let isCrashed = comp.checkCrashedGame();
+
+            //Assert
+            expect(isCrashed).toEqual(true);
+        });
+
+        it("should return false", () => {
+            //Arrange
+            comp.roundInfo = {
+                md5Result: {
+                    hashValue: "abc",
+                },
+                roundId: 123,
+                result: [1.23],
+                settlementResult: null,
+            };
+
+            //Act
+            let isCrashed = comp.checkCrashedGame();
+
+            //Assert
+            expect(isCrashed).toEqual(false);
+        });
+    });
+
+    describe("onClickRoundItem", () => {
+        it("should open popup md5", () => {
+            //Arrange
+            comp.playSoundClick = jest.fn();
+            comp.roundInfo = { roundId: 123, result: [1.23], settlementResult: null };
+
+            //Act
+            const roundData = comp.onClickRoundItem();
+
+            //Assert
+            expect(roundData.isOpenPopupMd5).toEqual(true);
+            expect(roundData.roundId).toEqual(123);
+        });
+    });
 });
