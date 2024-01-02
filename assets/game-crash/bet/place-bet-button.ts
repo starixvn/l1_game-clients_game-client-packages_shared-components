@@ -28,7 +28,7 @@ export default class PlaceBetButton extends ObserverComponent {
 
     private isEnableAutoCashOut = false;
 
-    private valueAutoCashOut = 1.01;
+    private valueAutoCashOut = 0;
 
     private isClickPlaceBet = false;
 
@@ -99,7 +99,7 @@ export default class PlaceBetButton extends ObserverComponent {
         this.isEnableAutoCashOut = isEnable;
     }
 
-    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.multiplier)
+    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.multiplier, { fireImmediately: false })
     updateValueAutoCashOut(value: number) {
         this.valueAutoCashOut = value;
     }

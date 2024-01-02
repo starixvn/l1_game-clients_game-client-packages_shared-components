@@ -71,9 +71,16 @@ export class AutoCashOutPopup extends ObserverComponent {
         this.multiplierLabel.string = `${FormatUtils.numberWithCommas(+multiplier, 2)}${slitStr}`;
     }
 
-    @render(GameCrash.CrashGameConfigs.CrashGameConfigStore, (store) => store.maxMultiplier)
-    updateMultiplierRangeLabel(maxMultiplier: number) {
-        this.multiplierRangeLabel.string = `1.01x - ${FormatUtils.numberWithCommas(maxMultiplier, 2, false)}x`;
+    @render(GameCrash.CrashGameConfigs.CrashGameConfigStore, (store) => ({
+        minMultiplier: store.minMultiplier,
+        maxMultiplier: store.maxMultiplier,
+    }))
+    updateMultiplierRangeLabel({ minMultiplier, maxMultiplier }) {
+        this.multiplierRangeLabel.string = `${FormatUtils.numberWithCommas(minMultiplier, 2, false)}x - ${FormatUtils.numberWithCommas(
+            maxMultiplier,
+            2,
+            false
+        )}x`;
     }
 
     @render(GameCrash.AutoCashOut.AutoCashOutPopupStore, (store) => store.isValid)
