@@ -150,10 +150,10 @@ export class Md5Popup extends ObserverComponent {
         this.handleRoundStatusQuickChange(this.btnIncrease, increaseStatus);
     }
 
-    @render(GameCrash.RoundHistory.CrashRoundHistoryStore, (store) => store.descreaseStatus)
-    private setDecreaseButtonStatus(descreaseStatus: boolean) {
+    @render(GameCrash.RoundHistory.CrashRoundHistoryStore, (store) => store.decreaseStatus)
+    private setDecreaseButtonStatus(decreaseStatus: boolean) {
         this.playSoundClick();
-        this.handleRoundStatusQuickChange(this.btnDecrease, descreaseStatus);
+        this.handleRoundStatusQuickChange(this.btnDecrease, decreaseStatus);
     }
 
     onClickCopyButtonResult() {
