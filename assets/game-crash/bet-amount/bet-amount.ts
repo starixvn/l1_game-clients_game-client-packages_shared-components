@@ -12,12 +12,12 @@ export class BetAmount extends ObserverComponent {
     @property(Node)
     nodeDisabledBetAmount: Node = null;
 
-    showHideDisabledNode(isShow: boolean) {
+    setDisplayOverlayNode(isShow: boolean) {
         this.nodeDisabledBetAmount.active = isShow;
     }
 
     @render(gc.GameCrash.PlayerActions.PlayerActionStore, (store) => store.disableBetAmount)
     adjustBetAmount(visibleBetAmount: boolean) {
-        this.showHideDisabledNode(visibleBetAmount);
+        this.setDisplayOverlayNode(visibleBetAmount);
     }
 }
