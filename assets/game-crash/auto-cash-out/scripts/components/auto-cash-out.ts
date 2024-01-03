@@ -100,4 +100,9 @@ export class AutoCashout extends ObserverComponent {
     playSoundClick() {
         return gc.Audios.AudioIds.CLICK;
     }
+
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.disabledWaitingBet)
+    setDisabledWaitingBet(disabledWaitingBet: boolean) {
+        this.disableNode.node.active = disabledWaitingBet;
+    }
 }

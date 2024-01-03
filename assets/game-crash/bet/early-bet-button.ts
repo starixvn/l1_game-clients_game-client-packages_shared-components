@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Sprite } from "cc";
+import { Node, Sprite, _decorator } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
@@ -15,6 +15,9 @@ export default class EarlyBetButton extends ObserverComponent {
 
     @property(Sprite)
     bgPlaceBet: Sprite = null;
+
+    @property(Node)
+    bgWaitingDisabled: Node = null;
 
     private readonly placeBetSound = "place_bet";
 
@@ -53,5 +56,10 @@ export default class EarlyBetButton extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundPlaceBet() {
         return this.placeBetSound;
+    }
+
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.disabledWaitingBet)
+    setDisabledWaitingBet(disabledWaitingBet: boolean) {
+        this.bgWaitingDisabled.active = disabledWaitingBet;
     }
 }
