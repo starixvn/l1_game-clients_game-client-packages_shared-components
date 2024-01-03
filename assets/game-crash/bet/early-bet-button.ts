@@ -50,17 +50,6 @@ export default class EarlyBetButton extends ObserverComponent {
     @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(true))
     handleAutoPlayStatus() {}
 
-    // @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.decreaseAutoPlayRounds())
-    // decreaseAutoPlayRounds() {}
-
-    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.updatedAutoPlayWhenRocketFly(false))
-    disableAutoPlayWhenRocketFly() {}
-
-    // @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle, flag: boolean) => handle.checkEarlyBetBeforeAutoPlay(flag))
-    // handleEarlyBetBeforeAutoPlay(flag: boolean) {
-    //     return flag;
-    // }
-
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundPlaceBet() {
         return this.placeBetSound;

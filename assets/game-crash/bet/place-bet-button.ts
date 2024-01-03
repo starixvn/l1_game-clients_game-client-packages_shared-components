@@ -169,29 +169,6 @@ export default class PlaceBetButton extends ObserverComponent {
         this.bgDisable.node.active = disable;
     }
 
-    // @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.activeAutoPlayCurrentRound)
-    // effectAutoPlayInCurrentRound(activeAutoPlayCurrentRound: boolean) {
-    //     if (activeAutoPlayCurrentRound && !this.isBetAccepted) {
-    //         this.disabledAutoPlayWhenPlacingBet();
-    //         this.onClickPlaceBet();
-    //     }
-    // }
-
-    // @render(Rounds.RoundTimeStore, (store) => store.isLocking)
-    // disableAutoPlay(isLocking: boolean) {
-    //     if (isLocking) {
-    //         this.handleAutoPlayStatus();
-    //     }
-    // }
-
-    // @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(false))
-    // handleAutoPlayStatus() {}
-
-    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle, value: boolean) => handle.updatedAutoPlayWhenPlacingBet(value))
-    disabledAutoPlayWhenPlacingBet() {
-        return false;
-    }
-
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundPlaceBet() {
         return this.placeBetSound;
