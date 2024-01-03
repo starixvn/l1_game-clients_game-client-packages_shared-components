@@ -57,18 +57,6 @@ export class AutoPlayPopup extends ObserverComponent {
         this.playSoundClick();
     }
 
-    @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
-    checkFinishedAutoPlay(isCrashed: boolean) {
-        if (isCrashed) {
-            setTimeout(() => {
-                this.updateAutoPlayMode();
-            }, 4000);
-        }
-    }
-
-    @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.checkFinishedPlayMode())
-    updateAutoPlayMode() {}
-
     @render(Notices.NoticeStore, (store) => store.notice)
     withNoticesGameInfo(notice: any) {
         const isExcludedGameOrApiError =
