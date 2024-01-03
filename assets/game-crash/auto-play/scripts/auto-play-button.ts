@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label, Node, Sprite } from "cc";
+import { _decorator, Label, Node, Sprite, tween, Vec3 } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
@@ -21,6 +21,9 @@ export class AutoPlayButton extends ObserverComponent {
     @property(Node)
     nodeTextStopAutoPlay: Node = null;
 
+    @property(Node)
+    nodeBg: Node = null;
+
     @handle(gc.GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.checkAutoPlayClick())
     onClickAutoPlay() {
         this.playSoundClick();
@@ -36,6 +39,18 @@ export class AutoPlayButton extends ObserverComponent {
         this.lblNoOfRound.node.active = this.nodeTextStopAutoPlay.active = hideArrowIcon;
         this.sprIconAutoPlay.node.active = this.nodeTextAutoPlay.active = !hideArrowIcon;
         this.enableAutoPlay(hideArrowIcon);
+    }
+
+    @render(gc.GameCrash.AutoPlay.AutoPlayStore, (store) => store.hideArrowIcon, { fireImmediately: false })
+    showAnimZoomInOut(hideArrowIcon: boolean) {
+        if (!hideArrowIcon) {
+            tween(this.nodeBg)
+                .to(0.35, { scale: new Vec3(1.2, 1.2, 1.2) }, { easing: "sineOut" })
+                .to(0.35, { scale: new Vec3(1, 1, 1) }, { easing: "sineOut" })
+                .union()
+                .repeat(2)
+                .start();
+        }
     }
 
     @handle(gc.GameCrash.PlayerActions.PlayerActionHandlers, (handle, flag: boolean) => handle.handleEnableAutoPlayInStore(flag))
