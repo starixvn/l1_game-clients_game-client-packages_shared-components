@@ -56,21 +56,16 @@ export class CashOutHalfButton extends ObserverComponent {
         return CashOutComponent.getCashOutValue(this.lblCashOut);
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isHalfCashedOut)
-    updateCashOutHalfButton(isHalfCashedOut: boolean) {
-        CashOutComponent.updateCashOutButtonStatus(isHalfCashedOut, this.sprDisabled);
-    }
-
     @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeAllPopups())
     closeAllPopups() {}
-
-    @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
-    updateStatusCashOutHalfButton(isCrashed: boolean) {
-        CashOutComponent.updateCashOutButtonStatus(isCrashed, this.sprDisabled);
-    }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundCashOut() {
         return this.cashOutSound;
+    }
+
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.disabledHalfCashOut)
+    disabledFullCashOut(disabledHalfCashOut: boolean) {
+        this.sprDisabled.node.active = disabledHalfCashOut;
     }
 }

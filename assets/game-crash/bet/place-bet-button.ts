@@ -58,7 +58,6 @@ export default class PlaceBetButton extends ObserverComponent {
 
         this.isBetAccepted = true;
         this.isClickPlaceBet && (this.placeBetNotice.active = true);
-        this.disableAutoCashOut(true);
         this.checkStatusLatestRound();
         this.hideAutoPlayPopup();
         this.hideMD5Popup();
@@ -83,9 +82,9 @@ export default class PlaceBetButton extends ObserverComponent {
     @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.updateStatusLatestRoundAccepted())
     checkStatusLatestRound() {}
 
-    @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle, disable: boolean) => handle.handleDisableAuto(disable))
-    disableAutoCashOut(disable: boolean) {
-        return disable;
+    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
+    handleBetUIControl(action: string) {
+        return action;
     }
 
     @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.enable)
@@ -113,13 +112,6 @@ export default class PlaceBetButton extends ObserverComponent {
     @handle(GameCrash.CrashBet.CrashBetHandler, (handle, payload: { autoCashOut: number; amount: number }) => handle.handle(payload))
     sendBetRequest() {
         return { autoCashOut: this.isEnableAutoCashOut ? this.valueAutoCashOut : undefined, amount: this.amount };
-    }
-
-    @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
-    renderPlacingBet(isPlacingBet: boolean) {
-        if (isPlacingBet) {
-            !this.isBetAccepted && this.enableAutoCashOut();
-        }
     }
 
     @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.buttonState)
@@ -155,9 +147,6 @@ export default class PlaceBetButton extends ObserverComponent {
             this.showDisabledPlayer(true);
         }
     }
-
-    @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
-    enableAutoCashOut() {}
 
     showDisabledPlayer(disable: boolean) {
         this.bgDisable.node.active = disable;

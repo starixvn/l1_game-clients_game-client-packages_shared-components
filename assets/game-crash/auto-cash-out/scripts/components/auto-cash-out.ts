@@ -65,11 +65,6 @@ export class AutoCashout extends ObserverComponent {
         this.toggle.isChecked = enable;
     }
 
-    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.disable)
-    isVisibleNode(disable: boolean) {
-        this.disableNode.node.active = disable;
-    }
-
     updateButtonStatus(button: Button, status: boolean) {
         button.interactable = status;
         button.node.getComponent(UIOpacity).opacity = status ? 255 : 100;
@@ -83,26 +78,13 @@ export class AutoCashout extends ObserverComponent {
         this.quickChangeMultiplier(-0.01);
     }
 
-    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => ({
-        visibleAdjustSetting: store.visibleAutoCashOut,
-    }))
-    showAutoCashOutButton(data: { visibleAdjustSetting: boolean }) {
-        const { visibleAdjustSetting } = data;
-        if (visibleAdjustSetting) {
-            this.enableAutoCashOut();
-        }
-    }
-
-    @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle) => handle.handleDisableAuto(false))
-    enableAutoCashOut() {}
-
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundClick() {
         return gc.Audios.AudioIds.CLICK;
     }
 
-    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.disabledWaitingBet)
-    setDisabledWaitingBet(disabledWaitingBet: boolean) {
-        this.disableNode.node.active = disabledWaitingBet;
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.disabledAutoCashout)
+    setDisabledAutoCashout(disabledAutoCashout: boolean) {
+        this.disableNode.node.active = disabledAutoCashout;
     }
 }

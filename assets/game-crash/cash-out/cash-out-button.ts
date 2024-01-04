@@ -24,10 +24,10 @@ export class CashOutButton extends ObserverComponent {
         this.lblCashOut.string = "";
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isFullCashedOut)
-    updateCashOutFullButton(isFullCashedOut: boolean) {
-        CashOutComponent.updateCashOutButtonStatus(isFullCashedOut, this.sprDisabled);
-    }
+    // @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.isFullCashedOut)
+    // updateCashOutFullButton(isFullCashedOut: boolean) {
+    //     CashOutComponent.updateCashOutButtonStatus(isFullCashedOut, this.sprDisabled);
+    // }
 
     @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.fullCashOutValue, { fireImmediately: false })
     updateCashOut(fullCashOutValue: number) {
@@ -65,13 +65,18 @@ export class CashOutButton extends ObserverComponent {
     @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeAllPopups())
     closeAllPopups() {}
 
-    @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
-    updateStatusCashOutButton(isCrashed: boolean) {
-        CashOutComponent.updateCashOutButtonStatus(isCrashed, this.sprDisabled);
-    }
+    // @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
+    // updateStatusCashOutButton(isCrashed: boolean) {
+    //     CashOutComponent.updateCashOutButtonStatus(isCrashed, this.sprDisabled);
+    // }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundCashOut() {
         return this.cashOutSound;
+    }
+
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.disabledFullCashOut)
+    disabledFullCashOut(disabledFullCashOut: boolean) {
+        this.sprDisabled.node.active = disabledFullCashOut;
     }
 }
