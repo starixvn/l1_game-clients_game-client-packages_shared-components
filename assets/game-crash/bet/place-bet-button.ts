@@ -87,7 +87,7 @@ export default class PlaceBetButton extends ObserverComponent {
         this.isEnableAutoCashOut = isEnable;
     }
 
-    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.multiplier, { fireImmediately: false })
+    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.multiplier)
     updateValueAutoCashOut(value: number) {
         this.valueAutoCashOut = value;
     }
@@ -96,7 +96,7 @@ export default class PlaceBetButton extends ObserverComponent {
         this.playSoundPlaceBet();
         this.closeAllPopups();
         this.isClickPlaceBet = true;
-        if (!this.isBetAccepted && !this.bgDisable.node.active) {
+        if (!this.isBetAccepted) {
             this.sendBetRequest();
         }
     }
