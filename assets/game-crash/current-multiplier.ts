@@ -45,13 +45,7 @@ export class CurrentMultiplier extends ObserverComponent {
     hideCurrentMultiplier(isPlacingBet: boolean) {
         if (isPlacingBet) {
             this.setVisibility(false);
-            this.updateIsCrashed(false);
         }
-    }
-
-    @handle(GameCrash.CrashMultiplier.MultiplierHandlers, (handle, isCrashed: boolean) => handle.handleIsCrashed(isCrashed))
-    updateIsCrashed(isCrashed: boolean) {
-        return isCrashed;
     }
 
     setVisibility(status: boolean) {
