@@ -51,7 +51,6 @@ export default class PlaceBetButton extends ObserverComponent {
     @render(Bet.BetStore, (store) => store.lastReceivedBet, { fireImmediately: false })
     updateStatusPlaceBet(lastReceivedBet: any) {
         const isReceivedBet = lastReceivedBet.value > 0;
-        this.handleBetUIControl(isReceivedBet ? GameCrash.BET_STATE.BET : GameCrash.BET_STATE.NONE);
         if (!isReceivedBet) {
             this.isBetAccepted = false;
             return;
@@ -83,11 +82,6 @@ export default class PlaceBetButton extends ObserverComponent {
 
     @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.updateStatusLatestRoundAccepted())
     checkStatusLatestRound() {}
-
-    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
-    handleBetUIControl(action: string) {
-        return action;
-    }
 
     @handle(GameCrash.AutoCashOut.AutoCashOutHandler, (handle, disable: boolean) => handle.handleDisableAuto(disable))
     disableAutoCashOut(disable: boolean) {

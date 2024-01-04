@@ -45,11 +45,6 @@ export default class EarlyBetButton extends ObserverComponent {
         this.node.active = isWaitingBet || isBetNextRound;
     }
 
-    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
-    handleBetUIControl(action: string) {
-        return action;
-    }
-
     @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(true))
     handleAutoPlayStatus() {}
 
