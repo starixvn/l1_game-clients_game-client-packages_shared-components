@@ -82,11 +82,6 @@ export default class PlaceBetButton extends ObserverComponent {
     @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.updateStatusLatestRoundAccepted())
     checkStatusLatestRound() {}
 
-    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentBetStateInStore(action))
-    handleBetUIControl(action: string) {
-        return action;
-    }
-
     @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.enable)
     updateStatusAutoCashOut(isEnable: boolean) {
         this.isEnableAutoCashOut = isEnable;
