@@ -34,16 +34,15 @@ export class AutoPlayButton extends ObserverComponent {
         this.lblNoOfRound.string = roundsAutoPlay.toString();
     }
 
-    @render(gc.GameCrash.AutoPlay.AutoPlayStore, (store) => store.hideArrowIcon)
-    updateAutoPlayButton(hideArrowIcon: boolean) {
-        this.lblNoOfRound.node.active = this.nodeTextStopAutoPlay.active = hideArrowIcon;
-        this.sprIconAutoPlay.node.active = this.nodeTextAutoPlay.active = !hideArrowIcon;
-        this.enableAutoPlay(hideArrowIcon);
+    @render(gc.GameCrash.AutoPlay.AutoPlayStore, (store) => store.isAutoPlay)
+    updateAutoPlayButton(isAutoPlay: boolean) {
+        this.lblNoOfRound.node.active = this.nodeTextStopAutoPlay.active = isAutoPlay;
+        this.sprIconAutoPlay.node.active = this.nodeTextAutoPlay.active = !isAutoPlay;
     }
 
-    @render(gc.GameCrash.AutoPlay.AutoPlayStore, (store) => store.hideArrowIcon, { fireImmediately: false })
-    showAnimZoomInOut(hideArrowIcon: boolean) {
-        if (!hideArrowIcon) {
+    @render(gc.GameCrash.AutoPlay.AutoPlayStore, (store) => store.isAutoPlay, { fireImmediately: false })
+    showAnimZoomInOut(isAutoPlay: boolean) {
+        if (!isAutoPlay) {
             tween(this.nodeBg)
                 .to(0.35, { scale: new Vec3(1.2, 1.2, 1.2) }, { easing: "sineOut" })
                 .to(0.35, { scale: new Vec3(1, 1, 1) }, { easing: "sineOut" })
@@ -51,11 +50,6 @@ export class AutoPlayButton extends ObserverComponent {
                 .repeat(2)
                 .start();
         }
-    }
-
-    @handle(gc.GameCrash.PlayerActions.PlayerActionHandlers, (handle, flag: boolean) => handle.handleEnableAutoPlayInStore(flag))
-    enableAutoPlay(isAutoPlay: boolean) {
-        return isAutoPlay;
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
