@@ -93,17 +93,18 @@ export class LeaderBoard extends ObserverComponent {
         fireImmediately: false,
     })
     private updateMainPlayer({ mainPlayer, roundTime }) {
-        const { amount, halfCashOut, cashOut } = mainPlayer;
+        if (!mainPlayer) {
+            return;
+        }
+        const { halfCashOut, cashOut } = mainPlayer;
 
-        if (amount) {
-            this.setMainPlayerVisibility(true);
-            this.cpnMainPlayer?.setData(mainPlayer, this.checkNeedEmptyBetAmount(roundTime));
-            this.scrollOtherPlayer(this.itemHeight);
+        this.setMainPlayerVisibility(true);
+        this.cpnMainPlayer?.setData(mainPlayer, this.checkNeedEmptyBetAmount(roundTime));
+        this.scrollOtherPlayer(this.itemHeight);
 
-            if (halfCashOut && cashOut) {
-                this.scrollOtherPlayer(this.itemHeight * 2);
-                !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight + this.itemHeight);
-            }
+        if (halfCashOut && cashOut) {
+            this.scrollOtherPlayer(this.itemHeight * 2);
+            !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight + this.itemHeight);
         }
     }
 

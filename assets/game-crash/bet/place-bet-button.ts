@@ -48,10 +48,10 @@ export default class PlaceBetButton extends ObserverComponent {
         isStartRound && (this.isBetAccepted = false);
     }
 
-    @render(Bet.BetStore, (store) => store.isReceivedBet, { fireImmediately: false })
-    updateStatusPlaceBet(isReceivedBet: any) {
+    @render(Bet.BetStore, (store) => store.lastReceivedBet, { fireImmediately: false })
+    updateStatusPlaceBet(lastReceivedBet: any) {
+        const isReceivedBet = lastReceivedBet.value > 0;
         this.handleBetUIControl(isReceivedBet ? GameCrash.BET_STATE.BET : GameCrash.BET_STATE.NONE);
-
         if (!isReceivedBet) {
             this.isBetAccepted = false;
             return;

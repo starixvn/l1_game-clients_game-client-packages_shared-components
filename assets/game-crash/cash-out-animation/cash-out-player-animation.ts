@@ -9,18 +9,18 @@ const { ccclass, property } = _decorator;
 const { GameCrash, FormatUtils } = gc;
 
 export const CashOutAnim = {
-    mainPlayer: "main",
-    otherPlayer: "user",
+    MainPlayer: "main",
+    OtherPlayer: "user",
 };
 
 export const ColorWinValue = {
-    mainPlayer: "ECB90A",
-    otherPlayer: "4d7fb6",
+    MainPlayer: "ECB90A",
+    OtherPlayer: "4d7fb6",
 };
 
 enum PathBonesIndex {
-    main = 0,
-    player = 1,
+    Main = 0,
+    Player = 1,
 }
 
 @ccclass
@@ -62,15 +62,15 @@ export class CashOutPlayerAnimation extends NodeContainer {
         const randomPosition = v3(currentPosition.x + random(-200, 100), -random(20, 50));
         ComponentUtils.moveToOtherNode(node, this.containerSpaceman);
         if (node?.children[0]) {
-            const animationName = isMainPlayer ? CashOutAnim.mainPlayer : CashOutAnim.otherPlayer;
+            const animationName = isMainPlayer ? CashOutAnim.MainPlayer : CashOutAnim.OtherPlayer;
             const spine = node?.getComponentInChildren(sp.Skeleton);
             spine.sockets[0].path =
-                isMainPlayer && this.pathBones.length > 0 ? this.pathBones[PathBonesIndex.main] : this.pathBones[PathBonesIndex.player];
+                isMainPlayer && this.pathBones.length > 0 ? this.pathBones[PathBonesIndex.Main] : this.pathBones[PathBonesIndex.Player];
             const animationDuration = spine?.findAnimation(animationName).duration;
             const lblWin = spine.node?.getComponentInChildren(Label);
             if (lblWin) {
                 lblWin.string = FormatUtils.numberWithCommas(winValue, 2);
-                lblWin.color = new Color().fromHEX(isMainPlayer ? ColorWinValue.mainPlayer : ColorWinValue.otherPlayer);
+                lblWin.color = new Color().fromHEX(isMainPlayer ? ColorWinValue.MainPlayer : ColorWinValue.OtherPlayer);
             }
             tween(node)
                 .parallel(

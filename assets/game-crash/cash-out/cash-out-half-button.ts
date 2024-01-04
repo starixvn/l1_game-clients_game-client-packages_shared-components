@@ -42,11 +42,6 @@ export class CashOutHalfButton extends ObserverComponent {
         return CashOutComponent.getBetValue(lastReceivedBet);
     }
 
-    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle, action: string) => handle.handleCurrentCashOutStateInStore(action))
-    handleCashOutState() {
-        return GameCrash.CASH_OUT_STATE.HALF;
-    }
-
     @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.visibleCashOut)
     updateCashOutButtonStatus(visibleCashOut: boolean) {
         CashOutComponent.setDisplayNode(this.node, visibleCashOut);
@@ -58,7 +53,6 @@ export class CashOutHalfButton extends ObserverComponent {
     onClickCashOutHalf() {
         this.playSoundCashOut();
         this.closeAllPopups();
-        this.handleCashOutState();
         return CashOutComponent.getCashOutValue(this.lblCashOut);
     }
 
