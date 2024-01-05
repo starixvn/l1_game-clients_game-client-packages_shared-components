@@ -90,14 +90,14 @@ export class LeaderBoard extends ObserverComponent {
 
         if (halfCashOut && cashOut) {
             this.scrollOtherPlayer(this.itemHeight * 2);
-            !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight + this.itemHeight);
+            !this.isExpandedBoard && this.updateBoardHeight(this.collapsedBoardHeight + this.itemHeight);
         }
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
     private resetLeaderBoard(isPlacingBet: boolean) {
         if (isPlacingBet && !this.isExpandedBoard) {
-            this.collapseAndExpandBoard(this.collapsedBoardHeight);
+            this.updateBoardHeight(this.collapsedBoardHeight);
         }
     }
 
@@ -128,12 +128,12 @@ export class LeaderBoard extends ObserverComponent {
             ? this.collapsedBoardHeight + this.itemHeight
             : this.collapsedBoardHeight;
         const boardHeight = this.isExpandedBoard ? collapseHeight : this.expandedBoardHeight;
-        this.collapseAndExpandBoard(boardHeight);
+        this.updateBoardHeight(boardHeight);
         this.nodeArrowIcon.eulerAngles = this.isExpandedBoard ? v3(0, 0, 180) : v3(0, 0, 0);
         this.isExpandedBoard = !this.isExpandedBoard;
     }
 
-    private collapseAndExpandBoard(boardHeight: number) {
+    private updateBoardHeight(boardHeight: number) {
         const leaderBoardSize = this.node.getComponent(UITransform);
         const leaderBoardMaskWidget = this.nodeLeaderBoardMask.getComponent(Widget);
         const arrowIconWidget = this.nodeArrowIcon.parent.getComponent(Widget);
