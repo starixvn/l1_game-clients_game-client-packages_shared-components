@@ -24,7 +24,7 @@ export class AutoPlayButton extends ObserverComponent {
     @property(Node)
     nodeBg: Node = null;
 
-    @handle(gc.GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.checkAutoPlayClick())
+    @handle(gc.GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.clickAutoPlay())
     onClickAutoPlay() {
         this.playSoundClick();
     }
