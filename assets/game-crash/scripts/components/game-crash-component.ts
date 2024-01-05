@@ -42,11 +42,6 @@ export default class GameCrashComponent extends GameComponent {
         this.resetValueCashOutLeaderBoard();
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
-    handleStartPlacingBet(isStartPlacingBet: boolean) {
-        isStartPlacingBet && this.resetValueCashOutBetList();
-    }
-
     @render(Settlements.SettlementStatusStore, (store) => store.settlementStatus)
     showPayoutForMainPlayer(settlementStatus) {
         if (settlementStatus?.win) {
@@ -76,9 +71,6 @@ export default class GameCrashComponent extends GameComponent {
 
     @handle(GameCrash.CrashCashOut.CrashCashOutUIHandlers, (handle) => handle.resetCashOutValue())
     resetValueCashOutLeaderBoard() {}
-
-    @handle(GameCrash.CrashBetList.CrashBetListHandlers, (handler) => handler.resetMainPlayer())
-    resetValueCashOutBetList() {}
 
     @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeAllPopups())
     closeAllPopups() {}

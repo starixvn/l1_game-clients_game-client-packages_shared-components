@@ -2,7 +2,6 @@ import gc from "@sg/game-client-base";
 import { _decorator, instantiate, Node, Prefab, ScrollView, Tween, tween, UITransform, v3, Widget } from "cc";
 import Observer from "observer";
 
-import { settings } from "../../../../../../../assets/game/scripts/game-settings";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { LeaderBoardItem } from "./leader-board-item";
 
@@ -43,13 +42,8 @@ export class LeaderBoard extends ObserverComponent {
 
     onLoad() {
         this.resetOtherPlayers();
-        this.resetMainPlayer();
+        this.hideMainPlayer();
         super.onLoad();
-    }
-
-    @handle(GameCrash.CrashBetList.CrashBetListHandlers, (handler) => handler.resetOtherPlayerList())
-    handleResetOtherPlayers() {
-        this.resetOtherPlayers();
     }
 
     private resetOtherPlayers() {
@@ -58,20 +52,15 @@ export class LeaderBoard extends ObserverComponent {
         this.otherPlayersScrollView.scrollToTop(0.1);
     }
 
-    @handle(GameCrash.CrashBetList.CrashBetListHandlers, (handler) => handler.resetMainPlayer())
-    private resetMainPlayer() {
-        this.hideMainPlayer();
-    }
-
     private hideMainPlayer() {
-        this.setMainPlayerVisibility(false);
-        this.cpnMainPlayer.setHalfCashOutVisibility(false);
+        this.setMainPlayerDisplay(false);
+        this.cpnMainPlayer.setHalfCashOutDisplay(false);
     }
 
-    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => ({ betList: store.betList, roundTime: store.roundTime }), {
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.betList, {
         fireImmediately: false,
     })
-    private updateOtherPlayers({ betList, roundTime }) {
+    private updateOtherPlayers(betList: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayerList) {
         const { players } = betList;
 
         if (players.length === 0) {
@@ -85,21 +74,21 @@ export class LeaderBoard extends ObserverComponent {
                 node = this.createBoardItem();
             }
             const comp = node.getComponent(LeaderBoardItem);
-            comp?.setData(player, this.checkNeedEmptyBetAmount(roundTime));
+            comp?.setData(player);
         });
     }
 
-    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => ({ mainPlayer: store.mainPlayer, roundTime: store.roundTime }), {
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.mainPlayer, {
         fireImmediately: false,
     })
-    private updateMainPlayer({ mainPlayer, roundTime }) {
+    private updateMainPlayer(mainPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         if (!mainPlayer) {
             return;
         }
         const { halfCashOut, cashOut } = mainPlayer;
 
-        this.setMainPlayerVisibility(true);
-        this.cpnMainPlayer?.setData(mainPlayer, this.checkNeedEmptyBetAmount(roundTime));
+        this.setMainPlayerDisplay(true);
+        this.cpnMainPlayer?.setData(mainPlayer);
         this.scrollOtherPlayer(this.itemHeight);
 
         if (halfCashOut && cashOut) {
@@ -108,18 +97,13 @@ export class LeaderBoard extends ObserverComponent {
         }
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.startPlacingBet)
-    private resetLeaderBoard(startPlacingBet: boolean) {
-        if (startPlacingBet) {
+    @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
+    private resetLeaderBoard(isStartPlacingBet: boolean) {
+        if (isStartPlacingBet) {
             this.hideMainPlayer();
-            this.handleResetOtherPlayers();
-            this.resetMainPlayer();
+            this.resetOtherPlayers();
             !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight);
         }
-    }
-
-    private checkNeedEmptyBetAmount(roundTime): boolean {
-        return roundTime <= 0 || (roundTime <= settings.durations.wholeRound && roundTime > settings.durations.placingBet);
     }
 
     private scrollOtherPlayer(top: number, isAnimated = true) {
@@ -184,7 +168,7 @@ export class LeaderBoard extends ObserverComponent {
         return node;
     }
 
-    private setMainPlayerVisibility(isShow: boolean) {
+    private setMainPlayerDisplay(isShow: boolean) {
         this.cpnMainPlayer.node.active = isShow;
     }
 

@@ -13,14 +13,14 @@ export class LeaderBoardItem extends Component {
     cpnHalfCashOut: LeaderBoardCashOut = null;
 
     onLoad() {
-        this.setHalfCashOutVisibility(false);
+        this.setHalfCashOutDisplay(false);
     }
 
-    setData(data: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer, isNeedEmptyAmount = false) {
+    setData(data: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         const { name, cashOut, halfCashOut, amount } = data;
         const customName = this.encryptedName(name);
 
-        this.setHalfCashOutVisibility(false);
+        this.setHalfCashOutDisplay(false);
         if ((halfCashOut && !cashOut) || (cashOut && !halfCashOut)) {
             const value = halfCashOut || cashOut;
             this.cpnFullCashOut.setData({
@@ -28,36 +28,32 @@ export class LeaderBoardItem extends Component {
                 multiplier: value.multiplier,
                 win: value.win,
                 amount,
-                isEmptyAmount: isNeedEmptyAmount,
             });
         } else if (halfCashOut && cashOut) {
-            this.setHalfCashOutVisibility(true);
+            this.setHalfCashOutDisplay(true);
             this.cpnHalfCashOut.setData({
                 name: customName,
                 multiplier: halfCashOut.multiplier,
                 win: halfCashOut.win,
                 amount,
-                isEmptyAmount: isNeedEmptyAmount,
             });
             this.cpnFullCashOut.setData({
                 name: customName,
                 multiplier: cashOut.multiplier,
                 win: cashOut.win,
                 amount,
-                isEmptyAmount: isNeedEmptyAmount,
             });
         } else {
             this.cpnFullCashOut.setData({
                 name: customName,
                 multiplier: null,
-                win: -1,
+                win: null,
                 amount,
-                isEmptyAmount: isNeedEmptyAmount,
             });
         }
     }
 
-    setHalfCashOutVisibility(status: boolean) {
+    setHalfCashOutDisplay(status: boolean) {
         this.cpnHalfCashOut.node.active = status;
     }
 
