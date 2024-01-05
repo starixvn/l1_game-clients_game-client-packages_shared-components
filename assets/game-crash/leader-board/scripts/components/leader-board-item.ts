@@ -21,33 +21,32 @@ export class LeaderBoardItem extends Component {
         const customName = this.encryptedName(name);
 
         this.setHalfCashOutDisplay(false);
-        if ((halfCashOut && !cashOut) || (cashOut && !halfCashOut)) {
-            const value = halfCashOut || cashOut;
-            this.cpnFullCashOut.setData({
-                name: customName,
-                multiplier: value.multiplier,
-                win: value.win,
-                amount,
-            });
-        } else if (halfCashOut && cashOut) {
+
+        if (halfCashOut && cashOut) {
             this.setHalfCashOutDisplay(true);
             this.cpnHalfCashOut.setData({
                 name: customName,
+                amount,
                 multiplier: halfCashOut.multiplier,
                 win: halfCashOut.win,
-                amount,
             });
             this.cpnFullCashOut.setData({
                 name: customName,
+                amount,
                 multiplier: cashOut.multiplier,
                 win: cashOut.win,
+            });
+        } else if (halfCashOut || cashOut) {
+            const value = halfCashOut || cashOut;
+            this.cpnFullCashOut.setData({
+                name: customName,
                 amount,
+                multiplier: value.multiplier,
+                win: value.win,
             });
         } else {
             this.cpnFullCashOut.setData({
                 name: customName,
-                multiplier: null,
-                win: null,
                 amount,
             });
         }

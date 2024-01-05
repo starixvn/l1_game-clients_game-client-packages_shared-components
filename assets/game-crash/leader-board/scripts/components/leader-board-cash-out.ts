@@ -10,9 +10,9 @@ const { render, handle } = Observer;
 
 interface ILeaderBoardCashOutData {
     name: string;
-    multiplier: number;
-    win: number;
     amount: number;
+    multiplier?: number;
+    win?: number;
 }
 
 @ccclass
