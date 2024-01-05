@@ -7,57 +7,58 @@ const { ccclass, property } = _decorator;
 @ccclass
 export class LeaderBoardItem extends Component {
     @property(LeaderBoardCashOut)
-    cpnFullCashOut: LeaderBoardCashOut = null;
+    firstRow: LeaderBoardCashOut = null;
 
     @property(LeaderBoardCashOut)
-    cpnHalfCashOut: LeaderBoardCashOut = null;
+    secondRow: LeaderBoardCashOut = null;
 
     onLoad() {
-        this.setHalfCashOutDisplay(false);
+        this.setSecondRowDisplay(false);
     }
 
     setData(data: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         const { name, cashOut, halfCashOut, amount } = data;
         const customName = this.encryptedName(name);
 
-        this.setHalfCashOutDisplay(false);
+        this.setSecondRowDisplay(false);
 
         if (halfCashOut && cashOut) {
-            this.setHalfCashOutDisplay(true);
-            this.cpnHalfCashOut.setData({
-                name: customName,
-                amount,
-                multiplier: halfCashOut.multiplier,
-                win: halfCashOut.win,
-            });
-            this.cpnFullCashOut.setData({
+            this.firstRow.setData({
                 name: customName,
                 amount,
                 multiplier: cashOut.multiplier,
                 win: cashOut.win,
             });
+
+            this.setSecondRowDisplay(true);
+            this.secondRow.setData({
+                name: customName,
+                amount,
+                multiplier: halfCashOut.multiplier,
+                win: halfCashOut.win,
+            });
         } else if (halfCashOut || cashOut) {
             const value = halfCashOut || cashOut;
-            this.cpnFullCashOut.setData({
+            this.firstRow.setData({
                 name: customName,
                 amount,
                 multiplier: value.multiplier,
                 win: value.win,
             });
         } else {
-            this.cpnFullCashOut.setData({
+            this.firstRow.setData({
                 name: customName,
                 amount,
             });
         }
     }
 
-    setHalfCashOutDisplay(status: boolean) {
-        this.cpnHalfCashOut.node.active = status;
+    setSecondRowDisplay(status: boolean) {
+        this.secondRow.node.active = status;
     }
 
-    isShowFullCashOutNode(): boolean {
-        return this.cpnHalfCashOut.node.active;
+    isShowSecondRow(): boolean {
+        return this.secondRow.node.active;
     }
 
     private encryptedName(name: string): string {

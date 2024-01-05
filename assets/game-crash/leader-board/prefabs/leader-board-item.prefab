@@ -187,7 +187,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "full-cash-out"
+    "value": "first-row"
   },
   {
     "__type__": "cc.TargetInfo",
@@ -345,7 +345,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "half-cash-out"
+    "value": "second-row"
   },
   {
     "__type__": "cc.TargetInfo",
@@ -565,8 +565,8 @@
     "__prefab": {
       "__id__": 36
     },
-    "cpnFullCashOut": null,
-    "cpnHalfCashOut": null,
+    "firstRow": null,
+    "secondRow": null,
     "_id": ""
   },
   {
@@ -635,7 +635,7 @@
     },
     "sourceInfo": null,
     "propertyPath": [
-      "cpnFullCashOut"
+      "firstRow"
     ],
     "target": {
       "__id__": 3
@@ -657,7 +657,7 @@
     },
     "sourceInfo": null,
     "propertyPath": [
-      "cpnHalfCashOut"
+      "secondRow"
     ],
     "target": {
       "__id__": 15

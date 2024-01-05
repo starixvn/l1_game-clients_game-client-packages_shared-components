@@ -54,7 +54,7 @@ export class LeaderBoard extends ObserverComponent {
 
     private hideMainPlayer() {
         this.setMainPlayerDisplay(false);
-        this.cpnMainPlayer.setHalfCashOutDisplay(false);
+        this.cpnMainPlayer.setSecondRowDisplay(false);
     }
 
     @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.betList, {
@@ -129,7 +129,7 @@ export class LeaderBoard extends ObserverComponent {
 
     onClickCollapseButton(e) {
         this.playSoundClick();
-        const collapseHeight = this.cpnMainPlayer.isShowFullCashOutNode()
+        const collapseHeight = this.cpnMainPlayer.isShowSecondRow()
             ? this.collapsedBoardHeight + this.itemHeight
             : this.collapsedBoardHeight;
         const boardHeight = this.isExpandedBoard ? collapseHeight : this.expandedBoardHeight;
