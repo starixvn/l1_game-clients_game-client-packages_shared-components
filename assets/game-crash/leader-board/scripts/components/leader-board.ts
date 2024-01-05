@@ -42,7 +42,7 @@ export class LeaderBoard extends ObserverComponent {
 
     onLoad() {
         this.resetOtherPlayers();
-        this.hideMainPlayer();
+        this.setMainPlayerDisplay(false);
         super.onLoad();
     }
 
@@ -52,11 +52,6 @@ export class LeaderBoard extends ObserverComponent {
         this.otherPlayersScrollView.scrollToTop(0.1);
     }
 
-    private hideMainPlayer() {
-        this.setMainPlayerDisplay(false);
-        this.cpnMainPlayer.setSecondRowDisplay(false);
-    }
-
     @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.betList, {
         fireImmediately: false,
     })
@@ -64,6 +59,7 @@ export class LeaderBoard extends ObserverComponent {
         const { players } = betList;
 
         if (players.length === 0) {
+            this.resetOtherPlayers();
             return;
         }
 
@@ -83,6 +79,7 @@ export class LeaderBoard extends ObserverComponent {
     })
     private updateMainPlayer(mainPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         if (!mainPlayer) {
+            this.setMainPlayerDisplay(false);
             return;
         }
         const { halfCashOut, cashOut } = mainPlayer;
@@ -97,12 +94,10 @@ export class LeaderBoard extends ObserverComponent {
         }
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
-    private resetLeaderBoard(isStartPlacingBet: boolean) {
-        if (isStartPlacingBet) {
-            this.hideMainPlayer();
-            this.resetOtherPlayers();
-            !this.isExpandedBoard && this.collapseAndExpandBoard(this.collapsedBoardHeight);
+    @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
+    private resetLeaderBoard(isPlacingBet: boolean) {
+        if (isPlacingBet && !this.isExpandedBoard) {
+            this.collapseAndExpandBoard(this.collapsedBoardHeight);
         }
     }
 

@@ -34,14 +34,12 @@ export class LeaderBoardCashOut extends ObserverComponent {
         this.lblName.string = name;
         this.lblMultiplier.string = multiplier ? `${FormatUtils.numberWithCommas(multiplier, 2, false)}x` : "-";
 
-        this.lblCashout.node.active = false;
-        this.lblBetAmount.node.active = false;
+        this.lblCashout.node.active = !!win;
+        this.lblBetAmount.node.active = !win;
 
         if (!!win) {
-            this.lblCashout.node.active = true;
             this.lblCashout.string = FormatUtils.numberWithCommas(win, 2);
         } else {
-            this.lblBetAmount.node.active = true;
             this.lblBetAmount.string = FormatUtils.numberWithCommas(amount, 2);
         }
     }
