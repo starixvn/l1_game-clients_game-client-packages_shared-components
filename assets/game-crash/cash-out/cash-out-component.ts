@@ -11,10 +11,6 @@ export namespace CashOutComponent {
         }
     };
 
-    // export const getBetValue = (lastReceivedBet: any) => {
-    //     return lastReceivedBet && lastReceivedBet.value >= 0 ? lastReceivedBet.value : undefined;
-    // };
-
     export const getCashOutValue = (lblCashOut: Label) => {
         return +lblCashOut.string;
     };
