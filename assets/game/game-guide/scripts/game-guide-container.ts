@@ -13,14 +13,16 @@ export class GameGuideContainer extends NodeContainer {
     @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
     openGuide({ event }: { event: InGameMenuEvents }) {
         if (event === InGameMenuEvents.OPEN_GUIDE) {
-            this.openDialog(false);
-        } else if (event === InGameMenuEvents.OPEN_GUIDE_SCROLL_MD5) {
-            this.openDialog(true);
+            this.openDialog("");
+        } else if (event.includes("open_guide_scroll")) {
+            const words = event.split("_");
+            const id = words[words.length - 1];
+            this.openDialog(id);
         }
     }
 
-    protected openDialog(isScrollMd5: boolean) {
+    protected openDialog(scrollToId: string) {
         const guide = this.createNode();
-        guide.getComponent(WebViewGuide)?.initUrl("", isScrollMd5);
+        guide.getComponent(WebViewGuide)?.initUrl("", scrollToId);
     }
 }

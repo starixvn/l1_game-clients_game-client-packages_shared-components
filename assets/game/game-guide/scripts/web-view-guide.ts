@@ -12,9 +12,9 @@ export default class WebViewGuide extends LoadWebView {
     private gameConfig: gc.GameConfigs.GameConfigStore;
 
     @handle(GameGuide.GameGuideHandlers.GetGuideURL)
-    initUrl(specialDirection = "", isScrollMd5 = false) {
+    initUrl(specialDirection = "", scrollToId = "") {
         const theme = "blue";
-        return { theme, specialDirection, isScrollMd5 };
+        return { theme, specialDirection, scrollToId };
     }
 
     @render(GameConfigs.GameConfigStore, (store) => store)
