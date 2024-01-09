@@ -23,7 +23,7 @@ export class CashOutHalfButton extends CashOutButtonBase {
     }
 
     @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.disabledHalfCashOut)
-    disabledFullCashOut(disabledHalfCashOut: boolean) {
+    disabledHalfCashOut(disabledHalfCashOut: boolean) {
         this.sprDisabled.node.active = disabledHalfCashOut;
     }
 }
