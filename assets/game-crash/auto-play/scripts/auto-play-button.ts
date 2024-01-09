@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label, Node, Sprite, tween, Vec3 } from "cc";
+import { _decorator, Label, Node, Sprite, tween, v3 } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
@@ -44,8 +44,8 @@ export class AutoPlayButton extends ObserverComponent {
     showAnimZoomInOut(isAutoPlay: boolean) {
         if (!isAutoPlay) {
             tween(this.nodeBg)
-                .to(0.35, { scale: new Vec3(1.2, 1.2, 1.2) }, { easing: "sineOut" })
-                .to(0.35, { scale: new Vec3(1, 1, 1) }, { easing: "sineOut" })
+                .to(0.35, { scale: v3(1.2, 1.2, 1.2) }, { easing: "sineOut" })
+                .to(0.35, { scale: v3(1, 1, 1) }, { easing: "sineOut" })
                 .union()
                 .repeat(2)
                 .start();
