@@ -55,7 +55,14 @@ describe("AutoCashoutPopup", () => {
 
     describe("updateMultiplierRangeLabel", () => {
         it("should update multiplier range label", () => {
-            autoCashoutPopup.updateMultiplierRangeLabel(3000);
+            // Arrange
+            const minMultiplier = 1.01;
+            const maxMultiplier = 3000;
+
+            // Act
+            autoCashoutPopup.updateMultiplierRangeLabel({ minMultiplier, maxMultiplier });
+
+            // Assert
             expect(autoCashoutPopup.multiplierRangeLabel.string).toEqual("1.01x - 3,000.00x");
         });
     });
