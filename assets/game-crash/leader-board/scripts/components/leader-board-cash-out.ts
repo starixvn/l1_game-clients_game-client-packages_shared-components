@@ -1,12 +1,8 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label } from "cc";
-import Observer from "observer";
-
-import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { _decorator, Component, Label } from "cc";
 
 const { ccclass, property } = _decorator;
 const { FormatUtils } = gc;
-const { render, handle } = Observer;
 
 interface ILeaderBoardCashOutData {
     name: string;
@@ -16,7 +12,7 @@ interface ILeaderBoardCashOutData {
 }
 
 @ccclass
-export class LeaderBoardCashOut extends ObserverComponent {
+export class LeaderBoardCashOut extends Component {
     @property(Label)
     lblName: Label = null;
 
@@ -24,32 +20,20 @@ export class LeaderBoardCashOut extends ObserverComponent {
     lblMultiplier: Label = null;
 
     @property(Label)
-    lblCashout: Label = null;
+    lblWin: Label = null;
 
     @property(Label)
     lblBetAmount: Label = null;
 
     setData(data: ILeaderBoardCashOutData) {
         const { name, multiplier, win, amount } = data;
-        this.lblName.string = name;
+        this.lblName.string = this.encryptedName(name);
+        this.lblBetAmount.string = FormatUtils.numberWithCommas(amount, 2);
         this.lblMultiplier.string = multiplier ? `${FormatUtils.numberWithCommas(multiplier, 2, false)}x` : "-";
-
-        this.lblCashout.node.active = !!win;
-        this.lblBetAmount.node.active = !win;
-
-        if (!!win) {
-            this.lblCashout.string = FormatUtils.numberWithCommas(win, 2);
-        } else {
-            this.lblBetAmount.string = FormatUtils.numberWithCommas(amount, 2);
-        }
+        this.lblWin.string = !!win ? FormatUtils.numberWithCommas(win, 2) : "-";
     }
 
-    @render(gc.GameCrash.CrashBetList.CrashBetListStore, (store) => store.isNeedEmptyBetAmount)
-    emptyBetAmount(isNeedEmptyBetAmount: boolean) {
-        if (!isNeedEmptyBetAmount) {
-            return;
-        }
-
-        this.lblBetAmount.string = "-";
+    private encryptedName(name: string): string {
+        return `${name.substring(0, 1)}***${name.substring(name.length - 3, name.length)}`;
     }
 }

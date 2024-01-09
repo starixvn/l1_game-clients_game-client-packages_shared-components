@@ -5,7 +5,7 @@ import { LeaderBoardCashOut } from "./leader-board-cash-out";
 
 const { ccclass, property } = _decorator;
 @ccclass
-export class LeaderBoardItem extends Component {
+export class LeaderBoardMainPlayer extends Component {
     @property(LeaderBoardCashOut)
     firstRow: LeaderBoardCashOut = null;
 
@@ -18,36 +18,47 @@ export class LeaderBoardItem extends Component {
 
     setData(data: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         const { name, cashOut, halfCashOut, amount } = data;
-        const customName = this.encryptedName(name);
 
         this.setSecondRowDisplay(false);
 
         if (halfCashOut && cashOut) {
             this.firstRow.setData({
-                name: customName,
-                amount,
+                name,
+                amount: cashOut.amount,
                 multiplier: cashOut.multiplier,
                 win: cashOut.win,
             });
 
             this.setSecondRowDisplay(true);
             this.secondRow.setData({
-                name: customName,
-                amount,
+                name,
+                amount: halfCashOut.amount,
                 multiplier: halfCashOut.multiplier,
                 win: halfCashOut.win,
             });
-        } else if (halfCashOut || cashOut) {
-            const value = halfCashOut || cashOut;
+        } else if (halfCashOut) {
             this.firstRow.setData({
-                name: customName,
-                amount,
-                multiplier: value.multiplier,
-                win: value.win,
+                name,
+                amount: halfCashOut.amount,
+                multiplier: halfCashOut.multiplier,
+                win: halfCashOut.win,
+            });
+
+            this.setSecondRowDisplay(true);
+            this.secondRow.setData({
+                name,
+                amount: halfCashOut.amount,
+            });
+        } else if (cashOut) {
+            this.firstRow.setData({
+                name,
+                amount: cashOut.amount,
+                multiplier: cashOut.multiplier,
+                win: cashOut.win,
             });
         } else {
             this.firstRow.setData({
-                name: customName,
+                name,
                 amount,
             });
         }
@@ -59,9 +70,5 @@ export class LeaderBoardItem extends Component {
 
     isShowSecondRow(): boolean {
         return this.secondRow.node.active;
-    }
-
-    private encryptedName(name: string): string {
-        return `${name.substring(0, 1)}***${name.substring(name.length - 3, name.length)}`;
     }
 }
