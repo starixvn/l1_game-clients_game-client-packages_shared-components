@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Node, Prefab, Tween, tween, v3, Widget } from "cc";
+import { _decorator, instantiate, Node, Prefab, Tween, tween, Widget } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -26,16 +26,10 @@ export class LeaderBoard extends ObserverComponent {
     pfbItem: Prefab = null;
 
     @property(Node)
-    nodeArrowIcon: Node = null;
-
-    @property(Node)
     nodeLeaderBoardMask: Node = null;
 
-    private readonly collapsedBoardHeight = 45;
-    private readonly expandedBoardHeight = 187;
     private readonly itemHeight = 24;
     private otherPlayerTween: Tween<Widget> = null;
-    private isExpandedBoard = true;
 
     onLoad() {
         this.resetOtherPlayers();
@@ -98,8 +92,9 @@ export class LeaderBoard extends ObserverComponent {
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
-    private resetLeaderBoard(isPlacingBet: boolean) {
+    private resetOtherPlayerScroll(isPlacingBet: boolean) {
         if (isPlacingBet) {
+            console.log("resetOtherPlayerScroll");
             this.scrollOtherPlayer(0);
         }
     }
@@ -124,36 +119,6 @@ export class LeaderBoard extends ObserverComponent {
         }
     }
 
-    onClickCollapseButton(e) {
-        this.playSoundClick();
-        const collapseHeight = this.cpnMainPlayer.isShowSecondRow()
-            ? this.collapsedBoardHeight + this.itemHeight
-            : this.collapsedBoardHeight;
-        const boardHeight = this.isExpandedBoard ? collapseHeight : this.expandedBoardHeight;
-        this.updateBoardHeight(boardHeight);
-        this.nodeArrowIcon.eulerAngles = this.isExpandedBoard ? v3(0, 0, 180) : v3(0, 0, 0);
-        this.isExpandedBoard = !this.isExpandedBoard;
-    }
-
-    private updateBoardHeight(boardHeight: number) {
-        // const leaderBoardSize = this.node.getComponent(UITransform);
-        // const leaderBoardMaskWidget = this.nodeLeaderBoardMask.getComponent(Widget);
-        // const arrowIconWidget = this.nodeArrowIcon.parent.getComponent(Widget);
-        // this.leaderBoardTween?.stop();
-        // this.leaderBoardTween = tween(leaderBoardSize)
-        //     .to(
-        //         0.3,
-        //         { height: boardHeight },
-        //         {
-        //             onUpdate() {
-        //                 arrowIconWidget.updateAlignment();
-        //                 leaderBoardMaskWidget.updateAlignment();
-        //             },
-        //         }
-        //     )
-        //     .start();
-    }
-
     private createBoardItem(): Node {
         const node = instantiate(this.pfbItem);
         this.nodeOtherPlayers.addChild(node);
@@ -162,10 +127,5 @@ export class LeaderBoard extends ObserverComponent {
 
     private setMainPlayerDisplay(isShow: boolean) {
         this.cpnMainPlayer.node.active = isShow;
-    }
-
-    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
-    playSoundClick() {
-        return gc.Audios.AudioIds.CLICK;
     }
 }
