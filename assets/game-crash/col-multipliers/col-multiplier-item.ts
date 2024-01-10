@@ -9,7 +9,7 @@ export class ColMultiplierItem extends Component {
     lblMultiplier: Label = null;
 
     setMultiplier(value: number) {
-        this.lblMultiplier.string = FormatUtils.numberWithCommas(value, 2);
+        this.lblMultiplier.string = `${FormatUtils.numberWithCommas(value, 2, false)}x`;
     }
 
     setPositionForMultiplier1() {
