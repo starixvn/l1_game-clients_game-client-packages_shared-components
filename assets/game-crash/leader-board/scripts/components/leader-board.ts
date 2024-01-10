@@ -16,9 +16,6 @@ export class LeaderBoard extends ObserverComponent {
     @property(Node)
     nodeOtherPlayers: Node = null;
 
-    @property(Node)
-    nodeOtherPLayerContainer: Node = null;
-
     @property(LeaderBoardMainPlayer)
     cpnMainPlayer: LeaderBoardMainPlayer = null;
 
@@ -91,16 +88,15 @@ export class LeaderBoard extends ObserverComponent {
         }
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isPlacingBet)
-    private resetOtherPlayerScroll(isPlacingBet: boolean) {
-        if (isPlacingBet) {
-            console.log("resetOtherPlayerScroll");
+    @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
+    private resetOtherPlayerScroll(isStartPlacingBet: boolean) {
+        if (isStartPlacingBet) {
             this.scrollOtherPlayer(0);
         }
     }
 
     private scrollOtherPlayer(top: number, isAnimated = true) {
-        const otherPlayerWidget = this.nodeOtherPLayerContainer.getComponent(Widget);
+        const otherPlayerWidget = this.nodeOtherPlayers.getComponent(Widget);
         if (isAnimated) {
             this.otherPlayerTween?.stop();
             this.otherPlayerTween = tween(otherPlayerWidget)
