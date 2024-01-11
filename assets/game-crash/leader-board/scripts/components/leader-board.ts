@@ -35,7 +35,7 @@ export class LeaderBoard extends ObserverComponent {
     }
 
     private resetOtherPlayers() {
-        this.nodeOtherPlayers.removeAllChildren();
+        this.nodeOtherPlayers.destroyAllChildren();
     }
 
     @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.betList, {
@@ -75,17 +75,14 @@ export class LeaderBoard extends ObserverComponent {
     private updateMainPlayer(mainPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         if (!mainPlayer) {
             this.setMainPlayerDisplay(false);
+            this.scrollOtherPlayer(0);
             return;
         }
-        const { halfCashOut, cashOut } = mainPlayer;
+        const { halfCashOut } = mainPlayer;
 
         this.setMainPlayerDisplay(true);
         this.cpnMainPlayer?.setData(mainPlayer);
-        this.scrollOtherPlayer(this.itemHeight);
-
-        if ((halfCashOut && !cashOut) || (halfCashOut && cashOut)) {
-            this.scrollOtherPlayer(this.itemHeight * 2);
-        }
+        this.scrollOtherPlayer(halfCashOut ? this.itemHeight * 2 : this.itemHeight);
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
