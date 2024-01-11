@@ -11,12 +11,17 @@ const { render, handle } = Observer;
 export class LeaderBoardContainer extends ObserverComponent {
     @property(Node)
     nodeArrowIcon: Node = null;
-    isExpandedBoard = false;
+
+    @property(Node)
+    nodeLeaderBoardContent: Node = null;
+
+    private isExpandedBoard = false;
 
     onClickCollapseButton(e) {
+        this.isExpandedBoard = !this.isExpandedBoard;
         this.playSoundClick();
         this.nodeArrowIcon.eulerAngles = this.isExpandedBoard ? v3(0, 0, 180) : v3(0, 0, 0);
-        this.isExpandedBoard = !this.isExpandedBoard;
+        this.nodeLeaderBoardContent.active = this.isExpandedBoard;
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
