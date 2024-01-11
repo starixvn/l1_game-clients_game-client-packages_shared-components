@@ -38,9 +38,7 @@ export class LeaderBoard extends ObserverComponent {
         this.nodeOtherPlayers.destroyAllChildren();
     }
 
-    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.betList, {
-        fireImmediately: false,
-    })
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.betList)
     private updateOtherPlayers(betList: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayerList) {
         const { players } = betList;
 
@@ -69,9 +67,7 @@ export class LeaderBoard extends ObserverComponent {
         });
     }
 
-    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.mainPlayer, {
-        fireImmediately: false,
-    })
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.mainPlayer)
     private updateMainPlayer(mainPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         if (!mainPlayer) {
             this.setMainPlayerDisplay(false);
