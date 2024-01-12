@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Node, Prefab, Tween, tween, Widget } from "cc";
+import { _decorator, instantiate, Node, Prefab, Tween, tween, UITransform, Widget } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -88,8 +88,15 @@ export class LeaderBoard extends ObserverComponent {
         }
     }
 
+    updateContentHeight(top: number) {
+        const otherPlayerTransform = this.nodeOtherPlayers.getComponent(UITransform);
+        const content = this.nodeOtherPlayers.parent.getComponent(UITransform);
+        content.height = top + otherPlayerTransform.height;
+    }
+
     private scrollOtherPlayer(top: number, isAnimated = true) {
         const otherPlayerWidget = this.nodeOtherPlayers.getComponent(Widget);
+
         if (isAnimated) {
             this.otherPlayerTween?.stop();
             this.otherPlayerTween = tween(otherPlayerWidget)
@@ -102,9 +109,11 @@ export class LeaderBoard extends ObserverComponent {
                         },
                     }
                 )
+                .call(() => this.updateContentHeight(top))
                 .start();
         } else {
             otherPlayerWidget.editorTop = top;
+            this.updateContentHeight(top);
         }
     }
 
