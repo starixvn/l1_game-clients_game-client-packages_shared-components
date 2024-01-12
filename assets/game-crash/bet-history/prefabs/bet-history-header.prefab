@@ -309,6 +309,8 @@
     },
     "key": "Common.time",
     "format": 3,
+    "prefix": "",
+    "suffix": "",
     "_id": ""
   },
   {
@@ -560,6 +562,8 @@
     },
     "key": "Common.round",
     "format": 3,
+    "prefix": "",
+    "suffix": "",
     "_id": ""
   },
   {
@@ -811,6 +815,8 @@
     },
     "key": "Spaceflight.glossary_crash_point",
     "format": 3,
+    "prefix": "",
+    "suffix": "",
     "_id": ""
   },
   {
@@ -975,7 +981,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "Total Stake",
+    "_string": "Total Bet",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 21,
@@ -1034,7 +1040,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 118.19677734375,
+      "width": 94.4794921875,
       "height": 55.44
     },
     "_anchorPoint": {
@@ -1060,8 +1066,10 @@
     "__prefab": {
       "__id__": 59
     },
-    "key": "Common.total_stake",
+    "key": "Spaceflight.glossary_total_bet",
     "format": 3,
+    "prefix": "",
+    "suffix": "",
     "_id": ""
   },
   {
@@ -1313,6 +1321,8 @@
     },
     "key": "Common.win",
     "format": 3,
+    "prefix": "",
+    "suffix": "",
     "_id": ""
   },
   {

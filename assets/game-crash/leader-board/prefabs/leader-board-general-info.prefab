@@ -1040,8 +1040,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 34.0439453125,
-      "y": 0.189,
+      "x": 30.038,
+      "y": -0.5,
       "z": 0
     },
     "_lrot": {
@@ -1081,8 +1081,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 60.087890625,
-      "height": 44.1
+      "width": 52.076171875,
+      "height": 32.76
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1120,10 +1120,10 @@
     "_string": "CASHED",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 15,
-    "_fontSize": 15,
+    "_actualFontSize": 13,
+    "_fontSize": 13,
     "_fontFamily": "Arial",
-    "_lineHeight": 35,
+    "_lineHeight": 26,
     "_overflow": 0,
     "_enableWrapText": false,
     "_font": {
@@ -1212,7 +1212,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 68.087890625,
+      "width": 60.076171875,
       "height": 22
     },
     "_anchorPoint": {
