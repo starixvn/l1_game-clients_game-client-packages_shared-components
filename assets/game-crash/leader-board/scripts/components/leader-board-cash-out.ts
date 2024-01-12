@@ -30,7 +30,7 @@ export class LeaderBoardCashOut extends Component {
         this.lblName.string = this.encryptedName(name);
         this.lblBetAmount.string = FormatUtils.numberWithCommas(amount, 2);
         this.lblMultiplier.string = multiplier ? `${FormatUtils.numberWithCommas(multiplier, 2, false)}x` : "-";
-        this.lblWin.string = !!win ? FormatUtils.numberWithCommas(win, 2) : "-";
+        this.lblWin.string = win ? FormatUtils.numberWithCommas(win, 2) : "-";
     }
 
     private encryptedName(name: string): string {
