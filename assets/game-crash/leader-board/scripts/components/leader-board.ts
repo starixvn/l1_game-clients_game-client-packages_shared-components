@@ -38,32 +38,22 @@ export class LeaderBoard extends ObserverComponent {
         this.nodeOtherPlayers.destroyAllChildren();
     }
 
-    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.betList)
-    private updateOtherPlayers(betList: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayerList) {
-        const { players } = betList;
-
-        if (players.length === 0) {
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.otherPlayers)
+    private updateOtherPlayers(otherPlayers: gc.GameCrash.LeaderBoardPlayer[]) {
+        if (otherPlayers.length === 0) {
             this.resetOtherPlayers();
             return;
         }
 
-        players.forEach((player, index) => {
+        otherPlayers.forEach((player, index) => {
             let node = this.nodeOtherPlayers.children[index];
-            const { name, amount, halfCashOut, cashOut } = player;
-            const calcAmount = halfCashOut?.amount || cashOut?.amount || amount;
-            const multiplier = halfCashOut?.multiplier || cashOut?.multiplier;
-            const win = halfCashOut?.win || cashOut?.win;
 
             if (!node) {
                 node = this.createBoardItem();
             }
+
             const comp = node.getComponent(LeaderBoardCashOut);
-            comp?.setData({
-                name,
-                amount: calcAmount,
-                multiplier,
-                win,
-            });
+            comp?.setData(player);
         });
     }
 
