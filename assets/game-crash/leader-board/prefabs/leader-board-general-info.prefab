@@ -874,7 +874,7 @@
       "b": 132,
       "a": 255
     },
-    "_string": "",
+    "_string": "0",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 29,
@@ -1570,6 +1570,7 @@
       "__id__": 0
     },
     "fileId": "c7bLnRqxJBO4LiDcjrZ9+f",
-    "instance": null
+    "instance": null,
+    "targetOverrides": null
   }
 ]

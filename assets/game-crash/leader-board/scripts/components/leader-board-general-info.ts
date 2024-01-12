@@ -32,6 +32,6 @@ export class LeaderBoardGeneralInfo extends ObserverComponent {
 
     @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.totalCashOut, { fireImmediately: false })
     private updateTotalCashOut(totalCashOut: number) {
-        this.lblTotalCashOut.string = FormatUtils.numberWithCommas(totalCashOut, 2, false);
+        this.lblTotalCashOut.string = FormatUtils.numberWithCommas(totalCashOut, 2, true);
     }
 }
