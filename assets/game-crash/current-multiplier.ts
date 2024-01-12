@@ -1,7 +1,6 @@
 import gc from "@sg/game-client-base";
 import { Label, Node, UIOpacity, _decorator } from "cc";
 import Observer from "observer";
-
 import { ObserverComponent } from "../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 
 const { ccclass, property } = _decorator;
@@ -22,29 +21,18 @@ export class CurrentMultiplier extends ObserverComponent {
     private readonly crashSound = "plane_explose";
     private readonly rocketFlySound = "sfx_extra";
 
-    onLoad() {
-        this.setVisibility(false);
-        super.onLoad();
-    }
-
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.multiplier, { fireImmediately: false })
     private setCurrentMultiplier(multiplier: number) {
-        this.setVisibility(true);
         this.setCurrMultiplierValue(multiplier);
     }
 
-    @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.isCrashed)
-    updateBottomText(isCrashed: boolean) {
-        if (isCrashed) {
-            this.stopSoundRocketFly();
-        }
-        this.setDisplayBottomText(isCrashed);
-    }
-
-    @render(gc.Rounds.RoundTimeStore, (store) => store.isPlacingBet)
-    hideCurrentMultiplier(isPlacingBet: boolean) {
-        if (isPlacingBet) {
+    @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.rocketState)
+    setDisplayMultiplier(rocketState: string) {
+        if (rocketState === GameCrash.RocketState.ONLAND) {
             this.setVisibility(false);
+        } else {
+            this.setVisibility(true);
+            this.setDisplayBottomText(rocketState === GameCrash.RocketState.CRASHED);
         }
     }
 
