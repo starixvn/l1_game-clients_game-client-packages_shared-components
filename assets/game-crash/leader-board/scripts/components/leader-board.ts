@@ -55,6 +55,7 @@ export class LeaderBoard extends ObserverComponent {
             const comp = node.getComponent(LeaderBoardCashOut);
             comp?.setData(player);
         });
+        this.updateContentHeight();
     }
 
     @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.mainPlayer)
@@ -69,19 +70,21 @@ export class LeaderBoard extends ObserverComponent {
         this.setMainPlayerDisplay(true);
         this.cpnMainPlayer?.setData(mainPlayer);
         this.scrollOtherPlayer(halfCashOut ? this.itemHeight * 2 : this.itemHeight);
+        this.updateContentHeight();
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
-    private resetOtherPlayerScroll(isStartPlacingBet: boolean) {
-        if (isStartPlacingBet) {
+    @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
+    private resetOtherPlayerScroll(isStartRound: boolean) {
+        if (isStartRound) {
             this.scrollOtherPlayer(0);
         }
     }
 
-    updateContentHeight(top: number) {
+    updateContentHeight() {
+        const mainPlayerContainerTransform = this.cpnMainPlayer.getComponent(UITransform);
         const otherPlayerTransform = this.nodeOtherPlayers.getComponent(UITransform);
         const content = this.nodeOtherPlayers.parent.getComponent(UITransform);
-        content.height = top + otherPlayerTransform.height;
+        content.height = otherPlayerTransform.height + (this.cpnMainPlayer.node.active ? mainPlayerContainerTransform.height : 0);
     }
 
     private scrollOtherPlayer(top: number, isAnimated = true) {
@@ -99,11 +102,9 @@ export class LeaderBoard extends ObserverComponent {
                         },
                     }
                 )
-                .call(() => this.updateContentHeight(top))
                 .start();
         } else {
             otherPlayerWidget.editorTop = top;
-            this.updateContentHeight(top);
         }
     }
 
