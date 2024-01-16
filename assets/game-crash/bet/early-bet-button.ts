@@ -45,9 +45,6 @@ export default class EarlyBetButton extends ObserverComponent {
         this.node.active = isWaitingBet || isBetNextRound;
     }
 
-    @handle(GameCrash.PlayerActions.PlayerActionHandlers, (handle) => handle.handleActiveAutoPlayInStore(true))
-    handleAutoPlayStatus() {}
-
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundPlaceBet() {
         return this.placeBetSound;
