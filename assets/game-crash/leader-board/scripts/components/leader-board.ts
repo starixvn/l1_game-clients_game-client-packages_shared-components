@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Node, Prefab, Tween, tween, UITransform, Widget } from "cc";
+import { _decorator, instantiate, Layout, Node, Prefab, Tween, tween, UITransform, Widget } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -82,6 +82,8 @@ export class LeaderBoard extends ObserverComponent {
 
     updateContentHeight() {
         const mainPlayerContainerTransform = this.cpnMainPlayer.getComponent(UITransform);
+        const otherPlayerLayout = this.nodeOtherPlayers.getComponent(Layout);
+        otherPlayerLayout?.updateLayout();
         const otherPlayerTransform = this.nodeOtherPlayers.getComponent(UITransform);
         const content = this.nodeOtherPlayers.parent.getComponent(UITransform);
         content.height = otherPlayerTransform.height + (this.cpnMainPlayer.node.active ? mainPlayerContainerTransform.height : 0);
