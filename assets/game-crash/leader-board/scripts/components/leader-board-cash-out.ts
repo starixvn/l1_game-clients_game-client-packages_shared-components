@@ -29,8 +29,9 @@ export class LeaderBoardCashOut extends Component {
         const { name, multiplier, win, amount } = data;
         this.lblName.string = this.encryptedName(name);
         this.lblBetAmount.string = FormatUtils.numberWithCommas(amount, 2);
-        this.lblMultiplier.string = multiplier ? `${FormatUtils.numberWithCommas(multiplier, 2, false)}x` : "-";
-        this.lblWin.string = win ? FormatUtils.numberWithCommas(win, 2) : "-";
+        const hasCashedOut = multiplier > 0;
+        this.lblMultiplier.string = hasCashedOut ? `${FormatUtils.numberWithCommas(multiplier, 2, false)}x` : "-";
+        this.lblWin.string = hasCashedOut ? FormatUtils.numberWithCommas(win, 2) : "-";
     }
 
     private encryptedName(name: string): string {
