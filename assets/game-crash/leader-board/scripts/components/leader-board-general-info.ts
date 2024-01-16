@@ -20,17 +20,17 @@ export class LeaderBoardGeneralInfo extends ObserverComponent {
     @property(Label)
     lblTotalCashOut: Label = null;
 
-    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.noOfPlayerBet, { fireImmediately: false })
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.noOfPlayerBet)
     private updateNoOfPlayersBet(noOfPlayers: number) {
         this.lblNoOfPlayersBet.string = noOfPlayers.toString();
     }
 
-    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.noOfPlayerCashOut, { fireImmediately: false })
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.noOfPlayerCashOut)
     private updateNoOfPlayersCashOut(noOfPlayerCashOut: number) {
         this.lblNoOfPlayerCashOut.string = noOfPlayerCashOut.toString();
     }
 
-    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.totalCashOut, { fireImmediately: false })
+    @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.totalCashOut)
     private updateTotalCashOut(totalCashOut: number) {
         this.lblTotalCashOut.string = FormatUtils.numberWithCommas(totalCashOut, 2, true);
     }
