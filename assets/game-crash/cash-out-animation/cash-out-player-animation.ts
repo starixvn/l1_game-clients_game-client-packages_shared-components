@@ -32,29 +32,24 @@ export class CashOutPlayerAnimation extends NodeContainer {
     pathBones = [];
 
     @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
-    async renderOtherPlayerCashOut(otherPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
+    renderOtherPlayerCashOut(otherPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         if (otherPlayer) {
             const player = otherPlayer?.cashOut || otherPlayer?.halfCashOut;
             const winAmount = player?.win || 0;
-            await this.createCashOutPlayer(winAmount);
+            this.createCashOutPlayer(winAmount);
         }
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOut, { fireImmediately: false })
+    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOutNotice, { fireImmediately: false })
     renderMainPlayerCashOutFull(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
         cashOut && this.createCashOutMainPlayer(cashOut);
     }
 
-    @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.halfCashOut, { fireImmediately: false })
-    renderMainPlayerCashOutHalf(halfCashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
-        halfCashOut && this.createCashOutMainPlayer(halfCashOut);
+    createCashOutMainPlayer(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
+        this.createCashOutPlayer(cashOut?.win || 0, true);
     }
 
-    async createCashOutMainPlayer(cashOut: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
-        await this.createCashOutPlayer(cashOut?.win || 0, true);
-    }
-
-    private async createCashOutPlayer(winValue: number, isMainPlayer = false) {
+    private createCashOutPlayer(winValue: number, isMainPlayer = false) {
         const node = this.createNode();
         const currentPosition = this.containerSpaceman
             .getComponent(UITransform)
@@ -64,8 +59,7 @@ export class CashOutPlayerAnimation extends NodeContainer {
         if (node?.children[0]) {
             const animationName = isMainPlayer ? CashOutAnim.MainPlayer : CashOutAnim.OtherPlayer;
             const spine = node?.getComponentInChildren(sp.Skeleton);
-            spine.sockets[0].path =
-                isMainPlayer && this.pathBones.length > 0 ? this.pathBones[PathBonesIndex.Main] : this.pathBones[PathBonesIndex.Player];
+            spine.sockets[0].path = isMainPlayer ? this.pathBones[PathBonesIndex.Main] : this.pathBones[PathBonesIndex.Player];
             const animationDuration = spine?.findAnimation(animationName).duration;
             const lblWin = spine.node?.getComponentInChildren(Label);
             if (lblWin) {
@@ -74,7 +68,7 @@ export class CashOutPlayerAnimation extends NodeContainer {
             }
             tween(node)
                 .parallel(
-                    tween(node).call(async () => {
+                    tween(node).call(() => {
                         spine && AnimationUtils.playSpine(spine, animationName);
                     }),
                     tween(node).to(animationDuration, {
@@ -85,7 +79,5 @@ export class CashOutPlayerAnimation extends NodeContainer {
                 )
                 .start();
         }
-
-        return node;
     }
 }
