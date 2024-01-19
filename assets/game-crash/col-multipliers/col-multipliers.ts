@@ -30,7 +30,10 @@ export default class ColMultipliers extends ObserverComponent {
     initMultiplierList() {
         let lastMultiplier = this.multiplierList[this.multiplierList.length - 1];
         while (lastMultiplier < 2000) {
-            const newMultiplier = Math.round(lastMultiplier * 1.5);
+            let newMultiplier = Math.round(lastMultiplier * 1.5);
+            if (newMultiplier > 2000) {
+                newMultiplier = 2000;
+            }
             this.multiplierList.push(newMultiplier);
             lastMultiplier = newMultiplier;
         }
