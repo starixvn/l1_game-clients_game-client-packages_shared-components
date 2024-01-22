@@ -9,6 +9,7 @@ describe("AudioContainer", () => {
     let component: AudioContainer;
     let musicSource: AudioSource;
     let sfxSource: AudioSource;
+    let stoppableSFXSource: AudioSource;
     let mockTime: number;
     let audioConfigsMock: TAudioConfigs;
 
@@ -18,6 +19,7 @@ describe("AudioContainer", () => {
         component = new AudioContainer();
         component.musicSource = musicSource;
         component.sfxSource = sfxSource;
+        component.stoppableSFXSource = stoppableSFXSource;
         const mockDate = new Date(2022, 1, 1);
         mockTime = mockDate.getTime();
         const dateSpy = jest.spyOn(global.Date.prototype, "getTime");
@@ -122,7 +124,7 @@ describe("AudioContainer", () => {
             });
 
             // Act
-            await component.playSFXAudio("test");
+            await component.playSFXAudio("test", false);
 
             // Assert
             expect(component.sfxSource.playOneShot).toHaveBeenCalled();
@@ -141,7 +143,7 @@ describe("AudioContainer", () => {
             });
 
             // Act
-            await component.playSFXAudio("test");
+            await component.playSFXAudio("test", false);
 
             // Assert
             expect(component.sfxSource.playOneShot).not.toHaveBeenCalled();
