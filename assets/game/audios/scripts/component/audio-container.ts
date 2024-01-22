@@ -55,8 +55,6 @@ export class AudioContainer extends ObserverComponent {
         [ECurrentPlayTime.playSFX]: 0,
     };
 
-    private sfxExtra: gc.Audios.AudioData = null;
-
     setIsUserGesture(isUserGesture: boolean) {
         this.isUserGesture = isUserGesture;
     }

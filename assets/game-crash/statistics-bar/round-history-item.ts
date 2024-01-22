@@ -3,7 +3,6 @@ import { _decorator, Label, Node, Sprite, SpriteAtlas } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
-import { CrashUtils } from "../crash-utils";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -61,7 +60,7 @@ export class RoundHistoryItem extends ObserverComponent {
     updateMultiplierValue(value: number, name: string) {
         this.setDisplay(true, false, false);
         this.lblMultiplier.string = `${FormatUtils.numberWithCommas(value, 2, false)}x`;
-        CrashUtils.setSpriteFrameBg(value, this.nodeMultiplier, this.mainAtlas, name);
+        this.setSpriteFrameBg(value, this.nodeMultiplier, this.mainAtlas, name);
     }
 
     checkCrashedGame() {
@@ -80,5 +79,17 @@ export class RoundHistoryItem extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundClick() {
         return gc.Audios.AudioIds.CLICK;
+    }
+
+    private setSpriteFrameBg(multiplier: number, nodeBg: Sprite, mainAtlas: SpriteAtlas, name: string) {
+        let sufix = "";
+        if (multiplier <= 5) {
+            sufix = "blue";
+        } else if (multiplier <= 10) {
+            sufix = "yellow";
+        } else {
+            sufix = "red";
+        }
+        nodeBg.spriteFrame = mainAtlas.getSpriteFrame(`${name}-${sufix}`);
     }
 }
