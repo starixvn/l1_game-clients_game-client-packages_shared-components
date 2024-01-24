@@ -22,25 +22,14 @@ export default class PlaceBetButton extends ObserverComponent {
     @property(Node)
     placeBetNotice: Node = null;
 
-    private amount: number;
-
     private isBetAccepted = false;
-
-    private isEnableAutoCashOut = false;
-
-    private valueAutoCashOut = 0;
 
     private isClickPlaceBet = false;
 
     private readonly placeBetSound = "place_bet";
     onLoad(): void {
-        super.onLoad();
         this.placeBetNotice.active = false;
-    }
-
-    @render(GameCrash.BetInput.BetInputStore, (store) => store.betAmount)
-    updateBetAmount(betAmount: number) {
-        this.amount = betAmount;
+        super.onLoad();
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
@@ -82,16 +71,6 @@ export default class PlaceBetButton extends ObserverComponent {
     @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.updateStatusLatestRoundAccepted())
     checkStatusLatestRound() {}
 
-    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.enable)
-    updateStatusAutoCashOut(isEnable: boolean) {
-        this.isEnableAutoCashOut = isEnable;
-    }
-
-    @render(GameCrash.AutoCashOut.AutoCashOutStore, (store) => store.multiplier)
-    updateValueAutoCashOut(value: number) {
-        this.valueAutoCashOut = value;
-    }
-
     onClickPlaceBet() {
         this.playSoundPlaceBet();
         this.closeAllPopups();
@@ -104,10 +83,8 @@ export default class PlaceBetButton extends ObserverComponent {
     @handle(GameCrash.Popups.PopupsHandlers, (handle) => handle.closeAllPopups())
     closeAllPopups() {}
 
-    @handle(GameCrash.CrashBet.CrashBetHandler, (handle, payload: { autoCashOut: number; amount: number }) => handle.handle(payload))
-    sendBetRequest() {
-        return { autoCashOut: this.isEnableAutoCashOut ? this.valueAutoCashOut : undefined, amount: this.amount };
-    }
+    @handle(GameCrash.CrashBet.CrashBetHandler, (handle) => handle.handle())
+    sendBetRequest() {}
 
     @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.buttonState)
     private setBetButtonVisibility(buttonState: string) {
