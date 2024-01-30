@@ -81,4 +81,15 @@ export default class GameCrashComponent extends GameComponent {
             this.playSound(this.countDownSound);
         }
     }
+
+    @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, isRandom: boolean) => handle.clientSeedGenerationMode(isRandom))
+    clientSeedGenerationMode() {
+        return true;
+    }
+
+    @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openPopup: boolean) => handle.handleClientSeedPopup(openPopup))
+    onClickPFButton() {
+        this.clientSeedGenerationMode();
+        return true;
+    }
 }
