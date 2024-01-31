@@ -28,6 +28,7 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
     }
 
     onClickOverlay() {
+        super.onClickOverlay();
         this.closeClientSeedSetting();
     }
 }

@@ -51,7 +51,9 @@ export class MultipleNodeContainer extends ObserverComponent {
     }
 
     displayOverlay(show: boolean) {
-        this.nodeOverlay.active = show;
+        if (this.nodeOverlay) {
+            this.nodeOverlay.active = show;
+        }
     }
 
     getPrefab(name: string) {
@@ -69,5 +71,7 @@ export class MultipleNodeContainer extends ObserverComponent {
         return node;
     }
 
-    onClickOverlay() {}
+    onClickOverlay() {
+        this.displayOverlay(false);
+    }
 }
