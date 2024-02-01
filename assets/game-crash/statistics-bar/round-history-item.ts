@@ -34,46 +34,58 @@ export class RoundHistoryItem extends ObserverComponent {
     readonly START_BET_TIMER = 10;
     readonly END_BET_TIMER = 0;
 
-    setDisplay(isShowMultiplier: boolean, isShowCountDown: boolean, isShowSprInPlay: boolean) {
-        this.nodeMultiplier.node.active = isShowMultiplier;
-        this.nodeCountdown.active = isShowCountDown;
-        this.nodeInPlay.active = isShowSprInPlay;
+    displayMultiplier(show: boolean) {
+        this.nodeMultiplier.node.active = show;
+    }
+
+    displayCountDown(show: boolean) {
+        this.nodeCountdown.active = show;
+    }
+
+    displayInPlay(show: boolean) {
+        this.nodeInPlay.active = show;
+    }
+
+    hideAllNodes() {
+        this.displayMultiplier(false);
+        this.displayCountDown(false);
+        this.displayInPlay(false);
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.countdownTimer)
     updateCountDownValue(countdownTimer: number) {
         if (countdownTimer <= this.START_BET_TIMER && countdownTimer > this.END_BET_TIMER) {
-            if (!this.checkCrashedGame()) {
+            if (!this.isCrashed()) {
                 this.lblCountdown.string = countdownTimer.toString();
-                this.setDisplay(false, true, false);
+                this.hideAllNodes();
+                this.displayCountDown(true);
             }
         }
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundTime)
     showInPlayStatus(roundTime: number) {
-        if (roundTime === 0 && !this.checkCrashedGame()) {
-            this.setDisplay(false, false, true);
+        if (roundTime === 0 && !this.isCrashed()) {
+            this.hideAllNodes();
+            this.displayInPlay(true);
         }
     }
 
     updateMultiplierValue(value: number, name: string) {
-        this.setDisplay(true, false, false);
+        this.hideAllNodes();
+        this.displayMultiplier(true);
         this.lblMultiplier.string = `${FormatUtils.numberWithCommas(value, 2, false)}x`;
         this.setSpriteFrameBg(value, this.nodeMultiplier, this.mainAtlas, name);
     }
 
-    checkCrashedGame() {
-        if (this.roundInfo.md5Result.hashValue && this.roundInfo.md5Result.rawValue) {
-            return true;
-        }
-        return false;
+    isCrashed() {
+        return !!this?.roundInfo?.pf?.result;
     }
 
-    @handle(GameCrash.Md5Popup.Md5PopupHandler, (handle, info: { isOpenPopupMd5: boolean; roundId: number }) => handle.handleMd5Popup(info))
+    @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, roundId: number) => handle.changeSelectRoundId(roundId))
     onClickRoundItem() {
         this.playSoundClick();
-        return { isOpenPopupMd5: true, roundId: this.roundInfo.roundId };
+        return this.roundInfo.roundId;
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))

@@ -5,7 +5,6 @@ describe("StatisticsBar", () => {
     beforeEach(() => {
         comp = new StatisticsBar();
         comp.content = new Node();
-        comp["rounds"] = [];
     });
     describe("setRoundsInfo", () => {
         it("should return rounds have 2 items", () => {
@@ -31,7 +30,6 @@ describe("StatisticsBar", () => {
 
             //Assert
             expect(comp["updateStatisticsBarInfo"]).toBeCalledWith(rounds);
-            expect(comp["rounds"].length).toEqual(2);
         });
     });
 });

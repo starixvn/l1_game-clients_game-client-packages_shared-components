@@ -1,4 +1,7 @@
+import { GameServiceMessage } from "@sg/game-client-base";
+import { RoundHistory } from "@sg/game-client-base/dist/game/round-histories";
 import { Label, Node, Sprite, SpriteAtlas } from "cc";
+import { stub } from "jest-auto-stub";
 import { RoundHistoryItem } from "./../../../../assets/game-crash/statistics-bar/round-history-item";
 describe("RoundHistoryItem", () => {
     let comp: RoundHistoryItem;
@@ -14,44 +17,59 @@ describe("RoundHistoryItem", () => {
         comp.roundInfo = null;
     });
 
-    describe("setDisplay", () => {
-        it("should display nodeCountdown", () => {
-            //Arrange
-            const isShowMultiplier = false;
-            const isShowCountDown = true;
-            const isShowSprInPlay = false;
-
-            //Act
-            comp.setDisplay(isShowMultiplier, isShowCountDown, isShowSprInPlay);
-
-            //Assert
-            expect(comp.nodeCountdown.active).toEqual(true);
-        });
-
+    describe("displayMultiplier", () => {
         it("should display nodeMultiplier", () => {
             //Arrange
-            const isShowMultiplier = true;
-            const isShowCountDown = false;
-            const isShowSprInPlay = false;
+            comp.nodeMultiplier.node.active = false;
 
             //Act
-            comp.setDisplay(isShowMultiplier, isShowCountDown, isShowSprInPlay);
+            comp.displayMultiplier(true);
 
             //Assert
             expect(comp.nodeMultiplier.node.active).toEqual(true);
         });
+    });
 
-        it("should display node InPlay", () => {
+    describe("displayCountDown", () => {
+        it("should display nodeCountdown", () => {
             //Arrange
-            const isShowMultiplier = false;
-            const isShowCountDown = false;
-            const isShowSprInPlay = true;
+            comp.nodeCountdown.active = false;
 
             //Act
-            comp.setDisplay(isShowMultiplier, isShowCountDown, isShowSprInPlay);
+            comp.displayCountDown(true);
+
+            //Assert
+            expect(comp.nodeCountdown.active).toEqual(true);
+        });
+    });
+
+    describe("displayInPlay", () => {
+        it("should display nodeInPlay", () => {
+            //Arrange
+            comp.nodeInPlay.active = false;
+
+            //Act
+            comp.displayInPlay(true);
 
             //Assert
             expect(comp.nodeInPlay.active).toEqual(true);
+        });
+    });
+
+    describe("displayInPlay", () => {
+        it("should display nodeInPlay", () => {
+            //Arrange
+            comp.nodeMultiplier.node.active = true;
+            comp.nodeCountdown.active = true;
+            comp.nodeInPlay.active = true;
+
+            //Act
+            comp.hideAllNodes();
+
+            //Assert
+            expect(comp.nodeInPlay.active).toEqual(false);
+            expect(comp.nodeCountdown.active).toEqual(false);
+            expect(comp.nodeMultiplier.node.active).toEqual(false);
         });
     });
 
@@ -59,7 +77,7 @@ describe("RoundHistoryItem", () => {
         it("should update node count down is 9", () => {
             //Arrange
             const countdownTimer = 9;
-            comp.checkCrashedGame = jest.fn(() => false);
+            comp.isCrashed = jest.fn(() => false);
 
             //Act
             comp.updateCountDownValue(countdownTimer);
@@ -70,21 +88,17 @@ describe("RoundHistoryItem", () => {
         });
     });
 
-    describe("checkCrashedGame", () => {
+    describe("isCrashed", () => {
         it("should return true", () => {
             //Arrange
-            comp.roundInfo = {
-                md5Result: {
-                    hashValue: "abc",
-                    rawValue: "xyz",
-                },
-                roundId: 123,
-                result: [1.23],
-                settlementResult: null,
-            };
+            comp.roundInfo = stub<RoundHistory>({
+                pf: stub<GameServiceMessage.ProvablyFair>({
+                    result: 1.0,
+                }),
+            });
 
             //Act
-            let isCrashed = comp.checkCrashedGame();
+            let isCrashed = comp.isCrashed();
 
             //Assert
             expect(isCrashed).toEqual(true);
@@ -102,7 +116,7 @@ describe("RoundHistoryItem", () => {
             };
 
             //Act
-            let isCrashed = comp.checkCrashedGame();
+            let isCrashed = comp.isCrashed();
 
             //Assert
             expect(isCrashed).toEqual(false);
@@ -119,8 +133,7 @@ describe("RoundHistoryItem", () => {
             const roundData = comp.onClickRoundItem();
 
             //Assert
-            expect(roundData.isOpenPopupMd5).toEqual(true);
-            expect(roundData.roundId).toEqual(123);
+            expect(roundData).toEqual(comp.roundInfo.roundId);
         });
     });
 });

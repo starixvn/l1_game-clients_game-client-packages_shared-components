@@ -16,18 +16,12 @@ export class StatisticsBar extends ObserverComponent {
     @property(Node)
     content: Node = null;
 
-    protected rounds: gc.RoundHistories.RoundHistory[] = [];
-
     @render(gc.GameCrash.RoundHistory.CrashRoundHistoryStore, (store) => store.roundHistories, { fireImmediately: false })
     setRoundsInfo(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.rounds = rounds;
         this.updateStatisticsBarInfo(rounds);
     }
 
     private updateStatisticsBarInfo(rounds: gc.RoundHistories.RoundHistory[]) {
-        if (this.rounds.length === 0) {
-            return;
-        }
         this.content.destroyAllChildren();
         rounds.forEach((round, index) => {
             if (index > 10) {
