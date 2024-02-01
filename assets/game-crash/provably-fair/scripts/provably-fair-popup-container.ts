@@ -17,7 +17,7 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
         this.showNode(Popup.ClientSeedSetting);
     }
 
-    @render(gc.GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.verification)
+    @render(gc.GameCrash.ProvablyFair.PFVerificationStore, (store) => store.verification)
     private renderVerificationPopup() {
         this.showNode(Popup.PFVerification);
     }
