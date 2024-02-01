@@ -52,11 +52,11 @@ export class RoundHistoryItem extends ObserverComponent {
         this.displayInPlay(false);
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.countdownTimer)
-    updateCountDownValue(countdownTimer: number) {
-        if (countdownTimer <= this.START_BET_TIMER && countdownTimer > this.END_BET_TIMER) {
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundTime)
+    updateCountDownValue(roundTime: number) {
+        if (roundTime <= this.START_BET_TIMER && roundTime > this.END_BET_TIMER) {
             if (!this.isCrashed()) {
-                this.lblCountdown.string = countdownTimer.toString();
+                this.lblCountdown.string = roundTime.toString();
                 this.hideAllNodes();
                 this.displayCountDown(true);
             }
