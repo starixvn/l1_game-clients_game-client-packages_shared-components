@@ -8,6 +8,6 @@ const { render, handle } = Observer;
 
 @ccclass()
 export class ProvablyFairPopup extends ObserverComponent {
-    @render(gc.GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.verification)
+    @render(gc.GameCrash.ProvablyFair.PFVerificationStore, (store) => store.verification)
     private renderVerification(verification: gc.GameCrash.ProvablyFair.CrashPFVerfication) {}
 }

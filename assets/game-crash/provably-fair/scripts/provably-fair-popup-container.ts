@@ -14,10 +14,14 @@ enum Popup {
 export class ProvablyFairPopupContainer extends MultipleNodeContainer {
     @render(gc.GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.openClientSeedPopup)
     private renderOpenClientSeedPopup(openClientSeedPopup: boolean) {
-        this.showNode(Popup.ClientSeedSetting);
+        if (openClientSeedPopup) {
+            this.showNode(Popup.ClientSeedSetting);
+        } else {
+            this.clearNode(Popup.ClientSeedSetting);
+        }
     }
 
-    @render(gc.GameCrash.ProvablyFair.PFVerificationStore, (store) => store.verification)
+    @render(gc.GameCrash.ProvablyFair.PFVerificationStore, (store) => store.verification, { fireImmediately: false })
     private renderVerificationPopup() {
         this.showNode(Popup.PFVerification);
     }

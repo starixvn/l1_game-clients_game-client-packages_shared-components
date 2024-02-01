@@ -27,6 +27,7 @@ export class MultipleNodeContainer extends ObserverComponent {
     }
 
     clearNode(name: string) {
+        this.displayOverlay(false);
         const node = this.visibleNodes[name];
         if (node) {
             const dialog = node.getComponent(Dialog);
