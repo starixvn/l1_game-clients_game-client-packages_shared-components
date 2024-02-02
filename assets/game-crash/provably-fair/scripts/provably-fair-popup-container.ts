@@ -16,12 +16,10 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
     private renderOpenClientSeedPopup(openClientSeedPopup: boolean) {
         if (openClientSeedPopup) {
             this.showNode(Popup.ClientSeedSetting);
-        } else {
-            this.clearNode(Popup.ClientSeedSetting);
         }
     }
 
-    @render(gc.GameCrash.ProvablyFair.PFVerificationStore, (store) => store.verification, { fireImmediately: false })
+    @render(gc.GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.openVerification, { fireImmediately: false })
     private renderVerificationPopup() {
         this.showNode(Popup.PFVerification);
     }
@@ -34,5 +32,10 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
     onClickOverlay() {
         super.onClickOverlay();
         this.closeClientSeedSetting();
+    }
+
+    clearAllNodes() {
+        this.clearNode(Popup.PFVerification);
+        this.clearNode(Popup.ClientSeedSetting);
     }
 }

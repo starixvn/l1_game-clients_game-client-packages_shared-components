@@ -1579,7 +1579,7 @@
     },
     "component": "",
     "_componentId": "40c6a7SWIlH+agIwwUGoF9g",
-    "handler": "",
+    "handler": "onClickVerify",
     "customEventData": ""
   },
   {

@@ -72,7 +72,10 @@ export class MultipleNodeContainer extends ObserverComponent {
         return node;
     }
 
+    clearAllNodes() {}
+
     onClickOverlay() {
         this.displayOverlay(false);
+        this.clearAllNodes();
     }
 }

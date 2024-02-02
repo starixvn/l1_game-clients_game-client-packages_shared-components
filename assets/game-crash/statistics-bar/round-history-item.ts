@@ -82,7 +82,7 @@ export class RoundHistoryItem extends ObserverComponent {
         return !!this?.roundInfo?.pf?.result;
     }
 
-    @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, roundId: number) => handle.changeSelectRoundId(roundId))
+    @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, roundId: number) => handle.openVerificationLatestRound(roundId))
     onClickRoundItem() {
         this.playSoundClick();
         return this.roundInfo.roundId;
