@@ -34,10 +34,18 @@ export class ProvablyFairPopup extends ObserverComponent {
         }
         this.lblRoundId.string = verification.roundId.toString();
         verification.result && (this.lblResult.string = `${verification.result}x`);
+
         verification.serverSeed && this.lblServerSeed.setString(verification.serverSeed);
+        this.lblServerSeed.setActive(!!verification.serverSeed);
+
         verification.serverSeedHash && this.lblServerSeedHash.setString(verification.serverSeedHash);
+        this.lblServerSeedHash.setActive(!!verification.serverSeedHash);
+
         verification.mergeClientSeed && this.lblMergeClientSeed.setString(verification.mergeClientSeed);
+        this.lblMergeClientSeed.setActive(!!verification.mergeClientSeed);
+
         verification.finalHash && this.lblFinalHash.setString(verification.finalHash);
+        this.lblFinalHash.setActive(!!verification.finalHash);
     }
 
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle) => handle.closeVerification())
