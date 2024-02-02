@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Node } from "cc";
+import { _decorator } from "cc";
 
 import Observer from "observer";
 import EffectAppearanceLabel from "../../../game/md5/scripts/effect-appearance-label";
@@ -11,14 +11,6 @@ const { Rounds, Settlements, Translator } = gc;
 export class ServerSeedHash extends ObserverComponent {
     @property(EffectAppearanceLabel)
     sshValue: EffectAppearanceLabel = null;
-
-    @property(Node)
-    nodeContentContainer: Node = null;
-
-    @property
-    lengthOfMd5 = 21;
-
-    private pf: gc.GameServiceMessage.ProvablyFair = null;
 
     @render(Rounds.RoundStore, (store) => store.currentServerSeedHash, { fireImmediately: false })
     private renderSSH(currentServerSeedHash: string) {

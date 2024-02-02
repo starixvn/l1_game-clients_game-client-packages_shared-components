@@ -30,10 +30,6 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     @property(Node)
     nodeOverlayChangeBtn: Node = null;
 
-    onLoad(): void {
-        super.onLoad();
-    }
-
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.openClientSeedPopup)
     openSettingsPopup(openClientSeedPopup: boolean) {
         this.node.active = openClientSeedPopup;

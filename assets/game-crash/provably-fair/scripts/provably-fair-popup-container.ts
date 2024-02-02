@@ -16,12 +16,18 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
     private renderOpenClientSeedPopup(openClientSeedPopup: boolean) {
         if (openClientSeedPopup) {
             this.showNode(Popup.ClientSeedSetting);
+        } else {
+            this.onClose();
         }
     }
 
     @render(gc.GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.openVerification, { fireImmediately: false })
-    private renderVerificationPopup() {
-        this.showNode(Popup.PFVerification);
+    private renderVerificationPopup(openVerification) {
+        if (openVerification) {
+            this.showNode(Popup.PFVerification);
+        } else {
+            this.onClose();
+        }
     }
 
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openCS: boolean) => handle.handleClientSeedPopup(openCS))
@@ -29,13 +35,8 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
         return false;
     }
 
-    onClickOverlay() {
-        super.onClickOverlay();
+    onClose() {
+        super.onClose();
         this.closeClientSeedSetting();
-    }
-
-    clearAllNodes() {
-        this.clearNode(Popup.PFVerification);
-        this.clearNode(Popup.ClientSeedSetting);
     }
 }

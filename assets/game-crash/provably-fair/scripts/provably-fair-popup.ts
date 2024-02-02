@@ -39,4 +39,7 @@ export class ProvablyFairPopup extends ObserverComponent {
         verification.mergeClientSeed && this.lblMergeClientSeed.setString(verification.mergeClientSeed);
         verification.finalHash && this.lblFinalHash.setString(verification.finalHash);
     }
+
+    @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle) => handle.closeVerification())
+    onClickClose() {}
 }
