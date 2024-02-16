@@ -241,8 +241,8 @@
     "_string": "PROVABLY FAIR SETTINGS",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
+    "_actualFontSize": 32,
+    "_fontSize": 32,
     "_fontFamily": "Arial",
     "_lineHeight": 36,
     "_overflow": 1,
@@ -519,7 +519,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -349.989,
-      "y": 12.600000000000001,
+      "y": 20.339999999999996,
       "z": 0
     },
     "_lrot": {
@@ -531,8 +531,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_mobility": 0,
@@ -559,8 +559,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 700,
-      "height": 50
+      "width": 1350,
+      "height": 85.88
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -598,11 +598,11 @@
     "_string": "The final result is determined by a combination of the Server Seed and the Client Seed of the first five betting players of the round.",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
-    "_actualFontSize": 14,
-    "_fontSize": 14,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_fontFamily": "Arial",
-    "_lineHeight": 20,
-    "_overflow": 1,
+    "_lineHeight": 38,
+    "_overflow": 3,
     "_enableWrapText": true,
     "_font": {
       "__uuid__": "0b9efa3d-c517-4301-af5b-ac67552528db",
@@ -683,7 +683,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -349.989,
-      "y": -25,
+      "y": -21.47,
       "z": 0
     },
     "_lrot": {
@@ -695,8 +695,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_mobility": 0,
@@ -723,8 +723,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 662.8740234375,
-      "height": 25.2
+      "width": 1350,
+      "height": 81.35999999999999
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -760,13 +760,13 @@
       "a": 255
     },
     "_string": "The Player can change the Client Seed value and check the fairness of game result from Bet history. ",
-    "_horizontalAlign": 1,
+    "_horizontalAlign": 0,
     "_verticalAlign": 1,
-    "_actualFontSize": 14,
-    "_fontSize": 14,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_fontFamily": "Arial",
-    "_lineHeight": 20,
-    "_overflow": 0,
+    "_lineHeight": 36,
+    "_overflow": 3,
     "_enableWrapText": true,
     "_font": {
       "__uuid__": "0b9efa3d-c517-4301-af5b-ac67552528db",
@@ -835,7 +835,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 100,
-      "height": 75.2
+      "height": 83.61999999999999
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -878,7 +878,7 @@
     "_horizontalDirection": 0,
     "_constraint": 0,
     "_constraintNum": 2,
-    "_affectedByScale": false,
+    "_affectedByScale": true,
     "_isAlign": false,
     "_id": ""
   },
@@ -1023,7 +1023,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 202.0458984375,
+      "width": 215.515625,
       "height": 45.36
     },
     "_anchorPoint": {
@@ -1062,8 +1062,8 @@
     "_string": "CLIENT SEED",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
+    "_actualFontSize": 32,
+    "_fontSize": 32,
     "_fontFamily": "Arial",
     "_lineHeight": 36,
     "_overflow": 0,
@@ -2275,8 +2275,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_mobility": 0,
@@ -2303,8 +2303,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 195.0224609375,
-      "height": 25.2
+      "width": 417.9052734375,
+      "height": 45.36
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -2342,10 +2342,10 @@
     "_string": "Random on every new round",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 14,
-    "_fontSize": 14,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_fontFamily": "Arial",
-    "_lineHeight": 20,
+    "_lineHeight": 36,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
@@ -2535,8 +2535,8 @@
     "_string": "",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 28,
-    "_fontSize": 28,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_fontFamily": "Arial",
     "_lineHeight": 30,
     "_overflow": 1,
@@ -2791,8 +2791,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_mobility": 0,
@@ -2819,8 +2819,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 90.7060546875,
-      "height": 25.2
+      "width": 194.3701171875,
+      "height": 45.36
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -2858,10 +2858,10 @@
     "_string": "Manual input",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 14,
-    "_fontSize": 14,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_fontFamily": "Arial",
-    "_lineHeight": 20,
+    "_lineHeight": 36,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
@@ -3051,8 +3051,8 @@
     "_string": "",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 28,
-    "_fontSize": 28,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_fontFamily": "Arial",
     "_lineHeight": 30,
     "_overflow": 1,
@@ -3339,8 +3339,8 @@
     "_string": "CHANGE",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 28,
-    "_fontSize": 28,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 1,
