@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label } from "cc";
+import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
@@ -10,6 +10,9 @@ const { render, handle } = Observer;
 export class ClientSeedManualPopup extends ObserverComponent {
     @property(Label)
     lblClientSeed: Label = null;
+
+    @property(Node)
+    nodeSaveDisabled: Node = null;
 
     private readonly CLIENT_SEED_CHAR = 4;
 
@@ -32,10 +35,14 @@ export class ClientSeedManualPopup extends ObserverComponent {
             newValue = `${clientSeed}${value}`;
         }
         this.lblClientSeed.string = newValue;
+        if (this.lblClientSeed.string !== "") {
+            this.nodeSaveDisabled.active = false;
+        }
     }
 
     clear() {
         this.lblClientSeed.string = "";
+        this.nodeSaveDisabled.active = true;
     }
 
     removeLastLetter() {
