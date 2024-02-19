@@ -4100,7 +4100,7 @@
       "__id__": 170
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 180
@@ -5053,7 +5053,9 @@
     "nodeManualLabelDisabledBg": {
       "__id__": 157
     },
-    "nodeWarningText": null,
+    "nodeWarningText": {
+      "__id__": 54
+    },
     "_id": ""
   },
   {

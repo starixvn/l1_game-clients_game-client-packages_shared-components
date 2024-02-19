@@ -57,10 +57,8 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.randomClientSeedEnabled)
     updateRandomMode(randomClientSeedEnabled: boolean) {
         if (!randomClientSeedEnabled) {
-            this.nodeOverlayChangeBtn.active = false;
             this.tglManualClientSeed.isChecked = true;
         } else {
-            this.nodeOverlayChangeBtn.active = true;
             this.tglRandomClientSeed.isChecked = true;
         }
     }
@@ -122,7 +120,6 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
         if (notAllowChangeClientSeed) {
             this.nodeRandomLabelDisabledBg.active = true;
             this.nodeManualLabelDisabledBg.active = true;
-            this.nodeOverlayChangeBtn.active = true;
             this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = 153;
             this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = 153;
             this.tglManualClientSeed.interactable = false;
@@ -131,12 +128,16 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
         } else {
             this.nodeRandomLabelDisabledBg.active = false;
             this.nodeManualLabelDisabledBg.active = false;
-            this.nodeOverlayChangeBtn.active = false;
             this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = 255;
             this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = 255;
             this.tglManualClientSeed.interactable = true;
             this.tglRandomClientSeed.interactable = true;
             this.nodeWarningText.active = false;
         }
+    }
+
+    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.allowChangeManualClientSeed)
+    setDisplayChangeBtn(allowChangeManualClientSeed: boolean) {
+        this.nodeOverlayChangeBtn.active = !allowChangeManualClientSeed;
     }
 }
