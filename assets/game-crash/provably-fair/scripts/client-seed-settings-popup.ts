@@ -37,6 +37,7 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
 
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openCS: boolean) => handle.handleClientSeedPopup(openCS))
     closeSettingsPopup() {
+        this.checkIsClickPFIcon();
         return false;
     }
 
@@ -47,12 +48,24 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
 
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.randomClientSeedEnabled)
     updateRandomMode(randomClientSeedEnabled: boolean) {
-        this.tglRandomClientSeed.isChecked = randomClientSeedEnabled;
         if (!randomClientSeedEnabled) {
             this.nodeOverlayChangeBtn.active = false;
-            this.openManualSettingPopup();
+            this.tglManualClientSeed.isChecked = true;
         } else {
             this.nodeOverlayChangeBtn.active = true;
+            this.tglRandomClientSeed.isChecked = true;
+        }
+    }
+
+    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.randomClientSeedEnabled, { fireImmediately: false })
+    resetIsClickPFIcon() {
+        this.checkIsClickPFIcon();
+    }
+
+    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.showManualClientSeedPopup)
+    setDisplayManualClientSeedPopup(showManualClientSeedPopup: boolean) {
+        if (showManualClientSeedPopup) {
+            this.openManualSettingPopup();
         }
     }
 
@@ -78,12 +91,17 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     openManualSettingPopup() {
         const node = instantiate(this.prfClientSeedManual);
         const clientSeedManualPopup = node.getComponent(ClientSeedManualPopup);
-        const manualValue = this.lblManualClientSeed.string === "" ? this.lblRandomClientSeed.string : this.lblManualClientSeed.string;
-        clientSeedManualPopup.setClientSeedValue(manualValue);
+        //const manualValue = this.lblManualClientSeed.string === "" ? this.lblRandomClientSeed.string : this.lblManualClientSeed.string;
+        //clientSeedManualPopup.setClientSeedValue(manualValue);
         this.nodeManualPopup.addChild(node);
     }
 
     clickChangeBtn() {
         this.openManualSettingPopup();
+    }
+
+    @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, isClickPFIcon: boolean) => handle.handleIsClickPFIcon(isClickPFIcon))
+    checkIsClickPFIcon() {
+        return false;
     }
 }

@@ -832,10 +832,10 @@
     "_string": ":",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
+    "_actualFontSize": 60,
+    "_fontSize": 60,
     "_fontFamily": "Arial",
-    "_lineHeight": 44,
+    "_lineHeight": 60,
     "_overflow": 0,
     "_enableWrapText": false,
     "_font": {
@@ -869,8 +869,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 6.88,
-      "height": 44
+      "width": 13.75,
+      "height": 60
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1459,10 +1459,10 @@
     "_string": ":",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
+    "_actualFontSize": 60,
+    "_fontSize": 60,
     "_fontFamily": "Arial",
-    "_lineHeight": 44,
+    "_lineHeight": 60,
     "_overflow": 0,
     "_enableWrapText": false,
     "_font": {
@@ -1496,8 +1496,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 6.88,
-      "height": 44
+      "width": 13.75,
+      "height": 60
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -2101,8 +2101,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_mobility": 0,
@@ -2129,7 +2129,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 78.28125,
+      "width": 195.703125,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -2168,8 +2168,8 @@
     "_string": "SERVER SEED",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 12,
-    "_fontSize": 12,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,
@@ -2589,8 +2589,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_mobility": 0,
@@ -2617,7 +2617,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 126.029296875,
+      "width": 315.0732421875,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -2656,8 +2656,8 @@
     "_string": "SERVER SEED SHA256",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 12,
-    "_fontSize": 12,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,

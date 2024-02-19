@@ -174,8 +174,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.5,
-      "y": 0.5,
+      "x": 1,
+      "y": 1,
       "z": 1
     },
     "_mobility": 0,
@@ -241,8 +241,8 @@
     "_string": "",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 28,
-    "_fontSize": 28,
+    "_actualFontSize": 15,
+    "_fontSize": 15,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,

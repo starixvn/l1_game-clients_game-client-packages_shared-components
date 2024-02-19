@@ -16,12 +16,17 @@ export class ClientSeedManualPopup extends ObserverComponent {
 
     private readonly CLIENT_SEED_CHAR = 4;
 
+    private clientSeedForManualForm = "";
+
     closePopup() {
+        this.updateClientSeedValue(this.clientSeedForManualForm);
         this.node.destroy();
     }
 
+    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.clientSeedForManualForm)
     setClientSeedValue(value: string) {
         this.lblClientSeed.string = value;
+        this.clientSeedForManualForm = value;
     }
 
     getClientSeed() {
@@ -48,19 +53,20 @@ export class ClientSeedManualPopup extends ObserverComponent {
     removeLastLetter() {
         let multiplierString = this.lblClientSeed.string.slice(0, -1);
         if (!multiplierString) {
-            multiplierString = "0";
+            multiplierString = "";
+            this.nodeSaveDisabled.active = true;
         }
 
         this.lblClientSeed.string = multiplierString;
     }
 
     clickSaveBtn() {
-        this.updateClientSeedValue();
+        this.updateClientSeedValue(this.lblClientSeed.string);
         this.closePopup();
     }
 
     @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, value: string) => handle.saveManualClientSeed(value))
-    updateClientSeedValue() {
-        return this.lblClientSeed.string;
+    updateClientSeedValue(value: string) {
+        return value;
     }
 }
