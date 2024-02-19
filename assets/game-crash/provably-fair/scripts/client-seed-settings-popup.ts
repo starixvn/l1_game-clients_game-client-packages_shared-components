@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, Prefab, Toggle, UIOpacity, _decorator, instantiate } from "cc";
+import { Color, Label, Node, Prefab, Toggle, UIOpacity, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
@@ -38,6 +38,9 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     @property(Node)
     nodeWarningText = null;
 
+    private readonly OPACITY_DISABLED = 153;
+    private readonly OPACITY_ENABLED = 255;
+
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.openClientSeedPopup)
     openSettingsPopup(openClientSeedPopup: boolean) {
         this.node.active = openClientSeedPopup;
@@ -58,8 +61,16 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     updateRandomMode(randomClientSeedEnabled: boolean) {
         if (!randomClientSeedEnabled) {
             this.tglManualClientSeed.isChecked = true;
+            this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_DISABLED;
+            this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_ENABLED;
+            this.nodeRandomLabelDisabledBg.active = true;
+            this.nodeManualLabelDisabledBg.active = false;
         } else {
             this.tglRandomClientSeed.isChecked = true;
+            this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_DISABLED;
+            this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_ENABLED;
+            this.nodeManualLabelDisabledBg.active = true;
+            this.nodeRandomLabelDisabledBg.active = false;
         }
     }
 
@@ -120,16 +131,16 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
         if (notAllowChangeClientSeed) {
             this.nodeRandomLabelDisabledBg.active = true;
             this.nodeManualLabelDisabledBg.active = true;
-            this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = 153;
-            this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = 153;
+            this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_DISABLED;
+            this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_DISABLED;
             this.tglManualClientSeed.interactable = false;
             this.tglRandomClientSeed.interactable = false;
             this.nodeWarningText.active = true;
         } else {
             this.nodeRandomLabelDisabledBg.active = false;
             this.nodeManualLabelDisabledBg.active = false;
-            this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = 255;
-            this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = 255;
+            this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_ENABLED;
+            this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_ENABLED;
             this.tglManualClientSeed.interactable = true;
             this.tglRandomClientSeed.interactable = true;
             this.nodeWarningText.active = false;
@@ -139,5 +150,9 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.allowChangeManualClientSeed)
     setDisplayChangeBtn(allowChangeManualClientSeed: boolean) {
         this.nodeOverlayChangeBtn.active = !allowChangeManualClientSeed;
+        this.lblManualClientSeed.color = allowChangeManualClientSeed ? Color.BLACK : Color.WHITE;
+        this.lblManualClientSeed.node.getComponent(UIOpacity).opacity = allowChangeManualClientSeed
+            ? this.OPACITY_ENABLED
+            : this.OPACITY_DISABLED;
     }
 }
