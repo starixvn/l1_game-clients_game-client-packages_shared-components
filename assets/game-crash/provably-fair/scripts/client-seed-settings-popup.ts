@@ -1,8 +1,7 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, Prefab, Toggle, _decorator, instantiate } from "cc";
+import { Label, Node, Prefab, Toggle, UIOpacity, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
-import { ClientSeedManualPopup } from "./client-seed-manual-popup";
 const { ccclass, property } = _decorator;
 const { GameCrash } = gc;
 const { render, handle } = Observer;
@@ -29,6 +28,15 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
 
     @property(Node)
     nodeOverlayChangeBtn: Node = null;
+
+    @property(Node)
+    nodeRandomLabelDisabledBg = null;
+
+    @property(Node)
+    nodeManualLabelDisabledBg = null;
+
+    @property(Node)
+    nodeWarningText = null;
 
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.openClientSeedPopup)
     openSettingsPopup(openClientSeedPopup: boolean) {
@@ -90,9 +98,6 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
 
     openManualSettingPopup() {
         const node = instantiate(this.prfClientSeedManual);
-        const clientSeedManualPopup = node.getComponent(ClientSeedManualPopup);
-        //const manualValue = this.lblManualClientSeed.string === "" ? this.lblRandomClientSeed.string : this.lblManualClientSeed.string;
-        //clientSeedManualPopup.setClientSeedValue(manualValue);
         this.nodeManualPopup.addChild(node);
     }
 
@@ -103,5 +108,35 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, isClickPFIcon: boolean) => handle.handleIsClickPFIcon(isClickPFIcon))
     checkIsClickPFIcon() {
         return false;
+    }
+
+    @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.buttonState, { fireImmediately: false })
+    closePopup(buttonState: string) {
+        if (buttonState === GameCrash.ButtonState.BET_ACCEPTED) {
+            this.closeSettingsPopup();
+        }
+    }
+
+    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.notAllowChangeClientSeed)
+    setOpacityComponents(notAllowChangeClientSeed: boolean) {
+        if (notAllowChangeClientSeed) {
+            this.nodeRandomLabelDisabledBg.active = true;
+            this.nodeManualLabelDisabledBg.active = true;
+            this.nodeOverlayChangeBtn.active = true;
+            this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = 153;
+            this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = 153;
+            this.tglManualClientSeed.interactable = false;
+            this.tglRandomClientSeed.interactable = false;
+            this.nodeWarningText.active = true;
+        } else {
+            this.nodeRandomLabelDisabledBg.active = false;
+            this.nodeManualLabelDisabledBg.active = false;
+            this.nodeOverlayChangeBtn.active = false;
+            this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = 255;
+            this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = 255;
+            this.tglManualClientSeed.interactable = true;
+            this.tglRandomClientSeed.interactable = true;
+            this.nodeWarningText.active = false;
+        }
     }
 }
