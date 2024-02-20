@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Color, Label, Node, Prefab, Toggle, UIOpacity, _decorator, instantiate } from "cc";
+import { Label, Node, Prefab, Toggle, UIOpacity, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
@@ -30,13 +30,13 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     nodeOverlayChangeBtn: Node = null;
 
     @property(Node)
-    nodeRandomLabelDisabledBg = null;
+    nodeRandomLabelDisabledBg: Node = null;
 
     @property(Node)
-    nodeManualLabelDisabledBg = null;
+    nodeManualLabelDisabledBg: Node = null;
 
     @property(Node)
-    nodeWarningText = null;
+    nodeWarningText: Node = null;
 
     private readonly OPACITY_DISABLED = 153;
     private readonly OPACITY_ENABLED = 255;
@@ -132,7 +132,7 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.allowChangeManualClientSeed)
     setDisplayContentManualMode(allowChangeManualClientSeed: boolean) {
         this.nodeOverlayChangeBtn.active = !allowChangeManualClientSeed;
-        this.lblManualClientSeed.color = allowChangeManualClientSeed ? Color.BLACK : Color.WHITE;
+        //this.lblManualClientSeed.color = allowChangeManualClientSeed ? Color.BLACK : Color.WHITE;
         this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = allowChangeManualClientSeed
             ? this.OPACITY_ENABLED
             : this.OPACITY_DISABLED;
@@ -148,5 +148,8 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     setDisplayContentRandomMode(selectedRandomMode: boolean) {
         this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = selectedRandomMode ? this.OPACITY_ENABLED : this.OPACITY_DISABLED;
         this.nodeRandomLabelDisabledBg.active = !selectedRandomMode;
+        this.nodeRandomLabelDisabledBg.parent.getComponent(UIOpacity).opacity = selectedRandomMode
+            ? this.OPACITY_ENABLED
+            : this.OPACITY_DISABLED;
     }
 }
