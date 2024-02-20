@@ -132,7 +132,6 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.allowChangeManualClientSeed)
     setDisplayContentManualMode(allowChangeManualClientSeed: boolean) {
         this.nodeOverlayChangeBtn.active = !allowChangeManualClientSeed;
-        //this.lblManualClientSeed.color = allowChangeManualClientSeed ? Color.BLACK : Color.WHITE;
         this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = allowChangeManualClientSeed
             ? this.OPACITY_ENABLED
             : this.OPACITY_DISABLED;

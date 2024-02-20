@@ -1405,7 +1405,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "pf-icon",
+    "_name": "lblfFairness",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -1490,7 +1490,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "Fairness",
+    "_string": "Common.pf_fairness",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 21,
@@ -1549,7 +1549,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 89.6396484375,
+      "width": 219.07470703125,
       "height": 55.44
     },
     "_anchorPoint": {
@@ -1575,7 +1575,7 @@
     "__prefab": {
       "__id__": 91
     },
-    "key": "Common.win",
+    "key": "Common.pf_fairness",
     "format": 3,
     "prefix": "",
     "suffix": "",
