@@ -20,11 +20,6 @@ export default class GameCrashComponent extends GameComponent {
 
     private readonly countDownSound = "count_down";
 
-    @handle(GameCrash.HideGameCrash.HideGameCrashHandler)
-    onHideGame() {
-        super.onHideGame();
-    }
-
     override isValidResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {
         return result;
     }
