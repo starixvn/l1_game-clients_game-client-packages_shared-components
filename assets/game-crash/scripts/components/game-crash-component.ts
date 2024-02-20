@@ -82,14 +82,8 @@ export default class GameCrashComponent extends GameComponent {
         }
     }
 
-    @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, isClickPFIcon: boolean) => handle.handleIsClickPFIcon(isClickPFIcon))
-    checkIsClickPFIcon() {
-        return true;
-    }
-
     @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openPopup: boolean) => handle.handleClientSeedPopup(openPopup))
     onClickPFButton() {
-        this.checkIsClickPFIcon();
         return true;
     }
 }

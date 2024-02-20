@@ -58,10 +58,6 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
 
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.randomClientSeedEnabled)
     updateRandomMode(randomClientSeedEnabled: boolean) {
-        this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = randomClientSeedEnabled
-            ? this.OPACITY_ENABLED
-            : this.OPACITY_DISABLED;
-        this.nodeRandomLabelDisabledBg.active = !randomClientSeedEnabled;
         if (!randomClientSeedEnabled) {
             this.tglManualClientSeed.isChecked = true;
         } else {
@@ -134,7 +130,7 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     }
 
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.allowChangeManualClientSeed)
-    setDisplayChangeBtn(allowChangeManualClientSeed: boolean) {
+    setDisplayContentManualMode(allowChangeManualClientSeed: boolean) {
         this.nodeOverlayChangeBtn.active = !allowChangeManualClientSeed;
         this.lblManualClientSeed.color = allowChangeManualClientSeed ? Color.BLACK : Color.WHITE;
         this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = allowChangeManualClientSeed
@@ -146,5 +142,11 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle, manualCS: string) => handle.saveManualClientSeed(manualCS))
     resetManualMode() {
         return "";
+    }
+
+    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.selectedRandomMode)
+    setDisplayContentRandomMode(selectedRandomMode: boolean) {
+        this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = selectedRandomMode ? this.OPACITY_ENABLED : this.OPACITY_DISABLED;
+        this.nodeRandomLabelDisabledBg.active = !selectedRandomMode;
     }
 }
