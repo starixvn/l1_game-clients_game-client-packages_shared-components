@@ -48,7 +48,6 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
 
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openCS: boolean) => handle.handleClientSeedPopup(openCS))
     closeSettingsPopup() {
-        this.checkIsClickPFIcon();
         return false;
     }
 
@@ -59,24 +58,16 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
 
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.randomClientSeedEnabled)
     updateRandomMode(randomClientSeedEnabled: boolean) {
+        this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = randomClientSeedEnabled
+            ? this.OPACITY_ENABLED
+            : this.OPACITY_DISABLED;
+        this.nodeRandomLabelDisabledBg.active = !randomClientSeedEnabled;
         if (!randomClientSeedEnabled) {
             this.tglManualClientSeed.isChecked = true;
-            this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_DISABLED;
-            this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_ENABLED;
-            this.nodeRandomLabelDisabledBg.active = true;
-            this.nodeManualLabelDisabledBg.active = false;
         } else {
             this.tglRandomClientSeed.isChecked = true;
-            this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_DISABLED;
-            this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_ENABLED;
-            this.nodeManualLabelDisabledBg.active = true;
-            this.nodeRandomLabelDisabledBg.active = false;
+            this.resetManualMode();
         }
-    }
-
-    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.randomClientSeedEnabled, { fireImmediately: false })
-    resetIsClickPFIcon() {
-        this.checkIsClickPFIcon();
     }
 
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.showManualClientSeedPopup)
@@ -114,11 +105,6 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
         this.openManualSettingPopup();
     }
 
-    @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, isClickPFIcon: boolean) => handle.handleIsClickPFIcon(isClickPFIcon))
-    checkIsClickPFIcon() {
-        return false;
-    }
-
     @render(GameCrash.PlayerActions.PlayerActionStore, (store) => store.buttonState, { fireImmediately: false })
     closePopup(buttonState: string) {
         if (buttonState === GameCrash.ButtonState.BET_ACCEPTED) {
@@ -151,8 +137,14 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     setDisplayChangeBtn(allowChangeManualClientSeed: boolean) {
         this.nodeOverlayChangeBtn.active = !allowChangeManualClientSeed;
         this.lblManualClientSeed.color = allowChangeManualClientSeed ? Color.BLACK : Color.WHITE;
-        this.lblManualClientSeed.node.getComponent(UIOpacity).opacity = allowChangeManualClientSeed
+        this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = allowChangeManualClientSeed
             ? this.OPACITY_ENABLED
             : this.OPACITY_DISABLED;
+        this.nodeManualLabelDisabledBg.active = !allowChangeManualClientSeed;
+    }
+
+    @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle, manualCS: string) => handle.saveManualClientSeed(manualCS))
+    resetManualMode() {
+        return "";
     }
 }
