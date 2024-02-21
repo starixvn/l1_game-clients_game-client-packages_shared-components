@@ -27,6 +27,15 @@ export class ProvablyFairPopup extends ObserverComponent {
     @property(LabelCopyComponent)
     lblFinalHash: LabelCopyComponent = null;
 
+    @property(Label)
+    lblParaVerification: Label = null;
+
+    onLoad() {
+        super.onLoad();
+        const para = `${gc.Translator.commonTranslate("pf_provably_fair_para_2")} https://www.provablyfair.io/`;
+        this.lblParaVerification.string = para;
+    }
+
     @render(gc.GameCrash.ProvablyFair.PFVerificationStore, (store) => store.verification)
     private renderVerification(verification: gc.GameServiceMessage.ProvablyFair) {
         if (!verification) {

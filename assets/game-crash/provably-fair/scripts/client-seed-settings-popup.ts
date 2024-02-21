@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { Label, Node, Prefab, Toggle, UIOpacity, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { ClientSeedManualPopup } from "./client-seed-manual-popup";
 const { ccclass, property } = _decorator;
 const { GameCrash } = gc;
 const { render, handle } = Observer;
@@ -62,7 +63,7 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
             this.tglManualClientSeed.isChecked = true;
         } else {
             this.tglRandomClientSeed.isChecked = true;
-            this.resetManualMode();
+            this.updateValueManualMode("");
         }
     }
 
@@ -94,7 +95,12 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
 
     openManualSettingPopup() {
         const node = instantiate(this.prfClientSeedManual);
+        const comp = node.getComponent(ClientSeedManualPopup);
+        const randomCS = this.lblRandomClientSeed.string;
+        comp.setClientSeedValue(randomCS);
         this.nodeManualPopup.addChild(node);
+        this.lblManualClientSeed.string = randomCS;
+        this.updateValueManualMode(randomCS);
     }
 
     clickChangeBtn() {
@@ -109,7 +115,7 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     }
 
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.notAllowChangeClientSeed)
-    setOpacityComponents(notAllowChangeClientSeed: boolean) {
+    setDisplayComponents(notAllowChangeClientSeed: boolean) {
         if (notAllowChangeClientSeed) {
             this.nodeRandomLabelDisabledBg.active = true;
             this.nodeManualLabelDisabledBg.active = true;
@@ -129,7 +135,7 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
         }
     }
 
-    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.allowChangeManualClientSeed)
+    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.highlightManualMode)
     setDisplayContentManualMode(allowChangeManualClientSeed: boolean) {
         this.nodeOverlayChangeBtn.active = !allowChangeManualClientSeed;
         this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = allowChangeManualClientSeed
@@ -139,11 +145,11 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     }
 
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle, manualCS: string) => handle.saveManualClientSeed(manualCS))
-    resetManualMode() {
-        return "";
+    updateValueManualMode(value: string) {
+        return value;
     }
 
-    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.selectedRandomMode)
+    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.highlightRandomMode)
     setDisplayContentRandomMode(selectedRandomMode: boolean) {
         this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = selectedRandomMode ? this.OPACITY_ENABLED : this.OPACITY_DISABLED;
         this.nodeRandomLabelDisabledBg.active = !selectedRandomMode;

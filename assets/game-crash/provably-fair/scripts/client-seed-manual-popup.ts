@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
+import { Dialog } from "../../../shared/common-components/dialogs/dialog";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
 const { GameCrash } = gc;
@@ -16,17 +17,8 @@ export class ClientSeedManualPopup extends ObserverComponent {
 
     private readonly CLIENT_SEED_CHAR = 4;
 
-    private clientSeedForManualForm = "";
-
-    closePopup() {
-        this.updateClientSeedValue(this.clientSeedForManualForm);
-        this.node.destroy();
-    }
-
-    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.clientSeedForManualForm)
     setClientSeedValue(value: string) {
         this.lblClientSeed.string = value;
-        this.clientSeedForManualForm = value;
     }
 
     getClientSeed() {
@@ -62,7 +54,7 @@ export class ClientSeedManualPopup extends ObserverComponent {
 
     clickSaveBtn() {
         this.updateClientSeedValue(this.lblClientSeed.string);
-        this.closePopup();
+        this.node.getComponent(Dialog).hide();
     }
 
     @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, value: string) => handle.saveManualClientSeed(value))
