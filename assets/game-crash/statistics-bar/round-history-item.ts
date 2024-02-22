@@ -79,7 +79,7 @@ export class RoundHistoryItem extends ObserverComponent {
     }
 
     isCrashed() {
-        return !!this?.roundInfo?.pf?.result;
+        return !!this?.roundInfo?.result;
     }
 
     @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, roundId: number) => handle.openVerificationLatestRound(roundId))
