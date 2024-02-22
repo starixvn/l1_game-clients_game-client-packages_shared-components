@@ -1045,10 +1045,10 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 150
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
     },
     "_spriteFrame": {
       "__uuid__": "7ed9e473-d804-4a64-b2ad-05bb4a985734@7f369",
