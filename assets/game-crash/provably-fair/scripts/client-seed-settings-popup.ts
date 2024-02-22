@@ -153,8 +153,6 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     setDisplayContentRandomMode(selectedRandomMode: boolean) {
         this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = selectedRandomMode ? this.OPACITY_ENABLED : this.OPACITY_DISABLED;
         this.nodeRandomLabelDisabledBg.active = !selectedRandomMode;
-        this.nodeRandomLabelDisabledBg.parent.getComponent(UIOpacity).opacity = selectedRandomMode
-            ? this.OPACITY_ENABLED
-            : this.OPACITY_DISABLED;
+        this.lblRandomClientSeed.node.getComponent(UIOpacity).opacity = selectedRandomMode ? this.OPACITY_ENABLED : this.OPACITY_DISABLED;
     }
 }

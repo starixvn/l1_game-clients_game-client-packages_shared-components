@@ -4,6 +4,7 @@ import { ObserverComponent } from "../../../shared/common-components/observer-co
 import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { LabelCopyComponent } from "../../../shared/common-components/copy-label/scripts/label-copy-component";
+import { ClientSeedInfo } from "./client-seed-info";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -30,6 +31,9 @@ export class ProvablyFairPopup extends ObserverComponent {
     @property(Label)
     lblParaVerification: Label = null;
 
+    @property({ type: ClientSeedInfo })
+    listClientSeedInfo: ClientSeedInfo[] = [];
+
     onLoad() {
         super.onLoad();
         const para = `${gc.Translator.commonTranslate("pf_provably_fair_para_2")} https://www.provablyfair.io/`;
@@ -55,6 +59,16 @@ export class ProvablyFairPopup extends ObserverComponent {
 
         verification.finalHash && this.lblFinalHash.setString(verification.finalHash);
         this.lblFinalHash.setActive(!!verification.finalHash);
+        this.listClientSeedInfo.forEach((clientSeedInfo) => {
+            clientSeedInfo.activeDisabledBg(true);
+        });
+        if (verification.clientSeeds && verification.clientSeeds.length > 0) {
+            verification.clientSeeds.forEach((clientSeed, index) => {
+                const info = this.listClientSeedInfo[index];
+                info.setDisplay(clientSeed);
+                info.activeDisabledBg(false);
+            });
+        }
     }
 
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle) => handle.closeVerification())
