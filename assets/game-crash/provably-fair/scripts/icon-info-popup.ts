@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, Label, Node } from "cc";
+import { _decorator, Button, Component, Label, Node } from "cc";
 import { AnimationUtils } from "../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
 const { fadeIn } = AnimationUtils;
@@ -9,8 +9,8 @@ export class IconInfoPopup extends Component {
     @property(Node)
     nodeTooltip: Node = null;
 
-    @property(Node)
-    nodeOverlay: Node = null;
+    @property(Button)
+    btnBgOverlay: Button = null;
 
     @property(Label)
     lblContent: Label = null;
@@ -18,17 +18,21 @@ export class IconInfoPopup extends Component {
     @property
     keyText: string = "";
 
+    onLoad() {
+        this.btnBgOverlay.node.on("click", this.hideTooltip, this);
+    }
+
     hideTooltip() {
-        this.nodeTooltip.active = this.nodeOverlay.active = false;
+        this.nodeTooltip.active = this.btnBgOverlay.node.active = false;
     }
 
     showTooltip() {
-        this.nodeTooltip.active = this.nodeOverlay.active = true;
+        this.nodeTooltip.active = this.btnBgOverlay.node.active = true;
     }
 
     clickInfoIcon() {
         this.nodeTooltip.active = !this.nodeTooltip.active;
-        this.nodeOverlay.active = !this.nodeOverlay.active;
+        this.btnBgOverlay.node.active = !this.btnBgOverlay.node.active;
         this.setContentTooltip(this.keyText);
     }
 
