@@ -1,6 +1,8 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Component, Label, Node } from "cc";
+import { AnimationUtils } from "../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
+const { fadeIn } = AnimationUtils;
 
 @ccclass
 export class IconInfoPopup extends Component {
@@ -16,8 +18,6 @@ export class IconInfoPopup extends Component {
     @property
     keyText: string = "";
 
-    private readonly PADDIND = 10;
-
     hideTooltip() {
         this.nodeTooltip.active = this.nodeOverlay.active = false;
     }
@@ -27,12 +27,13 @@ export class IconInfoPopup extends Component {
     }
 
     clickInfoIcon() {
-        this.setContentTooltip(this.keyText);
         this.nodeTooltip.active = !this.nodeTooltip.active;
         this.nodeOverlay.active = !this.nodeOverlay.active;
+        this.setContentTooltip(this.keyText);
     }
 
     setContentTooltip(key: string) {
         this.lblContent.string = `${gc.Translator.commonTranslate(key)}`;
+        fadeIn(this.lblContent.node, 0.3);
     }
 }
