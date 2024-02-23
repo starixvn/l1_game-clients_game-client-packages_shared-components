@@ -1289,8 +1289,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 109.25,
-      "height": 50.4
+      "width": 200,
+      "height": 70
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1332,7 +1332,7 @@
     "_fontSize": 38,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
-    "_overflow": 0,
+    "_overflow": 1,
     "_enableWrapText": true,
     "_font": {
       "__uuid__": "0b9efa3d-c517-4301-af5b-ac67552528db",
