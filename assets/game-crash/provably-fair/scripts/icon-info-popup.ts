@@ -19,20 +19,27 @@ export class IconInfoPopup extends Component {
     keyText: string = "";
 
     onLoad() {
-        this.btnBgOverlay.node.on("click", this.hideTooltip, this);
+        this.btnBgOverlay.node.on("click", this.hideTooltipComp, this);
     }
 
-    hideTooltip() {
+    hideTooltipComp() {
         this.nodeTooltip.active = this.btnBgOverlay.node.active = false;
     }
 
-    showTooltip() {
+    showTooltipComp() {
         this.nodeTooltip.active = this.btnBgOverlay.node.active = true;
+    }
+
+    setDisplayTooltip(show: boolean) {
+        this.nodeTooltip.active = show;
     }
 
     clickInfoIcon() {
         this.nodeTooltip.active = !this.nodeTooltip.active;
-        this.btnBgOverlay.node.active = !this.btnBgOverlay.node.active;
+        const isActiveBgOverlay = this.btnBgOverlay.node.active;
+        if (!isActiveBgOverlay) {
+            this.btnBgOverlay.node.active = !this.btnBgOverlay.node.active;
+        }
         this.setContentTooltip(this.keyText);
     }
 
