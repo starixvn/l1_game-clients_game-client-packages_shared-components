@@ -41,6 +41,7 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
 
     private readonly OPACITY_DISABLED = 153;
     private readonly OPACITY_ENABLED = 255;
+    private manualClientSeed = "";
 
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.openClientSeedPopup)
     openSettingsPopup(openClientSeedPopup: boolean) {
@@ -76,6 +77,7 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
 
     @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.manualClientSeed)
     updateManualClientSeed(manualClientSeed: string) {
+        this.manualClientSeed = manualClientSeed;
         if (manualClientSeed === "") {
             this.lblManualClientSeed.string = "";
         } else {
@@ -97,10 +99,15 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
         const node = instantiate(this.prfClientSeedManual);
         const comp = node.getComponent(ClientSeedManualPopup);
         const randomCS = this.lblRandomClientSeed.string;
-        comp.setClientSeedValue(randomCS);
+        if (this.manualClientSeed === "") {
+            comp.setClientSeedValue(randomCS);
+            this.lblManualClientSeed.string = randomCS;
+            this.updateValueManualMode(randomCS);
+        } else {
+            comp.setClientSeedValue(this.manualClientSeed);
+        }
+
         this.nodeManualPopup.addChild(node);
-        this.lblManualClientSeed.string = randomCS;
-        this.updateValueManualMode(randomCS);
     }
 
     clickChangeBtn() {
