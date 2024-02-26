@@ -39,9 +39,6 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     @property(Node)
     nodeWarningText: Node = null;
 
-    @property(Label)
-    lblCombinedHash: Label = null;
-
     private readonly OPACITY_DISABLED = 153;
     private readonly OPACITY_ENABLED = 255;
 
@@ -157,10 +154,5 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
         this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = selectedRandomMode ? this.OPACITY_ENABLED : this.OPACITY_DISABLED;
         this.nodeRandomLabelDisabledBg.active = !selectedRandomMode;
         this.lblRandomClientSeed.node.getComponent(UIOpacity).opacity = selectedRandomMode ? this.OPACITY_ENABLED : this.OPACITY_DISABLED;
-    }
-
-    @render(Rounds.RoundStore, (store) => store.currentServerSeedHash)
-    private renderSSH(currentServerSeedHash: string) {
-        this.lblCombinedHash.string = currentServerSeedHash;
     }
 }
