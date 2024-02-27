@@ -52,6 +52,7 @@ export class ProvablyFairPopup extends ObserverComponent {
         if (!verification) {
             return;
         }
+
         const { serverSeed, serverSeedHash, mergeClientSeed, finalHash, clientSeeds, result, roundId } = verification;
         console.log("renderVerification", verification);
         this.lblRoundId.string = roundId.toString();
@@ -90,5 +91,14 @@ export class ProvablyFairPopup extends ObserverComponent {
 
     clickGuideCombinedHash() {
         this.listTooltip[0].setDisplayTooltip(false);
+    }
+
+    clickVerify() {
+        this.openVerificationPopup();
+    }
+
+    @handle(gc.PFVerification.WebViewPFVerificationHandlers.VerificationPopupHandler)
+    openVerificationPopup() {
+        return true;
     }
 }

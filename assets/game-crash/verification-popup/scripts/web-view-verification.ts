@@ -1,0 +1,59 @@
+import gc from "@sg/game-client-base";
+import { _decorator } from "cc";
+import Observer from "observer";
+import LoadWebView from "../../../shared/common-components/web-view/load-web-view";
+
+const { GameGuide, GameConfigs, UrlUtils, PFVerification } = gc;
+const { handle, render } = Observer;
+const { ccclass } = _decorator;
+
+@ccclass
+export default class WebViewVerification extends LoadWebView {
+    private provablyFair: gc.GameServiceMessage.ProvablyFair;
+
+    @handle(PFVerification.WebViewPFVerificationHandlers.GetVerificationURL)
+    initUrl(specialDirection = "", scrollToId = "") {
+        const theme = "blue";
+        return { theme, specialDirection, scrollToId };
+    }
+
+    @render(gc.RoundPF.RoundPFStore, (store) => store.pf)
+    setGameConfigs(pf: gc.GameServiceMessage.RoundPFResult) {
+        this.provablyFair = pf;
+    }
+
+    sendDataToIframe(provablyFair: gc.GameServiceMessage.ProvablyFair) {
+        const guideUrl = "http://localhost:3001/pf";
+        this.onWebViewLoaded = () => {
+            (document.getElementById("webview") as HTMLIFrameElement)?.contentWindow?.postMessage(JSON.stringify(provablyFair), guideUrl);
+        };
+    }
+
+    @render(PFVerification.WebViewPFVerificationStore, (store) => store.url)
+    loadGameGuide(url: string) {
+        if (url) {
+            console.log("loadGame", url);
+            this.url = "http://localhost:3001/pf";
+            this.sendDataToIframe(this.provablyFair);
+            this.loadWebView();
+        }
+    }
+    loadWebView() {
+        if (this.url) {
+            this.showLoading();
+            this.hideWebView();
+
+            this.webView.url = this.url;
+        }
+    }
+
+    onClickClose() {
+        this.node?.destroy();
+        this.closeVerificationPopup();
+    }
+
+    @handle(gc.PFVerification.WebViewPFVerificationHandlers.VerificationPopupHandler)
+    closeVerificationPopup() {
+        return false;
+    }
+}
