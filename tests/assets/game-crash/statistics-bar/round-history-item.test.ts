@@ -73,14 +73,14 @@ describe("RoundHistoryItem", () => {
         });
     });
 
-    describe("updateCountDownValue", () => {
+    describe("renderRoundTime", () => {
         it("should update node count down is 9", () => {
             //Arrange
             const countdownTimer = 9;
             comp.isCrashed = jest.fn(() => false);
 
             //Act
-            comp.updateCountDownValue(countdownTimer);
+            comp.renderRoundTime(countdownTimer);
 
             //Assert
             expect(comp.lblCountdown.string).toEqual("9");

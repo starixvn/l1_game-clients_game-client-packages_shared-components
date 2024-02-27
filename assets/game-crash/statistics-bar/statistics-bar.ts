@@ -30,7 +30,11 @@ export class StatisticsBar extends ObserverComponent {
             const node = instantiate(this.prbStatisticsItem);
             const control = node.getComponent(RoundHistoryItem);
             control.roundInfo = round;
-            control.updateMultiplierValue(+round.result, "statistics-bar");
+            control.hideAllNodes();
+            control.setPrefixFrame("statistics-bar");
+            if (control.isCrashed()) {
+                control.updateMultiplierValue(+round.result);
+            }
             this.content.addChild(node);
         });
     }

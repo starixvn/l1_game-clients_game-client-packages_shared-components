@@ -27,6 +27,7 @@ export class RoundHistoryItem extends ObserverComponent {
 
     @property(SpriteAtlas)
     mainAtlas: SpriteAtlas = null;
+    prefixFrameBg = "";
 
     public isLastRound = false;
 
@@ -53,29 +54,23 @@ export class RoundHistoryItem extends ObserverComponent {
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundTime)
-    updateCountDownValue(roundTime: number) {
-        if (roundTime <= this.START_BET_TIMER && roundTime > this.END_BET_TIMER) {
-            if (!this.isCrashed()) {
+    renderRoundTime(roundTime: number) {
+        if (!this.isCrashed()) {
+            if (roundTime <= this.START_BET_TIMER && roundTime > this.END_BET_TIMER) {
                 this.lblCountdown.string = roundTime.toString();
                 this.hideAllNodes();
                 this.displayCountDown(true);
+            } else if (roundTime <= 0) {
+                this.hideAllNodes();
+                this.displayInPlay(true);
             }
         }
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.roundTime)
-    showInPlayStatus(roundTime: number) {
-        if (roundTime === 0 && !this.isCrashed()) {
-            this.hideAllNodes();
-            this.displayInPlay(true);
-        }
-    }
-
-    updateMultiplierValue(value: number, name: string) {
-        this.hideAllNodes();
+    updateMultiplierValue(value: number) {
         this.displayMultiplier(true);
         this.lblMultiplier.string = `${FormatUtils.numberWithCommas(value, 2, false)}x`;
-        this.setSpriteFrameBg(value, this.nodeMultiplier, this.mainAtlas, name);
+        this.updateFrameBg(value);
     }
 
     isCrashed() {
@@ -93,7 +88,11 @@ export class RoundHistoryItem extends ObserverComponent {
         return gc.Audios.AudioIds.CLICK;
     }
 
-    private setSpriteFrameBg(multiplier: number, nodeBg: Sprite, mainAtlas: SpriteAtlas, name: string) {
+    setPrefixFrame(name: string) {
+        this.prefixFrameBg = name;
+    }
+
+    private updateFrameBg(multiplier: number) {
         let sufix = "";
         if (multiplier <= 5) {
             sufix = "blue";
@@ -102,6 +101,6 @@ export class RoundHistoryItem extends ObserverComponent {
         } else {
             sufix = "red";
         }
-        nodeBg.spriteFrame = mainAtlas.getSpriteFrame(`${name}-${sufix}`);
+        this.nodeMultiplier.spriteFrame = this.mainAtlas.getSpriteFrame(`${this.prefixFrameBg}-${sufix}`);
     }
 }
