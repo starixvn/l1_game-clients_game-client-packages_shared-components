@@ -1,4 +1,3 @@
-import { GameServiceMessage } from "@sg/game-client-base";
 import { RoundHistory } from "@sg/game-client-base/dist/game/round-histories";
 import { Label, Node, Sprite, SpriteAtlas } from "cc";
 import { stub } from "jest-auto-stub";
@@ -89,12 +88,10 @@ describe("RoundHistoryItem", () => {
     });
 
     describe("isCrashed", () => {
-        it("should return true", () => {
+        it("should return true, when result has value", () => {
             //Arrange
             comp.roundInfo = stub<RoundHistory>({
-                pf: stub<GameServiceMessage.ProvablyFair>({
-                    result: 1.0,
-                }),
+                result: 1.0,
             });
 
             //Act
@@ -104,16 +101,11 @@ describe("RoundHistoryItem", () => {
             expect(isCrashed).toEqual(true);
         });
 
-        it("should return false", () => {
+        it("should return false, when result has no value", () => {
             //Arrange
-            comp.roundInfo = {
-                md5Result: {
-                    hashValue: "abc",
-                },
-                roundId: 123,
-                result: [1.23],
-                settlementResult: null,
-            };
+            comp.roundInfo = stub<RoundHistory>({
+                result: undefined,
+            });
 
             //Act
             let isCrashed = comp.isCrashed();
@@ -127,7 +119,7 @@ describe("RoundHistoryItem", () => {
         it("should open popup md5", () => {
             //Arrange
             comp.playSoundClick = jest.fn();
-            comp.roundInfo = { roundId: 123, result: [1.23], settlementResult: null };
+            comp.roundInfo = { roundId: 123, result: 1.23, settlementResult: null };
 
             //Act
             const roundData = comp.onClickRoundItem();
