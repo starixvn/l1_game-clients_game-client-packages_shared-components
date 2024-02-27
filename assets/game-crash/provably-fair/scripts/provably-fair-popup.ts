@@ -49,6 +49,7 @@ export class ProvablyFairPopup extends ObserverComponent {
         if (!verification) {
             return;
         }
+        console.log("renderVerification");
         this.lblRoundId.string = verification.roundId.toString();
         verification.result && (this.lblResult.string = `${verification.result}x`);
 

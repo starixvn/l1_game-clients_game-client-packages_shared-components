@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Button, Component, Label, Node } from "cc";
+import { _decorator, Button, Component, Label, Node, UIOpacity } from "cc";
 import { Md5CopyButton } from "../../../../game/md5/scripts/md5-copy-button";
 const { ccclass, property } = _decorator;
 
@@ -14,6 +14,12 @@ export class LabelCopyComponent extends Component {
     @property(Node)
     nodeDisable: Node = null;
 
+    @property(Node)
+    nodeOverlayText = null;
+
+    @property(Node)
+    nodeDisableCopy = null;
+
     private cpnCopyButton: Md5CopyButton = null;
 
     onLoad() {
@@ -26,10 +32,15 @@ export class LabelCopyComponent extends Component {
 
     setActive(active: boolean) {
         this.btnCopy.interactable = active;
+        this.lblText.node.parent.getComponent(UIOpacity).opacity = active ? 255 : 153;
 
         if (this.nodeDisable) {
             this.nodeDisable.active = !active;
         }
+        if (this.nodeOverlayText) {
+            this.nodeOverlayText.active = active;
+        }
+        this.nodeDisableCopy && (this.nodeDisableCopy.active = !active);
     }
 
     clickCopyButton() {
