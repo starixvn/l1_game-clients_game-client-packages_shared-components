@@ -7,6 +7,6 @@ const { render, handle } = Observer;
 
 @ccclass
 export class IconGuide extends ObserverComponent {
-    @handle(gc.GuidePF.GuidePFHandlers, (handler) => handler.handle())
+    @handle(gc.GuidePF.GuidePFHandlers, (handle) => handle.handle())
     clickOpenGuide() {}
 }

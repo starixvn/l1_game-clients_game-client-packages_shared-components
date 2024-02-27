@@ -8,8 +8,11 @@ const { render } = Observer;
 
 @ccclass
 export class GuidePFContainer extends NodeContainer {
-    @render(gc.GuidePF.GuidePFStore, (store) => store.url)
+    @render(gc.GuidePF.GuidePFStore, (store) => store.url, { fireImmediately: false })
     protected openDialog(url: string) {
+        if (url === "") {
+            return;
+        }
         const guide = this.createNode();
         guide.getComponent(WebViewGuide)?.loadGameGuide(url);
     }
