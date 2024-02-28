@@ -16,7 +16,7 @@ export class IconInfoPopup extends Component {
     lblContent: Label = null;
 
     @property
-    keyText: string = "";
+    keyText = "";
 
     onLoad() {
         this.btnBgOverlay.node.on("click", this.hideTooltipComp, this);
