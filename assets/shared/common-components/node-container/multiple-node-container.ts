@@ -14,6 +14,9 @@ class PrefabItem {
 
 @ccclass("MultipleNodeContainer")
 export class MultipleNodeContainer extends ObserverComponent {
+    @property(Node)
+    container: Node = null;
+
     @property({ type: PrefabItem })
     prefabItems: PrefabItem[] = [];
 
@@ -66,7 +69,7 @@ export class MultipleNodeContainer extends ObserverComponent {
         }
         const node = instantiate(prefab);
         node.name = name;
-        this.node.addChild(node);
+        this.container.addChild(node);
         return node;
     }
 
