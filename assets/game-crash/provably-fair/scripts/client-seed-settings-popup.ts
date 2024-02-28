@@ -43,11 +43,6 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     private readonly OPACITY_ENABLED = 255;
     private manualClientSeed = "";
 
-    @render(GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.openClientSeedPopup)
-    openSettingsPopup(openClientSeedPopup: boolean) {
-        this.node.active = openClientSeedPopup;
-    }
-
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openCS: boolean) => handle.handleClientSeedPopup(openCS))
     closeSettingsPopup() {
         return false;

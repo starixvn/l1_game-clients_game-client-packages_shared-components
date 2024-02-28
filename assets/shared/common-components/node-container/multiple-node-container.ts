@@ -17,9 +17,6 @@ export class MultipleNodeContainer extends ObserverComponent {
     @property({ type: PrefabItem })
     prefabItems: PrefabItem[] = [];
 
-    @property(Node)
-    nodeOverlay: Node = null;
-
     protected visibleNodes: { [nodeName: string]: Node } = {};
 
     isNodeVisible(name: string): boolean {
@@ -27,7 +24,7 @@ export class MultipleNodeContainer extends ObserverComponent {
     }
 
     clearNode(name: string) {
-        this.displayOverlay(false);
+        this.showDialog(false);
         const node = this.visibleNodes[name];
         if (node) {
             const dialog = node.getComponent(Dialog);
@@ -41,7 +38,7 @@ export class MultipleNodeContainer extends ObserverComponent {
     }
 
     showNode(name: string) {
-        this.displayOverlay(true);
+        this.showDialog(true);
 
         if (this.isNodeVisible(name)) {
             return;
@@ -51,9 +48,10 @@ export class MultipleNodeContainer extends ObserverComponent {
         this.visibleNodes[name] = node;
     }
 
-    displayOverlay(show: boolean) {
-        if (this.nodeOverlay) {
-            this.nodeOverlay.active = show;
+    showDialog(show: boolean) {
+        const dialog = this.node.getComponent(Dialog);
+        if (dialog) {
+            show ? dialog.show() : dialog.hide();
         }
     }
 
@@ -79,7 +77,7 @@ export class MultipleNodeContainer extends ObserverComponent {
     }
 
     onClose() {
-        this.displayOverlay(false);
+        this.showDialog(false);
         this.clearAllNodes();
     }
 }

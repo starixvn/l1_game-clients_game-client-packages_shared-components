@@ -19,16 +19,25 @@ export class Dialog extends Component {
     }
 
     show() {
-        fadeIn(this.nodeFadeBackground, 0.1);
-        fadeIn(this.nodeBody, 0.3);
-        bounceIn(this.nodeBody, this.nodeBody.scale, this.appearDuration);
+        if (this.nodeFadeBackground) {
+            this.nodeFadeBackground.active = true;
+            fadeIn(this.nodeFadeBackground, 0.1);
+        }
+        if (this.nodeBody) {
+            fadeIn(this.nodeBody, 0.3);
+            bounceIn(this.nodeBody, this.nodeBody.scale, this.appearDuration);
+        }
     }
 
     hide() {
-        fadeOut(this.nodeFadeBackground, this.appearDuration);
-        fadeOut(this.nodeBody, this.appearDuration);
-        bounceOut(this.nodeBody, this.appearDuration).then(() => {
-            this.node?.destroy();
-        });
+        if (this.nodeFadeBackground) {
+            fadeOut(this.nodeFadeBackground, this.appearDuration).then(() => (this.nodeFadeBackground.active = false));
+        }
+        if (this.nodeBody) {
+            fadeOut(this.nodeBody, this.appearDuration);
+            bounceOut(this.nodeBody, this.appearDuration).then(() => {
+                this.node?.destroy();
+            });
+        }
     }
 }
