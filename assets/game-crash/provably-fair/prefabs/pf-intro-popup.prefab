@@ -329,7 +329,7 @@
     },
     "component": "",
     "_componentId": "adf80wMtt5NH5kM4GVS10nu",
-    "handler": "resetUrl",
+    "handler": "onClosePopup",
     "customEventData": ""
   },
   {
@@ -1606,7 +1606,7 @@
     },
     "component": "",
     "_componentId": "adf80wMtt5NH5kM4GVS10nu",
-    "handler": "resetUrl",
+    "handler": "onClosePopup",
     "customEventData": ""
   },
   {
@@ -1823,6 +1823,7 @@
     "nodeBody": {
       "__id__": 17
     },
+    "autoShowWhenEnable": true,
     "_id": ""
   },
   {

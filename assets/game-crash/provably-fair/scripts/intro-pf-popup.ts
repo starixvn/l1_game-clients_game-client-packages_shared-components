@@ -7,6 +7,7 @@ const { render, handle } = Observer;
 
 @ccclass
 export class IntroPFPopup extends ObserverComponent {
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     @handle(gc.GuidePF.GuidePFHandlers, (handle) => handle.resetUrl())
-    resetUrl() {}
+    onClosePopup() {}
 }
