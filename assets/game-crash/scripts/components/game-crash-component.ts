@@ -76,9 +76,4 @@ export default class GameCrashComponent extends GameComponent {
             this.playSound(this.countDownSound);
         }
     }
-
-    @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openPopup: boolean) => handle.handleClientSeedPopup(openPopup))
-    onClickPFButton() {
-        return true;
-    }
 }

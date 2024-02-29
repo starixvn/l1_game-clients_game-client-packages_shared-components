@@ -6971,8 +6971,8 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "005bc0+TtJHraxrdPo4rGru",
-    "handler": "hide",
+    "_componentId": "04121Ivv3xBA68QBubEWESu",
+    "handler": "onClosePopup",
     "customEventData": ""
   },
   {
@@ -7180,6 +7180,7 @@
     "nodeBody": {
       "__id__": 19
     },
+    "autoShowWhenEnable": true,
     "_id": ""
   },
   {

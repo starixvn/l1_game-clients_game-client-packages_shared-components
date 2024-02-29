@@ -17,6 +17,11 @@ export class ClientSeedManualPopup extends ObserverComponent {
 
     private readonly CLIENT_SEED_CHAR = 4;
 
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
+    onClosePopup() {
+        this.node.getComponent(Dialog)?.hide();
+    }
+
     setClientSeedValue(value: string) {
         this.lblClientSeed.string = value;
     }
@@ -25,6 +30,7 @@ export class ClientSeedManualPopup extends ObserverComponent {
         return this.lblClientSeed.string;
     }
 
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     addValue(event, value) {
         const clientSeed = this.lblClientSeed.string;
         let newValue = `${clientSeed}`;
@@ -37,11 +43,13 @@ export class ClientSeedManualPopup extends ObserverComponent {
         }
     }
 
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     clear() {
         this.lblClientSeed.string = "";
         this.nodeSaveDisabled.active = true;
     }
 
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     removeLastLetter() {
         let multiplierString = this.lblClientSeed.string.slice(0, -1);
         if (!multiplierString) {

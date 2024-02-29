@@ -106,6 +106,7 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
         this.nodeManualPopup.addChild(node);
     }
 
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     clickChangeBtn() {
         this.openManualSettingPopup();
     }

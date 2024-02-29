@@ -8,6 +8,7 @@ const { GameCrash } = gc;
 
 @ccclass
 export class ProvablyFairButton extends ObserverComponent {
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     @handle(GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openPopup: boolean) => handle.handleClientSeedPopup(openPopup))
     onClickPFButton() {
         return true;
