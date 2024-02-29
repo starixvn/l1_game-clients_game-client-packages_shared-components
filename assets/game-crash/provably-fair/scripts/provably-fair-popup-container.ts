@@ -13,12 +13,11 @@ enum Popup {
 
 @ccclass
 export class ProvablyFairPopupContainer extends MultipleNodeContainer {
-    @render(gc.GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.openClientSeedPopup)
+    @render(gc.GameCrash.ProvablyFair.ProvablyFairStore, (store) => store.openClientSeedPopup, { fireImmediately: false })
     private renderOpenClientSeedPopup(openClientSeedPopup: boolean) {
         if (openClientSeedPopup) {
             this.showNode(Popup.ClientSeedSetting);
         } else {
-            this.closeClientSeedSetting();
             this.onClose();
         }
     }
@@ -32,23 +31,12 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
         }
     }
 
-    @render(gc.PFVerification.WebViewPFVerificationStore, (store) => store.openVerificationPopup)
+    @render(gc.PFVerification.WebViewPFVerificationStore, (store) => store.openVerificationPopup, { fireImmediately: false })
     private renderVerificationPopupDetail(openVerificationPopup: boolean) {
         if (openVerificationPopup) {
             this.showNode(Popup.PFVerificationDetail);
         } else {
-            this.closeVerificationDetailPopup();
             this.onClose();
         }
-    }
-
-    @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openCS: boolean) => handle.handleClientSeedPopup(openCS))
-    private closeClientSeedSetting() {
-        return false;
-    }
-
-    @handle(gc.PFVerification.WebViewPFVerificationHandlers.VerificationPopupHandler)
-    closeVerificationDetailPopup() {
-        return false;
     }
 }
