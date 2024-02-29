@@ -11,6 +11,11 @@ const { ccclass } = _decorator;
 export default class WebViewVerification extends LoadWebView {
     private provablyFair: gc.GameServiceMessage.ProvablyFair;
 
+    onLoad() {
+        super.onLoad();
+        this.initUrl();
+    }
+
     @handle(PFVerification.WebViewPFVerificationHandlers.GetVerificationURL)
     initUrl(specialDirection = "", scrollToId = "") {
         const theme = "blue";
@@ -32,7 +37,6 @@ export default class WebViewVerification extends LoadWebView {
     @render(PFVerification.WebViewPFVerificationStore, (store) => store.url)
     loadVerificationGuide(url: string) {
         if (url) {
-            console.log("loadGame", url);
             this.url = url;
             this.sendDataToIframe(this.provablyFair);
             this.loadWebView();

@@ -8,6 +8,7 @@ const { render, handle } = Observer;
 enum Popup {
     ClientSeedSetting = "ClientSeedSetting",
     PFVerification = "PFVerification",
+    PFVerificationDetail = "PFVerificationDetail",
 }
 
 @ccclass
@@ -30,13 +31,28 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
         }
     }
 
+    @render(gc.PFVerification.WebViewPFVerificationStore, (store) => store.openVerificationPopup)
+    private renderVerificationPopupDetail(openVerificationPopup: boolean) {
+        if (openVerificationPopup) {
+            this.showNode(Popup.PFVerificationDetail);
+        } else {
+            this.onClose();
+        }
+    }
+
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openCS: boolean) => handle.handleClientSeedPopup(openCS))
     private closeClientSeedSetting() {
+        return false;
+    }
+
+    @handle(gc.PFVerification.WebViewPFVerificationHandlers.VerificationPopupHandler)
+    closeVerificationDetailPopup() {
         return false;
     }
 
     onClose() {
         super.onClose();
         this.closeClientSeedSetting();
+        this.closeVerificationDetailPopup();
     }
 }
