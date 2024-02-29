@@ -12,10 +12,13 @@ export class Dialog extends Component {
     @property(Node)
     nodeBody: Node = null;
 
+    @property
+    autoShowWhenEnable = true;
+
     protected readonly appearDuration = 0.4;
 
     onEnable() {
-        this.show();
+        this.autoShowWhenEnable && this.show();
     }
 
     show() {

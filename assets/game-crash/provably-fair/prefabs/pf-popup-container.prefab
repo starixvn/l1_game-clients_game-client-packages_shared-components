@@ -720,6 +720,7 @@
       "__id__": 2
     },
     "nodeBody": null,
+    "autoShowWhenEnable": false,
     "_id": ""
   },
   {
