@@ -3,7 +3,7 @@ import { _decorator } from "cc";
 import Observer from "observer";
 import LoadWebView from "../../../shared/common-components/web-view/load-web-view";
 
-const { GameGuide, GameConfigs, UrlUtils, PFVerification } = gc;
+const { UrlUtils, PFVerification } = gc;
 const { handle, render } = Observer;
 const { ccclass } = _decorator;
 
@@ -18,22 +18,22 @@ export default class WebViewVerification extends LoadWebView {
     }
 
     @render(gc.RoundPF.RoundPFStore, (store) => store.pf)
-    setGameConfigs(pf: gc.GameServiceMessage.RoundPFResult) {
+    setProvablyFair(pf: gc.GameServiceMessage.RoundPFResult) {
         this.provablyFair = pf;
     }
 
     sendDataToIframe(provablyFair: gc.GameServiceMessage.ProvablyFair) {
-        const guideUrl = "http://localhost:3001/pf";
+        const guideUrl = UrlUtils.getSubDomain(this.url);
         this.onWebViewLoaded = () => {
             (document.getElementById("webview") as HTMLIFrameElement)?.contentWindow?.postMessage(JSON.stringify(provablyFair), guideUrl);
         };
     }
 
     @render(PFVerification.WebViewPFVerificationStore, (store) => store.url)
-    loadGameGuide(url: string) {
+    loadVerificationGuide(url: string) {
         if (url) {
             console.log("loadGame", url);
-            this.url = "http://localhost:3001/pf";
+            this.url = url;
             this.sendDataToIframe(this.provablyFair);
             this.loadWebView();
         }
