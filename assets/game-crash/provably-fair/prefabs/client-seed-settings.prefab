@@ -268,7 +268,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 645.2109375,
+      "width": 897.375,
       "height": 60.480000000000004
     },
     "_anchorPoint": {
@@ -304,7 +304,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "PROVABLY FAIR SETTINGS",
+    "_string": "PENGATURAN YANG TERBUKTI ADIL",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 48,
@@ -388,7 +388,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 165.302734375,
+      "x": 228.34375,
       "y": -1.815,
       "z": 0
     },
@@ -515,7 +515,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 362.60546875,
+      "width": 488.6875,
       "height": 100
     },
     "_anchorPoint": {
@@ -876,7 +876,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "The final result is determined by a combination of the Server Seed and the Client Seed of the first five betting players of the round.",
+    "_string": "Hasil akhir ditentukan oleh kombinasi Server Seed dan Klien Seed dari lima pemain taruhan pertama pada putaran tersebut.",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1040,7 +1040,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "The Player can change the Client Seed value and check the fairness of game result from Bet history. ",
+    "_string": "Pemain dapat mengubah nilai Seed Klien dan memeriksa kewajaran hasil permainan dari riwayat Taruhan.",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1361,7 +1361,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 242.455078125,
+      "width": 221.326171875,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -1397,7 +1397,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "CLIENT SEED",
+    "_string": "KLIEN SEED",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1484,7 +1484,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 125.2275390625,
+      "x": 114.6630859375,
       "y": 0,
       "z": 0
     },
@@ -1525,7 +1525,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 727.55859375,
+      "width": 945.369140625,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -1561,7 +1561,7 @@
       "b": 25,
       "a": 255
     },
-    "_string": "(Can not change seed after bet is accepted)",
+    "_string": "(Tidak dapat mengubah seed setelah taruhan diterima)",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1636,7 +1636,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 489.0068359375,
+      "width": 587.34765625,
       "height": 70
     },
     "_anchorPoint": {
@@ -2217,7 +2217,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 143.982421875,
+      "width": 536.80078125,
       "height": 45.36
     },
     "_anchorPoint": {
@@ -2253,7 +2253,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "Random",
+    "_string": "Common.pf_client_seed_para_4",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -2851,7 +2851,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 233.244140625,
+      "width": 299.056640625,
       "height": 45.36
     },
     "_anchorPoint": {
@@ -2887,7 +2887,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "Manual input",
+    "_string": "masukan manual",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -4319,8 +4319,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 200,
-      "height": 40
+      "width": 240,
+      "height": 50
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -4355,13 +4355,13 @@
       "b": 255,
       "a": 255
     },
-    "_string": "CHANGE",
+    "_string": "MENGUBAH",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
     "_fontSize": 36,
     "_fontFamily": "Arial",
-    "_lineHeight": 40,
+    "_lineHeight": 48,
     "_overflow": 1,
     "_enableWrapText": false,
     "_font": {
@@ -5029,7 +5029,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 197.771484375,
+      "width": 202.447265625,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -5065,7 +5065,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "SERVER SEED SHA256",
+    "_string": "SERVER SEED SHA256 ",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 18,
