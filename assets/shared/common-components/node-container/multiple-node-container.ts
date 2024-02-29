@@ -22,12 +22,13 @@ export class MultipleNodeContainer extends ObserverComponent {
 
     protected visibleNodes: { [nodeName: string]: Node } = {};
 
+    protected nodeStacks: string[] = [];
+
     isNodeVisible(name: string): boolean {
         return !!this.visibleNodes[name];
     }
 
     clearNode(name: string) {
-        this.showDialog(false);
         const node = this.visibleNodes[name];
         if (node) {
             const dialog = node.getComponent(Dialog);
@@ -47,6 +48,7 @@ export class MultipleNodeContainer extends ObserverComponent {
             return;
         }
 
+        this.nodeStacks.push(name);
         const node = this.createNode(name);
         this.visibleNodes[name] = node;
     }
@@ -73,14 +75,11 @@ export class MultipleNodeContainer extends ObserverComponent {
         return node;
     }
 
-    clearAllNodes() {
-        Object.keys(this.visibleNodes).forEach((key) => {
-            this.clearNode(key);
-        });
-    }
-
     onClose() {
-        this.showDialog(false);
-        this.clearAllNodes();
+        if (this.nodeStacks.length > 0) {
+            const topNode = this.nodeStacks.pop();
+            this.clearNode(topNode);
+        }
+        this.showDialog(this.nodeStacks.length > 0);
     }
 }

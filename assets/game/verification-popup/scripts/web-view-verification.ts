@@ -52,7 +52,6 @@ export default class WebViewVerification extends LoadWebView {
     }
 
     onClickClose() {
-        this.node?.destroy();
         this.closeVerificationPopup();
     }
 

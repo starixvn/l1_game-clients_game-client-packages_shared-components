@@ -18,6 +18,7 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
         if (openClientSeedPopup) {
             this.showNode(Popup.ClientSeedSetting);
         } else {
+            this.closeClientSeedSetting();
             this.onClose();
         }
     }
@@ -36,6 +37,7 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
         if (openVerificationPopup) {
             this.showNode(Popup.PFVerificationDetail);
         } else {
+            this.closeVerificationDetailPopup();
             this.onClose();
         }
     }
@@ -48,11 +50,5 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
     @handle(gc.PFVerification.WebViewPFVerificationHandlers.VerificationPopupHandler)
     closeVerificationDetailPopup() {
         return false;
-    }
-
-    onClose() {
-        super.onClose();
-        this.closeClientSeedSetting();
-        this.closeVerificationDetailPopup();
     }
 }
