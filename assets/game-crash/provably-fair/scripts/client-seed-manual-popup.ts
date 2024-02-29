@@ -52,6 +52,7 @@ export class ClientSeedManualPopup extends ObserverComponent {
         this.lblClientSeed.string = multiplierString;
     }
 
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     clickSaveBtn() {
         this.updateClientSeedValue(this.lblClientSeed.string);
         this.node.getComponent(Dialog).hide();

@@ -1,10 +1,12 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Button, Component, Label, Node, UIOpacity } from "cc";
+import { _decorator, Button, Label, Node, UIOpacity } from "cc";
+import observer from "observer";
 import { Md5CopyButton } from "../../../../game/md5/scripts/md5-copy-button";
+import { ObserverComponent } from "../../observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
-
+const { handle } = observer;
 @ccclass
-export class LabelCopyComponent extends Component {
+export class LabelCopyComponent extends ObserverComponent {
     @property(Label)
     lblText: Label = null;
 
@@ -23,6 +25,7 @@ export class LabelCopyComponent extends Component {
     private cpnCopyButton: Md5CopyButton = null;
 
     onLoad() {
+        super.onLoad();
         this.cpnCopyButton = this.btnCopy.getComponent(Md5CopyButton);
     }
 
@@ -43,6 +46,7 @@ export class LabelCopyComponent extends Component {
         this.nodeDisableCopy && (this.nodeDisableCopy.active = !active);
     }
 
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     clickCopyButton() {
         this.cpnCopyButton && (this.cpnCopyButton.isCopying = true);
         gc.GameUtils.copyToClipboard(this.lblText.string);

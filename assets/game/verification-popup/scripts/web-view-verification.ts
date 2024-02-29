@@ -51,6 +51,7 @@ export default class WebViewVerification extends LoadWebView {
         }
     }
 
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     onClickClose() {
         this.closeVerificationPopup();
     }

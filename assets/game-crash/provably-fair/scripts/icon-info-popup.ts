@@ -1,11 +1,14 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Button, Component, Label, Node } from "cc";
+import { _decorator, Button, Label, Node } from "cc";
+import observer from "observer";
+import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { AnimationUtils } from "../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
 const { fadeIn } = AnimationUtils;
+const { handle } = observer;
 
 @ccclass
-export class IconInfoPopup extends Component {
+export class IconInfoPopup extends ObserverComponent {
     @property(Node)
     nodeTooltip: Node = null;
 
@@ -19,6 +22,7 @@ export class IconInfoPopup extends Component {
     keyText = "";
 
     onLoad() {
+        super.onLoad();
         this.btnBgOverlay.node.on("click", this.hideTooltipComp, this);
     }
 
@@ -34,6 +38,7 @@ export class IconInfoPopup extends Component {
         this.nodeTooltip.active = show;
     }
 
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     clickInfoIcon() {
         this.nodeTooltip.active = !this.nodeTooltip.active;
         const isActiveBgOverlay = this.btnBgOverlay.node.active;

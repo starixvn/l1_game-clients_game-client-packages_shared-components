@@ -54,7 +54,6 @@ export class ProvablyFairPopup extends ObserverComponent {
         }
 
         const { serverSeed, serverSeedHash, mergeClientSeed, finalHash, clientSeeds, result, roundId } = verification;
-        console.log("renderVerification", verification);
         this.lblRoundId.string = roundId.toString();
         result && (this.lblResult.string = `${result}x`);
 
@@ -82,6 +81,7 @@ export class ProvablyFairPopup extends ObserverComponent {
         this.nodeDisabledVerification.active = !result;
     }
 
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle) => handle.closeVerification())
     onClickClose() {}
 
@@ -93,6 +93,7 @@ export class ProvablyFairPopup extends ObserverComponent {
         this.listTooltip[0].setDisplayTooltip(false);
     }
 
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     clickVerify() {
         this.openVerificationPopup();
     }

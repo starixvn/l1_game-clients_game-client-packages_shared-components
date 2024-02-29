@@ -43,6 +43,7 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     private readonly OPACITY_ENABLED = 255;
     private manualClientSeed = "";
 
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openCS: boolean) => handle.handleClientSeedPopup(openCS))
     closeSettingsPopup() {
         return false;
