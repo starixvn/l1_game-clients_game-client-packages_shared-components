@@ -39,7 +39,7 @@ export class ProvablyFairPopup extends ObserverComponent {
 
     onLoad() {
         super.onLoad();
-        const para = `${gc.Translator.commonTranslate("pf_provably_fair_para_2")} https://www.provablyfair.io/`;
+        const para = `${gc.Translator.commonTranslate("pf_provably_fair_para_2")}`;
         this.lblParaVerification.string = para;
     }
 
