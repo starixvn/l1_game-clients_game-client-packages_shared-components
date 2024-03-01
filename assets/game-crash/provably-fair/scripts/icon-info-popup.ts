@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Button, Label, Node } from "cc";
+import { _decorator, Label, Node } from "cc";
 import observer from "observer";
+import { CrossControlItem } from "../../../shared/common-components/cross-control/cross-control-item";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { AnimationUtils } from "../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
@@ -12,9 +13,6 @@ export class IconInfoPopup extends ObserverComponent {
     @property(Node)
     nodeTooltip: Node = null;
 
-    @property(Button)
-    btnBgOverlay: Button = null;
-
     @property(Label)
     lblContent: Label = null;
 
@@ -23,15 +21,18 @@ export class IconInfoPopup extends ObserverComponent {
 
     onLoad() {
         super.onLoad();
-        this.btnBgOverlay.node.on("click", this.hideTooltipComp, this);
+        const crossControlItem = this.getComponentInChildren(CrossControlItem);
+        if (crossControlItem) {
+            crossControlItem.registerListenerOtherControls(crossControlItem.node, () => this.hideTooltipComp());
+        }
     }
 
     hideTooltipComp() {
-        this.nodeTooltip.active = this.btnBgOverlay.node.active = false;
+        this.nodeTooltip.active = false;
     }
 
     showTooltipComp() {
-        this.nodeTooltip.active = this.btnBgOverlay.node.active = true;
+        this.nodeTooltip.active = true;
     }
 
     setDisplayTooltip(show: boolean) {
@@ -41,10 +42,6 @@ export class IconInfoPopup extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     clickInfoIcon() {
         this.nodeTooltip.active = !this.nodeTooltip.active;
-        const isActiveBgOverlay = this.btnBgOverlay.node.active;
-        if (!isActiveBgOverlay) {
-            this.btnBgOverlay.node.active = !this.btnBgOverlay.node.active;
-        }
         this.setContentTooltip(this.keyText);
     }
 

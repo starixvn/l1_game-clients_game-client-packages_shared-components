@@ -25,17 +25,17 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 97
-      },
-      {
         "__id__": 99
       },
       {
         "__id__": 101
+      },
+      {
+        "__id__": 103
       }
     ],
     "_prefab": {
-      "__id__": 103
+      "__id__": 105
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -91,17 +91,17 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 90
-      },
-      {
         "__id__": 92
       },
       {
         "__id__": 94
+      },
+      {
+        "__id__": 96
       }
     ],
     "_prefab": {
-      "__id__": 96
+      "__id__": 98
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1086,10 +1086,13 @@
       },
       {
         "__id__": 87
+      },
+      {
+        "__id__": 89
       }
     ],
     "_prefab": {
-      "__id__": 89
+      "__id__": 91
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1870,6 +1873,24 @@
     "fileId": "edKAjDg+tEOKWOFP00aDcS"
   },
   {
+    "__type__": "45884CDT3pDV7VqmPvqqKGx",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 49
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 90
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "9bnEvuDttIeKlId3AMWgq5"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -1892,7 +1913,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 91
+      "__id__": 93
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -1920,7 +1941,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 93
+      "__id__": 95
     },
     "_customMaterial": null,
     "_srcBlendFactor": 2,
@@ -1965,7 +1986,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 95
+      "__id__": 97
     },
     "_id": ""
   },
@@ -1996,7 +2017,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 98
+      "__id__": 100
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -2024,7 +2045,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 100
+      "__id__": 102
     },
     "_opacity": 255,
     "_id": ""
@@ -2043,7 +2064,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 102
+      "__id__": 104
     },
     "lblText": {
       "__id__": 23
@@ -2078,7 +2099,7 @@
     "instance": null,
     "targetOverrides": [
       {
-        "__id__": 104
+        "__id__": 106
       }
     ]
   },
@@ -2093,7 +2114,7 @@
       "__id__": 49
     },
     "targetInfo": {
-      "__id__": 105
+      "__id__": 107
     }
   },
   {

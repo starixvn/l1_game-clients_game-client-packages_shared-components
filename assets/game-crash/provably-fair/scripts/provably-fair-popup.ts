@@ -86,11 +86,11 @@ export class ProvablyFairPopup extends ObserverComponent {
     onClickClose() {}
 
     clickGuideClientSeed() {
-        this.listTooltip[1].setDisplayTooltip(false);
+        // this.listTooltip[1].setDisplayTooltip(false);
     }
 
     clickGuideCombinedHash() {
-        this.listTooltip[0].setDisplayTooltip(false);
+        // this.listTooltip[0].setDisplayTooltip(false);
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
