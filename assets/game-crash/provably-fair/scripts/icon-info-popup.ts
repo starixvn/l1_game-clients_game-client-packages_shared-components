@@ -23,7 +23,7 @@ export class IconInfoPopup extends ObserverComponent {
         super.onLoad();
         const crossControlItem = this.getComponentInChildren(CrossControlItem);
         if (crossControlItem) {
-            crossControlItem.registerListenerOtherControls(crossControlItem.node, () => this.hideTooltipComp());
+            crossControlItem.registerListenerOtherControls(() => this.hideTooltipComp());
         }
     }
 

@@ -32,9 +32,9 @@ export class CrossControlItem extends Component {
         }
     }
 
-    registerListenerOtherControls(node: Node, callback: (nodeId: string) => void) {
+    registerListenerOtherControls(callback: (nodeId: string) => void) {
         this.listener = (nodeId: string) => {
-            if (node.uuid !== nodeId) {
+            if (this.node.uuid !== nodeId) {
                 callback(nodeId);
             }
         };
