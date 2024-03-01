@@ -559,7 +559,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 388.5,
+      "width": 358.59375,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -595,7 +595,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "PROVABLY FAIR",
+    "_string": "VERIFICATION",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 48,
@@ -633,7 +633,7 @@
     "__prefab": {
       "__id__": 23
     },
-    "key": "Common.pf_title_provably_fair",
+    "key": "Common.pf_title_verification",
     "format": 1,
     "prefix": "",
     "suffix": "",
@@ -670,7 +670,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 194.25,
+      "width": 179.296875,
       "height": 70
     },
     "_anchorPoint": {

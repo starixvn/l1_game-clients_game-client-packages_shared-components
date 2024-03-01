@@ -1215,7 +1215,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 226.625,
+      "width": 343.73828125,
       "height": 37.8
     },
     "_anchorPoint": {
@@ -1251,7 +1251,7 @@
       "b": 95,
       "a": 255
     },
-    "_string": "PROVABLY FAIR",
+    "_string": "PROVABLY FAIR GUIDES",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 28,
@@ -1289,7 +1289,7 @@
     "__prefab": {
       "__id__": 55
     },
-    "key": "Common.pf_title_provably_fair",
+    "key": "Common.pf_pop-up_title_pf_guide",
     "format": 1,
     "prefix": "",
     "suffix": "",
