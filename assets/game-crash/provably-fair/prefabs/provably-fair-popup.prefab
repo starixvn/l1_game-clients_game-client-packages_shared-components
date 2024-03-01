@@ -16364,10 +16364,6 @@
       null,
       null
     ],
-    "listTooltip": [
-      null,
-      null
-    ],
     "nodeDisabledVerification": {
       "__id__": 879
     },
@@ -16461,12 +16457,6 @@
       },
       {
         "__id__": 1216
-      },
-      {
-        "__id__": 1218
-      },
-      {
-        "__id__": 1220
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -21975,7 +21965,6 @@
     "lblFinalHash": null,
     "lblParaVerification": null,
     "listClientSeedInfo": [],
-    "listTooltip": [],
     "nodeDisabledVerification": null,
     "_id": "5ddicKpjdPWI2UMckX54mG"
   },
@@ -22496,56 +22485,10 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 904
-    },
-    "sourceInfo": null,
-    "propertyPath": [
-      "listTooltip",
-      "0"
-    ],
-    "target": {
-      "__id__": 398
-    },
-    "targetInfo": {
-      "__id__": 1217
-    }
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "b2oMl10CBPR7+jnPWWjsB0"
-    ]
-  },
-  {
-    "__type__": "cc.TargetOverrideInfo",
-    "source": {
-      "__id__": 904
-    },
-    "sourceInfo": null,
-    "propertyPath": [
-      "listTooltip",
-      "1"
-    ],
-    "target": {
-      "__id__": 685
-    },
-    "targetInfo": {
-      "__id__": 1219
-    }
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "b2oMl10CBPR7+jnPWWjsB0"
-    ]
-  },
-  {
-    "__type__": "cc.TargetOverrideInfo",
-    "source": {
       "__id__": 685
     },
     "sourceInfo": {
-      "__id__": 1221
+      "__id__": 1217
     },
     "propertyPath": [
       "_target"
@@ -22554,7 +22497,7 @@
       "__id__": 685
     },
     "targetInfo": {
-      "__id__": 1222
+      "__id__": 1218
     }
   },
   {

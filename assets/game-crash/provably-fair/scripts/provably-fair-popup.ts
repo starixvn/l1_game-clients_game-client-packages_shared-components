@@ -5,7 +5,6 @@ import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { LabelCopyComponent } from "../../../shared/common-components/copy-label/scripts/label-copy-component";
 import { ClientSeedInfo } from "./client-seed-info";
-import { IconInfoPopup } from "./icon-info-popup";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -34,9 +33,6 @@ export class ProvablyFairPopup extends ObserverComponent {
 
     @property({ type: ClientSeedInfo })
     listClientSeedInfo: ClientSeedInfo[] = [];
-
-    @property({ type: IconInfoPopup })
-    listTooltip: IconInfoPopup[] = [];
 
     @property(Node)
     nodeDisabledVerification: Node = null;
@@ -84,14 +80,6 @@ export class ProvablyFairPopup extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle) => handle.closeVerification())
     onClickClose() {}
-
-    clickGuideClientSeed() {
-        // this.listTooltip[1].setDisplayTooltip(false);
-    }
-
-    clickGuideCombinedHash() {
-        // this.listTooltip[0].setDisplayTooltip(false);
-    }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     clickVerify() {
