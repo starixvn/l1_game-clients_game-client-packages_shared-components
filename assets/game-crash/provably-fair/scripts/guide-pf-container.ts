@@ -1,8 +1,8 @@
 import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import Observer from "observer";
-import WebViewGuide from "../../../game/game-guide/scripts/web-view-guide";
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
+import { IntroPFPopup } from "./intro-pf-popup";
 const { ccclass, property } = _decorator;
 const { render } = Observer;
 
@@ -14,6 +14,6 @@ export class GuidePFContainer extends NodeContainer {
             return;
         }
         const guide = this.createNode();
-        guide.getComponent(WebViewGuide)?.loadGameGuide(url);
+        guide.getComponent(IntroPFPopup)?.openGuidePF(url);
     }
 }

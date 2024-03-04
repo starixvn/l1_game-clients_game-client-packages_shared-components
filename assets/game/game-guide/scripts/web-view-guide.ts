@@ -31,6 +31,10 @@ export default class WebViewGuide extends LoadWebView {
 
     @render(GameGuide.GameGuideStore, (store) => store.url)
     loadGameGuide(url: string) {
+        this.loadContent(url);
+    }
+
+    loadContent(url: string) {
         if (url) {
             this.url = url;
             this.sendDataToIframe(this.gameConfig);
