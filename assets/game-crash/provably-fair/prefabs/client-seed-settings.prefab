@@ -268,7 +268,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 645.2109375,
+      "width": 601.3359375,
       "height": 60.480000000000004
     },
     "_anchorPoint": {
@@ -304,7 +304,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "PROVABLY FAIR SETTINGS",
+    "_string": "CÀI ĐẶT PROVABLY FAIR",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 48,
@@ -441,7 +441,7 @@
     ],
     "value": {
       "__type__": "cc.Vec3",
-      "x": 165.302734375,
+      "x": 154.333984375,
       "y": 0,
       "z": 0
     }
@@ -491,7 +491,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 362.60546875,
+      "width": 340.66796875,
       "height": 100
     },
     "_anchorPoint": {
@@ -654,7 +654,7 @@
       "r": 196,
       "g": 188,
       "b": 224,
-      "a": 255
+      "a": 30
     },
     "_spriteFrame": {
       "__uuid__": "7ed9e473-d804-4a64-b2ad-05bb4a985734@8fe80",
@@ -852,7 +852,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "The final result is determined by a combination of the Server Seed and the Client Seed of the first five betting players of the round.",
+    "_string": "Kết quả cuối cùng được xác định dựa trên sự kết hợp giữa Server Seed và Client Seed của 5 người chơi đặt cược đầu tiên.",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1016,7 +1016,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "The Player can change the Client Seed value and check the fairness of game result from Bet history. ",
+    "_string": "Người chơi có thể thay đổi giá trị Client Seed và kiểm tra tính minh bạch của kết quả trong mục Lịch sử cược.",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1501,7 +1501,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 727.55859375,
+      "width": 1038.33984375,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -1537,7 +1537,7 @@
       "b": 25,
       "a": 255
     },
-    "_string": "(Can not change seed after bet is accepted)",
+    "_string": "(Không thể thay đổi Client Seed sau khi đặt cược thành công)",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1612,7 +1612,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 489.0068359375,
+      "width": 644.3974609375,
       "height": 70
     },
     "_anchorPoint": {
@@ -2193,7 +2193,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 143.982421875,
+      "width": 312.46875,
       "height": 45.36
     },
     "_anchorPoint": {
@@ -2229,7 +2229,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "Random",
+    "_string": "Giá trị ngẫu nhiên",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -2827,7 +2827,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 233.244140625,
+      "width": 255.181640625,
       "height": 45.36
     },
     "_anchorPoint": {
@@ -2863,7 +2863,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "Manual input",
+    "_string": "Tự nhập giá trị",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -4331,7 +4331,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "CHANGE",
+    "_string": "THAY ĐỔI",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,

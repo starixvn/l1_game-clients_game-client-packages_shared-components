@@ -570,7 +570,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 455.15625,
+      "width": 441.140625,
       "height": 63
     },
     "_anchorPoint": {
@@ -606,7 +606,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "NEW CLIENT SEED",
+    "_string": "CLIENT SEED MỚI",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 48,
@@ -765,7 +765,7 @@
       "r": 196,
       "g": 188,
       "b": 224,
-      "a": 255
+      "a": 30
     },
     "_spriteFrame": {
       "__uuid__": "7ed9e473-d804-4a64-b2ad-05bb4a985734@8fe80",
@@ -987,7 +987,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 177.099609375,
+      "width": 235.634765625,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -1023,7 +1023,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "Your seed:",
+    "_string": "Seed của bạn:",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1572,7 +1572,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 132.99609375,
+      "width": 80.349609375,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -1608,7 +1608,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "CLEAR ",
+    "_string": "XÓA",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -6155,7 +6155,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 93.234375,
+      "width": 81.140625,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -6191,7 +6191,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "SAVE",
+    "_string": "LƯU",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
