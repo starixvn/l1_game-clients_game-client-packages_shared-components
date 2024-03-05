@@ -1,15 +1,17 @@
 import gc from "@sg/game-client-base";
-import { _decorator } from "cc";
+import { _decorator, Label } from "cc";
 import Observer from "observer";
 import LoadWebView from "../../../shared/common-components/web-view/load-web-view";
 
 const { UrlUtils, PFVerification } = gc;
 const { handle, render } = Observer;
-const { ccclass } = _decorator;
+const { ccclass, property } = _decorator;
 
 @ccclass
 export default class WebViewVerification extends LoadWebView {
     private provablyFair: gc.GameServiceMessage.ProvablyFair;
+    @property(Label)
+    lblRound: Label = null;
 
     onLoad() {
         super.onLoad();
@@ -25,6 +27,7 @@ export default class WebViewVerification extends LoadWebView {
     @render(gc.RoundPF.RoundPFStore, (store) => store.pf)
     setProvablyFair(pf: gc.GameServiceMessage.RoundPFResult) {
         this.provablyFair = pf;
+        this.lblRound.string = pf.roundId.toString();
     }
 
     sendDataToIframe(provablyFair: gc.GameServiceMessage.ProvablyFair) {
