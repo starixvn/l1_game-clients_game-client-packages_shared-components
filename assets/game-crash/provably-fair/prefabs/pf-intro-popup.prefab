@@ -715,10 +715,10 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
+      "r": 196,
+      "g": 188,
+      "b": 224,
+      "a": 30
     },
     "_spriteFrame": {
       "__uuid__": "7ed9e473-d804-4a64-b2ad-05bb4a985734@8fe80",
@@ -1191,7 +1191,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 343.73828125,
+      "width": 418.6875,
       "height": 37.8
     },
     "_anchorPoint": {
@@ -1227,7 +1227,7 @@
       "b": 95,
       "a": 255
     },
-    "_string": "PROVABLY FAIR GUIDES",
+    "_string": "HƯỚNG DẪN PROVABLY FAIR",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 28,
