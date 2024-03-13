@@ -1,4 +1,4 @@
-import { Intersection2D, PolygonCollider2D, Vec2, _decorator } from "cc";
+import { EventTouch, Intersection2D, PolygonCollider2D, Vec2, _decorator } from "cc";
 import BetItem from "./bet-item";
 import { BetItems } from "./bet-items";
 const { ccclass, property } = _decorator;
@@ -9,8 +9,8 @@ export class BetItemsPolygon extends BetItems {
         return Intersection2D.pointInPolygon(location, collider.worldPoints);
     }
 
-    handleBetItemClick(event) {
-        const location = event.getLocation();
+    handleBetItemClick(event: EventTouch) {
+        const location = event.getUILocation();
         const betItem = this.node.children.find((item) => this.checkCollider(location, item.getComponent(PolygonCollider2D)));
 
         if (!betItem) {
