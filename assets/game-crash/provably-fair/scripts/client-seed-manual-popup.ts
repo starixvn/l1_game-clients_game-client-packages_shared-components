@@ -1,11 +1,13 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label, Node } from "cc";
+import { Label, Node, _decorator } from "cc";
 import Observer from "observer";
 import { Dialog } from "../../../shared/common-components/dialogs/dialog";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { FunctionUtils } from "../../../shared/utils";
 const { ccclass, property } = _decorator;
-const { GameCrash } = gc;
-const { render, handle } = Observer;
+const { GameCrash, Shared } = gc;
+const { utils } = Shared;
+const { handle } = Observer;
 
 @ccclass
 export class ClientSeedManualPopup extends ObserverComponent {
@@ -16,6 +18,15 @@ export class ClientSeedManualPopup extends ObserverComponent {
     nodeSaveDisabled: Node = null;
 
     private readonly CLIENT_SEED_CHAR = 4;
+    onLoad(): void {
+        super.onLoad();
+        utils.AnalyticsManager.trackEvent(gc.Shared.utils.TrackingEvent.Button, {
+            location: FunctionUtils.getNamespace(),
+            action: gc.Shared.utils.TrackingAction.ChangePF,
+            object_name: "ProvablyFair",
+            game_name: FunctionUtils.getNamespace(),
+        });
+    }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     onClosePopup() {
