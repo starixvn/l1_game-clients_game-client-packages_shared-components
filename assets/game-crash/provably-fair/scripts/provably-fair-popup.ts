@@ -4,9 +4,13 @@ import { ObserverComponent } from "../../../shared/common-components/observer-co
 import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { LabelCopyComponent } from "../../../shared/common-components/copy-label/scripts/label-copy-component";
+import { FunctionUtils } from "../../../shared/utils";
 import { ClientSeedInfo } from "./client-seed-info";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
+
+const { Shared } = gc;
+const { utils } = Shared;
 
 @ccclass()
 export class ProvablyFairPopup extends ObserverComponent {
@@ -41,6 +45,16 @@ export class ProvablyFairPopup extends ObserverComponent {
         super.onLoad();
         const para = `${gc.Translator.commonTranslate("pf_provably_fair_para_2")}`;
         this.lblParaVerification.string = para;
+        this.handleGATracking();
+    }
+
+    handleGATracking() {
+        utils.AnalyticsManager.trackEvent(gc.Shared.utils.TrackingEvent.Button, {
+            location: FunctionUtils.getNamespace(),
+            action: gc.Shared.utils.TrackingAction.Show,
+            object_name: utils.PFObjectName.ViewPFGuide,
+            game_name: FunctionUtils.getNamespace(),
+        });
     }
 
     @render(gc.GameCrash.ProvablyFair.PFVerificationStore, (store) => store.verification)

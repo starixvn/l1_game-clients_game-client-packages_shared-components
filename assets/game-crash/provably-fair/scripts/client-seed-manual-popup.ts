@@ -20,10 +20,14 @@ export class ClientSeedManualPopup extends ObserverComponent {
     private readonly CLIENT_SEED_CHAR = 4;
     onLoad(): void {
         super.onLoad();
+        this.handleGATracking();
+    }
+
+    handleGATracking() {
         utils.AnalyticsManager.trackEvent(gc.Shared.utils.TrackingEvent.Button, {
             location: FunctionUtils.getNamespace(),
-            action: gc.Shared.utils.TrackingAction.ChangePF,
-            object_name: "ProvablyFair",
+            action: gc.Shared.utils.TrackingAction.Click,
+            object_name: utils.PFObjectName.PFClientSeed,
             game_name: FunctionUtils.getNamespace(),
         });
     }

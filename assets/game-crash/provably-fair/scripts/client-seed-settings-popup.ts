@@ -2,9 +2,11 @@ import gc from "@sg/game-client-base";
 import { Label, Node, Prefab, Toggle, UIOpacity, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { FunctionUtils } from "../../../shared/utils";
 import { ClientSeedManualPopup } from "./client-seed-manual-popup";
 const { ccclass, property } = _decorator;
-const { GameCrash, Rounds } = gc;
+const { GameCrash, Shared } = gc;
+const { utils } = Shared;
 const { render, handle } = Observer;
 
 @ccclass
@@ -42,6 +44,27 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     private readonly OPACITY_DISABLED = 153;
     private readonly OPACITY_ENABLED = 255;
     private manualClientSeed = "";
+
+    onLoad(): void {
+        super.onLoad();
+        this.handleGATracking();
+    }
+
+    handleGATracking() {
+        utils.AnalyticsManager.trackEvent(gc.Shared.utils.TrackingEvent.Button, {
+            location: FunctionUtils.getNamespace(),
+            action: gc.Shared.utils.TrackingAction.Show,
+            object_name: utils.PFObjectName.PFClientSeed,
+            game_name: FunctionUtils.getNamespace(),
+        });
+
+        utils.AnalyticsManager.trackEvent(gc.Shared.utils.TrackingEvent.Button, {
+            location: FunctionUtils.getNamespace(),
+            action: gc.Shared.utils.TrackingAction.Show,
+            object_name: utils.PFObjectName.PFUseGuide,
+            game_name: FunctionUtils.getNamespace(),
+        });
+    }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     @handle(gc.GameCrash.ProvablyFair.ProvablyFairHandler, (handle, openCS: boolean) => handle.handleClientSeedPopup(openCS))

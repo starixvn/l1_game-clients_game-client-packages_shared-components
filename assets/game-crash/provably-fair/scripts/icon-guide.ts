@@ -15,8 +15,8 @@ export class IconGuide extends ObserverComponent {
     clickOpenGuide() {
         utils.AnalyticsManager.trackEvent(utils.TrackingEvent.Button, {
             location: FunctionUtils.getNamespace(),
-            action: utils.TrackingAction.ViewPFGuide,
-            object_name: utils.PFObjectName.ProvablyFair,
+            action: utils.TrackingAction.Click,
+            object_name: utils.PFObjectName.PFUseGuide,
             game_name: FunctionUtils.getNamespace(),
         });
     }
