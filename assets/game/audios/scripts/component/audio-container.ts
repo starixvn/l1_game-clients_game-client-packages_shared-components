@@ -204,7 +204,7 @@ export class AudioContainer extends ObserverComponent {
     }
 
     protected stopAudio(audioSource: AudioSource) {
-        audioSource.stop();
+        audioSource?.stop();
     }
 
     @render(Audios.AudioStore, (store) => store.sfx, { fireImmediately: false })
@@ -216,7 +216,7 @@ export class AudioContainer extends ObserverComponent {
 
     @render(Audios.AudioStore, (store) => store.stoppableSFX)
     handleStoppableSFX(data: gc.Audios.AudioData) {
-        if (data.action === Audios.AudioAction.PLAY && this.isUserGesture) {
+        if (data && data.action === Audios.AudioAction.PLAY && this.isUserGesture) {
             this.playSFXAudio(data.id, true);
         } else {
             this.stopAudio(this.stoppableSFXSource);
