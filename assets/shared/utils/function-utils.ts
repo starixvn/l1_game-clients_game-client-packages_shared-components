@@ -1,5 +1,8 @@
-import { Node, find, screen, warn } from "cc";
+import { Node, find, screen, sys, warn } from "cc";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
+import gc from "@sg/game-client-base";
+
+const { Configs } = gc;
 
 export namespace FunctionUtils {
     export const getNamespace = () => {
@@ -77,5 +80,20 @@ export namespace FunctionUtils {
                     });
             }
         });
+    };
+
+    export const isSabaPlay = (): boolean => {
+        const operator = sys.localStorage.getItem("current_operator") || "";
+        console.log("showSystemSlogan", operator);
+        return operator.toUpperCase() === "SP";
+    };
+
+    export const getLogoByOperator = (systemType: string): string => {
+        const isSystemSG = systemType === Configs.SystemConfigs.SG.name;
+        if (isSystemSG) {
+            return "logo-SG";
+        } else {
+            return isSabaPlay() ? "logo-SP" : "logo-VG";
+        }
     };
 }

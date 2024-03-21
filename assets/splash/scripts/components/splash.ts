@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, director, instantiate, Label, Node, Prefab, ProgressBar } from "cc";
+import { _decorator, Component, director, instantiate, Label, Node, Prefab, ProgressBar, sys } from "cc";
 import Observer from "observer";
 
 import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
@@ -25,6 +25,9 @@ export default class Splash extends Component {
 
     @property(Node)
     nodeSloganVG: Node = null;
+
+    @property(Node)
+    nodeSloganSP: Node = null;
 
     @property(Node)
     signNameContainer: Node = null;
@@ -156,7 +159,7 @@ export default class Splash extends Component {
     @render(Configs.SiteConfigs, (store) => store.systemType)
     async showSystemSlogan(systemType: string) {
         const isSystemSG = systemType === Configs.SystemConfigs.SG.name;
-        const assetPath = isSystemSG ? "logo-SG" : "logo-VG";
+        const assetPath = FunctionUtils.getLogoByOperator(systemType);
         await this.loadSystemSlogan(assetPath, isSystemSG);
     }
 
@@ -168,7 +171,7 @@ export default class Splash extends Component {
             if (isSystemSG) {
                 this.nodeSloganSG.addChild(sloganNode);
             } else {
-                this.nodeSloganVG.addChild(sloganNode);
+                FunctionUtils.isSabaPlay() ? this.nodeSloganSP.addChild(sloganNode) : this.nodeSloganVG.addChild(sloganNode);
             }
         }
     }
