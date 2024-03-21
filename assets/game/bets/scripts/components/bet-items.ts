@@ -142,4 +142,14 @@ export class BetItems extends ObserverComponent {
     isWinning(value: number, target = 1) {
         return value === target;
     }
+
+    @render(Rounds.RoundStore, (store) => store.userBetPercentage)
+    handleUserBetPercentage(userBetPercentage: gc.GameServiceMessage.UserBetPercentage) {
+        if (userBetPercentage) {
+            this.betItemComponents.forEach((betItem) => {
+                const choice = betItem.node.name;
+                betItem.renderUserBetPercentage(userBetPercentage[choice]);
+            });
+        }
+    }
 }

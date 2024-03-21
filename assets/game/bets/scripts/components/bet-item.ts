@@ -30,6 +30,9 @@ export default class BetItem extends ObserverComponent {
     @property(Node)
     choice: Node = null;
 
+    @property(Label)
+    lblBetPercentage: Label = null;
+
     onLoad() {
         super.onLoad();
         ComponentUtils.setEmptyLabels([this.lblOwnBet, this.lblTotalBet, this.lblOdds]);
@@ -68,5 +71,9 @@ export default class BetItem extends ObserverComponent {
 
     public handleHighlightStatic(isActive: boolean) {
         this.highlightStatic.active = isActive;
+    }
+
+    renderUserBetPercentage(userBetPercentage: number) {
+        this.lblBetPercentage && (this.lblBetPercentage.string = `${userBetPercentage}%`);
     }
 }
