@@ -2,7 +2,7 @@ import { Node, find, screen, sys, warn } from "cc";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 import gc from "@sg/game-client-base";
 
-const { Configs } = gc;
+const { Configs, StorageManager, localStorageKeys } = gc;
 
 export namespace FunctionUtils {
     export const getNamespace = () => {
@@ -83,9 +83,9 @@ export namespace FunctionUtils {
     };
 
     export const isSabaPlay = (): boolean => {
-        const operator = sys.localStorage.getItem("current_operator") || "";
-        console.log("showSystemSlogan", operator);
-        return operator.toUpperCase() === "SP";
+        const operator = StorageManager.get(localStorageKeys?.operator);
+        console.log("isSabaPlay", operator);
+        return operator.toString().toUpperCase() === "SP";
     };
 
     export const getLogoByOperator = (systemType: string): string => {
