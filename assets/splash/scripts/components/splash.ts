@@ -179,6 +179,7 @@ export default class Splash extends Component {
     destroyAllChildrenSlogan() {
         this.nodeSloganSG.destroyAllChildren();
         this.nodeSloganVG.destroyAllChildren();
+        this.nodeSloganSP.destroyAllChildren();
     }
 
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
