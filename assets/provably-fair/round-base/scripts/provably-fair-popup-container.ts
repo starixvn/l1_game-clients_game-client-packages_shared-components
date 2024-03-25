@@ -1,7 +1,8 @@
 import gc from "@sg/game-client-base";
-import { _decorator } from "cc";
+import { Prefab, _decorator } from "cc";
 import Observer from "observer";
 import { MultipleNodeContainer } from "../../../shared/common-components/node-container/multiple-node-container";
+import { ProvablyFairPopup } from "./provably-fair-popup";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -15,6 +16,9 @@ enum Popup {
 
 @ccclass
 export class ProvablyFairPopupContainer extends MultipleNodeContainer {
+    @property(Prefab)
+    customResultPrefab: Prefab = null;
+
     @render(RoundBasePF.ProvablyFairStore, (store) => store.openClientSeedPopup, { fireImmediately: false })
     private renderOpenClientSeedPopup(openClientSeedPopup: boolean) {
         if (openClientSeedPopup) {
@@ -28,6 +32,8 @@ export class ProvablyFairPopupContainer extends MultipleNodeContainer {
     private renderVerificationPopup(openVerification) {
         if (openVerification) {
             this.showNode(Popup.PFVerification);
+            const node = this.getNode(Popup.PFVerification);
+            node.getComponent(ProvablyFairPopup)?.initResultNode(this.customResultPrefab);
         } else {
             this.onClose();
         }

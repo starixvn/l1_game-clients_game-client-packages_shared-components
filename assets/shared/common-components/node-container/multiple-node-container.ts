@@ -41,6 +41,10 @@ export class MultipleNodeContainer extends ObserverComponent {
         }
     }
 
+    getNode(name: string) {
+        return this.visibleNodes[name];
+    }
+
     showNode(name: string) {
         this.showDialog(true);
 

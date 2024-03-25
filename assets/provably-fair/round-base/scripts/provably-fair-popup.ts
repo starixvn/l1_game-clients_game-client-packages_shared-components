@@ -1,8 +1,9 @@
-import { Label, Node, _decorator } from "cc";
+import { Label, Node, Prefab, _decorator, instantiate } from "cc";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 
 import gc from "@sg/game-client-base";
 import Observer from "observer";
+import { BaseResultBodyItem } from "../../../game/bet-history/scripts/components/bet-history-body-item";
 import { LabelCopyComponent } from "../../../shared/common-components/copy-label/scripts/label-copy-component";
 import { ClientSeedInfo } from "../../../shared/common-components/provably-fair/client-seed-info";
 import { FunctionUtils } from "../../../shared/utils";
@@ -16,9 +17,6 @@ const { utils } = Shared;
 export class ProvablyFairPopup extends ObserverComponent {
     @property(Label)
     lblRoundId: Label = null;
-
-    @property(Label)
-    lblResult: Label = null;
 
     @property(LabelCopyComponent)
     lblServerSeed: LabelCopyComponent = null;
@@ -41,6 +39,9 @@ export class ProvablyFairPopup extends ObserverComponent {
     @property(Node)
     nodeDisabledVerification: Node = null;
 
+    @property(Node)
+    nodeResult: Node = null;
+
     private listClientSeedInfo: ClientSeedInfo[] = [];
 
     onLoad() {
@@ -49,6 +50,10 @@ export class ProvablyFairPopup extends ObserverComponent {
         const para = `${gc.Translator.commonTranslate("pf_provably_fair_para_2")}`;
         this.lblParaVerification.string = para;
         this.handleGATracking();
+    }
+
+    initResultNode(customResultPrefab: Prefab) {
+        this.nodeResult.addChild(instantiate(customResultPrefab));
     }
 
     handleGATracking() {
@@ -68,7 +73,7 @@ export class ProvablyFairPopup extends ObserverComponent {
 
         const { serverSeed, serverSeedHash, mergeClientSeed, finalHash, clientSeeds, result, roundId } = verification;
         this.lblRoundId.string = roundId.toString();
-        result && (this.lblResult.string = `${result}x`);
+        result && this.renderResult(result);
 
         serverSeed && this.lblServerSeed.setString(serverSeed);
         this.lblServerSeed.setActive(!!serverSeed);
@@ -92,6 +97,13 @@ export class ProvablyFairPopup extends ObserverComponent {
             });
         }
         this.nodeDisabledVerification.active = !result;
+    }
+
+    private renderResult(result: gc.BetHistory.DynamicObject<object>) {
+        if (this.nodeResult) {
+            const resultComp = this.nodeResult.getComponentInChildren(BaseResultBodyItem);
+            resultComp.setData(result, null);
+        }
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
