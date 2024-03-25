@@ -2389,7 +2389,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "db0ec86ZJZAo4LS5xVKup22",
+    "_componentId": "62fceCxsX9IRJ6z5IokhEp3",
     "handler": "clickRandomMode",
     "customEventData": ""
   },
@@ -3023,7 +3023,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "db0ec86ZJZAo4LS5xVKup22",
+    "_componentId": "62fceCxsX9IRJ6z5IokhEp3",
     "handler": "clickManualMode",
     "customEventData": ""
   },
@@ -4693,7 +4693,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "db0ec86ZJZAo4LS5xVKup22",
+    "_componentId": "62fceCxsX9IRJ6z5IokhEp3",
     "handler": "clickChangeBtn",
     "customEventData": ""
   },
@@ -7636,7 +7636,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "db0ec86ZJZAo4LS5xVKup22",
+    "_componentId": "62fceCxsX9IRJ6z5IokhEp3",
     "handler": "closeSettingsPopup",
     "customEventData": ""
   },

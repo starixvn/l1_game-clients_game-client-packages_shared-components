@@ -35,13 +35,16 @@ export class ProvablyFairPopup extends ObserverComponent {
     @property(Label)
     lblParaVerification: Label = null;
 
-    @property({ type: ClientSeedInfo })
-    listClientSeedInfo: ClientSeedInfo[] = [];
+    @property(Node)
+    clientSeedsContainer: Node = null;
 
     @property(Node)
     nodeDisabledVerification: Node = null;
 
+    private listClientSeedInfo: ClientSeedInfo[] = [];
+
     onLoad() {
+        this.listClientSeedInfo = this.clientSeedsContainer.getComponentsInChildren(ClientSeedInfo);
         super.onLoad();
         const para = `${gc.Translator.commonTranslate("pf_provably_fair_para_2")}`;
         this.lblParaVerification.string = para;
