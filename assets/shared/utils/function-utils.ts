@@ -96,4 +96,13 @@ export namespace FunctionUtils {
             return isSabaPlay() ? "logo-SP" : "logo-VG";
         }
     };
+
+    export const getBackCardByOperator = (systemType: string): string => {
+        const isSystemSG = systemType === Configs.SystemConfigs.SG.name;
+        if (isSystemSG) {
+            return "back-SG";
+        } else {
+            return isSabaPlay() ? "back-SP" : "back-VG";
+        }
+    };
 }

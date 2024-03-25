@@ -45,7 +45,7 @@ export class DominoCard extends Component {
     }
 
     setBackDominoCardSystem(systemType: string) {
-        const spriteFrameName = systemType === Configs.SystemConfigs.VG.name ? "back-VG" : "back-SG";
+        const spriteFrameName = FunctionUtils.getBackCardByOperator(systemType);
         this.backCard.spriteFrame = this.atlas.getSpriteFrame(spriteFrameName);
     }
 
