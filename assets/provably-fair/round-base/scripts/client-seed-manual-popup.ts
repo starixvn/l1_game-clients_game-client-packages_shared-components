@@ -5,7 +5,7 @@ import { Dialog } from "../../../shared/common-components/dialogs/dialog";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { FunctionUtils } from "../../../shared/utils";
 const { ccclass, property } = _decorator;
-const { Shared } = gc;
+const { Shared, RoundBasePF } = gc;
 const { utils } = Shared;
 const { handle } = Observer;
 
@@ -81,7 +81,7 @@ export class ClientSeedManualPopup extends ObserverComponent {
         this.node.getComponent(Dialog).hide();
     }
 
-    @handle(gc.RoundBasePF.ProvablyFairHandler, (handle, value: string) => handle.saveManualClientSeed(value))
+    @handle(RoundBasePF.ProvablyFairHandler, (handle, value: string) => handle.saveManualClientSeed(value))
     updateClientSeedValue(value: string) {
         return value;
     }

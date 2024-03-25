@@ -4,8 +4,8 @@ import { ObserverComponent } from "../../../shared/common-components/observer-co
 import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { LabelCopyComponent } from "../../../shared/common-components/copy-label/scripts/label-copy-component";
+import { ClientSeedInfo } from "../../../shared/common-components/provably-fair/client-seed-info";
 import { FunctionUtils } from "../../../shared/utils";
-import { ClientSeedInfo } from "./client-seed-info";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
