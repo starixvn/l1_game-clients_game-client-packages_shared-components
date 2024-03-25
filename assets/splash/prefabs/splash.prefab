@@ -41,16 +41,13 @@
       },
       {
         "__id__": 102
+      },
+      {
+        "__id__": 112
       }
     ],
     "_active": true,
     "_components": [
-      {
-        "__id__": 112
-      },
-      {
-        "__id__": 114
-      },
       {
         "__id__": 116
       },
@@ -62,10 +59,16 @@
       },
       {
         "__id__": 122
+      },
+      {
+        "__id__": 124
+      },
+      {
+        "__id__": 126
       }
     ],
     "_prefab": {
-      "__id__": 124
+      "__id__": 128
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -163,8 +166,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 812,
-      "height": 410
+      "width": 1398,
+      "height": 786
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -670,7 +673,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 36.42667589689556,
+      "width": 36.4306640625,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -709,7 +712,7 @@
     "_string": "68%",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 18.532019704433498,
+    "_actualFontSize": 18,
     "_fontSize": 18,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
@@ -1223,7 +1226,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 116.1259042840255,
+      "width": 116.138671875,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -1262,7 +1265,7 @@
     "_string": "DATA NULL: ",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 18.532019704433498,
+    "_actualFontSize": 18,
     "_fontSize": 18,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
@@ -2115,6 +2118,94 @@
     ]
   },
   {
+    "__type__": "cc.Node",
+    "_name": "logo-SP-container",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 113
+      }
+    ],
+    "_prefab": {
+      "__id__": 115
+    },
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 317.5,
+      "z": 0
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_mobility": 0,
+    "_layer": 33554432,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.UITransform",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 112
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 114
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 100,
+      "height": 100
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "81lZQmU5ZPo4VJGtwvvMWU"
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__id__": 0
+    },
+    "fileId": "47tHydLGtBBqISa6VRbuKu",
+    "instance": null,
+    "targetOverrides": null,
+    "nestedPrefabInstanceRoots": null
+  },
+  {
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
@@ -2124,12 +2215,12 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 113
+      "__id__": 117
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 812,
-      "height": 410
+      "width": 1398,
+      "height": 786
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -2152,7 +2243,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 115
+      "__id__": 119
     },
     "_alignFlags": 45,
     "_target": null,
@@ -2188,7 +2279,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 117
+      "__id__": 121
     },
     "progressBar": {
       "__id__": 33
@@ -2201,6 +2292,9 @@
     },
     "nodeSloganVG": {
       "__id__": 70
+    },
+    "nodeSloganSP": {
+      "__id__": 112
     },
     "signNameContainer": {
       "__id__": 74
@@ -2231,7 +2325,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 119
+      "__id__": 123
     },
     "_id": ""
   },
@@ -2249,7 +2343,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 121
+      "__id__": 125
     },
     "_id": ""
   },
@@ -2267,7 +2361,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 123
+      "__id__": 127
     },
     "_id": ""
   },
