@@ -16,7 +16,6 @@ export class BetItemsPolygon extends BetItems {
         if (!betItem) {
             return;
         }
-        console.log(betItem.name);
-        betItem.getComponent(BetItem).onBet();
+        betItem.getComponent(BetItem)?.callBet();
     }
 }

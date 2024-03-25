@@ -48,6 +48,10 @@ export default class BetItem extends ObserverComponent {
         return this.node.name;
     }
 
+    callBet() {
+        this.onBet();
+    }
+
     @handle(gc.Bet.BetHandler, (handler, payload: string) => handler.handle(payload))
     onBet() {
         return this.node.name;
