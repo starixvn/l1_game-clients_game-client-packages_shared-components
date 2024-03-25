@@ -1,9 +1,9 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Label, Node } from "cc";
 import observer from "observer";
-import { CrossControlItem } from "../../../shared/common-components/cross-control/cross-control-item";
-import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
-import { AnimationUtils } from "../../../shared/utils/utils";
+import { CrossControlItem } from "db://shared-components/shared/common-components/cross-control/cross-control-item";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
+import { AnimationUtils } from "db://shared-components/shared/utils/utils";
 const { ccclass, property } = _decorator;
 const { fadeIn } = AnimationUtils;
 const { handle } = observer;

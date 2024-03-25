@@ -1,8 +1,8 @@
 import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import Observer from "observer";
-import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
-import { FunctionUtils } from "../../../shared/utils";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
+import { FunctionUtils } from "db://shared-components/shared/utils";
 const { ccclass } = _decorator;
 const { handle } = Observer;
 const { Shared } = gc;

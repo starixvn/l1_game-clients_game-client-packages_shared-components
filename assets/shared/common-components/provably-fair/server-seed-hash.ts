@@ -2,8 +2,8 @@ import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 
 import Observer from "observer";
-import { LabelCopyComponent } from "../../../shared/common-components/copy-label/scripts/label-copy-component";
-import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { LabelCopyComponent } from "db://shared-components/shared/common-components/copy-label/scripts/label-copy-component";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 @ccclass
