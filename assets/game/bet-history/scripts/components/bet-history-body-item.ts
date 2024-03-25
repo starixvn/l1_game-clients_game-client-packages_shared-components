@@ -76,6 +76,12 @@ export default class BetHistoryBodyItem extends ObserverComponent {
     playSoundClick() {
         return gc.Audios.AudioIds.CLICK;
     }
+
+    @handle(gc.RoundBasePF.ProvablyFairHandler, (handle, roundId: number) => handle.openVerificationHistory(roundId))
+    onClickVerify() {
+        this.playSoundClick();
+        return this.betHistoryLog.roundId;
+    }
 }
 
 export class BaseResultBodyItem extends Component {
