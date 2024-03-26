@@ -84,7 +84,6 @@ export namespace FunctionUtils {
 
     export const isSabaPlay = (): boolean => {
         const operator = StorageManager.get(localStorageKeys?.operator);
-        console.log("isSabaPlay", operator);
         return operator.toString().toUpperCase() === "SP";
     };
 
