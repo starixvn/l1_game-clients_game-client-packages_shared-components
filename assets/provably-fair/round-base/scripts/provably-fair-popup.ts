@@ -45,11 +45,15 @@ export class ProvablyFairPopup extends ObserverComponent {
     private listClientSeedInfo: ClientSeedInfo[] = [];
 
     onLoad() {
-        this.listClientSeedInfo = this.clientSeedsContainer.getComponentsInChildren(ClientSeedInfo);
+        this.initClientSeedsList();
         super.onLoad();
         const para = `${gc.Translator.commonTranslate("pf_provably_fair_para_2")}`;
         this.lblParaVerification.string = para;
         this.handleGATracking();
+    }
+
+    private initClientSeedsList() {
+        this.listClientSeedInfo = this.clientSeedsContainer.getComponentsInChildren(ClientSeedInfo);
     }
 
     initResultNode(customResultPrefab: Prefab) {
@@ -86,6 +90,10 @@ export class ProvablyFairPopup extends ObserverComponent {
 
         finalHash && this.lblFinalHash.setString(finalHash);
         this.lblFinalHash.setActive(!!finalHash);
+
+        if (this.listClientSeedInfo.length === 0) {
+            this.initClientSeedsList();
+        }
         this.listClientSeedInfo.forEach((clientSeedInfo) => {
             clientSeedInfo.activeDisabledBg(true);
         });
