@@ -134,8 +134,6 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
         this.openManualSettingPopup();
     }
 
-    //TODO:close popup when not allow change client seed
-
     @render(RoundBasePF.ProvablyFairStore, (store) => store.notAllowChangeClientSeed)
     setDisplayComponents(notAllowChangeClientSeed: boolean) {
         if (notAllowChangeClientSeed) {
