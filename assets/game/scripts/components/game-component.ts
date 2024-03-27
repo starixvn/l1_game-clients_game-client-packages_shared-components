@@ -94,8 +94,8 @@ export default class GameComponent extends GameComponentBase {
 
     @render(RoundHistories.RoundHistoryStore, (store) => store.joinGameHistory)
     handleJoinGameAndShowResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
-        const { roundHistory, isShow } = joinGameHistory ?? {};
-        if (roundHistory && isShow) {
+        const { roundHistory } = joinGameHistory ?? {};
+        if (roundHistory) {
             this.isReceiveFinishBeforeRoundHistory = false;
             this.showResult(roundHistory?.result, false, roundHistory?.settlementResult);
         }
@@ -131,7 +131,7 @@ export default class GameComponent extends GameComponentBase {
         result: gc.GameServiceMessage.TResult,
         hasAnimation: boolean,
         settlementResult: gc.GameServiceMessage.TSettlementResult
-    ) { }
+    ) {}
 
     isValidResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {
         return result && settlementResult;
