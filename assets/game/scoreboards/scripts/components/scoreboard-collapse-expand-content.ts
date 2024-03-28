@@ -22,7 +22,7 @@ export class ScoreboardCollapseExpandContent extends ObserverComponent {
         this.isCollapse
             ? this.animChangePositon(this.node, this.POSITION_COLLAPSE)
             : this.animChangePositon(this.node, this.POSITION_EXPAND);
-        this.nodeArrow.active = !this.isCollapse;
+        this.nodeArrow.active = this.isCollapse;
     }
 
     @render(Settlements.SettlementStore, (store) => ({ result: store.result, settlementResult: store.settlementResult }))
