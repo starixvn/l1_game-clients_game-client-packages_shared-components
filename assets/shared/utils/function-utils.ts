@@ -1,8 +1,5 @@
-import { Node, find, screen, sys, warn } from "cc";
+import { Node, find, screen, warn } from "cc";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
-import gc from "@sg/game-client-base";
-
-const { Configs, StorageManager, localStorageKeys } = gc;
 
 export namespace FunctionUtils {
     export const getNamespace = () => {
@@ -80,28 +77,5 @@ export namespace FunctionUtils {
                     });
             }
         });
-    };
-
-    export const isSabaPlay = (): boolean => {
-        const operator = StorageManager.get(localStorageKeys?.operator);
-        return operator.toString().toUpperCase() === "SP";
-    };
-
-    export const getLogoByOperator = (systemType: string): string => {
-        const isSystemSG = systemType === Configs.SystemConfigs.SG.name;
-        if (isSystemSG) {
-            return "logo-SG";
-        } else {
-            return isSabaPlay() ? "logo-SP" : "logo-VG";
-        }
-    };
-
-    export const getBackCardByOperator = (systemType: string): string => {
-        const isSystemSG = systemType === Configs.SystemConfigs.SG.name;
-        if (isSystemSG) {
-            return "back-SG";
-        } else {
-            return isSabaPlay() ? "back-SP" : "back-VG";
-        }
     };
 }

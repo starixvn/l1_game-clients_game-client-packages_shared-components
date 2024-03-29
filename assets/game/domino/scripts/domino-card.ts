@@ -1,6 +1,6 @@
 import gc from "@sg/game-client-base";
 import { Animation, Component, Node, Sprite, SpriteAtlas, _decorator, warn } from "cc";
-import { AnimationUtils, FunctionUtils } from "../../../shared/utils";
+import { AnimationUtils, FunctionUtils, OperatorUtils } from "../../../shared/utils";
 const { ccclass, property } = _decorator;
 
 const { Configs } = gc;
@@ -44,8 +44,8 @@ export class DominoCard extends Component {
         this.dominoCard = dominoCard;
     }
 
-    setBackDominoCardSystem(systemType: string) {
-        const spriteFrameName = FunctionUtils.getBackCardByOperator(systemType);
+    setBackDominoCardSystem() {
+        const spriteFrameName = OperatorUtils.getBackCardByOperator();
         this.backCard.spriteFrame = this.atlas.getSpriteFrame(spriteFrameName);
     }
 

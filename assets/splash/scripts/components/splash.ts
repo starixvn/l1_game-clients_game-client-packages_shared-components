@@ -4,7 +4,7 @@ import Observer from "observer";
 
 import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
 import GameConnection from "../../../shared/common-components/game-connection";
-import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
+import { ComponentUtils, FunctionUtils, OperatorUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
 
 const { ccclass, property } = _decorator;
@@ -157,23 +157,29 @@ export default class Splash extends Component {
     }
 
     @render(Configs.SiteConfigs, (store) => store.systemType)
-    async showSystemSlogan(systemType: string) {
-        const isSystemSG = systemType === Configs.SystemConfigs.SG.name;
-        const assetPath = FunctionUtils.getLogoByOperator(systemType);
-        await this.loadSystemSlogan(assetPath, isSystemSG);
+    async showSystemSlogan() {
+        const assetPath = OperatorUtils.getLogoByOperator();
+        await this.loadSystemSlogan(assetPath);
     }
 
-    async loadSystemSlogan(assetPath: string, isSystemSG: boolean) {
+    async loadSystemSlogan(assetPath: string) {
         this.destroyAllChildrenSlogan();
-        const slogan = await bundleManager.loadSharedAsset<Prefab>(`splash/${assetPath}`, Prefab, null);
-        if (slogan && this?.node?.isValid) {
-            const sloganNode = instantiate(slogan);
-            if (isSystemSG) {
-                this.nodeSloganSG.addChild(sloganNode);
-            } else {
-                FunctionUtils.isSabaPlay() ? this.nodeSloganSP.addChild(sloganNode) : this.nodeSloganVG.addChild(sloganNode);
-            }
+        const sloganPrefab = await bundleManager.loadSharedAsset<Prefab>(`splash/${assetPath}`, Prefab, null);
+        if (sloganPrefab && this?.node?.isValid) {
+            const slogan = instantiate(sloganPrefab);
+            const sloganNode = this.getSloganNode();
+            sloganNode.addChild(slogan);
         }
+    }
+
+    getSloganNode() {
+        const nodeSlogans = {
+            SP: this.nodeSloganSP,
+            VG: this.nodeSloganVG,
+            SG: this.nodeSloganSG,
+        };
+        const opAlias = OperatorUtils.getOperatorAlias();
+        return nodeSlogans[opAlias];
     }
 
     destroyAllChildrenSlogan() {
