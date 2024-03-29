@@ -11,8 +11,8 @@ export namespace OperatorUtils {
 
     export const getLogoByOperator = (): string => {
         const opStorage = StorageManager.get(localStorageKeys?.operator).toString().toUpperCase();
-        const operator = OperatorAlias.hasOwnProperty(opStorage) ? `-${OperatorAlias[opStorage]}` : "";
-        return `logo${operator}`;
+        const operator = OperatorAlias.hasOwnProperty(opStorage) ? OperatorAlias[opStorage] : "Other";
+        return `logo-${operator}`;
     };
 
     export const getBackCardByOperator = (): string => {
@@ -29,6 +29,6 @@ export namespace OperatorUtils {
 
     export const getOperatorAlias = ():string=>{
         const opStorage = StorageManager.get(localStorageKeys?.operator).toString().toUpperCase();
-        return OperatorAlias.hasOwnProperty(opStorage) ? OperatorAlias[opStorage] : "";
+        return OperatorAlias.hasOwnProperty(opStorage) ? OperatorAlias[opStorage] : "Other";
     }
 }

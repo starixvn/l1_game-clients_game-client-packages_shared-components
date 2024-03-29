@@ -6,6 +6,7 @@ import { bundleManager } from "../../../shared/common-components/bundle-magager/
 import GameConnection from "../../../shared/common-components/game-connection";
 import { ComponentUtils, FunctionUtils, OperatorUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
+import { OperatorUtils } from "../../../shared/utils/operator-utils";
 
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
@@ -28,6 +29,9 @@ export default class Splash extends Component {
 
     @property(Node)
     nodeSloganSP: Node = null;
+
+    @property(Node)
+    nodeSloganOther: Node = null;
 
     @property(Node)
     signNameContainer: Node = null;
@@ -177,6 +181,7 @@ export default class Splash extends Component {
             SP: this.nodeSloganSP,
             VG: this.nodeSloganVG,
             SG: this.nodeSloganSG,
+            Other: this.nodeSloganOther
         };
         const opAlias = OperatorUtils.getOperatorAlias();
         return nodeSlogans[opAlias];
