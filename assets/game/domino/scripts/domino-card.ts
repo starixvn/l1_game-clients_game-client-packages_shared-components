@@ -1,7 +1,6 @@
 import gc from "@sg/game-client-base";
 import { Animation, Component, Node, Sprite, SpriteAtlas, _decorator, warn } from "cc";
 import { AnimationUtils, FunctionUtils, OperatorUtils } from "../../../shared/utils";
-import { OperatorUtils } from "../../../shared/utils/operator-utils";
 const { ccclass, property } = _decorator;
 
 const { Configs } = gc;

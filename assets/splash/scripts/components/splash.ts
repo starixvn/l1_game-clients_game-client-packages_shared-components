@@ -6,7 +6,6 @@ import { bundleManager } from "../../../shared/common-components/bundle-magager/
 import GameConnection from "../../../shared/common-components/game-connection";
 import { ComponentUtils, FunctionUtils, OperatorUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
-import { OperatorUtils } from "../../../shared/utils/operator-utils";
 
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
