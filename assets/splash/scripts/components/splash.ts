@@ -161,9 +161,14 @@ export default class Splash extends Component {
 
     @render(Configs.SiteConfigs, (store) => store.systemType)
     async showSystemSlogan() {
-        const assetPath = OperatorUtils.getLogoByOperator();
+        const assetPath = this.getLogoByOperator();
         await this.loadSystemSlogan(assetPath);
     }
+
+    getLogoByOperator = (): string => {
+        const operator = OperatorUtils.getOperatorAlias();
+        return `logo-${operator}`;
+    };
 
     async loadSystemSlogan(assetPath: string) {
         this.destroyAllChildrenSlogan();

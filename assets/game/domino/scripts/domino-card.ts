@@ -1,9 +1,6 @@
-import gc from "@sg/game-client-base";
 import { Animation, Component, Node, Sprite, SpriteAtlas, _decorator, warn } from "cc";
 import { AnimationUtils, FunctionUtils, OperatorUtils } from "../../../shared/utils";
 const { ccclass, property } = _decorator;
-
-const { Configs } = gc;
 
 export interface DominoCardModel {
     top: number;
@@ -45,9 +42,14 @@ export class DominoCard extends Component {
     }
 
     setBackDominoCardSystem() {
-        const spriteFrameName = OperatorUtils.getBackCardByOperator();
+        const spriteFrameName = this.getBackCardByOperator();
         this.backCard.spriteFrame = this.atlas.getSpriteFrame(spriteFrameName);
     }
+
+    getBackCardByOperator = (): string => {
+        const operator = OperatorUtils.getOperatorAlias();
+        return `back-${operator}`;
+    };
 
     protected async playAnimationWithAsyncExecute(animationName: string, duration: number) {
         return FunctionUtils.asyncExecute(this.node, AnimationUtils.playAnimation(this.animation, animationName, duration));
