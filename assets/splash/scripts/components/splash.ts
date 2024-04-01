@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, director, instantiate, Label, Node, Prefab, ProgressBar, sys } from "cc";
+import { _decorator, Component, director, instantiate, Label, Node, Prefab, ProgressBar } from "cc";
 import Observer from "observer";
 
 import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
@@ -9,7 +9,7 @@ import { ErrorMessage } from "../error-message";
 
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
-const { Auth, ChipSetting, StorageManager, sentryLogger, Configs, Translator, BrowserDomUtils, App, AppTypes } = gc;
+const { Auth, ChipSetting, sentryLogger, Configs, Translator, BrowserDomUtils, App, AppTypes } = gc;
 
 @ccclass
 @observer
