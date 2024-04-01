@@ -97,6 +97,20 @@ export class BetItems extends ObserverComponent {
         });
     }
 
+    @render(RoundHistories.RoundHistoryStore, (store) => store.firstJoinGameHistory)
+    renderStaticResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory) {
+        if (!firstJoinGameHistory) {
+            return;
+        }
+        const { roundHistory, staticHighlight, animationHighlight } = firstJoinGameHistory;
+        if (staticHighlight) {
+            this.showHighlightStatic(roundHistory.settlementResult);
+        }
+        if (animationHighlight) {
+            this.showAnimationHighlight(roundHistory.settlementResult);
+        }
+    }
+
     @render(Rounds.RoundStore, (store) => store.highLightAnim, { fireImmediately: false })
     handleHighlightAnim(highLightInfo: gc.Rounds.THighlightAnim) {
         const { settlementResult, isAnim } = highLightInfo;
@@ -127,6 +141,13 @@ export class BetItems extends ObserverComponent {
         this.betItemComponents.forEach((betItem) => {
             const choice = betItem.node.name;
             betItem.handleHighlightStatic(this.isWinning(+settlementResult?.[choice]));
+        });
+    }
+
+    protected showAnimationHighlight(settlementResult: gc.GameServiceMessage.TSettlementResult) {
+        this.betItemComponents.forEach((betItem) => {
+            const choice = betItem.node.name;
+            betItem.handleHighlightAnim(this.isWinning(+settlementResult?.[choice]));
         });
     }
 

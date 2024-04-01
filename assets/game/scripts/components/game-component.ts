@@ -25,6 +25,7 @@ export default class GameComponent extends GameComponentBase {
 
     containerOptions: gc.IContainerOptions;
     protected isReceiveFinishBeforeRoundHistory = true;
+    protected enableFixHandleFinish = false;
 
     onLoad() {
         game.on(Game.EVENT_HIDE, this.onHideGame, this);
@@ -94,6 +95,9 @@ export default class GameComponent extends GameComponentBase {
 
     @render(RoundHistories.RoundHistoryStore, (store) => store.joinGameHistory)
     handleJoinGameAndShowResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
+        if (this.enableFixHandleFinish) {
+            return;
+        }
         const { roundHistory } = joinGameHistory ?? {};
         if (roundHistory) {
             this.isReceiveFinishBeforeRoundHistory = false;
@@ -114,10 +118,32 @@ export default class GameComponent extends GameComponentBase {
 
     @render(Settlements.SettlementStore, (store) => ({ result: store.result, settlementResult: store.settlementResult }))
     handleResult(data: { result: gc.GameServiceMessage.TResult; settlementResult: gc.GameServiceMessage.TSettlementResult }) {
+        if (this.enableFixHandleFinish) {
+            return;
+        }
         const { result, settlementResult } = data;
 
         if (!this.isValidResult(result, settlementResult)) {
             this.isReceiveFinishBeforeRoundHistory = false;
+            return;
+        }
+
+        this.showResult(result, true, settlementResult).then(() => {
+            this.finishShowResult(result, settlementResult);
+        });
+        this.playSound(gc.Audios.AudioIds.RECEIVE_FINISH);
+    }
+
+    @render(Settlements.SettlementStore, (store) => store.currentFinish, {
+        fireImmediately: false,
+    })
+    renderCurrentFinish(currentFinish: gc.GameServiceMessage.Finish) {
+        if (!currentFinish || !this.enableFixHandleFinish) {
+            return;
+        }
+        const { result, settlementResult } = currentFinish;
+
+        if (!this.isValidResult(result, settlementResult)) {
             return;
         }
 
