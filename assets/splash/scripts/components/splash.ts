@@ -160,14 +160,18 @@ export default class Splash extends Component {
     }
 
     @render(Configs.SiteConfigs, (store) => store.systemType)
-    async showSystemSlogan() {
-        const assetPath = this.getLogoByOperator();
+    async showSystemSlogan(systemType: string) {
+        const assetPath = this.getLogo(systemType);
         await this.loadSystemSlogan(assetPath);
     }
 
-    getLogoByOperator = (): string => {
+    getLogo = (systemType: string): string => {
         const operator = OperatorUtils.getOperatorAlias();
-        return `logo-${operator}`;
+        if (operator === "OTHER") {
+            return `logo-${operator}-${systemType.toUpperCase()}`;
+        } else {
+            return `logo-${operator}`;
+        }
     };
 
     async loadSystemSlogan(assetPath: string) {
@@ -185,7 +189,7 @@ export default class Splash extends Component {
             SP: this.nodeSloganSP,
             VG: this.nodeSloganVG,
             SG: this.nodeSloganSG,
-            Other: this.nodeSloganOther
+            Other: this.nodeSloganOther,
         };
         const opAlias = OperatorUtils.getOperatorAlias();
         return nodeSlogans[opAlias];
