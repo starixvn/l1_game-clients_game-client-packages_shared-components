@@ -81,7 +81,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 3
@@ -1191,7 +1191,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 418.6875,
+      "width": 343.73828125,
       "height": 37.8
     },
     "_anchorPoint": {
@@ -1227,7 +1227,7 @@
       "b": 95,
       "a": 255
     },
-    "_string": "HƯỚNG DẪN PROVABLY FAIR",
+    "_string": "PROVABLY FAIR GUIDES",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 28,
