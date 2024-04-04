@@ -32,6 +32,9 @@ export class BaseBetDetailLogItem extends Component {
     @property(Node)
     nodeBackground: Node = null;
 
+    refundChoices: string[] = [];
+    refundRatio = 0.5;
+
     setData(data: BetDetailLogItemType) {
         const { index, betDetailsLog } = data;
         const { time } = betDetailsLog as GameRoundBetDetailsLog & gc.BetHistory.DynamicObject<object>;
@@ -60,6 +63,39 @@ export default class BetDetailLogItem extends BaseBetDetailLogItem {
 
         this.lblChoice.string = Translator.gameTranslate(`glossary_${choice}`);
         this.lblAmount.string = FormatUtils.numberWithCommas(amount, 2);
+        this.parseOddByData(data);
+        this.calculateWinValue(data);
+    }
+
+    protected calculateWinValue(data: BetDetailLogItemType) {
+        const { betDetailsLog, settlementResult, freeBet, odds } = data;
+        const { amount, choice } = betDetailsLog as GameRoundBetDetailsLog & gc.BetHistory.DynamicObject<object>;
+
+        if (settlementResult[choice]) {
+            const rawOdd = odds[choice];
+            const effectiveOdds = freeBet ? rawOdd - 1 : rawOdd;
+            const winningAmount = amount * effectiveOdds;
+            this.lblWin.string = FormatUtils.numberWithCommas(winningAmount, 2);
+            this.setHighlightTicketDetail(winningAmount > amount);
+        } else {
+            if (this.needRefund(settlementResult)) {
+                const value = amount * this.refundRatio;
+                this.lblWin.string = FormatUtils.numberWithCommas(value, 2);
+            } else {
+                this.lblWin.string = "0";
+            }
+        }
+    }
+
+    needRefund(settlementResult: gc.BetHistory.DynamicObject<boolean>) {
+        return this.refundChoices.findIndex((choice) => settlementResult[choice]) > -1;
+    }
+
+    parseOddByData(data) {
+        const { betDetailsLog } = data;
+        const { choice } = betDetailsLog;
+        const odds = data.odds[choice];
+        this.lblOdds.string = gc.FormatUtils.formatOdds(odds, data.fractionalOddsFormat);
     }
 
     setHighlightTicketDetail(highlight: boolean) {
