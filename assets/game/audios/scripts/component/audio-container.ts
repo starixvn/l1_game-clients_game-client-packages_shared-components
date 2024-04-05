@@ -85,13 +85,17 @@ export class AudioContainer extends ObserverComponent {
         const keys = Object.keys(audioConfigs);
         for (const key of keys) {
             const value = audioConfigs[key];
+            if (Object.keys(value).length === 0) {
+                continue;
+            }
             if (value.type === "music") {
-                this.musicIds.push(key);
+                if (value?.isMusicGame) {
+                    this.musicGameIds.push(key);
+                } else {
+                    this.musicIds.push(key);
+                }
             } else {
                 this.audios.push(key);
-            }
-            if (value?.isMusicGame) {
-                this.musicGameIds.push(key);
             }
         }
 
