@@ -27,25 +27,44 @@ export class ScoreboardCollapseExpandContent extends ObserverComponent {
     private readonly POSITION_EXPAND = 371;
     private nameSpriteFrame = "Big-road-board-BG-bot-side";
 
-    @render(Settlements.SettlementStore, (store) => store.settlementResult)
-    async collapseScoreboard(settlementResult) {
-        if (settlementResult) {
-            this.animChangePositon(this.node, this.POSITION_COLLAPSE);
-            await FunctionUtils.delay(500);
-            this.nodeBigRoad.getComponent(UIOpacity).opacity = 0;
-            this.nodeBgPercent1.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(`${this.nameSpriteFrame}-collapse`);
-            this.nodeBgPercent2.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(`${this.nameSpriteFrame}-collapse`);
-        }
-    }
-
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
     expandScoreboard(isStartRound: boolean) {
         if (isStartRound) {
-            this.nodeBigRoad.getComponent(UIOpacity).opacity = 255;
-            this.animChangePositon(this.node, this.POSITION_EXPAND);
-            this.nodeBgPercent1.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(this.nameSpriteFrame);
-            this.nodeBgPercent2.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(this.nameSpriteFrame);
+            this.renderExpandScoreboard(true);
         }
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => store.isInRoundTime)
+    expandScoreboardNoAnim(isInRoundTime: boolean) {
+        if (isInRoundTime) {
+            this.renderExpandScoreboard(false);
+        }
+    }
+
+    renderExpandScoreboard(hasAnimation: boolean) {
+        this.nodeBigRoad.getComponent(UIOpacity).opacity = 255;
+        if (hasAnimation) {
+            this.animChangePositon(this.node, this.POSITION_EXPAND);
+        } else {
+            this.node.position = v3(this.node.position.x, this.POSITION_EXPAND, 0);
+        }
+
+        this.nodeBgPercent1.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(this.nameSpriteFrame);
+        this.nodeBgPercent2.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(this.nameSpriteFrame);
+    }
+
+    async renderCollapseScoreboard(hasAnimation: boolean) {
+        console.log("renderCollapseScoreboard");
+        if (hasAnimation) {
+            this.animChangePositon(this.node, this.POSITION_COLLAPSE);
+            await FunctionUtils.delay(500);
+        } else {
+            this.node.position = v3(this.node.position.x, this.POSITION_COLLAPSE, 0);
+        }
+
+        this.nodeBigRoad.getComponent(UIOpacity).opacity = 0;
+        this.nodeBgPercent1.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(`${this.nameSpriteFrame}-collapse`);
+        this.nodeBgPercent2.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(`${this.nameSpriteFrame}-collapse`);
     }
 
     animChangePositon(node: Node, y: number) {

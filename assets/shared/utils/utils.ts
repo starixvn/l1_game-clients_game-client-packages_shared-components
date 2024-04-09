@@ -77,7 +77,12 @@ export namespace AnimationUtils {
 
     export const playSpine = (spine: sp.Skeleton, animationName: string, isLoop = false, duration?: number) => {
         return new Promise<void>((resolve, reject) => {
-            const animationDuration = spine.findAnimation(animationName).duration;
+            const animation = spine.findAnimation(animationName);
+            if (!animation) {
+                resolve();
+                return;
+            }
+            const animationDuration = animation.duration;
             if (duration) {
                 spine.timeScale = animationDuration / duration;
             } else {
