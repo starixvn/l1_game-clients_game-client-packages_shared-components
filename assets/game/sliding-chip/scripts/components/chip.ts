@@ -66,5 +66,13 @@ export default class Chip extends Component {
 
         const button = this.getComponent(Button);
         button && (button.enabled = false);
+        this.hideSomeSprites();
+    }
+
+    hideSomeSprites() {
+        ["bg-overlay", "bg-circle"].forEach((name) => {
+            const node = this.typeNodes[ChipDisplayType.Normal].getChildByName(name);
+            node && (node.active = false);
+        });
     }
 }
