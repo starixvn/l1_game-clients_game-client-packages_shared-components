@@ -6,10 +6,10 @@ export const OperatorAlias = {
     SP: "SP",
     VG: "VG",
     SG: "SG",
+    TIP88: "TIP88",
 };
 
 export namespace OperatorUtils {
-
     export const getOperatorAlias = (): string => {
         const operator = getOperator();
         return OperatorAlias[operator] || "OTHER";

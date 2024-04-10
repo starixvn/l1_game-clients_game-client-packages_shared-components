@@ -43,9 +43,9 @@ export class DominoCard extends Component {
 
     setBackDominoCardSystem() {
         const spriteFrameName = this.getBackCardByOperator();
-        this.backCard.spriteFrame = this.atlas.getSpriteFrame(spriteFrameName);
+        const defaultSpriteFrameName = "back-OTHER";
+        this.backCard.spriteFrame = this.atlas.getSpriteFrame(spriteFrameName) || this.atlas.getSpriteFrame(defaultSpriteFrameName);
     }
-
     getBackCardByOperator = (): string => {
         const operator = OperatorUtils.getOperatorAlias();
         return `back-${operator}`;

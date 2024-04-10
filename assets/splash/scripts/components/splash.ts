@@ -1,10 +1,9 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Component, director, instantiate, Label, Node, Prefab, ProgressBar } from "cc";
 import Observer from "observer";
-
 import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
 import GameConnection from "../../../shared/common-components/game-connection";
-import { ComponentUtils, FunctionUtils, OperatorUtils } from "../../../shared/utils";
+import { ComponentUtils, FunctionUtils, OperatorAlias, OperatorUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
 
 const { ccclass, property } = _decorator;
@@ -31,6 +30,9 @@ export default class Splash extends Component {
 
     @property(Node)
     nodeSloganOther: Node = null;
+
+    @property(Node)
+    nodeSloganTip88: Node = null;
 
     @property(Node)
     signNameContainer: Node = null;
@@ -167,12 +169,8 @@ export default class Splash extends Component {
 
     getLogo = (systemType: string): string => {
         const operator = OperatorUtils.getOperatorAlias();
-        if (operator === "OTHER") {
-            return `logo-${operator}-${systemType.toUpperCase()}`;
-        } else {
-            return `logo-${operator}`;
-        }
-    };
+        return operator === "OTHER" ? `logo-${operator}-${systemType.toUpperCase()}` : `logo-${operator}`;
+    }
 
     async loadSystemSlogan(assetPath: string) {
         this.destroyAllChildrenSlogan();
@@ -186,10 +184,11 @@ export default class Splash extends Component {
 
     getSloganNode() {
         const nodeSlogans = {
-            SP: this.nodeSloganSP,
-            VG: this.nodeSloganVG,
-            SG: this.nodeSloganSG,
-            Other: this.nodeSloganOther,
+            [OperatorAlias.SP]: this.nodeSloganSP,
+            [OperatorAlias.VG]: this.nodeSloganVG,
+            [OperatorAlias.SG]: this.nodeSloganSG,
+            [OperatorAlias.TIP88]: this.nodeSloganTip88,
+            OTHER: this.nodeSloganOther,
         };
         const opAlias = OperatorUtils.getOperatorAlias();
         return nodeSlogans[opAlias];
@@ -199,6 +198,8 @@ export default class Splash extends Component {
         this.nodeSloganSG.destroyAllChildren();
         this.nodeSloganVG.destroyAllChildren();
         this.nodeSloganSP.destroyAllChildren();
+        this.nodeSloganTip88.destroyAllChildren();
+        this.nodeSloganOther.destroyAllChildren();
     }
 
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
