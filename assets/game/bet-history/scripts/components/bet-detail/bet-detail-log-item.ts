@@ -95,7 +95,7 @@ export default class BetDetailLogItem extends BaseBetDetailLogItem {
         const { betDetailsLog } = data;
         const { choice } = betDetailsLog;
         const odds = data.odds[choice];
-        this.lblOdds.string = gc.FormatUtils.formatOdds(odds, data.fractionalOddsFormat);
+        this.lblOdds.string = data.fractionalOddsFormat ? gc.FormatUtils.numberWithCommas(+odds - 1, 2) : odds.toString();
     }
 
     setHighlightTicketDetail(highlight: boolean) {
