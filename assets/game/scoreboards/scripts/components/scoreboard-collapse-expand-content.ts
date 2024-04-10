@@ -14,18 +14,18 @@ export class ScoreboardCollapseExpandContent extends ObserverComponent {
     @property(Node)
     nodeBigRoad: Node = null;
 
-    @property(Node)
-    nodeBgPercent1: Node = null;
+    @property(Sprite)
+    sprBgPercent1: Sprite = null;
 
-    @property(Node)
-    nodeBgPercent2: Node = null;
+    @property(Sprite)
+    sprBgPercent2: Sprite = null;
 
     @property(SpriteAtlas)
     mainAtlas: SpriteAtlas = null;
 
     private readonly POSITION_COLLAPSE = 505;
     private readonly POSITION_EXPAND = 371;
-    private nameSpriteFrame = "Big-road-board-BG-bot-side";
+    private readonly nameSpriteFrame = "Big-road-board-BG-bot-side";
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
     expandScoreboard(isStartRound: boolean) {
@@ -48,13 +48,12 @@ export class ScoreboardCollapseExpandContent extends ObserverComponent {
         } else {
             this.node.position = v3(this.node.position.x, this.POSITION_EXPAND, 0);
         }
+        const spriteFrameName = this.mainAtlas.getSpriteFrame(this.nameSpriteFrame);
 
-        this.nodeBgPercent1.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(this.nameSpriteFrame);
-        this.nodeBgPercent2.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(this.nameSpriteFrame);
+        this.sprBgPercent1.spriteFrame = this.sprBgPercent2.spriteFrame = spriteFrameName;
     }
 
     async renderCollapseScoreboard(hasAnimation: boolean) {
-        console.log("renderCollapseScoreboard");
         if (hasAnimation) {
             this.animChangePositon(this.node, this.POSITION_COLLAPSE);
             await FunctionUtils.delay(500);
@@ -63,8 +62,8 @@ export class ScoreboardCollapseExpandContent extends ObserverComponent {
         }
 
         this.nodeBigRoad.getComponent(UIOpacity).opacity = 0;
-        this.nodeBgPercent1.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(`${this.nameSpriteFrame}-collapse`);
-        this.nodeBgPercent2.getComponent(Sprite).spriteFrame = this.mainAtlas.getSpriteFrame(`${this.nameSpriteFrame}-collapse`);
+        const spriteFrameName = this.mainAtlas.getSpriteFrame(`${this.nameSpriteFrame}-collapse`);
+        this.sprBgPercent1.spriteFrame = this.sprBgPercent2.spriteFrame = spriteFrameName;
     }
 
     animChangePositon(node: Node, y: number) {
