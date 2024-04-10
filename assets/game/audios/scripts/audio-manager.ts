@@ -15,8 +15,14 @@ export default class AudioManager {
     static audioConfigs(configs?: TAudioConfigs) {
         const instance = AudioManager.getInstance();
         if (configs) {
+            this.removeEmptyKey(configs);
             instance.audioConfigs = configs;
         }
         return instance.audioConfigs;
+    }
+
+    private static removeEmptyKey(configs) {
+        const emptyValueKeys = Object.keys(configs).filter((key) => Object.keys(configs[key]).length === 0);
+        emptyValueKeys.forEach((key) => delete configs[key]);
     }
 }
