@@ -23,8 +23,8 @@ export class ScoreboardCollapseExpandContent extends ObserverComponent {
     @property(SpriteAtlas)
     mainAtlas: SpriteAtlas = null;
 
-    private readonly POSITION_COLLAPSE = 505;
-    private readonly POSITION_EXPAND = 371;
+    private readonly POSITION_COLLAPSE = 130;
+    private readonly POSITION_EXPAND = 0;
     private readonly nameSpriteFrame = "Big-road-board-BG-bot-side";
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
