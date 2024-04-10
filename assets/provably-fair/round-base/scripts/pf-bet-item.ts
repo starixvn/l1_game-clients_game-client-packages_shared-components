@@ -9,7 +9,6 @@ const { ccclass, property } = _decorator;
 @ccclass
 export class PFBetItem extends BetItem {
     @handle(gc.RoundBasePF.PFBetHandler, (handler, payload: string) => handler.handle(payload))
-    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     onPFBet() {
         return this.node.name;
     }
