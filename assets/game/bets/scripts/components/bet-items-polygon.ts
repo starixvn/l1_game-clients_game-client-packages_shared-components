@@ -11,7 +11,13 @@ export class BetItemsPolygon extends BetItems {
 
     handleBetItemClick(event: EventTouch) {
         const location = event.getUILocation();
-        const betItem = this.node.children.find((item) => this.checkCollider(location, item.getComponent(PolygonCollider2D)));
+        const betItem = this.node.children.find((item) => {
+            const collider = item.getComponent(PolygonCollider2D);
+            if (!collider) {
+                return false;
+            }
+            return this.checkCollider(location, collider);
+        });
 
         if (!betItem) {
             return;
