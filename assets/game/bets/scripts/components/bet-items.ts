@@ -103,11 +103,8 @@ export class BetItems extends ObserverComponent {
             return;
         }
         const { roundHistory, staticHighlight, animationHighlight } = firstJoinGameHistory;
-        if (staticHighlight) {
+        if (staticHighlight || animationHighlight) {
             this.showHighlightStatic(roundHistory.settlementResult);
-        }
-        if (animationHighlight) {
-            this.showAnimationHighlight(roundHistory.settlementResult);
         }
     }
 
