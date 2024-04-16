@@ -34,6 +34,11 @@ export class BetItemsPolygon extends BetItems {
         this.drawDebug();
     }
 
+    onDestroy() {
+        this.node.off(Node.EventType.TOUCH_END, this.handleBetItemClick, this);
+        super.onDestroy();
+    }
+
     drawDebug() {
         if (!this.debugSample) {
             return;
