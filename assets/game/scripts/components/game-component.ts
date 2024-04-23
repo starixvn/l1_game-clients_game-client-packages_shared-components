@@ -105,7 +105,7 @@ export default class GameComponent extends GameComponentBase {
         }
     }
 
-    @render(Rounds.RoundStore, (store) => store.historyRoundId)
+    @render(Rounds.RoundStore, (store) => store.clientRoundId)
     renderRoundId(roundId: number) {
         roundId > 0 && this.lblRoundId && (this.lblRoundId.string = `#${roundId}`);
     }
