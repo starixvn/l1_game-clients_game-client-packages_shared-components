@@ -103,6 +103,10 @@ export class BetItems extends ObserverComponent {
             return;
         }
         const { roundHistory, staticHighlight, animationHighlight } = firstJoinGameHistory;
+        this.setHighlightStatic(staticHighlight, animationHighlight, roundHistory);
+    }
+
+    setHighlightStatic(staticHighlight: boolean, animationHighlight: boolean, roundHistory: gc.RoundHistories.RoundHistory) {
         if (staticHighlight || animationHighlight) {
             this.showHighlightStatic(roundHistory.settlementResult);
         }
@@ -123,14 +127,6 @@ export class BetItems extends ObserverComponent {
     handleHighlightStatic(highlightStatic: gc.Rounds.THighlightStatic) {
         if (!isEmpty(highlightStatic?.settlementResult)) {
             this.showHighlightStatic(highlightStatic.settlementResult);
-        }
-    }
-
-    @render(RoundHistories.RoundHistoryStore, (store) => store.joinGameHistory)
-    handleHighlightStaticWhenJoinStageResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
-        const { roundHistory } = joinGameHistory ?? {};
-        if (roundHistory?.settlementResult) {
-            this.showHighlightStatic(roundHistory.settlementResult);
         }
     }
 
