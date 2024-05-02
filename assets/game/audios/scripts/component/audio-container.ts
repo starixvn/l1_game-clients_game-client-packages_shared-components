@@ -184,6 +184,10 @@ export class AudioContainer extends ObserverComponent {
         }
     }
 
+    updateVolumeMusicSource(volume: number) {
+        this.musicSource.volume = volume;
+    }
+
     @render(UserSettings.UserSettingStore, (store) => store.sfxEnable)
     enableSFX(sfxEnable: boolean) {
         this.isPlaySFX = sfxEnable;
