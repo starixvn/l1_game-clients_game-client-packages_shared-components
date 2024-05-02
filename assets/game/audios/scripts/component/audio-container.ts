@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, AudioClip, AudioSource, game, JsonAsset, log, sys } from "cc";
+import { _decorator, AudioClip, AudioSource, game, JsonAsset, log, sys, tween } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -184,8 +184,8 @@ export class AudioContainer extends ObserverComponent {
         }
     }
 
-    updateVolumeMusicSource(volume: number) {
-        this.musicSource.volume = volume;
+    updateVolumeMusicSource(volume: number, duration: number) {
+        tween(this.musicSource).to(duration, { volume: volume }).start();
     }
 
     @render(UserSettings.UserSettingStore, (store) => store.sfxEnable)
