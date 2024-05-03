@@ -35,9 +35,9 @@ export class LedLight extends ObserverComponent {
     protected toolTipCompt: LedLightTooltip = null;
 
     onLoad() {
-        super.onLoad();
         this.createLedLightItems();
         this.createToolTip();
+        super.onLoad();
     }
 
     protected createLedLightItems() {
