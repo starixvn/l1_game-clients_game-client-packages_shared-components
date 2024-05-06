@@ -41,13 +41,20 @@ export default class LoadWebView extends ObserverComponent {
         }
     }
 
+    setOpacity(opacity) {
+        let iframe = this.webView?._impl?._wrapper;
+        if (iframe && iframe.style) {
+            iframe.style.opacity = opacity / 255;
+        }
+    }
+
     showWebView() {
-        this.webView.onEnable();
+        this.setOpacity(255);
         this.onWebViewLoaded();
     }
 
     hideWebView() {
-        this.webView.onDisable();
+        this.setOpacity(0);
     }
 
     destroyDivIframe() {
