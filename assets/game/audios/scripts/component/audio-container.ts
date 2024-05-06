@@ -188,6 +188,10 @@ export class AudioContainer extends ObserverComponent {
         tween(this.musicSource).to(duration, { volume: volume }).start();
     }
 
+    updateVoulmeStoppableSFXSource(volume: number, duration: number) {
+        tween(this.stoppableSFXSource).to(duration, { volume: volume }).start();
+    }
+
     @render(UserSettings.UserSettingStore, (store) => store.sfxEnable)
     enableSFX(sfxEnable: boolean) {
         this.isPlaySFX = sfxEnable;
