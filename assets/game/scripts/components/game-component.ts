@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Game, game, Label, sys } from "cc";
+import { _decorator, Game, game, Label } from "cc";
 import Observer from "observer";
 
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
@@ -72,14 +72,15 @@ export default class GameComponent extends GameComponentBase {
 
     @handle(HideGame.HideGameHandler)
     onHideGame() {
+        console.log("onHideGame");
         // reload here will run when page appears from hidden
         // to fix issue on iOS that EVENT_SHOW are not triggered when phone active
-        if (sys.os === sys.OS.IOS) {
-            setTimeout(() => {
-                console.log("onHideGame reload");
-                window.location.reload();
-            }, 100);
-        }
+        // if (sys.os === sys.OS.IOS) {
+        //     setTimeout(() => {
+        //         console.log("onHideGame reload");
+        //         window.location.reload();
+        //     }, 100);
+        // }
     }
 
     onShowGame() {
