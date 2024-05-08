@@ -7,6 +7,7 @@ export class CustomizeBackground extends Component {
     sprBackground: Sprite = null;
     onLoad() {
         // let absolutePath = gc.UrlUtils.buildServerUrl("http", "/splash-resources/game_background.png", 78, siteConfigs);
+        console.log("window", window.location);
         const absolutePath = "https://l1-proxy1.lumigame.com/site-78/splash-resources/game_background.png";
         assetManager.loadRemote<ImageAsset>(absolutePath, (err, imageAsset) => {
             const spriteFrameTmp = new SpriteFrame();
