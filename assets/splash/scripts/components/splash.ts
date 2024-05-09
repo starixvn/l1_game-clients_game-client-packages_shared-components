@@ -47,6 +47,12 @@ export default class Splash extends Component {
     @property(Prefab)
     prefabCustomize: Prefab = null;
 
+    @property(Node)
+    nodeLogoContainer: Node = null;
+
+    @property(Prefab)
+    prefabLogo: Prefab = null;
+
     gameConnection: GameConnection = null;
 
     protected system: number = AppTypes.Club;
@@ -59,6 +65,11 @@ export default class Splash extends Component {
         this.gameName && (this.gameName.string = Translator.gameTranslate("game_name").toUpperCase());
         ComponentUtils.addChildFromPrefab(this.prefabCustomize, this.containerCustomize);
         window.addEventListener("message", this.registerEvents);
+    }
+
+    start() {
+        const logo = instantiate(this.prefabLogo);
+        this.nodeLogoContainer.addChild(logo);
     }
 
     onDestroy(): void {
@@ -161,8 +172,8 @@ export default class Splash extends Component {
 
     @render(Configs.SiteConfigs, (store) => store.systemType)
     async showSystemSlogan(systemType: string) {
-        const assetPath = this.getLogo(systemType);
-        await this.loadSystemSlogan(assetPath);
+        // const assetPath = this.getLogo(systemType);
+        // await this.loadSystemSlogan(assetPath);
     }
 
     getLogo = (systemType: string): string => {

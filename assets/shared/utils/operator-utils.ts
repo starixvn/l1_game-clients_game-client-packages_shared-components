@@ -3,13 +3,12 @@ import gc from "@sg/game-client-base";
 const { StorageManager, localStorageKeys } = gc;
 
 export const OperatorAlias = {
-    SP: "SP",
-    VG: "VG",
-    SG: "SG",
+    SP: "SabaPlay",
+    VG: "VGaming",
+    SG: "Saba",
 };
 
 export namespace OperatorUtils {
-
     export const getOperatorAlias = (): string => {
         const operator = getOperator();
         return OperatorAlias[operator] || "OTHER";

@@ -1,6 +1,12 @@
+import gc from "@sg/game-client-base";
 import { _decorator, assetManager, Component, ImageAsset, Sprite, SpriteFrame, Texture2D } from "cc";
 import * as i18n from "db://i18n/LanguageData";
+import Observer from "observer";
+import { OperatorUtils } from "../../../shared/utils/operator-utils";
 const { ccclass, property } = _decorator;
+
+const { Configs } = gc;
+const { observer, handle, render } = Observer;
 
 @ccclass
 export class CustomizeLogoSplash extends Component {
@@ -10,22 +16,36 @@ export class CustomizeLogoSplash extends Component {
     @property(Sprite)
     sprTagline: Sprite = null;
 
-    @property
-    isSystemSC: boolean = true;
     onLoad() {
-        const logoName = this.isSystemSC ? "logo_saba.png" : "logo_vgaming.png";
-        const absolutePathLogo = `${window.location.href}${logoName}`;
-        assetManager.loadRemote<ImageAsset>(absolutePathLogo, (err, imageAsset) => {
+        this.renderLogo();
+    }
+
+    @render(Configs.SiteConfigs, (store) => store.systemType)
+    async showSystemSlogan(systemType: string) {
+        this.renderTagLine(systemType);
+    }
+
+    renderLogo() {
+        const operator = OperatorUtils.getOperatorAlias();
+        if (operator === "OTHER") {
+            return;
+        }
+
+        const logoName = `logo-${operator.toLowerCase()}`;
+        const logoPath = `${window.location.href}${logoName}`;
+        assetManager.loadRemote<ImageAsset>(logoPath, (err, imageAsset) => {
             const spriteFrameTmp = new SpriteFrame();
             const texture = new Texture2D();
             texture.image = imageAsset;
             spriteFrameTmp.texture = texture;
             this.sprLogo.spriteFrame = spriteFrameTmp;
         });
-        const taglineName = this.isSystemSC ? "splash_text_sc1" : "splash_text_sc2";
+    }
+
+    renderTagLine(systemType: string) {
+        const taglineName = systemType ? "splash_text_sc1" : "splash_text_sc2";
         const lang = i18n._language;
         const taglinePath = `${window.location.href}${taglineName}_${lang}.png`;
-        console.log("lang", lang);
         assetManager.loadRemote<ImageAsset>(taglinePath, (err, imageAsset) => {
             const spriteFrameTmp = new SpriteFrame();
             const texture = new Texture2D();
