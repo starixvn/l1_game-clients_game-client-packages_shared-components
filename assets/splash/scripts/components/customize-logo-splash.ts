@@ -14,7 +14,7 @@ export class CustomizeLogoSplash extends Component {
     isSystemSC: boolean = true;
     onLoad() {
         const logoName = this.isSystemSC ? "logo_saba.png" : "logo_vgaming.png";
-        const absolutePathLogo = `${window.location.href}logoName`;
+        const absolutePathLogo = `${window.location.href}${logoName}`;
         assetManager.loadRemote<ImageAsset>(absolutePathLogo, (err, imageAsset) => {
             const spriteFrameTmp = new SpriteFrame();
             const texture = new Texture2D();
