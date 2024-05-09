@@ -44,6 +44,7 @@ export class CustomizeLogoSplash extends Component {
             texture.image = imageAsset;
             spriteFrameTmp.texture = texture;
             this.sprLogo.spriteFrame = spriteFrameTmp;
+            this.sprLogo.sizeMode = Sprite.SizeMode.RAW;
         });
     }
 
@@ -57,6 +58,7 @@ export class CustomizeLogoSplash extends Component {
             texture.image = imageAsset;
             spriteFrameTmp.texture = texture;
             this.sprTagline.spriteFrame = spriteFrameTmp;
+            this.sprTagline.sizeMode = Sprite.SizeMode.RAW;
         });
     }
 }
