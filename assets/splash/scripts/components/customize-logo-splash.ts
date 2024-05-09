@@ -32,7 +32,7 @@ export class CustomizeLogoSplash extends Component {
         }
 
         const logoName = `logo-${operator.toLowerCase()}`;
-        const logoPath = `${window.location.href}${logoName}`;
+        const logoPath = `${window.location.href}${logoName}.png`;
         assetManager.loadRemote<ImageAsset>(logoPath, (err, imageAsset) => {
             const spriteFrameTmp = new SpriteFrame();
             const texture = new Texture2D();
