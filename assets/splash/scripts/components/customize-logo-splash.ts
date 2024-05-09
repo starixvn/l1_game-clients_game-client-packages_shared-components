@@ -16,13 +16,18 @@ export class CustomizeLogoSplash extends Component {
     @property(Sprite)
     sprTagline: Sprite = null;
 
+    private systemType: string = "";
+
     onLoad() {
         this.renderLogo();
+        console.log("renderTagLine");
+        this.renderTagLine(this.systemType);
     }
 
     @render(Configs.SiteConfigs, (store) => store.systemType)
     async showSystemSlogan(systemType: string) {
-        this.renderTagLine(systemType);
+        console.log("systemType", systemType);
+        this.systemType = systemType;
     }
 
     renderLogo() {
@@ -31,7 +36,7 @@ export class CustomizeLogoSplash extends Component {
             return;
         }
 
-        const logoName = `logo-${operator.toLowerCase()}`;
+        const logoName = `logo_${operator.toLowerCase()}`;
         const logoPath = `${window.location.href}${logoName}.png`;
         assetManager.loadRemote<ImageAsset>(logoPath, (err, imageAsset) => {
             const spriteFrameTmp = new SpriteFrame();
