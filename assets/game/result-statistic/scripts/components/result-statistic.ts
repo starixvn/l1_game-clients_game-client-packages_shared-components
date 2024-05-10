@@ -35,7 +35,8 @@ export class ResultStatistic extends ObserverComponent {
             ?.toString();
     }
 
-    private generateStatisticalData(histories: gc.RoundHistories.RoundHistory[]) {
+    protected generateStatisticalData(histories: gc.RoundHistories.RoundHistory[]) {
+        console.log(JSON.stringify(histories));
         return histories.reduce((result, history) => {
             this.statisticKeys?.forEach((key) => {
                 const name = this.getResultValue(key, history);
@@ -47,6 +48,7 @@ export class ResultStatistic extends ObserverComponent {
 
     private setData(statistic: Object) {
         this.statisticItems?.forEach((item) => {
+            console.log(statistic);
             item.label && (item.label.string = (statistic[item.value] || 0).toString());
         });
     }
