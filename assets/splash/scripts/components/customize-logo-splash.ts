@@ -16,18 +16,10 @@ export class CustomizeLogoSplash extends Component {
     @property(Sprite)
     sprTagline: Sprite = null;
 
-    private systemType: string = "";
-
     onLoad() {
         this.renderLogo();
         console.log("renderTagLine");
-        this.renderTagLine(this.systemType);
-    }
-
-    @render(Configs.SiteConfigs, (store) => store.systemType)
-    async showSystemSlogan(systemType: string) {
-        console.log("systemType", systemType);
-        this.systemType = systemType;
+        this.renderTagLine();
     }
 
     renderLogo() {
@@ -48,8 +40,7 @@ export class CustomizeLogoSplash extends Component {
         });
     }
 
-    renderTagLine(systemType: string) {
-        //const taglineName = systemType ? "splash_text_sc1" : "splash_text_sc2";
+    renderTagLine() {
         const lang = i18n._language;
         const taglinePath = `${window.location.href}splash_text_${lang}.png`;
         assetManager.loadRemote<ImageAsset>(taglinePath, (err, imageAsset) => {
