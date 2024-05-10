@@ -49,9 +49,9 @@ export class CustomizeLogoSplash extends Component {
     }
 
     renderTagLine(systemType: string) {
-        const taglineName = systemType ? "splash_text_sc1" : "splash_text_sc2";
+        //const taglineName = systemType ? "splash_text_sc1" : "splash_text_sc2";
         const lang = i18n._language;
-        const taglinePath = `${window.location.href}${taglineName}_${lang}.png`;
+        const taglinePath = `${window.location.href}splash_text_${lang}.png`;
         assetManager.loadRemote<ImageAsset>(taglinePath, (err, imageAsset) => {
             const spriteFrameTmp = new SpriteFrame();
             const texture = new Texture2D();
