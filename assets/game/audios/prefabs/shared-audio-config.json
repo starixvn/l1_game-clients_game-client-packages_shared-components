@@ -23,7 +23,10 @@
         "bundle": "shared-bundle",
         "path": "draw-single-domino-card"
     },
-
+    "paymoney": {
+        "bundle": "shared-bundle",
+        "path": "paymoney"
+    },
     "start-betting_en": {
         "bundle": "shared-bundle",
         "path": "betting/start-betting_en"
@@ -72,7 +75,6 @@
         "bundle": "shared-bundle",
         "path": "betting/stop-betting_zh_tw"
     },
-
     "bgm-song1": {
         "bundle": "shared-bundle",
         "path": "background-music/bgm-song1",

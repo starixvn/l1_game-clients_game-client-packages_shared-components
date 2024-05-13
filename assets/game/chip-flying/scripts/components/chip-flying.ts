@@ -149,6 +149,7 @@ export class ChipFlying extends ObserverComponent {
             tween(this.node)
                 .delay(this.delayAnimPayChips)
                 .call(() => {
+                    this.playPayMoneySound();
                     ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems, this);
                 })
                 .delay(this.chipDelayFlyingTime)
@@ -162,6 +163,9 @@ export class ChipFlying extends ObserverComponent {
                 .start();
         }
     }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX("paymoney"))
+    playPayMoneySound() {}
 
     private readonly payChipToAllPlayers = () => {
         const chipFlyingInfo: IChipFlyingInfo = {
