@@ -7,6 +7,7 @@ export class CustomizeBackground extends Component {
     sprBackground: Sprite = null;
     onLoad() {
         let absolutePath = `${window.location.href}splash-resources/game_background.png`;
+        console.log("window.location", window.location);
         console.log("absolutePath", absolutePath);
         assetManager.loadRemote<ImageAsset>(absolutePath, (err, imageAsset) => {
             const spriteFrameTmp = new SpriteFrame();
