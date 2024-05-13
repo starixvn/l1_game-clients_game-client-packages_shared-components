@@ -6,7 +6,7 @@ export class CustomizeBackground extends Component {
     @property(Sprite)
     sprBackground: Sprite = null;
     onLoad() {
-        let absolutePath = `${window.location.href}splash-resources/game_background.png`;
+        let absolutePath = `${window.location.origin}${window.location.pathname}splash-resources/game_background.png`;
         console.log("window.location", window.location);
         console.log("absolutePath", absolutePath);
         assetManager.loadRemote<ImageAsset>(absolutePath, (err, imageAsset) => {
