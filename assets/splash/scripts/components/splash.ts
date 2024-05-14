@@ -2,9 +2,8 @@ import gc from "@sg/game-client-base";
 import { _decorator, Component, director, instantiate, Label, Node, Prefab, ProgressBar } from "cc";
 import Observer from "observer";
 
-import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
 import GameConnection from "../../../shared/common-components/game-connection";
-import { ComponentUtils, FunctionUtils, OperatorUtils } from "../../../shared/utils";
+import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
 
 const { ccclass, property } = _decorator;
@@ -19,18 +18,6 @@ export default class Splash extends Component {
 
     @property(ErrorMessage)
     cpnMessage: ErrorMessage = null;
-
-    @property(Node)
-    nodeSloganSG: Node = null;
-
-    @property(Node)
-    nodeSloganVG: Node = null;
-
-    @property(Node)
-    nodeSloganSP: Node = null;
-
-    @property(Node)
-    nodeSloganOther: Node = null;
 
     @property(Node)
     signNameContainer: Node = null;
@@ -168,48 +155,6 @@ export default class Splash extends Component {
         }
 
         return "game";
-    }
-
-    @render(Configs.SiteConfigs, (store) => store.systemType)
-    async showSystemSlogan(systemType: string) {
-        // const assetPath = this.getLogo(systemType);
-        // await this.loadSystemSlogan(assetPath);
-    }
-
-    getLogo = (systemType: string): string => {
-        const operator = OperatorUtils.getOperatorAlias();
-        if (operator === "OTHER") {
-            return `logo-${operator}-${systemType.toUpperCase()}`;
-        } else {
-            return `logo-${operator}`;
-        }
-    };
-
-    async loadSystemSlogan(assetPath: string) {
-        this.destroyAllChildrenSlogan();
-        const sloganPrefab = await bundleManager.loadSharedAsset<Prefab>(`splash/${assetPath}`, Prefab, null);
-        if (sloganPrefab && this?.node?.isValid) {
-            const slogan = instantiate(sloganPrefab);
-            const sloganNode = this.getSloganNode();
-            sloganNode.addChild(slogan);
-        }
-    }
-
-    getSloganNode() {
-        const nodeSlogans = {
-            SP: this.nodeSloganSP,
-            VG: this.nodeSloganVG,
-            SG: this.nodeSloganSG,
-            Other: this.nodeSloganOther,
-        };
-        const opAlias = OperatorUtils.getOperatorAlias();
-        return nodeSlogans[opAlias];
-    }
-
-    destroyAllChildrenSlogan() {
-        this.nodeSloganSG.destroyAllChildren();
-        this.nodeSloganVG.destroyAllChildren();
-        this.nodeSloganSP.destroyAllChildren();
     }
 
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
