@@ -72,19 +72,16 @@ export default class GameComponent extends GameComponentBase {
 
     @handle(HideGame.HideGameHandler)
     onHideGame() {
-        console.log("onHideGame");
         // reload here will run when page appears from hidden
         // to fix issue on iOS that EVENT_SHOW are not triggered when phone active
         // if (sys.os === sys.OS.IOS) {
         //     setTimeout(() => {
-        //         console.log("onHideGame reload");
         //         window.location.reload();
         //     }, 100);
         // }
     }
 
     onShowGame() {
-        console.log("onShowGame reload");
         window.location.reload();
     }
 

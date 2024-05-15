@@ -166,12 +166,11 @@ export class ChipFlying extends ObserverComponent {
 
     handlePayMoneySound() {
         if (Object.keys(this.chipStorage).length > 0) {
-            console.log("handlePayMoneySound");
             this.playPayMoneySound();
         }
     }
 
-    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX("paymoney"))
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX("pay-money"))
     playPayMoneySound() {}
 
     private readonly payChipToAllPlayers = () => {

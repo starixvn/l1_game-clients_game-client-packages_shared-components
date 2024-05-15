@@ -3,6 +3,7 @@ import { _decorator, assetManager, Component, ImageAsset, Sprite, SpriteFrame, T
 import * as i18n from "db://i18n/LanguageData";
 import Observer from "observer";
 import { OperatorUtils } from "../../../shared/utils/operator-utils";
+import { isValidNode } from "./../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
 
 const { Configs } = gc;
@@ -20,7 +21,6 @@ export class CustomizeLogoSplash extends Component {
 
     onLoad() {
         this.renderLogo();
-        console.log("renderTagLine");
         this.renderTagLine();
     }
 
@@ -46,6 +46,9 @@ export class CustomizeLogoSplash extends Component {
         const lang = i18n._language;
         const taglinePath = `${this.href}splash_text_${lang}.png`;
         assetManager.loadRemote<ImageAsset>(taglinePath, (err, imageAsset) => {
+            if (!isValidNode(this)) {
+                return;
+            }
             const spriteFrameTmp = new SpriteFrame();
             const texture = new Texture2D();
             texture.image = imageAsset;

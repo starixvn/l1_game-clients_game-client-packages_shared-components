@@ -23,9 +23,9 @@
         "bundle": "shared-bundle",
         "path": "draw-single-domino-card"
     },
-    "paymoney": {
+    "pay-money": {
         "bundle": "shared-bundle",
-        "path": "paymoney"
+        "path": "pay-money"
     },
     "start-betting_en": {
         "bundle": "shared-bundle",

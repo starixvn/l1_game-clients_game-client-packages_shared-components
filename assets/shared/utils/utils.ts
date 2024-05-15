@@ -1,4 +1,4 @@
-import { Animation, math, Node, sp, tween, UIOpacity, UITransform, Vec3 } from "cc";
+import { Animation, Component, math, Node, sp, tween, UIOpacity, UITransform, Vec3 } from "cc";
 
 export namespace AnimationUtils {
     export const getUiOpacity = (node: Node) => {
@@ -120,3 +120,6 @@ export namespace AnimationUtils {
         });
     };
 }
+export const isValidNode = (comp: Component) => {
+    return comp.node && comp.node.isValid;
+};
