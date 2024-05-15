@@ -42,7 +42,7 @@ export default class LoadWebView extends ObserverComponent {
     }
 
     setOpacity(opacity) {
-        let iframe = this.webView?._impl?._wrapper;
+        const iframe = this.webView?._impl?._wrapper;
         if (iframe && iframe.style) {
             iframe.style.opacity = opacity / 255;
         }

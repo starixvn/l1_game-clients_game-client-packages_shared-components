@@ -40,7 +40,7 @@ export class CommonDebug extends Component {
         const children = this.canvasNode.children;
         const material: Material = this.overdrawMode ? this.overdrawMat : this.defaultMaterial;
         children.forEach((child) => {
-            if (child == this.menu.node) return;
+            if (child === this.menu.node) return;
             const sprites = child.getComponentsInChildren(Sprite);
             sprites.forEach((sprite) => {
                 if (!this.defaultMaterial) {

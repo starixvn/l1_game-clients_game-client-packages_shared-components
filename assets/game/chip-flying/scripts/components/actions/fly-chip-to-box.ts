@@ -21,7 +21,7 @@ export const placeChipToChipBox = (
     const containerTransform = chipContainer.getComponent(UITransform);
     const { chipBox, chipValue } = mainPlayerChip;
     const chipBoxTransform = chipBox.getComponent(UITransform);
-    const flyingDuration = startNode == null ? SlidingChip.mainPlayerChipFlyingTime : SlidingChip.chipFlyingTime;
+    const flyingDuration = startNode === null ? SlidingChip.mainPlayerChipFlyingTime : SlidingChip.chipFlyingTime;
     const chipPosition = containerTransform.convertToNodeSpaceAR(slidingChip.createStartNodeInfo(startNode, chipValue).worldPos);
     const chipNode = slidingChip.createSmallChip(chipValue);
     chipNode.position = chipPosition;

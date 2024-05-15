@@ -17,7 +17,7 @@ export class CustomizeLogoSplash extends Component {
     @property(Sprite)
     sprTagline: Sprite = null;
 
-    private href = `${window.location.origin}${window.location.pathname}`;
+    private readonly href = `${window.location.origin}${window.location.pathname}`;
 
     onLoad() {
         this.renderLogo();

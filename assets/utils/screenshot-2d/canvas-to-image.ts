@@ -21,10 +21,10 @@ export class Canvas2Image {
         function scaleCanvas(canvas, width, height) {
             var w = canvas.width,
                 h = canvas.height;
-            if (width == undefined) {
+            if (width === undefined) {
                 width = w;
             }
-            if (height == undefined) {
+            if (height === undefined) {
                 height = h;
             }
 
@@ -61,7 +61,7 @@ export class Canvas2Image {
                 throw "btoa undefined";
             }
             var str = "";
-            if (typeof data == "string") {
+            if (typeof data === "string") {
                 str = data;
             } else {
                 for (var i = 0; i < data.length; i++) {
@@ -243,10 +243,10 @@ export class Canvas2Image {
              */
             var quality = 1.0;
             if ($support.canvas && $support.dataURL) {
-                if (typeof canvas == "string") {
+                if (typeof canvas === "string") {
                     canvas = document.getElementById(canvas);
                 }
-                if (type == undefined) {
+                if (type === undefined) {
                     type = "png";
                 }
                 type = fixType(type);
@@ -271,10 +271,10 @@ export class Canvas2Image {
 
         var convertToImage = function (canvas, width, height, type) {
             if ($support.canvas && $support.dataURL) {
-                if (typeof canvas == "string") {
+                if (typeof canvas === "string") {
                     canvas = document.getElementById(canvas);
                 }
-                if (type == undefined) {
+                if (type === undefined) {
                     type = "png";
                 }
                 type = fixType(type);

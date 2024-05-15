@@ -224,7 +224,7 @@ export class ChipFlying extends ObserverComponent {
     }
 
     protected payChipsToAroundTablePlayers() {
-        if (this.winningPlayers == null || Object.keys(this.winningPlayers).length === 0) {
+        if (this.winningPlayers === null || Object.keys(this.winningPlayers).length === 0) {
             return;
         }
 
