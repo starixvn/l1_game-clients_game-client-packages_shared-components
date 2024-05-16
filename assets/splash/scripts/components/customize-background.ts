@@ -6,8 +6,11 @@ const { ccclass, property } = _decorator;
 export class CustomizeBackground extends Component {
     @property(Sprite)
     sprBackground: Sprite = null;
+
+    @property
+    versionImg = 1;
     onLoad() {
-        const absolutePath = `${window.location.origin}${window.location.pathname}splash-resources/game_background.png?v=1`;
+        const absolutePath = `${window.location.origin}${window.location.pathname}splash-resources/game_background.png?v=${this.versionImg}`;
         assetManager.loadRemote<ImageAsset>(absolutePath, (err, imageAsset) => {
             if (!isValidNode(this)) {
                 return;

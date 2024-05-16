@@ -17,6 +17,9 @@ export class CustomizeLogoSplash extends Component {
     @property(Sprite)
     sprTagline: Sprite = null;
 
+    @property
+    versionImg = 1;
+
     private readonly href = `${window.location.origin}${window.location.pathname}`;
 
     onLoad() {
@@ -31,7 +34,7 @@ export class CustomizeLogoSplash extends Component {
         }
 
         const logoName = `logo_${operator.toLowerCase()}`;
-        const logoPath = `${this.href}${logoName}.png?v=1`;
+        const logoPath = `${this.href}${logoName}.png?v=${this.versionImg}`;
         assetManager.loadRemote<ImageAsset>(logoPath, (err, imageAsset) => {
             const spriteFrameTmp = new SpriteFrame();
             const texture = new Texture2D();
@@ -44,7 +47,7 @@ export class CustomizeLogoSplash extends Component {
 
     renderTagLine() {
         const lang = i18n._language;
-        const taglinePath = `${this.href}splash_text_${lang}.png?v=1`;
+        const taglinePath = `${this.href}splash_text_${lang}.png?v=${this.versionImg}`;
         assetManager.loadRemote<ImageAsset>(taglinePath, (err, imageAsset) => {
             if (!isValidNode(this)) {
                 return;
