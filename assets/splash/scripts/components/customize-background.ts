@@ -7,7 +7,7 @@ export class CustomizeBackground extends Component {
     @property(Sprite)
     sprBackground: Sprite = null;
     onLoad() {
-        const absolutePath = `${window.location.origin}${window.location.pathname}splash-resources/game_background.png`;
+        const absolutePath = `${window.location.origin}${window.location.pathname}splash-resources/game_background.png?v=1`;
         assetManager.loadRemote<ImageAsset>(absolutePath, (err, imageAsset) => {
             if (!isValidNode(this)) {
                 return;
@@ -17,6 +17,7 @@ export class CustomizeBackground extends Component {
             texture.image = imageAsset;
             spriteFrameTmp.texture = texture;
             this.sprBackground.spriteFrame = spriteFrameTmp;
+            this.sprBackground.sizeMode = Sprite.SizeMode.RAW;
         });
     }
 }
