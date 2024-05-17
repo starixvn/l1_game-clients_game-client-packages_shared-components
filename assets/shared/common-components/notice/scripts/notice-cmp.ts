@@ -70,7 +70,6 @@ export class NoticeCmp extends Dialog {
     }
 
     onDestroy() {
-        console.log("onDestroy notice call reload ", this.onClose);
         this.onClose && this.onClose();
     }
 }
