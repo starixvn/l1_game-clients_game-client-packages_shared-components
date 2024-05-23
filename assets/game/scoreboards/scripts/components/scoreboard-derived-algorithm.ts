@@ -68,10 +68,10 @@ export class ScoreboardDerivedAlgorithm extends ScoreboardAlgorithm {
         return rowToColumns(sbData);
     }
 
-    apply(data: any[][]) {
-        this.bigRoad.initialize(data);
+    apply(data: any[][], hasBlinkNode = false) {
+        this.bigRoad.initialize(data, hasBlinkNode);
         const bigRoadData = this.bigRoad.rows();
-        this.derivedSB.update(bigRoadData);
+        this.derivedSB.update(bigRoadData, hasBlinkNode);
 
         return data;
     }
