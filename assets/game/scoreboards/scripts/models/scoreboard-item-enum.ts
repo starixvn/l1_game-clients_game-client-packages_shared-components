@@ -10,3 +10,5 @@ export enum ScoreboardItemTieCriteria {
     POSITIVE,
     ANY,
 }
+
+export const ScoreboardBlinkKey = "blink";

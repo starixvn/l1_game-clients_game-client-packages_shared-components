@@ -1,5 +1,7 @@
 import { _decorator, Component } from "cc";
 import { Scoreboard } from "./scoreboard";
+import { ScoreboardDataConverter } from "./scoreboard-converter";
+import { ScoreboardDerived } from "./scoreboard-derived";
 
 const { ccclass, property } = _decorator;
 
@@ -11,10 +13,16 @@ export class RenderFakeData extends Component {
     @property(Scoreboard)
     protected beadRoad: Scoreboard = null;
 
+    @property(ScoreboardDerived)
+    protected derived: ScoreboardDerived = null;
+
     protected results = [];
 
     onLoad(): void {
-        this.schedule(() => this.render(), 1);
+        this.schedule(() => {
+            this.render();
+            this.scheduleOnce(this.renderBlinkNode, 1);
+        }, 3);
     }
 
     render() {
@@ -38,5 +46,17 @@ export class RenderFakeData extends Component {
 
         this.bigRoad?.render(this.results);
         this.beadRoad?.render(this.results);
+        this.derived?.render(this.results);
+    }
+
+    renderBlinkNode() {
+        const converter = this.bigRoad.getComponent(ScoreboardDataConverter);
+        const round = converter.createRound();
+        const lastResult = converter.convert(this.results[this.results.length - 1])?.[converter.keyOfA];
+        round[converter.resultKey][converter.keyOfA] = lastResult;
+        round[converter.resultKey][converter.blinkKey] = true;
+        const rounds = [...this.results, round];
+        this.bigRoad?.render(rounds);
+        this.derived?.render(rounds);
     }
 }
