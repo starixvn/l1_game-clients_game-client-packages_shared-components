@@ -57,6 +57,6 @@ export class RenderFakeData extends Component {
         round[converter.resultKey][converter.blinkKey] = true;
         const rounds = [...this.results, round];
         this.bigRoad?.render(rounds);
-        this.derived?.render(rounds);
+        this.derived?.render(this.results, true);
     }
 }
