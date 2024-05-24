@@ -30,12 +30,26 @@ export class RenderFakeData extends Component {
         const isBanker = value < 2;
         const isTie = value >= 8;
 
+        const randomRank = () => (4 + Math.random() * 5) >> 0;
         const result = {
-            banker: isBanker,
-            tie: isTie,
+            player: {
+                card1: { rank: randomRank() },
+                card2: { rank: randomRank() },
+            },
+            banker: {
+                card1: { rank: randomRank() },
+                card2: { rank: randomRank() },
+            },
         };
 
-        const round = { settlementResult: result };
+        const settlementResult = {
+            banker: isBanker,
+            tie: isTie,
+            playerPair: !isBanker,
+            bankerPair: isTie,
+        };
+
+        const round = { result, settlementResult };
 
         if (this.results.length < 102) {
             this.results.push(round);
