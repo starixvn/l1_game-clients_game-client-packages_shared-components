@@ -10,6 +10,7 @@ export class ScoreboardItemState {
 
     @property({ type: Enum(ScoreboardItemStatus) })
     status = ScoreboardItemStatus.NONE;
+    data?: any = null;
 }
 
 @ccclass("ScoreboardItemStateCriteria")
