@@ -1,7 +1,7 @@
 import { Node, _decorator } from "cc";
 import { ScoreboardItemRenderer } from "../../../renderers/scoreboard-item-renderer";
 import { ScoreboardItem } from "../../scoreboard-item";
-import { BaccaratResultRenderer } from "./baccarat-result-renderer";
+import { BaccaratResultRenderer } from "../baccarat-result-renderer";
 
 const { ccclass, property } = _decorator;
 

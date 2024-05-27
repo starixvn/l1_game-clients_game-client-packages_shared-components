@@ -1,6 +1,6 @@
 import { Label, _decorator } from "cc";
-import { ScoreboardItemState } from "../../../models/scoreboard-item-state";
-import { ScoreboardItemRenderer } from "../../../renderers/scoreboard-item-renderer";
+import { ScoreboardItemState } from "../../models/scoreboard-item-state";
+import { ScoreboardItemRenderer } from "../../renderers/scoreboard-item-renderer";
 const { ccclass, property } = _decorator;
 @ccclass
 export class BaccaratResultRenderer extends ScoreboardItemRenderer {
