@@ -1,17 +1,14 @@
 import { _decorator } from "cc";
 import { Scoreboard } from "../../scoreboard";
-import { BaccaratBeadRoadAlgorithm } from "./baccarat-bead-road-algorithm";
+import { ScoreboardBeadRoadAlgorithm } from "../../scoreboard-bead-road-algorithm";
+import { ScoreboardKeepDetailConverter } from "../../scoreboard-keep-detail-converter";
 import { BaccaratBeadRoadItem } from "./baccarat-bead-road-item";
 
 const { ccclass, property, requireComponent } = _decorator;
 
 @ccclass
+@requireComponent([ScoreboardKeepDetailConverter, ScoreboardBeadRoadAlgorithm])
 export class BaccaratBeadRoad extends Scoreboard {
-    onFocusInEditor(): void {
-        super.onFocusInEditor();
-        this.algorithm = this.node.getComponent(BaccaratBeadRoadAlgorithm);
-    }
-
     onChangeMode() {
         this.grid.scrollView.content.children.forEach((node) => {
             const item = node.getComponent(BaccaratBeadRoadItem);

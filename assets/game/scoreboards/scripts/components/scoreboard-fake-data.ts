@@ -7,18 +7,11 @@ const { ccclass, property } = _decorator;
 
 @ccclass
 export class RenderFakeData extends Component {
-    @property(Scoreboard)
-    protected bigRoad: Scoreboard = null;
-
-    @property(Scoreboard)
-    protected beadRoad: Scoreboard = null;
-
-    @property(ScoreboardDerived)
-    protected derived: ScoreboardDerived = null;
+    scoreboards: Scoreboard[] = [];
 
     protected results = [];
-
     onLoad(): void {
+        this.scoreboards = this.node.getComponentsInChildren(Scoreboard);
         this.schedule(() => {
             this.render();
             this.scheduleOnce(this.renderBlinkNode, 1);
@@ -26,15 +19,16 @@ export class RenderFakeData extends Component {
     }
 
     render() {
-        const value = (Math.random() * 9) >> 0; //NOSONAR
+        const randomNum = (inputNumber: number) => (Math.random() * inputNumber) >> 0; //NOSONAR
+        const value = randomNum(9);
         const isBanker = value < 2;
         const isTie = value >= 8;
 
         const randomRank = () => (4 + Math.random() * 5) >> 0;
         const result = {
             player: {
-                card1: { rank: randomRank() },
-                card2: { rank: randomRank() },
+                card1: { rank: 3 },
+                card2: { rank: 4 },
             },
             banker: {
                 card1: { rank: randomRank() },
@@ -45,8 +39,9 @@ export class RenderFakeData extends Component {
         const settlementResult = {
             banker: isBanker,
             tie: isTie,
-            playerPair: !isBanker,
-            bankerPair: isTie,
+            playerPair: randomNum(2) > 1,
+            bankerPair: randomNum(2) > 1,
+            natural: randomNum(2) > 1,
         };
 
         const round = { result, settlementResult };
@@ -58,19 +53,26 @@ export class RenderFakeData extends Component {
             this.results.push(round);
         }
 
-        this.bigRoad?.render(this.results);
-        this.beadRoad?.render(this.results);
-        this.derived?.render(this.results);
+        this.scoreboards.forEach((scoreboard) => {
+            scoreboard.render(this.results);
+        });
     }
 
     renderBlinkNode() {
-        const converter = this.bigRoad.getComponent(ScoreboardDataConverter);
+        const converter = this.scoreboards[0].getComponent(ScoreboardDataConverter);
         const round = converter.createRound();
         const lastResult = converter.convert(this.results[this.results.length - 1])?.[converter.keyOfA];
         round[converter.resultKey][converter.keyOfA] = lastResult;
         round[converter.resultKey][converter.blinkKey] = true;
         const rounds = [...this.results, round];
-        this.bigRoad?.render(rounds);
-        this.derived?.render(this.results, true);
+
+        this.scoreboards.forEach((scoreboard) => {
+            const derivedScoreboard = scoreboard.getComponent(ScoreboardDerived);
+            if (derivedScoreboard) {
+                derivedScoreboard.render(this.results, true);
+            } else {
+                scoreboard.render(rounds);
+            }
+        });
     }
 }

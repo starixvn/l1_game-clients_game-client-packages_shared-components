@@ -31,14 +31,17 @@ export class ScoreboardBigRoadItem<T> extends ScoreboardGridItem<BigRoadPoint<T>
         return data.status ? ScoreboardItemStatus.A : ScoreboardItemStatus.B;
     }
 
-    protected countTie(data: BigRoadPoint<T>, converter: ScoreboardDataConverter): number {
-        const count = this.firstRoundHasTie(data, converter) ? data.data.length : data.data.length - 1;
+    protected countTie(point: BigRoadPoint<T>, converter: ScoreboardDataConverter): number {
+        if (!point?.data) {
+            return 0;
+        }
+        const count = this.firstRoundHasTie(point, converter) ? point.data.length : point.data.length - 1;
 
         return Math.max(0, count);
     }
 
     protected firstRoundHasTie(point: BigRoadPoint<T>, converter: ScoreboardDataConverter): boolean {
-        if (point?.data.length) {
+        if (point?.data?.length) {
             return point?.data[0][converter.tieKey];
         }
 
@@ -46,6 +49,6 @@ export class ScoreboardBigRoadItem<T> extends ScoreboardGridItem<BigRoadPoint<T>
     }
 
     protected hasBlinkNode(point: BigRoadPoint<T>, converter: ScoreboardDataConverter): boolean {
-        return point?.data.map((data) => data[converter.blinkKey]).includes(true);
+        return point?.data?.map((data) => data[converter.blinkKey]).includes(true);
     }
 }
