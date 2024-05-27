@@ -17,7 +17,7 @@ export class ClientSeedManualPopup extends ObserverComponent {
     @property(Node)
     nodeSaveDisabled: Node = null;
 
-    private readonly CLIENT_SEED_CHAR = 4;
+    clientSeedChar = 4;
     onLoad(): void {
         super.onLoad();
         this.handleGATracking();
@@ -49,13 +49,16 @@ export class ClientSeedManualPopup extends ObserverComponent {
     addValue(event, value) {
         const clientSeed = this.lblClientSeed.string;
         let newValue = `${clientSeed}`;
-        if (clientSeed.length < this.CLIENT_SEED_CHAR) {
+        if (clientSeed.length < this.clientSeedChar) {
             newValue = `${clientSeed}${value}`;
         }
         this.lblClientSeed.string = newValue;
-        if (this.lblClientSeed.string !== "") {
-            this.nodeSaveDisabled.active = false;
-        }
+
+        this.nodeSaveDisabled.active = this.checkValueCS(newValue);
+    }
+
+    checkValueCS(newCS: string) {
+        return newCS !== "" ? false : true;
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
