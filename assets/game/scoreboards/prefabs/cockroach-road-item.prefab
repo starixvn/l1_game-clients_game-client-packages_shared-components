@@ -816,7 +816,7 @@
       "__id__": 48
     },
     "image": {
-      "__uuid__": "a9aeec1d-6f8b-4f56-a89d-3f29f8c16112@3a095",
+      "__uuid__": "a9aeec1d-6f8b-4f56-a89d-3f29f8c16112@d41a2",
       "__expectedType__": "cc.SpriteFrame"
     }
   },
@@ -831,7 +831,7 @@
       "__id__": 50
     },
     "image": {
-      "__uuid__": "a9aeec1d-6f8b-4f56-a89d-3f29f8c16112@d41a2",
+      "__uuid__": "a9aeec1d-6f8b-4f56-a89d-3f29f8c16112@3a095",
       "__expectedType__": "cc.SpriteFrame"
     }
   },
