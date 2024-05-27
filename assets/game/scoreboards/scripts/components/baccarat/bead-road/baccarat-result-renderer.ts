@@ -9,7 +9,8 @@ export class BaccaratResultRenderer extends ScoreboardItemRenderer {
         if (!data) {
             return;
         }
-        this.node.active = data[this.node.name];
+        this.node.active =
+            data[this.node.name] || (Array.isArray(data) && data.some((settlementResult) => settlementResult[this.node.name]));
 
         const label = this.node.getComponent(Label);
         if (label) {

@@ -35,7 +35,7 @@ export class ScoreboardItem extends Component {
     }
 
     onFocusInEditor(): void {
-        const renderers = [...this.getComponents(ScoreboardItemRenderer), ...this.getComponentsInChildren(ScoreboardItemRenderer)];
+        const renderers = [...this.getComponentsInChildren(ScoreboardItemRenderer)];
 
         if (renderers.length !== this.renderers.length) {
             this.renderers = renderers;

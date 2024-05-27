@@ -1,5 +1,6 @@
-import { Component, _decorator } from "cc";
+import { _decorator } from "cc";
 import { GridLayout } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
+import { Scoreboard } from "./scoreboard";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
 import { DerivedScoreboardKey, ScoreboardDerivedAlgorithm } from "./scoreboard-derived-algorithm";
 import { ScoreboardGridItem } from "./scoreboard-grid-item";
@@ -8,7 +9,7 @@ const { ccclass, property, requireComponent } = _decorator;
 
 @ccclass
 @requireComponent([ScoreboardDataConverter, ScoreboardDerivedAlgorithm])
-export class ScoreboardDerived extends Component {
+export class ScoreboardDerived extends Scoreboard {
     @property(ScoreboardDataConverter)
     converter: ScoreboardDataConverter = null;
 
