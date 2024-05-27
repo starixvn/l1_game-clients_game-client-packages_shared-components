@@ -68,6 +68,10 @@ export class ScoreboardDerivedAlgorithm extends ScoreboardAlgorithm {
         return rowToColumns(sbData);
     }
 
+    getPrediction() {
+        return this.derivedSB.getPrediction(true);
+    }
+
     apply(data: any[][], hasBlinkNode = false) {
         this.bigRoad.initialize(data, hasBlinkNode);
         const bigRoadData = this.bigRoad.rows();
