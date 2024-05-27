@@ -816,7 +816,7 @@
       "__id__": 48
     },
     "image": {
-      "__uuid__": "30ca2c7b-11e0-4a7f-9f4f-00818f3d1f7b@0b391",
+      "__uuid__": "a9aeec1d-6f8b-4f56-a89d-3f29f8c16112@a51da",
       "__expectedType__": "cc.SpriteFrame"
     }
   },
@@ -831,7 +831,7 @@
       "__id__": 50
     },
     "image": {
-      "__uuid__": "30ca2c7b-11e0-4a7f-9f4f-00818f3d1f7b@9f35f",
+      "__uuid__": "a9aeec1d-6f8b-4f56-a89d-3f29f8c16112@d85a8",
       "__expectedType__": "cc.SpriteFrame"
     }
   },
