@@ -1,15 +1,14 @@
 import gc from "@sg/game-client-base";
-import { Component, Label, Node, Prefab, _decorator, instantiate } from "cc";
+import { Label, Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
-import { settings } from "../../../../../../assets/game/scripts/game-settings";
+import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { ClientSeedManualBaccaratPopup } from "./client-seed-manual-baccarat-popup";
 const { ccclass, property } = _decorator;
 const { CutCardPF, GameBaccaratX } = gc;
 const { render, handle, observer } = Observer;
 
 @ccclass
-@observer(settings.name)
-export class FairnessSettingsBaccaratPopup extends Component {
+export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     @property(Label)
     lblClientSeed: Label = null;
 
@@ -28,10 +27,13 @@ export class FairnessSettingsBaccaratPopup extends Component {
     @property(Prefab)
     prfWaitingScreen: Prefab = null;
 
+    minCSNumber = 0;
+    maxCSNumber = 0;
     @property
     timer = 10;
 
     onLoad() {
+        super.onLoad();
         this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopup, this);
         this.renderCountDown();
     }
@@ -39,6 +41,9 @@ export class FairnessSettingsBaccaratPopup extends Component {
     showPopup() {
         const manual = instantiate(this.prfManualSettings);
         const comp = manual.getComponent(ClientSeedManualBaccaratPopup);
+        comp.minClientSeed = this.minCSNumber;
+        comp.maxClientSeed = this.maxCSNumber;
+        comp.renderRangeCS();
         this.nodeManualSettings.addChild(manual);
         comp.setClientSeedValue(this.lblClientSeed.string);
     }
@@ -49,12 +54,19 @@ export class FairnessSettingsBaccaratPopup extends Component {
             this.timer--;
             if (this.timer < 0) {
                 clearInterval(interval);
-                this.node.active = false;
             }
         }, 1000);
     }
 
-    @handle(CutCardPF.FairnessHandler, (handler, clientSeed: string) => handler.handle(clientSeed))
+    @render(CutCardPF.CutCardStore, (store) => store.cutCardInfo)
+    hidePopup(cutCardInfo: any) {
+        if (!cutCardInfo) {
+            return;
+        }
+        cutCardInfo.successful && (this.node.active = false);
+    }
+
+    @handle(CutCardPF.CutCardHandler, (handler, clientSeed: string) => handler.handle(clientSeed))
     onClickSubmit() {
         return this.lblClientSeed.string;
     }
@@ -67,5 +79,12 @@ export class FairnessSettingsBaccaratPopup extends Component {
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoeHash)
     renderSHA256(sha256: string) {
         this.lblSHA256.string = sha256;
+    }
+
+    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
+    hideNode(shoeInfo: any) {
+        if (shoeInfo) {
+            this.node.active = false;
+        }
     }
 }

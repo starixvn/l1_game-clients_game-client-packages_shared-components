@@ -54,11 +54,11 @@ export class ClientSeedManualPopup extends ObserverComponent {
         }
         this.lblClientSeed.string = newValue;
 
-        this.nodeSaveDisabled.active = this.checkValueCS(newValue);
+        this.nodeSaveDisabled.active = this.disabledSaveBtn(newValue);
     }
 
-    checkValueCS(newCS: string) {
-        return newCS !== "" ? false : true;
+    disabledSaveBtn(newCS: string) {
+        return newCS === "";
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
@@ -84,8 +84,12 @@ export class ClientSeedManualPopup extends ObserverComponent {
         this.node.getComponent(Dialog).hide();
     }
 
-    @handle(RoundBasePF.ProvablyFairHandler, (handle, value: string) => handle.saveManualClientSeed(value))
     updateClientSeedValue(value: string) {
+        this.sendClientSeed(value);
+    }
+
+    @handle(RoundBasePF.ProvablyFairHandler, (handle, value: string) => handle.saveManualClientSeed(value))
+    sendClientSeed(value: string) {
         return value;
     }
 }
