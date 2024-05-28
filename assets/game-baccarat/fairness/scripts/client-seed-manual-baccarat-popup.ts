@@ -14,33 +14,33 @@ export class ClientSeedManualBaccaratPopup extends ClientSeedManualPopup {
     @property(Label)
     lblMaxCSNumber: Label = null;
 
-    @property
-    minCSNumber = 300;
-
-    @property
-    maxCSNumber = 350;
-
     clientSeedChar = 3;
+
+    minClientSeed = 0;
+    maxClientSeed = 0;
 
     onLoad() {
         super.onLoad();
-        this.renderRangeCS();
     }
 
     renderRangeCS() {
-        this.lblMaxCSNumber.string = this.maxCSNumber.toString();
-        this.lblMinCSNumber.string = this.minCSNumber.toString();
+        this.lblMaxCSNumber.string = this.maxClientSeed.toString();
+        this.lblMinCSNumber.string = this.minClientSeed.toString();
     }
 
-    checkValueCS(newCS: string) {
-        if (+newCS >= this.minCSNumber && +newCS <= this.maxCSNumber) {
+    disabledSaveBtn(newCS: string) {
+        if (+newCS >= this.minClientSeed && +newCS <= this.maxClientSeed) {
             return false;
         }
         return true;
     }
 
-    @handle(CutCardPF.FairnessHandler, (handle, value: string) => handle.saveClientSeed(value))
     updateClientSeedValue(value: string) {
+        this.sendCSBaccarat(value);
+    }
+
+    @handle(CutCardPF.FairnessHandler, (handle, value: string) => handle.saveClientSeed(value))
+    sendCSBaccarat(value: string) {
         return value;
     }
 }
