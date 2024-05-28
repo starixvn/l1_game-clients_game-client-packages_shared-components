@@ -2129,7 +2129,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "btn-change",
+    "_name": "btn-submit",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -2335,7 +2335,7 @@
       "__id__": 93
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 101
@@ -2627,8 +2627,8 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "62fceCxsX9IRJ6z5IokhEp3",
-    "handler": "clickChangeBtn",
+    "_componentId": "e4a42WOyFJB45uiaRS5hULb",
+    "handler": "onClickSubmit",
     "customEventData": ""
   },
   {
@@ -6652,6 +6652,7 @@
     "lblCountDown": {
       "__id__": 146
     },
+    "prfWaitingScreen": null,
     "timer": 10,
     "_id": ""
   },
