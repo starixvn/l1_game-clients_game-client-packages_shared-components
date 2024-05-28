@@ -29,7 +29,6 @@ export class ClientSeedManualBaccaratPopup extends ClientSeedManualPopup {
     }
 
     checkValueCS(newCS: string) {
-        console.log("checkValueCS", newCS);
         if (+newCS >= this.minCSNumber && +newCS <= this.maxCSNumber) {
             return false;
         }
