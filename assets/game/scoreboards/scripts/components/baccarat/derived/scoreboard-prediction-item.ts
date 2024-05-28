@@ -32,8 +32,8 @@ export class ScoreboardPredictionItem extends Component {
 
     setData(data: boolean[], invert: boolean) {
         this.sprites.forEach((sprite, index) => {
-            const dataItem = invert ? !data[index] : data[index];
-            if (dataItem !== undefined) {
+            if (data[index] !== undefined) {
+                const dataItem = invert ? !data[index] : data[index];
                 sprite.spriteFrame = this.getSpriteFrame(dataItem, index);
                 sprite.node.active = true;
             } else {

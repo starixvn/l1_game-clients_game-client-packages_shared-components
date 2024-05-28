@@ -2286,7 +2286,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "prediction-item-001",
+    "_name": "banker",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -2840,7 +2840,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "prediction-item-002",
+    "_name": "player",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
