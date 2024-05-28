@@ -1,8 +1,15 @@
-import { _decorator, Component, instantiate, Label, Node, Prefab } from "cc";
+import gc from "@sg/game-client-base";
+import { Component, Label, Node, Prefab, _decorator, instantiate } from "cc";
 import * as _ from "lodash";
+import Observer from "observer";
+import { settings } from "../../../../../../assets/game/scripts/game-settings";
+import { ClientSeedManualBaccaratPopup } from "./client-seed-manual-baccarat-popup";
 const { ccclass, property } = _decorator;
+const { CutCardPF, Shared } = gc;
+const { render, handle, observer } = Observer;
 
 @ccclass
+@observer(settings.name)
 export class FairnessSettingsBaccaratPopup extends Component {
     @property(Label)
     lblClientSeed: Label = null;
@@ -32,7 +39,9 @@ export class FairnessSettingsBaccaratPopup extends Component {
 
     showPopup() {
         const manual = instantiate(this.prfManualSettings);
+        const comp = manual.getComponent(ClientSeedManualBaccaratPopup);
         this.nodeManualSettings.addChild(manual);
+        comp.setClientSeedValue(this.lblClientSeed.string);
     }
 
     private randomClientSeedValue(): string {
@@ -45,12 +54,20 @@ export class FairnessSettingsBaccaratPopup extends Component {
             this.timer--;
             if (this.timer < 0) {
                 clearInterval(interval);
-                this.node.destroy();
+                this.node.active = false;
             }
         }, 1000);
     }
 
+    @handle(CutCardPF.FairnessHandler, (handler, clientSeed: string) => handler.handle(clientSeed))
     onClickSubmit() {
-        const waiting = instantiate(this.prfWaitingScreen);
+        //const waiting = instantiate(this.prfWaitingScreen);
+
+        return this.lblClientSeed.string;
+    }
+
+    @render(CutCardPF.FairnessStore, (store) => store.clientSeed)
+    renderClientSeed(clientSeed: string) {
+        this.lblClientSeed.string = clientSeed;
     }
 }
