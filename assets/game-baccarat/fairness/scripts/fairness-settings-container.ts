@@ -18,4 +18,8 @@ export class FairnessSettingsContainer extends ObserverComponent {
         const setting = instantiate(this.prfCutCardSetting);
         this.node.addChild(setting);
     }
+
+    onLoad() {
+        this.renderNewShoeHash({ hashValue: "abc" });
+    }
 }

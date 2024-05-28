@@ -1,6 +1,5 @@
 import gc from "@sg/game-client-base";
 import { Component, Label, Node, Prefab, _decorator, instantiate } from "cc";
-import * as _ from "lodash";
 import Observer from "observer";
 import { settings } from "../../../../../../assets/game/scripts/game-settings";
 import { ClientSeedManualBaccaratPopup } from "./client-seed-manual-baccarat-popup";
@@ -44,10 +43,6 @@ export class FairnessSettingsBaccaratPopup extends Component {
         comp.setClientSeedValue(this.lblClientSeed.string);
     }
 
-    private randomClientSeedValue(): string {
-        return _.random(1000, 9999).toString();
-    }
-
     renderCountDown() {
         const interval = setInterval(() => {
             this.lblCountDown && (this.lblCountDown.string = this.timer.toString());
@@ -61,8 +56,6 @@ export class FairnessSettingsBaccaratPopup extends Component {
 
     @handle(CutCardPF.FairnessHandler, (handler, clientSeed: string) => handler.handle(clientSeed))
     onClickSubmit() {
-        //const waiting = instantiate(this.prfWaitingScreen);
-
         return this.lblClientSeed.string;
     }
 
