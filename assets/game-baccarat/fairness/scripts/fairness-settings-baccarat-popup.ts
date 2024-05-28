@@ -4,7 +4,7 @@ import Observer from "observer";
 import { settings } from "../../../../../../assets/game/scripts/game-settings";
 import { ClientSeedManualBaccaratPopup } from "./client-seed-manual-baccarat-popup";
 const { ccclass, property } = _decorator;
-const { CutCardPF, Shared } = gc;
+const { CutCardPF, GameBaccaratX } = gc;
 const { render, handle, observer } = Observer;
 
 @ccclass
@@ -62,5 +62,10 @@ export class FairnessSettingsBaccaratPopup extends Component {
     @render(CutCardPF.FairnessStore, (store) => store.clientSeed)
     renderClientSeed(clientSeed: string) {
         this.lblClientSeed.string = clientSeed;
+    }
+
+    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoeHash)
+    renderSHA256(sha256: string) {
+        this.lblSHA256.string = sha256;
     }
 }
