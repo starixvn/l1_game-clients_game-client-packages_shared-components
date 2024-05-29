@@ -63,7 +63,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         if (!cutCardInfo) {
             return;
         }
-        cutCardInfo.successful && (this.node.active = false);
+        this.node.active = !cutCardInfo.sucessful;
     }
 
     @handle(CutCardPF.CutCardHandler, (handler, clientSeed: string) => handler.handle(clientSeed))
@@ -79,12 +79,5 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoeHash)
     renderSHA256(sha256: string) {
         this.lblSHA256.string = sha256;
-    }
-
-    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
-    hideNode(shoeInfo: any) {
-        if (shoeInfo) {
-            this.node.active = false;
-        }
     }
 }
