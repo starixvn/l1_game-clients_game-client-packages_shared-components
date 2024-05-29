@@ -59,6 +59,7 @@ export class InGameMenu extends ObserverComponent {
         this.handleEvent(InGameMenuEvents.GO_TO_LOBBY);
     }
 
+    @handle(gc.Orientation.OrientationHandler, (handler) => handler.changeOrientation())
     onChangeOrientation() {
         this.doCommons();
         this.handleEvent(InGameMenuEvents.CHANGE_ORIENTATION);
