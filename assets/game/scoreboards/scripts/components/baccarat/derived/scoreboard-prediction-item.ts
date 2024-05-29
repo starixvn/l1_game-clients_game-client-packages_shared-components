@@ -8,7 +8,7 @@ enum DerivedType {
     Cockroach,
 }
 
-@ccclass
+@ccclass("PredictionItemSprite")
 export class PredictionItemSprite {
     @property({ type: Enum(DerivedType) })
     type: number = DerivedType.BigEyeBoy;
