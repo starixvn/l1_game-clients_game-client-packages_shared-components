@@ -19,16 +19,6 @@ export class WaitingScreenContainer extends ObserverComponent {
 
     @render(CutCardPF.CutCardStore, (store) => store.cutCardInfo)
     showNode(cutCardInfo: any) {
-        if (!cutCardInfo || !cutCardInfo.successful) {
-            return;
-        }
-        this.node.active = true;
-    }
-
-    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
-    hideNode(shoeInfo: any) {
-        if (shoeInfo) {
-            this.node.active = false;
-        }
+        cutCardInfo && (this.node.active = cutCardInfo.successful);
     }
 }
