@@ -11,11 +11,14 @@ const { ccclass, property, requireComponent } = _decorator;
 @ccclass
 @requireComponent([ScoreboardDataConverter, ScoreboardDerivedAlgorithm])
 export class ScoreboardDerived extends Scoreboard {
-    @property(ScoreboardDataConverter)
-    converter: ScoreboardDataConverter = null;
+    @property({ type: GridLayout, visible: false, override: true })
+    protected override grid: GridLayout = null;
 
-    @property(ScoreboardDerivedAlgorithm)
-    algorithm: ScoreboardDerivedAlgorithm = null;
+    @property({ type: ScoreboardDataConverter, override: true })
+    override converter: ScoreboardDataConverter = null;
+
+    @property({ type: ScoreboardDerivedAlgorithm, override: true })
+    override algorithm: ScoreboardDerivedAlgorithm = null;
 
     @property({ type: GridLayout })
     protected grids: GridLayout[] = [];
