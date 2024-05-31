@@ -8,6 +8,7 @@ import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 
 import { random, round } from "lodash-es";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { FunctionUtils } from "../../../../shared/utils";
 import { AroundTablePlayers } from "../../../around-table-player/scripts/components/around-table-players";
 import {
     AroundTablePlayersChipStore,
@@ -75,8 +76,8 @@ export class ChipFlying extends ObserverComponent {
     protected winningPlayers: gc.GameServiceMessage.TWinningPlayers = {};
 
     onLoad(): void {
-        super.onLoad();
         this.fetchComponents();
+        super.onLoad();
     }
 
     fetchComponents() {
@@ -85,10 +86,14 @@ export class ChipFlying extends ObserverComponent {
         this.betItems = this.nodeBetItems?.getComponent(BetItems);
     }
 
-    @render(Chips.ChipStore, (store) => store.chipsByMainPlayerRate, { fireImmediately: false })
-    flyChipsWhenJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {
-        if (!chipsByMainPlayerRate?.chips || !chipsByMainPlayerRate.isShow || !this.node.activeInHierarchy) {
+    @render(Chips.ChipStore, (store) => store.chipsByMainPlayerRate)
+    async flyChipsWhenJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {
+        if (!this.node.activeInHierarchy || !chipsByMainPlayerRate.isShow || Object.keys(chipsByMainPlayerRate?.chips).length === 0) {
             return;
+        }
+
+        while (!this.slidingChip.getReady()) {
+            await FunctionUtils.delay(100);
         }
 
         for (const betItem of this.betItems.betItemComponents) {
