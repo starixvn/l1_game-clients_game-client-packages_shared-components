@@ -1,10 +1,11 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, Prefab, _decorator, instantiate } from "cc";
+import { Color, Label, Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
+import { settings } from "../../../../../../assets/game/scripts/game-settings";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { ClientSeedManualBaccaratPopup } from "./client-seed-manual-baccarat-popup";
 const { ccclass, property } = _decorator;
-const { CutCardPF, GameBaccaratX } = gc;
+const { CutCardPF, GameBaccaratX, Rounds } = gc;
 const { render, handle, observer } = Observer;
 
 @ccclass
@@ -24,18 +25,18 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     @property(Label)
     lblCountDown: Label = null;
 
-    @property(Prefab)
-    prfWaitingScreen: Prefab = null;
+    @property(Label)
+    lblMessageSubmit: Label = null;
+
+    @property(Node)
+    nodeDisabledSubmit: Node = null;
 
     minCSNumber = 0;
     maxCSNumber = 0;
-    @property
-    timer = 10;
 
     onLoad() {
         super.onLoad();
         this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopup, this);
-        this.renderCountDown();
     }
 
     showPopup() {
@@ -48,26 +49,24 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         comp.setClientSeedValue(this.lblClientSeed.string);
     }
 
-    renderCountDown() {
-        const interval = setInterval(() => {
-            this.lblCountDown && (this.lblCountDown.string = this.timer.toString());
-            this.timer--;
-            if (this.timer < 0) {
-                clearInterval(interval);
-            }
-        }, 1000);
-    }
-
     @render(CutCardPF.CutCardStore, (store) => store.cutCardInfo)
-    hidePopup(cutCardInfo: any) {
+    updateMessageSubmit(cutCardInfo: any) {
         if (!cutCardInfo) {
             return;
         }
-        this.node.active = !cutCardInfo.sucessful;
+        if (cutCardInfo.sucessful) {
+            this.lblMessageSubmit.string = "Submission Successful";
+            this.lblMessageSubmit.color = Color.WHITE.fromHEX("#06681D");
+        } else {
+            this.lblMessageSubmit.string = "Submission fails, please try again";
+            this.nodeDisabledSubmit.active = true;
+            this.lblMessageSubmit.color = Color.WHITE.fromHEX("B82222");
+        }
     }
 
     @handle(CutCardPF.CutCardHandler, (handler, clientSeed: string) => handler.handle(clientSeed))
     onClickSubmit() {
+        this.nodeDisabledSubmit.active = false;
         return this.lblClientSeed.string;
     }
 
@@ -79,5 +78,16 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoeHash)
     renderSHA256(sha256: string) {
         this.lblSHA256.string = sha256;
+    }
+
+    @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.handleShowFairnessSettingsPopup(isShow))
+    onClickDontShowAgain() {
+        return false;
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => store.remaining)
+    renderCountDown(remaining: number) {
+        const countDown = settings.durations.wholeShoe - remaining;
+        this.lblCountDown.string = countDown < 9 ? countDown.toString() : "";
     }
 }
