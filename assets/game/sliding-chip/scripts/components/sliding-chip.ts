@@ -69,6 +69,7 @@ export default class SlidingChip extends ObserverComponent {
     static chipFlyingTime = 0.8;
     static mainPlayerChipFlyingTime = 0.5;
     private currentSelectChip = 0;
+    private isCreatedChips = false;
 
     setDisabledBetChips(status: boolean) {
         this.disabledBetChips = status;
@@ -84,6 +85,10 @@ export default class SlidingChip extends ObserverComponent {
         this.snappedScrollView.actionScrollEnded = () => {
             this.updateSelectChip();
         };
+    }
+
+    getReady() {
+        return this.chipSetting && this.isCreatedChips;
     }
 
     @handle(SlidingChipHandler.UpdateSelectChip)
@@ -296,6 +301,7 @@ export default class SlidingChip extends ObserverComponent {
         this.chipValues = chipValuesByStakeLevel;
         this.createChips();
         this.updateChips();
+        this.isCreatedChips = true;
     }
 
     @handle(SlidingChipHandler.UpdateChips)
