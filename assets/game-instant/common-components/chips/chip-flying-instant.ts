@@ -36,4 +36,6 @@ export default class ChipFlyingInstant extends ChipFlying {
         }
         this.isFirstJoinGame = false;
     }
+
+    handlePayMoneySound() {} // removed paymoney sound for Instant game
 }
