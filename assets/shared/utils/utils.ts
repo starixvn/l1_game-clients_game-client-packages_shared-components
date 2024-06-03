@@ -21,6 +21,11 @@ export namespace AnimationUtils {
         node.active = false;
     };
 
+    export const fadeInAndActivate = async (node: Node, duration: number, opacity = 255) => {
+        await fadeIn(node, duration, opacity);
+        node.active = true;
+    };
+
     export const fadeTo = (node: Node, duration: number, opacity: number) => {
         const uiOpacity = getUiOpacity(node);
 
@@ -75,7 +80,7 @@ export namespace AnimationUtils {
         });
     };
 
-    export const playSpine = (spine: sp.Skeleton, animationName: string, isLoop = false, duration?: number) => {
+    export const playSpine = (spine: sp.Skeleton, animationName: string, isLoop = false, duration?: number, skin?: string) => {
         return new Promise<void>((resolve, reject) => {
             const animation = spine.findAnimation(animationName);
             if (!animation) {
@@ -88,6 +93,11 @@ export namespace AnimationUtils {
             } else {
                 duration = animationDuration;
             }
+
+            if (skin) {
+                spine.setSkin(skin);
+            }
+
             spine.setAnimation(0, animationName, isLoop);
             tween(spine)
                 .delay(duration)
