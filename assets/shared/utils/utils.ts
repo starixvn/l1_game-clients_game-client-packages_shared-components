@@ -80,7 +80,7 @@ export namespace AnimationUtils {
         });
     };
 
-    export const playSpine = (spine: sp.Skeleton, animationName: string, isLoop = false, duration?: number, skin?: string) => {
+    export const playSpine = (spine: sp.Skeleton, animationName: string, isLoop = false, duration?: number) => {
         return new Promise<void>((resolve, reject) => {
             const animation = spine.findAnimation(animationName);
             if (!animation) {
@@ -94,11 +94,41 @@ export namespace AnimationUtils {
                 duration = animationDuration;
             }
 
+            spine.setAnimation(0, animationName, isLoop);
+
+            tween(spine)
+                .delay(duration)
+                .call(() => resolve())
+                .start();
+        });
+    };
+
+    export const playSkinSpine = (
+        spine: sp.Skeleton,
+        animationName: string,
+        skin: string,
+        track = 0,
+        isLoop = false,
+        duration?: number
+    ) => {
+        return new Promise<void>((resolve, reject) => {
+            const animation = spine.findAnimation(animationName);
+            if (!animation) {
+                resolve();
+                return;
+            }
+            const animationDuration = animation.duration;
+            if (duration) {
+                spine.timeScale = animationDuration / duration;
+            } else {
+                duration = animationDuration;
+            }
+
+            spine.setAnimation(track, animationName, isLoop);
             if (skin) {
                 spine.setSkin(skin);
             }
 
-            spine.setAnimation(0, animationName, isLoop);
             tween(spine)
                 .delay(duration)
                 .call(() => resolve())
