@@ -1,0 +1,50 @@
+import { _decorator, Button, Component, Label, Node } from "cc";
+import { PokerCard, ServiceCard } from "./poker-card";
+const { ccclass, property } = _decorator;
+
+export interface FairnessCardData {
+    card: ServiceCard;
+    index: number;
+}
+
+@ccclass
+export class FairnessCard extends Component {
+    @property(Node)
+    nodeCard: Node = null;
+
+    @property(Label)
+    lblCardIndex: Label = null;
+
+    @property(Button)
+    btnOnCard: Button = null;
+
+    private _card: PokerCard = null;
+    private _clickCallback = () => {};
+
+    get card(): PokerCard {
+        if (this._card === null) {
+            this._card = this.nodeCard.getComponent(PokerCard);
+        }
+        return this._card;
+    }
+
+    setClickCallback(callback: () => void) {
+        if (callback) {
+            this._clickCallback = callback;
+        }
+    }
+
+    setData(data: FairnessCardData) {
+        const { card, index } = data;
+        this.card.setServiceCard(card);
+        this.setIndexValue(index);
+    }
+
+    setIndexValue(index: number) {
+        this.lblCardIndex.string = `${index}`;
+    }
+
+    onClickCard() {
+        this._clickCallback();
+    }
+}
