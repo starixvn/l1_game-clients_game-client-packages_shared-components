@@ -6537,8 +6537,8 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "62fceCxsX9IRJ6z5IokhEp3",
-    "handler": "closeSettingsPopup",
+    "_componentId": "005bc0+TtJHraxrdPo4rGru",
+    "handler": "hide",
     "customEventData": ""
   },
   {
@@ -6903,7 +6903,7 @@
     "lblMessageSubmit": {
       "__id__": 128
     },
-    "timer": 10,
+    "nodeDisabledSubmit": null,
     "_id": ""
   },
   {
