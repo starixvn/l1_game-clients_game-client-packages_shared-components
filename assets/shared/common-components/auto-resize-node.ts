@@ -60,10 +60,12 @@ export class AutoResizeNode extends Component {
 
     update(dt) {
         this.resizeNode();
+        this.syncPosition && this.doSyncPosition();
     }
 
     onDestroy() {
         this.target?.isValid && this.target.off(Node.EventType.SIZE_CHANGED, this.resizeNode, this);
+        this.target?.isValid && this.target.off(Node.EventType.TRANSFORM_CHANGED, this.doSyncPosition, this);
     }
 
     resizeNode() {
