@@ -1,6 +1,6 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Component, instantiate, Node, Prefab } from "cc";
 import BetHistoryBodyItem from "./bet-history-body-item";
-import gc from "@sg/game-client-base";
 
 const { ccclass, property } = _decorator;
 
