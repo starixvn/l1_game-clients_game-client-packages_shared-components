@@ -1,7 +1,7 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
 import { Label, Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
-import { CardModel, convertRank } from "../../../game/poker-cards/scripts/poker-card";
+import { ServiceCard, convertRank } from "../../../game/poker-cards/scripts/poker-card";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { FairnessPokerCard } from "./fairness-poker-card";
 const { ccclass, property } = _decorator;
@@ -53,28 +53,17 @@ export class FairnessVerificationPopup extends ObserverComponent {
         this.lblRoundId.string = this.roundId.toString();
     }
 
-    convertCardsToModel(cards: string[]) {
-        let cardsModel: CardModel[] = [];
-
+    renderCards(cards: ServiceCard[], usedCardIndexes: number[]) {
         cards.forEach((card, index) => {
-            const length = card.length - 1;
-            cardsModel.push({
-                rank: convertRank(+card.slice(0, length)),
-                suit: +card.charAt(length),
-            });
-        });
-        return cardsModel;
-    }
-
-    renderCards(cards: string[], usedCardIndexes: number[]) {
-        let cardsModel = this.convertCardsToModel(cards);
-        cardsModel.forEach((card, index) => {
             let cardNode = instantiate(this.prfCard);
             const comp = cardNode.getComponent(FairnessPokerCard);
-            comp.card = card;
+            comp.card = { rank: convertRank(card.rank), suit: card.suit };
             comp.faceUp();
             comp.showHighlight(usedCardIndexes.includes(index));
             this.nodeCardsContent.addChild(cardNode);
         });
     }
+
+    @handle(CutCardPF.FairnessHandler, (handle) => handle.openCutCardIndex())
+    onClickDetail() {}
 }

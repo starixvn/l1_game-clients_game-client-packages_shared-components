@@ -21,6 +21,6 @@ export class BaccaratXBetHistorybodyItem extends BetHistoryBodyItem {
     onClickFairness() {
         this.playSoundClick();
         //return this.betHistoryLog.roundId;
-        return 20769;
+        return 1;
     }
 }

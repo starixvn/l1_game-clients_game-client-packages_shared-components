@@ -1,4 +1,4 @@
-import gc from "@sg/game-client-base";
+import gc, { GameServiceMessage } from "@sg/game-client-base";
 import { Color, Label, Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { settings } from "../../../../../../assets/game/scripts/game-settings";
@@ -31,15 +31,34 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     @property(Node)
     nodeDisabledSubmit: Node = null;
 
-    minCSNumber = 0;
-    maxCSNumber = 0;
+    @property
+    minCSNumber = 300;
+
+    @property
+    maxCSNumber = 350;
 
     onLoad() {
         super.onLoad();
-        this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopup, this);
+        this.updateMaxCS();
+        this.updateMinCS();
+        this.generateRandomCS();
+        this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopupManual, this);
     }
 
-    showPopup() {
+    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoeHash)
+    renderNewShoeHash(newShoeHash: GameServiceMessage.NewShoeHash) {
+        if (!newShoeHash) {
+            return;
+        }
+        this.openFairnessSetting();
+    }
+
+    @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.handleShowFairnessSettingsPopup(isShow))
+    openFairnessSetting() {
+        return true;
+    }
+
+    showPopupManual() {
         const manual = instantiate(this.prfManualSettings);
         const comp = manual.getComponent(ClientSeedManualBaccaratPopup);
         comp.minClientSeed = this.minCSNumber;
@@ -90,4 +109,17 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         const countDown = settings.durations.wholeShoe - remaining;
         this.lblCountDown.string = countDown < 9 ? countDown.toString() : "";
     }
+
+    @handle(CutCardPF.FairnessHandler, (handler, min: number) => handler.setMinClientSeed(min))
+    updateMinCS() {
+        return this.minCSNumber;
+    }
+
+    @handle(CutCardPF.FairnessHandler, (handler, max: number) => handler.setMaxClientSeed(max))
+    updateMaxCS() {
+        return this.maxCSNumber;
+    }
+
+    @handle(CutCardPF.FairnessHandler, (handler) => handler.generateClientSeed())
+    generateRandomCS() {}
 }
