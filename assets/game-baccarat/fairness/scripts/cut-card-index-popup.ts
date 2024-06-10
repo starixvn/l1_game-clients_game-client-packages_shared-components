@@ -1,11 +1,13 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
-import { _decorator, instantiate, Label, Node, Prefab } from "cc";
+import { Label, Node, Prefab, _decorator, instantiate } from "cc";
+import FileSaver from "file-saver";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { ClientSeedInfo } from "../../../shared/common-components/provably-fair/client-seed-info";
-const { CutCardPF, GameBaccaratX } = gc;
+const { CutCardPF, GameBaccaratX, DateTimeUtils, Auth } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
+const { saveAs } = FileSaver;
 
 @ccclass
 export class CutCardIndexPopup extends ObserverComponent {
@@ -21,8 +23,11 @@ export class CutCardIndexPopup extends ObserverComponent {
     @property(Prefab)
     prfPlayerSeed: Prefab = null;
 
+    roundId = 0;
+    playerName = "";
+
     private playerCutCards = [
-        { name: "T12123", clientSeed: 123 },
+        { name: "Matrix42549", clientSeed: 123 },
         { name: "T12123", clientSeed: 123 },
         { name: "T12123", clientSeed: 123 },
         { name: "T12123", clientSeed: 123 },
@@ -46,6 +51,12 @@ export class CutCardIndexPopup extends ObserverComponent {
         { name: "T12123", clientSeed: 123 },
     ];
 
+    @render(gc.Player.MainPlayerStore, (store) => store.name)
+    renderPlayerName(name: string) {
+        console.log("renderPlayerName", name);
+        this.playerName = name;
+    }
+
     @handle(CutCardPF.FairnessHandler, (handle) => handle.closeCutCardIndex())
     closePopup() {}
 
@@ -64,8 +75,18 @@ export class CutCardIndexPopup extends ObserverComponent {
         seedPlayers.forEach((player) => {
             const node = instantiate(this.prfPlayerSeed);
             const comp = node.getComponent(ClientSeedInfo);
-            comp.setDisplay(player);
+            comp.setDisplay(player, this.playerName !== player.name);
             this.nodeSeedPlayers.addChild(node);
         });
+    }
+
+    onClickSave() {
+        let data = "Player,Nickname,Seed\n";
+        this.playerCutCards.forEach((player, index) => {
+            data += `${index + 1},${player.name},${player.clientSeed}\n`;
+        });
+        const blob = new Blob([data], { type: "text/csv;charset=utf-8" });
+        const fileName = `Round_${this.roundId}_${DateTimeUtils.getStringDateNow()}.csv`;
+        saveAs(blob, fileName);
     }
 }
