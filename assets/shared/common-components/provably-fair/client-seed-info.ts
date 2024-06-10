@@ -12,9 +12,9 @@ export class ClientSeedInfo extends Component {
     @property(Node)
     nodeDisabledBg: Node = null;
 
-    setDisplay(data: any) {
+    setDisplay(data: any, encryptedName: boolean) {
         this.lblName.node.active = true;
-        this.lblName.string = this.encryptedName(data.name);
+        this.lblName.string = encryptedName ? this.encryptedName(data.name) : data.name;
         this.lblClientSeed.string = data.clientSeed;
     }
 

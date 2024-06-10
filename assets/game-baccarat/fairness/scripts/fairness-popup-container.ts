@@ -2,6 +2,8 @@ import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import Observer from "observer";
 import { MultipleNodeContainer } from "../../../shared/common-components/node-container/multiple-node-container";
+import { CutCardIndexPopup } from "./cut-card-index-popup";
+import { FairnessVerificationPopup } from "./fairness-verification-popup";
 const { ccclass, property } = _decorator;
 const { CutCardPF, GameBaccaratX } = gc;
 const { render, handle } = Observer;
@@ -15,9 +17,11 @@ enum Popup {
 @ccclass
 export class FairnessPopupContainer extends MultipleNodeContainer {
     @render(CutCardPF.FairnessStore, (store) => store.openCutCardIndex, { fireImmediately: false })
-    renderCutCardIndexPopup(openCutCardIndex: boolean) {
+    renderCutCardIndexPopup(openCutCardIndex: any) {
         if (openCutCardIndex) {
             this.showNode(Popup.CutCardIndex);
+            const node = this.getNode(Popup.CutCardIndex);
+            node.getComponent(CutCardIndexPopup).roundId = openCutCardIndex.roundId;
         } else {
             this.onClose();
         }
@@ -33,9 +37,11 @@ export class FairnessPopupContainer extends MultipleNodeContainer {
     }
 
     @render(CutCardPF.FairnessStore, (store) => store.openVerification, { fireImmediately: false })
-    renderOpenVerificationPopup(openVerification: boolean) {
+    renderOpenVerificationPopup(openVerification: any) {
         if (openVerification) {
             this.showNode(Popup.FairnessVerification);
+            const node = this.getNode(Popup.FairnessVerification);
+            node.getComponent(FairnessVerificationPopup).roundId = openVerification.roundId;
         } else {
             this.onClose();
         }

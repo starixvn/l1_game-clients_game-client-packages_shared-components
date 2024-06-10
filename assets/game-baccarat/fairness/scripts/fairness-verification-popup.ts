@@ -64,6 +64,8 @@ export class FairnessVerificationPopup extends ObserverComponent {
         });
     }
 
-    @handle(CutCardPF.FairnessHandler, (handle) => handle.openCutCardIndex())
-    onClickDetail() {}
+    @handle(CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openCutCardIndex(roundId))
+    onClickDetail() {
+        return this.roundId;
+    }
 }
