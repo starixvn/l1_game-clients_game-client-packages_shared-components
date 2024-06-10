@@ -122,4 +122,9 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @handle(CutCardPF.FairnessHandler, (handler) => handler.generateClientSeed())
     generateRandomCS() {}
+
+    @handle(CutCardPF.FairnessHandler, (handler, isShow: boolean) => handler.handleShowFairnessSettingsPopup(isShow))
+    closePopup() {
+        return false;
+    }
 }
