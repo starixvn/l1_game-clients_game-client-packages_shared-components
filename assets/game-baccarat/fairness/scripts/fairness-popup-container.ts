@@ -18,7 +18,7 @@ enum Popup {
 export class FairnessPopupContainer extends MultipleNodeContainer {
     @render(CutCardPF.FairnessStore, (store) => store.openCutCardIndex, { fireImmediately: false })
     renderCutCardIndexPopup(openCutCardIndex: any) {
-        if (openCutCardIndex) {
+        if (openCutCardIndex.isOpen) {
             this.showNode(Popup.CutCardIndex);
             const node = this.getNode(Popup.CutCardIndex);
             node.getComponent(CutCardIndexPopup).roundId = openCutCardIndex.roundId;
@@ -38,7 +38,7 @@ export class FairnessPopupContainer extends MultipleNodeContainer {
 
     @render(CutCardPF.FairnessStore, (store) => store.openVerification, { fireImmediately: false })
     renderOpenVerificationPopup(openVerification: any) {
-        if (openVerification) {
+        if (openVerification.isOpen) {
             this.showNode(Popup.FairnessVerification);
             const node = this.getNode(Popup.FairnessVerification);
             node.getComponent(FairnessVerificationPopup).roundId = openVerification.roundId;

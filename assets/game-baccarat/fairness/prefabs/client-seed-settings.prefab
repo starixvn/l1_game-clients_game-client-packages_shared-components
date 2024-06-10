@@ -6537,8 +6537,8 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "005bc0+TtJHraxrdPo4rGru",
-    "handler": "hide",
+    "_componentId": "e4a42WOyFJB45uiaRS5hULb",
+    "handler": "closePopup",
     "customEventData": ""
   },
   {
@@ -6904,6 +6904,8 @@
       "__id__": 128
     },
     "nodeDisabledSubmit": null,
+    "minCSNumber": 300,
+    "maxCSNumber": 350,
     "_id": ""
   },
   {
