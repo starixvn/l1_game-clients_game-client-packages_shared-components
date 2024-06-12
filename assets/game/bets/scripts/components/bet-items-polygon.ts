@@ -69,9 +69,11 @@ export class BetItemsPolygon extends BetItems {
     }
 
     handleBetItemClick(event: EventTouch) {
-        const location = event.getLocation();
+        let location = event.getUILocation();
 
         if (this.enableFixSingleCamera3D) {
+            location = event.getLocation();
+
             const v3WorldPt = new Vec3();
             // Convert Screen Space into World Space.
             Vec3.set(v3WorldPt, location.x, location.y, 0); // vec3 screen pos
