@@ -1,6 +1,11 @@
-import { _decorator, Button, Component, Label, Node } from "cc";
+import gc from "@sg/game-client-base";
+import { _decorator, Button, Label, Node } from "cc";
+import Observer from "observer";
+import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { PokerCard, ServiceCard } from "./poker-card";
 const { ccclass, property } = _decorator;
+const { handle, render } = Observer;
+const { GameBaccaratX } = gc;
 
 export interface FairnessCardData {
     card: ServiceCard;
@@ -8,7 +13,7 @@ export interface FairnessCardData {
 }
 
 @ccclass
-export class FairnessCard extends Component {
+export class FairnessCard extends ObserverComponent {
     @property(Node)
     nodeCard: Node = null;
 
@@ -47,4 +52,9 @@ export class FairnessCard extends Component {
     onClickCard() {
         this._clickCallback();
     }
+
+    // @render(GameBaccaratX.Shoe.CardIndexStore, (store) => store.cardIndex)
+    // renderCardIndex(cardIndex: GameServiceMessage.BaccaratX) {
+    //     this.lblCardIndex.string = cardIndex.currentIndex.toString();
+    // }
 }
