@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Game, game, Label } from "cc";
+import { _decorator, Label } from "cc";
 import Observer from "observer";
 
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
@@ -28,8 +28,6 @@ export default class GameComponent extends GameComponentBase {
     protected enableFixHandleFinish = false;
 
     onLoad() {
-        game.on(Game.EVENT_HIDE, this.onHideGame, this);
-        game.on(Game.EVENT_SHOW, this.onShowGame, this);
         this.initUserSettings();
         this.initPlayerSelections();
         this.handleStaticNodeAndSetEmptyLabels();
@@ -65,10 +63,7 @@ export default class GameComponent extends GameComponentBase {
     @handle(gc.PlayerSelections.PlayerSelectionHandlers.InitHandlers)
     initPlayerSelections() {}
 
-    protected onDestroy(): void {
-        game.off(Game.EVENT_HIDE, this.onHideGame, this);
-        game.off(Game.EVENT_SHOW, this.onShowGame, this);
-    }
+    protected onDestroy(): void {}
 
     @handle(HideGame.HideGameHandler)
     onHideGame() {
@@ -81,9 +76,7 @@ export default class GameComponent extends GameComponentBase {
         // }
     }
 
-    onShowGame() {
-        window.location.reload();
-    }
+    onShowGame() {}
 
     @render(Connection.ConnectionStore, (store) => store.signedIn)
     onSignedIn(signedIn: boolean) {
