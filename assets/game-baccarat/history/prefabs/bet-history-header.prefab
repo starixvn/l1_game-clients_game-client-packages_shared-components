@@ -220,9 +220,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 232,
-      "b": 0,
+      "r": 237,
+      "g": 187,
+      "b": 2,
       "a": 255
     },
     "_string": "Time",
@@ -473,9 +473,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 232,
-      "b": 0,
+      "r": 237,
+      "g": 187,
+      "b": 2,
       "a": 255
     },
     "_string": "Round",
@@ -726,9 +726,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 232,
-      "b": 0,
+      "r": 237,
+      "g": 187,
+      "b": 2,
       "a": 255
     },
     "_string": "Total Stake",
@@ -979,9 +979,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 232,
-      "b": 0,
+      "r": 237,
+      "g": 187,
+      "b": 2,
       "a": 255
     },
     "_string": "Win",
@@ -1229,9 +1229,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 232,
-      "b": 0,
+      "r": 237,
+      "g": 187,
+      "b": 2,
       "a": 255
     },
     "_string": "WinLoss",
@@ -1460,9 +1460,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 232,
-      "b": 0,
+      "r": 237,
+      "g": 187,
+      "b": 2,
       "a": 255
     },
     "_string": "Fairness",
