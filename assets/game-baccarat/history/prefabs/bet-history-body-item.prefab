@@ -142,9 +142,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 42,
-      "g": 39,
-      "b": 38,
+      "r": 20,
+      "g": 20,
+      "b": 20,
       "a": 255
     },
     "_spriteFrame": {
@@ -1200,7 +1200,7 @@
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "ef8509f0-8c17-4d46-8ca0-a31d72a99153",
+      "__uuid__": "a8537839-a202-488b-8bb5-fdc265f2048a",
       "__expectedType__": "cc.BitmapFont"
     },
     "_isSystemFontUsed": false,
