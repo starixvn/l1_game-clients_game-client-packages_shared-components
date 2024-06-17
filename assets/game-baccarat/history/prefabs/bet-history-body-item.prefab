@@ -643,8 +643,8 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 58,
-      "g": 151,
+      "r": 0,
+      "g": 85,
       "b": 255,
       "a": 255
     },
@@ -1633,8 +1633,8 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 58,
-      "g": 151,
+      "r": 0,
+      "g": 85,
       "b": 255,
       "a": 255
     },
