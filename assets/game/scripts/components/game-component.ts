@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label } from "cc";
+import { Game, Label, _decorator, game } from "cc";
 import Observer from "observer";
 
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
@@ -26,8 +26,10 @@ export default class GameComponent extends GameComponentBase {
     containerOptions: gc.IContainerOptions;
     protected isReceiveFinishBeforeRoundHistory = true;
     protected enableFixHandleFinish = false;
+    protected signedIn = false;
 
     onLoad() {
+        game.on(Game.EVENT_SHOW, this.onShowGame, this);
         this.initUserSettings();
         this.initPlayerSelections();
         this.handleStaticNodeAndSetEmptyLabels();
@@ -76,10 +78,13 @@ export default class GameComponent extends GameComponentBase {
         // }
     }
 
-    onShowGame() {}
+    onShowGame() {
+        this.signedIn && this.inGame();
+    }
 
     @render(Connection.ConnectionStore, (store) => store.signedIn)
     onSignedIn(signedIn: boolean) {
+        this.signedIn = signedIn;
         signedIn && this.inGame();
     }
 
