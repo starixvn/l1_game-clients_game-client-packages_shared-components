@@ -82,8 +82,8 @@ export class PokerCard extends Component {
         return AnimationUtils.playAnimation(this.animation, AnimationName.Drop_Card, duration);
     }
 
-    async openCard() {
-        if (this.animation) {
+    async openCard(animated = true) {
+        if (this.animation && animated) {
             await AnimationUtils.playAnimation(this.animation, AnimationName.Open_Card);
         } else {
             this.faceUp();

@@ -45,6 +45,14 @@ export class FairnessCard extends ObserverComponent {
         this.setIndexValue(index);
     }
 
+    setCardData(card: ServiceCard) {
+        this.card.setServiceCard(card);
+    }
+
+    openCard(animated = true) {
+        return this.card.openCard(animated);
+    }
+
     setIndexValue(index: number) {
         this.lblCardIndex.string = `${index}`;
     }
@@ -52,9 +60,4 @@ export class FairnessCard extends ObserverComponent {
     onClickCard() {
         this._clickCallback();
     }
-
-    // @render(GameBaccaratX.Shoe.CardIndexStore, (store) => store.cardIndex)
-    // renderCardIndex(cardIndex: GameServiceMessage.BaccaratX) {
-    //     this.lblCardIndex.string = cardIndex.currentIndex.toString();
-    // }
 }
