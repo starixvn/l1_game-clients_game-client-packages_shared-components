@@ -38,6 +38,9 @@ export class PokerCard extends Component {
     atlas: SpriteAtlas = null;
 
     @property(Node)
+    bgBackCard: Node = null;
+
+    @property(Node)
     bgWhiteCard: Node = null;
 
     @property(Sprite)
@@ -116,8 +119,6 @@ export class PokerCard extends Component {
                 this.smallSuit.spriteFrame = this.atlas.getSpriteFrame(`${this.suits[this.card.suit]}_small`);
 
                 this.setLargeSuiteImage(lowerCaseRank);
-
-                this.bgWhiteCard.active = true;
                 this.setDetailVisibility(true);
             } else {
                 console.warn("Call setFaceUp when this.card null");
@@ -138,10 +139,12 @@ export class PokerCard extends Component {
 
     protected setDetailVisibility(active: boolean) {
         this.largeSuit.node.parent.active = active;
+
+        this.bgWhiteCard.active = active;
+        this.bgBackCard.active = !active;
     }
 
     protected showCardBack() {
         this.setDetailVisibility(false);
-        this.bgWhiteCard.active = false;
     }
 }
