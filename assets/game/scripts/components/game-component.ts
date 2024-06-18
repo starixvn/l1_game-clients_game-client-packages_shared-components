@@ -35,6 +35,13 @@ export default class GameComponent extends GameComponentBase {
         this.handleStaticNodeAndSetEmptyLabels();
     }
 
+    @render(gc.Connection.ConnectionStore, (connectionStore) => connectionStore.isTransError)
+    handleTransError(isTransError: boolean) {
+        if (isTransError) {
+            window.location.reload();
+        }
+    }
+
     protected handleStaticNodeAndSetEmptyLabels() {
         const lblList: Label[] = [this?.lblRoundId, this?.lblMinBet, this?.lblMaxBet];
         if (lblList.length > 0) {
