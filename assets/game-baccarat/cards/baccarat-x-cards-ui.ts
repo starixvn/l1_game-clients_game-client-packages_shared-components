@@ -263,7 +263,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         });
     }
 
-    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
+    // @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
     async startNewShoe(shoeInfo: gc.GameServiceMessage.ShoeInfo) {
         if (!shoeInfo) {
             return;
