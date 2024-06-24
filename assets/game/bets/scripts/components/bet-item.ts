@@ -80,4 +80,8 @@ export default class BetItem extends ObserverComponent {
     renderUserBetPercentage(userBetPercentage: number) {
         this.lblBetPercentage && (this.lblBetPercentage.string = `${userBetPercentage}%`);
     }
+
+    renderbetPercentage(betPercentage: number) {
+        this.lblBetPercentage && (this.lblBetPercentage.string = `${betPercentage}%`);
+    }
 }
