@@ -1,11 +1,11 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
-import { _decorator, instantiate, Node, Prefab } from "cc";
+import { Label, Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
 import { MultiplierCard } from "./multiplier-card";
 const { ccclass, property } = _decorator;
 const { observer, render } = Observer;
-const { GameBaccaratX } = gc;
+const { GameBaccaratX, Rounds } = gc;
 
 @ccclass
 export class MultiplierCards extends ObserverComponent {
@@ -15,9 +15,17 @@ export class MultiplierCards extends ObserverComponent {
     @property(Node)
     content: Node = null;
 
+    @property(Label)
+    lblRangeBetLimit: Label = null;
+
+    @property(Label)
+    lblExtraFee: Label = null;
+
+    private minBet = 0;
+    private maxBet = 0;
+
     @render(GameBaccaratX.Multiplier.BaccaratMultipliersStore, (store) => store.multiplierCards, { fireImmediately: false })
     renderMultiplierCards(multiplierCards: GameServiceMessage.BaccaratCardMultiplier[]) {
-        console.log("renderMultiplierCards", multiplierCards);
         this.content.removeAllChildren();
         multiplierCards.forEach((card) => {
             const node = instantiate(this.prfMultiplierCard);
@@ -35,5 +43,27 @@ export class MultiplierCards extends ObserverComponent {
 
     showMultiplierCards(isShow: boolean) {
         this.content.active = isShow;
+    }
+
+    @render(Rounds.RoundStore, (store) => store.minBet, { fireImmediately: false })
+    renderMinBet(minBet: number) {
+        this.minBet = minBet;
+        this.renderRangeBetLimit();
+    }
+
+    @render(Rounds.RoundStore, (store) => store.maxBet, { fireImmediately: false })
+    renderMaxBet(maxBet: number) {
+        this.maxBet = maxBet;
+        this.renderRangeBetLimit();
+    }
+
+    renderRangeBetLimit() {
+        this.lblRangeBetLimit.string = `$ ${this.minBet} - ${this.maxBet}`;
+    }
+
+    @render(GameBaccaratX.BaccaratXConfigs.BaccaratXGameConfigStore, (store) => store.extraFeeRatio)
+    renderExtraFee(extraFeeRatio: number) {
+        const extraFee = extraFeeRatio * 100;
+        this.lblExtraFee.string = `${extraFee}%`;
     }
 }
