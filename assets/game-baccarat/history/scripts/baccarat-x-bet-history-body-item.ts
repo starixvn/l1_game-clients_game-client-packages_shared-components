@@ -32,7 +32,7 @@ export class BaccaratXBetHistorybodyItem extends BetHistoryBodyItem {
             roundId: this.betHistoryLog.roundId,
             mode: "dark",
             language: i18n._language,
-            timeZoneOffset: new Date().getTimezoneOffset() / 60,
+            timeZoneOffset: -new Date().getTimezoneOffset() / 60,
         };
     }
 }

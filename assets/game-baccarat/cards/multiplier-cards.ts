@@ -61,9 +61,12 @@ export class MultiplierCards extends ObserverComponent {
         this.lblRangeBetLimit.string = `$ ${this.minBet} - ${this.maxBet}`;
     }
 
-    @render(GameBaccaratX.BaccaratXConfigs.BaccaratXGameConfigStore, (store) => store.extraFeeRatio)
-    renderExtraFee(extraFeeRatio: number) {
-        const extraFee = extraFeeRatio * 100;
-        this.lblExtraFee.string = `${extraFee}%`;
+    @render(GameBaccaratX.ExtraFee.ExtraFeeStore, (store) => store.extraFee)
+    renderExtraFee(extraFee: any) {
+        if (extraFee) {
+            const fee = extraFee.fee;
+            const extraFeeString = extraFee.isRatio ? `${fee * 100}%` : `${fee}`;
+            this.lblExtraFee.string = extraFeeString;
+        }
     }
 }
