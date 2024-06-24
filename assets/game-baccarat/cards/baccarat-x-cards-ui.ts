@@ -75,7 +75,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         for (let i = 0; i < 6; i++) {
             const node = instantiate(this.prfCard);
             this.nodeCardContainer.addChild(node);
-            node.setScale(v3(0.5, 0.5));
+            node.setScale(v3(0.4, 0.4));
             // node.active = false;
             const card = node.getComponent(FairnessCard);
             this.cardPool.push({
