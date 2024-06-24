@@ -1,11 +1,6 @@
-import gc from "@sg/game-client-base";
-import { _decorator, Button, Label, Node } from "cc";
-import Observer from "observer";
-import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { _decorator, Button, Component, Label, Node } from "cc";
 import { PokerCard, ServiceCard } from "./poker-card";
 const { ccclass, property } = _decorator;
-const { handle, render } = Observer;
-const { GameBaccaratX } = gc;
 
 export interface FairnessCardData {
     card: ServiceCard;
@@ -13,7 +8,7 @@ export interface FairnessCardData {
 }
 
 @ccclass
-export class FairnessCard extends ObserverComponent {
+export class FairnessCard extends Component {
     @property(Node)
     nodeCard: Node = null;
 

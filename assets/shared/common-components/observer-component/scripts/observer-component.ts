@@ -14,6 +14,6 @@ export class ObserverComponent extends Component {
     }
 
     onDestroy(): void {
-        this.dispose();
+        this.dispose && this.dispose();
     }
 }

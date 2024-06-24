@@ -51,4 +51,10 @@ export namespace ComponentUtils {
             node.active = false;
         });
     };
+
+    export const convertPosition = (container: Node, target: Node) => {
+        const transformContainer = container.getComponent(UITransform);
+        const transformTarget = target.getComponent(UITransform);
+        return transformContainer.convertToNodeSpaceAR(transformTarget.convertToWorldSpaceAR(v3(0, 0, 0)));
+    };
 }

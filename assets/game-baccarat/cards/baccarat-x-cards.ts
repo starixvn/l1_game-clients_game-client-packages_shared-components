@@ -1,12 +1,11 @@
-import { Label, Node, Prefab, _decorator } from "cc";
+import { Component, Label, Node, Prefab, _decorator } from "cc";
 import Observer from "observer";
-import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
 @ccclass
-export class BaccaratXCards extends ObserverComponent {
+export class BaccaratXCards extends Component {
     @property(Prefab)
     prfCard: Prefab = null;
 

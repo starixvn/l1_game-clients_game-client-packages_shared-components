@@ -3,7 +3,9 @@ import { Node, Prefab, UITransform, Vec3, _decorator, instantiate, sp, tween, v3
 import Observer from "observer";
 import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
+import { bundleManager } from "../../shared/common-components/bundle-magager/bundle-manager";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
+import { ComponentUtils, FunctionUtils } from "../../shared/utils";
 import { AnimationUtils } from "../../shared/utils/utils";
 import { BaccaratXCards } from "./baccarat-x-cards";
 const { ccclass, property } = _decorator;
@@ -56,8 +58,11 @@ export class BaccaratXCardsUI extends ObserverComponent {
     @property(Node)
     nodeTrash: Node = null;
 
-    @property(sp.Skeleton)
-    spineCutCard: sp.Skeleton = null;
+    @property(Node)
+    nodeBurnCards: Node = null;
+
+    @property
+    spineCutCardPath = "";
 
     private _cardHands: BaccaratXCards[] = [];
 
@@ -67,15 +72,31 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     cardPool: PoolItem[] = [];
 
+    spineCutCard: sp.Skeleton = null;
+
     onLoad() {
         super.onLoad();
     }
 
+    async initSpineCutCard() {
+        if (!this.spineCutCard) {
+            const data = await bundleManager.loadAssetsFromBundle<sp.SkeletonData>(
+                "resources",
+                this.spineCutCardPath,
+                sp.SkeletonData,
+                null
+            );
+            const node = new Node();
+            this.nodeBurnCards.addChild(node);
+            this.spineCutCard = node.addComponent(sp.Skeleton);
+            this.spineCutCard.skeletonData = data;
+        }
+    }
+
     async initCards() {
         for (let i = 0; i < 6; i++) {
-            const node = instantiate(this.prfCard);
+            const node = this.creatNewCardNode();
             this.nodeCardContainer.addChild(node);
-            node.setScale(v3(0.4, 0.4));
             // node.active = false;
             const card = node.getComponent(FairnessCard);
             this.cardPool.push({
@@ -84,6 +105,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
             });
         }
         await this.draw6Cards(false);
+    }
+
+    private creatNewCardNode() {
+        const node = instantiate(this.prfCard);
+        node.setScale(v3(0.4, 0.4));
+        return node;
     }
 
     get cardHands() {
@@ -270,11 +297,58 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
         const { firstCard, burnedCards } = shoeInfo;
         await this.playAnimationCutCard();
+        await this.playAnimationBurnCards(firstCard, burnedCards);
     }
 
     async playAnimationCutCard() {
-        await AnimationUtils.playSpine(this.spineCutCard, this.spineCutCard.animation, false);
+        await this.initSpineCutCard();
+        await AnimationUtils.playSpine(this.spineCutCard, "cut-card", false);
+
+        await AnimationUtils.fadeOut(this.spineCutCard.node, 0.5);
+        await FunctionUtils.delay(0.5);
     }
 
-    async playAnimationBurnCards(firstCard, burnedCards: number) {}
+    async playAnimationBurnCards(firstCard, burnedCards: number) {
+        let cardNodes = [];
+        const node = this.creatNewCardNode();
+        const firstCardComp = node.getComponent(FairnessCard);
+        firstCardComp.setIndexValue(1);
+        firstCardComp.setCardData(firstCard);
+        this.nodeBurnCards.addChild(node);
+        node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
+        cardNodes.push(node);
+
+        firstCardComp.openCard();
+        await this.moveCardAnimation(node, v3(0, 0, 0), true);
+
+        await FunctionUtils.delay(2);
+
+        const spacingFirstCard = 50;
+        const spacingBurnedCards = 10;
+
+        const cardWidth = 60;
+        const firstCardsX = -0.5 * (cardWidth + spacingFirstCard + (cardWidth + spacingBurnedCards) * burnedCards - spacingBurnedCards);
+        await this.moveCardAnimation(node, v3(firstCardsX + cardWidth / 2, 0, 0), true);
+
+        const startX = firstCardsX + cardWidth + spacingFirstCard;
+        for (let i = 0; i < burnedCards; i++) {
+            const node = this.creatNewCardNode();
+            const cardComp = node.getComponent(FairnessCard);
+            cardComp.setIndexValue(2 + i);
+            this.nodeBurnCards.addChild(node);
+            node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
+            await this.moveCardAnimation(node, v3(startX + i * (cardWidth + spacingBurnedCards) + cardWidth / 2, 0, 0), true);
+            cardNodes.push(node);
+        }
+
+        await FunctionUtils.delay(1);
+
+        const dropPosition = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeTrash);
+        for (let i = 0; i < cardNodes.length; i++) {
+            await this.moveCardAnimation(cardNodes[i], dropPosition, true);
+            cardNodes[i].destroy();
+        }
+
+        cardNodes = [];
+    }
 }
