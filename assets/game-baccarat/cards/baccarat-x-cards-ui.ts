@@ -364,7 +364,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
         await this.moveCardAnimation(node, v3(firstCardsX + cardWidth / 2, 0, 0), true);
 
         const startX = firstCardsX + cardWidth + spacingFirstCard;
-        for (let i = 0; i < burnedCards; i++) {
+        const moreCards = burnedCards - 1;
+        for (let i = 0; i < moreCards; i++) {
             const node = this.creatNewCardNode();
             const cardComp = node.getComponent(FairnessCard);
             cardComp.setIndexValue(2 + i);
