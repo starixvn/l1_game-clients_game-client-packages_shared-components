@@ -75,6 +75,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     cardPool: PoolItem[] = [];
 
     spineCutCard: sp.Skeleton = null;
+    isNewShoe = false;
 
     test() {
         this.scheduleOnce(() => {
@@ -307,9 +308,16 @@ export class BaccaratXCardsUI extends ObserverComponent {
         });
     }
 
-    // @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
+    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoeHash, { fireImmediately: false })
+    receivedNewShoe(newShoeHash: gc.GameServiceMessage.NewShoeHash) {
+        if (newShoeHash) {
+            this.isNewShoe = true;
+        }
+    }
+
+    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
     async startNewShoe(shoeInfo: gc.GameServiceMessage.ShoeInfo) {
-        if (!shoeInfo) {
+        if (!shoeInfo || !this.isNewShoe) {
             return;
         }
         const { firstCard, burnedCards } = shoeInfo;
