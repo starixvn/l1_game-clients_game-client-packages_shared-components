@@ -48,6 +48,10 @@ export class FairnessCard extends Component {
         return this.card.openCard(animated);
     }
 
+    closeCard(duration = 0) {
+        return this.card.closeCard(duration);
+    }
+
     setIndexValue(index: number) {
         this.lblCardIndex.string = `${index}`;
     }
