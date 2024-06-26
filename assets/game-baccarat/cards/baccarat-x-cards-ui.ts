@@ -194,6 +194,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             item.card.card.faceDown();
             item.location = CardLocation.Box;
             this.moveCard(item.card.node, CardLocation.Box, false);
+            item.card.node.active = false;
         });
     }
 
@@ -201,6 +202,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         for (let i = 0; i < cards.length; i++) {
             const item = cards[i];
             const nextLocation = i + 1;
+            item.card.node.active = true;
             item.card.setIndexValue(this.currentCardIndex + i);
             await this.moveCard(item.card.node, nextLocation, animated);
             this.updateLocation(item, nextLocation);
