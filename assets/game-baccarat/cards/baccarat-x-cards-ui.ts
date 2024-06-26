@@ -186,6 +186,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         for (const item of cards) {
             item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
             await this.moveCard(item.card.node, CardLocation.Trash, animated);
+            item.card.node.active = false;
             this.updateLocation(item, CardLocation.Trash);
         }
     }
@@ -321,6 +322,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
             return;
         }
         const { firstCard, burnedCards } = shoeInfo;
+        this.dropCards(this.cardPool, false);
+        //TODO: clear UI when new shoe
         await this.playAnimationCutCard();
         await this.playAnimationBurnCards(firstCard, burnedCards);
     }
