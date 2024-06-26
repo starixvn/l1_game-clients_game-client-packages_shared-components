@@ -19,6 +19,7 @@ export class WaitingScreenContainer extends ObserverComponent {
 
     @render(CutCardPF.CutCardStore, (store) => store.cutCardInfo)
     showNode(cutCardInfo: any) {
-        cutCardInfo && (this.node.active = cutCardInfo.successful);
+        console.log("cutCardInfo waiting: ", cutCardInfo);
+        this.node.active = cutCardInfo && cutCardInfo.successful;
     }
 }
