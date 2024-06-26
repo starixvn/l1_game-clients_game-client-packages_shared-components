@@ -53,7 +53,7 @@ export class FairnessCard extends Component {
     }
 
     setIndexValue(index: number) {
-        this.lblCardIndex.string = `${index}`;
+        this.lblCardIndex.string = `${index + 1}`;
     }
 
     onClickCard() {

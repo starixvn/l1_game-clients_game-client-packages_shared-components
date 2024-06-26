@@ -382,7 +382,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         for (let i = 0; i < moreCards; i++) {
             const node = this.creatNewCardNode();
             const cardComp = node.getComponent(FairnessCard);
-            cardComp.setIndexValue(2 + i);
+            cardComp.setIndexValue(1 + i);
             this.nodeBurnCards.addChild(node);
             node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
             this.transformCardNode(node, CardLocation.Box, false);
