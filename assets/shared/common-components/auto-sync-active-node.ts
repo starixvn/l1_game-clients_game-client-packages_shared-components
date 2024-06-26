@@ -6,8 +6,7 @@ export class AutoSyncActiveNode extends Component {
     @property(Node)
     target: Node = null;
 
-    onLoad() {
-        this.target?.on(Node.EventType.ACTIVE_IN_HIERARCHY_CHANGED, this.syncActive, this);
+    update() {
         this.syncActive();
     }
 
