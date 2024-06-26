@@ -1247,7 +1247,8 @@
     "instance": {
       "__id__": 78
     },
-    "targetOverrides": []
+    "targetOverrides": [],
+    "nestedPrefabInstanceRoots": null
   },
   {
     "__type__": "cc.PrefabInstance",
@@ -1297,7 +1298,7 @@
     ],
     "value": {
       "__type__": "cc.Vec3",
-      "x": -153,
+      "x": -270,
       "y": 0,
       "z": 0
     }
@@ -1426,7 +1427,7 @@
     ],
     "value": {
       "__type__": "cc.Vec3",
-      "x": 207,
+      "x": 270,
       "y": 0,
       "z": 0
     }
@@ -1474,7 +1475,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 720,
+      "width": 1080,
       "height": 100
     },
     "_anchorPoint": {
