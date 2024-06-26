@@ -39,6 +39,7 @@ enum CardLocation {
     Player3,
     Banker3,
     Trash = 9,
+    Center,
 }
 
 @ccclass
@@ -65,6 +66,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     spineCutCardPath = "";
 
     private _cardHands: BaccaratXCards[] = [];
+    private readonly movingCardDuration = 0.5;
 
     currentCardIndex = -1;
 
@@ -74,8 +76,18 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     spineCutCard: sp.Skeleton = null;
 
-    onLoad() {
-        super.onLoad();
+    test() {
+        this.scheduleOnce(() => {
+            this.startNewShoe({
+                cutCardIndex: 130,
+                currentIndex: 6,
+                firstCard: {
+                    rank: 5,
+                    suit: 2,
+                },
+                burnedCards: 6,
+            });
+        }, 2);
     }
 
     async initSpineCutCard() {
@@ -103,6 +115,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 location: CardLocation.Box,
                 card,
             });
+            this.transformCardNode(node, CardLocation.Box, false);
         }
         await this.draw6Cards(false);
     }
@@ -170,6 +183,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     async dropCards(cards: PoolItem[], animated = true) {
         for (const item of cards) {
+            item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
             await this.moveCard(item.card.node, CardLocation.Trash, animated);
             this.updateLocation(item, CardLocation.Trash);
         }
@@ -226,6 +240,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     async moveCard(card: Node, nextLocation: number, animated: boolean) {
         const nextPosition = this.nodeCardContainer.getComponent(UITransform).convertToNodeSpaceAR(this.getPosition(nextLocation));
+        this.transformCardNode(card, nextLocation, animated);
         await this.moveCardAnimation(card, nextPosition, animated);
     }
 
@@ -236,7 +251,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
 
         return new Promise((resolve) => {
-            const duration = 0.5;
+            const duration = this.movingCardDuration;
             tween(node)
                 .to(duration, {
                     position,
@@ -302,10 +317,10 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     async playAnimationCutCard() {
         await this.initSpineCutCard();
+        this.spineCutCard.node.active = true;
         await AnimationUtils.playSpine(this.spineCutCard, "cut-card", false);
-
-        await AnimationUtils.fadeOut(this.spineCutCard.node, 0.5);
         await FunctionUtils.delay(0.5);
+        this.spineCutCard.node.active = false;
     }
 
     async playAnimationBurnCards(firstCard, burnedCards: number) {
@@ -315,10 +330,13 @@ export class BaccaratXCardsUI extends ObserverComponent {
         firstCardComp.setIndexValue(1);
         firstCardComp.setCardData(firstCard);
         this.nodeBurnCards.addChild(node);
+
         node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
         cardNodes.push(node);
 
         firstCardComp.openCard();
+
+        this.transformCardNode(node, CardLocation.Box, false);
         await this.moveCardAnimation(node, v3(0, 0, 0), true);
 
         await FunctionUtils.delay(2);
@@ -328,6 +346,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         const cardWidth = 60;
         const firstCardsX = -0.5 * (cardWidth + spacingFirstCard + (cardWidth + spacingBurnedCards) * burnedCards - spacingBurnedCards);
+
+        this.transformCardNode(node, CardLocation.Center);
         await this.moveCardAnimation(node, v3(firstCardsX + cardWidth / 2, 0, 0), true);
 
         const startX = firstCardsX + cardWidth + spacingFirstCard;
@@ -337,6 +357,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
             cardComp.setIndexValue(2 + i);
             this.nodeBurnCards.addChild(node);
             node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
+            this.transformCardNode(node, CardLocation.Box, false);
+            this.transformCardNode(node, CardLocation.Center);
             await this.moveCardAnimation(node, v3(startX + i * (cardWidth + spacingBurnedCards) + cardWidth / 2, 0, 0), true);
             cardNodes.push(node);
         }
@@ -345,10 +367,47 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         const dropPosition = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeTrash);
         for (let i = 0; i < cardNodes.length; i++) {
-            await this.moveCardAnimation(cardNodes[i], dropPosition, true);
-            cardNodes[i].destroy();
+            const node = cardNodes[i];
+            this.transformCardNode(node, CardLocation.Trash);
+            await this.moveCardAnimation(node, dropPosition, true);
+            node.destroy();
         }
 
         cardNodes = [];
+    }
+
+    transformCardNode(node: Node, location: CardLocation, animated = true) {
+        let scale: Vec3;
+        let eulerAngles: Vec3;
+        switch (location) {
+            case CardLocation.Trash:
+                eulerAngles = this.nodeTrash.eulerAngles;
+                scale = this.nodeTrash.scale;
+                break;
+            case CardLocation.Box:
+                eulerAngles = this.nodeBoxCard.eulerAngles;
+                scale = this.nodeBoxCard.scale;
+                break;
+
+            case CardLocation.Player3:
+                eulerAngles = v3(0, 0, -90);
+                scale = v3(1, 1, 1).multiplyScalar(0.4);
+                break;
+            case CardLocation.Banker3:
+                eulerAngles = v3(0, 0, 90);
+                scale = v3(1, 1, 1).multiplyScalar(0.4);
+                break;
+
+            default:
+                eulerAngles = v3(0);
+                scale = v3(1, 1, 1).multiplyScalar(0.4);
+                break;
+        }
+        if (animated) {
+            tween(node).to(0.5, { scale, eulerAngles }).start();
+        } else {
+            node.scale = scale;
+            node.eulerAngles = eulerAngles;
+        }
     }
 }
