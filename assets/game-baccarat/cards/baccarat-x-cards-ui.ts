@@ -77,7 +77,13 @@ export class BaccaratXCardsUI extends ObserverComponent {
     spineCutCard: sp.Skeleton = null;
     isNewShoe = false;
 
+    async onLoad() {
+        await this.initCards();
+        super.onLoad();
+    }
+
     test() {
+        this.isNewShoe = true;
         this.scheduleOnce(() => {
             this.startNewShoe({
                 cutCardIndex: 130,
@@ -89,6 +95,11 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 burnedCards: 6,
             });
         }, 2);
+    }
+
+    test2() {
+        this.currentCardIndex = 6;
+        this.closeCards(true);
     }
 
     async initSpineCutCard() {
@@ -107,10 +118,13 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async initCards() {
+        if (this.cardPool.length > 0) {
+            return;
+        }
         for (let i = 0; i < 6; i++) {
             const node = this.creatNewCardNode();
             this.nodeCardContainer.addChild(node);
-            // node.active = false;
+            node.active = false;
             const card = node.getComponent(FairnessCard);
             this.cardPool.push({
                 location: CardLocation.Box,
@@ -118,7 +132,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             });
             this.transformCardNode(node, CardLocation.Box, false);
         }
-        await this.draw6Cards(false);
+        // await this.draw6Cards(false);
     }
 
     private creatNewCardNode() {
@@ -175,7 +189,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
     }
 
-    private async draw6Cards(animated = true) {
+    async draw6Cards(animated = true) {
         await this.dropCards(this.cardPool, animated);
         this.resetCardsToBox(this.cardPool);
         this.cards = this.cardPool.map((item) => item.card);
