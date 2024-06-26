@@ -1,4 +1,4 @@
-import gc, { GameServiceMessage } from "@sg/game-client-base";
+import gc from "@sg/game-client-base";
 import { Color, Label, Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { settings } from "../../../../../../assets/game/scripts/game-settings";
@@ -45,14 +45,6 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopupManual, this);
     }
 
-    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoeHash)
-    renderNewShoeHash(newShoeHash: GameServiceMessage.NewShoeHash) {
-        if (!newShoeHash) {
-            return;
-        }
-        this.openFairnessSetting();
-    }
-
     @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.handleShowFairnessSettingsPopup(isShow))
     openFairnessSetting() {
         return true;
@@ -70,16 +62,18 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @render(CutCardPF.CutCardStore, (store) => store.cutCardInfo)
     updateMessageSubmit(cutCardInfo: any) {
+        const color: Color = new Color(0, 0, 0, 255);
         if (!cutCardInfo) {
             return;
         }
-        if (cutCardInfo.sucessful) {
+        console.log("updateMessageSubmit", cutCardInfo);
+        if (cutCardInfo.successful) {
             this.lblMessageSubmit.string = "Submission Successful";
-            this.lblMessageSubmit.color = Color.WHITE.fromHEX("#06681D");
+            this.lblMessageSubmit.color = Color.fromHEX(color, "#06681D");
         } else {
             this.lblMessageSubmit.string = "Submission fails, please try again";
             this.nodeDisabledSubmit.active = true;
-            this.lblMessageSubmit.color = Color.WHITE.fromHEX("B82222");
+            this.lblMessageSubmit.color = Color.fromHEX(color, "#B82222");
         }
     }
 
