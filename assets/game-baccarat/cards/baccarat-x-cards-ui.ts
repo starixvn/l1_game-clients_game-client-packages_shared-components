@@ -132,7 +132,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             });
             this.transformCardNode(node, CardLocation.Box, false);
         }
-        // await this.draw6Cards(false);
+        this.cards = this.cardPool.map((item) => item.card);
     }
 
     private creatNewCardNode() {
