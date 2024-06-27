@@ -21,8 +21,8 @@
       "blendState": {
         "targets": [
           {
-            "blendSrc": 6,
-            "blendDst": 6,
+            "blendSrc": 1,
+            "blendDst": 1,
             "blendEq": 3,
             "blendDstAlpha": 1
           }
