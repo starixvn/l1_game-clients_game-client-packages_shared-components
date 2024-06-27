@@ -19,9 +19,9 @@ export class WaitingScreen extends ObserverComponent {
         return true;
     }
 
-    @render(CutCardPF.FairnessStore, (store) => store.isShowFairnessSettingsPopup)
+    @render(CutCardPF.FairnessStore, (store) => store.dontShowAgain)
     showCutCardButtonSection(isShow: boolean) {
-        !isShow && (this.nodeCutCardButtonSection.active = true);
+        this.nodeCutCardButtonSection.active = isShow;
         this.nodeWrapper.enabled = true;
         this.nodeWrapper.updateLayout();
         this.nodeWrapper.enabled = false;
