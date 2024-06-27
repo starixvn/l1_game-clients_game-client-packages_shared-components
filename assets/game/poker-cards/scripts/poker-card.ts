@@ -70,7 +70,6 @@ export class PokerCard extends Component {
     }
 
     setGoldenCard(show = true): void {
-        console.log("setGoldenCard");
         if (!this.bgGolden) {
             return;
         }
