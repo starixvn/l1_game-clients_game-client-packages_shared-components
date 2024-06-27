@@ -1,7 +1,6 @@
 import gc from "@sg/game-client-base";
 import { Color, Label, Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
-import { settings } from "../../../../../../assets/game/scripts/game-settings";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { ClientSeedManualBaccaratPopup } from "./client-seed-manual-baccarat-popup";
 const { ccclass, property } = _decorator;
@@ -37,15 +36,24 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     @property
     maxCSNumber = 350;
 
+    private timer = 10;
+    private interval;
+
     onLoad() {
         super.onLoad();
         this.updateMaxCS();
         this.updateMinCS();
         this.generateRandomCS();
         this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopupManual, this);
+        this.renderCountDown();
     }
 
-    @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.handleShowFairnessSettingsPopup(isShow))
+    onDestroy() {
+        this.interval && clearInterval(this.interval);
+        super.onDestroy();
+    }
+
+    @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))
     openFairnessSetting() {
         return true;
     }
@@ -93,15 +101,20 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         this.lblSHA256.string = sha256;
     }
 
-    @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.handleShowFairnessSettingsPopup(isShow))
+    @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))
     onClickDontShowAgain() {
-        return false;
+        return true;
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.remaining)
-    renderCountDown(remaining: number) {
-        const countDown = settings.durations.wholeShoe - remaining;
-        this.lblCountDown.string = countDown < 9 ? countDown.toString() : "";
+    private renderCountDown() {
+        this.interval = setInterval(() => {
+            this.lblCountDown && (this.lblCountDown.string = this.timer.toString());
+            this.timer--;
+            if (this.timer < 0) {
+                this.closePopup();
+                clearInterval(this.interval);
+            }
+        }, 1000);
     }
 
     @handle(CutCardPF.FairnessHandler, (handler, min: number) => handler.setMinClientSeed(min))

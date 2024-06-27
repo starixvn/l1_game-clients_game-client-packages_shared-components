@@ -17,9 +17,8 @@ export class WaitingScreenContainer extends ObserverComponent {
         super.onLoad();
     }
 
-    @render(CutCardPF.CutCardStore, (store) => store.cutCardInfo)
-    showNode(cutCardInfo: any) {
-        console.log("cutCardInfo waiting: ", cutCardInfo);
-        this.node.active = cutCardInfo && cutCardInfo.successful;
+    @render(CutCardPF.FairnessStore, (store) => store.showWaitingScreen)
+    showNode(showWaitingScreen: boolean) {
+        this.node.active = showWaitingScreen;
     }
 }
