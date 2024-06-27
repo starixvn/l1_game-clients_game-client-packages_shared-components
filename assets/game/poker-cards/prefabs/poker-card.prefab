@@ -569,6 +569,8 @@
       "__id__": 0
     },
     "fileId": "24d4HaWbVBJIGq4N4LZ/R9",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -1114,7 +1116,10 @@
     "__prefab": {
       "__id__": 48
     },
-    "_customMaterial": null,
+    "_customMaterial": {
+      "__uuid__": "127b7254-7342-487d-ae3f-07fa2aa65bb3",
+      "__expectedType__": "cc.Material"
+    },
     "_srcBlendFactor": 2,
     "_dstBlendFactor": 4,
     "_color": {
