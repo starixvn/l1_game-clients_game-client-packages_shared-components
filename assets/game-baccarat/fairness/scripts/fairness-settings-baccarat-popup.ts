@@ -77,17 +77,17 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         console.log("updateMessageSubmit", cutCardInfo);
         if (cutCardInfo.successful) {
             this.lblMessageSubmit.string = "Submission Successful";
+            this.nodeDisabledSubmit.active = true;
             this.lblMessageSubmit.color = Color.fromHEX(color, "#06681D");
         } else {
             this.lblMessageSubmit.string = "Submission fails, please try again";
-            this.nodeDisabledSubmit.active = true;
+            this.nodeDisabledSubmit.active = false;
             this.lblMessageSubmit.color = Color.fromHEX(color, "#B82222");
         }
     }
 
     @handle(CutCardPF.CutCardHandler, (handler, clientSeed: string) => handler.handle(clientSeed))
     onClickSubmit() {
-        this.nodeDisabledSubmit.active = false;
         return this.lblClientSeed.string;
     }
 
