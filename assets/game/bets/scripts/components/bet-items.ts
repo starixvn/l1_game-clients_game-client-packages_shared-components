@@ -103,7 +103,7 @@ export class BetItems extends ObserverComponent {
             return;
         }
         const { roundHistory, staticHighlight, animationHighlight } = firstJoinGameHistory;
-        this.setHighlightStatic(staticHighlight, animationHighlight, roundHistory);
+        roundHistory && this.setHighlightStatic(staticHighlight, animationHighlight, roundHistory);
     }
 
     setHighlightStatic(staticHighlight: boolean, animationHighlight: boolean, roundHistory: gc.RoundHistories.RoundHistory) {
