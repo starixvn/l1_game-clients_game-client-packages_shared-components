@@ -1,7 +1,6 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
 import { Label, Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
-import { ServiceCard, convertRank } from "../../../game/poker-cards/scripts/poker-card";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { FairnessPokerCard } from "./fairness-poker-card";
 const { ccclass, property } = _decorator;
@@ -28,6 +27,9 @@ export class FairnessVerificationPopup extends ObserverComponent {
     @property(Prefab)
     prfCard: Prefab = null;
 
+    @property(Prefab)
+    prfCutCard: Prefab = null;
+
     roundId = 0;
 
     start() {
@@ -46,19 +48,25 @@ export class FairnessVerificationPopup extends ObserverComponent {
         this.lblShoeResult.string = pf.rawValue;
         this.lblShoeResultSHA256.string = pf.hashValue;
         this.lblMergeSeed.string = pf.cutCardIndex.toString();
-        this.renderCards(pf.cards, pf.usedCardIndexes);
+        this.renderCards(pf);
     }
 
     handleRoundId() {
         this.lblRoundId.string = this.roundId.toString();
     }
 
-    renderCards(cards: ServiceCard[], usedCardIndexes: number[]) {
+    renderCards(pf: GameServiceMessage.ShoeVerification) {
+        const { cards, usedCardIndexes, cutCardIndex } = pf;
         cards.forEach((card, index) => {
             let cardNode = instantiate(this.prfCard);
             const comp = cardNode.getComponent(FairnessPokerCard);
-            comp.card = { rank: convertRank(card.rank), suit: card.suit };
-            comp.faceUp();
+            comp.cardFairness.setCardData(card);
+            comp.cardFairness.card.faceUp();
+            comp.cardFairness.setIndexValue(index);
+            if (cutCardIndex === index) {
+                const cutCard = instantiate(this.prfCutCard);
+                this.nodeCardsContent.addChild(cutCard);
+            }
             comp.showHighlight(usedCardIndexes.includes(index));
             this.nodeCardsContent.addChild(cardNode);
         });
