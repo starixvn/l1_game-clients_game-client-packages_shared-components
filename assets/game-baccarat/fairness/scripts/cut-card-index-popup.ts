@@ -23,37 +23,19 @@ export class CutCardIndexPopup extends ObserverComponent {
     @property(Prefab)
     prfPlayerSeed: Prefab = null;
 
+    @property(Label)
+    lblFinalCutCard: Label = null;
+
+    @property(Label)
+    lblAverage: Label = null;
+
     roundId = 0;
     playerName = "";
 
-    private playerCutCards = [
-        { name: "Matrix42549", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-        { name: "T12123", clientSeed: 123 },
-    ];
+    private playerCutCards = [];
 
     @render(gc.Player.MainPlayerStore, (store) => store.name)
     renderPlayerName(name: string) {
-        console.log("renderPlayerName", name);
         this.playerName = name;
     }
 
@@ -67,15 +49,16 @@ export class CutCardIndexPopup extends ObserverComponent {
         }
         this.lblMergeSeed.string = pf.cutCardIndex.toString();
         this.lblServerSeed.string = pf.cutCardPF.serverCutCardIndex.toString();
-        //this.renderSeedPlayers(pf.cutCardPF.playerCutCards);
+        this.playerCutCards = pf.cutCardPF.playerCutCards;
         this.renderSeedPlayers(this.playerCutCards);
+        this.renderCombinedHash(pf);
     }
 
     renderSeedPlayers(seedPlayers) {
         seedPlayers.forEach((player) => {
             const node = instantiate(this.prfPlayerSeed);
             const comp = node.getComponent(ClientSeedInfo);
-            comp.setDisplay(player, this.playerName !== player.name);
+            comp.setDisplayName(player, this.playerName !== player.name);
             this.nodeSeedPlayers.addChild(node);
         });
     }
@@ -88,5 +71,15 @@ export class CutCardIndexPopup extends ObserverComponent {
         const blob = new Blob([data], { type: "text/csv;charset=utf-8" });
         const fileName = `Round_${this.roundId}_${DateTimeUtils.getStringDateNow()}.csv`;
         saveAs(blob, fileName);
+    }
+
+    private renderCombinedHash(pf: GameServiceMessage.ShoeVerification) {
+        this.lblFinalCutCard.string = pf.cutCardIndex.toString();
+        let clientSeedStr = `${pf.cutCardPF.serverCutCardIndex},`;
+        this.playerCutCards.forEach((player, index) => {
+            const seed = player.clientSeed;
+            clientSeedStr += index === this.playerCutCards.length - 1 ? seed : `${seed},`;
+        });
+        this.lblAverage.string = `Average(${clientSeedStr}) = ${pf.cutCardIndex}`;
     }
 }
