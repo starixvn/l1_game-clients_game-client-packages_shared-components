@@ -1,6 +1,7 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
 import { Label, Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
+import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
 import { MultiplierCard } from "./multiplier-card";
 const { ccclass, property } = _decorator;
@@ -24,14 +25,22 @@ export class MultiplierCards extends ObserverComponent {
     private minBet = 0;
     private maxBet = 0;
 
+    private multiplierCards: MultiplierCard[] = [];
+
+    findMatchedCard(card: ServiceCard): MultiplierCard {
+        return this.multiplierCards.find((comp) => comp.data.rank === card.rank && comp.data.suit === card.suit);
+    }
+
     @render(GameBaccaratX.Multiplier.BaccaratMultipliersStore, (store) => store.multiplierCards, { fireImmediately: false })
     renderMultiplierCards(multiplierCards: GameServiceMessage.BaccaratCardMultiplier[]) {
         this.content.removeAllChildren();
+        this.multiplierCards = [];
         multiplierCards.forEach((card) => {
             const node = instantiate(this.prfMultiplierCard);
             const comp = node.getComponent(MultiplierCard);
             comp.setData(card);
             this.content.addChild(node);
+            this.multiplierCards.push(comp);
         });
         this.showMultiplierCards(true);
     }

@@ -1,8 +1,7 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Component, Label } from "cc";
-import { convertRank } from "../../game/poker-cards/scripts/poker-card";
 import { PokerCard } from "./../../game/poker-cards/scripts/poker-card";
 const { ccclass, property } = _decorator;
-
 @ccclass
 export class MultiplierCard extends Component {
     @property(Label)
@@ -11,9 +10,13 @@ export class MultiplierCard extends Component {
     @property(PokerCard)
     card: PokerCard = null;
 
-    setData(card: any) {
-        this.lblMultiplier.string = card.value;
-        this.card.setCard({ rank: convertRank(card.rank), suit: card.suit });
+    data: gc.GameServiceMessage.BaccaratCardMultiplier;
+
+    setData(card: gc.GameServiceMessage.BaccaratCardMultiplier) {
+        this.data = card;
+        this.lblMultiplier.string = `${card.value}x`;
+        this.card.setServiceCard(card);
         this.card.faceUp();
+        this.card.setGoldenCard();
     }
 }

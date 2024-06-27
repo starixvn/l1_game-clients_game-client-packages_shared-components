@@ -53,8 +53,8 @@ export namespace ComponentUtils {
     };
 
     export const convertPosition = (container: Node, target: Node) => {
-        const transformContainer = container.getComponent(UITransform);
-        const transformTarget = target.getComponent(UITransform);
+        const transformContainer = container.getComponent(UITransform) ?? container.addComponent(UITransform);
+        const transformTarget = target.getComponent(UITransform) ?? container.addComponent(UITransform);
         return transformContainer.convertToNodeSpaceAR(transformTarget.convertToWorldSpaceAR(v3(0, 0, 0)));
     };
 }

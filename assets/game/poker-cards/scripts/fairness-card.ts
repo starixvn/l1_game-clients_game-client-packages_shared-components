@@ -28,6 +28,10 @@ export class FairnessCard extends Component {
         return this._card;
     }
 
+    setGoldenCard() {
+        this.card.setGoldenCard();
+    }
+
     setClickCallback(callback: () => void) {
         if (callback) {
             this._clickCallback = callback;
