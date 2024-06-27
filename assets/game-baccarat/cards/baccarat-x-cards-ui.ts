@@ -42,6 +42,10 @@ enum CardLocation {
     Center,
 }
 
+export enum CardEvent {
+    OPENED_CARD = "OPENED_CARD",
+}
+
 @ccclass
 export class BaccaratXCardsUI extends ObserverComponent {
     @property(Prefab)
@@ -288,7 +292,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async openCards(result: BaccaratResult, animated = true) {
-        const dataCards = [];
+        const dataCards: ServiceCard[] = [];
         for (let i = 0; i < 3; i++) {
             [gc.GameBaccaratX.BetChoice.Player, gc.GameBaccaratX.BetChoice.Banker].forEach((team) => {
                 const handData = result[team];
@@ -312,6 +316,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
                     item.location = newLocation;
                 }
                 await card.openCard(animated);
+                this.node.emit(CardEvent.OPENED_CARD, { card, data });
                 index++;
             }
         }

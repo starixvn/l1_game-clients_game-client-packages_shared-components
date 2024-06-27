@@ -52,6 +52,9 @@ export class PokerCard extends Component {
     @property(Sprite)
     largeSuit: Sprite = null;
 
+    @property(Node)
+    bgGolden: Node = null;
+
     public card: CardModel = { rank: "A", suit: 3 };
 
     protected readonly suits = ["heart", "diamond", "club", "spade"];
@@ -63,6 +66,19 @@ export class PokerCard extends Component {
     animation: Animation;
     protected onLoad(): void {
         this.animation = this.getComponent(Animation);
+        this.setGoldenCard(false);
+    }
+
+    setGoldenCard(show = true): void {
+        console.log("setGoldenCard");
+        if (!this.bgGolden) {
+            return;
+        }
+        if (show) {
+            AnimationUtils.fadeIn(this.bgGolden, 0.3);
+        } else {
+            AnimationUtils.fadeOut(this.bgGolden, 0);
+        }
     }
 
     setServiceCard(card: ServiceCard): void {
@@ -146,5 +162,6 @@ export class PokerCard extends Component {
 
     protected showCardBack() {
         this.setDetailVisibility(false);
+        this.setGoldenCard(false);
     }
 }
