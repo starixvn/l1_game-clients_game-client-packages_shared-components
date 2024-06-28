@@ -63,9 +63,15 @@ export class PokerCard extends Component {
         q: "q_picture",
         k: "k_picture",
     };
-    animation: Animation;
+    private _animation: Animation;
+
+    get animation() {
+        if (!this._animation) {
+            this._animation = this.getComponent(Animation);
+        }
+        return this._animation;
+    }
     protected onLoad(): void {
-        this.animation = this.getComponent(Animation);
         this.setGoldenCard(false);
     }
 
