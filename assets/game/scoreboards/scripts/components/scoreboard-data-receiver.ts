@@ -17,17 +17,24 @@ export class ScoreboardDataReceiver extends ObserverComponent {
     @property(Scoreboard)
     protected beadRoad: Scoreboard = null;
 
+    @property(Scoreboard)
+    protected derivedRoad: Scoreboard = null;
+
     protected lastRound: unknown = {};
     protected rounds: unknown[] = [];
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     public render<T>(rounds: T[]) {
+        if (!rounds) {
+            return;
+        }
         const reversedRounds = [...rounds].reverse();
 
         this.rounds = reversedRounds;
 
         this.bigRoad?.render([...reversedRounds]);
         this.beadRoad?.render([...reversedRounds]);
+        this.derivedRoad?.render([...reversedRounds]);
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.getLastRound())
@@ -65,6 +72,20 @@ export class ScoreboardDataReceiver extends ObserverComponent {
             rounds.length === row * column && rounds.shift();
             rounds.push(round);
             this.beadRoad.render(rounds);
+        }
+
+        if (this.derivedRoad) {
+            const converter = this.derivedRoad.getComponent(ScoreboardDataConverter);
+            const round = converter.createRound();
+            round[converter.resultKey][converter.blinkKey] = true;
+
+            const rounds = [...this.rounds];
+            const setting = this.derivedRoad.getComponent(GridLayout).settings;
+            const { row, column } = setting;
+
+            rounds.length === row * column && rounds.shift();
+            rounds.push(round);
+            this.derivedRoad.render(rounds);
         }
     }
 }
