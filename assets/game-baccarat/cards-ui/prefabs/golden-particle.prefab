@@ -42,8 +42,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -150.065,
-      "y": 67.203,
+      "x": 105.088,
+      "y": -93.623,
       "z": 0
     },
     "_lrot": {
@@ -170,7 +170,7 @@
       "a": 255
     },
     "duration": -1,
-    "emissionRate": 10,
+    "emissionRate": 30,
     "life": 0.20000000298023224,
     "lifeVar": 0.5,
     "angle": 360,
@@ -267,8 +267,6 @@
       "__id__": 0
     },
     "fileId": "09GrO3aPtEGKVUAYLXgAB0",
-    "instance": null,
-    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -372,7 +370,7 @@
       "a": 255
     },
     "duration": -1,
-    "emissionRate": 20,
+    "emissionRate": 40,
     "life": 0.3,
     "lifeVar": 0.5,
     "angle": 360,
@@ -469,8 +467,6 @@
       "__id__": 0
     },
     "fileId": "63V7DN6eFO9plq62vs7OvG",
-    "instance": null,
-    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -574,7 +570,7 @@
       "a": 255
     },
     "duration": -1,
-    "emissionRate": 10,
+    "emissionRate": 20,
     "life": 0.3,
     "lifeVar": 0.5,
     "angle": 360,
@@ -621,10 +617,7 @@
     "_preview": true,
     "preview": true,
     "_custom": true,
-    "_file": {
-      "__uuid__": "86f25d5c-9de5-454f-a5f9-ee16603e6701",
-      "__expectedType__": "cc.ParticleAsset"
-    },
+    "_file": null,
     "_spriteFrame": {
       "__uuid__": "24c419ea-63a8-4ea1-a9d0-7fc469489bbc@f9941",
       "__expectedType__": "cc.SpriteFrame"
@@ -674,8 +667,6 @@
       "__id__": 0
     },
     "fileId": "daFmLadmVBOaev4wkuWwrp",
-    "instance": null,
-    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -714,7 +705,7 @@
     "node": {
       "__id__": 1
     },
-    "_enabled": false,
+    "_enabled": true,
     "__prefab": {
       "__id__": 23
     },
@@ -729,19 +720,19 @@
       "a": 255
     },
     "duration": -1,
-    "emissionRate": 0,
-    "life": 0.20000000298023224,
-    "lifeVar": 0.5,
+    "emissionRate": 300,
+    "life": 0.6,
+    "lifeVar": 0,
     "angle": 360,
     "angleVar": 360,
-    "startSize": 3.37,
-    "startSizeVar": 10,
-    "endSize": 20,
+    "startSize": 20,
+    "startSizeVar": 0,
+    "endSize": 5,
     "endSizeVar": 0,
-    "startSpin": 50,
-    "startSpinVar": 50,
-    "endSpin": 50,
-    "endSpinVar": 90,
+    "startSpin": 0,
+    "startSpinVar": 0,
+    "endSpin": 0,
+    "endSpinVar": 0,
     "sourcePos": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -749,10 +740,10 @@
     },
     "posVar": {
       "__type__": "cc.Vec2",
-      "x": 7,
-      "y": 7
+      "x": 0,
+      "y": 0
     },
-    "emitterMode": 0,
+    "emitterMode": 1,
     "gravity": {
       "__type__": "cc.Vec2",
       "x": 0.25,
@@ -777,8 +768,11 @@
     "preview": true,
     "_custom": true,
     "_file": null,
-    "_spriteFrame": null,
-    "_totalParticles": 200,
+    "_spriteFrame": {
+      "__uuid__": "24c419ea-63a8-4ea1-a9d0-7fc469489bbc@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
+    "_totalParticles": 300,
     "_startColor": {
       "__type__": "cc.Color",
       "r": 255,

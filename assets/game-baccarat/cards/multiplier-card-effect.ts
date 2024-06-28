@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, tween } from "cc";
+import { _decorator, Component, instantiate, Node, tween } from "cc";
 import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
 import { ComponentUtils } from "../../shared/utils";
@@ -35,18 +35,23 @@ export class MultiplierCardEffect extends Component {
         const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data);
         if (matchedMultiplierCard) {
             console.log("matched multiplier");
-            this.nodeEffect.active = true;
-            const startPos = ComponentUtils.convertPosition(this.nodeEffect.parent, matchedMultiplierCard.node);
-            const destPos = ComponentUtils.convertPosition(this.nodeEffect.parent, card.node);
-            this.nodeEffect.position = startPos;
-            tween(this.nodeEffect)
+
+            const node = instantiate(this.nodeEffect);
+            this.nodeEffect.parent.addChild(node);
+
+            node.active = true;
+
+            const startPos = ComponentUtils.convertPosition(node.parent, matchedMultiplierCard.node);
+            const destPos = ComponentUtils.convertPosition(node.parent, card.node);
+            node.position = startPos;
+            tween(node)
                 .to(1, {
                     position: destPos,
                 })
                 .call(() => {
                     card.setGoldenCard();
-                    this.nodeEffect.active = false;
                 })
+                .destroySelf()
                 .start();
         }
     }
