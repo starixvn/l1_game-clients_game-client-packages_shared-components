@@ -4,7 +4,7 @@ import Observer from "observer";
 
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
 import { StaticGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
-import { ComponentUtils } from "../../../shared/utils";
+import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
 
@@ -27,12 +27,28 @@ export default class GameComponent extends GameComponentBase {
     protected isReceiveFinishBeforeRoundHistory = true;
     protected enableFixHandleFinish = false;
     protected signedIn = false;
+    protected observer: IntersectionObserver = null;
+    protected isHideGame = false;
 
     onLoad() {
         game.on(Game.EVENT_SHOW, this.onShowGame, this);
+        game.on(Game.EVENT_HIDE, this.onHideGame, this);
+        this.observer = FunctionUtils.setupIntersectionObserver(this.onCanvasVisible.bind(this), this.onCanvasHidden.bind(this));
+        this.observer?.observe(game?.canvas);
+
         this.initUserSettings();
         this.initPlayerSelections();
         this.handleStaticNodeAndSetEmptyLabels();
+    }
+
+    @handle(HideGame.HideGameHandler, (handle, status: boolean) => handle.handleHideGame(status))
+    onCanvasVisible() {
+        return false;
+    }
+
+    @handle(HideGame.HideGameHandler, (handle, status: boolean) => handle.handleHideGame(status))
+    onCanvasHidden() {
+        return true;
     }
 
     @render(gc.Connection.ConnectionStore, (connectionStore) => connectionStore.isTransError)
@@ -74,18 +90,12 @@ export default class GameComponent extends GameComponentBase {
 
     protected onDestroy(): void {}
 
-    @handle(HideGame.HideGameHandler)
     onHideGame() {
-        // reload here will run when page appears from hidden
-        // to fix issue on iOS that EVENT_SHOW are not triggered when phone active
-        // if (sys.os === sys.OS.IOS) {
-        //     setTimeout(() => {
-        //         window.location.reload();
-        //     }, 100);
-        // }
+        this.onCanvasHidden();
     }
 
     onShowGame() {
+        this.onCanvasVisible();
         this.signedIn && this.inGame();
     }
 
@@ -143,9 +153,10 @@ export default class GameComponent extends GameComponentBase {
         fireImmediately: false,
     })
     renderCurrentFinish(currentFinish: gc.GameServiceMessage.Finish) {
-        if (!currentFinish || !this.enableFixHandleFinish) {
+        if (!currentFinish || !this.enableFixHandleFinish || this.isHideGame) {
             return;
         }
+
         const { result, settlementResult } = currentFinish;
 
         if (!this.isValidResult(result, settlementResult)) {
@@ -182,5 +193,11 @@ export default class GameComponent extends GameComponentBase {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSound(id: string) {
         return id;
+    }
+
+    @render(HideGame.HideGameStore, (store) => store.isHideGame)
+    handleHiddenCanvasGame(isHideGame: boolean) {
+        this.isHideGame = isHideGame;
+        isHideGame && this?.unscheduleAllCallbacks();
     }
 }

@@ -6,7 +6,7 @@ import { ObserverComponent } from "../../../../shared/common-components/observer
 import { AudioUtils } from "../../utils";
 import AudioManager from "../audio-manager";
 
-const { Audios, UserSettings, App, BrowserDomUtils, AppTypes, Auth } = gc;
+const { Audios, UserSettings, App, BrowserDomUtils, HideGame } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -298,4 +298,19 @@ export class AudioContainer extends ObserverComponent {
 
         return { audioClip, currentLoadAssetTime, isPlay };
     };
+
+    public stopAllSFX() {
+        if (this?.sfxSource?.clip) {
+            this.sfxSource?.stop();
+        }
+
+        if (this?.stoppableSFXSource?.clip) {
+            this.stoppableSFXSource?.stop();
+        }
+    }
+
+    @render(HideGame.HideGameStore, (store) => store.isHideGame)
+    handleHiddenGame(isHideGame: boolean) {
+        isHideGame && this?.stopAllSFX();
+    }
 }

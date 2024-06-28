@@ -1,4 +1,4 @@
-import { Node, find, screen, warn } from "cc";
+import { Component, Node, find, screen, warn } from "cc";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 
 export namespace FunctionUtils {
@@ -77,5 +77,25 @@ export namespace FunctionUtils {
                     });
             }
         });
+    };
+
+    export const scheduleDelay = (context: Component, duration: number) => {
+        return new Promise((resolve) => {
+            context?.scheduleOnce(resolve, duration);
+        });
+    };
+
+    export const setupIntersectionObserver = (onShow: () => void, onHide: () => void) => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    onShow();
+                } else {
+                    onHide();
+                }
+            });
+        });
+
+        return observer;
     };
 }
