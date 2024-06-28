@@ -164,7 +164,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         item.location = location;
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
+    @render(Rounds.RoundTimeStore, (store) => store.isStartingRound, { fireImmediately: false })
     async closeCards(isStartingRound) {
         this.cardHands.forEach((comp) => {
             comp.showScore(false);
@@ -202,7 +202,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     async dropCards(cards: PoolItem[], animated = true) {
         for (const item of cards) {
-            item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
+            await item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
             await this.moveCard(item.card.node, CardLocation.Trash, animated);
             item.card.node.active = false;
             this.updateLocation(item, CardLocation.Trash);
@@ -292,6 +292,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async openCards(result: BaccaratResult, animated = true) {
+        if (this.cards.length === 0) {
+            await this.initCards();
+        }
         const dataCards: ServiceCard[] = [];
         for (let i = 0; i < 3; i++) {
             [gc.GameBaccaratX.BetChoice.Player, gc.GameBaccaratX.BetChoice.Banker].forEach((team) => {
@@ -301,12 +304,10 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
 
         let index = 0;
-        if (this.cards.length === 0) {
-            await this.initCards();
-        }
         for (const [dataIndex, data] of dataCards.entries()) {
             if (data) {
                 const card = this.cards[index];
+                card.node.active = true;
                 card.setCardData(data);
                 if (index > 3) {
                     const newLocation = dataIndex === 4 ? CardLocation.Player3 : CardLocation.Banker3;

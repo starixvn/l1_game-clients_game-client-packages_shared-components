@@ -53,6 +53,10 @@ export class FairnessCard extends Component {
     }
 
     closeCard(duration = 0) {
+        if (duration === 0) {
+            this.card.faceDown();
+            return;
+        }
         return this.card.closeCard(duration);
     }
 
