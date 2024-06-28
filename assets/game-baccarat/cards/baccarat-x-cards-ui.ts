@@ -81,6 +81,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
     spineCutCard: sp.Skeleton = null;
     isNewShoe = false;
 
+    private cardsStates: gc.GameBaccaratX.CardsState = {};
+
     async onLoad() {
         await this.initCards();
         super.onLoad();
@@ -291,6 +293,16 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
     }
 
+    @handle(GameBaccaratX.Multiplier.BaccaratMultipliersHandler, (handler, cardsStates: gc.GameBaccaratX.CardsState) =>
+        handler.openCards(cardsStates)
+    )
+    updateCardStates(card: ServiceCard, index: number) {
+        const hand = index % 2 === 0 ? gc.GameBaccaratX.BetChoice.Player : gc.GameBaccaratX.BetChoice.Banker;
+        this.cardsStates[hand] = this.cardsStates[hand] ?? [];
+        this.cardsStates[hand].push(card);
+        return this.cardsStates;
+    }
+
     async openCards(result: BaccaratResult, animated = true) {
         if (this.cards.length === 0) {
             await this.initCards();
@@ -312,11 +324,13 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 if (index > 3) {
                     const newLocation = dataIndex === 4 ? CardLocation.Player3 : CardLocation.Banker3;
                     await this.moveCard(card.node, newLocation, animated);
+                    this.updateCardStates(data, dataIndex);
                     // update remove from waiting cards
                     const item = this.cardPool.find((item) => item.card === card);
                     item.location = newLocation;
                 }
                 await card.openCard(animated);
+
                 this.node.emit(CardEvent.OPENED_CARD, { card, data });
                 index++;
             }
