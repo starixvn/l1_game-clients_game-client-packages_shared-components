@@ -283,7 +283,7 @@
     "_string": "Result",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 30,
+    "_actualFontSize": 37.389162561576356,
     "_fontSize": 30,
     "_fontFamily": "Arial",
     "_lineHeight": 60,
@@ -389,10 +389,7 @@
       "b": 255,
       "a": 255
     },
-    "_spriteFrame": {
-      "__uuid__": "2d67d332-0b65-4c26-aacf-03f54c9217cc@e76a4",
-      "__expectedType__": "cc.SpriteFrame"
-    },
+    "_spriteFrame": null,
     "_type": 1,
     "_fillType": 0,
     "_sizeMode": 0,
@@ -421,8 +418,6 @@
       "__id__": 0
     },
     "fileId": "477GAgZulBdKMLeAiC2tuT",
-    "instance": null,
-    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -1280,10 +1275,7 @@
       "b": 255,
       "a": 255
     },
-    "_spriteFrame": {
-      "__uuid__": "2d67d332-0b65-4c26-aacf-03f54c9217cc@7c73f",
-      "__expectedType__": "cc.SpriteFrame"
-    },
+    "_spriteFrame": null,
     "_type": 1,
     "_fillType": 0,
     "_sizeMode": 0,
@@ -1397,8 +1389,6 @@
     "sshValue": {
       "__id__": 47
     },
-    "nodeContentContainer": null,
-    "lengthOfMd5": 21,
     "_id": ""
   },
   {
