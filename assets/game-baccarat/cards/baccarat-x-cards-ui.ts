@@ -166,12 +166,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
         item.location = location;
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartingRound, { fireImmediately: false })
-    async closeCards(isStartingRound) {
+    @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
+    async closeCards(isStartRound) {
         this.cardHands.forEach((comp) => {
             comp.showScore(false);
         });
-        if (isStartingRound) {
+        if (isStartRound) {
             if (this.hasWaitingCards()) {
                 const waitingCards = this.cardPool.filter(
                     (card) => card.location === CardLocation.Waiting1 || card.location === CardLocation.Waiting2
@@ -180,12 +180,15 @@ export class BaccaratXCardsUI extends ObserverComponent {
                     (card) => card.location !== CardLocation.Waiting1 && card.location !== CardLocation.Waiting2
                 );
 
+                console.time("new round");
                 await this.dropCards(others, true);
                 this.resetCardsToBox(others);
 
                 const pool = [...waitingCards, ...others];
                 this.cards = pool.map((item) => item.card);
                 await this.drawingCards(pool, true);
+                console.timeEnd("new round");
+
                 this.currentCardIndex += others.length;
             } else {
                 await this.draw6Cards(true);
@@ -203,12 +206,14 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async dropCards(cards: PoolItem[], animated = true) {
-        for (const item of cards) {
-            await item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
-            await this.moveCard(item.card.node, CardLocation.Trash, animated);
-            item.card.node.active = false;
-            this.updateLocation(item, CardLocation.Trash);
-        }
+        await Promise.all(
+            cards.map(async (item) => {
+                item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
+                await this.moveCard(item.card.node, CardLocation.Trash, animated);
+                item.card.node.active = false;
+                this.updateLocation(item, CardLocation.Trash);
+            })
+        );
     }
 
     resetCardsToBox(pool: PoolItem[]) {
