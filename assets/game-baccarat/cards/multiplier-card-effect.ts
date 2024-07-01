@@ -34,8 +34,6 @@ export class MultiplierCardEffect extends Component {
         const { card, data } = openCard;
         const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data);
         if (matchedMultiplierCard) {
-            console.log("matched multiplier");
-
             const node = instantiate(this.nodeEffect);
             this.nodeEffect.parent.addChild(node);
 
