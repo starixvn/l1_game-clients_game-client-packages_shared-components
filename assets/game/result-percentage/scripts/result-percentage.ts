@@ -32,6 +32,9 @@ export class ResultPercentage extends ObserverComponent {
     @property
     enablePercentage = true;
 
+    @property
+    showSignPercentage = true;
+
     originalChoices: string[] = [];
     onLoad() {
         super.onLoad();
@@ -64,7 +67,7 @@ export class ResultPercentage extends ObserverComponent {
         const percentage = this.calculateWinPercentage(this.originalChoices, histories);
         this.labels.forEach((label) => {
             const choice = label.node.name;
-            label.string = `${percentage[choice] || 0}%`;
+            label.string = `${percentage[choice] || 0}${this.showSignPercentage ? "%" : ""}`;
         });
     }
 

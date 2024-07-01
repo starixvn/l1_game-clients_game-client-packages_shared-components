@@ -5,9 +5,13 @@ const { ccclass, property } = _decorator;
 
 @ccclass
 export class ScoreboardPrediction extends Component {
-    items: ScoreboardPredictionItem[] = [];
-    protected onLoad(): void {
-        this.items = this.getComponentsInChildren(ScoreboardPredictionItem);
+    _items: ScoreboardPredictionItem[] = [];
+
+    get items() {
+        if (this._items.length === 0) {
+            this._items = this.getComponentsInChildren(ScoreboardPredictionItem);
+        }
+        return this._items;
     }
 
     setData(data: boolean[]): void {

@@ -39,12 +39,17 @@ export class ScoreboardDataReceiver extends ObserverComponent {
     public toggleBlinkNode(active: boolean) {
         if (!active) {
             return;
-        }       
+        }
 
         const converter = this.scoreboards[0].getComponent(ScoreboardDataConverter);
         const round = converter.createRound();
-        const lastResult = converter.convert(this.rounds[this.rounds.length - 1])?.[converter.keyOfA];
-        round[converter.resultKey][converter.keyOfA] = lastResult;
+        if (this.rounds.length > 0) {
+            const lastResult = converter.convert(this.rounds[this.rounds.length - 1])?.[converter.keyOfA];
+            round[converter.resultKey][converter.keyOfA] = lastResult;
+        } else {
+            round[converter.resultKey][converter.keyOfA] = true;
+        }
+
         round[converter.resultKey][converter.blinkKey] = true;
         const rounds = [...this.rounds, round];
 
