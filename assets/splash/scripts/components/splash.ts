@@ -50,13 +50,13 @@ export default class Splash extends Component {
         this.updateProgressBar(0);
         this.sso();
         this.gameName && (this.gameName.string = Translator.gameTranslate("game_name").toUpperCase());
-        ComponentUtils.addChildFromPrefab(this.prefabCustomize, this.containerCustomize);
+        ComponentUtils.addChildFromPrefab(this?.prefabCustomize, this?.containerCustomize);
         window.addEventListener("message", this.registerEvents);
     }
 
     start() {
-        const logo = instantiate(this.prefabLogo);
-        this.nodeLogoContainer.addChild(logo);
+        const logo = instantiate(this?.prefabLogo);
+        this.nodeLogoContainer?.addChild(logo);
     }
 
     onDestroy(): void {
@@ -127,7 +127,7 @@ export default class Splash extends Component {
     updateProgressBar(progress: number) {
         if (this.progressBar) {
             this.gameName && (this.gameName.node.active = true);
-            this.percentResourceLoad.string = `${Math.round(progress * 100)}%`;
+            this.percentResourceLoad && (this.percentResourceLoad.string = `${Math.round(progress * 100)}%`);
             this.progressBar.progress = progress;
         }
     }
@@ -174,7 +174,7 @@ export default class Splash extends Component {
     }
 
     private updateContentUnderBackground(status: boolean) {
-        this.progressBar.node.active = status;
-        this.cpnMessage.node.active = status;
+        this.progressBar && (this.progressBar.node.active = status);
+        this.cpnMessage && (this.cpnMessage.node.active = status);
     }
 }

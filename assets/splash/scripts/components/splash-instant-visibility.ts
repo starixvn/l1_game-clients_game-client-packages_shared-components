@@ -29,7 +29,7 @@ export default class SplashInstantVisibility extends Component {
         return FunctionUtils.isPortraitMode() ? "portrait" : "landscape";
     }
 
-    private async loadSplashInfo(assetPath: string) {
+    protected async loadSplashInfo(assetPath: string) {
         let splashInfoPrefab: Prefab = null;
 
         try {
