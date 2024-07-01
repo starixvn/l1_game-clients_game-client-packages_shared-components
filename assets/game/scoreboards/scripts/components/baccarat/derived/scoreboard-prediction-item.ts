@@ -21,13 +21,16 @@ export class PredictionItemSprite {
 export class ScoreboardPredictionItem extends Component {
     @property(SpriteAtlas)
     atlas: SpriteAtlas = null;
-    sprites: Sprite[] = [];
+    _sprites: Sprite[] = [];
 
     @property({ type: PredictionItemSprite })
     spriteDict: PredictionItemSprite[] = [];
 
-    onLoad() {
-        this.sprites = this.getComponentsInChildren(Sprite);
+    get sprites() {
+        if (this._sprites.length === 0) {
+            this._sprites = this.getComponentsInChildren(Sprite);
+        }
+        return this._sprites;
     }
 
     setData(data: boolean[], invert: boolean) {

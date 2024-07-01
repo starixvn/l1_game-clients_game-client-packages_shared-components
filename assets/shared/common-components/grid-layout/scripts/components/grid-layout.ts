@@ -61,6 +61,10 @@ export class GridLayout extends Component {
         return node.getComponent(classConstructor) ?? node.getComponentInChildren(classConstructor);
     }
 
+    onEnable() {
+        this.updateLayout();
+    }
+
     protected updateLayout() {
         this.layout.enabled = true;
         this.layout.updateLayout();

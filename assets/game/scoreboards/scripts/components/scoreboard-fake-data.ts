@@ -61,8 +61,12 @@ export class RenderFakeData extends Component {
     renderBlinkNode() {
         const converter = this.scoreboards[0].getComponent(ScoreboardDataConverter);
         const round = converter.createRound();
-        const lastResult = converter.convert(this.results[this.results.length - 1])?.[converter.keyOfA];
-        round[converter.resultKey][converter.keyOfA] = lastResult;
+        if (this.results.length > 0) {
+            const lastResult = converter.convert(this.results[this.results.length - 1])?.[converter.keyOfA];
+            round[converter.resultKey][converter.keyOfA] = lastResult;
+        } else {
+            round[converter.resultKey][converter.keyOfA] = true;
+        }
         round[converter.resultKey][converter.blinkKey] = true;
         const rounds = [...this.results, round];
 
