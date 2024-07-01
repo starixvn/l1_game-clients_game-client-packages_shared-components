@@ -1,5 +1,5 @@
 import { _decorator } from "cc";
-import type { BigRoadScoreboard, DerivedScoreboards } from "sc-scoreboards";
+import type { BigRoadScoreboard, DerivedScoreboardPoint, DerivedScoreboards } from "sc-scoreboards";
 import SCScoreboard from "sc-scoreboards";
 import { GridLayout } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
 import { rowToColumns } from "../helpers/scoreboard-big-road-helper";
@@ -65,7 +65,24 @@ export class ScoreboardDerivedAlgorithm extends ScoreboardAlgorithm {
 
     getDerivedData(key: DerivedScoreboardKey) {
         const sbData = this.derivedSB.getScoreboardData(key);
-        return rowToColumns(sbData);
+
+        const maximumPoints = this.grid.settings.row * this.grid.settings.column;
+        const data = rowToColumns(sbData);
+        this.addEmptyPoints(data, maximumPoints);
+        return data;
+    }
+
+    addEmptyPoints(points: DerivedScoreboardPoint[], maximum: number) {
+        const additionPoints = maximum - points.length;
+
+        for (let index = 0; index < additionPoints; index++) {
+            points.push({
+                row: -1,
+                column: -1,
+                status: undefined,
+            });
+        }
+        return points;
     }
 
     getPrediction() {
