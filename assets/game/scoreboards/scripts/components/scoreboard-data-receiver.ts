@@ -1,24 +1,18 @@
 import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import Observer from "observer";
-import { GridLayout } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { Scoreboard } from "./scoreboard";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
+import { ScoreboardDerived } from "./scoreboard-derived";
 
 const { ccclass, property } = _decorator;
 const { render } = Observer;
 
 @ccclass
 export class ScoreboardDataReceiver extends ObserverComponent {
-    @property(Scoreboard)
-    protected bigRoad: Scoreboard = null;
-
-    @property(Scoreboard)
-    protected beadRoad: Scoreboard = null;
-
-    @property(Scoreboard)
-    protected derivedRoad: Scoreboard = null;
+    @property({ type: Scoreboard })
+    scoreboards: Scoreboard[] = [];
 
     protected lastRound: unknown = {};
     protected rounds: unknown[] = [];
@@ -31,10 +25,9 @@ export class ScoreboardDataReceiver extends ObserverComponent {
         const reversedRounds = [...rounds].reverse();
 
         this.rounds = reversedRounds;
-
-        this.bigRoad?.render([...reversedRounds]);
-        this.beadRoad?.render([...reversedRounds]);
-        this.derivedRoad?.render([...reversedRounds]);
+        this.scoreboards.forEach((scoreboard) => {
+            scoreboard.render([...reversedRounds]);
+        });
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.getLastRound())
@@ -46,46 +39,22 @@ export class ScoreboardDataReceiver extends ObserverComponent {
     public toggleBlinkNode(active: boolean) {
         if (!active) {
             return;
-        }
-        if (this.bigRoad) {
-            const converter = this.bigRoad.getComponent(ScoreboardDataConverter);
-            const round = converter.createRound();
-            const lastResult = converter.convert(this.lastRound)?.[converter.keyOfA];
+        }       
 
-            round[converter.resultKey][converter.keyOfA] = lastResult;
-            round[converter.resultKey][converter.blinkKey] = true;
+        const converter = this.scoreboards[0].getComponent(ScoreboardDataConverter);
+        const round = converter.createRound();
+        const lastResult = converter.convert(this.rounds[this.rounds.length - 1])?.[converter.keyOfA];
+        round[converter.resultKey][converter.keyOfA] = lastResult;
+        round[converter.resultKey][converter.blinkKey] = true;
+        const rounds = [...this.rounds, round];
 
-            const rounds = [...this.rounds];
-
-            rounds.push(round);
-            this.bigRoad.render(rounds);
-        }
-        if (this.beadRoad) {
-            const converter = this.beadRoad.getComponent(ScoreboardDataConverter);
-            const round = converter.createRound();
-            round[converter.resultKey][converter.blinkKey] = true;
-
-            const rounds = [...this.rounds];
-            const setting = this.beadRoad.getComponent(GridLayout).settings;
-            const { row, column } = setting;
-
-            rounds.length === row * column && rounds.shift();
-            rounds.push(round);
-            this.beadRoad.render(rounds);
-        }
-
-        if (this.derivedRoad) {
-            const converter = this.derivedRoad.getComponent(ScoreboardDataConverter);
-            const round = converter.createRound();
-            round[converter.resultKey][converter.blinkKey] = true;
-
-            const rounds = [...this.rounds];
-            const setting = this.derivedRoad.getComponent(GridLayout).settings;
-            const { row, column } = setting;
-
-            rounds.length === row * column && rounds.shift();
-            rounds.push(round);
-            this.derivedRoad.render(rounds);
-        }
+        this.scoreboards.forEach((scoreboard) => {
+            const derivedScoreboard = scoreboard.getComponent(ScoreboardDerived);
+            if (derivedScoreboard) {
+                derivedScoreboard.render(this.rounds, true);
+            } else {
+                scoreboard.render(rounds);
+            }
+        });
     }
 }
