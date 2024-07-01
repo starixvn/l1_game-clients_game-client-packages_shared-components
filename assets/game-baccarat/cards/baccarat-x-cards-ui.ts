@@ -303,7 +303,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         return this.cardsStates;
     }
 
-    async openCards(result: BaccaratResult, animated = true) {
+    async openCards(result: BaccaratResult, settlemenResult: gc.GameServiceMessage.TSettlementResult, animated = true) {
         if (this.cards.length === 0) {
             await this.initCards();
         }
@@ -324,18 +324,19 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 if (index > 3) {
                     const newLocation = dataIndex === 4 ? CardLocation.Player3 : CardLocation.Banker3;
                     await this.moveCard(card.node, newLocation, animated);
-                    this.updateCardStates(data, dataIndex);
+
                     // update remove from waiting cards
                     const item = this.cardPool.find((item) => item.card === card);
                     item.location = newLocation;
                 }
                 await card.openCard(animated);
+                this.updateCardStates(data, dataIndex);
 
                 this.node.emit(CardEvent.OPENED_CARD, { card, data });
                 index++;
             }
         }
-        this.onFinalPayout();
+        this.updateFinalPayout(settlemenResult);
         [gc.GameBaccaratX.BetChoice.Player, gc.GameBaccaratX.BetChoice.Banker].forEach((team, index) => {
             const handData = result[team];
             const comp = this.cardHands[index];
@@ -343,8 +344,10 @@ export class BaccaratXCardsUI extends ObserverComponent {
         });
     }
 
-    @handle(GameBaccaratX.Multiplier.BaccaratMultipliersHandler, (handler) => handler.updateFinalOdds())
-    onFinalPayout() {}
+    @handle(GameBaccaratX.Multiplier.BaccaratMultipliersHandler, (handler, settlementResult) => handler.updateFinalPayout(settlementResult))
+    updateFinalPayout(settlementResult) {
+        return settlementResult;
+    }
 
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoeHash, { fireImmediately: false })
     receivedNewShoe(newShoeHash: gc.GameServiceMessage.NewShoeHash) {

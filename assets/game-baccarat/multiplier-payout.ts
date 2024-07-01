@@ -4,7 +4,7 @@ import Observer from "observer";
 import { ObserverComponent } from "../shared/common-components/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
-const { Rounds, GameBaccaratX } = gc;
+const { FormatUtils, GameBaccaratX } = gc;
 
 @ccclass
 export class MultiplierPayout extends ObserverComponent {
@@ -25,7 +25,7 @@ export class MultiplierPayout extends ObserverComponent {
             const choice = label.node.name;
             if (possiblePayout[choice]) {
                 const value = possiblePayout[choice].value;
-                label.string = `${value}`;
+                label.string = FormatUtils.numberWithCommas(value, 2, false);
             } else {
                 label.string = ``;
             }
