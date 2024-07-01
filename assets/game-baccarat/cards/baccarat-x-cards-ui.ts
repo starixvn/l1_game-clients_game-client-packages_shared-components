@@ -335,13 +335,16 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 index++;
             }
         }
-
+        this.onFinalPayout();
         [gc.GameBaccaratX.BetChoice.Player, gc.GameBaccaratX.BetChoice.Banker].forEach((team, index) => {
             const handData = result[team];
             const comp = this.cardHands[index];
             comp.setScore(handData.score);
         });
     }
+
+    @handle(GameBaccaratX.Multiplier.BaccaratMultipliersHandler, (handler) => handler.updateFinalOdds())
+    onFinalPayout() {}
 
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoeHash, { fireImmediately: false })
     receivedNewShoe(newShoeHash: gc.GameServiceMessage.NewShoeHash) {
