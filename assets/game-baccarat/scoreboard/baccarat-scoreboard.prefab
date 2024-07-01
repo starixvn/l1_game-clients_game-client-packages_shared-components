@@ -41,13 +41,10 @@
       },
       {
         "__id__": 243
-      },
-      {
-        "__id__": 245
       }
     ],
     "_prefab": {
-      "__id__": 247
+      "__id__": 245
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -4423,7 +4420,7 @@
     "fileId": "b84Xyz0FVN7pBIpGFVL/Xb"
   },
   {
-    "__type__": "cc.Sprite",
+    "__type__": "7c15fCIv8JEEJXs3ToN0h0H",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -4434,54 +4431,11 @@
     "__prefab": {
       "__id__": 244
     },
-    "_customMaterial": null,
-    "_srcBlendFactor": 2,
-    "_dstBlendFactor": 4,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "_spriteFrame": {
-      "__uuid__": "d216d4aa-1748-4db9-a370-3dd528ccf0a9@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "_type": 1,
-    "_fillType": 0,
-    "_sizeMode": 0,
-    "_fillCenter": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_fillStart": 0,
-    "_fillRange": 0,
-    "_isTrimmedMode": true,
-    "_useGrayscale": false,
-    "_atlas": null,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "b4naG8XHJHyYgGlXa+7DT1"
-  },
-  {
-    "__type__": "7c15fCIv8JEEJXs3ToN0h0H",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 246
-    },
-    "bigRoad": null,
-    "beadRoad": null,
-    "derivedRoad": null,
+    "scoreboards": [
+      null,
+      null,
+      null
+    ],
     "_id": ""
   },
   {
@@ -4500,22 +4454,22 @@
     "instance": null,
     "targetOverrides": [
       {
-        "__id__": 248
+        "__id__": 246
       },
       {
-        "__id__": 251
+        "__id__": 249
       },
       {
-        "__id__": 254
+        "__id__": 252
+      },
+      {
+        "__id__": 255
       },
       {
         "__id__": 257
       },
       {
         "__id__": 259
-      },
-      {
-        "__id__": 261
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -4536,7 +4490,7 @@
       "__id__": 158
     },
     "sourceInfo": {
-      "__id__": 249
+      "__id__": 247
     },
     "propertyPath": [
       "grid"
@@ -4545,7 +4499,7 @@
       "__id__": 158
     },
     "targetInfo": {
-      "__id__": 250
+      "__id__": 248
     }
   },
   {
@@ -4566,7 +4520,7 @@
       "__id__": 177
     },
     "sourceInfo": {
-      "__id__": 252
+      "__id__": 250
     },
     "propertyPath": [
       "scrollView"
@@ -4575,7 +4529,7 @@
       "__id__": 177
     },
     "targetInfo": {
-      "__id__": 253
+      "__id__": 251
     }
   },
   {
@@ -4596,7 +4550,7 @@
       "__id__": 177
     },
     "sourceInfo": {
-      "__id__": 255
+      "__id__": 253
     },
     "propertyPath": [
       "layout"
@@ -4605,7 +4559,7 @@
       "__id__": 177
     },
     "targetInfo": {
-      "__id__": 256
+      "__id__": 254
     }
   },
   {
@@ -4623,17 +4577,18 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 245
+      "__id__": 243
     },
     "sourceInfo": null,
     "propertyPath": [
-      "bigRoad"
+      "scoreboards",
+      "0"
     ],
     "target": {
       "__id__": 158
     },
     "targetInfo": {
-      "__id__": 258
+      "__id__": 256
     }
   },
   {
@@ -4645,17 +4600,18 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 245
+      "__id__": 243
     },
     "sourceInfo": null,
     "propertyPath": [
-      "beadRoad"
+      "scoreboards",
+      "1"
     ],
     "target": {
       "__id__": 177
     },
     "targetInfo": {
-      "__id__": 260
+      "__id__": 258
     }
   },
   {
@@ -4667,17 +4623,18 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 245
+      "__id__": 243
     },
     "sourceInfo": null,
     "propertyPath": [
-      "derivedRoad"
+      "scoreboards",
+      "2"
     ],
     "target": {
       "__id__": 202
     },
     "targetInfo": {
-      "__id__": 262
+      "__id__": 260
     }
   },
   {
