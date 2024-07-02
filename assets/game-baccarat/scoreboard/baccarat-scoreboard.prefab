@@ -3372,11 +3372,21 @@
     },
     "autoFindLabels": false,
     "labels": [
-      null,
-      null,
-      null,
-      null,
-      null
+      {
+        "__id__": 23
+      },
+      {
+        "__id__": 53
+      },
+      {
+        "__id__": 83
+      },
+      {
+        "__id__": 113
+      },
+      {
+        "__id__": 143
+      }
     ],
     "labelContainer": null,
     "supportChoices": "player,banker,tie,playerPair,bankerPair",
