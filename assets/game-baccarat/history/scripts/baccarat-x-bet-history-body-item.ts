@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Color, Label, _decorator } from "cc";
+import { Color, Label, Node, _decorator } from "cc";
 import * as i18n from "db://i18n/LanguageData";
 import Observer from "observer";
 import BetHistoryBodyItem, { BetHistoryBodyItemType } from "../../../game/bet-history/scripts/components/bet-history-body-item";
@@ -13,11 +13,19 @@ export class BaccaratXBetHistorybodyItem extends BetHistoryBodyItem {
     @property(Label)
     lblWinLoss: Label = null;
 
+    @property(Node)
+    nodeDisabledVerify: Node = null;
+
+    @property(Label)
+    lblVerify: Label = null;
+
     setData(data: BetHistoryBodyItemType) {
         super.setData(data);
         const winloss = data.betHistoryLog.betwin - data.betHistoryLog.totalAmount;
         this.lblWinLoss.string = FormatUtils.numberWithCommas(winloss, 2);
         this.lblWinLoss.color = winloss >= 0 ? new Color().fromHEX("F1E344") : new Color().fromHEX("EB3D26");
+        this.nodeDisabledVerify.active = !data.betHistoryLog.verifiable;
+        this.lblVerify.color = data.betHistoryLog.verifiable ? new Color().fromHEX("0055FF") : new Color().fromHEX("586379");
     }
 
     @handle(CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openVerificationHistory(roundId))
