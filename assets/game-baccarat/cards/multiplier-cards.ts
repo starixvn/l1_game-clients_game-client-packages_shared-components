@@ -6,7 +6,7 @@ import { ObserverComponent } from "../../shared/common-components/observer-compo
 import { MultiplierCard } from "./multiplier-card";
 const { ccclass, property } = _decorator;
 const { observer, render } = Observer;
-const { GameBaccaratX, Rounds } = gc;
+const { GameBaccaratX, Rounds, FormatUtils } = gc;
 
 @ccclass
 export class MultiplierCards extends ObserverComponent {
@@ -54,20 +54,23 @@ export class MultiplierCards extends ObserverComponent {
         this.content.active = isShow;
     }
 
-    @render(Rounds.RoundStore, (store) => store.minBet, { fireImmediately: false })
+    @render(Rounds.RoundStore, (store) => store.minBet)
     renderMinBet(minBet: number) {
         this.minBet = minBet;
         this.renderRangeBetLimit();
     }
 
-    @render(Rounds.RoundStore, (store) => store.maxBet, { fireImmediately: false })
+    @render(Rounds.RoundStore, (store) => store.maxBet)
     renderMaxBet(maxBet: number) {
         this.maxBet = maxBet;
         this.renderRangeBetLimit();
     }
 
     renderRangeBetLimit() {
-        this.lblRangeBetLimit.string = `$ ${this.minBet} - ${this.maxBet}`;
+        this.lblRangeBetLimit.string = `$ ${FormatUtils.numberWithCommas(this.minBet, 2)} - ${FormatUtils.numberWithCommas(
+            this.maxBet,
+            2
+        )}`;
     }
 
     @render(GameBaccaratX.ExtraFee.ExtraFeeStore, (store) => store.extraFee)
