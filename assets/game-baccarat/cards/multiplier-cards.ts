@@ -77,7 +77,7 @@ export class MultiplierCards extends ObserverComponent {
     renderExtraFee(extraFee: any) {
         if (extraFee) {
             const fee = extraFee.fee;
-            const extraFeeString = extraFee.isRatio ? `${fee * 100}%` : `${fee}`;
+            const extraFeeString = extraFee.isRatio ? `${fee * 100}%` : `${FormatUtils.numberWithCommas(fee, 2)}`;
             this.lblExtraFee.string = extraFeeString;
         }
     }
