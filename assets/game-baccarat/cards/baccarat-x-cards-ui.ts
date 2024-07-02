@@ -431,10 +431,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         const dropPosition = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeTrash);
         for (let i = 0; i < cardNodes.length; i++) {
+            i > 0 && (await FunctionUtils.delay(0.1));
             const node = cardNodes[i];
             this.transformCardNode(node, CardLocation.Trash);
-            await this.moveCardAnimation(node, dropPosition, true);
-            node.destroy();
+            this.moveCardAnimation(node, dropPosition, true).then(() => {
+                node.destroy();
+            });
         }
 
         cardNodes = [];
