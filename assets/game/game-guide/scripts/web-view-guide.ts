@@ -41,13 +41,4 @@ export default class WebViewGuide extends LoadWebView {
             this.loadWebView();
         }
     }
-
-    loadWebView() {
-        if (this.url) {
-            this.showLoading();
-            this.hideWebView();
-
-            this.webView.url = this.url;
-        }
-    }
 }
