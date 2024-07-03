@@ -44,7 +44,6 @@ export class MultiplierCards extends ObserverComponent {
         if (this.content.children.length > 0) {
             return;
         }
-        console.log(`render multipliersssssssssssssssssss`);
         this.showMultiplierCards(true);
         this.content.removeAllChildren();
         this.multiplierCards = [];
