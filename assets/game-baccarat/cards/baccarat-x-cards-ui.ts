@@ -354,8 +354,10 @@ export class BaccaratXCardsUI extends ObserverComponent {
         });
     }
 
-    @handle(GameBaccaratX.Multiplier.BaccaratMultipliersHandler, (handler, settlementResult) => handler.updateFinalPayout(settlementResult))
-    updateFinalPayout(settlementResult) {
+    @handle(GameBaccaratX.Multiplier.BaccaratMultipliersHandler, (handler, settlementResult: gc.GameServiceMessage.TSettlementResult) =>
+        handler.updateFinalPayout(settlementResult)
+    )
+    updateFinalPayout(settlementResult: gc.GameServiceMessage.TSettlementResult) {
         return settlementResult;
     }
 
@@ -363,16 +365,21 @@ export class BaccaratXCardsUI extends ObserverComponent {
     receivedNewShoe(newShoeHash: gc.GameServiceMessage.NewShoeHash) {
         if (newShoeHash) {
             this.isNewShoe = true;
+
+            this.dropCards(this.cardPool, false);
+            this.cardHands.forEach((comp) => {
+                comp.showScore(false);
+            });
         }
     }
 
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
     async startNewShoe(shoeInfo: gc.GameServiceMessage.ShoeInfo) {
-        if (!shoeInfo || !this.isNewShoe) {
+        if (!shoeInfo || !shoeInfo.new) {
             return;
         }
         const { firstCard, burnedCards } = shoeInfo;
-        this.dropCards(this.cardPool, false);
+
         //TODO: clear UI when new shoe
         await this.playAnimationCutCard();
         await this.playAnimationBurnCards(firstCard, burnedCards);

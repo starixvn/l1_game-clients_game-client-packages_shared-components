@@ -44,9 +44,14 @@ export class MultiplierCards extends ObserverComponent {
         if (this.content.children.length > 0) {
             return;
         }
-        this.showMultiplierCards(true);
+
         this.content.removeAllChildren();
         this.multiplierCards = [];
+
+        if (multipliers.length === 0) {
+            return;
+        }
+        this.showMultiplierCards(true);
         multipliers.forEach((item) => {
             const node = instantiate(this.prfMultiplierCard);
             const comp = node.getComponent(MultiplierCard);
