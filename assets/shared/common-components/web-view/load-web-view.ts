@@ -37,6 +37,7 @@ export default class LoadWebView extends ObserverComponent {
     loadWebView() {
         if (this.url) {
             this.showLoading();
+            this.hideWebView();
             this.webView.url = this.url;
         }
     }

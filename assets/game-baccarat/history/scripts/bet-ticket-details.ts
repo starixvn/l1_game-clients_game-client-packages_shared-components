@@ -1,12 +1,11 @@
 import { _decorator } from "cc";
-import Observer from "observer";
-import WebViewGuide from "../../../game/game-guide/scripts/web-view-guide";
+import LoadWebView from "../../../shared/common-components/web-view/load-web-view";
 const { ccclass, property } = _decorator;
-const { render, handle } = Observer;
 
 @ccclass
-export class BetTicketDetails extends WebViewGuide {
+export class BetTicketDetails extends LoadWebView {
     openBetDetails(url: string) {
-        this.loadContent(url);
+        this.url = url;
+        this.loadWebView();
     }
 }
