@@ -35,22 +35,14 @@ export class MultiplierCards extends ObserverComponent {
     renderMultipliers(renderMultipliers: { visible: boolean; animated: boolean; multipliers: any[] }) {
         const { visible, animated, multipliers } = renderMultipliers;
 
-        if (!visible) {
+        if (!visible || multipliers.length === 0) {
             this.content.removeAllChildren();
             this.showMultiplierCards(false);
             return;
         }
 
-        if (this.content.children.length > 0) {
-            return;
-        }
-
         this.content.removeAllChildren();
         this.multiplierCards = [];
-
-        if (multipliers.length === 0) {
-            return;
-        }
         this.showMultiplierCards(true);
         multipliers.forEach((item) => {
             const node = instantiate(this.prfMultiplierCard);
