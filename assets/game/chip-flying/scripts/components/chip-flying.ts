@@ -433,13 +433,7 @@ export class ChipFlying extends ObserverComponent {
         }
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isStartRound || store.isStartingRound)
-    clearChipsAtStartRound(isStartRound: boolean) {
-        if (isStartRound) {
-            this.clearChipsForAllBetItems();
-        }
-    }
-
+    @render(Chips.ChipStore, (store) => store.clearAllChips, { fireImmediately: false })
     clearChipsForAllBetItems() {
         this.chipStorage = {};
         this.chipContainer.destroyAllChildren();
