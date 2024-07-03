@@ -1,5 +1,4 @@
 import gc from "@sg/game-client-base";
-import { BetChoice } from "@sg/game-client-base/dist/game-baccaratx";
 import { Node, Prefab, UITransform, Vec3, _decorator, instantiate, sp, tween, v3 } from "cc";
 import Observer from "observer";
 import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
@@ -301,7 +300,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     decreaseCardIndexForOldRound(result) {
         let count = 0;
-        [BetChoice.Player, BetChoice.Banker].forEach((hand) => {
+        [GameBaccaratX.BetChoice.Player, GameBaccaratX.BetChoice.Banker].forEach((hand) => {
             ["card1", "card2", "card3"].forEach((cardKey) => {
                 if (result[hand][cardKey]) {
                     count++;
