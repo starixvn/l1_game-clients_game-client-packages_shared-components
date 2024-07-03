@@ -1,4 +1,4 @@
-import gc, { GameServiceMessage } from "@sg/game-client-base";
+import gc from "@sg/game-client-base";
 import { Label, Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
@@ -31,18 +31,30 @@ export class MultiplierCards extends ObserverComponent {
         return this.multiplierCards.find((comp) => comp.data.rank === card.rank && comp.data.suit === card.suit);
     }
 
-    @render(GameBaccaratX.Multiplier.BaccaratMultipliersStore, (store) => store.multiplierCards, { fireImmediately: false })
-    renderMultiplierCards(multiplierCards: GameServiceMessage.BaccaratCardMultiplier[]) {
+    @render(gc.MultipliersStore, (store) => store.renderMultipliers, { fireImmediately: false })
+    renderMultipliers(renderMultipliers: { visible: boolean; animated: boolean; multipliers: any[] }) {
+        const { visible, animated, multipliers } = renderMultipliers;
+
+        if (!visible) {
+            this.content.removeAllChildren();
+            this.showMultiplierCards(false);
+            return;
+        }
+
+        if (this.content.children.length > 0) {
+            return;
+        }
+        console.log(`render multipliersssssssssssssssssss`);
+        this.showMultiplierCards(true);
         this.content.removeAllChildren();
         this.multiplierCards = [];
-        multiplierCards.forEach((card) => {
+        multipliers.forEach((item) => {
             const node = instantiate(this.prfMultiplierCard);
             const comp = node.getComponent(MultiplierCard);
-            comp.setData(card);
+            comp.setData(item);
             this.content.addChild(node);
             this.multiplierCards.push(comp);
         });
-        this.showMultiplierCards(true);
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.isStartingRound)
