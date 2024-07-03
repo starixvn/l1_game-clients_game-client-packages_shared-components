@@ -1,6 +1,5 @@
-import gc from "@sg/game-client-base";
 import { _decorator, Component, Label } from "cc";
-import { PokerCard } from "./../../game/poker-cards/scripts/poker-card";
+import { PokerCard, ServiceCard } from "./../../game/poker-cards/scripts/poker-card";
 const { ccclass, property } = _decorator;
 @ccclass
 export class MultiplierCard extends Component {
@@ -10,12 +9,12 @@ export class MultiplierCard extends Component {
     @property(PokerCard)
     card: PokerCard = null;
 
-    data: gc.GameServiceMessage.BaccaratCardMultiplier;
+    data: ServiceCard;
 
-    setData(card: gc.GameServiceMessage.BaccaratCardMultiplier) {
-        this.data = card;
-        this.lblMultiplier.string = `${card.value}x`;
-        this.card.setServiceCard(card);
+    setData(data: { item: ServiceCard; value: number }) {
+        this.data = data.item;
+        this.lblMultiplier.string = `${data.value}x`;
+        this.card.setServiceCard(this.data);
         this.card.faceUp();
         this.card.setGoldenCard();
     }
