@@ -120,6 +120,8 @@ export class BetItems extends ObserverComponent {
                 const choice = betItem.node.name;
                 betItem.handleHighlightAnim(this.isWinning(+settlementResult?.[choice]) && isAnim);
             });
+        } else {
+            this.clearHighlightAnim();
         }
     }
 
@@ -127,6 +129,8 @@ export class BetItems extends ObserverComponent {
     handleHighlightStatic(highlightStatic: gc.Rounds.THighlightStatic) {
         if (!isEmpty(highlightStatic?.settlementResult)) {
             this.showHighlightStatic(highlightStatic.settlementResult);
+        } else {
+            this.clearHighlightStatic();
         }
     }
 
@@ -147,10 +151,20 @@ export class BetItems extends ObserverComponent {
     @render(Rounds.RoundStore, (store) => store.isResetHighlight)
     handleResetHighlight(isResetHighlight: boolean) {
         if (isResetHighlight) {
-            this.betItemComponents.forEach((betItem) => {
-                betItem.handleHighlightStatic(false);
-            });
+            this.clearHighlightStatic();
         }
+    }
+
+    clearHighlightStatic() {
+        this.betItemComponents.forEach((betItem) => {
+            betItem.handleHighlightStatic(false);
+        });
+    }
+
+    clearHighlightAnim() {
+        this.betItemComponents.forEach((betItem) => {
+            betItem.handleHighlightAnim(false);
+        });
     }
 
     isWinning(value: number, target = 1) {
