@@ -6,7 +6,7 @@ import BetHistoryBodyItem, { BetHistoryBodyItemType } from "../../../game/bet-hi
 const { ccclass, property } = _decorator;
 const { handle } = Observer;
 
-const { CutCardPF, FormatUtils, BetDetailsNew } = gc;
+const { CutCardPF, FormatUtils, BetDetailsNew, DateTimeUtils } = gc;
 
 @ccclass
 export class BaccaratXBetHistorybodyItem extends BetHistoryBodyItem {
@@ -20,12 +20,14 @@ export class BaccaratXBetHistorybodyItem extends BetHistoryBodyItem {
     lblVerify: Label = null;
 
     setData(data: BetHistoryBodyItemType) {
+        const { betwin, totalAmount, verifiable, time } = data.betHistoryLog;
         super.setData(data);
-        const winloss = data.betHistoryLog.betwin - data.betHistoryLog.totalAmount;
+        const winloss = betwin - totalAmount;
         this.lblWinLoss.string = FormatUtils.numberWithCommas(winloss, 2);
         this.lblWinLoss.color = winloss >= 0 ? new Color().fromHEX("F1E344") : new Color().fromHEX("EB3D26");
-        this.nodeDisabledVerify.active = !data.betHistoryLog.verifiable;
-        this.lblVerify.color = data.betHistoryLog.verifiable ? new Color().fromHEX("0055FF") : new Color().fromHEX("586379");
+        this.nodeDisabledVerify.active = !verifiable;
+        this.lblVerify.color = verifiable ? new Color().fromHEX("0055FF") : new Color().fromHEX("586379");
+        this.lblTime.string = `${DateTimeUtils.getStringDate(time)} ${DateTimeUtils.getStringHourByTime(time)}`;
     }
 
     @handle(CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openVerificationHistory(roundId))
