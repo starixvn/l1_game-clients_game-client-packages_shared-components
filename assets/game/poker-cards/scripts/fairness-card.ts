@@ -61,6 +61,7 @@ export class FairnessCard extends Component {
     }
 
     setIndexValue(index: number) {
+        console.log("setIndex card index: " + index);
         this.lblCardIndex.string = `${index + 1}`;
     }
 

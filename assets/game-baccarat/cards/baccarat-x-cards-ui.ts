@@ -1,4 +1,5 @@
 import gc from "@sg/game-client-base";
+import { BetChoice } from "@sg/game-client-base/dist/game-baccaratx";
 import { Node, Prefab, UITransform, Vec3, _decorator, instantiate, sp, tween, v3 } from "cc";
 import Observer from "observer";
 import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
@@ -294,8 +295,21 @@ export class BaccaratXCardsUI extends ObserverComponent {
     renderShoeInfo(shoeInfo: gc.GameServiceMessage.ShoeInfo) {
         if (shoeInfo) {
             this.currentCardIndex = shoeInfo.currentIndex ?? shoeInfo.burnedCards;
-            console.log(`received current index`, this.currentCardIndex);
+            console.log(`received current index ======================== `, this.currentCardIndex);
         }
+    }
+
+    decreaseCardIndexForOldRound(result) {
+        let count = 0;
+        [BetChoice.Player, BetChoice.Banker].forEach((hand) => {
+            ["card1", "card2", "card3"].forEach((cardKey) => {
+                if (result[hand][cardKey]) {
+                    count++;
+                }
+            });
+        });
+        this.currentCardIndex = this.currentCardIndex - count;
+        console.log(`decrease card index ======================== ${count} => ${this.currentCardIndex}`);
     }
 
     @handle(GameBaccaratX.Multiplier.BaccaratMultipliersHandler, (handler, cardsStates: gc.GameBaccaratX.CardsState) =>
