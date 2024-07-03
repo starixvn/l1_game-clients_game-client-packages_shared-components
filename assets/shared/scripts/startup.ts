@@ -3,7 +3,7 @@ import * as i18n from "db://i18n/LanguageData";
 import mobx from "mobx";
 import Observer from "observer";
 
-const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string, tolgeeNamespace: string) => {
+const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string) => {
     try {
         const isUseTolgeeRealTime = !!siteConfigs.tolgeeUrl;
         const languageId = gc.Translator.getLanguageId();
@@ -20,7 +20,6 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, gameNamespace: string, to
                 console.log("started tolgee");
             },
             gameNamespace: gameNamespace,
-            tolgeeNamespace: tolgeeNamespace,
         };
 
         gc.Translator.init(translationOptions);
@@ -34,10 +33,10 @@ export function startGame(
     namespace: string,
     containerOptions: gc.IContainerOptions,
     siteConfigs: gc.Configs.SiteConfigs,
-    tolgeeNamespace: string
+    tolgeeNamespace?: string
 ) {
     gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey);
-    loadI18n(siteConfigs, namespace, tolgeeNamespace);
+    loadI18n(siteConfigs, tolgeeNamespace ? tolgeeNamespace : namespace);
 
     const container = gc.getContainer(containerOptions);
     const observerContainer = gc.buildObserverContainer(container);
