@@ -361,14 +361,4 @@ export default class SlidingChip extends ObserverComponent {
     private getChipNode(bet: number): Node {
         return this.chips?.children?.find((child) => child.name === bet.toString());
     }
-
-    @render(Rounds.RoundTimeStore, (store) => store.isStartingRound)
-    handleStartingRound(isStartingRound: boolean) {
-        if (isStartingRound) {
-            this.resetChips();
-        }
-    }
-
-    @handle(SlidingChipHandler.ResetChips)
-    resetChips() {}
 }
