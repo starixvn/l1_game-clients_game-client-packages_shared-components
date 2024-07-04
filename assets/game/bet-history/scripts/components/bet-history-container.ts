@@ -29,11 +29,9 @@ export default class BetHistoryContainer extends NodeContainer {
     hanldeShowBetHistory() {}
 
     @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
-    betHistoryVisibility({ event }: { event: InGameMenuEvents }) {
+    openBetHistory({ event }: { event: InGameMenuEvents }) {
         if (event === InGameMenuEvents.OPEN_HISTORY) {
             this.hanldeShowBetHistory();
-        } else if (event === InGameMenuEvents.CLOSE_GAME) {
-            this.wrapperNode?.destroy();
         }
     }
 
@@ -50,5 +48,10 @@ export default class BetHistoryContainer extends NodeContainer {
             bodyItemPrefab: this.bodyItemPrefab,
             resultPrefab: this.resultPrefab,
         });
+    }
+
+    @render(gc.PopupsClosed.PopupsClosedStore, (store) => store.forceClosed, { fireImmediately: false })
+    popupVisibility(forceClosed: any) {
+        forceClosed && this.wrapperNode?.destroy();
     }
 }

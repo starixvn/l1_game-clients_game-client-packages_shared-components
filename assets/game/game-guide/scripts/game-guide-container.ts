@@ -1,3 +1,4 @@
+import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import Observer from "observer";
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
@@ -18,13 +19,16 @@ export class GameGuideContainer extends NodeContainer {
             const words = event.split("_");
             const id = words[words.length - 1];
             this.openDialog(id);
-        } else if (event === InGameMenuEvents.CLOSE_GAME) {
-            this.node.removeAllChildren();
         }
     }
 
     protected openDialog(scrollToId: string) {
         const guide = this.createNode();
         guide.getComponent(WebViewGuide)?.initUrl("", scrollToId);
+    }
+
+    @render(gc.PopupsClosed.PopupsClosedStore, (store) => store.forceClosed, { fireImmediately: false })
+    popupVisibility(forceClosed: any) {
+        forceClosed && this.node.removeAllChildren();
     }
 }

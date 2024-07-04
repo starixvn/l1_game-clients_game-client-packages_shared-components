@@ -65,11 +65,6 @@ export class InGameMenu extends ObserverComponent {
         this.handleEvent(InGameMenuEvents.CHANGE_ORIENTATION);
     }
 
-    @render(gc.PopupsClosed.PopupsClosedStore, (store) => store.forceClosed, { fireImmediately: false })
-    popupVisibility(forceClosed: any) {
-        forceClosed && this.onCloseGame();
-    }
-
     onChangeWinningNotification() {
         this.doCommons();
         this.handleEvent(InGameMenuEvents.CHANGE_WINNING_NOTIFICATION);
