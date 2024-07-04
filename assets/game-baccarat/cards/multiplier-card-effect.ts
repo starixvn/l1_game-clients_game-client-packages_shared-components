@@ -34,15 +34,13 @@ export class MultiplierCardEffect extends Component {
         const { card, data, animated } = openCard;
         const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data);
         if (matchedMultiplierCard) {
-            const node = instantiate(this.nodeEffect);
-            this.nodeEffect.parent.addChild(node);
-
-            node.active = true;
-
-            const startPos = ComponentUtils.convertPosition(node.parent, matchedMultiplierCard.node);
-            const destPos = ComponentUtils.convertPosition(node.parent, card.node);
-            node.position = startPos;
             if (animated) {
+                const node = instantiate(this.nodeEffect);
+                this.nodeEffect.parent.addChild(node);
+                node.active = true;
+                const startPos = ComponentUtils.convertPosition(node.parent, matchedMultiplierCard.node);
+                const destPos = ComponentUtils.convertPosition(node.parent, card.node);
+                node.position = startPos;
                 tween(node)
                     .to(0.5, {
                         position: destPos,
