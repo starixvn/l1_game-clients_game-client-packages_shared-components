@@ -30,8 +30,8 @@ export class MultiplierCardEffect extends Component {
         this.cardsUI.node.off(CardEvent.OPENED_CARD, this.onOpenedCard, this);
     }
 
-    onOpenedCard(openCard: { card: FairnessCard; data: ServiceCard }) {
-        const { card, data } = openCard;
+    onOpenedCard(openCard: { card: FairnessCard; data: ServiceCard; animated: boolean }) {
+        const { card, data, animated } = openCard;
         const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data);
         if (matchedMultiplierCard) {
             const node = instantiate(this.nodeEffect);
@@ -42,15 +42,21 @@ export class MultiplierCardEffect extends Component {
             const startPos = ComponentUtils.convertPosition(node.parent, matchedMultiplierCard.node);
             const destPos = ComponentUtils.convertPosition(node.parent, card.node);
             node.position = startPos;
-            tween(node)
-                .to(1, {
-                    position: destPos,
-                })
-                .call(() => {
-                    card.setGoldenCard();
-                })
-                .destroySelf()
-                .start();
+            if (animated) {
+                tween(node)
+                    .to(0.5, {
+                        position: destPos,
+                    })
+                    .call(() => {
+                        matchedMultiplierCard.card.setGoldenCard(false);
+                        card.setGoldenCard();
+                    })
+                    .destroySelf()
+                    .start();
+            } else {
+                matchedMultiplierCard.card.setGoldenCard(false);
+                card.setGoldenCard();
+            }
         }
     }
 }

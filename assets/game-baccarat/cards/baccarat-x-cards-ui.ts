@@ -351,7 +351,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 await card.openCard(animated);
                 this.updateCardStates(data, dataIndex);
 
-                this.node.emit(CardEvent.OPENED_CARD, { card, data });
+                this.node.emit(CardEvent.OPENED_CARD, { card, data, animated });
                 index++;
             }
         }
