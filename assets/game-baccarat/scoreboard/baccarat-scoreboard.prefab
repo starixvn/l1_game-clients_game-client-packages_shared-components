@@ -3390,7 +3390,7 @@
     ],
     "labelContainer": null,
     "supportChoices": "player,banker,tie,playerPair,bankerPair",
-    "enablePercentage": true,
+    "enablePercentage": false,
     "showSignPercentage": false,
     "_id": ""
   },
