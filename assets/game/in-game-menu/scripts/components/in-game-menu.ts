@@ -6,7 +6,7 @@ import { ObserverComponent } from "../../../../shared/common-components/observer
 import { InGameMenuHandlers } from "../handlers/in-game-menu-handlers";
 import { InGameMenuEvents } from "../stores/in-game-menu-events";
 const { ccclass, property } = _decorator;
-const { handle } = Observer;
+const { handle, render } = Observer;
 
 @ccclass("InGameMenu")
 export class InGameMenu extends ObserverComponent {
@@ -63,6 +63,11 @@ export class InGameMenu extends ObserverComponent {
     onChangeOrientation() {
         this.doCommons();
         this.handleEvent(InGameMenuEvents.CHANGE_ORIENTATION);
+    }
+
+    @render(gc.PopupsClosed.PopupsClosedStore, (store) => store.forceClosed, { fireImmediately: false })
+    popupVisibility(forceClosed: any) {
+        forceClosed && this.onCloseGame();
     }
 
     onChangeWinningNotification() {
