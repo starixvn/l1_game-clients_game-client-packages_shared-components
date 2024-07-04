@@ -180,19 +180,16 @@ export class BaccaratXCardsUI extends ObserverComponent {
                     (card) => card.location !== CardLocation.Waiting1 && card.location !== CardLocation.Waiting2
                 );
 
-                console.time("new round");
                 await this.dropCards(others, true);
                 this.resetCardsToBox(others);
 
                 const pool = [...waitingCards, ...others];
                 this.cards = pool.map((item) => item.card);
-                await this.drawingCards(pool, true);
-                console.timeEnd("new round");
-
                 this.currentCardIndex += others.length;
+                await this.drawingCards(pool, true);
             } else {
-                await this.draw6Cards(true);
                 this.currentCardIndex += this.cardPool.length;
+                await this.draw6Cards(true);
             }
             console.log(`increase currentCardIndex `, this.currentCardIndex);
         }
@@ -326,9 +323,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async openCards(result: BaccaratResult, settlemenResult: gc.GameServiceMessage.TSettlementResult, animated = true) {
-        if (this.cards.length === 0) {
-            await this.initCards();
-        }
         const dataCards: ServiceCard[] = [];
         for (let i = 0; i < 3; i++) {
             [gc.GameBaccaratX.BetChoice.Player, gc.GameBaccaratX.BetChoice.Banker].forEach((team) => {
