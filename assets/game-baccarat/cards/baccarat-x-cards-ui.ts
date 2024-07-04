@@ -265,9 +265,11 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async moveCard(card: Node, nextLocation: number, animated: boolean) {
+        card.setSiblingIndex(99);
         const nextPosition = this.nodeCardContainer.getComponent(UITransform).convertToNodeSpaceAR(this.getPosition(nextLocation));
         this.transformCardNode(card, nextLocation, animated);
         await this.moveCardAnimation(card, nextPosition, animated);
+        card.setSiblingIndex(0);
     }
 
     moveCardAnimation(node: Node, position: Vec3, animated) {
