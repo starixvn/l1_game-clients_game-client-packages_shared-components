@@ -20,6 +20,6 @@ export class BetDetailsContainer extends NodeContainer {
 
     @render(gc.PopupsClosed.PopupsClosedStore, (store) => store.forceClosed, { fireImmediately: false })
     popupVisibility(forceClosed: any) {
-        forceClosed && this.node.removeAllChildren();
+        forceClosed && this.node.destroyAllChildren();
     }
 }
