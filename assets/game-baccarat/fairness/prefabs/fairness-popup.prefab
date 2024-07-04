@@ -1052,7 +1052,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "ROUND:",
+    "_string": "PHIÊN:",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1092,7 +1092,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 146.900390625,
+      "width": 129.708984375,
       "height": 55.44
     },
     "_anchorPoint": {
@@ -7487,7 +7487,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 5.172,
+      "x": -127.074,
       "y": -6.034,
       "z": 0
     },
@@ -7540,7 +7540,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -133.701171875,
+      "x": 0,
       "y": 0,
       "z": 0
     },
@@ -7581,7 +7581,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 385.505859375,
+      "width": 426.7265625,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -7617,7 +7617,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "MERGE CLIENT SEED",
+    "_string": "KẾT HỢP CLIENT SEED ",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -7704,7 +7704,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 104.37646484375,
+      "x": 258.68798828125,
       "y": 0,
       "z": 0
     },
@@ -7904,12 +7904,12 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 267.40234375,
+      "width": 288.0126953125,
       "height": 100
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 0,
       "y": 0.5
     },
     "_id": ""

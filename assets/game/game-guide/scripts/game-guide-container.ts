@@ -18,6 +18,8 @@ export class GameGuideContainer extends NodeContainer {
             const words = event.split("_");
             const id = words[words.length - 1];
             this.openDialog(id);
+        } else if (event === InGameMenuEvents.CLOSE_GAME) {
+            this.node.removeAllChildren();
         }
     }
 

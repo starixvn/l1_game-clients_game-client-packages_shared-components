@@ -1,10 +1,10 @@
-import { Node, Prefab, _decorator } from "cc";
 import gc from "@sg/game-client-base";
+import { Node, Prefab, _decorator } from "cc";
 import Observer from "observer";
 import { NodeContainer } from "../../../../shared/common-components/node-container/node-container";
 
-import { InGameMenuStore } from "../../../in-game-menu/scripts/stores/in-game-menu-store";
 import { InGameMenuEvents } from "../../../in-game-menu/scripts/stores/in-game-menu-events";
+import { InGameMenuStore } from "../../../in-game-menu/scripts/stores/in-game-menu-store";
 import { BetHistoryTable } from "./bet-history-table";
 
 const { ccclass, property } = _decorator;
@@ -29,9 +29,11 @@ export default class BetHistoryContainer extends NodeContainer {
     hanldeShowBetHistory() {}
 
     @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
-    openBetHistory({ event }: { event: InGameMenuEvents }) {
+    betHistoryVisibility({ event }: { event: InGameMenuEvents }) {
         if (event === InGameMenuEvents.OPEN_HISTORY) {
             this.hanldeShowBetHistory();
+        } else if (event === InGameMenuEvents.CLOSE_GAME) {
+            this.wrapperNode?.destroy();
         }
     }
 
