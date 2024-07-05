@@ -43,7 +43,7 @@ export class BetItemsPolygon extends BetItems {
         if (!this.debugSample) {
             return;
         }
-        const betItems = this.node.children.map((item) => item.getComponent(PolygonCollider2D));
+        const betItems = this.node.children.map((item) => item.getComponentsInChildren(PolygonCollider2D)[0]);
         betItems.forEach((betItem) => {
             if (betItem) {
                 betItem.worldPoints.forEach((worldPoint) => {
