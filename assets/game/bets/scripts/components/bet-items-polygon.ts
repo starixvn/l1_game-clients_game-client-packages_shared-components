@@ -43,14 +43,23 @@ export class BetItemsPolygon extends BetItems {
         if (!this.debugSample) {
             return;
         }
-        const betItems = this.node.children.map((item) => item.getComponentsInChildren(PolygonCollider2D)[0]);
-        betItems.forEach((betItem) => {
-            if (betItem) {
-                betItem.worldPoints.forEach((worldPoint) => {
+        const colliders = this.node.children.map((item) => this.getCollider(item));
+        colliders.forEach((collider) => {
+            if (collider) {
+                collider.worldPoints.forEach((worldPoint) => {
                     this.drawDebugNode(worldPoint);
                 });
             }
         });
+    }
+
+    getCollider(node: Node) {
+        const colliders = node.getComponentsInChildren(PolygonCollider2D);
+        if (colliders.length === 0) {
+            return null;
+        }
+
+        return colliders[0];
     }
 
     private drawDebugNode(worldPoint: Readonly<Vec2>, isRed = false) {
@@ -91,7 +100,7 @@ export class BetItemsPolygon extends BetItems {
         }
 
         const betItem = this.node.children.find((item) => {
-            const collider = item.getComponent(PolygonCollider2D);
+            const collider = this.getCollider(item);
             if (!collider) {
                 return false;
             }
