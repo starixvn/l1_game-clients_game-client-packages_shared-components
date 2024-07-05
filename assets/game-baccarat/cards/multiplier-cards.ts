@@ -40,7 +40,9 @@ export class MultiplierCards extends ObserverComponent {
             this.showMultiplierCards(false);
             return;
         }
-
+        if (!animated && this.content.children.length > 0) {
+            return;
+        }
         this.content.removeAllChildren();
         this.multiplierCards = [];
         this.showMultiplierCards(true);
