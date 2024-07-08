@@ -7240,8 +7240,8 @@
     "nodeDisabledSubmit": {
       "__id__": 115
     },
-    "minCSNumber": 300,
-    "maxCSNumber": 350,
+    "minCSNumber": 250,
+    "maxCSNumber": 306,
     "_id": ""
   },
   {
