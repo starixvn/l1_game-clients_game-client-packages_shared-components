@@ -17,19 +17,21 @@ export class Dialog extends Component {
 
     protected readonly appearDuration = 0.4;
 
+    callBackFn = () => {};
+
     onEnable() {
         this.autoShowWhenEnable && this.show();
     }
 
-    show() {
+    async show() {
         if (this.nodeFadeBackground) {
             this.nodeFadeBackground.active = true;
-            fadeIn(this.nodeFadeBackground, 0.1);
+            await fadeIn(this.nodeFadeBackground, 0.1);
         }
         if (this.nodeBody) {
-            fadeIn(this.nodeBody, 0.3);
-            bounceIn(this.nodeBody, this.nodeBody.scale, this.appearDuration);
+            await Promise.all([fadeIn(this.nodeBody, 0.3), bounceIn(this.nodeBody, this.nodeBody.scale, this.appearDuration)]);
         }
+        this.callBackFn?.();
     }
 
     hide() {
