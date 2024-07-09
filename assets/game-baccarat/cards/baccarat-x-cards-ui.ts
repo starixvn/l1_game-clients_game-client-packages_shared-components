@@ -186,7 +186,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 this.currentCardIndex += others.length;
                 await this.drawingCards(pool, true);
             } else {
-                this.currentCardIndex += this.cardPool.length;
+                const onTableCards = this.cardPool.filter(
+                    (card) => card.location !== CardLocation.Box && card.location !== CardLocation.Trash
+                );
+                if (onTableCards.length > 0) {
+                    this.currentCardIndex += this.cardPool.length;
+                }
                 await this.draw6Cards(true);
             }
             console.log(`increase currentCardIndex `, this.currentCardIndex);
