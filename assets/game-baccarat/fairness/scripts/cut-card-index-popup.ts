@@ -1,7 +1,8 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
-import { Label, Node, Prefab, _decorator, instantiate } from "cc";
+import { _decorator, instantiate, Label, Node, Prefab, ScrollView } from "cc";
 import FileSaver from "file-saver";
 import Observer from "observer";
+import { Dialog } from "../../../shared/common-components/dialogs/dialog";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { ClientSeedInfo } from "../../../shared/common-components/provably-fair/client-seed-info";
 const { CutCardPF, GameBaccaratX, DateTimeUtils, Auth } = gc;
@@ -29,10 +30,24 @@ export class CutCardIndexPopup extends ObserverComponent {
     @property(Label)
     lblAverage: Label = null;
 
+    @property(ScrollView)
+    playerSeedScrollView: ScrollView = null;
+
+    @property(Dialog)
+    dialog: Dialog = null;
+
     roundId = 0;
     playerName = "";
 
     private playerCutCards = [];
+
+    onLoad(): void {
+        super.onLoad();
+        this.dialog?.callBackFn &&
+            (this.dialog.callBackFn = () => {
+                this.playerSeedScrollView.scrollToBottomLeft(0);
+            });
+    }
 
     @render(gc.Player.MainPlayerStore, (store) => store.name)
     renderPlayerName(name: string) {
