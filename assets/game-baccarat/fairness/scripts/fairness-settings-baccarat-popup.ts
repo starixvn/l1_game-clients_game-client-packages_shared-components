@@ -74,7 +74,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         if (!cutCardInfo) {
             return;
         }
-        console.log("updateMessageSubmit", cutCardInfo);
+        //TODO: missing localization
         if (cutCardInfo.successful) {
             this.lblMessageSubmit.string = "Submission Successful";
             this.nodeDisabledSubmit.active = true;
@@ -96,9 +96,9 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         this.lblClientSeed.string = clientSeed;
     }
 
-    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoeHash)
-    renderSHA256(sha256: string) {
-        this.lblSHA256.string = sha256;
+    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeHash)
+    renderSHA256(shoeHash: string) {
+        this.lblSHA256.string = shoeHash;
     }
 
     @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))

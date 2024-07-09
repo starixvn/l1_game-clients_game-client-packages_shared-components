@@ -79,7 +79,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
     cardPool: PoolItem[] = [];
 
     spineCutCard: sp.Skeleton = null;
-    isNewShoe = false;
 
     private cardsStates: gc.GameBaccaratX.CardsState = {};
 
@@ -89,7 +88,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     test() {
-        this.isNewShoe = true;
         this.scheduleOnce(() => {
             this.startNewShoe({
                 cutCardIndex: 130,
@@ -370,11 +368,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
         return settlementResult;
     }
 
-    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoeHash, { fireImmediately: false })
-    receivedNewShoe(newShoeHash: gc.GameServiceMessage.NewShoeHash) {
-        if (newShoeHash) {
-            this.isNewShoe = true;
-
+    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoePhase, { fireImmediately: false })
+    receivedNewShoe(newShoePhase: boolean) {
+        if (newShoePhase) {
             this.dropCards(this.cardPool, false);
             this.cardHands.forEach((comp) => {
                 comp.showScore(false);
@@ -389,7 +385,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
         const { firstCard, burnedCards } = shoeInfo;
 
-        //TODO: clear UI when new shoe
         await this.playAnimationCutCard();
         await this.playAnimationBurnCards(firstCard, burnedCards);
     }
