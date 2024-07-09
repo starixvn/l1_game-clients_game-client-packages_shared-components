@@ -380,13 +380,17 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
     async startNewShoe(shoeInfo: gc.GameServiceMessage.ShoeInfo) {
-        if (!shoeInfo || !shoeInfo.new) {
+        if (!shoeInfo || !shoeInfo.animated) {
             return;
         }
-        const { firstCard, burnedCards } = shoeInfo;
+        const { firstCard, burnedCards, roundTime } = shoeInfo;
 
-        await this.playAnimationCutCard();
-        await this.playAnimationBurnCards(firstCard, burnedCards);
+        if (roundTime > 47) {
+            await this.playAnimationCutCard();
+        }
+        if (roundTime > 37) {
+            await this.playAnimationBurnCards(firstCard, burnedCards);
+        }
     }
 
     async playAnimationCutCard() {
