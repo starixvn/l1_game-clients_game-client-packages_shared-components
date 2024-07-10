@@ -135,7 +135,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     private creatNewCardNode() {
         const node = instantiate(this.prfCard);
-        node.setScale(v3(0.4, 0.4));
+        node.setScale(v3(0.34, 0.34));
         return node;
     }
 
@@ -489,16 +489,16 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
             case CardLocation.Player3:
                 eulerAngles = v3(0, 0, -90);
-                scale = v3(1, 1, 1).multiplyScalar(0.4);
+                scale = v3(1, 1, 1).multiplyScalar(0.34);
                 break;
             case CardLocation.Banker3:
                 eulerAngles = v3(0, 0, 90);
-                scale = v3(1, 1, 1).multiplyScalar(0.4);
+                scale = v3(1, 1, 1).multiplyScalar(0.34);
                 break;
 
             default:
                 eulerAngles = v3(0);
-                scale = v3(1, 1, 1).multiplyScalar(0.4);
+                scale = v3(1, 1, 1).multiplyScalar(0.34);
                 break;
         }
         if (animated) {
