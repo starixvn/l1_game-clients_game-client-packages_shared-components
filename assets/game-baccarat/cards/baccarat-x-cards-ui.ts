@@ -147,7 +147,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     hasWaitingCards(): boolean {
-        return this.cardPool.find((card) => card.location === CardLocation.Waiting1 || card.location === CardLocation.Waiting2) !== null;
+        return !!this.cardPool.find((card) => card.location === CardLocation.Waiting1 || card.location === CardLocation.Waiting2);
     }
 
     getItemAtLocation(location: number): PoolItem {
@@ -407,7 +407,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         for (let i = 0; i < burnedCards; i++) {
             const node = this.creatNewCardNode();
             const cardComp = node.getComponent(FairnessCard);
-            cardComp.setIndexValue(1 + i);
+            cardComp.setIndexValue(i);
             this.nodeBurnCards.addChild(node);
             node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
             this.transformCardNode(node, CardLocation.Box, false);
@@ -438,7 +438,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         await this.moveCardAnimation(firstCardNode, v3(firstCardsX + cardWidth / 2, 0, 0), animated);
 
         const startX = firstCardsX + cardWidth + spacingFirstCard;
-        for (let i = 1; i < burnedCards; i++) {
+        for (let i = 1; i < this.burnCardsNodes.length; i++) {
             const node = this.burnCardsNodes[i];
             node.active = true;
 
