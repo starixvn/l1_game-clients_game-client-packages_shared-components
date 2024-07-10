@@ -390,9 +390,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
         const { firstCard, burnedCards, roundTime } = shoeInfo;
 
-        if (roundTime > 47) {
-            await this.playAnimationCutCard();
-        }
+        await this.playAnimationCutCard();
         if (roundTime > 37) {
             await this.playAnimationBurnCards(firstCard, burnedCards);
         }
