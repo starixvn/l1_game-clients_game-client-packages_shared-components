@@ -56,11 +56,26 @@ export class ResultPercentage extends ObserverComponent {
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     render(histories: gc.RoundHistories.RoundHistory[]) {
+        if (histories.length === 0) {
+            this.clearAllLabels();
+            return;
+        }
+
         if (this.enablePercentage) {
             this.handlePercentageChoice(histories);
         } else {
             this.handleOccurrenceChoice(histories);
         }
+    }
+
+    clearAllLabels() {
+        this.labels.forEach((label) => {
+            if (this.enablePercentage) {
+                label.string = `0${this.showSignPercentage ? "%" : ""}`;
+            } else {
+                label.string = `0`;
+            }
+        });
     }
 
     handlePercentageChoice(histories: gc.RoundHistories.RoundHistory[]) {
