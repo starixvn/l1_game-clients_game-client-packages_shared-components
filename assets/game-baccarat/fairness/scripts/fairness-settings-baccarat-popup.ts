@@ -36,7 +36,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     @property
     maxCSNumber = 350;
 
-    private timer = 30;
+    private timer = 10;
     private interval;
 
     onLoad() {
