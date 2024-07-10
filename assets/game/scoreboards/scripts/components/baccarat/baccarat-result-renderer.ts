@@ -1,4 +1,4 @@
-import { Label, _decorator } from "cc";
+import { _decorator, Color, Label } from "cc";
 import { ScoreboardItemState } from "../../models/scoreboard-item-state";
 import { ScoreboardItemRenderer } from "../../renderers/scoreboard-item-renderer";
 const { ccclass, property } = _decorator;
@@ -15,11 +15,30 @@ export class BaccaratResultRenderer extends ScoreboardItemRenderer {
         const label = this.node.getComponent(Label);
         if (label) {
             label.string = `${data["score"]}`;
+            this.renderColorScore(data, label);
             this.node.active = true;
         }
     }
 
     reset(): void {
         this.node.active = false;
+    }
+
+    renderColorScore(data, label: Label) {
+        if (!data || !label) {
+            return;
+        }
+
+        switch (true) {
+            case !!data.banker:
+                label.color = new Color("FB0505");
+                break;
+            case !!data.player:
+                label.color = new Color("0824F9");
+                break;
+            case !!data.tie:
+                label.color = new Color("26ff26");
+                break;
+        }
     }
 }
