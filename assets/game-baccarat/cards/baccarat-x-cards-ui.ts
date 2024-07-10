@@ -5,7 +5,7 @@ import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
 import { bundleManager } from "../../shared/common-components/bundle-magager/bundle-manager";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
-import { ComponentUtils, FunctionUtils } from "../../shared/utils";
+import { ComponentUtils } from "../../shared/utils";
 import { AnimationUtils } from "../../shared/utils/utils";
 import { BaccaratXCards } from "./baccarat-x-cards";
 const { ccclass, property } = _decorator;
@@ -69,6 +69,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
     @property
     spineCutCardPath = "";
 
+    @property
+    cutCardsTimePoint = 47;
+
+    @property
+    burnCardsTimePoint = 44;
+
     private _cardHands: BaccaratXCards[] = [];
     private readonly movingCardDuration = 0.5;
 
@@ -81,29 +87,17 @@ export class BaccaratXCardsUI extends ObserverComponent {
     spineCutCard: sp.Skeleton = null;
 
     private cardsStates: gc.GameBaccaratX.CardsState = {};
+    private burnCardsNodes: Node[] = [];
+    private durations: gc.GameConfigs.DurationSetting;
 
     async onLoad() {
         await this.initCards();
         super.onLoad();
     }
 
-    test() {
-        this.scheduleOnce(() => {
-            this.startNewShoe({
-                cutCardIndex: 130,
-                currentIndex: 6,
-                firstCard: {
-                    rank: 5,
-                    suit: 2,
-                },
-                burnedCards: 6,
-            });
-        }, 2);
-    }
-
-    test2() {
-        this.currentCardIndex = 6;
-        this.closeCards(true);
+    @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.durations)
+    storeSettingDurations(durations: gc.GameConfigs.DurationSetting) {
+        this.durations = durations;
     }
 
     async initSpineCutCard() {
@@ -390,9 +384,13 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
         const { firstCard, burnedCards, roundTime } = shoeInfo;
 
-        await this.playAnimationCutCard();
-        if (roundTime > 37) {
-            await this.playAnimationBurnCards(firstCard, burnedCards);
+        console.log("start new shoe ", roundTime);
+        if (roundTime >= this.cutCardsTimePoint) {
+            await this.playAnimationCutCard();
+        }
+
+        if (roundTime > this.beforeStartRound) {
+            await this.playAnimationBurnCards(firstCard, burnedCards, roundTime >= this.burnCardsTimePoint);
         }
     }
 
@@ -400,27 +398,36 @@ export class BaccaratXCardsUI extends ObserverComponent {
         await this.initSpineCutCard();
         this.spineCutCard.node.active = true;
         await AnimationUtils.playSpine(this.spineCutCard, "cut-card", false);
-        await FunctionUtils.delay(0.5);
+        await AnimationUtils.delayTime(0.5);
         this.spineCutCard.node.active = false;
     }
 
-    async playAnimationBurnCards(firstCard, burnedCards: number) {
-        let cardNodes = [];
-        const node = this.creatNewCardNode();
-        const firstCardComp = node.getComponent(FairnessCard);
-        firstCardComp.setIndexValue(1);
-        firstCardComp.setCardData(firstCard);
-        this.nodeBurnCards.addChild(node);
+    async playAnimationBurnCards(firstCard: ServiceCard, burnedCards: number, animated: boolean) {
+        console.time("show burn card");
+        for (let i = 0; i < burnedCards; i++) {
+            const node = this.creatNewCardNode();
+            const cardComp = node.getComponent(FairnessCard);
+            cardComp.setIndexValue(1 + i);
+            this.nodeBurnCards.addChild(node);
+            node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
+            this.transformCardNode(node, CardLocation.Box, false);
+            node.active = false;
 
-        node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
-        cardNodes.push(node);
+            if (i === 0) {
+                cardComp.setCardData(firstCard);
+            }
 
-        firstCardComp.openCard();
+            this.burnCardsNodes.push(node);
+        }
 
-        this.transformCardNode(node, CardLocation.Box, false);
-        await this.moveCardAnimation(node, v3(0, 0, 0), true);
+        const firstCardNode = this.burnCardsNodes[0];
+        firstCardNode.active = true;
+        const firstCardComp = firstCardNode.getComponent(FairnessCard);
+        firstCardComp.openCard(animated);
+        this.transformCardNode(firstCardNode, CardLocation.Center, animated);
+        await this.moveCardAnimation(firstCardNode, v3(0, 0, 0), animated);
 
-        await FunctionUtils.delay(2);
+        animated && (await AnimationUtils.delayTime(2));
 
         const spacingFirstCard = 50;
         const spacingBurnedCards = 10;
@@ -428,36 +435,43 @@ export class BaccaratXCardsUI extends ObserverComponent {
         const cardWidth = 60;
         const firstCardsX = -0.5 * (cardWidth + spacingFirstCard + (cardWidth + spacingBurnedCards) * burnedCards - spacingBurnedCards);
 
-        this.transformCardNode(node, CardLocation.Center);
-        await this.moveCardAnimation(node, v3(firstCardsX + cardWidth / 2, 0, 0), true);
+        await this.moveCardAnimation(firstCardNode, v3(firstCardsX + cardWidth / 2, 0, 0), animated);
 
         const startX = firstCardsX + cardWidth + spacingFirstCard;
-        const moreCards = burnedCards - 1;
-        for (let i = 0; i < moreCards; i++) {
-            const node = this.creatNewCardNode();
-            const cardComp = node.getComponent(FairnessCard);
-            cardComp.setIndexValue(1 + i);
-            this.nodeBurnCards.addChild(node);
-            node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
-            this.transformCardNode(node, CardLocation.Box, false);
-            this.transformCardNode(node, CardLocation.Center);
-            await this.moveCardAnimation(node, v3(startX + i * (cardWidth + spacingBurnedCards) + cardWidth / 2, 0, 0), true);
-            cardNodes.push(node);
+        for (let i = 1; i < burnedCards; i++) {
+            const node = this.burnCardsNodes[i];
+            node.active = true;
+
+            this.transformCardNode(node, CardLocation.Center, animated);
+            this.moveCardAnimation(node, v3(startX + i * (cardWidth + spacingBurnedCards) + cardWidth / 2, 0, 0), animated);
         }
+        console.timeEnd("show burn card");
+    }
 
-        await FunctionUtils.delay(1);
+    @render(Rounds.RoundTimeStore, (store) => store.roundTime)
+    renderClearBurnCards(roundTime: number) {
+        if (roundTime === this.beforeStartRound) {
+            this.clearBurnCards();
+        }
+    }
 
+    private get beforeStartRound() {
+        return this.durations.placingBet + this.durations.startRound + 1;
+    }
+
+    async clearBurnCards() {
+        console.time("clear burn card");
         const dropPosition = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeTrash);
-        for (let i = 0; i < cardNodes.length; i++) {
-            i > 0 && (await FunctionUtils.delay(0.1));
-            const node = cardNodes[i];
+        for (let i = 0; i < this.burnCardsNodes.length; i++) {
+            i > 0 && (await AnimationUtils.delayTime(0.1));
+            const node = this.burnCardsNodes[i];
             this.transformCardNode(node, CardLocation.Trash);
             this.moveCardAnimation(node, dropPosition, true).then(() => {
                 node.destroy();
             });
         }
-
-        cardNodes = [];
+        console.timeEnd("clear burn card");
+        this.burnCardsNodes = [];
     }
 
     transformCardNode(node: Node, location: CardLocation, animated = true) {
