@@ -7,15 +7,15 @@ repeat: none
 cutcard_card1
   rotate: false
   xy: 2, 2
-  size: 252, 125
-  orig: 255, 128
+  size: 373, 125
+  orig: 376, 128
   offset: 3, 0
   index: -1
 cutcard_card2
   rotate: false
-  xy: 256, 2
-  size: 252, 125
-  orig: 253, 128
+  xy: 377, 2
+  size: 131, 125
+  orig: 132, 128
   offset: 0, 0
   index: -1
 cutcard_keycard
