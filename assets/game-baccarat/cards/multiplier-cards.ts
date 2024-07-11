@@ -46,9 +46,9 @@ export class MultiplierCards extends ObserverComponent {
         for (let i = 0; i < multipliers.length; i++) {
             const item = multipliers[i];
             const node = instantiate(this.prfMultiplierCard);
+            this.content.addChild(node);
             const comp = node.getComponent(MultiplierCard);
             comp.setData(item);
-            this.content.addChild(node);
             await this.moveCardAnimation(node, i, animated);
             this.multiplierCards.push(comp);
         }
