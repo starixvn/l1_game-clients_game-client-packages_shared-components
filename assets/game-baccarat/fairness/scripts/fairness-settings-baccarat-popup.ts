@@ -4,7 +4,7 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { ClientSeedManualBaccaratPopup } from "./client-seed-manual-baccarat-popup";
 const { ccclass, property } = _decorator;
-const { CutCardPF, GameBaccaratX, Rounds } = gc;
+const { CutCardPF, GameBaccaratX, Rounds, Translator } = gc;
 const { render, handle, observer } = Observer;
 
 @ccclass
@@ -31,6 +31,9 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     nodeDisabledSubmit: Node = null;
 
     @property
+    cutCardsTimePoint = 45;
+
+    @property
     minCSNumber = 300;
 
     @property
@@ -45,7 +48,6 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         this.updateMinCS();
         this.generateRandomCS();
         this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopupManual, this);
-        this.renderCountDown();
     }
 
     onDestroy() {
@@ -76,11 +78,11 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         }
         //TODO: missing localization
         if (cutCardInfo.successful) {
-            this.lblMessageSubmit.string = "Submission Successful";
+            this.lblMessageSubmit.string = Translator.gameTranslate("submission_sucessful");
             this.nodeDisabledSubmit.active = true;
             this.lblMessageSubmit.color = Color.fromHEX(color, "#06681D");
         } else {
-            this.lblMessageSubmit.string = "Submission fails, please try again";
+            this.lblMessageSubmit.string = Translator.gameTranslate("submission_fail");
             this.nodeDisabledSubmit.active = false;
             this.lblMessageSubmit.color = Color.fromHEX(color, "#B82222");
         }
@@ -106,15 +108,10 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         return true;
     }
 
-    private renderCountDown() {
-        this.interval = setInterval(() => {
-            this.lblCountDown && (this.lblCountDown.string = this.timer.toString());
-            this.timer--;
-            if (this.timer < 0) {
-                this.closePopup();
-                clearInterval(this.interval);
-            }
-        }, 1000);
+    @render(Rounds.RoundTimeStore, (store) => store.roundTime)
+    renderCountDownTime(roundTime: number) {
+        console.log("roundTime", roundTime);
+        this.lblCountDown && (this.lblCountDown.string = (roundTime - this.cutCardsTimePoint).toString());
     }
 
     @handle(CutCardPF.FairnessHandler, (handler, min: number) => handler.setMinClientSeed(min))
