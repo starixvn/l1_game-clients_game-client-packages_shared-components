@@ -30,7 +30,7 @@ export class MultiplierPayout extends ObserverComponent {
             if (possiblePayout[choice]) {
                 parentNode.active = true;
                 const value = possiblePayout[choice].value;
-                label.string = `${FormatUtils.numberWithCommas(value, 2, true)}x`;
+                label.string = `${+(+value).toFixed(2)}x`;
             } else {
                 parentNode.active = false;
                 label.string = ``;
