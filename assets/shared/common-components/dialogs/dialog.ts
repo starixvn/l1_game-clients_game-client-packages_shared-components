@@ -24,19 +24,25 @@ export class Dialog extends Component {
     }
 
     async show() {
+        const promises = [];
         if (this.nodeFadeBackground) {
             this.nodeFadeBackground.active = true;
-            await fadeIn(this.nodeFadeBackground, 0.1);
+            promises.push(fadeIn(this.nodeFadeBackground, 0.1));
         }
+
         if (this.nodeBody) {
-            await Promise.all([fadeIn(this.nodeBody, 0.3), bounceIn(this.nodeBody, this.nodeBody.scale, this.appearDuration)]);
+            promises.push(Promise.all([fadeIn(this.nodeBody, 0.3), bounceIn(this.nodeBody, this.nodeBody.scale, this.appearDuration)]));
         }
+
+        await Promise.all(promises);
         this.callBackFn?.();
     }
 
     hide() {
         if (this.nodeFadeBackground) {
-            fadeOut(this.nodeFadeBackground, this.appearDuration).then(() => (this.nodeFadeBackground.active = false));
+            fadeOut(this.nodeFadeBackground, this.appearDuration).then(
+                () => this.nodeFadeBackground && (this.nodeFadeBackground.active = false)
+            );
         }
         if (this.nodeBody) {
             fadeOut(this.nodeBody, this.appearDuration);

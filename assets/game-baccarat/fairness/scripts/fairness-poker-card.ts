@@ -11,6 +11,6 @@ export class FairnessPokerCard extends Component {
     cardFairness: FairnessCard = null;
 
     showHighlight(isShow: boolean) {
-        this.nodeHighlight.active = isShow;
+        this.nodeHighlight && (this.nodeHighlight.active = isShow);
     }
 }
