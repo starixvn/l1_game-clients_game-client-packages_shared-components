@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, Prefab, Tween, UIOpacity, _decorator, instantiate, tween, v3 } from "cc";
+import { Label, Node, Prefab, UIOpacity, _decorator, instantiate, tween, v3 } from "cc";
 import Observer from "observer";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
@@ -26,25 +26,21 @@ export class MultiplierCards extends ObserverComponent {
     private maxBet = 0;
 
     private multiplierCards: MultiplierCard[] = [];
-    private cardTween: Tween<UIOpacity> = null;
 
     findMatchedCard(card: ServiceCard): MultiplierCard {
         return this.multiplierCards.find((comp) => comp.data.rank === card.rank && comp.data.suit === card.suit);
     }
 
     @render(gc.MultipliersStore, (store) => store.renderMultipliers, { fireImmediately: false })
-    async renderMultipliers(renderMultipliers: { visible: boolean; animated: boolean; multipliers: any[] }) {
-        const { visible, animated, multipliers } = renderMultipliers;
+    async renderMultipliers(renderMultipliers: { animated: boolean; multipliers: any[] }) {
+        if (renderMultipliers) {
+            this.hideCards();
+            return;
+        }
 
-        if (!visible || multipliers.length === 0) {
-            this.content.removeAllChildren();
-            this.showMultiplierCards(false);
-            return;
-        }
-        if (!animated && this.content.children.length > 0) {
-            return;
-        }
-        this.content.removeAllChildren();
+        const { animated, multipliers } = renderMultipliers;
+
+        this.content.destroyAllChildren();
         this.multiplierCards = [];
         this.showMultiplierCards(true);
         for (let i = 0; i < multipliers.length; i++) {
@@ -53,14 +49,15 @@ export class MultiplierCards extends ObserverComponent {
             const comp = node.getComponent(MultiplierCard);
             comp.setData(item);
             this.content.addChild(node);
-            await this.moveCardAnimation(node, i, multipliers.length, true);
+            await this.moveCardAnimation(node, i, multipliers.length, animated);
             this.multiplierCards.push(comp);
         }
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.isStartingRound)
     hideCards() {
         this.showMultiplierCards(false);
+        this.content.destroyAllChildren();
+        this.multiplierCards = [];
     }
 
     showMultiplierCards(isShow: boolean) {
