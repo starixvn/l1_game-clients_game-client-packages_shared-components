@@ -33,7 +33,7 @@ export class MultiplierCards extends ObserverComponent {
 
     @render(gc.MultipliersStore, (store) => store.renderMultipliers, { fireImmediately: false })
     async renderMultipliers(renderMultipliers: { animated: boolean; multipliers: any[] }) {
-        if (renderMultipliers) {
+        if (!renderMultipliers) {
             this.hideCards();
             return;
         }
