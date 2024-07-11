@@ -1,9 +1,9 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Label, Node } from "cc";
-import observer from "observer";
 import { CrossControlItem } from "db://shared-components/shared/common-components/cross-control/cross-control-item";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { AnimationUtils } from "db://shared-components/shared/utils/utils";
+import observer from "observer";
 const { ccclass, property } = _decorator;
 const { fadeIn } = AnimationUtils;
 const { handle } = observer;
@@ -18,6 +18,9 @@ export class IconInfoPopup extends ObserverComponent {
 
     @property
     keyText = "";
+
+    @property
+    nameSpace = "Common";
 
     onLoad() {
         super.onLoad();
@@ -42,11 +45,11 @@ export class IconInfoPopup extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     clickInfoIcon() {
         this.nodeTooltip.active = !this.nodeTooltip.active;
-        this.setContentTooltip(this.keyText);
+        this.setContentTooltip();
     }
 
-    setContentTooltip(key: string) {
-        this.lblContent.string = `${gc.Translator.commonTranslate(key)}`;
+    setContentTooltip() {
+        this.lblContent.string = gc.Translator.translate(`${this?.nameSpace}.${this?.keyText}`);
         fadeIn(this.lblContent.node, 0.3);
     }
 }
