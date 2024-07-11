@@ -11,6 +11,9 @@ export class WinningResult extends Component {
     @property
     supportChoices = "";
 
+    @property
+    upperCaseChoice = false;
+
     private get choices() {
         return this.supportChoices.split(",");
     }
@@ -50,7 +53,8 @@ export class WinningResult extends Component {
     setSettlementResult(data: gc.GameServiceMessage.TSettlementResult) {
         const winChoice = this.choices.find((choice) => data[choice]);
         if (winChoice) {
-            this.label.string = gc.Translator.gameTranslate(`${winChoice}_win`);
+            const choice = gc.Translator.gameTranslate(`${winChoice}_win`);
+            this.label.string = this.upperCaseChoice ? choice.toUpperCase() : choice;
         }
 
         return winChoice;
