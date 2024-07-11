@@ -11,10 +11,14 @@ export class SharpnessLabel extends Component {
     private get weightScale() {
         return 1 / this.fontSizeWeight;
     }
-    private label: Label = null;
-    private richText: RichText = null;
+    label: Label = null;
+    richText: RichText = null;
 
     protected onLoad(): void {
+        this.updateLabel();
+    }
+
+    updateLabel() {
         this.label = this.node.getComponent(Label);
         this.richText = this.node.getComponent(RichText);
 
