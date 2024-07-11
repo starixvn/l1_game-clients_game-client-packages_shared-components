@@ -8,6 +8,11 @@ export namespace AnimationUtils {
         }
         return uiOpacity;
     };
+
+    export const setOpacityNode = (node: Node, opacity: number) => {
+        getUiOpacity(node).opacity = opacity;
+    };
+
     export const fadeIn = (node: Node, duration: number, opacity = 255) => {
         return fadeTo(node, duration, opacity);
     };

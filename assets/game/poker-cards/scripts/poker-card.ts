@@ -72,17 +72,22 @@ export class PokerCard extends Component {
         return this._animation;
     }
     protected onLoad(): void {
-        this.setGoldenCard(false);
+        this.setGoldenCard(false, false);
     }
 
-    setGoldenCard(show = true): void {
+    setGoldenCard(show: boolean, animated: boolean): void {
         if (!this.bgGolden) {
             return;
         }
-        if (show) {
-            AnimationUtils.fadeIn(this.bgGolden, 0.3);
+
+        if (animated) {
+            if (show) {
+                AnimationUtils.fadeIn(this.bgGolden, 0.3);
+            } else {
+                AnimationUtils.fadeOut(this.bgGolden, 0);
+            }
         } else {
-            AnimationUtils.fadeOut(this.bgGolden, 0);
+            AnimationUtils.setOpacityNode(this.bgGolden, show ? 255 : 1);
         }
     }
 
@@ -167,6 +172,6 @@ export class PokerCard extends Component {
 
     protected showCardBack() {
         this.setDetailVisibility(false);
-        this.setGoldenCard(false);
+        this.setGoldenCard(false, false);
     }
 }

@@ -34,6 +34,10 @@ export class MultiplierCardEffect extends Component {
         const { card, data, animated } = openCard;
         const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data);
         if (matchedMultiplierCard) {
+            const changeToGoldCard = () => {
+                matchedMultiplierCard.card.setGoldenCard(false, animated);
+                card.setGoldenCard(true, animated);
+            };
             if (animated) {
                 const node = instantiate(this.nodeEffect);
                 this.nodeEffect.parent.addChild(node);
@@ -46,14 +50,12 @@ export class MultiplierCardEffect extends Component {
                         position: destPos,
                     })
                     .call(() => {
-                        matchedMultiplierCard.card.setGoldenCard(false);
-                        card.setGoldenCard();
+                        changeToGoldCard();
                     })
                     .destroySelf()
                     .start();
             } else {
-                matchedMultiplierCard.card.setGoldenCard(false);
-                card.setGoldenCard();
+                changeToGoldCard();
             }
         }
     }
