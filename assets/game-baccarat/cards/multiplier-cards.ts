@@ -49,7 +49,7 @@ export class MultiplierCards extends ObserverComponent {
             const comp = node.getComponent(MultiplierCard);
             comp.setData(item);
             this.content.addChild(node);
-            await this.moveCardAnimation(node, i, multipliers.length, animated);
+            await this.moveCardAnimation(node, i, animated);
             this.multiplierCards.push(comp);
         }
     }
@@ -92,17 +92,19 @@ export class MultiplierCards extends ObserverComponent {
         }
     }
 
-    async moveCardAnimation(node: Node, index: number, numberCards: number, animated) {
+    async moveCardAnimation(node: Node, index: number, animated: boolean) {
+        const cardWidth = 52;
+        const origin = index * cardWidth;
+
         if (!animated) {
+            node.position = v3(origin, node.position.y, 0);
             return;
         }
         const opacityNode = node.getComponent(UIOpacity);
         opacityNode.opacity = 0;
-        const cardWidth = 52;
-        const origin = index * cardWidth;
-
         node.setPosition(origin + cardWidth, node.position.y, 0);
         const duration = 0.25;
+
         return new Promise((resolve) => {
             tween(opacityNode)
                 .to(0, {
