@@ -77,10 +77,7 @@ export class MultiplierCards extends ObserverComponent {
     }
 
     renderRangeBetLimit() {
-        this.lblRangeBetLimit.string = `$ ${FormatUtils.numberWithCommas(this.minBet, 2)} - ${FormatUtils.numberWithCommas(
-            this.maxBet,
-            2
-        )}`;
+        this.lblRangeBetLimit.string = `${FormatUtils.numberWithCommas(this.minBet, 2)} - ${FormatUtils.numberWithCommas(this.maxBet, 2)}`;
     }
 
     @render(GameBaccaratX.ExtraFee.ExtraFeeStore, (store) => store.extraFee)
