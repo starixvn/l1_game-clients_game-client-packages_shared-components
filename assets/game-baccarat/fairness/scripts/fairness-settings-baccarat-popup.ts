@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { Color, Label, Node, Prefab, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { TimePoints } from "../../time-point";
 import { ClientSeedManualBaccaratPopup } from "./client-seed-manual-baccarat-popup";
 const { ccclass, property } = _decorator;
 const { CutCardPF, GameBaccaratX, Rounds, Translator } = gc;
@@ -29,9 +30,6 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @property(Node)
     nodeDisabledSubmit: Node = null;
-
-    @property
-    cutCardsTimePoint = 45;
 
     @property
     minCSNumber = 300;
@@ -110,8 +108,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @render(Rounds.RoundTimeStore, (store) => store.roundTime)
     renderCountDownTime(roundTime: number) {
-        console.log("roundTime", roundTime);
-        this.lblCountDown && (this.lblCountDown.string = (roundTime - this.cutCardsTimePoint).toString());
+        this.lblCountDown && (this.lblCountDown.string = (roundTime - TimePoints.cutCard).toString());
     }
 
     @handle(CutCardPF.FairnessHandler, (handler, min: number) => handler.setMinClientSeed(min))
