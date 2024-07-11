@@ -16,6 +16,6 @@ export class MultiplierCard extends Component {
         this.lblMultiplier.string = `${data.value}x`;
         this.card.setServiceCard(this.data);
         this.card.faceUp();
-        this.card.setGoldenCard();
+        this.card.setGoldenCard(true, false);
     }
 }
