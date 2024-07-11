@@ -1,6 +1,7 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
-import { Label, Node, Prefab, _decorator, instantiate } from "cc";
+import { _decorator, instantiate, Label, Node, Prefab, ScrollView } from "cc";
 import Observer from "observer";
+import { Dialog } from "../../../shared/common-components/dialogs/dialog";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { FairnessPokerCard } from "./fairness-poker-card";
 const { ccclass, property } = _decorator;
@@ -30,10 +31,18 @@ export class FairnessVerificationPopup extends ObserverComponent {
     @property(Prefab)
     prfCutCard: Prefab = null;
 
+    @property(ScrollView)
+    cardsScrollView: ScrollView = null;
+
     roundId = 0;
+    private pfData: GameServiceMessage.ShoeVerification = null;
 
     start() {
         this.handleRoundId();
+        this.node?.getComponent(Dialog) &&
+            (this.node.getComponent(Dialog).callBackFn = () => {
+                this.renderCards(this?.pfData);
+            });
     }
 
     @handle(CutCardPF.FairnessHandler, (handle) => handle.closeVerification())
@@ -48,7 +57,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
         this.lblShoeResult.string = pf.rawValue;
         this.lblShoeResultSHA256.string = pf.hashValue;
         this.lblMergeSeed.string = pf.cutCardIndex.toString();
-        this.renderCards(pf);
+        this.pfData = pf;
     }
 
     handleRoundId() {
@@ -57,7 +66,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
 
     renderCards(pf: GameServiceMessage.ShoeVerification) {
         const { cards, usedCardIndexes, cutCardIndex } = pf;
-        cards.forEach((card, index) => {
+        cards?.forEach((card, index) => {
             let cardNode = instantiate(this.prfCard);
             const comp = cardNode.getComponent(FairnessPokerCard);
             comp.cardFairness.setCardData(card);
@@ -70,6 +79,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
             comp.showHighlight(usedCardIndexes.includes(index));
             this.nodeCardsContent.addChild(cardNode);
         });
+        this.cardsScrollView?.scrollToTop(0);
     }
 
     @handle(CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openCutCardIndex(roundId))
