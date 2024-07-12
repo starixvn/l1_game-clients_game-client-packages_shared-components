@@ -37,7 +37,7 @@ export class BaccaratResultRenderer extends ScoreboardItemRenderer {
                 label.color = new Color("0824F9");
                 break;
             case !!data.tie:
-                label.color = new Color("26ff26");
+                label.color = new Color("23ba00");
                 break;
         }
     }
