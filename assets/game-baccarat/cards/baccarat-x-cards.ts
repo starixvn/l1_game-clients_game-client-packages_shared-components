@@ -15,6 +15,10 @@ export class BaccaratXCards extends Component {
     @property(Label)
     lblScore: Label = null;
 
+    protected onLoad(): void {
+        this.cardContainer.children.forEach((node) => node.children.forEach((child) => (child.active = false)));
+    }
+
     getCardLocation(index: number) {
         return this.cardContainer.children[index];
     }
