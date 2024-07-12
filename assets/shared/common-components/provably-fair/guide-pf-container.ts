@@ -1,7 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
-import Observer from "observer";
 import { NodeContainer } from "db://shared-components/shared/common-components/node-container/node-container";
+import Observer from "observer";
 import { IntroPFPopup } from "./intro-pf-popup";
 const { ccclass, property } = _decorator;
 const { render } = Observer;
@@ -15,5 +15,10 @@ export class GuidePFContainer extends NodeContainer {
         }
         const guide = this.createNode();
         guide.getComponent(IntroPFPopup)?.openGuidePF(url);
+    }
+
+    @render(gc.PopupsClosed.PopupsClosedStore, (store) => store.forceClosed, { fireImmediately: false })
+    popupVisibility(forceClosed: any) {
+        forceClosed && this.node.destroyAllChildren();
     }
 }
