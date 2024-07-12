@@ -64,7 +64,13 @@ export class BaccaratXCardsUI extends ObserverComponent {
     nodeTrash: Node = null;
 
     @property(Node)
+    nodeBgNewShoe: Node = null;
+
+    @property(Node)
     nodeBurnCards: Node = null;
+
+    @property(Node)
+    nodeCutCards: Node = null;
 
     @property
     spineCutCardPath = "";
@@ -91,6 +97,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     private durations: gc.GameConfigs.DurationSetting;
 
     async onLoad() {
+        this.nodeBgNewShoe.active = false;
         await this.initCards();
         super.onLoad();
     }
@@ -109,7 +116,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 null
             );
             const node = new Node();
-            this.nodeBurnCards.addChild(node);
+            this.nodeCutCards.addChild(node);
             this.spineCutCard = node.addComponent(sp.Skeleton);
             this.spineCutCard.skeletonData = data;
         }
@@ -377,6 +384,22 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
     }
 
+    test() {
+        const shoe = {
+            roundTime: 48,
+            cutCardIndex: 200,
+            burnedCards: 7,
+            firstCard: {
+                rank: 5,
+                suit: 3,
+            },
+            currentIndex: 6,
+            animated: true,
+        };
+
+        this.startNewShoe(shoe);
+    }
+
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
     async startNewShoe(shoeInfo: gc.GameServiceMessage.ShoeInfo) {
         if (!shoeInfo || !shoeInfo.animated) {
@@ -385,6 +408,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         const { firstCard, burnedCards, roundTime } = shoeInfo;
 
         console.log("start new shoe ", roundTime);
+        this.nodeBgNewShoe.active = true;
         if (roundTime >= this.cutCardsTimePoint) {
             await this.playAnimationCutCard();
         }
@@ -429,21 +453,22 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         animated && (await AnimationUtils.delayTime(2));
 
-        const spacingFirstCard = 50;
+        const spacingFirstCard = 25;
         const spacingBurnedCards = 10;
-
         const cardWidth = 60;
-        const firstCardsX = -0.5 * (cardWidth + spacingFirstCard + (cardWidth + spacingBurnedCards) * burnedCards - spacingBurnedCards);
 
-        await this.moveCardAnimation(firstCardNode, v3(firstCardsX + cardWidth / 2, 0, 0), animated);
+        const totalWidth = cardWidth * burnedCards + (burnedCards - 2) * spacingBurnedCards + spacingFirstCard;
+        const firstCardsX = -totalWidth / 2 + cardWidth / 2;
 
-        const startX = firstCardsX + cardWidth + spacingFirstCard;
+        await this.moveCardAnimation(firstCardNode, v3(firstCardsX, 0, 0), animated);
+
+        const startX = firstCardsX + spacingFirstCard + cardWidth;
         for (let i = 1; i < this.burnCardsNodes.length; i++) {
             const node = this.burnCardsNodes[i];
             node.active = true;
 
             this.transformCardNode(node, CardLocation.Center, animated);
-            this.moveCardAnimation(node, v3(startX + i * (cardWidth + spacingBurnedCards) + cardWidth / 2, 0, 0), animated);
+            this.moveCardAnimation(node, v3(startX + (i - 1) * (cardWidth + spacingBurnedCards), 0, 0), animated);
         }
         console.timeEnd("show burn card");
     }
@@ -472,6 +497,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
         console.timeEnd("clear burn card");
         this.burnCardsNodes = [];
+
+        this.nodeBgNewShoe.active = false;
     }
 
     transformCardNode(node: Node, location: CardLocation, animated = true) {
