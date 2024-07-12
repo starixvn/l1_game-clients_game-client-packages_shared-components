@@ -63,6 +63,7 @@ export class GridLayout extends Component {
 
     onEnable() {
         this.updateLayout();
+        this.scrollToEnd();
     }
 
     protected updateLayout() {
