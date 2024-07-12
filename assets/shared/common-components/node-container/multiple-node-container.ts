@@ -57,8 +57,12 @@ export class MultipleNodeContainer extends ObserverComponent {
         this.visibleNodes[name] = node;
     }
 
-    showDialog(show: boolean) {
+    showDialog(show: boolean, animated = true) {
         const dialog = this.node.getComponent(Dialog);
+        if (!animated) {
+            show ? dialog?.showQuickly() : dialog?.hideQuickly();
+            return;
+        }
         if (dialog) {
             show ? dialog.show() : dialog.hide();
         }

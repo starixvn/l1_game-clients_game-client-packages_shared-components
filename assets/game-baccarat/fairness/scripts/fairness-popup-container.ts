@@ -46,4 +46,22 @@ export class FairnessPopupContainer extends MultipleNodeContainer {
             this.onClose();
         }
     }
+
+    @render(gc.PopupsClosed.PopupsClosedStore, (store) => store.forceClosed, { fireImmediately: false })
+    popupVisibility(forceClosed: any) {
+        if (forceClosed) {
+            this.forcedClose([Popup.CutCardIndex, Popup.FairnessVerification]);
+            this.showDialog(false, false);
+        }
+    }
+
+    forcedClose(names: string[]) {
+        names.forEach((name) => {
+            const index = this.nodeStacks.indexOf(name);
+            if (index > -1) {
+                this.nodeStacks.splice(index, 1);
+            }
+            this.clearNode(name);
+        });
+    }
 }
