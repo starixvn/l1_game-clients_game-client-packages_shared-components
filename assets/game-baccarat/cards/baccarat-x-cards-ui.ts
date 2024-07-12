@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Node, Prefab, UITransform, Vec3, _decorator, instantiate, sp, tween, v3 } from "cc";
+import { Label, Node, Prefab, UITransform, Vec3, _decorator, instantiate, sp, tween, v3 } from "cc";
 import Observer from "observer";
 import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
@@ -405,12 +405,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
         if (!shoeInfo || !shoeInfo.animated) {
             return;
         }
-        const { firstCard, burnedCards, roundTime } = shoeInfo;
+        const { firstCard, burnedCards, roundTime, cutCardIndex } = shoeInfo;
 
         console.log("start new shoe ", roundTime);
         this.nodeBgNewShoe.active = true;
         if (roundTime >= this.cutCardsTimePoint) {
-            await this.playAnimationCutCard();
+            await this.playAnimationCutCard(cutCardIndex);
         }
 
         if (roundTime > this.beforeStartRound) {
@@ -418,12 +418,18 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
     }
 
-    async playAnimationCutCard() {
+    async playAnimationCutCard(cutCardIndex: number) {
         await this.initSpineCutCard();
-        this.spineCutCard.node.active = true;
+        const label = this.nodeCutCards.getComponentInChildren(Label);
+        if (label) {
+            label.string = gc.Translator.gameTranslate("show_cut_card_index", {
+                cut_card_index: cutCardIndex,
+            });
+        }
+        this.nodeCutCards.active = true;
         await AnimationUtils.playSpine(this.spineCutCard, "cut-card", false);
         await AnimationUtils.delayTime(0.5);
-        this.spineCutCard.node.active = false;
+        this.nodeCutCards.active = false;
     }
 
     async playAnimationBurnCards(firstCard: ServiceCard, burnedCards: number, animated: boolean) {
