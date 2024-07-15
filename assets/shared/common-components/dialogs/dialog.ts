@@ -25,7 +25,6 @@ export class Dialog extends Component {
 
     async show() {
         const promises = [];
-        const actionTag = 99;
         if (this.nodeFadeBackground) {
             this.nodeFadeBackground.active = true;
             Tween.stopAllByTag(FadeTag, this.nodeFadeBackground);
@@ -51,6 +50,8 @@ export class Dialog extends Component {
             AnimationUtils.setOpacityNode(this.nodeBody, 255);
             this.nodeBody.scale = v3(1, 1, 1);
         }
+
+        this.callBackFn?.();
     }
 
     hideQuickly() {

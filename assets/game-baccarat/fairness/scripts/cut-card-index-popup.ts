@@ -1,5 +1,5 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
-import { _decorator, instantiate, Label, Node, Prefab, ScrollView } from "cc";
+import { _decorator, instantiate, Label, Node, Prefab, ScrollView, tween, Tween } from "cc";
 import FileSaver from "file-saver";
 import Observer from "observer";
 import { Dialog } from "../../../shared/common-components/dialogs/dialog";
@@ -40,13 +40,29 @@ export class CutCardIndexPopup extends ObserverComponent {
     playerName = "";
 
     private playerCutCards = [];
+    private dataPF = null;
+    private DURATION_DELAY_RENDER_DATA = 0.3;
+    private TAG_INDEX = 5;
 
     onLoad(): void {
         super.onLoad();
         this.dialog?.callBackFn &&
             (this.dialog.callBackFn = () => {
-                this.playerSeedScrollView.scrollToBottomLeft(0);
+                tween(this?.node)
+                    .delay(this.DURATION_DELAY_RENDER_DATA)
+                    .call(() => {
+                        this.renderSeedPlayers(this.playerCutCards);
+                        this.renderCombinedHash(this.dataPF);
+                        this.playerSeedScrollView?.scrollToLeft(0);
+                    })
+                    .tag(this.TAG_INDEX)
+                    .start();
             });
+    }
+    onDestroy(): void {
+        super.onDestroy();
+        Tween.stopAllByTag(this.TAG_INDEX);
+        this.unscheduleAllCallbacks();
     }
 
     @render(gc.Player.MainPlayerStore, (store) => store.name)
@@ -62,11 +78,10 @@ export class CutCardIndexPopup extends ObserverComponent {
         if (!pf) {
             return;
         }
-        this.lblMergeSeed.string = pf.cutCardIndex.toString();
-        this.lblServerSeed.string = pf.cutCardPF.serverCutCardIndex.toString();
-        this.playerCutCards = pf.cutCardPF.playerCutCards;
-        this.renderSeedPlayers(this.playerCutCards);
-        this.renderCombinedHash(pf);
+        this.lblMergeSeed.string = pf?.cutCardIndex.toString();
+        this.lblServerSeed.string = pf?.cutCardPF?.serverCutCardIndex.toString();
+        this.playerCutCards = pf?.cutCardPF?.playerCutCards;
+        this.dataPF = pf;
     }
 
     renderSeedPlayers(seedPlayers) {
