@@ -329,6 +329,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async openCards(result: BaccaratResult, settlemenResult: gc.GameServiceMessage.TSettlementResult, animated = true) {
+        await this.draw6Cards(false);
+
         const dataCards: ServiceCard[] = [];
         for (let i = 0; i < 3; i++) {
             [gc.GameBaccaratX.BetChoice.Player, gc.GameBaccaratX.BetChoice.Banker].forEach((team) => {
@@ -398,6 +400,43 @@ export class BaccaratXCardsUI extends ObserverComponent {
         };
 
         this.startNewShoe(shoe);
+    }
+
+    testOpenCards() {
+        const cards1 = {
+            player: {
+                card1: { rank: 2, suit: 0 },
+                card2: { rank: 2, suit: 1 },
+                card3: { rank: 2, suit: 2 },
+                score: 9,
+            },
+            banker: {
+                card1: { rank: 4, suit: 0 },
+                card2: { rank: 2, suit: 1 },
+                card3: { rank: 4, suit: 2 },
+                score: 3,
+            },
+        };
+
+        const cards2 = {
+            player: {
+                card1: { rank: 7, suit: 0 },
+                card2: { rank: 0, suit: 1 },
+                card3: null,
+                score: 9,
+            },
+            banker: {
+                card1: { rank: 6, suit: 0 },
+                card2: { rank: 0, suit: 1 },
+                card3: null,
+                score: 8,
+            },
+        };
+
+        this.openCards(cards1, {}, false);
+        this.scheduleOnce(() => {
+            this.openCards(cards2, {}, true);
+        }, 0.1);
     }
 
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
