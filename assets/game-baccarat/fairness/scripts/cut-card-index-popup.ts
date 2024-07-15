@@ -102,7 +102,8 @@ export class CutCardIndexPopup extends ObserverComponent {
     private renderCombinedHash(pf: GameServiceMessage.ShoeVerification) {
         this.lblFinalCutCard.string = pf.cutCardIndex.toString();
 
-        let clientSeedStr = pf.cutCardPF?.serverCutCardIndex ? `${pf.cutCardPF?.serverCutCardIndex},` : "";
+        let clientSeedStr = pf.cutCardPF?.serverCutCardIndex ? pf.cutCardPF?.serverCutCardIndex : "";
+        this.playerCutCards?.length > 0 && (clientSeedStr += ",");
         this.playerCutCards?.forEach((player, index) => {
             const seed = player.clientSeed;
             clientSeedStr += index === this.playerCutCards.length - 1 ? seed : `${seed},`;
