@@ -1,5 +1,5 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
-import { _decorator, instantiate, Label, Node, Prefab, ScrollView, tween, Tween } from "cc";
+import { _decorator, instantiate, Label, Node, Prefab, ScrollView } from "cc";
 import FileSaver from "file-saver";
 import Observer from "observer";
 import { Dialog } from "../../../shared/common-components/dialogs/dialog";
@@ -41,27 +41,23 @@ export class CutCardIndexPopup extends ObserverComponent {
 
     private playerCutCards = [];
     private dataPF = null;
-    private DURATION_DELAY_RENDER_DATA = 0.3;
-    private TAG_INDEX = 5;
+    private DURATION_DELAY_RENDER_DATA = 0.4;
 
     onLoad(): void {
         super.onLoad();
         this.dialog?.callBackFn &&
             (this.dialog.callBackFn = () => {
-                tween(this?.node)
-                    .delay(this.DURATION_DELAY_RENDER_DATA)
-                    .call(() => {
-                        this.renderSeedPlayers(this.playerCutCards);
-                        this.renderCombinedHash(this.dataPF);
-                        this.playerSeedScrollView?.scrollToLeft(0);
-                    })
-                    .tag(this.TAG_INDEX)
-                    .start();
+                if (!this?.dataPF?.cards) {
+                    this.scheduleOnce(this.dialog.callBackFn, this.DURATION_DELAY_RENDER_DATA);
+                    return;
+                }
+                this.renderSeedPlayers(this.playerCutCards);
+                this.renderCombinedHash(this.dataPF);
+                this.playerSeedScrollView?.scrollToLeft(0);
             });
     }
     onDestroy(): void {
         super.onDestroy();
-        Tween.stopAllByTag(this.TAG_INDEX);
         this.unscheduleAllCallbacks();
     }
 
@@ -85,7 +81,7 @@ export class CutCardIndexPopup extends ObserverComponent {
     }
 
     renderSeedPlayers(seedPlayers) {
-        seedPlayers.forEach((player) => {
+        seedPlayers?.forEach((player) => {
             const node = instantiate(this.prfPlayerSeed);
             const comp = node.getComponent(ClientSeedInfo);
             comp.setDisplayName(player, this.playerName !== player.name);
@@ -105,8 +101,9 @@ export class CutCardIndexPopup extends ObserverComponent {
 
     private renderCombinedHash(pf: GameServiceMessage.ShoeVerification) {
         this.lblFinalCutCard.string = pf.cutCardIndex.toString();
-        let clientSeedStr = `${pf.cutCardPF.serverCutCardIndex},`;
-        this.playerCutCards.forEach((player, index) => {
+
+        let clientSeedStr = pf.cutCardPF?.serverCutCardIndex ? `${pf.cutCardPF?.serverCutCardIndex},` : "";
+        this.playerCutCards?.forEach((player, index) => {
             const seed = player.clientSeed;
             clientSeedStr += index === this.playerCutCards.length - 1 ? seed : `${seed},`;
         });

@@ -1,5 +1,5 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
-import { _decorator, instantiate, Label, Node, Prefab, ScrollView } from "cc";
+import { _decorator, CCInteger, instantiate, Label, Node, Prefab, ScrollView, UITransform, Vec2 } from "cc";
 import Observer from "observer";
 import { Dialog } from "../../../shared/common-components/dialogs/dialog";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
@@ -36,6 +36,12 @@ export class FairnessVerificationPopup extends ObserverComponent {
 
     @property(Dialog)
     dialog: Dialog = null;
+
+    @property(CCInteger)
+    maxIndexCard = 416;
+
+    @property(CCInteger)
+    maxCardRow = 20;
 
     roundId = 0;
     private pfData: GameServiceMessage.ShoeVerification = null;
@@ -80,6 +86,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
 
     renderCards(pf: GameServiceMessage.ShoeVerification) {
         const { cards, usedCardIndexes, cutCardIndex } = pf;
+
         cards?.forEach((card, index) => {
             let cardNode = instantiate(this.prfCard);
             const comp = cardNode.getComponent(FairnessPokerCard);
@@ -94,10 +101,23 @@ export class FairnessVerificationPopup extends ObserverComponent {
             this.nodeCardsContent.addChild(cardNode);
         });
         this.cardsScrollView?.scrollToTop(0);
+        this.scheduleOnce(() => {
+            this.handleScrollCardUsing(usedCardIndexes[0]);
+        }, 0.5);
     }
 
     @handle(CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openCutCardIndex(roundId))
     onClickDetail() {
         return this.roundId;
+    }
+
+    handleScrollCardUsing(index: number) {
+        const maxRow = Math.ceil(this.maxIndexCard / this.maxCardRow);
+        const getRowIndex = Math.ceil(index / this.maxCardRow);
+        const maxOffset = this.cardsScrollView?.getMaxScrollOffset()?.y || 0;
+        const maskHeight = this.nodeCardsContent?.parent?.getComponent(UITransform)?.height;
+        const heightOneRow = maxOffset / maxRow;
+        const positionScroll = new Vec2(0, heightOneRow * getRowIndex - maskHeight / 2);
+        this.cardsScrollView.scrollToOffset(positionScroll, 0.1);
     }
 }
