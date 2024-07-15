@@ -1,3 +1,3 @@
 export const TimePoints = {
-    cutCard: 45,
+    cutCard: 46,
 };
