@@ -84,7 +84,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     private _cardHands: BaccaratXCards[] = [];
     private readonly movingCardDuration = 0.5;
 
-    currentCardIndex = -1;
+    currentCardIndex = 0;
 
     cards: FairnessCard[] = [];
 
@@ -296,8 +296,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
     renderShoeInfo(shoeInfo: gc.GameServiceMessage.ShoeInfo) {
         if (shoeInfo) {
-            this.currentCardIndex = shoeInfo.currentIndex ?? shoeInfo.burnedCards;
-            console.log(`received current index ======================== `, this.currentCardIndex);
+            const currentCardIndex = shoeInfo.currentIndex ?? shoeInfo.burnedCards;
+            console.log(`currentCardIndex from shoe ======================== `, currentCardIndex);
         }
     }
 
@@ -455,6 +455,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
         if (roundTime > this.beforeStartRound) {
             await this.playAnimationBurnCards(firstCard, burnedCards, roundTime >= this.burnCardsTimePoint);
         }
+
+        this.currentCardIndex = burnedCards;
     }
 
     async playAnimationCutCard(cutCardIndex: number) {
