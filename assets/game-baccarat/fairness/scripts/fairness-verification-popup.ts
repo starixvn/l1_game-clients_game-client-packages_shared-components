@@ -34,15 +34,29 @@ export class FairnessVerificationPopup extends ObserverComponent {
     @property(ScrollView)
     cardsScrollView: ScrollView = null;
 
+    @property(Dialog)
+    dialog: Dialog = null;
+
     roundId = 0;
     private pfData: GameServiceMessage.ShoeVerification = null;
 
-    start() {
+    onLoad() {
+        super.onLoad();
         this.handleRoundId();
-        this.node?.getComponent(Dialog) &&
-            (this.node.getComponent(Dialog).callBackFn = () => {
+
+        this.dialog &&
+            (this.dialog.callBackFn = () => {
+                if (!this.pfData?.cards) {
+                    this.scheduleOnce(this.dialog.callBackFn, 0.4);
+                    return;
+                }
                 this.renderCards(this?.pfData);
             });
+    }
+
+    onDestroy(): void {
+        super.onDestroy();
+        this.unscheduleAllCallbacks();
     }
 
     @handle(CutCardPF.FairnessHandler, (handle) => handle.closeVerification())
