@@ -31,26 +31,22 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     @property(Node)
     nodeDisabledSubmit: Node = null;
 
+    @property(Label)
+    lblRangeClientSeed: Label = null;
+
     @property
     minCSNumber = 300;
 
     @property
     maxCSNumber = 350;
 
-    private timer = 10;
-    private interval;
-
     onLoad() {
         super.onLoad();
         this.updateMaxCS();
         this.updateMinCS();
+        this.lblRangeClientSeed.string = `(${this.minCSNumber} - ${this.maxCSNumber})`;
         this.generateRandomCS();
         this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopupManual, this);
-    }
-
-    onDestroy() {
-        this.interval && clearInterval(this.interval);
-        super.onDestroy();
     }
 
     @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))
@@ -127,5 +123,13 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     @handle(CutCardPF.FairnessHandler, (handler, isShow: boolean) => handler.handleShowFairnessSettingsPopup(isShow))
     closePopup() {
         return false;
+    }
+
+    onClickPrevious() {
+        this.lblClientSeed.string = (+this.lblClientSeed.string - 1).toString();
+    }
+
+    onClickNext() {
+        this.lblClientSeed.string = (+this.lblClientSeed.string + 1).toString();
     }
 }
