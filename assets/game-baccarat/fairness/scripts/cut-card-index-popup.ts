@@ -89,14 +89,14 @@ export class CutCardIndexPopup extends ObserverComponent {
         });
     }
 
-    private encryptedName(name: string): string {
-        return `(${name.substring(0, 1)}***${name.substring(name.length - 3, name.length)})`;
+    private setDisplayName(name: string, encryptedName: boolean): string {
+        return encryptedName ? `(${name.substring(0, 1)}***${name.substring(name.length - 3, name.length)})` : name;
     }
 
     onClickSave() {
         let data = "Player,Nickname,Seed\n";
         this.playerCutCards.forEach((player, index) => {
-            data += `${index + 1},${this.encryptedName(player.name)},${player.clientSeed}\n`;
+            data += `${index + 1},${this.setDisplayName(player.name, this.playerName !== player.name)},${player.clientSeed}\n`;
         });
         const blob = new Blob([data], { type: "text/csv;charset=utf-8" });
         const fileName = `Round_${this.roundId}_${DateTimeUtils.getStringDateNow()}.csv`;
