@@ -4,6 +4,21 @@
     <dict>
         <key>frames</key>
         <dict>
+            <key>arrow.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{16,23}</string>
+                <key>spriteSourceSize</key>
+                <string>{16,23}</string>
+                <key>textureRect</key>
+                <string>{{490,214},{16,23}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
             <key>bar_scrollview_h.png</key>
             <dict>
                 <key>aliases</key>
@@ -30,7 +45,7 @@
                 <key>spriteSourceSize</key>
                 <string>{10,31}</string>
                 <key>textureRect</key>
-                <string>{{490,238},{10,31}}</string>
+                <string>{{490,263},{10,31}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -90,7 +105,7 @@
                 <key>spriteSourceSize</key>
                 <string>{29,10}</string>
                 <key>textureRect</key>
-                <string>{{483,303},{29,10}}</string>
+                <string>{{483,328},{29,10}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -165,7 +180,7 @@
                 <key>spriteSourceSize</key>
                 <string>{26,30}</string>
                 <key>textureRect</key>
-                <string>{{483,271},{26,30}}</string>
+                <string>{{483,296},{26,30}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -435,7 +450,7 @@
                 <key>spriteSourceSize</key>
                 <string>{22,16}</string>
                 <key>textureRect</key>
-                <string>{{490,214},{22,16}}</string>
+                <string>{{490,239},{22,16}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -630,7 +645,7 @@
                 <key>spriteSourceSize</key>
                 <string>{56,36}</string>
                 <key>textureRect</key>
-                <string>{{287,255},{56,36}}</string>
+                <string>{{425,305},{56,36}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -645,7 +660,7 @@
                 <key>spriteSourceSize</key>
                 <string>{56,36}</string>
                 <key>textureRect</key>
-                <string>{{425,305},{56,36}}</string>
+                <string>{{287,255},{56,36}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -693,7 +708,7 @@
             <key>size</key>
             <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:d532ed6cb1e8d09e1f71b81520d6b3e9:7252ceac420ef59588e5fc9a7fc66a9e:4b5110d3e0533b73dab9d917945109d9$</string>
+            <string>$TexturePacker:SmartUpdate:3ed063441714c110e9774a111a4f207a:16c8f6ba32ac433b2b4cdd9d29f67968:4b5110d3e0533b73dab9d917945109d9$</string>
             <key>textureFileName</key>
             <string>provability-fair.png</string>
         </dict>
