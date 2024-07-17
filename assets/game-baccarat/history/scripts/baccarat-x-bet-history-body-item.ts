@@ -27,7 +27,7 @@ export class BaccaratXBetHistorybodyItem extends BetHistoryBodyItem {
         this.lblWinLoss.color = winloss >= 0 ? new Color().fromHEX("F1E344") : new Color().fromHEX("EB3D26");
         this.nodeDisabledVerify.active = !verifiable;
         this.lblVerify.color = verifiable ? new Color().fromHEX("0055FF") : new Color().fromHEX("586379");
-        this.lblTime.string = `${DateTimeUtils.getStringDate1(time)} ${DateTimeUtils.getStringHourByTime(time)}`;
+        this.lblTime.string = `${DateTimeUtils.getStringDate1(time)} ${DateTimeUtils.getString12HourByTime(time)}`;
     }
 
     @handle(CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openVerificationHistory(roundId))
