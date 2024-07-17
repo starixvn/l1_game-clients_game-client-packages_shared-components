@@ -48,7 +48,6 @@ export class FairnessVerificationPopup extends ObserverComponent {
 
     onLoad() {
         super.onLoad();
-        this.handleRoundId();
 
         this.dialog &&
             (this.dialog.callBackFn = () => {
@@ -58,6 +57,10 @@ export class FairnessVerificationPopup extends ObserverComponent {
                 }
                 this.renderCards(this?.pfData);
             });
+    }
+
+    protected start(): void {
+        this.handleRoundId();
     }
 
     onDestroy(): void {
@@ -85,7 +88,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
     }
 
     renderCards(pf: GameServiceMessage.ShoeVerification) {
-        const { cards, usedCardIndexes, cutCardIndex } = pf;
+        const { cards, usedCardIndexes, cutCardIndex, burnedCards } = pf;
 
         cards?.forEach((card, index) => {
             let cardNode = instantiate(this.prfCard);
@@ -97,7 +100,9 @@ export class FairnessVerificationPopup extends ObserverComponent {
                 const cutCard = instantiate(this.prfCutCard);
                 this.nodeCardsContent.addChild(cutCard);
             }
+
             comp.showHighlight(usedCardIndexes.includes(index));
+            comp.showBgBurnCard(index < burnedCards);
             this.nodeCardsContent.addChild(cardNode);
         });
         this.cardsScrollView?.scrollToTop(0);
