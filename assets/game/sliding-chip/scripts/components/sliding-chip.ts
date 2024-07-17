@@ -345,11 +345,7 @@ export default class SlidingChip extends ObserverComponent {
         if (startNode) {
             worldPos = startNode.parent.getComponent(UITransform).convertToWorldSpaceAR(startNode.position);
         } else {
-            let chip = this.getChipNode(bet);
-            if (!chip) {
-                const chips = this.chips.children.filter((child) => +child.name < bet).sort((b, a) => +a.name - +b.name);
-                chip = chips[0];
-            }
+            const chip = this.getChipNode(bet);
             const localPosition = v3(0, chip.getComponent(UITransform).height / 2, 0).add(chip.position);
             worldPos = chip.parent.getComponent(UITransform).convertToWorldSpaceAR(localPosition);
             node = this.node;
@@ -358,7 +354,12 @@ export default class SlidingChip extends ObserverComponent {
         return { node, worldPos };
     }
 
-    private getChipNode(bet: number): Node {
-        return this.chips?.children?.find((child) => child.name === bet.toString());
+    public getChipNode(bet: number): Node {
+        let node = this.chips?.children?.find((child) => child.name === bet.toString());
+        if (!node) {
+            const chips = this.chips.children.filter((child) => +child.name < bet).sort((b, a) => +a.name - +b.name);
+            node = chips[0];
+        }
+        return node;
     }
 }

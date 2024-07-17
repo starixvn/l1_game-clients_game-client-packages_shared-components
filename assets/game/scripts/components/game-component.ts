@@ -147,6 +147,7 @@ export default class GameComponent extends GameComponentBase {
             return;
         }
 
+        console.log("original render current finish");
         this.showResult(result, true, settlementResult).then(() => {
             this.finishShowResult(result, settlementResult);
         });
