@@ -45,6 +45,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
 
     roundId = 0;
     private pfData: GameServiceMessage.ShoeVerification = null;
+    private DURATION_DELAY_RENDER_DATA = 0.4;
 
     onLoad() {
         super.onLoad();
@@ -52,7 +53,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
         this.dialog &&
             (this.dialog.callBackFn = () => {
                 if (!this.pfData?.cards) {
-                    this.scheduleOnce(this.dialog.callBackFn, 0.4);
+                    this.scheduleOnce(this.dialog.callBackFn, this.DURATION_DELAY_RENDER_DATA);
                     return;
                 }
                 this.renderCards(this?.pfData);
