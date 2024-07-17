@@ -41,7 +41,7 @@ export class CutCardIndexPopup extends ObserverComponent {
 
     private playerCutCards = [];
     private dataPF = null;
-    private DURATION_DELAY_RENDER_DATA = 0.4;
+    private DURATION_DELAY_RENDER_DATA = 0.5;
 
     onLoad(): void {
         super.onLoad();
@@ -51,12 +51,12 @@ export class CutCardIndexPopup extends ObserverComponent {
                     this.scheduleOnce(this.dialog.callBackFn, this.DURATION_DELAY_RENDER_DATA);
                     return;
                 }
-                this.renderSeedPlayers(this.playerCutCards);
-                this.renderCombinedHash(this.dataPF);
 
+                this.renderCombinedHash(this.dataPF);
                 this.scheduleOnce(() => {
+                    this.renderSeedPlayers(this.playerCutCards);
                     this.playerSeedScrollView?.scrollToLeft(0);
-                }, 0.3);
+                }, this.DURATION_DELAY_RENDER_DATA);
             });
     }
     onDestroy(): void {
