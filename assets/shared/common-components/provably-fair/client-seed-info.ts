@@ -29,7 +29,7 @@ export class ClientSeedInfo extends Component {
     setDisplayName(data: any, encryptedName: boolean) {
         this.lblName.node.active = true;
         this.lblName.string = encryptedName ? this.encryptedName(data.name) : data.name;
-        this.lblName.color = encryptedName ? Color.WHITE : Color.GREEN;
+        this.lblName.color = encryptedName ? new Color("#bdbec9") : Color.GREEN;
         this.lblClientSeed.string = data.clientSeed;
     }
 }

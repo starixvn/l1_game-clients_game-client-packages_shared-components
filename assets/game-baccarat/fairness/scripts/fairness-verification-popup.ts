@@ -105,10 +105,10 @@ export class FairnessVerificationPopup extends ObserverComponent {
             comp.showBgBurnCard(index < burnedCards);
             this.nodeCardsContent.addChild(cardNode);
         });
-        this.cardsScrollView?.scrollToTop(0);
+
         this.scheduleOnce(() => {
             this.handleScrollCardUsing(usedCardIndexes[0]);
-        }, 0.5);
+        }, 0.3);
     }
 
     @handle(CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openCutCardIndex(roundId))

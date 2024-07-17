@@ -53,7 +53,10 @@ export class CutCardIndexPopup extends ObserverComponent {
                 }
                 this.renderSeedPlayers(this.playerCutCards);
                 this.renderCombinedHash(this.dataPF);
-                this.playerSeedScrollView?.scrollToLeft(0);
+
+                this.scheduleOnce(() => {
+                    this.playerSeedScrollView?.scrollToLeft(0);
+                }, 0.3);
             });
     }
     onDestroy(): void {
