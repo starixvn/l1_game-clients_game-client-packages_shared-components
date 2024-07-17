@@ -201,7 +201,7 @@ export class ChipFlying extends ObserverComponent {
             this.mainPlayerIncreaseBalance(this.settlementStatus?.bet);
             this.mainPlayerPlayWinningEffect();
             if (this.settlementStatus?.reachMaxWin && this.settlementStatus.reachMaxWin) {
-                this.handleTotalWin(this.settlementStatus.bet);
+                this.handleTotalWin();
             }
 
             this.getBalance();
@@ -209,10 +209,8 @@ export class ChipFlying extends ObserverComponent {
         }
     }
 
-    @handle(Settlements.SettlementHandlers, (handle, winAmount: number) => handle.handleTotalWin(winAmount))
-    handleTotalWin(win: number) {
-        return win;
-    }
+    @handle(Settlements.SettlementHandlers, (handle) => handle.handleTotalWin())
+    handleTotalWin() {}
 
     @handle(Auth.AuthHandlers.GetBalance)
     getBalance() {}
