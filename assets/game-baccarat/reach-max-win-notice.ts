@@ -20,7 +20,7 @@ export class ReachMaxWinNotice extends ObserverComponent {
         const node = instantiate(this.prfWarning);
         this.node.addChild(node);
         const warning = node.getComponent(WarningCmp);
-        warning.setData(`(${gc.Translator.commonTranslate("you_reach_max_win")})`);
+        warning.setData(gc.Translator.commonTranslate("you_reach_max_win"));
     }
 
     @render(gc.Settlements.SettlementStatusStore, (store) => store.eventData)
