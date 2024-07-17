@@ -126,10 +126,18 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     }
 
     onClickPrevious() {
-        this.lblClientSeed.string = (+this.lblClientSeed.string - 1).toString();
+        let clientSeedTpm = +this.lblClientSeed.string - 1;
+        if (clientSeedTpm < this.minCSNumber) {
+            clientSeedTpm = this.maxCSNumber;
+        }
+        this.lblClientSeed.string = clientSeedTpm.toString();
     }
 
     onClickNext() {
-        this.lblClientSeed.string = (+this.lblClientSeed.string + 1).toString();
+        let clientSeedTpm = +this.lblClientSeed.string + 1;
+        if (clientSeedTpm > this.maxCSNumber) {
+            clientSeedTpm = this.minCSNumber;
+        }
+        this.lblClientSeed.string = clientSeedTpm.toString();
     }
 }
