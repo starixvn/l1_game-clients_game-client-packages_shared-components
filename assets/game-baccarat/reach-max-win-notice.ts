@@ -25,7 +25,7 @@ export class ReachMaxWinNotice extends ObserverComponent {
 
     @render(gc.Settlements.SettlementStatusStore, (store) => store.eventData)
     renderTotalWin(eventData: any) {
-        if (eventData && eventData.event === gc.Settlements.SettlementAction.TOTAL_WIN) {
+        if (eventData && eventData.event === gc.Settlements.SettlementAction.REACH_MAX_WIN) {
             this.addNotice();
         }
     }
