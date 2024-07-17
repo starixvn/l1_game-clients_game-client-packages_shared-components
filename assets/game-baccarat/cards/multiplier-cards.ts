@@ -22,6 +22,9 @@ export class MultiplierCards extends ObserverComponent {
     @property(Label)
     lblExtraFee: Label = null;
 
+    @property(Prefab)
+    prfCardDecor: Prefab = null;
+
     private minBet = 0;
     private maxBet = 0;
 
@@ -31,7 +34,7 @@ export class MultiplierCards extends ObserverComponent {
         return this.multiplierCards.find((comp) => comp.data.rank === card.rank && comp.data.suit === card.suit);
     }
 
-    @render(gc.MultipliersStore, (store) => store.renderMultipliers, { fireImmediately: false })
+    @render(gc.MultipliersStore, (store) => store.renderMultipliers)
     async renderMultipliers(renderMultipliers: { animated: boolean; multipliers: any[] }) {
         if (!renderMultipliers) {
             this.hideCards();
@@ -42,7 +45,6 @@ export class MultiplierCards extends ObserverComponent {
 
         this.content.destroyAllChildren();
         this.multiplierCards = [];
-        this.showMultiplierCards(true);
         for (let i = 0; i < multipliers.length; i++) {
             const item = multipliers[i];
             const node = instantiate(this.prfMultiplierCard);
@@ -55,8 +57,13 @@ export class MultiplierCards extends ObserverComponent {
     }
 
     hideCards() {
-        this.showMultiplierCards(false);
         this.content.destroyAllChildren();
+        for (let i = 0; i < 8; i++) {
+            const node = instantiate(this.prfCardDecor);
+            this.content.addChild(node);
+            this.moveCardAnimation(node, i, false);
+        }
+
         this.multiplierCards = [];
     }
 
