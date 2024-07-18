@@ -1,5 +1,5 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
-import { _decorator, CCInteger, instantiate, Label, Node, Prefab, ScrollView, UIOpacity, UITransform, Vec2 } from "cc";
+import { _decorator, CCInteger, instantiate, Label, Node, Prefab, ScrollView, UITransform, Vec2 } from "cc";
 import Observer from "observer";
 import { Dialog } from "../../../shared/common-components/dialogs/dialog";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
@@ -8,7 +8,7 @@ import { FairnessPokerCard } from "./fairness-poker-card";
 const { ccclass, property } = _decorator;
 const { CutCardPF, GameBaccaratX } = gc;
 const { render, handle } = Observer;
-const { fadeIn } = AnimationUtils;
+const { fadeIn, getUiOpacity } = AnimationUtils;
 
 @ccclass
 export class FairnessVerificationPopup extends ObserverComponent {
@@ -48,6 +48,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
     roundId = 0;
     private pfData: GameServiceMessage.ShoeVerification = null;
     private DURATION_DELAY_RENDER_DATA = 0.4;
+    private DURATION_SHOW_CARDS = 0.3;
 
     onLoad() {
         super.onLoad();
@@ -92,8 +93,8 @@ export class FairnessVerificationPopup extends ObserverComponent {
 
     renderCards(pf: GameServiceMessage.ShoeVerification) {
         const { cards, usedCardIndexes, cutCardIndex, burnedCards } = pf;
-        const opacityCardsContent = this.nodeCardsContent?.getComponent(UIOpacity);
-        opacityCardsContent && (opacityCardsContent.opacity = 1);
+        const opacityCardsContent = getUiOpacity(this.nodeCardsContent);
+        opacityCardsContent.opacity = 0;
         cards?.forEach((card, index) => {
             let cardNode = instantiate(this.prfCard);
             const comp = cardNode.getComponent(FairnessPokerCard);
@@ -110,7 +111,9 @@ export class FairnessVerificationPopup extends ObserverComponent {
             this.nodeCardsContent.addChild(cardNode);
         });
 
-        this.handleScrollCardUsing(usedCardIndexes[0]);
+        this.scheduleOnce(async () => {
+            await this.handleScrollCardUsing(usedCardIndexes[0]);
+        }, this.DURATION_SHOW_CARDS);
     }
 
     @handle(CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openCutCardIndex(roundId))
@@ -118,7 +121,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
         return this.roundId;
     }
 
-    handleScrollCardUsing(index: number) {
+    async handleScrollCardUsing(index: number) {
         const maxRow = Math.ceil(this.maxIndexCard / this.maxCardRow);
         const getRowIndex = Math.ceil(index / this.maxCardRow);
         const maxOffset = this.cardsScrollView?.getMaxScrollOffset()?.y || 0;
@@ -127,6 +130,6 @@ export class FairnessVerificationPopup extends ObserverComponent {
         const positionScroll = new Vec2(0, heightOneRow * getRowIndex - maskHeight / 2);
         this.cardsScrollView.scrollToOffset(positionScroll, 0);
 
-        fadeIn(this.nodeCardsContent, 0.5, 255);
+        fadeIn(this.nodeCardsContent, this.DURATION_SHOW_CARDS, 255);
     }
 }
