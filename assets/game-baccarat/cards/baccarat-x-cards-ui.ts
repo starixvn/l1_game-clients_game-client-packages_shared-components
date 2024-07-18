@@ -293,27 +293,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
         });
     }
 
-    @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
-    renderShoeInfo(shoeInfo: gc.GameServiceMessage.ShoeInfo) {
-        if (shoeInfo) {
-            const currentCardIndex = shoeInfo.currentIndex ?? shoeInfo.burnedCards;
-            console.log(`currentCardIndex from shoe ======================== `, currentCardIndex);
-        }
-    }
-
-    decreaseCardIndexForOldRound(result) {
-        let count = 0;
-        [GameBaccaratX.BetChoice.Player, GameBaccaratX.BetChoice.Banker].forEach((hand) => {
-            ["card1", "card2", "card3"].forEach((cardKey) => {
-                if (result[hand][cardKey]) {
-                    count++;
-                }
-            });
-        });
-        this.currentCardIndex = this.currentCardIndex - count;
-        console.log(`decrease card index ======================== ${count} => ${this.currentCardIndex}`);
-    }
-
     @handle(GameBaccaratX.Multiplier.BaccaratMultipliersHandler, (handler, cardsStates: gc.GameBaccaratX.CardsState) =>
         handler.openCards(cardsStates)
     )
