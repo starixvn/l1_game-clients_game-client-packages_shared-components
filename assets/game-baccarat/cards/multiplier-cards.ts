@@ -51,7 +51,11 @@ export class MultiplierCards extends ObserverComponent {
             this.content.addChild(node);
             const comp = node.getComponent(MultiplierCard);
             comp.setData(item);
-            await this.moveCardAnimation(node, i, animated);
+            if (animated) {
+                await this.moveCardAnimation(node, i, animated);
+            } else {
+                this.moveCardAnimation(node, i, false);
+            }
             this.multiplierCards.push(comp);
         }
     }
