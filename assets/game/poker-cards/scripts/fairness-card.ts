@@ -32,6 +32,9 @@ export class FairnessCard extends Component {
         this.card.setGoldenCard(show, animated);
     }
 
+    setWinHighlight(show: boolean) {
+        this.card.setWinHighlight(show);
+    }
     setClickCallback(callback: () => void) {
         if (callback) {
             this._clickCallback = callback;
