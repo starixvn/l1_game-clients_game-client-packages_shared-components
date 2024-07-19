@@ -102,6 +102,16 @@ export class BaccaratXCardsUI extends ObserverComponent {
         super.onLoad();
     }
 
+    @render(gc.GameBaccaratX.Multiplier.BaccaratMultipliersStore, (store) => store.scores)
+    updateScore(scores: { [hand: string]: number }) {
+        this.cardHands.forEach((cardHand) => {
+            const hand = cardHand.node.name;
+            if (scores[hand]) {
+                cardHand.setScore(scores[hand]);
+            }
+        });
+    }
+
     @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.durations)
     storeSettingDurations(durations: gc.GameConfigs.DurationSetting) {
         this.durations = durations;
