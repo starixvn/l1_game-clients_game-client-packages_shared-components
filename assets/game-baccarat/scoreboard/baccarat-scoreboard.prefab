@@ -534,7 +534,7 @@
     "__prefab": {
       "__id__": 20
     },
-    "key": "BaccaratX.glossary_option_player",
+    "key": "BaccaratX.glossary_player",
     "format": 1,
     "prefix": "",
     "suffix": "",
@@ -1191,7 +1191,7 @@
     "__prefab": {
       "__id__": 52
     },
-    "key": "BaccaratX.glossary_option_banker",
+    "key": "BaccaratX.glossary_banker",
     "format": 1,
     "prefix": "",
     "suffix": "",
@@ -1848,7 +1848,7 @@
     "__prefab": {
       "__id__": 84
     },
-    "key": "BaccaratX.glossary_option_tie",
+    "key": "BaccaratX.glossary_tie",
     "format": 1,
     "prefix": "",
     "suffix": "",
