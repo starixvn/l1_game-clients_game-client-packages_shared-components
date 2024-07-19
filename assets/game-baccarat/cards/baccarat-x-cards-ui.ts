@@ -104,6 +104,10 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     @render(gc.GameBaccaratX.Multiplier.BaccaratMultipliersStore, (store) => store.scores)
     updateScore(scores: { [hand: string]: number }) {
+        if (!scores || Object.keys(scores).length === 0) {
+            return;
+        }
+
         this.cardHands.forEach((cardHand) => {
             const hand = cardHand.node.name;
             if (scores[hand]) {
