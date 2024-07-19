@@ -1073,7 +1073,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 82.8544921875,
+      "width": 48.2216796875,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -1109,7 +1109,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "PLAYER",
+    "_string": "ผู้เล่น",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 22,
@@ -2276,7 +2276,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
+      "x": -53,
       "y": 1.401,
       "z": 0
     },
@@ -2404,7 +2404,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "a194aea9-d75d-49d7-a53f-62399dcbd054@9f1b1",
+      "__uuid__": "2d67d332-0b65-4c26-aacf-03f54c9217cc@9f1b1",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -2857,7 +2857,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 89.783203125,
+      "width": 56.482421875,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -2893,7 +2893,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "BANKER",
+    "_string": "เจ้ามือ",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 22,
@@ -4060,7 +4060,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -1.772,
+      "x": 53,
       "y": 1.765,
       "z": 0
     },
@@ -4188,7 +4188,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "a194aea9-d75d-49d7-a53f-62399dcbd054@3f64e",
+      "__uuid__": "2d67d332-0b65-4c26-aacf-03f54c9217cc@3f64e",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
