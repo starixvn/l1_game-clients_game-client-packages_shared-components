@@ -55,7 +55,6 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     }
 
     start() {
-        console.log("-----------start", this.tglDontShowAgain.isChecked);
         this.tglDontShowAgain.isChecked = this.dontShowAgain;
     }
 
@@ -109,13 +108,11 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))
     onClickDontShowAgain() {
-        console.log("+++++++++++++++++++++onClickDontShowAgain", !this.tglDontShowAgain.isChecked);
         return !this.tglDontShowAgain.isChecked;
     }
 
     @render(CutCardPF.FairnessStore, (store) => store.dontShowAgain)
     checkDontShowAgain(dontShowAgain: boolean) {
-        console.log("-------------------dontShowAgain", dontShowAgain);
         this.dontShowAgain = dontShowAgain;
     }
 
