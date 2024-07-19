@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Color, Label, Node, Prefab, _decorator, instantiate } from "cc";
+import { Color, Label, Node, Prefab, Toggle, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { TimePoints } from "../../time-point";
@@ -34,11 +34,16 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     @property(Label)
     lblRangeClientSeed: Label = null;
 
+    @property(Toggle)
+    tglDontShowAgain: Toggle = null;
+
     @property
     minCSNumber = 300;
 
     @property
     maxCSNumber = 350;
+
+    private dontShowAgain = false;
 
     onLoad() {
         super.onLoad();
@@ -47,6 +52,11 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         this.lblRangeClientSeed.string = `(${this.minCSNumber} - ${this.maxCSNumber})`;
         this.generateRandomCS();
         this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopupManual, this);
+    }
+
+    start() {
+        console.log("-----------start", this.tglDontShowAgain.isChecked);
+        this.tglDontShowAgain.isChecked = this.dontShowAgain;
     }
 
     @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))
@@ -99,7 +109,14 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))
     onClickDontShowAgain() {
-        return true;
+        console.log("+++++++++++++++++++++onClickDontShowAgain", !this.tglDontShowAgain.isChecked);
+        return !this.tglDontShowAgain.isChecked;
+    }
+
+    @render(CutCardPF.FairnessStore, (store) => store.dontShowAgain)
+    checkDontShowAgain(dontShowAgain: boolean) {
+        console.log("-------------------dontShowAgain", dontShowAgain);
+        this.dontShowAgain = dontShowAgain;
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.roundTime)

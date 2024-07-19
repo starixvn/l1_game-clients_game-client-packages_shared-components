@@ -7325,7 +7325,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "dont-show",
+    "_name": "dont-show-again",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -8619,6 +8619,9 @@
     },
     "lblRangeClientSeed": {
       "__id__": 98
+    },
+    "tglDontShowAgain": {
+      "__id__": 390
     },
     "minCSNumber": 250,
     "maxCSNumber": 306,
