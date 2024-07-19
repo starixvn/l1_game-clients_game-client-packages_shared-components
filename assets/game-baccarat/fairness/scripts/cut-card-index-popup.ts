@@ -115,6 +115,7 @@ export class CutCardIndexPopup extends ObserverComponent {
             const seed = player.clientSeed;
             clientSeedStr += index === this.playerCutCards.length - 1 ? seed : `${seed},`;
         });
-        this.lblAverage.string = `Average(${clientSeedStr}) = ${pf.cutCardIndex}`;
+        const average = gc.Translator.gameTranslate("average");
+        this.lblAverage.string = `${average}(${clientSeedStr}) = ${pf.cutCardIndex}`;
     }
 }
