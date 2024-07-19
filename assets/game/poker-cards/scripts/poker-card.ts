@@ -55,6 +55,9 @@ export class PokerCard extends Component {
     @property(Node)
     bgGolden: Node = null;
 
+    @property(Node)
+    nodeWinHighlight: Node = null;
+
     public card: CardModel = { rank: "A", suit: 3 };
 
     protected readonly suits = ["heart", "diamond", "club", "spade"];
@@ -133,6 +136,10 @@ export class PokerCard extends Component {
 
     faceDown() {
         this.changeCardFace(false);
+    }
+
+    setWinHighlight(show: boolean) {
+        this.nodeWinHighlight && (this.nodeWinHighlight.active = show);
     }
 
     protected changeCardFace(faceUp: boolean) {
