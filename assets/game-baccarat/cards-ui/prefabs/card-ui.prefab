@@ -942,7 +942,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "player-section",
+    "_name": "player",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -2726,7 +2726,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "banker-section",
+    "_name": "banker",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
