@@ -6,7 +6,7 @@ import { ObserverComponent } from "../../../shared/common-components/observer-co
 import { AnimationUtils } from "../../../shared/utils";
 import { FairnessPokerCard } from "./fairness-poker-card";
 const { ccclass, property } = _decorator;
-const { CutCardPF, GameBaccaratX } = gc;
+const { GameBaccaratX } = gc;
 const { render, handle } = Observer;
 const { fadeIn, getUiOpacity } = AnimationUtils;
 
@@ -72,10 +72,10 @@ export class FairnessVerificationPopup extends ObserverComponent {
         this.unscheduleAllCallbacks();
     }
 
-    @handle(CutCardPF.FairnessHandler, (handle) => handle.closeVerification())
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handle) => handle.closeVerification())
     closePoup() {}
 
-    @render(GameBaccaratX.RoundPF.RoundPFStore, (store) => store.pf, { fireImmediately: false })
+    @render(GameBaccaratX.ShoePF.ShoePFStore, (store) => store.pf, { fireImmediately: false })
     renderPFRound(pf: GameServiceMessage.ShoeVerification) {
         if (!pf) {
             return;
@@ -116,7 +116,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
         }, this.DURATION_SHOW_CARDS);
     }
 
-    @handle(CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openCutCardIndex(roundId))
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openCutCardIndex(roundId))
     onClickDetail() {
         return this.roundId;
     }

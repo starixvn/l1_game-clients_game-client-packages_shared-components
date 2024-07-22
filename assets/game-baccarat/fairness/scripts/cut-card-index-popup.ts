@@ -5,7 +5,7 @@ import Observer from "observer";
 import { Dialog } from "../../../shared/common-components/dialogs/dialog";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { ClientSeedInfo } from "../../../shared/common-components/provably-fair/client-seed-info";
-const { CutCardPF, GameBaccaratX, DateTimeUtils, Auth } = gc;
+const { GameBaccaratX, DateTimeUtils, Auth } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 const { saveAs } = FileSaver;
@@ -69,10 +69,10 @@ export class CutCardIndexPopup extends ObserverComponent {
         this.playerName = name;
     }
 
-    @handle(CutCardPF.FairnessHandler, (handle) => handle.closeCutCardIndex())
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handle) => handle.closeCutCardIndex())
     closePopup() {}
 
-    @render(GameBaccaratX.RoundPF.RoundPFStore, (store) => store.pf)
+    @render(GameBaccaratX.ShoePF.ShoePFStore, (store) => store.pf)
     renderRound(pf: GameServiceMessage.ShoeVerification) {
         if (!pf) {
             return;

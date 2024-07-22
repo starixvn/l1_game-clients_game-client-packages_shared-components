@@ -5,7 +5,7 @@ import { ObserverComponent } from "../../../shared/common-components/observer-co
 import { TimePoints } from "../../time-point";
 import { ClientSeedManualBaccaratPopup } from "./client-seed-manual-baccarat-popup";
 const { ccclass, property } = _decorator;
-const { CutCardPF, GameBaccaratX, Rounds, Translator } = gc;
+const { GameBaccaratX, Rounds, Translator } = gc;
 const { render, handle, observer } = Observer;
 
 @ccclass
@@ -58,7 +58,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         this.tglDontShowAgain.isChecked = this.dontShowAgain;
     }
 
-    @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))
     openFairnessSetting() {
         return true;
     }
@@ -73,7 +73,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         comp.setClientSeedValue(this.lblClientSeed.string);
     }
 
-    @render(CutCardPF.CutCardStore, (store) => store.cutCardInfo)
+    @render(GameBaccaratX.CutCardPF.FairnessStore, (store) => store.cutCardInfo)
     updateMessageSubmit(cutCardInfo: any) {
         const color: Color = new Color(0, 0, 0, 255);
         if (!cutCardInfo) {
@@ -92,12 +92,12 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         }
     }
 
-    @handle(CutCardPF.CutCardHandler, (handler, clientSeed: string) => handler.handle(clientSeed))
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handler, clientSeed: string) => handler.sendClientSeed(clientSeed))
     onClickSubmit() {
         return this.lblClientSeed.string;
     }
 
-    @render(CutCardPF.FairnessStore, (store) => store.clientSeed)
+    @render(GameBaccaratX.CutCardPF.FairnessStore, (store) => store.clientSeed)
     renderClientSeed(clientSeed: string) {
         this.lblClientSeed.string = clientSeed;
     }
@@ -107,12 +107,12 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         this.lblSHA256.string = shoeHash;
     }
 
-    @handle(CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))
     onClickDontShowAgain() {
         return !this.tglDontShowAgain.isChecked;
     }
 
-    @render(CutCardPF.FairnessStore, (store) => store.dontShowAgain)
+    @render(GameBaccaratX.CutCardPF.FairnessStore, (store) => store.dontShowAgain)
     checkDontShowAgain(dontShowAgain: boolean) {
         this.dontShowAgain = dontShowAgain;
     }
@@ -122,20 +122,20 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         this.lblCountDown && (this.lblCountDown.string = (roundTime - TimePoints.cutCard).toString());
     }
 
-    @handle(CutCardPF.FairnessHandler, (handler, min: number) => handler.setMinClientSeed(min))
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handler, min: number) => handler.setMinClientSeed(min))
     updateMinCS() {
         return this.minCSNumber;
     }
 
-    @handle(CutCardPF.FairnessHandler, (handler, max: number) => handler.setMaxClientSeed(max))
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handler, max: number) => handler.setMaxClientSeed(max))
     updateMaxCS() {
         return this.maxCSNumber;
     }
 
-    @handle(CutCardPF.FairnessHandler, (handler) => handler.generateClientSeed())
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handler) => handler.generateClientSeed())
     generateRandomCS() {}
 
-    @handle(CutCardPF.FairnessHandler, (handler, isShow: boolean) => handler.handleShowFairnessSettingsPopup(isShow))
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handler, isShow: boolean) => handler.handleShowFairnessSettingsPopup(isShow))
     closePopup() {
         return false;
     }

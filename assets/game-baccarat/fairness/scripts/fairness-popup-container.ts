@@ -5,7 +5,7 @@ import { MultipleNodeContainer } from "../../../shared/common-components/node-co
 import { CutCardIndexPopup } from "./cut-card-index-popup";
 import { FairnessVerificationPopup } from "./fairness-verification-popup";
 const { ccclass, property } = _decorator;
-const { CutCardPF, GameBaccaratX } = gc;
+const { GameBaccaratX } = gc;
 const { render, handle } = Observer;
 
 enum Popup {
@@ -16,7 +16,7 @@ enum Popup {
 
 @ccclass
 export class FairnessPopupContainer extends MultipleNodeContainer {
-    @render(CutCardPF.FairnessStore, (store) => store.openCutCardIndex, { fireImmediately: false })
+    @render(GameBaccaratX.CutCardPF.FairnessStore, (store) => store.openCutCardIndex, { fireImmediately: false })
     renderCutCardIndexPopup(openCutCardIndex: any) {
         if (openCutCardIndex.isOpen) {
             this.showNode(Popup.CutCardIndex);
@@ -27,7 +27,7 @@ export class FairnessPopupContainer extends MultipleNodeContainer {
         }
     }
 
-    @render(CutCardPF.FairnessStore, (store) => store.isShowFairnessSettingsPopup, { fireImmediately: false })
+    @render(GameBaccaratX.CutCardPF.FairnessStore, (store) => store.isShowFairnessSettingsPopup, { fireImmediately: false })
     renderClientSeedSettingPopup(isShowFairnessSettingsPopup: boolean) {
         if (isShowFairnessSettingsPopup) {
             this.showNode(Popup.ClientSeedSetting);
@@ -36,7 +36,7 @@ export class FairnessPopupContainer extends MultipleNodeContainer {
         }
     }
 
-    @render(CutCardPF.FairnessStore, (store) => store.openVerification, { fireImmediately: false })
+    @render(GameBaccaratX.CutCardPF.FairnessStore, (store) => store.openVerification, { fireImmediately: false })
     renderOpenVerificationPopup(openVerification: any) {
         if (openVerification.isOpen) {
             this.showNode(Popup.FairnessVerification);

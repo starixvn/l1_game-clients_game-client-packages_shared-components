@@ -4,7 +4,7 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 const { render, handle, observer } = Observer;
 const { ccclass, property } = _decorator;
-const { CutCardPF, GameBaccaratX } = gc;
+const { GameBaccaratX } = gc;
 
 @ccclass
 export class WaitingScreenContainer extends ObserverComponent {
@@ -17,7 +17,7 @@ export class WaitingScreenContainer extends ObserverComponent {
         super.onLoad();
     }
 
-    @render(CutCardPF.FairnessStore, (store) => store.showWaitingScreen)
+    @render(GameBaccaratX.CutCardPF.FairnessStore, (store) => store.showWaitingScreen)
     showNode(showWaitingScreen: boolean) {
         this.node.active = showWaitingScreen;
     }
