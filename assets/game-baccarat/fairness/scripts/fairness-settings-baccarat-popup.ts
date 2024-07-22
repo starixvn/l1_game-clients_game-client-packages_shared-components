@@ -77,9 +77,10 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     updateMessageSubmit(cutCardInfo: any) {
         const color: Color = new Color(0, 0, 0, 255);
         if (!cutCardInfo) {
+            this.lblMessageSubmit.string = "";
             return;
         }
-        //TODO: missing localization
+
         if (cutCardInfo.successful) {
             this.lblMessageSubmit.string = Translator.gameTranslate("submission_sucessful");
             this.nodeDisabledSubmit.active = true;
