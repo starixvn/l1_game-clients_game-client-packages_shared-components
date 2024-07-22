@@ -18,10 +18,10 @@ export class CutCardInfoNotice extends ObserverComponent {
         const node = instantiate(this.prfWarning);
         this.node.addChild(node);
         const warning = node.getComponent(WarningCmp);
-        warning.setData(gc.Translator.gameTranslate("submission_fail"));
+        warning.setData(gc.Translator.gameTranslate("submission_failed_time_expired"));
     }
 
-    @render(gc.CutCardPF.CutCardStore, (store) => store.showNoticeCutCardFailed)
+    @render(gc.GameBaccaratX.CutCardPF.FairnessStore, (store) => store.showNoticeCutCardFailed)
     renderTotalWin(showNoticeCutCardMessage: boolean) {
         showNoticeCutCardMessage && this.addNotice();
     }

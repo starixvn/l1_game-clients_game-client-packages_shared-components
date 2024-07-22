@@ -4,7 +4,7 @@ import Observer from "observer";
 import { ClientSeedManualPopup } from "../../../provably-fair/round-base/scripts/client-seed-manual-popup";
 const { ccclass, property } = _decorator;
 const { handle } = Observer;
-const { CutCardPF } = gc;
+const { GameBaccaratX } = gc;
 
 @ccclass
 export class ClientSeedManualBaccaratPopup extends ClientSeedManualPopup {
@@ -39,7 +39,7 @@ export class ClientSeedManualBaccaratPopup extends ClientSeedManualPopup {
         this.sendCSBaccarat(value);
     }
 
-    @handle(CutCardPF.FairnessHandler, (handle, value: string) => handle.saveClientSeed(value))
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handle, value: string) => handle.saveClientSeed(value))
     sendCSBaccarat(value: string) {
         return value;
     }

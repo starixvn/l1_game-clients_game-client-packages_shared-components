@@ -5,7 +5,7 @@ import { ObserverComponent } from "../../../shared/common-components/observer-co
 import { TimePoints } from "./../../time-point";
 const { ccclass, property } = _decorator;
 const { render, handle, observer } = Observer;
-const { CutCardPF, Rounds } = gc;
+const { Rounds, GameBaccaratX } = gc;
 
 @ccclass
 export class WaitingScreen extends ObserverComponent {
@@ -15,12 +15,12 @@ export class WaitingScreen extends ObserverComponent {
     @property(Label)
     lblCountDown: Label = null;
 
-    @handle(CutCardPF.FairnessHandler, (handler, isShow: boolean) => handler.handleShowFairnessSettingsPopup(isShow))
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handler, isShow: boolean) => handler.handleShowFairnessSettingsPopup(isShow))
     onClickCutCardBtn() {
         return true;
     }
 
-    @render(CutCardPF.CutCardStore, (store) => store.cutCardInfo)
+    @render(GameBaccaratX.CutCardPF.FairnessStore, (store) => store.cutCardInfo)
     showCutCardButtonSection(cutCardInfo: any) {
         this.nodeDisabled.active = cutCardInfo && cutCardInfo.successful;
     }

@@ -6,7 +6,7 @@ import BetHistoryBodyItem, { BetHistoryBodyItemType } from "../../../game/bet-hi
 const { ccclass, property } = _decorator;
 const { handle } = Observer;
 
-const { CutCardPF, FormatUtils, BetDetailsNew, DateTimeUtils } = gc;
+const { GameBaccaratX, FormatUtils, BetDetailsNew, DateTimeUtils } = gc;
 
 @ccclass
 export class BaccaratXBetHistorybodyItem extends BetHistoryBodyItem {
@@ -30,7 +30,7 @@ export class BaccaratXBetHistorybodyItem extends BetHistoryBodyItem {
         this.lblTime.string = `${DateTimeUtils.getStringDate1(time)} ${DateTimeUtils.getString12HourByTime(time)}`;
     }
 
-    @handle(CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openVerificationHistory(roundId))
+    @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openVerificationHistory(roundId))
     onClickFairness() {
         this.playSoundClick();
         return this.betHistoryLog.roundId;
