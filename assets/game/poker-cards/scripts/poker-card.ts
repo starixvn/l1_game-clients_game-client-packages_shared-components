@@ -87,10 +87,11 @@ export class PokerCard extends Component {
             if (show) {
                 AnimationUtils.fadeIn(this.bgGolden, 0.3);
             } else {
-                AnimationUtils.fadeOut(this.bgGolden, 0);
+                AnimationUtils.fadeOutAndDeactivate(this.bgGolden, 0);
             }
         } else {
             AnimationUtils.setOpacityNode(this.bgGolden, show ? 255 : 1);
+            this.bgGolden.active = show;
         }
     }
 

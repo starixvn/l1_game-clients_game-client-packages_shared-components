@@ -1,7 +1,6 @@
 import { Animation, Component, math, Node, sp, tween, UIOpacity, UITransform, Vec3 } from "cc";
 
 export namespace AnimationUtils {
-
     export const FadeTag = 1001;
     export const getUiOpacity = (node: Node) => {
         let uiOpacity = node.getComponent(UIOpacity);
@@ -37,12 +36,13 @@ export namespace AnimationUtils {
         const uiOpacity = getUiOpacity(node);
 
         return new Promise<void>((resolve) => {
+            node.active = true;
             if (uiOpacity) {
                 tween(uiOpacity)
                     .to(duration, { opacity: opacity })
-                    .tag(FadeTag)
                     .call(() => resolve())
-                    
+                    .union()
+                    .tag(FadeTag)
                     .start();
             } else {
                 resolve();
