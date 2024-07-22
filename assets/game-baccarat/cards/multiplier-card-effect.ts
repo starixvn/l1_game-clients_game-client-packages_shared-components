@@ -23,11 +23,11 @@ export class MultiplierCardEffect extends Component {
         this.cardsUI = this.nodeCardsUI.getComponent(BaccaratXCardsUI);
         this.multiplierCards = this.nodeMultiplierCards.getComponent(MultiplierCards);
 
-        this.cardsUI.node.on(CardEvent.OPENED_CARD, this.onOpenedCard, this);
+        this.nodeCardsUI.on(CardEvent.OPENED_CARD, this.onOpenedCard, this);
     }
 
     onDestroy() {
-        this.cardsUI.node.off(CardEvent.OPENED_CARD, this.onOpenedCard, this);
+        this.nodeCardsUI?.off(CardEvent.OPENED_CARD, this.onOpenedCard, this);
     }
 
     onOpenedCard(openCard: { card: FairnessCard; data: ServiceCard; animated: boolean }) {
