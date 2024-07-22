@@ -3,6 +3,7 @@ import { Label, Node, Prefab, UIOpacity, _decorator, instantiate, tween, v3 } fr
 import Observer from "observer";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
+import { ComponentUtils } from "../../shared/utils";
 import { MultiplierCard } from "./multiplier-card";
 const { ccclass, property } = _decorator;
 const { observer, render } = Observer;
@@ -41,6 +42,9 @@ export class MultiplierCards extends ObserverComponent {
         const { animated, multipliers } = renderMultipliers;
 
         this.content.destroyAllChildren();
+
+        const labelContainer = new Node("label-container");
+        this.node.addChild(labelContainer);
         this.multiplierCards = [];
         for (let i = 0; i < multipliers.length; i++) {
             const item = multipliers[i];
@@ -53,8 +57,15 @@ export class MultiplierCards extends ObserverComponent {
             } else {
                 this.moveCardAnimation(node, i, false);
             }
+            this.optimizedDrawCall(comp.lblMultiplier.node, labelContainer);
             this.multiplierCards.push(comp);
         }
+
+        ComponentUtils.moveToOtherNode(labelContainer, this.content);
+    }
+
+    private optimizedDrawCall(labelNode: Node, labelContainer: Node) {
+        ComponentUtils.moveToOtherNode(labelNode, labelContainer);
     }
 
     hideCards() {
