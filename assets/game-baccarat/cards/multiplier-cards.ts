@@ -22,9 +22,6 @@ export class MultiplierCards extends ObserverComponent {
     @property(Label)
     lblExtraFee: Label = null;
 
-    @property(Prefab)
-    prfCardDecor: Prefab = null;
-
     private minBet = 0;
     private maxBet = 0;
 
@@ -62,11 +59,6 @@ export class MultiplierCards extends ObserverComponent {
 
     hideCards() {
         this.content.destroyAllChildren();
-        for (let i = 0; i < 8; i++) {
-            const node = instantiate(this.prfCardDecor);
-            this.content.addChild(node);
-            this.moveCardAnimation(node, i, false);
-        }
 
         this.multiplierCards = [];
     }
