@@ -244,6 +244,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             const nextLocation = i + 1;
             item.card.node.active = true;
             item.card.setIndexValue(this.currentCardIndex + i);
+            animated && this.playSound("draw-card");
             await this.moveCard(item.card.node, nextLocation, animated);
             this.updateLocation(item, nextLocation);
         }
@@ -285,7 +286,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         const nextPosition = this.nodeCardContainer.getComponent(UITransform).convertToNodeSpaceAR(this.getPosition(nextLocation));
         this.transformCardNode(card, nextLocation, animated);
         await this.moveCardAnimation(card, nextPosition, animated);
-        animated && this.playSound("draw-card");
+
         card.setSiblingIndex(0);
     }
 
@@ -588,7 +589,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSound(id: string) {
-        console.log("darw-card");
         return id;
     }
 }
