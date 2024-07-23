@@ -285,6 +285,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         const nextPosition = this.nodeCardContainer.getComponent(UITransform).convertToNodeSpaceAR(this.getPosition(nextLocation));
         this.transformCardNode(card, nextLocation, animated);
         await this.moveCardAnimation(card, nextPosition, animated);
+        animated && this.playSound("draw-card");
         card.setSiblingIndex(0);
     }
 
@@ -583,5 +584,11 @@ export class BaccaratXCardsUI extends ObserverComponent {
             node.scale = scale;
             node.eulerAngles = eulerAngles;
         }
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSound(id: string) {
+        console.log("darw-card");
+        return id;
     }
 }
