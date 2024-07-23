@@ -27,7 +27,7 @@ export class MultiplierCardEffect extends Component {
     }
 
     onDestroy() {
-        this.nodeCardsUI?.off(CardEvent.OPENED_CARD, this.onOpenedCard, this);
+        this.nodeCardsUI && this.nodeCardsUI.isValid && this.nodeCardsUI.off(CardEvent.OPENED_CARD, this.onOpenedCard, this);
     }
 
     onOpenedCard(openCard: { card: FairnessCard; data: ServiceCard; animated: boolean }) {
