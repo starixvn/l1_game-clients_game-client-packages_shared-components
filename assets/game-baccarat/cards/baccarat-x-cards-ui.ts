@@ -75,11 +75,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
     @property
     spineCutCardPath = "";
 
-    @property
-    cutCardsTimePoint = 47;
-
-    @property
-    burnCardsTimePoint = 44;
+    CutCardsTimePoint = 45;
+    BurnCardsTimePoint = 42;
 
     private _cardHands: BaccaratXCards[] = [];
     private readonly movingCardDuration = 0.5;
@@ -453,12 +450,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         console.log("start new shoe ", roundTime);
         this.nodeBgNewShoe.active = true;
-        if (roundTime >= this.cutCardsTimePoint) {
+        if (roundTime >= this.CutCardsTimePoint) {
             await this.playAnimationCutCard(cutCardIndex);
         }
 
         if (roundTime > this.beforeStartRound) {
-            await this.playAnimationBurnCards(firstCard, burnedCards, roundTime >= this.burnCardsTimePoint);
+            await this.playAnimationBurnCards(firstCard, burnedCards, roundTime >= this.BurnCardsTimePoint);
         }
 
         this.currentCardIndex = burnedCards;
