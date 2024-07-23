@@ -1,6 +1,5 @@
 import gc from "@sg/game-client-base";
 import { Color, Label, Node, _decorator } from "cc";
-import * as i18n from "db://i18n/LanguageData";
 import Observer from "observer";
 import BetHistoryBodyItem, { BetHistoryBodyItemType } from "../../../game/bet-history/scripts/components/bet-history-body-item";
 const { ccclass, property } = _decorator;
@@ -41,7 +40,7 @@ export class BaccaratXBetHistorybodyItem extends BetHistoryBodyItem {
         return {
             roundId: this.betHistoryLog.roundId,
             mode: "dark",
-            language: i18n._language,
+            language: gc.Translator.getLanguageId(),
             timeZoneOffset: -new Date().getTimezoneOffset() / 60,
         };
     }
