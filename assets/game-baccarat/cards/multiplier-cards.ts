@@ -28,7 +28,10 @@ export class MultiplierCards extends ObserverComponent {
 
     private multiplierCards: MultiplierCard[] = [];
 
-    findMatchedCard(card: ServiceCard): MultiplierCard {
+    findMatchedCard(card: ServiceCard, testIndex = -1): MultiplierCard {
+        if (testIndex > -1) {
+            return this.multiplierCards[testIndex % this.multiplierCards.length];
+        }
         return this.multiplierCards.find((comp) => comp.data.rank === card.rank && comp.data.suit === card.suit);
     }
 
