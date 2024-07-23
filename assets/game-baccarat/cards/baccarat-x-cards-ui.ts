@@ -107,7 +107,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         this.cardHands.forEach((cardHand) => {
             const hand = cardHand.node.name;
-            if (scores[hand]) {
+            if (scores[hand] !== undefined) {
                 cardHand.setScore(scores[hand]);
             }
         });
