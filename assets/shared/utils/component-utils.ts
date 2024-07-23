@@ -1,7 +1,7 @@
 import { Label, Node, Prefab, UIOpacity, UITransform, instantiate, math, tween, v3 } from "cc";
 
 export namespace ComponentUtils {
-    export const getTransform = (node: Node) => {
+    export const getTransform = (node: Node): UITransform => {
         const uiTransform = node.getComponent(UITransform);
 
         if (uiTransform) {
@@ -59,9 +59,9 @@ export namespace ComponentUtils {
         });
     };
 
-    export const convertPosition = (container: Node, target: Node) => {
-        const transformContainer = container.getComponent(UITransform) ?? container.addComponent(UITransform);
-        const transformTarget = target.getComponent(UITransform) ?? container.addComponent(UITransform);
-        return transformContainer.convertToNodeSpaceAR(transformTarget.convertToWorldSpaceAR(v3(0, 0, 0)));
+    export const convertPosition = (container: Node, target: Node, offset = v3(0, 0, 0)) => {
+        const transformContainer = getTransform(container);
+        const transformTarget = getTransform(target);
+        return transformContainer.convertToNodeSpaceAR(transformTarget.convertToWorldSpaceAR(offset));
     };
 }
