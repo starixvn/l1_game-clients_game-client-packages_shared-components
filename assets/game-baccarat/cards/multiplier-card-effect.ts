@@ -19,7 +19,6 @@ export class MultiplierCardEffect extends Component {
 
     cardsUI: BaccaratXCardsUI = null;
     multiplierCards: MultiplierCards = null;
-    testIndex = 0;
     onLoad() {
         this.cardsUI = this.nodeCardsUI.getComponent(BaccaratXCardsUI);
         this.multiplierCards = this.nodeMultiplierCards.getComponent(MultiplierCards);
@@ -34,7 +33,6 @@ export class MultiplierCardEffect extends Component {
     onOpenedCard(openCard: { card: FairnessCard; data: ServiceCard; animated: boolean }) {
         const { card, data, animated } = openCard;
         const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data);
-        this.testIndex++;
         if (matchedMultiplierCard) {
             const changeToGoldCard = () => {
                 matchedMultiplierCard.card.setGoldenCard(false, animated);
