@@ -72,6 +72,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
     @property(Node)
     nodeCutCards: Node = null;
 
+    @property(Node)
+    nodeStackCards: Node = null;
+
     @property
     spineCutCardPath = "";
 
@@ -80,8 +83,11 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     private _cardHands: BaccaratXCards[] = [];
     private readonly movingCardDuration = 0.5;
+    private maximizeStackCards = 6;
+    private isNewShoe = false;
 
     currentCardIndex = 0;
+    cutCardIndex = 0;
 
     cards: FairnessCard[] = [];
 
@@ -206,6 +212,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 }
                 await this.draw6Cards(true);
             }
+
+            this.updateStacksCardBox(this.currentCardIndex, this.cutCardIndex);
+
             console.log(`increase currentCardIndex `, this.currentCardIndex);
         }
     }
@@ -383,7 +392,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.newShoePhase, { fireImmediately: false })
     receivedNewShoe(newShoePhase: boolean) {
         if (newShoePhase) {
+            this.isNewShoe = true;
             this.dropCards(this.cardPool, false);
+            this.updateStacksCardBox(0, 1);
             this.cardHands.forEach((comp) => {
                 comp.showScore(false);
             });
@@ -449,6 +460,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             return;
         }
         const { firstCard, burnedCards, roundTime, cutCardIndex } = shoeInfo;
+        this.cutCardIndex = cutCardIndex;
 
         console.log("start new shoe ", roundTime);
         this.nodeBgNewShoe.active = true;
@@ -548,8 +560,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
         console.timeEnd("clear burn card");
         this.burnCardsNodes = [];
+        if (this.isNewShoe) {
+            this.updateStacksCardBox(this.currentCardIndex, this.cutCardIndex);
+        }
 
         this.nodeBgNewShoe.active = false;
+        this.isNewShoe = false;
     }
 
     transformCardNode(node: Node, location: CardLocation, animated = true) {
@@ -590,5 +606,19 @@ export class BaccaratXCardsUI extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSound(id: string) {
         return id;
+    }
+
+    updateStacksCardBox(currentIndex: number, cutCardIndex: number) {
+        if (this?.nodeStackCards) {
+            const percent = Math.ceil((currentIndex / cutCardIndex) * this.maximizeStackCards);
+            if (percent > 0) {
+                this.nodeStackCards.active = true;
+                this.nodeStackCards?.children?.forEach((child, index) => {
+                    child && (child.active = percent - 1 >= index);
+                });
+            } else {
+                this.nodeStackCards.active = false;
+            }
+        }
     }
 }
