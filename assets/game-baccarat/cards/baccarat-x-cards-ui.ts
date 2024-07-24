@@ -349,6 +349,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 card.node.active = true;
                 card.setCardData(data);
                 if (index > 3) {
+                    this.playSound("draw-card");
                     const newLocation = dataIndex === 4 ? CardLocation.Player3 : CardLocation.Banker3;
                     await this.moveCard(card.node, newLocation, animated);
 
@@ -498,6 +499,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             this.nodeBurnCards.addChild(node);
             node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
             this.transformCardNode(node, CardLocation.Box, false);
+
             node.active = false;
 
             if (i === 0) {
@@ -509,6 +511,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         const firstCardNode = this.burnCardsNodes[0];
         firstCardNode.active = true;
+        this.playSound("draw-card");
         const firstCardComp = firstCardNode.getComponent(FairnessCard);
         firstCardComp.openCard(animated);
         this.transformCardNode(firstCardNode, CardLocation.Center, animated);
@@ -522,11 +525,11 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         const totalWidth = cardWidth * burnedCards + (burnedCards - 2) * spacingBurnedCards + spacingFirstCard;
         const firstCardsX = -totalWidth / 2 + cardWidth / 2;
-
         await this.moveCardAnimation(firstCardNode, v3(firstCardsX, 0, 0), animated);
 
         const startX = firstCardsX + spacingFirstCard + cardWidth;
         for (let i = 1; i < this.burnCardsNodes.length; i++) {
+            this.playSound("draw-card");
             const node = this.burnCardsNodes[i];
             node.active = true;
 
