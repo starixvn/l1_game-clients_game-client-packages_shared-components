@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Node, tween, v3 } from "cc";
+import { _decorator, Component, instantiate, math, Node, tween, v3 } from "cc";
 import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
 import { ComponentUtils } from "../../shared/utils";
@@ -42,19 +42,22 @@ export class MultiplierCardEffect extends Component {
                 const node = instantiate(this.nodeEffect);
                 this.nodeEffect.parent.addChild(node);
                 node.active = true;
-                const startPos = ComponentUtils.convertPosition(node.parent, matchedMultiplierCard.node);
+                const startPos = ComponentUtils.convertPosition(node.parent, matchedMultiplierCard.card.node);
                 const cardTransform = ComponentUtils.getTransform(card.node);
 
                 const eulerAngles = card.node.eulerAngles;
                 const isRotated = eulerAngles.z !== 0;
                 const offset = isRotated ? v3(((eulerAngles.z / 90) * cardTransform.width) / 2, 0) : v3(0, cardTransform.height / 2);
-                const destPos = ComponentUtils.convertPosition(node.parent, card.node, offset);
-                node.position = startPos;
+                const destPos = ComponentUtils.convertPosition(node.parent, card.node); //, offset);
+
+                const deltaPosition = startPos.subtract(destPos);
+                const angle = math.toDegree(Math.atan2(deltaPosition.y, deltaPosition.x));
+                ComponentUtils.getTransform(node).width = deltaPosition.length();
+                node.eulerAngles = v3(0, 0, angle);
+                node.position = destPos;
 
                 tween(node)
-                    .to(0.5, {
-                        position: destPos,
-                    })
+                    .delay(0.5)
                     .call(() => {
                         changeToGoldCard();
                     })
