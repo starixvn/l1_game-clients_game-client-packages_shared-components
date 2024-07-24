@@ -1,5 +1,5 @@
 import gc, { GameServiceMessage } from "@sg/game-client-base";
-import { _decorator, CCInteger, instantiate, Label, Node, Prefab, ScrollView, UITransform, Vec2 } from "cc";
+import { _decorator, CCFloat, CCInteger, instantiate, Label, Node, Prefab, ScrollView, UITransform } from "cc";
 import Observer from "observer";
 import { Dialog } from "../../../shared/common-components/dialogs/dialog";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
@@ -43,16 +43,24 @@ export class FairnessVerificationPopup extends ObserverComponent {
     maxIndexCard = 416;
 
     @property(CCInteger)
-    maxCardRow = 20;
+    scrollViewMaxColumn = 20;
+
+    @property(CCFloat)
+    scrollViewCardHeight = 62.4;
+
+    @property(CCInteger)
+    cardSpacing = 4;
 
     roundId = 0;
     private pfData: GameServiceMessage.ShoeVerification = null;
     private DURATION_DELAY_RENDER_DATA = 0.4;
-    private DURATION_SHOW_CARDS = 0.3;
+    private DURATION_SHOW_CARDS = 0.1;
+    private readonly calculatedPercent: number[] = [];
+    private scrollViewMaxRow: number = 0;
 
     onLoad() {
         super.onLoad();
-
+        this.initCalculatePercent();
         this.dialog &&
             (this.dialog.callBackFn = () => {
                 if (!this.pfData?.cards) {
@@ -70,6 +78,23 @@ export class FairnessVerificationPopup extends ObserverComponent {
     onDestroy(): void {
         super.onDestroy();
         this.unscheduleAllCallbacks();
+    }
+
+    initCalculatePercent() {
+        const maxRow = Math.ceil(this.maxIndexCard / this.scrollViewMaxColumn);
+        this.scrollViewMaxRow = maxRow;
+        const maskHeight = this.nodeCardsContent?.parent?.getComponent(UITransform)?.height;
+        const contentHeight = maxRow * this.scrollViewCardHeight + (maxRow + 1) * this.cardSpacing;
+        const maxOffset = contentHeight - maskHeight;
+        for (let i = 0; i < maxRow; i++) {
+            let offset = (this.scrollViewCardHeight + this.cardSpacing) * i;
+            if (offset > maxOffset) {
+                offset = maxOffset;
+            }
+
+            const percent = offset / maxOffset;
+            this.calculatedPercent.push(percent);
+        }
     }
 
     @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handle) => handle.closeVerification())
@@ -91,7 +116,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
         this.lblRoundId.string = this.roundId.toString();
     }
 
-    renderCards(pf: GameServiceMessage.ShoeVerification) {
+    protected renderCards(pf: GameServiceMessage.ShoeVerification) {
         const { cards, usedCardIndexes, cutCardIndex, burnedCards } = pf;
         const opacityCardsContent = getUiOpacity(this.nodeCardsContent);
         opacityCardsContent.opacity = 0;
@@ -112,8 +137,8 @@ export class FairnessVerificationPopup extends ObserverComponent {
         });
 
         this.scheduleOnce(async () => {
-            await this.handleScrollCardUsing(usedCardIndexes[0]);
-        }, this.DURATION_SHOW_CARDS);
+            await this.handleScrollCardUsing(usedCardIndexes?.slice(-1)[0] || 0);
+        }, 0.1);
     }
 
     @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openCutCardIndex(roundId))
@@ -121,15 +146,27 @@ export class FairnessVerificationPopup extends ObserverComponent {
         return this.roundId;
     }
 
-    async handleScrollCardUsing(index: number) {
-        const maxRow = Math.ceil(this.maxIndexCard / this.maxCardRow);
-        const getRowIndex = Math.ceil(index / this.maxCardRow);
-        const maxOffset = this.cardsScrollView?.getMaxScrollOffset()?.y || 0;
-        const maskHeight = this.nodeCardsContent?.parent?.getComponent(UITransform)?.height;
-        const heightOneRow = maxOffset / maxRow;
-        const positionScroll = new Vec2(0, heightOneRow * getRowIndex - maskHeight / 2);
-        this.cardsScrollView.scrollToOffset(positionScroll, 0);
-
+    protected async handleScrollCardUsing(index: number) {
+        const rowIndex = this.calculateDisplayIndex(index);
+        const currentIndex = rowIndex >= 2 ? rowIndex - 2 : 0;
+        this.cardsScrollView.scrollToPercentVertical(1 - this.calculatedPercent[currentIndex]);
         fadeIn(this.nodeCardsContent, this.DURATION_SHOW_CARDS, 255);
+    }
+
+    protected calculateDisplayIndex(currentIndex: number) {
+        let rowIndex = 1;
+        const totalCards = this.scrollViewMaxRow * this.scrollViewMaxColumn;
+        const maxIndex = this.scrollViewMaxRow * this.scrollViewMaxColumn - (this.scrollViewMaxColumn - 1);
+
+        for (let i = 0, j = this.scrollViewMaxColumn - 1; i < maxIndex && j < totalCards; ) {
+            if (currentIndex >= i && currentIndex <= j) {
+                return rowIndex;
+            }
+            rowIndex++;
+            i += this.scrollViewMaxColumn;
+            j += this.scrollViewMaxColumn;
+        }
+
+        return 0;
     }
 }
