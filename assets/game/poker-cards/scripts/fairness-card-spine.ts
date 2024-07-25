@@ -85,6 +85,10 @@ export class FairnessSpineCard extends Component {
         await AnimationUtils.playSpine(this?.skeletonCard, animated ? AnimationName.CloseCard : AnimationName.BackCard, false);
     }
 
+    faceDown() {
+        AnimationUtils.playSpine(this?.skeletonCard, AnimationName.BackCard, false);
+    }
+
     setClickCallback(callback: () => void) {
         if (callback) {
             this._clickCallback = callback;
