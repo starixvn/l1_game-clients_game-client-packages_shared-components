@@ -813,7 +813,7 @@
     "__type__": "GridLayoutSettings",
     "direction": 0,
     "scrollable": true,
-    "scrollToEnd": false,
+    "scrollToEnd": true,
     "row": 6,
     "column": 24,
     "itemSize": 22,
