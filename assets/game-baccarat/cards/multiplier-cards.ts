@@ -116,8 +116,8 @@ export class MultiplierCards extends ObserverComponent {
         }
         const opacityNode = node.getComponent(UIOpacity);
         opacityNode.opacity = 0;
-        node.setPosition(origin + cardWidth, node.position.y, 0);
-        const duration = 0.25;
+        node.setPosition(origin + cardWidth / 2, node.position.y, 0);
+        const duration = 0.15;
 
         return new Promise((resolve) => {
             tween(opacityNode)
