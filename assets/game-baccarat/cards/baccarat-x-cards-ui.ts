@@ -1,7 +1,7 @@
 import gc from "@sg/game-client-base";
 import { Label, Node, Prefab, UITransform, Vec3, _decorator, instantiate, sp, tween, v3 } from "cc";
 import Observer from "observer";
-import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
+import { FairnessSpineCard } from "../../game/poker-cards/scripts/fairness-card-spine";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
 import { bundleManager } from "../../shared/common-components/bundle-magager/bundle-manager";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
@@ -25,7 +25,7 @@ type BaccaratResult = {
 
 type PoolItem = {
     location: number;
-    card: FairnessCard;
+    card: FairnessSpineCard;
 };
 
 enum CardLocation {
@@ -89,7 +89,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     currentCardIndex = 0;
     cutCardIndex = 0;
 
-    cards: FairnessCard[] = [];
+    cards: FairnessSpineCard[] = [];
 
     cardPool: PoolItem[] = [];
 
@@ -147,7 +147,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             const node = this.creatNewCardNode();
             this.nodeCardContainer.addChild(node);
             node.active = false;
-            const card = node.getComponent(FairnessCard);
+            const card = node.getComponent(FairnessSpineCard);
             this.cardPool.push({
                 location: CardLocation.Box,
                 card,
@@ -229,8 +229,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
     async dropCards(cards: PoolItem[], animated = true) {
         await Promise.all(
             cards.map(async (item) => {
-                item.card.setWinHighlight(false);
-                item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
+                // item.card.setWinHighlight();
+                // item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
+                item.card.closeCard(animated);
                 await this.moveCard(item.card.node, CardLocation.Trash, animated);
                 item.card.node.active = false;
                 this.updateLocation(item, CardLocation.Trash);
@@ -240,7 +241,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     resetCardsToBox(pool: PoolItem[]) {
         pool.forEach((item) => {
-            item.card.card.faceDown();
+            item.card.faceDown();
             item.location = CardLocation.Box;
             this.moveCard(item.card.node, CardLocation.Box, false);
             item.card.node.active = false;
@@ -380,7 +381,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             ? [CardLocation.Player1, CardLocation.Player2, CardLocation.Player3]
             : [CardLocation.Banker1, CardLocation.Banker2, CardLocation.Banker3];
         const cards = this.cardPool.filter((item) => locations.includes(item.location));
-        cards.forEach((item) => item.card.setWinHighlight(true));
+        cards.forEach((item) => item.card.setWinHighlight());
     }
 
     @handle(GameBaccaratX.Multiplier.BaccaratMultipliersHandler, (handler, settlementResult: gc.GameServiceMessage.TSettlementResult) =>
@@ -494,7 +495,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         console.time("show burn card");
         for (let i = 0; i < burnedCards; i++) {
             const node = this.creatNewCardNode();
-            const cardComp = node.getComponent(FairnessCard);
+            const cardComp = node.getComponent(FairnessSpineCard);
             cardComp.setIndexValue(i);
             this.nodeBurnCards.addChild(node);
             node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
@@ -512,7 +513,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         const firstCardNode = this.burnCardsNodes[0];
         firstCardNode.active = true;
         this.playSound("draw-card");
-        const firstCardComp = firstCardNode.getComponent(FairnessCard);
+        const firstCardComp = firstCardNode.getComponent(FairnessSpineCard);
         firstCardComp.openCard(animated);
         this.transformCardNode(firstCardNode, CardLocation.Center, animated);
         await this.moveCardAnimation(firstCardNode, v3(0, 0, 0), animated);
