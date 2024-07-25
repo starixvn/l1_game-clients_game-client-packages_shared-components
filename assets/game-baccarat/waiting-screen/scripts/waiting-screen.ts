@@ -15,6 +15,7 @@ export class WaitingScreen extends ObserverComponent {
     @property(Label)
     lblCountDown: Label = null;
 
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handler, isShow: boolean) => handler.handleShowFairnessSettingsPopup(isShow))
     onClickCutCardBtn() {
         return true;

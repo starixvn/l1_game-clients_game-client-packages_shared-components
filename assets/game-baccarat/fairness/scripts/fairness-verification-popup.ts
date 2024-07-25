@@ -141,6 +141,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
         }, 0.1);
     }
 
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handle, roundId: number) => handle.openCutCardIndex(roundId))
     onClickDetail() {
         return this.roundId;

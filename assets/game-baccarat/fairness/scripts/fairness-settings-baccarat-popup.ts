@@ -64,6 +64,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     }
 
     showPopupManual() {
+        this.playSoundClick();
         const manual = instantiate(this.prfManualSettings);
         const comp = manual.getComponent(ClientSeedManualBaccaratPopup);
         comp.minClientSeed = this.minCSNumber;
@@ -94,6 +95,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handler, clientSeed: string) => handler.sendClientSeed(clientSeed))
     onClickSubmit() {
+        this.playSoundClick();
         return this.lblClientSeed.string;
     }
 
@@ -109,6 +111,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handle, isShow: boolean) => handle.updateDontShowAgain(isShow))
     onClickDontShowAgain() {
+        this.playSoundClick();
         return !this.tglDontShowAgain.isChecked;
     }
 
@@ -137,10 +140,12 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handler, isShow: boolean) => handler.handleShowFairnessSettingsPopup(isShow))
     closePopup() {
+        this.playSoundClick();
         return false;
     }
 
     onClickPrevious() {
+        this.playSoundClick();
         let clientSeedTpm = +this.lblClientSeed.string - 1;
         if (clientSeedTpm < this.minCSNumber) {
             clientSeedTpm = this.maxCSNumber;
@@ -149,10 +154,16 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
     }
 
     onClickNext() {
+        this.playSoundClick();
         let clientSeedTpm = +this.lblClientSeed.string + 1;
         if (clientSeedTpm > this.maxCSNumber) {
             clientSeedTpm = this.minCSNumber;
         }
         this.lblClientSeed.string = clientSeedTpm.toString();
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundClick() {
+        return gc.Audios.AudioIds.CLICK;
     }
 }

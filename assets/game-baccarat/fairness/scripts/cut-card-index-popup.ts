@@ -96,6 +96,7 @@ export class CutCardIndexPopup extends ObserverComponent {
         return encryptedName ? `(${name.substring(0, 1)}***${name.substring(name.length - 3, name.length)})` : name;
     }
 
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     onClickSave() {
         let data = "Player,Nickname,Seed\n";
         this.playerCutCards.forEach((player, index) => {
