@@ -37,6 +37,7 @@ export class BaccaratXBetHistorybodyItem extends BetHistoryBodyItem {
 
     @handle(BetDetailsNew.BetDetailsHandler, (handler, payload: any) => handler.openBetDetails(payload))
     openBetDetails() {
+        this.playSoundClick();
         return {
             roundId: this.betHistoryLog.roundId,
             mode: "dark",
