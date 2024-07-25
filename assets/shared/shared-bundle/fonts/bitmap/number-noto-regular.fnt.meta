@@ -44,7 +44,7 @@
           },
           "xOffset": 0,
           "yOffset": 6,
-          "xAdvance": 26
+          "xAdvance": 29
         },
         "36": {
           "rect": {
@@ -55,7 +55,7 @@
           },
           "xOffset": 0,
           "yOffset": 4,
-          "xAdvance": 23
+          "xAdvance": 26
         },
         "37": {
           "rect": {
@@ -66,7 +66,7 @@
           },
           "xOffset": 0,
           "yOffset": 5,
-          "xAdvance": 40
+          "xAdvance": 43
         },
         "43": {
           "rect": {
@@ -77,7 +77,7 @@
           },
           "xOffset": 0,
           "yOffset": 13,
-          "xAdvance": 22
+          "xAdvance": 25
         },
         "44": {
           "rect": {
@@ -88,7 +88,7 @@
           },
           "xOffset": 0,
           "yOffset": 34,
-          "xAdvance": 10
+          "xAdvance": 13
         },
         "45": {
           "rect": {
@@ -99,7 +99,7 @@
           },
           "xOffset": 0,
           "yOffset": 25,
-          "xAdvance": 14
+          "xAdvance": 17
         },
         "46": {
           "rect": {
@@ -110,7 +110,7 @@
           },
           "xOffset": 0,
           "yOffset": 34,
-          "xAdvance": 7
+          "xAdvance": 10
         },
         "47": {
           "rect": {
@@ -121,7 +121,7 @@
           },
           "xOffset": 0,
           "yOffset": 4,
-          "xAdvance": 15
+          "xAdvance": 18
         },
         "48": {
           "rect": {
@@ -132,7 +132,7 @@
           },
           "xOffset": 0,
           "yOffset": 5,
-          "xAdvance": 24
+          "xAdvance": 27
         },
         "49": {
           "rect": {
@@ -143,7 +143,7 @@
           },
           "xOffset": 0,
           "yOffset": 6,
-          "xAdvance": 21
+          "xAdvance": 24
         },
         "50": {
           "rect": {
@@ -154,7 +154,7 @@
           },
           "xOffset": 0,
           "yOffset": 5,
-          "xAdvance": 23
+          "xAdvance": 26
         },
         "51": {
           "rect": {
@@ -165,7 +165,7 @@
           },
           "xOffset": 0,
           "yOffset": 5,
-          "xAdvance": 24
+          "xAdvance": 27
         },
         "52": {
           "rect": {
@@ -176,7 +176,7 @@
           },
           "xOffset": 0,
           "yOffset": 6,
-          "xAdvance": 28
+          "xAdvance": 31
         },
         "53": {
           "rect": {
@@ -187,7 +187,7 @@
           },
           "xOffset": 0,
           "yOffset": 6,
-          "xAdvance": 23
+          "xAdvance": 26
         },
         "54": {
           "rect": {
@@ -198,7 +198,7 @@
           },
           "xOffset": 0,
           "yOffset": 5,
-          "xAdvance": 24
+          "xAdvance": 27
         },
         "55": {
           "rect": {
@@ -209,7 +209,7 @@
           },
           "xOffset": 0,
           "yOffset": 6,
-          "xAdvance": 24
+          "xAdvance": 27
         },
         "56": {
           "rect": {
@@ -220,7 +220,7 @@
           },
           "xOffset": 0,
           "yOffset": 5,
-          "xAdvance": 24
+          "xAdvance": 27
         },
         "57": {
           "rect": {
@@ -231,7 +231,7 @@
           },
           "xOffset": 0,
           "yOffset": 5,
-          "xAdvance": 23
+          "xAdvance": 26
         },
         "58": {
           "rect": {
@@ -242,7 +242,7 @@
           },
           "xOffset": 0,
           "yOffset": 11,
-          "xAdvance": 8
+          "xAdvance": 11
         },
         "65": {
           "rect": {
@@ -253,7 +253,7 @@
           },
           "xOffset": 0,
           "yOffset": 6,
-          "xAdvance": 35
+          "xAdvance": 38
         },
         "75": {
           "rect": {
@@ -264,7 +264,7 @@
           },
           "xOffset": 0,
           "yOffset": 6,
-          "xAdvance": 35
+          "xAdvance": 38
         },
         "77": {
           "rect": {
@@ -275,7 +275,7 @@
           },
           "xOffset": 0,
           "yOffset": 6,
-          "xAdvance": 44
+          "xAdvance": 47
         },
         "80": {
           "rect": {
@@ -286,7 +286,7 @@
           },
           "xOffset": 0,
           "yOffset": 6,
-          "xAdvance": 28
+          "xAdvance": 31
         },
         "120": {
           "rect": {
@@ -297,7 +297,7 @@
           },
           "xOffset": 0,
           "yOffset": 14,
-          "xAdvance": 29
+          "xAdvance": 32
         }
       },
       "kerningDict": {}
