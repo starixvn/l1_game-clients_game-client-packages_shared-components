@@ -1,7 +1,8 @@
-import { Animation, Component, math, Node, sp, tween, UIOpacity, UITransform, Vec3 } from "cc";
+import { Animation, Component, math, Node, sp, Tween, tween, TweenEasing, UIOpacity, UITransform, v3, Vec3 } from "cc";
 
 export namespace AnimationUtils {
     export const FadeTag = 1001;
+    export const ScaleTag = 1002;
     export const getUiOpacity = (node: Node) => {
         let uiOpacity = node.getComponent(UIOpacity);
         if (!uiOpacity) {
@@ -54,6 +55,27 @@ export namespace AnimationUtils {
         const originalScale = node.scale.clone();
         node.scale = math.Vec3.ZERO;
         return bounceTo(node, originalScale, duration);
+    };
+
+    export const scaleHop = (node: Node, scale: math.Vec3, duration = 0.3) => {
+        const originalScale = v3(node.scale);
+        return scaleTransition(node, [
+            { scale, duration: 0.1, easing: "sineIn" },
+            { scale: originalScale, duration, easing: "backOut" },
+        ]);
+    };
+
+    export const scaleTransition = (node: Node, config: { scale: math.Vec3; duration: number; easing: TweenEasing }[]) => {
+        return new Promise<void>((resolve) => {
+            Tween.stopAllByTag(ScaleTag, node);
+            const tweens = config.map((item) => tween(node).to(item.duration, { scale: item.scale }, { easing: item.easing }));
+            tween(node)
+                .sequence(...tweens)
+                .call(() => resolve())
+                .union()
+                .tag(ScaleTag)
+                .start();
+        });
     };
 
     export const bounceTo = (node: Node, scaleTo: math.Vec3, duration: number) => {
