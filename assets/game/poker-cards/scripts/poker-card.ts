@@ -66,7 +66,7 @@ export class PokerCard extends Component {
         q: "q_picture",
         k: "k_picture",
     };
-    private _animation: Animation;
+    protected _animation: Animation;
 
     get animation() {
         if (!this._animation) {
