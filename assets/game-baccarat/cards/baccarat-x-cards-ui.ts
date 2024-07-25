@@ -229,10 +229,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
     async dropCards(cards: PoolItem[], animated = true) {
         await Promise.all(
             cards.map(async (item) => {
-                // item.card.setWinHighlight();
-                // item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
                 item.card.closeCard(animated);
-                await this.moveCard(item.card.node, CardLocation.Trash, animated);
+                await this.moveCard(item.card, CardLocation.Trash, animated);
                 item.card.node.active = false;
                 this.updateLocation(item, CardLocation.Trash);
             })
@@ -243,7 +241,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         pool.forEach((item) => {
             item.card.faceDown();
             item.location = CardLocation.Box;
-            this.moveCard(item.card.node, CardLocation.Box, false);
+            this.moveCard(item.card, CardLocation.Box, false);
             item.card.node.active = false;
         });
     }
@@ -255,7 +253,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             item.card.node.active = true;
             item.card.setIndexValue(this.currentCardIndex + i);
             animated && this.playSound("draw-card");
-            await this.moveCard(item.card.node, nextLocation, animated);
+            await this.moveCard(item.card, nextLocation, animated);
             this.updateLocation(item, nextLocation);
         }
     }
@@ -291,13 +289,14 @@ export class BaccaratXCardsUI extends ObserverComponent {
         return node.getComponent(UITransform).convertToWorldSpaceAR(v3(0, 0, 0));
     }
 
-    async moveCard(card: Node, nextLocation: number, animated: boolean) {
-        card.setSiblingIndex(99);
-        const nextPosition = this.nodeCardContainer.getComponent(UITransform).convertToNodeSpaceAR(this.getPosition(nextLocation));
-        this.transformCardNode(card, nextLocation, animated);
-        await this.moveCardAnimation(card, nextPosition, animated);
-
-        card.setSiblingIndex(0);
+    async moveCard(card: FairnessSpineCard, nextLocation: number, animated: boolean) {
+        const cardNode = card?.node;
+        if (cardNode) {
+            cardNode.setSiblingIndex(card?.cardIndex);
+            const nextPosition = this.nodeCardContainer.getComponent(UITransform).convertToNodeSpaceAR(this.getPosition(nextLocation));
+            this.transformCardNode(cardNode, nextLocation, animated);
+            await this.moveCardAnimation(cardNode, nextPosition, animated);
+        }
     }
 
     moveCardAnimation(node: Node, position: Vec3, animated) {
@@ -352,7 +351,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 if (index > 3) {
                     this.playSound("draw-card");
                     const newLocation = dataIndex === 4 ? CardLocation.Player3 : CardLocation.Banker3;
-                    await this.moveCard(card.node, newLocation, animated);
+                    await this.moveCard(card, newLocation, animated);
 
                     // update remove from waiting cards
                     const item = this.cardPool.find((item) => item.card === card);
