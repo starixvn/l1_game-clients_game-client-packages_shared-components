@@ -1,5 +1,6 @@
 import { _decorator, Button, Component, Label, Node } from "cc";
-import { PokerCard, ServiceCard } from "./poker-card";
+import { ServiceCard } from "./poker-card";
+import { PokerCardSpine } from "./poker-card-spine";
 const { ccclass, property } = _decorator;
 
 export interface FairnessCardData {
@@ -18,12 +19,12 @@ export class FairnessCard extends Component {
     @property(Button)
     btnOnCard: Button = null;
 
-    private _card: PokerCard = null;
+    private _card: PokerCardSpine = null;
     private _clickCallback = () => {};
 
-    get card(): PokerCard {
+    get card(): PokerCardSpine {
         if (this._card === null) {
-            this._card = this.nodeCard.getComponent(PokerCard);
+            this._card = this.nodeCard.getComponent(PokerCardSpine);
         }
         return this._card;
     }
