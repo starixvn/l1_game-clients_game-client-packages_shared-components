@@ -50,13 +50,15 @@ export class FairnessSpineCard extends Component {
 
     private _clickCallback = () => {};
 
-    public card: CardModel = { rank: "A", suit: 3 };
     protected readonly suits = ["heart", "diamond", "club", "spade"];
     protected readonly picture = {
         j: "j_picture",
         q: "q_picture",
         k: "k_picture",
     };
+
+    public card: CardModel = { rank: "A", suit: 3 };
+    public cardIndex = 0;
 
     protected onLoad(): void {
         this.setStatusSkeletonCardWin(false);
@@ -110,7 +112,9 @@ export class FairnessSpineCard extends Component {
     }
 
     setIndexValue(index: number) {
-        this.lblCardIndex.string = `${index + 1}`;
+        const cardIndex = index + 1;
+        this.lblCardIndex.string = `${cardIndex}`;
+        this.cardIndex = cardIndex;
     }
 
     onClickCard() {
