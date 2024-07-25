@@ -1,5 +1,6 @@
-import { Component, Label, Node, Prefab, _decorator } from "cc";
+import { Component, Label, Node, Prefab, _decorator, v3 } from "cc";
 import Observer from "observer";
+import { AnimationUtils } from "../../shared/utils";
 
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -26,6 +27,7 @@ export class BaccaratXCards extends Component {
     setScore(score: number) {
         this.showScore(true);
         this.lblScore.string = score.toString();
+        AnimationUtils.scaleHop(this.lblScore.node.parent, v3(1, 1, 1).multiplyScalar(0.9), 0.3);
     }
 
     showScore(isShow: boolean) {
