@@ -2184,13 +2184,15 @@
     "__prefab": {
       "__id__": 96
     },
-    "target": null,
+    "target": {
+      "__id__": 74
+    },
     "syncWidth": true,
     "syncHeight": false,
     "syncPosition": false,
     "ratioWidth": 1,
     "ratioHeight": 1,
-    "widthPadding": 0,
+    "widthPadding": 30,
     "heightPadding": 0,
     "_id": ""
   },
