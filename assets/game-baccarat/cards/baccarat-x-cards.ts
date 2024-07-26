@@ -1,4 +1,4 @@
-import { Component, Label, Node, Prefab, _decorator, v3 } from "cc";
+import { Component, Label, Node, _decorator, v3 } from "cc";
 import Observer from "observer";
 import { AnimationUtils } from "../../shared/utils";
 
@@ -7,9 +7,6 @@ const { render, handle } = Observer;
 
 @ccclass
 export class BaccaratXCards extends Component {
-    @property(Prefab)
-    prfCard: Prefab = null;
-
     @property(Node)
     cardContainer: Node = null;
 
