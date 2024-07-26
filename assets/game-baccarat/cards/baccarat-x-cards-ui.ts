@@ -229,7 +229,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     async dropCards(cards: PoolItem[], animated = true) {
         await Promise.all(
             cards.map(async (item) => {
-                item.card.closeCard(animated);
+                item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
                 await this.moveCard(item.card, CardLocation.Trash, animated);
                 item.card.node.active = false;
                 this.updateLocation(item, CardLocation.Trash);
@@ -239,7 +239,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     resetCardsToBox(pool: PoolItem[]) {
         pool.forEach((item) => {
-            item.card.faceDown();
+            item.card.card.faceDown();
             item.location = CardLocation.Box;
             this.moveCard(item.card, CardLocation.Box, false);
             item.card.node.active = false;
@@ -380,7 +380,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             ? [CardLocation.Player1, CardLocation.Player2, CardLocation.Player3]
             : [CardLocation.Banker1, CardLocation.Banker2, CardLocation.Banker3];
         const cards = this.cardPool.filter((item) => locations.includes(item.location));
-        cards.forEach((item) => item.card.setWinHighlight());
+        cards.forEach((item) => item.card.setWinHighlight(true));
     }
 
     @handle(GameBaccaratX.Multiplier.BaccaratMultipliersHandler, (handler, settlementResult: gc.GameServiceMessage.TSettlementResult) =>

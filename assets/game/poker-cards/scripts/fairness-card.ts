@@ -1,6 +1,5 @@
 import { _decorator, Button, Component, Label, Node } from "cc";
-import { ServiceCard } from "./poker-card";
-import { PokerCardSpine } from "./poker-card-spine";
+import { PokerCard, ServiceCard } from "./poker-card";
 const { ccclass, property } = _decorator;
 
 export interface FairnessCardData {
@@ -19,12 +18,13 @@ export class FairnessCard extends Component {
     @property(Button)
     btnOnCard: Button = null;
 
-    private _card: PokerCardSpine = null;
+    protected _card = null;
     private _clickCallback = () => {};
+    public cardIndex = 0;
 
-    get card(): PokerCardSpine {
+    get card(): PokerCard {
         if (this._card === null) {
-            this._card = this.nodeCard.getComponent(PokerCardSpine);
+            this._card = this.nodeCard.getComponent(PokerCard);
         }
         return this._card;
     }
@@ -36,6 +36,7 @@ export class FairnessCard extends Component {
     setWinHighlight(show: boolean) {
         this.card.setWinHighlight(show);
     }
+
     setClickCallback(callback: () => void) {
         if (callback) {
             this._clickCallback = callback;
@@ -65,7 +66,9 @@ export class FairnessCard extends Component {
     }
 
     setIndexValue(index: number) {
-        this.lblCardIndex.string = `${index + 1}`;
+        const cardIndex = index + 1;
+        this.lblCardIndex.string = `${cardIndex}`;
+        this.cardIndex = cardIndex;
     }
 
     onClickCard() {
