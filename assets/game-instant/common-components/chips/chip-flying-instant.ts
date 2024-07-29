@@ -14,7 +14,7 @@ export default class ChipFlyingInstant extends ChipFlying {
     protected isShowChips = false;
     private isFirstJoinGame = true;
 
-    override flyChipsWhenJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {}
+    override async flyChipsWhenJoinGame(chipsByMainPlayerRate: gc.Chips.TChipsByMainPlayerRate) {}
 
     @render(Rounds.RoundTimeStore, (store) => store.isDisplayingResultState)
     isShowMainPlayerChips(isShow: boolean) {
