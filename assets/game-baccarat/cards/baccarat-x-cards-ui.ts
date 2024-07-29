@@ -8,6 +8,7 @@ import { ObserverComponent } from "../../shared/common-components/observer-compo
 import { ComponentUtils } from "../../shared/utils";
 import { AnimationUtils } from "../../shared/utils/utils";
 import { BaccaratXCards } from "./baccarat-x-cards";
+import { LuckyCardEffect } from "./lucky-card-effect";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 const { Rounds, GameBaccaratX } = gc;
@@ -75,6 +76,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
     @property(Node)
     nodeStackCards: Node = null;
 
+    @property(Node)
+    nodeLuckyCardsEffect: Node = null;
+
     @property
     spineCutCardPath = "";
 
@@ -98,8 +102,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
     private cardsStates: gc.GameBaccaratX.CardsState = {};
     private burnCardsNodes: Node[] = [];
     private durations: gc.GameConfigs.DurationSetting;
-
+    luckyCardEffect: LuckyCardEffect;
     async onLoad() {
+        this.luckyCardEffect = this.nodeLuckyCardsEffect.getComponent(LuckyCardEffect);
         this.nodeBgNewShoe.active = false;
         await this.initCards();
         super.onLoad();
@@ -358,9 +363,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
                     item.location = newLocation;
                 }
                 await card.openCard(animated);
+                await this.luckyCardEffect.checkLuckyCard({ card, data, animated });
                 this.updateCardStates(data, dataIndex);
-
-                this.node.emit(CardEvent.OPENED_CARD, { card, data, animated });
                 index++;
             }
         }
