@@ -33,10 +33,10 @@ export function startGame(
     gameName: string,
     containerOptions: gc.IContainerOptions,
     siteConfigs: gc.Configs.SiteConfigs,
-    namespaces: string[]
+    namespaces?: string[]
 ) {
     gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey);
-    loadI18n(siteConfigs, namespaces);
+    loadI18n(siteConfigs, namespaces ? namespaces : [gameName]);
 
     const container = gc.getContainer(containerOptions);
     const observerContainer = gc.buildObserverContainer(container);

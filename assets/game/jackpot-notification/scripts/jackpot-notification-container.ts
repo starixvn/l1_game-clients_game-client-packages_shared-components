@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
-import { _decorator } from "cc";
+import { _decorator, instantiate, Prefab } from "cc";
 import Observer from "observer";
+import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
 import { JackpotNotification } from "./jackpot-notification";
 
@@ -22,12 +23,15 @@ export class JackpotNotificationContainer extends NodeContainer {
         window.removeEventListener("message", this.registerEventGetGameName.bind(this));
     }
 
-    registerEventGetGameName(event: MessageEvent) {
+    async registerEventGetGameName(event: MessageEvent) {
         const { gameName, gameId } = event.data;
         if (gameName !== undefined && this.jackpotInfo?.gameId === gameId) {
-            const node = this.createNode();
-            const jackpotNotificationCmp = node.getComponent(JackpotNotification);
-            jackpotNotificationCmp.setData(this.jackpotInfo.winnerName, this.jackpotInfo.amount, gameName);
+            const prefab = await bundleManager.loadSharedAsset<Prefab>(`prefabs/jackpot-notification`, Prefab);
+            if (prefab) {
+                const node = instantiate(prefab);
+                const jackpotNotificationCmp = node.getComponent(JackpotNotification);
+                jackpotNotificationCmp.setData(this.jackpotInfo.winnerName, this.jackpotInfo.amount, gameName);
+            }
             this.jackpotInfo = null;
         }
     }

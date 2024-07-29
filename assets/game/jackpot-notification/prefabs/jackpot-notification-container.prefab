@@ -102,10 +102,7 @@
     "__prefab": {
       "__id__": 5
     },
-    "prefab": {
-      "__uuid__": "d0af3bcd-1087-4987-adcb-a0cd4a6a66ae",
-      "__expectedType__": "cc.Prefab"
-    },
+    "prefab": null,
     "_id": ""
   },
   {
