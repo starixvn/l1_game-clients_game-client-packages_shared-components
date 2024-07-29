@@ -363,7 +363,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
                     item.location = newLocation;
                 }
                 await card.openCard(animated);
-                await this.luckyCardEffect.checkLuckyCard({ card, data, animated });
+                this.luckyCardEffect.checkLuckyCard({ card, data, animated });
                 this.updateCardStates(data, dataIndex);
                 index++;
             }
