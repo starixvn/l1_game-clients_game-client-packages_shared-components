@@ -45,10 +45,9 @@ export class LuckyCardEffect extends Component {
 
             if (animated) {
                 console.time(`anim gold in ${timeStamp}`);
-                this.createEffectNode(true, card.node).then(() => {
-                    console.timeEnd(`anim gold in ${timeStamp}`);
-                    card.setGoldenCard(true, animated);
-                });
+                await this.createEffectNode(true, card.node);
+                console.timeEnd(`anim gold in ${timeStamp}`);
+                card.setGoldenCard(true, animated);
             } else {
                 card.setGoldenCard(true, animated);
             }
