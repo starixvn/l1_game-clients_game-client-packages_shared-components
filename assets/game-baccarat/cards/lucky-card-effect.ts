@@ -34,7 +34,7 @@ export class LuckyCardEffect extends Component {
 
     async checkLuckyCard(openCard: { card: FairnessCard; data: ServiceCard; animated: boolean }) {
         const { card, data, animated } = openCard;
-        const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data, Math.floor(Math.random() * 8));
+        const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data);
         if (matchedMultiplierCard) {
             const timeStamp = new Date().getTime();
             console.time(`anim white in ${timeStamp}`);
