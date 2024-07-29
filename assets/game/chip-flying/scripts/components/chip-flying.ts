@@ -80,7 +80,7 @@ export class ChipFlying extends ObserverComponent {
     protected aroundTablePlayerChips = [];
     protected isFlyChipSlow = true;
     protected chipStorage = {};
-    protected isStartRunAnimPayChips = false;
+    protected startShowResultAnimation = false;
     protected winningPlayers: gc.GameServiceMessage.TWinningPlayers = {};
 
     onLoad(): void {
@@ -149,18 +149,21 @@ export class ChipFlying extends ObserverComponent {
 
     @render(Settlements.SettlementStore, (store) => store.settlementResult, { fireImmediately: false })
     payChipsWhenReceivingSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult) {
-        if (!this || !settlementResult || !this.enablePlaceChips || !this.node || !this.usingDelayPayChips) {
+        if (!this || !settlementResult || !this.enablePlaceChips || !this.node) {
             return;
         }
 
         if (!this.node.activeInHierarchy) {
             this.actionPayChips(false);
         } else {
-            this.isStartRunAnimPayChips = true;
-            tween(this.node)
-                .delay(this.delayAnimPayChips)
-                .call(() => this.actionPayChips(true))
-                .start();
+            this.startShowResultAnimation = true;
+
+            if (!this.usingDelayPayChips) {
+                tween(this.node)
+                    .delay(this.delayAnimPayChips)
+                    .call(() => this.actionPayChips(true))
+                    .start();
+            }
         }
     }
 
@@ -179,6 +182,7 @@ export class ChipFlying extends ObserverComponent {
             this.payChipToAllPlayers();
             return;
         }
+
         tween(this.node)
             .call(() => {
                 this.handlePayMoneySound();
@@ -220,6 +224,7 @@ export class ChipFlying extends ObserverComponent {
         }
 
         this.payChipsToAroundTablePlayers();
+        this.startShowResultAnimation = false;
     };
 
     private showPayoutForMainPlayer() {
@@ -255,9 +260,8 @@ export class ChipFlying extends ObserverComponent {
     handleWinningAroundTablePlayers(winningPlayers: gc.GameServiceMessage.TWinningPlayers) {
         this.winningPlayers = winningPlayers;
 
-        if (!this.isStartRunAnimPayChips) {
+        if (!this.startShowResultAnimation) {
             this.payChipsToAroundTablePlayers();
-            this.isStartRunAnimPayChips = false;
         }
     }
 
@@ -348,7 +352,7 @@ export class ChipFlying extends ObserverComponent {
 
     protected resetSettlementStatus() {
         this.settlementStatus = null;
-        this.isStartRunAnimPayChips = false;
+        this.startShowResultAnimation = false;
     }
 
     @render(Chips.ChipStore, (store) => store.collectChipsReBet, { fireImmediately: false })
