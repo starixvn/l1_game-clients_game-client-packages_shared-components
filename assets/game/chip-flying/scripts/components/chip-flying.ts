@@ -58,7 +58,15 @@ export class ChipFlying extends ObserverComponent {
     @property(Node)
     nodeBetItems: Node = null;
 
-    @property(CCFloat)
+    @property
+    usingDelayPayChips = true;
+
+    @property({
+        visible: function (this: ChipFlying) {
+            return this.usingDelayPayChips;
+        },
+        type: CCFloat,
+    })
     delayAnimPayChips = 1.25;
 
     slidingChip: SlidingChip = null;
@@ -141,32 +149,50 @@ export class ChipFlying extends ObserverComponent {
 
     @render(Settlements.SettlementStore, (store) => store.settlementResult, { fireImmediately: false })
     payChipsWhenReceivingSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult) {
-        if (!this || !settlementResult || !this.enablePlaceChips || !this.node) {
+        if (!this || !settlementResult || !this.enablePlaceChips || !this.node || !this.usingDelayPayChips) {
             return;
         }
 
         if (!this.node.activeInHierarchy) {
-            ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems, this);
-            ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems, this);
-            this.payChipToAllPlayers();
+            this.actionPayChips(false);
         } else {
             this.isStartRunAnimPayChips = true;
             tween(this.node)
                 .delay(this.delayAnimPayChips)
-                .call(() => {
-                    this.handlePayMoneySound();
-                    ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems, this);
-                })
-                .delay(this.chipDelayFlyingTime)
-                .call(() => {
-                    ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems, this);
-                })
-                .delay(this.chipDelayFlyingTime)
-                .call(() => {
-                    this.payChipToAllPlayers();
-                })
+                .call(() => this.actionPayChips(true))
                 .start();
         }
+    }
+
+    callActionPayChips() {
+        if (this.usingDelayPayChips) {
+            return;
+        }
+
+        this.actionPayChips(true);
+    }
+
+    actionPayChips(animated: boolean) {
+        if (!animated) {
+            ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems, this);
+            ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems, this);
+            this.payChipToAllPlayers();
+            return;
+        }
+        tween(this.node)
+            .call(() => {
+                this.handlePayMoneySound();
+                ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems, this);
+            })
+            .delay(this.chipDelayFlyingTime)
+            .call(() => {
+                ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems, this);
+            })
+            .delay(this.chipDelayFlyingTime)
+            .call(() => {
+                this.payChipToAllPlayers();
+            })
+            .start();
     }
 
     handlePayMoneySound() {
