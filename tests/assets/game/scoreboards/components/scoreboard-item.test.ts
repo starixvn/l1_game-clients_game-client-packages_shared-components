@@ -16,14 +16,13 @@ describe(ScoreboardItem.name, () => {
         describe("when length of array is difference from current", () => {
             it("should update renderers", () => {
                 // Arrange
-                (component.getComponents as jest.Mock).mockReturnValue([1]);
                 (component.getComponentsInChildren as jest.Mock).mockReturnValue([2, 3]);
 
                 // Act
                 component.onFocusInEditor();
 
                 // Assert
-                expect(component["renderers"]).toStrictEqual([1, 2, 3]);
+                expect(component["renderers"]).toStrictEqual([2, 3]);
             });
         });
     });
