@@ -26,6 +26,7 @@ export class LuckyCardEffect extends Component {
         node.active = true;
 
         node.position = ComponentUtils.convertPosition(this.node, target);
+        node.worldRotation = target.worldRotation;
 
         const spine = node.getComponent(sp.Skeleton);
         await AnimationUtils.playSpine(spine, golden ? "golden" : "white", false, 1.0);
@@ -34,7 +35,7 @@ export class LuckyCardEffect extends Component {
 
     async checkLuckyCard(openCard: { card: FairnessCard; data: ServiceCard; animated: boolean }) {
         const { card, data, animated } = openCard;
-        const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data);
+        const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data, Math.floor(Math.random() * 8));
         if (matchedMultiplierCard) {
             const timeStamp = new Date().getTime();
             console.time(`anim white in ${timeStamp}`);
