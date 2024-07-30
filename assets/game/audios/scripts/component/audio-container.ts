@@ -280,7 +280,6 @@ export class AudioContainer extends ObserverComponent {
             return { audioClip: null, currentLoadAssetTime: 0, isPlay: false };
         }
 
-        console.log(`load audio ${bundle}  ---- ${path}`);
         const audioClip = await AudioUtils.getAudioClip(bundle, path);
 
         return { audioClip, currentLoadAssetTime, isPlay };
