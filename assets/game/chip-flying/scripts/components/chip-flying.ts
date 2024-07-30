@@ -158,7 +158,7 @@ export class ChipFlying extends ObserverComponent {
         } else {
             this.startShowResultAnimation = true;
 
-            if (!this.usingDelayPayChips) {
+            if (this.usingDelayPayChips) {
                 tween(this.node)
                     .delay(this.delayAnimPayChips)
                     .call(() => this.actionPayChips(true))
