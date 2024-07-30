@@ -250,7 +250,7 @@ export class AudioContainer extends ObserverComponent {
 
     async playAudio(id: string, playFunction: (clip: AudioClip, isPlay: boolean) => void, isCurrentPlaying: boolean) {
         const audioValue = AudioManager?.audioConfigs()?.[id];
-        if (!audioValue || this.currentPlayTime[id] === 0) {
+        if (!audioValue || (this.currentPlayTime[id] !== undefined && this.currentPlayTime[id] > 0)) {
             return;
         }
 
