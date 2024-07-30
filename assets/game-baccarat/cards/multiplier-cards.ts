@@ -6,7 +6,7 @@ import { ObserverComponent } from "../../shared/common-components/observer-compo
 import { ComponentUtils, FunctionUtils } from "../../shared/utils";
 import { MultiplierCard } from "./multiplier-card";
 const { ccclass, property } = _decorator;
-const { observer, render } = Observer;
+const { observer, render, handle } = Observer;
 const { GameBaccaratX, Rounds, FormatUtils } = gc;
 
 @ccclass
@@ -58,6 +58,7 @@ export class MultiplierCards extends ObserverComponent {
             comp.setData(item);
             this.cardPosition(node, i);
             if (animated) {
+                this.playSound("multiplier");
                 comp.playAnimCard();
                 await FunctionUtils.delay(130);
             } else {
@@ -113,5 +114,10 @@ export class MultiplierCards extends ObserverComponent {
         const cardWidth = 52;
         const origin = index * cardWidth;
         node.position = v3(origin, node.position.y, 0);
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSound(id: string) {
+        return id;
     }
 }

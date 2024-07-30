@@ -1,13 +1,17 @@
-import { _decorator, Component, instantiate, Node, sp } from "cc";
+import gc from "@sg/game-client-base";
+import { _decorator, instantiate, Node, sp } from "cc";
+import Observer from "observer";
 import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
+import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
 import { AnimationUtils, ComponentUtils } from "../../shared/utils";
 import { BaccaratXCardsUI } from "./baccarat-x-cards-ui";
 import { MultiplierCards } from "./multiplier-cards";
 const { ccclass, property } = _decorator;
+const { handle } = Observer;
 
 @ccclass
-export class LuckyCardEffect extends Component {
+export class LuckyCardEffect extends ObserverComponent {
     @property(Node)
     nodeMultiplierCards: Node = null;
 
@@ -17,6 +21,7 @@ export class LuckyCardEffect extends Component {
     cardsUI: BaccaratXCardsUI = null;
     multiplierCards: MultiplierCards = null;
     onLoad() {
+        super.onLoad();
         this.multiplierCards = this.nodeMultiplierCards.getComponent(MultiplierCards);
     }
 
@@ -37,6 +42,7 @@ export class LuckyCardEffect extends Component {
         const { card, data, animated } = openCard;
         const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data);
         if (matchedMultiplierCard) {
+            animated && this.playSound("lightning");
             const timeStamp = new Date().getTime();
             console.time(`anim white in ${timeStamp}`);
             animated && (await this.createEffectNode(false, matchedMultiplierCard.card.node));
@@ -52,5 +58,10 @@ export class LuckyCardEffect extends Component {
                 card.setGoldenCard(true, animated);
             }
         }
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSound(id: string) {
+        return id;
     }
 }
