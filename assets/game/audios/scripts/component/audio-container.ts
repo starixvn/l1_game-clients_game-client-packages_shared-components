@@ -22,11 +22,6 @@ export type TAudioValue = {
     isLazyLoad?: boolean;
 };
 
-export enum ECurrentPlayTime {
-    playMusic = "playMusic",
-    playSFX = "playSFX",
-}
-
 @ccclass
 export class AudioContainer extends ObserverComponent {
     @property(JsonAsset)
@@ -50,10 +45,7 @@ export class AudioContainer extends ObserverComponent {
     protected isUserGesture = false;
     protected isPlayMusic = false;
     protected isPlaySFX = false;
-    protected currentPlayTime = {
-        [ECurrentPlayTime.playMusic]: 0,
-        [ECurrentPlayTime.playSFX]: 0,
-    };
+    protected currentPlayTime = {};
 
     setIsUserGesture(isUserGesture: boolean) {
         this.isUserGesture = isUserGesture;
@@ -210,7 +202,6 @@ export class AudioContainer extends ObserverComponent {
             (clip, isPlay) => {
                 isPlay === this.isPlayMusic && this.playSourceClip(this.musicSource, clip);
             },
-            ECurrentPlayTime.playMusic,
             this.isPlayMusic
         );
     }
@@ -243,7 +234,6 @@ export class AudioContainer extends ObserverComponent {
                     isStoppableSFX ? this.playSourceClip(this.stoppableSFXSource, clip) : this.sfxSource.playOneShot(clip);
                 }
             },
-            ECurrentPlayTime.playSFX,
             this.isPlaySFX
         );
     }
@@ -258,27 +248,23 @@ export class AudioContainer extends ObserverComponent {
         audioSource.stop();
     }
 
-    async playAudio(
-        id: string,
-        playFunction: (clip: AudioClip, isPlay: boolean) => void,
-        currentTimeField: string,
-        isCurrentPlaying: boolean
-    ) {
+    async playAudio(id: string, playFunction: (clip: AudioClip, isPlay: boolean) => void, isCurrentPlaying: boolean) {
         const audioValue = AudioManager?.audioConfigs()?.[id];
-        if (!audioValue) {
+        if (!audioValue || this.currentPlayTime[id] === 0) {
             return;
         }
 
         const currentTime = new Date().getTime();
-        this.currentPlayTime[currentTimeField] = currentTime;
+        this.currentPlayTime[id] = currentTime;
         const { audioClip, currentLoadAssetTime, isPlay } = await this.loadAssets(audioValue, id, currentTime, isCurrentPlaying);
 
         if (audioClip) {
-            if (this.currentPlayTime[currentTimeField] !== currentLoadAssetTime) {
+            if (this.currentPlayTime[id] !== currentLoadAssetTime) {
                 return;
             }
 
             playFunction(audioClip, isPlay);
+            this.currentPlayTime[id] = 0;
         }
     }
 
@@ -294,6 +280,7 @@ export class AudioContainer extends ObserverComponent {
             return { audioClip: null, currentLoadAssetTime: 0, isPlay: false };
         }
 
+        console.log(`load audio ${bundle}  ---- ${path}`);
         const audioClip = await AudioUtils.getAudioClip(bundle, path);
 
         return { audioClip, currentLoadAssetTime, isPlay };
