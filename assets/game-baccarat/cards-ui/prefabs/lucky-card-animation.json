@@ -1,6 +1,6 @@
 {
     "skeleton": {
-        "hash": "AkAwqOuN06D319+5gyjONt1GoM4",
+        "hash": "1N9A3uPCRICZP63zdX4wQXzNQQI",
         "spine": "3.8.99",
         "images": "./images/",
         "audio": "D:/MYWORKFOLDER/multibaccaratX/spine"
@@ -13,7 +13,7 @@
         { "name": "vfx", "parent": "table", "scaleY": -0.9 },
         { "name": "gold-card-table", "parent": "table" },
         { "name": "top", "parent": "root" },
-        { "name": "vfx2", "parent": "top", "y": 0.79, "scaleX": 0.84, "scaleY": 0.72 },
+        { "name": "vfx2", "parent": "top", "x": -0.69, "y": 0.79, "scaleX": 0.9231, "scaleY": 0.84 },
         { "name": "card-glowy2-gold-table", "parent": "table", "y": 34.39 },
         { "name": "face-table", "parent": "table", "y": -0.59 },
         { "name": "shiny-light-table", "parent": "table", "x": 0.01, "y": 35.9 },
