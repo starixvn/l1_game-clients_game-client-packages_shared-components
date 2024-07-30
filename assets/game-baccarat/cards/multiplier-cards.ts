@@ -1,9 +1,9 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, Prefab, UIOpacity, _decorator, instantiate, tween, v3 } from "cc";
+import { Label, Node, Prefab, _decorator, instantiate, v3 } from "cc";
 import Observer from "observer";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
-import { ComponentUtils } from "../../shared/utils";
+import { ComponentUtils, FunctionUtils } from "../../shared/utils";
 import { MultiplierCard } from "./multiplier-card";
 const { ccclass, property } = _decorator;
 const { observer, render } = Observer;
@@ -49,16 +49,19 @@ export class MultiplierCards extends ObserverComponent {
         const labelContainer = new Node("label-container");
         this.node.addChild(labelContainer);
         this.multiplierCards = [];
+
         for (let i = 0; i < multipliers.length; i++) {
             const item = multipliers[i];
             const node = instantiate(this.prfMultiplierCard);
             this.content.addChild(node);
             const comp = node.getComponent(MultiplierCard);
             comp.setData(item);
+            this.cardPosition(node, i);
             if (animated) {
-                await this.moveCardAnimation(node, i, animated);
+                comp.playAnimCard();
+                await FunctionUtils.delay(130);
             } else {
-                this.moveCardAnimation(node, i, false);
+                comp.card.setGoldenCard(true, false);
             }
             this.optimizedDrawCall(comp.lblMultiplier.node, labelContainer);
             this.multiplierCards.push(comp);
@@ -106,32 +109,9 @@ export class MultiplierCards extends ObserverComponent {
         }
     }
 
-    async moveCardAnimation(node: Node, index: number, animated: boolean) {
+    async cardPosition(node: Node, index: number) {
         const cardWidth = 52;
         const origin = index * cardWidth;
-
-        if (!animated) {
-            node.position = v3(origin, node.position.y, 0);
-            return;
-        }
-        const opacityNode = node.getComponent(UIOpacity);
-        opacityNode.opacity = 0;
-        node.setPosition(origin + cardWidth / 2, node.position.y, 0);
-        const duration = 0.15;
-
-        return new Promise((resolve) => {
-            tween(opacityNode)
-                .to(0, {
-                    opacity: 50,
-                })
-                .to(duration, {
-                    opacity: 255,
-                })
-                .start();
-            tween(node)
-                .to(duration, { position: v3(origin, node.position.y, 0) }, { easing: "sineInOut" })
-                .call(resolve)
-                .start();
-        });
+        node.position = v3(origin, node.position.y, 0);
     }
 }
