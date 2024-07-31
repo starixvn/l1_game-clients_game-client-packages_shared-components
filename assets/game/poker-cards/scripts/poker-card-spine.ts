@@ -57,9 +57,9 @@ export class PokerCardSpine extends PokerCard {
         AnimationUtils.playSpine(this?.skeletonCard, AnimationName.FrontCard, false);
     }
 
-    async faceDown() {
-        this.changeCardFace(false);
-        await AnimationUtils.playSpine(this?.skeletonCard, AnimationName.BackCard, false);
+    faceDown() {
+        super.faceDown();
+        AnimationUtils.playSpine(this?.skeletonCard, AnimationName.BackCard, false);
     }
 
     protected override setDetailVisibility(active: boolean) {}

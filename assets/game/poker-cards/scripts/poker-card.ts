@@ -136,6 +136,7 @@ export class PokerCard extends Component {
     }
 
     faceDown() {
+        this.setWinHighlight(false);
         this.changeCardFace(false);
     }
 
