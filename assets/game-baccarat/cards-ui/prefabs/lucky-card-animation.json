@@ -1,6 +1,6 @@
 {
     "skeleton": {
-        "hash": "1N9A3uPCRICZP63zdX4wQXzNQQI",
+        "hash": "7j4gknggQQdMsD77ghqWntscQNo",
         "spine": "3.8.99",
         "images": "./images/",
         "audio": "D:/MYWORKFOLDER/multibaccaratX/spine"
@@ -45,13 +45,13 @@
             "name": "default",
             "attachments": {
                 "card-glow": {
-                    "card-glow": { "x": 0.5, "y": -34.16, "width": 70, "height": 88 }
+                    "card-glow-gold-side": { "x": 0.5, "y": -34.16, "width": 70, "height": 88 }
                 },
                 "card-glow2": {
                     "card-glow": { "x": 0.5, "y": -34.16, "width": 70, "height": 88 }
                 },
                 "card-glow7": {
-                    "card-glow-white": { "x": 1.18, "y": -35.33, "width": 69, "height": 89 }
+                    "card-glow-white-side": { "x": 1.18, "y": -35.33, "width": 69, "height": 89 }
                 },
                 "card-glow8": {
                     "card-glow-white": { "x": 0.41, "y": -34.89, "width": 69, "height": 89 }
@@ -177,7 +177,7 @@
                         { "time": 1.2, "color": "ffffffff" },
                         { "time": 1.4667, "color": "ffffff00" }
                     ],
-                    "attachment": [{ "name": "card-glow" }]
+                    "attachment": [{ "name": "card-glow-gold-side" }]
                 },
                 "card-glow2": {
                     "color": [
@@ -307,7 +307,7 @@
                         { "time": 1.2, "color": "ffffffff" },
                         { "time": 1.4667, "color": "ffffff00" }
                     ],
-                    "attachment": [{ "name": "card-glow-white" }]
+                    "attachment": [{ "name": "card-glow-white-side" }]
                 },
                 "card-glow8": {
                     "color": [
