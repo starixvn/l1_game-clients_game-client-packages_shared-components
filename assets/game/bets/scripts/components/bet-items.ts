@@ -19,10 +19,15 @@ export class BetItems extends ObserverComponent {
     betItemComponents: BetItem[] = [];
     settlementResult: gc.GameServiceMessage.TSettlementResult = null;
 
+    init() {
+        this.betItemComponents = this.node.getComponentsInChildren(BetItem);
+        this.betItemComponents.forEach((item) => item.init());
+    }
+
     onLoad() {
-        this.node && (this.betItemComponents = this.node.getComponentsInChildren(BetItem) ?? []);
-        super.onLoad();
+        this.init();
         this.handleStaticNode();
+        super.onLoad();
     }
 
     protected handleStaticNode() {
