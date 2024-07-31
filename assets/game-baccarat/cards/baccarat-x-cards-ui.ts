@@ -257,7 +257,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             const nextLocation = i + 1;
             item.card.node.active = true;
             item.card.setIndexValue(this.currentCardIndex + i);
-            animated && this.playSound("draw-card");
+            animated && this.playSoundDrawCard();
             await this.moveCard(item.card, nextLocation, animated);
             this.updateLocation(item, nextLocation);
         }
@@ -354,7 +354,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 card.node.active = true;
                 card.setCardData(data);
                 if (index > 3) {
-                    this.playSound("draw-card");
+                    this.playSoundDrawCard();
                     const newLocation = dataIndex === 4 ? CardLocation.Player3 : CardLocation.Banker3;
                     await this.moveCard(card, newLocation, animated);
 
@@ -515,7 +515,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         const firstCardNode = this.burnCardsNodes[0];
         firstCardNode.active = true;
-        this.playSound("draw-card");
+        this.playSoundDrawCard();
         const firstCardComp = firstCardNode.getComponent(FairnessSpineCard);
         firstCardComp.openCard(animated);
         this.transformCardNode(firstCardNode, CardLocation.Center, animated);
@@ -533,7 +533,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         const startX = firstCardsX + spacingFirstCard + cardWidth;
         for (let i = 1; i < this.burnCardsNodes.length; i++) {
-            this.playSound("draw-card");
+            this.playSoundDrawCard();
             const node = this.burnCardsNodes[i];
             node.active = true;
 
@@ -611,8 +611,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
-    playSound(id: string) {
-        return id;
+    playSoundDrawCard() {
+        return "draw-single-card";
     }
 
     updateStacksCardBox(currentIndex: number, cutCardIndex: number) {
