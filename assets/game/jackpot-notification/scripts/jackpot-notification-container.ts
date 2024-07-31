@@ -27,11 +27,15 @@ export class JackpotNotificationContainer extends NodeContainer {
         const { gameName, gameId } = event.data;
         if (gameName !== undefined && this.jackpotInfo?.gameId === gameId) {
             const prefab = await bundleManager.loadSharedAsset<Prefab>(`prefabs/jackpot-notification`, Prefab);
-            if (prefab) {
-                const node = instantiate(prefab);
-                const jackpotNotificationCmp = node.getComponent(JackpotNotification);
-                jackpotNotificationCmp.setData(this.jackpotInfo.winnerName, this.jackpotInfo.amount, gameName);
-            }
+            try {
+                if (prefab) {
+                    const node = instantiate(prefab);
+                    this.node.addChild(node);
+                    const jackpotNotificationCmp = node.getComponent(JackpotNotification);
+                    jackpotNotificationCmp.setData(this.jackpotInfo.winnerName, this.jackpotInfo.amount, gameName);
+                }
+            } catch (e) {}
+
             this.jackpotInfo = null;
         }
     }
