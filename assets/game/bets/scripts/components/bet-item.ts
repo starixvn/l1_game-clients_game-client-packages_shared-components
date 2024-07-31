@@ -33,13 +33,23 @@ export default class BetItem extends ObserverComponent {
     @property(Label)
     lblBetPercentage: Label = null;
 
-    onLoad() {
-        super.onLoad();
+    private _initialized = false;
+
+    init() {
+        if (this._initialized) {
+            return;
+        }
         ComponentUtils.setEmptyLabels([this.lblOwnBet, this.lblTotalBet, this.lblOdds]);
-        this.loadInactiveHighlight();
+        this.hideSomeNodes();
+        this._initialized = true;
     }
 
-    loadInactiveHighlight() {
+    onLoad() {
+        this.init();
+        super.onLoad();
+    }
+
+    hideSomeNodes() {
         this.highlightStatic.active = false;
         this.highlightAnim.active = false;
     }
