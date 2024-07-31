@@ -122,7 +122,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @render(Rounds.RoundTimeStore, (store) => store.roundTime)
     renderCountDownTime(roundTime: number) {
-        this.lblCountDown && (this.lblCountDown.string = (roundTime - TimePoints.cutCard).toString());
+        this.lblCountDown && (this.lblCountDown.string = (roundTime - TimePoints.CutCards).toString());
     }
 
     @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handler, min: number) => handler.setMinClientSeed(min))

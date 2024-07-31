@@ -28,6 +28,6 @@ export class WaitingScreen extends ObserverComponent {
 
     @render(Rounds.RoundTimeStore, (store) => store.roundTime)
     renderCountDownTime(roundTime: number) {
-        this.lblCountDown && (this.lblCountDown.string = (roundTime - TimePoints.cutCard).toString());
+        this.lblCountDown && (this.lblCountDown.string = (roundTime - TimePoints.CutCards).toString());
     }
 }
