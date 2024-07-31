@@ -1,257 +1,271 @@
 
 lucky-card-animation.png
-size: 1002,125
+size: 963,141
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 card-glow
-  rotate: false
-  xy: 118, 53
+  rotate: true
+  xy: 104, 10
   size: 56, 70
   orig: 56, 70
   offset: 0, 0
   index: -1
+card-glow-gold-side
+  rotate: false
+  xy: 278, 3
+  size: 56, 66
+  orig: 56, 70
+  offset: 0, 2
+  index: -1
 card-glow-white
   rotate: false
-  xy: 61, 52
+  xy: 61, 68
   size: 55, 71
   orig: 55, 71
   offset: 0, 0
   index: -1
+card-glow-white-side
+  rotate: false
+  xy: 336, 3
+  size: 55, 66
+  orig: 55, 71
+  offset: 0, 2
+  index: -1
 shiny
   rotate: true
-  xy: 2, 50
+  xy: 2, 66
   size: 73, 57
   orig: 74, 58
   offset: 1, 0
   index: -1
 vfx/ui_nudge_eff_R_00005
   rotate: false
-  xy: 950, 48
+  xy: 648, 2
   size: 40, 14
   orig: 49, 128
   offset: 4, 31
   index: -1
 vfx/ui_nudge_eff_R_00006
-  rotate: true
-  xy: 974, 82
+  rotate: false
+  xy: 920, 113
   size: 41, 26
   orig: 49, 128
   offset: 4, 30
   index: -1
 vfx/ui_nudge_eff_R_00007
   rotate: true
-  xy: 52, 4
+  xy: 920, 67
   size: 44, 35
   orig: 49, 128
   offset: 2, 30
   index: -1
 vfx/ui_nudge_eff_R_00008
-  rotate: false
-  xy: 2, 3
+  rotate: true
+  xy: 699, 21
   size: 48, 45
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00009
   rotate: false
-  xy: 229, 2
+  xy: 648, 18
   size: 49, 51
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00010
   rotate: false
-  xy: 899, 4
+  xy: 597, 14
   size: 49, 55
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00011
   rotate: false
-  xy: 923, 64
+  xy: 53, 5
   size: 49, 59
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00012
   rotate: false
-  xy: 872, 61
+  xy: 2, 2
   size: 49, 62
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00013
-  rotate: true
-  xy: 832, 4
+  rotate: false
+  xy: 546, 4
   size: 49, 65
   orig: 49, 128
   offset: 0, 29
   index: -1
 vfx/ui_nudge_eff_R_00014
-  rotate: true
-  xy: 628, 4
+  rotate: false
+  xy: 393, 3
   size: 49, 66
   orig: 49, 128
   offset: 0, 29
   index: -1
 vfx/ui_nudge_eff_R_00015
-  rotate: true
-  xy: 490, 4
+  rotate: false
+  xy: 176, 2
   size: 49, 67
   orig: 49, 128
   offset: 0, 29
   index: -1
 vfx/ui_nudge_eff_R_00016
-  rotate: true
-  xy: 696, 4
+  rotate: false
+  xy: 444, 3
   size: 49, 66
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00017
-  rotate: true
-  xy: 764, 4
+  rotate: false
+  xy: 495, 3
   size: 49, 66
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00018
-  rotate: true
-  xy: 559, 4
+  rotate: false
+  xy: 227, 2
   size: 49, 67
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00019
-  rotate: true
-  xy: 159, 2
+  rotate: false
+  xy: 118, 71
   size: 49, 68
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00020
   rotate: false
-  xy: 176, 55
+  xy: 169, 71
   size: 49, 68
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00021
   rotate: false
-  xy: 227, 55
+  xy: 220, 71
   size: 49, 68
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00022
   rotate: false
-  xy: 278, 55
+  xy: 271, 71
   size: 49, 68
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00023
-  rotate: true
-  xy: 280, 4
+  rotate: false
+  xy: 322, 71
   size: 49, 68
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00024
   rotate: false
-  xy: 329, 55
+  xy: 373, 71
   size: 49, 68
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00025
-  rotate: true
-  xy: 350, 4
+  rotate: false
+  xy: 424, 71
   size: 49, 68
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00026
   rotate: false
-  xy: 380, 55
+  xy: 475, 71
   size: 49, 68
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00027
-  rotate: true
-  xy: 420, 4
+  rotate: false
+  xy: 526, 71
   size: 49, 68
   orig: 49, 128
   offset: 0, 30
   index: -1
 vfx/ui_nudge_eff_R_00028
-  rotate: true
-  xy: 89, 3
+  rotate: false
+  xy: 577, 71
   size: 47, 68
   orig: 49, 128
   offset: 1, 30
   index: -1
 vfx/ui_nudge_eff_R_00029
   rotate: false
-  xy: 431, 55
+  xy: 626, 71
   size: 47, 68
   orig: 49, 128
   offset: 1, 30
   index: -1
 vfx/ui_nudge_eff_R_00030
   rotate: false
-  xy: 480, 55
+  xy: 675, 71
   size: 47, 68
   orig: 49, 128
   offset: 1, 30
   index: -1
 vfx/ui_nudge_eff_R_00031
   rotate: false
-  xy: 529, 55
+  xy: 724, 71
   size: 47, 68
   orig: 49, 128
   offset: 1, 30
   index: -1
 vfx/ui_nudge_eff_R_00032
-  rotate: false
-  xy: 578, 55
+  rotate: true
+  xy: 746, 22
   size: 47, 68
   orig: 49, 128
   offset: 1, 30
   index: -1
 vfx/ui_nudge_eff_R_00033
   rotate: false
-  xy: 627, 55
+  xy: 773, 71
   size: 47, 68
   orig: 49, 128
   offset: 1, 30
   index: -1
 vfx/ui_nudge_eff_R_00034
-  rotate: false
-  xy: 676, 55
+  rotate: true
+  xy: 816, 22
   size: 47, 68
   orig: 49, 128
   offset: 1, 30
   index: -1
 vfx/ui_nudge_eff_R_00035
   rotate: false
-  xy: 725, 55
+  xy: 822, 71
   size: 47, 68
   orig: 49, 128
   offset: 1, 30
   index: -1
 vfx/ui_nudge_eff_R_00036
   rotate: false
-  xy: 774, 55
+  xy: 871, 71
   size: 47, 68
   orig: 49, 128
   offset: 1, 30
   index: -1
 vfx/ui_nudge_eff_R_00037
-  rotate: false
-  xy: 823, 55
+  rotate: true
+  xy: 886, 18
   size: 47, 68
   orig: 49, 128
   offset: 1, 30
