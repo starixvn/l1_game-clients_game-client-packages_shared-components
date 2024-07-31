@@ -7,6 +7,7 @@ import { bundleManager } from "../../shared/common-components/bundle-magager/bun
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../shared/utils";
 import { AnimationUtils } from "../../shared/utils/utils";
+import { TimePoints } from "../time-point";
 import { BaccaratXCards } from "./baccarat-x-cards";
 import { LuckyCardEffect } from "./lucky-card-effect";
 const { ccclass, property } = _decorator;
@@ -81,9 +82,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     @property
     spineCutCardPath = "";
-
-    CutCardsTimePoint = 45;
-    BurnCardsTimePoint = 42;
 
     private _cardHands: BaccaratXCards[] = [];
     private readonly movingCardDuration = 0.5;
@@ -469,12 +467,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         console.log("start new shoe ", roundTime);
         this.nodeBgNewShoe.active = true;
-        if (roundTime >= this.CutCardsTimePoint) {
+        if (roundTime >= TimePoints.CutCards) {
             await this.playAnimationCutCard(cutCardIndex);
         }
 
         if (roundTime > this.beforeStartRound) {
-            await this.playAnimationBurnCards(firstCard, burnedCards, roundTime >= this.BurnCardsTimePoint);
+            await this.playAnimationBurnCards(firstCard, burnedCards, roundTime >= TimePoints.BurnCards);
         }
 
         this.currentCardIndex = burnedCards;
