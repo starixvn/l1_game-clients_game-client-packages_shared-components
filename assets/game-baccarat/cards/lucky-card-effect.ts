@@ -34,7 +34,8 @@ export class LuckyCardEffect extends ObserverComponent {
         node.worldRotation = target.worldRotation;
 
         const spine = node.getComponent(sp.Skeleton);
-        await AnimationUtils.playSpine(spine, golden ? "golden" : "white", false, 1.0);
+        const duration = golden ? 1 : 0.5;
+        await AnimationUtils.playSpine(spine, golden ? "golden" : "white", true, duration);
         node.destroy();
     }
 
