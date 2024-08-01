@@ -298,7 +298,11 @@ export class BaccaratXCardsUI extends ObserverComponent {
             cardNode.setSiblingIndex(card?.cardIndex);
             const nextPosition = this.nodeCardContainer.getComponent(UITransform).convertToNodeSpaceAR(this.getPosition(nextLocation));
             this.transformCardNode(cardNode, nextLocation, animated);
-            await this.moveCardAnimation(cardNode, nextPosition, animated);
+            if (animated) {
+                await this.moveCardAnimation(cardNode, nextPosition, animated);
+            } else {
+                this.moveCardAnimation(cardNode, nextPosition, animated);
+            }
         }
     }
 
@@ -354,13 +358,21 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 if (index > 3) {
                     this.playSoundDrawCard();
                     const newLocation = dataIndex === 4 ? CardLocation.Player3 : CardLocation.Banker3;
-                    await this.moveCard(card, newLocation, animated);
+                    if (animated) {
+                        await this.moveCard(card, newLocation, animated);
+                    } else {
+                        this.moveCard(card, newLocation, animated);
+                    }
 
                     // update remove from waiting cards
                     const item = this.cardPool.find((item) => item.card === card);
                     item.location = newLocation;
                 }
-                await card.openCard(animated);
+                if (animated) {
+                    await card.openCard(animated);
+                } else {
+                    card.openCard(animated);
+                }
                 this.luckyCardEffect.checkLuckyCard({ card, data, animated });
                 this.updateCardStates(data, dataIndex);
                 index++;
