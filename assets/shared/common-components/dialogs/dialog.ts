@@ -1,11 +1,15 @@
-import { _decorator, Component, Node, Tween, v3 } from "cc";
+import gc from "@sg/game-client-base";
+import { _decorator, Node, Tween, v3 } from "cc";
+import Observer from "observer";
 import { AnimationUtils } from "../../utils/utils";
+import { ObserverComponent } from "../observer-component/scripts/observer-component";
 
 const { bounceIn, bounceOut, fadeIn, fadeOut, FadeTag } = AnimationUtils;
 const { ccclass, property } = _decorator;
+const { handle } = Observer;
 
 @ccclass("Dialog")
-export class Dialog extends Component {
+export class Dialog extends ObserverComponent {
     @property(Node)
     nodeFadeBackground: Node = null;
 
@@ -64,6 +68,7 @@ export class Dialog extends Component {
     }
 
     hide() {
+        this.playSoundClick();
         if (this.nodeFadeBackground) {
             Tween.stopAllByTag(FadeTag, this.nodeFadeBackground);
             fadeOut(this.nodeFadeBackground, this.appearDuration).then(
@@ -78,4 +83,7 @@ export class Dialog extends Component {
             });
         }
     }
+
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
+    playSoundClick() {}
 }

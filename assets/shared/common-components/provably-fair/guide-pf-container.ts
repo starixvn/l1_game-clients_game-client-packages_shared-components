@@ -10,11 +10,12 @@ const { render } = Observer;
 export class GuidePFContainer extends NodeContainer {
     @render(gc.GuidePF.GuidePFStore, (store) => store.url, { fireImmediately: false })
     protected openDialog(url: string) {
+        console.log("--------GuidePFContainer receive url: ", url);
         if (url === "") {
             return;
         }
         const guide = this.createNode();
-        guide.getComponent(IntroPFPopup)?.openGuidePF(url);
+        guide.getComponent(IntroPFPopup)?.loadContent(url);
     }
 
     @render(gc.Dialogs.DialogsStore, (store) => store.forceClosed, { fireImmediately: false })
