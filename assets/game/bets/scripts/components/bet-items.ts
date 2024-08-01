@@ -102,6 +102,17 @@ export class BetItems extends ObserverComponent {
         });
     }
 
+    @render(Settlements.SettlementStore, (store) => store.currentFinish, {
+        fireImmediately: false,
+    })
+    renderCurrentFinish(currentFinish: gc.GameServiceMessage.Finish) {
+        if (!currentFinish) {
+            return;
+        }
+        this.clearHighlightStatic();
+        this.clearHighlightAnim();
+    }
+
     @render(RoundHistories.RoundHistoryStore, (store) => store.firstJoinGameHistory)
     renderStaticResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory) {
         if (!firstJoinGameHistory) {
