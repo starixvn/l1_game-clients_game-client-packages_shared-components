@@ -13,7 +13,6 @@ export class IconGuide extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
     @handle(gc.GuidePF.GuidePFHandlers, (handle) => handle.handle())
     clickOpenGuide() {
-        console.log("clickOpenGuide---------");
         utils.AnalyticsManager.trackEvent(utils.TrackingEvent.Button, {
             location: FunctionUtils.getNamespace(),
             action: utils.TrackingAction.Click,
