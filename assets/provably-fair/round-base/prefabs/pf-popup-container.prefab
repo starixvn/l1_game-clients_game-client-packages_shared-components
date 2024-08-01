@@ -368,7 +368,9 @@
     "_disabledSprite": null,
     "_duration": 0.1,
     "_zoomScale": 1.2,
-    "_target": null,
+    "_target": {
+      "__id__": 2
+    },
     "_id": ""
   },
   {
@@ -394,8 +396,6 @@
       "__id__": 0
     },
     "fileId": "16Q9RVpDlFvI+ucR3ILoDS",
-    "instance": null,
-    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
