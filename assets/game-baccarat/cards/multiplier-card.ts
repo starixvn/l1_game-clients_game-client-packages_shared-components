@@ -1,5 +1,5 @@
 import { _decorator, Component, Label, sp, UIOpacity } from "cc";
-import { AnimationUtils, FunctionUtils } from "../../shared/utils";
+import { AnimationUtils } from "../../shared/utils";
 import { PokerCard, ServiceCard } from "./../../game/poker-cards/scripts/poker-card";
 const { ccclass, property } = _decorator;
 @ccclass
@@ -24,14 +24,15 @@ export class MultiplierCard extends Component {
 
     async playAnimCard() {
         this.node.getComponent(UIOpacity).opacity = 0;
-        await AnimationUtils.fadeIn(this.node, 0.26).then(async () => {
+        await AnimationUtils.fadeIn(this.node, 0.26);
+        try {
             this.spineTransformCard.node.active = true;
 
-            AnimationUtils.playSpine(this.spineTransformCard, "luckycard", false).then(() => {
-                this.spineTransformCard.node.active = false;
+            AnimationUtils.delayTime(0.1).then(() => {
+                this?.card?.node?.isValid && this.card.setGoldenCard(true, false);
             });
-            await FunctionUtils.delay(100);
-            this.card.setGoldenCard(true, false);
-        });
+            await AnimationUtils.playSpine(this.spineTransformCard, "luckycard", false);
+            this.spineTransformCard.node.active = false;
+        } catch (e) {}
     }
 }
