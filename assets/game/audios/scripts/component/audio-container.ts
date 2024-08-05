@@ -3,6 +3,8 @@ import { _decorator, AudioClip, AudioSource, game, JsonAsset, log, sys, tween } 
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { InGameMenuEvents } from "../../../in-game-menu/scripts/stores/in-game-menu-events";
+import { InGameMenuStore } from "../../../in-game-menu/scripts/stores/in-game-menu-store";
 import { AudioUtils } from "../../utils";
 import AudioManager from "../audio-manager";
 
@@ -284,4 +286,13 @@ export class AudioContainer extends ObserverComponent {
 
         return { audioClip, currentLoadAssetTime, isPlay };
     };
+
+    @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
+    stopAllAudio({ event }: { event: InGameMenuEvents }) {
+        if (event === InGameMenuEvents.GO_TO_LOBBY) {
+            this.stopAudio(this.musicSource);
+            this.stopAudio(this.sfxSource);
+            this.stopAudio(this.stoppableSFXSource);
+        }
+    }
 }
