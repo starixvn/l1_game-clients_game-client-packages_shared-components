@@ -1,10 +1,12 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Game, game, Label } from "cc";
+import { _decorator, assetManager, director, Game, game, Label, sys } from "cc";
 import Observer from "observer";
 
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
 import { StaticGroupId } from "../../../shared/common-components/static-node/scripts/static-node-info";
 import { ComponentUtils } from "../../../shared/utils";
+import { InGameMenuEvents } from "../../in-game-menu/scripts/stores/in-game-menu-events";
+import { InGameMenuStore } from "../../in-game-menu/scripts/stores/in-game-menu-store";
 import { LogStore } from "../stores/log-store";
 import { GameComponentBase } from "./game-component-base";
 
@@ -177,5 +179,28 @@ export default class GameComponent extends GameComponentBase {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSound(id: string) {
         return id;
+    }
+
+    @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
+    async handleGoToLobby({ event }: { event: InGameMenuEvents }) {
+        if (event === InGameMenuEvents.GO_TO_LOBBY) {
+            await this.forceCleanup();
+        }
+    }
+
+    async forceCleanup() {
+        // Clear asset manager cache
+        assetManager?.assets?.clear();
+        assetManager?.bundles?.clear();
+        assetManager?.cacheManager?.clearCache();
+        assetManager?.cacheManager?.clearLRU();
+
+        // Clear all loaded scenes
+        director?.purgeDirector();
+        director.getScheduler().destroy();
+        director?.removeAll(game);
+
+        // Clear sys
+        sys.garbageCollect();
     }
 }
