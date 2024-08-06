@@ -15,8 +15,6 @@ export class HtmlSiteSprite extends Component {
     @property
     extension = "png";
 
-    versionId = 1;
-
     @property
     localization = false;
 
@@ -27,10 +25,12 @@ export class HtmlSiteSprite extends Component {
 
         const info = await this.getVersionInfo();
         try {
-            if (info && info[this.key]) {
-                this.versionId = info[this.key];
+            const fileName = this.getFileName();
+            let versionId = 1;
+            if (info && info[fileName]) {
+                versionId = info[fileName];
             }
-            const url = this.getUrl(this.localization, this.versionId);
+            const url = this.getUrl(fileName, versionId);
             const imageAsset = (await FunctionUtils.loadRemote(url)) as ImageAsset;
             if (!isValidNode(this)) {
                 return;
@@ -61,9 +61,13 @@ export class HtmlSiteSprite extends Component {
         }
     }
 
-    getUrl(localization: boolean, versionImg: number): string {
+    getFileName() {
+        const languageId = this.localization ? `_${Translator.getCurrentLanguageId()}` : "";
+        return `${this.key}${languageId}`;
+    }
+
+    getUrl(fileName: string, versionId: number): string {
         const { origin, pathname } = window.location;
-        const languageId = localization ? `_${Translator.getCurrentLanguageId()}` : "";
-        return `${origin}${pathname}${this.folder}/${this.key}${languageId}.${this.extension}?v=${versionImg}`;
+        return `${origin}${pathname}${this.folder}/${fileName}.${this.extension}?v=${versionId}`;
     }
 }
