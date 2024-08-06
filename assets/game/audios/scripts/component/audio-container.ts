@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, AudioClip, AudioSource, game, JsonAsset, log, sys, tween } from "cc";
+import { _decorator, assetManager, AudioClip, AudioSource, director, game, JsonAsset, log, sys, tween } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -293,7 +293,27 @@ export class AudioContainer extends ObserverComponent {
             this.stopAudio(this.musicSource);
             this.stopAudio(this.sfxSource);
             this.stopAudio(this.stoppableSFXSource);
+            this.forceCleanup();
             game.end();
+        }
+    }
+
+    forceCleanup() {
+        // Clear asset manager cache
+        assetManager.assets.clear();
+        assetManager.bundles.clear();
+        assetManager.cacheManager.clearCache();
+        assetManager.cacheManager.clearLRU();
+
+        // Clear all loaded scenes
+        director.purgeDirector();
+
+        // Clear all actions
+        director.removeAll(game);
+
+        // Force garbage collection again
+        if (typeof global !== "undefined" && global.gc) {
+            global.gc();
         }
     }
 }
