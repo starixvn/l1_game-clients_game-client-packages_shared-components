@@ -1,7 +1,16 @@
-import { Node, find, screen, warn } from "cc";
+import { Asset, Node, assetManager, find, screen, warn } from "cc";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 
 export namespace FunctionUtils {
+    export const loadRemote = (url: string) => {
+        return new Promise((resolve, reject) => {
+            assetManager.loadRemote(url, (err, data: Asset) => {
+                if (err) return reject(err);
+
+                resolve(data);
+            });
+        });
+    };
     export const getNamespace = () => {
         const namespace = find("Canvas").getComponentInChildren(GameComponentBase)?.namespace;
 
