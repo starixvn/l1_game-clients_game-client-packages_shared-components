@@ -293,6 +293,7 @@ export class AudioContainer extends ObserverComponent {
             this.stopAudio(this.musicSource);
             this.stopAudio(this.sfxSource);
             this.stopAudio(this.stoppableSFXSource);
+            game.end();
         }
     }
 }
