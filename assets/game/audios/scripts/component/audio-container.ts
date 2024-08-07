@@ -287,33 +287,39 @@ export class AudioContainer extends ObserverComponent {
         return { audioClip, currentLoadAssetTime, isPlay };
     };
 
+    stopAudios() {
+        this?.stopAudio(this.musicSource);
+        this?.stopAudio(this.sfxSource);
+        this?.stopAudio(this.stoppableSFXSource);
+    }
+
     @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
-    stopAllAudio({ event }: { event: InGameMenuEvents }) {
+    handleGoToLobby({ event }: { event: InGameMenuEvents }) {
         if (event === InGameMenuEvents.GO_TO_LOBBY) {
-            this.stopAudio(this.musicSource);
-            this.stopAudio(this.sfxSource);
-            this.stopAudio(this.stoppableSFXSource);
+            this.stopAudios();
             this.forceCleanup();
-            game.end();
         }
     }
 
     forceCleanup() {
         // Clear asset manager cache
-        assetManager.assets.clear();
-        assetManager.bundles.clear();
-        assetManager.cacheManager.clearCache();
-        assetManager.cacheManager.clearLRU();
+        assetManager?.assets?.clear();
+        assetManager?.bundles?.clear();
+        assetManager?.cacheManager?.clearCache();
+        assetManager?.cacheManager?.clearLRU();
 
         // Clear all loaded scenes
-        director.purgeDirector();
+        director?.purgeDirector();
+        director.getScheduler().destroy();
 
         // Clear all actions
-        director.removeAll(game);
+        director?.removeAll(game);
 
         // Force garbage collection again
         if (typeof global !== "undefined" && global.gc) {
-            global.gc();
+            global?.gc();
         }
+
+        game?.pause();
     }
 }
