@@ -75,7 +75,7 @@ export class PokerCard extends Component {
         return this._animation;
     }
     protected onLoad(): void {
-        this.setGoldenCard(false, false);
+        // this.setGoldenCard(false, false);
     }
 
     setGoldenCard(show: boolean, animated: boolean): void {

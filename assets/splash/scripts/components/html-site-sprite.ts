@@ -48,8 +48,8 @@ export class HtmlSiteSprite extends Component {
         const { origin, pathname } = window.location;
         const url = `${origin}${pathname}${this.folder}/versions.json?v=${Date.now()}`;
 
-        const jsonAsset = (await FunctionUtils.loadRemote(url)) as JsonAsset;
         try {
+            const jsonAsset = (await FunctionUtils.loadRemote(url)) as JsonAsset;
             if (!isValidNode(this)) {
                 return null;
             }
