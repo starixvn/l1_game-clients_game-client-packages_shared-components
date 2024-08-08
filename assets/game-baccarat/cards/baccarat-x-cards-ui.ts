@@ -1,7 +1,7 @@
 import gc from "@sg/game-client-base";
 import { Label, Node, Prefab, UITransform, Vec3, _decorator, instantiate, sp, tween, v3 } from "cc";
 import Observer from "observer";
-import { FairnessCard3D } from "../../game/poker-cards/scripts/fairness-card-3D";
+import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
 import { bundleManager } from "../../shared/common-components/bundle-magager/bundle-manager";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
@@ -27,7 +27,7 @@ type BaccaratResult = {
 
 type PoolItem = {
     location: number;
-    card: FairnessCard3D;
+    card: FairnessCard;
 };
 
 enum CardLocation {
@@ -91,7 +91,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     currentCardIndex = 0;
     cutCardIndex = 0;
 
-    cards: FairnessCard3D[] = [];
+    cards: FairnessCard[] = [];
 
     cardPool: PoolItem[] = [];
 
@@ -150,7 +150,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
             const node = this.createNewCardNode();
             this.nodeCardContainer.addChild(node);
             node.active = false;
-            const card = node.getComponent(FairnessCard3D);
+            const card = node.getComponent(FairnessCard);
             this.cardPool.push({
                 location: CardLocation.Box,
                 card,
@@ -293,7 +293,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         return node.getComponent(UITransform).convertToWorldSpaceAR(v3(0, 0, 0));
     }
 
-    async moveCard(card: FairnessCard3D, nextLocation: number, animated: boolean) {
+    async moveCard(card: FairnessCard, nextLocation: number, animated: boolean) {
         const cardNode = card?.node;
         if (cardNode) {
             cardNode.setSiblingIndex(card?.cardIndex);
@@ -509,7 +509,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         console.time("show burn card");
         for (let i = 0; i < burnedCards; i++) {
             const node = this.createNewCardNode();
-            const cardComp = node.getComponent(FairnessCard3D);
+            const cardComp = node.getComponent(FairnessCard);
             cardComp.setIndexValue(i);
             this.nodeBurnCards.addChild(node);
             node.position = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeBoxCard);
@@ -527,7 +527,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         const firstCardNode = this.burnCardsNodes[0];
         firstCardNode.active = true;
         this.playSoundDrawCard();
-        const firstCardComp = firstCardNode.getComponent(FairnessCard3D);
+        const firstCardComp = firstCardNode.getComponent(FairnessCard);
         firstCardComp.openCard(animated);
         this.transformCardNode(firstCardNode, CardLocation.Center, animated);
         await this.moveCardAnimation(firstCardNode, v3(0, 0, 0), animated);

@@ -58,16 +58,17 @@ export class PokerCard3D extends PokerCard {
 
     protected override async showCardBack() {
         this.resetDefaultCardBack();
+        super.showCardBack();
     }
 
     protected resetDefaultCardBack() {
+        // Node using in anim files
         AnimationUtils.setOpacityNode(this.bgBackCard, 255);
         AnimationUtils.setOpacityNode(this.bgWhiteCard, 1);
         this.bgWhiteCard.eulerAngles = v3(0, 0, 0);
         this.bgWhiteCard.scale = v3(1, 1, 1);
         this.bgBackCard.eulerAngles = v3(0, 0, 0);
         this.bgBackCard.scale = v3(1, 1, 1);
-
         this.bgWhiteCard.parent.eulerAngles = v3(0, 0, 0);
         this.bgWhiteCard.parent.scale = v3(1, 1, 1);
     }
