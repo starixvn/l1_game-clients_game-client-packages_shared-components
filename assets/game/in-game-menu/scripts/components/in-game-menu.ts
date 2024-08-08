@@ -56,6 +56,7 @@ export class InGameMenu extends ObserverComponent {
     @handle(gc.App.AppHandlers.BackToOperatorLobby)
     onGoToLobby() {
         this.doCommons();
+        director.getScene().destroyAllChildren();
         director.purgeDirector();
         this.handleEvent(InGameMenuEvents.GO_TO_LOBBY);
     }
