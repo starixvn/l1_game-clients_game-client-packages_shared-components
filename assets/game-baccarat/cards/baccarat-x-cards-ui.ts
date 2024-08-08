@@ -370,6 +370,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
                     item.location = newLocation;
                 }
                 if (animated) {
+                    this.playSoundOpeningCard();
                     await card.openCard(animated);
                 } else {
                     card.openCard(animated);
@@ -528,6 +529,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         firstCardNode.active = true;
         this.playSoundDrawCard();
         const firstCardComp = firstCardNode.getComponent(FairnessCard);
+        animated && this.playSoundOpeningCard();
         firstCardComp.openCard(animated);
         this.transformCardNode(firstCardNode, CardLocation.Center, animated);
         await this.moveCardAnimation(firstCardNode, v3(0, 0, 0), animated);
@@ -624,6 +626,11 @@ export class BaccaratXCardsUI extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
     playSoundDrawCard() {
         return "draw-single-card";
+    }
+
+    @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
+    playSoundOpeningCard() {
+        return "opening-card";
     }
 
     updateStacksCardBox(currentIndex: number, cutCardIndex: number) {
