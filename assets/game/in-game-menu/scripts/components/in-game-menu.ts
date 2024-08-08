@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, game } from "cc";
+import { _decorator } from "cc";
 import Observer from "observer";
 import { ExpandableNode } from "../../../../shared/common-components/expandable-node/scripts/expandable-node";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -56,7 +56,6 @@ export class InGameMenu extends ObserverComponent {
     @handle(gc.App.AppHandlers.BackToOperatorLobby)
     onGoToLobby() {
         this.doCommons();
-        game.end();
         this.handleEvent(InGameMenuEvents.GO_TO_LOBBY);
     }
 
