@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, director } from "cc";
+import { _decorator } from "cc";
 import Observer from "observer";
 import { ExpandableNode } from "../../../../shared/common-components/expandable-node/scripts/expandable-node";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -53,10 +53,9 @@ export class InGameMenu extends ObserverComponent {
         this.handleEvent(InGameMenuEvents.CLOSE_GAME);
     }
 
-    // @handle(gc.App.AppHandlers.BackToOperatorLobby)
+    @handle(gc.App.AppHandlers.BackToOperatorLobby)
     onGoToLobby() {
         this.doCommons();
-        director.getScene().destroyAllChildren();
         this.handleEvent(InGameMenuEvents.GO_TO_LOBBY);
     }
 
