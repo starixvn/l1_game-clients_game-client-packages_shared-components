@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, Prefab, UITransform, Vec3, _decorator, instantiate, sp, tween, v3 } from "cc";
+import { Label, Node, Prefab, UITransform, Vec3, _decorator, director, instantiate, sp, tween, v3 } from "cc";
 import Observer from "observer";
 import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
@@ -7,6 +7,7 @@ import { bundleManager } from "../../shared/common-components/bundle-magager/bun
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../shared/utils";
 import { AnimationUtils } from "../../shared/utils/utils";
+import { MultiplierPayoutEvent } from "../multiplier-payout";
 import { TimePoints } from "../time-point";
 import { BaccaratXCards } from "./baccarat-x-cards";
 import { LuckyCardEffect } from "./lucky-card-effect";
@@ -188,9 +189,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
     async closeCards(isStartRound) {
-        this.cardHands.forEach((comp) => {
-            comp.showScore(false);
-        });
+        this.clearScores();
         if (isStartRound) {
             if (this.hasWaitingCards()) {
                 const waitingCards = this.cardPool.filter(
@@ -371,8 +370,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
 
         let index = 0;
-        this.clearCardStates();
-        this.luckyCardEffect.resetLuckyCardsColor();
+        this.beforeOpenCards();
         for (const [dataIndex, data] of dataCards.entries()) {
             if (data) {
                 const card = this.cards[index];
@@ -413,6 +411,14 @@ export class BaccaratXCardsUI extends ObserverComponent {
         });
     }
 
+    private beforeOpenCards() {
+        this.clearScores();
+        this.clearCardStates();
+        this.luckyCardEffect.resetLuckyCardsColor();
+        const scene = director.getScene();
+        scene?.emit(MultiplierPayoutEvent.Clear);
+    }
+
     highlightWinHandCards(isPlayerWin: boolean) {
         const locations = isPlayerWin
             ? [CardLocation.Player1, CardLocation.Player2, CardLocation.Player3]
@@ -434,10 +440,14 @@ export class BaccaratXCardsUI extends ObserverComponent {
             this.isNewShoe = true;
             this.dropCards(this.cardPool, false);
             this.updateStacksCardBox(0, 1);
-            this.cardHands.forEach((comp) => {
-                comp.showScore(false);
-            });
+            this.clearScores();
         }
+    }
+
+    private clearScores() {
+        this.cardHands.forEach((comp) => {
+            comp.showScore(false);
+        });
     }
 
     test() {
