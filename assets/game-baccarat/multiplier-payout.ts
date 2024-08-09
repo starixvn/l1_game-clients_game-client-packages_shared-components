@@ -1,10 +1,14 @@
 import gc from "@sg/game-client-base";
-import { Label, _decorator } from "cc";
+import { Label, _decorator, director } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../shared/common-components/observer-component/scripts/observer-component";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 const { FormatUtils, GameBaccaratX } = gc;
+
+export enum MultiplierPayoutEvent {
+    Clear = "Clear",
+}
 
 @ccclass
 export class MultiplierPayout extends ObserverComponent {
@@ -12,7 +16,14 @@ export class MultiplierPayout extends ObserverComponent {
     onLoad() {
         this.labels = this.getComponentsInChildren(Label);
         this.cleanLabels();
+        const scene = director.getScene();
+        scene?.on(MultiplierPayoutEvent.Clear, this.cleanLabels, this);
         super.onLoad();
+    }
+    onDestroy(): void {
+        const scene = director.getScene();
+        scene?.off(MultiplierPayoutEvent.Clear, this.cleanLabels, this);
+        super.onDestroy();
     }
 
     cleanLabels() {
