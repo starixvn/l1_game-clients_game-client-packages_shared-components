@@ -104,7 +104,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     async onLoad() {
         this.luckyCardEffect = this.nodeLuckyCardsEffect.getComponent(LuckyCardEffect);
         this.nodeBgNewShoe.active = false;
-        await this.initCards();
+        this.initCards();
         super.onLoad();
     }
 
@@ -142,7 +142,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }
     }
 
-    async initCards() {
+    initCards() {
         if (this.cardPool.length > 0) {
             return;
         }
