@@ -224,13 +224,30 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async draw6Cards(animated = true) {
-        await this.dropCards(this.cardPool, animated);
+        if (animated) {
+            await this.dropCards(this.cardPool, animated);
+        } else {
+            this.dropCards(this.cardPool, animated);
+        }
         this.resetCardsToBox(this.cardPool);
         this.cards = this.cardPool.map((item) => item.card);
-        await this.drawingCards(this.cardPool, animated);
+        if (animated) {
+            await this.drawingCards(this.cardPool, animated);
+        } else {
+            this.drawingCards(this.cardPool, animated);
+        }
     }
 
     async dropCards(cards: PoolItem[], animated = true) {
+        if (!animated) {
+            cards.map(async (item) => {
+                item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
+                this.moveCard(item.card, CardLocation.Trash, animated);
+                item.card.node.active = false;
+                this.updateLocation(item, CardLocation.Trash);
+            });
+            return;
+        }
         await Promise.all(
             cards.map(async (item) => {
                 item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
@@ -256,8 +273,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
             const nextLocation = i + 1;
             item.card.node.active = true;
             item.card.setIndexValue(this.currentCardIndex + i);
-            animated && this.playSoundDrawCard();
-            await this.moveCard(item.card, nextLocation, animated);
+            if (animated) {
+                this.playSoundDrawCard();
+                await this.moveCard(item.card, nextLocation, animated);
+            } else {
+                this.moveCard(item.card, nextLocation, animated);
+            }
             this.updateLocation(item, nextLocation);
         }
     }
@@ -339,7 +360,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async openCards(result: BaccaratResult, settlemenResult: gc.GameServiceMessage.TSettlementResult, animated = true) {
-        await this.draw6Cards(false);
+        this.draw6Cards(false);
 
         const dataCards: ServiceCard[] = [];
         for (let i = 0; i < 3; i++) {
