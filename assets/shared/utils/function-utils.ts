@@ -37,6 +37,9 @@ export namespace FunctionUtils {
     };
 
     export const waitUntil = async (condition: Function, interval = 1000, maxWait = 5000): Promise<void> => {
+        if (condition()) {
+            return;
+        }
         return new Promise<void>((resolve, reject) => {
             const startTime = new Date().getTime();
             let timeoutId: NodeJS.Timeout;
