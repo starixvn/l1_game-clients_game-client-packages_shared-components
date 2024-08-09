@@ -35,6 +35,10 @@ export class MultiplierCards extends ObserverComponent {
         return this.multiplierCards.find((comp) => comp.data.rank === card.rank && comp.data.suit === card.suit);
     }
 
+    resetLuckyCardsColor() {
+        this.multiplierCards.forEach((card) => card.card.setGoldenCard(true, false));
+    }
+
     @render(gc.MultipliersStore, (store) => store.renderMultipliers)
     async renderMultipliers(renderMultipliers: { animated: boolean; multipliers: any[] }) {
         if (!renderMultipliers) {

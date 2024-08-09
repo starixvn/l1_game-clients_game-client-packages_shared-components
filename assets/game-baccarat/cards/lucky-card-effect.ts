@@ -25,6 +25,10 @@ export class LuckyCardEffect extends ObserverComponent {
         this.multiplierCards = this.nodeMultiplierCards.getComponent(MultiplierCards);
     }
 
+    resetLuckyCardsColor() {
+        this.multiplierCards?.resetLuckyCardsColor();
+    }
+
     async createEffectNode(golden: boolean, target: Node) {
         const node = instantiate(this.nodeSpineEffect);
         this.node.addChild(node);

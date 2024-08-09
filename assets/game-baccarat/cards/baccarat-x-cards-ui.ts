@@ -351,6 +351,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
         let index = 0;
         this.clearCardStates();
+        this.luckyCardEffect.resetLuckyCardsColor();
         for (const [dataIndex, data] of dataCards.entries()) {
             if (data) {
                 const card = this.cards[index];
