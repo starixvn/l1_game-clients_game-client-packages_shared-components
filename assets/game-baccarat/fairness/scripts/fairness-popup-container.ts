@@ -47,7 +47,7 @@ export class FairnessPopupContainer extends MultipleNodeContainer {
         }
     }
 
-    @render(gc.PopupsClosed.PopupsClosedStore, (store) => store.forceClosed, { fireImmediately: false })
+    @render(gc.Dialogs.DialogsStore, (store) => store.forceClosed, { fireImmediately: false })
     popupVisibility(forceClosed: any) {
         if (forceClosed) {
             this.forcedClose([Popup.CutCardIndex, Popup.FairnessVerification]);

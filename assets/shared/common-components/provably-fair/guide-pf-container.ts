@@ -17,7 +17,7 @@ export class GuidePFContainer extends NodeContainer {
         guide.getComponent(IntroPFPopup)?.openGuidePF(url);
     }
 
-    @render(gc.PopupsClosed.PopupsClosedStore, (store) => store.forceClosed, { fireImmediately: false })
+    @render(gc.Dialogs.DialogsStore, (store) => store.forceClosed, { fireImmediately: false })
     popupVisibility(forceClosed: any) {
         forceClosed && this.node.destroyAllChildren();
     }
