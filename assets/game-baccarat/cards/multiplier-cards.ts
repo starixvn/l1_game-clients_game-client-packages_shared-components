@@ -28,10 +28,12 @@ export class MultiplierCards extends ObserverComponent {
 
     private multiplierCards: MultiplierCard[] = [];
 
-    findMatchedCard(card: ServiceCard, testIndex = -1): MultiplierCard {
+    async findMatchedCard(card: ServiceCard, testIndex = -1) {
         if (testIndex > -1) {
             return this.multiplierCards[testIndex % this.multiplierCards.length];
         }
+
+        await FunctionUtils.waitUntil(() => this.isValidMultiplierCards(), 100, 1000);
         return this.multiplierCards.find((comp) => comp.data.rank === card.rank && comp.data.suit === card.suit);
     }
 
@@ -81,8 +83,11 @@ export class MultiplierCards extends ObserverComponent {
 
     hideCards() {
         this.content.destroyAllChildren();
-
         this.multiplierCards = [];
+    }
+
+    isValidMultiplierCards() {
+        return this.multiplierCards.length > 0;
     }
 
     showMultiplierCards(isShow: boolean) {

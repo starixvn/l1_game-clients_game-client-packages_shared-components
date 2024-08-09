@@ -45,7 +45,7 @@ export class LuckyCardEffect extends ObserverComponent {
 
     async checkLuckyCard(openCard: { card: FairnessCard; data: ServiceCard; animated: boolean }) {
         const { card, data, animated } = openCard;
-        const matchedMultiplierCard = this.multiplierCards.findMatchedCard(data);
+        const matchedMultiplierCard = await this.multiplierCards.findMatchedCard(data);
         if (matchedMultiplierCard) {
             animated && this.playSound("lightning");
             const timeStamp = new Date().getTime();
