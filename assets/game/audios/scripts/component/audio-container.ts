@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, assetManager, AudioClip, AudioSource, director, game, JsonAsset, log, sys, tween } from "cc";
+import { _decorator, AudioClip, AudioSource, game, JsonAsset, log, sys, tween } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -297,29 +297,6 @@ export class AudioContainer extends ObserverComponent {
     handleGoToLobby({ event }: { event: InGameMenuEvents }) {
         if (event === InGameMenuEvents.GO_TO_LOBBY) {
             this.stopAudios();
-            this.forceCleanup();
         }
-    }
-
-    forceCleanup() {
-        // Clear asset manager cache
-        assetManager?.assets?.clear();
-        assetManager?.bundles?.clear();
-        assetManager?.cacheManager?.clearCache();
-        assetManager?.cacheManager?.clearLRU();
-
-        // Clear all loaded scenes
-        director?.purgeDirector();
-        director.getScheduler().destroy();
-
-        // Clear all actions
-        director?.removeAll(game);
-
-        // Force garbage collection again
-        if (typeof global !== "undefined" && global.gc) {
-            global?.gc();
-        }
-
-        game?.pause();
     }
 }
