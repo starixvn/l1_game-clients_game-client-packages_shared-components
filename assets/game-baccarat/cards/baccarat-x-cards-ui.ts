@@ -586,7 +586,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     @render(Rounds.RoundTimeStore, (store) => store.roundTime)
     renderClearBurnCards(roundTime: number) {
-        if (roundTime === this.beforeStartRound) {
+        if (roundTime <= this.beforeStartRound && roundTime > this.durations.placingBet) {
             this.clearBurnCards();
         }
     }
