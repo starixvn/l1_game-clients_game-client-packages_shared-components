@@ -535,7 +535,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async playAnimationBurnCards(firstCard: ServiceCard, burnedCards: number, animated: boolean) {
-        console.time("show burn card");
         for (let i = 0; i < burnedCards; i++) {
             const node = this.createNewCardNode();
             const cardComp = node.getComponent(FairnessCard);
@@ -581,7 +580,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
             this.transformCardNode(node, CardLocation.Center, animated);
             this.moveCardAnimation(node, v3(startX + (i - 1) * (cardWidth + spacingBurnedCards), 0, 0), animated);
         }
-        console.timeEnd("show burn card");
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.roundTime)
@@ -596,7 +594,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async clearBurnCards() {
-        console.time("clear burn card");
         const dropPosition = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeTrash);
         for (let i = 0; i < this.burnCardsNodes.length; i++) {
             i > 0 && (await AnimationUtils.delayTime(0.1));
@@ -606,7 +603,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 node.destroy();
             });
         }
-        console.timeEnd("clear burn card");
         this.burnCardsNodes = [];
         if (this.isNewShoe) {
             this.updateStacksCardBox(this.currentCardIndex, this.cutCardIndex);
