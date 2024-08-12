@@ -48,16 +48,11 @@ export class LuckyCardEffect extends ObserverComponent {
         const matchedMultiplierCard = await this.multiplierCards.findMatchedCard(data);
         if (matchedMultiplierCard) {
             animated && this.playSound("lightning");
-            const timeStamp = new Date().getTime();
-            console.time(`anim white in ${timeStamp}`);
             animated && (await this.createEffectNode(false, matchedMultiplierCard.card.node));
-            console.timeEnd(`anim white in ${timeStamp}`);
             matchedMultiplierCard.card.setGoldenCard(false, animated);
 
             if (animated) {
-                console.time(`anim gold in ${timeStamp}`);
                 await this.createEffectNode(true, card.node);
-                console.timeEnd(`anim gold in ${timeStamp}`);
                 card.setGoldenCard(true, animated);
             } else {
                 card.setGoldenCard(true, animated);
