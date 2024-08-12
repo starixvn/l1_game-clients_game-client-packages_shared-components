@@ -89,7 +89,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     private maximizeStackCards = 6;
     private isNewShoe = false;
 
-    currentCardIndex = 0;
+    currentCardIndex = -1;
     cutCardIndex = 0;
 
     cards: FairnessCard[] = [];
@@ -190,6 +190,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
     async closeCards(isStartRound) {
         this.clearScores();
         if (isStartRound) {
+            if (this.currentCardIndex === -1) {
+                return;
+            }
             if (this.hasWaitingCards()) {
                 const waitingCards = this.cardPool.filter(
                     (card) => card.location === CardLocation.Waiting1 || card.location === CardLocation.Waiting2
