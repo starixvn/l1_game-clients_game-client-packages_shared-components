@@ -158,7 +158,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
             });
             this.transformCardNode(node, CardLocation.Box, false);
         }
-        console.log(this.cardPool);
         this.cards = this.cardPool.map((item) => item.card);
     }
 
@@ -217,8 +216,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
             }
 
             this.updateStacksCardBox(this.currentCardIndex, this.cutCardIndex);
-
-            console.log(`increase currentCardIndex `, this.currentCardIndex);
         }
     }
 
@@ -511,7 +508,6 @@ export class BaccaratXCardsUI extends ObserverComponent {
         const { firstCard, burnedCards, roundTime, cutCardIndex } = shoeInfo;
         this.cutCardIndex = cutCardIndex;
 
-        console.log("start new shoe ", roundTime);
         this.nodeBgNewShoe.active = true;
         if (roundTime >= TimePoints.CutCards) {
             await this.playAnimationCutCard(cutCardIndex);
