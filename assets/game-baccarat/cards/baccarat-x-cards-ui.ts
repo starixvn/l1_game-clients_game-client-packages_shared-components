@@ -597,22 +597,24 @@ export class BaccaratXCardsUI extends ObserverComponent {
     }
 
     async clearBurnCards() {
-        const dropPosition = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeTrash);
-        for (let i = 0; i < this.burnCardsNodes.length; i++) {
-            i > 0 && (await AnimationUtils.delayTime(0.1));
-            const node = this.burnCardsNodes[i];
-            this.transformCardNode(node, CardLocation.Trash);
-            this.moveCardAnimation(node, dropPosition, true).then(() => {
-                node.destroy();
-            });
-        }
-        this.burnCardsNodes = [];
-        if (this.isNewShoe) {
-            this.updateStacksCardBox(this.currentCardIndex, this.cutCardIndex);
-        }
+        try {
+            const dropPosition = ComponentUtils.convertPosition(this.nodeBurnCards, this.nodeTrash);
+            for (let i = 0; i < this.burnCardsNodes.length; i++) {
+                i > 0 && (await AnimationUtils.delayTime(0.1));
+                const node = this.burnCardsNodes[i];
+                this.transformCardNode(node, CardLocation.Trash);
+                this.moveCardAnimation(node, dropPosition, true).then(() => {
+                    node.destroy();
+                });
+            }
+            this.burnCardsNodes = [];
+            if (this.isNewShoe) {
+                this.updateStacksCardBox(this.currentCardIndex, this.cutCardIndex);
+            }
 
-        this.nodeBgNewShoe.active = false;
-        this.isNewShoe = false;
+            this.nodeBgNewShoe.active = false;
+            this.isNewShoe = false;
+        } catch (e) {}
     }
 
     transformCardNode(node: Node, location: CardLocation, animated = true) {
