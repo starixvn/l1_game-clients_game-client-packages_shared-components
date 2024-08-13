@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, assetManager, director, Game, game, Label, sys } from "cc";
+import { _decorator, Game, game, Label } from "cc";
 import Observer from "observer";
 
 import { StaticNode } from "../../../shared/common-components/static-node/scripts/static-node";
@@ -189,18 +189,21 @@ export default class GameComponent extends GameComponentBase {
     }
 
     async forceCleanup() {
-        // Clear asset manager cache
-        assetManager?.assets?.clear();
-        assetManager?.bundles?.clear();
-        assetManager?.cacheManager?.clearCache();
-        assetManager?.cacheManager?.clearLRU();
+        // // Clear asset manager cache
+        // assetManager?.assets?.clear();
+        // assetManager?.bundles?.clear();
+        // assetManager?.cacheManager?.clearCache();
+        // assetManager?.cacheManager?.clearLRU();
 
-        // Clear all loaded scenes
-        director?.purgeDirector();
-        director.getScheduler().destroy();
-        director?.removeAll(game);
+        // // Clear all loaded scenes
+        // director?.purgeDirector();
+        // director.getScheduler().destroy();
+        // director?.removeAll(game);
 
-        // Clear sys
-        sys.garbageCollect();
+        // // Clear sys
+        // sys.garbageCollect();
+        game.canvas = null;
+        game.container = null;
+        game.frame = null;
     }
 }
