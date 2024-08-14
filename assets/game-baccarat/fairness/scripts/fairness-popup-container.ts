@@ -27,7 +27,7 @@ export class FairnessPopupContainer extends MultipleNodeContainer {
         }
     }
 
-    @render(GameBaccaratX.CutCardPF.FairnessStore, (store) => store.isShowFairnessSettingsPopup, { fireImmediately: false })
+    @render(GameBaccaratX.CutCardPF.FairnessStore, (store) => store.isShowFairnessSettingsPopup)
     renderClientSeedSettingPopup(isShowFairnessSettingsPopup: boolean) {
         if (isShowFairnessSettingsPopup) {
             this.showNode(Popup.ClientSeedSetting);
