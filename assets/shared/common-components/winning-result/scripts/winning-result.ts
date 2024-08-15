@@ -20,13 +20,11 @@ export class WinningResult extends Component {
 
     show(duration = 0.3) {
         const offsetMoving = 50;
+        this.node.position = v3(this.node.position.x, this.node.position.y - offsetMoving);
+        this.node.active = true;
+        AnimationUtils.fadeIn(this.node, 0.4 * duration);
         return new Promise((resolve) => {
-            this.node.position = v3(this.node.position.x, this.node.position.y - offsetMoving);
-            this.node.active = true;
             tween(this.node)
-                .call(() => {
-                    AnimationUtils.fadeIn(this.node, 0.4 * duration);
-                })
                 .by(
                     duration,
                     {
