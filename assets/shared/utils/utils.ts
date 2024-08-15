@@ -15,6 +15,13 @@ export namespace AnimationUtils {
         getUiOpacity(node).opacity = opacity;
     };
 
+    export const stopFade = (node: Node) => {
+        const uiOpacity = getUiOpacity(node);
+        if (uiOpacity) {
+            Tween.stopAllByTag(FadeTag, uiOpacity);
+        }
+    };
+
     export const fadeIn = (node: Node, duration: number, opacity = 255) => {
         return fadeTo(node, duration, opacity);
     };
@@ -36,8 +43,8 @@ export namespace AnimationUtils {
     export const fadeTo = (node: Node, duration: number, opacity: number) => {
         const uiOpacity = getUiOpacity(node);
 
+        node.active = true;
         return new Promise<void>((resolve) => {
-            node.active = true;
             if (uiOpacity) {
                 tween(uiOpacity)
                     .to(duration, { opacity: opacity })

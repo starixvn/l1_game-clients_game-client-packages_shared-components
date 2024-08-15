@@ -1,7 +1,7 @@
-import { _decorator, Component, Node, Tween, v3 } from "cc";
+import { _decorator, Component, Node, v3 } from "cc";
 import { AnimationUtils } from "../../utils/utils";
 
-const { bounceIn, bounceOut, fadeIn, fadeOut, FadeTag } = AnimationUtils;
+const { bounceIn, bounceOut, fadeIn, fadeOut, stopFade } = AnimationUtils;
 const { ccclass, property } = _decorator;
 
 @ccclass("Dialog")
@@ -27,12 +27,12 @@ export class Dialog extends Component {
         const promises = [];
         if (this.nodeFadeBackground) {
             this.nodeFadeBackground.active = true;
-            Tween.stopAllByTag(FadeTag, this.nodeFadeBackground);
+            stopFade(this.nodeFadeBackground);
             promises.push(fadeIn(this.nodeFadeBackground, 0.1));
         }
 
         if (this.nodeBody) {
-            Tween.stopAllByTag(FadeTag, this.nodeBody);
+            stopFade(this.nodeBody);
             promises.push([fadeIn(this.nodeBody, 0.3), bounceIn(this.nodeBody, this.nodeBody.scale, this.appearDuration)]);
         }
 
@@ -56,22 +56,24 @@ export class Dialog extends Component {
 
     hideQuickly() {
         if (this.nodeFadeBackground) {
+            stopFade(this.nodeFadeBackground);
             this.nodeFadeBackground.active = false;
         }
         if (this.nodeBody) {
+            stopFade(this.nodeBody);
             this.node?.destroy();
         }
     }
 
     hide() {
         if (this.nodeFadeBackground) {
-            Tween.stopAllByTag(FadeTag, this.nodeFadeBackground);
+            stopFade(this.nodeFadeBackground);
             fadeOut(this.nodeFadeBackground, this.appearDuration).then(
                 () => this.nodeFadeBackground && (this.nodeFadeBackground.active = false)
             );
         }
         if (this.nodeBody) {
-            Tween.stopAllByTag(FadeTag, this.nodeBody);
+            stopFade(this.nodeBody);
             fadeOut(this.nodeBody, this.appearDuration);
             bounceOut(this.nodeBody, this.appearDuration).then(() => {
                 this.node?.destroy();
