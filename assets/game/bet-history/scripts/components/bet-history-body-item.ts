@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Button, Component, instantiate, Label, Node, Prefab } from "cc";
+import { _decorator, Button, Color, Component, instantiate, Label, Node, Prefab } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -44,6 +44,9 @@ export default class BetHistoryBodyItem extends ObserverComponent {
     @property(Node)
     result: Node = null;
 
+    @property(Label)
+    lblWinLoss: Label = null;
+
     betHistoryLog: gc.BetHistory.BetHistoryLog = null;
 
     setData(data: BetHistoryBodyItemType) {
@@ -64,6 +67,12 @@ export default class BetHistoryBodyItem extends ObserverComponent {
             bodyRow.getComponent(BaseResultBodyItem)?.setData(result as gc.BetHistory.DynamicObject<object>, settlementResult);
             this.result.addChild(bodyRow);
         }
+
+        if (this.lblWinLoss) {
+            const winloss = betwin - totalAmount;
+            this.lblWinLoss.string = FormatUtils.numberWithCommas(winloss, 2);
+            this.lblWinLoss.color = winloss >= 0 ? new Color().fromHEX("F1E344") : new Color().fromHEX("EB3D26");
+        }
     }
 
     @handle(BetHistory.BetDetailsHandlers)
@@ -81,6 +90,17 @@ export default class BetHistoryBodyItem extends ObserverComponent {
     onClickVerify() {
         this.playSoundClick();
         return this.betHistoryLog.roundId;
+    }
+
+    @handle(gc.BetDetailsNew.BetDetailsHandler, (handler, payload: any) => handler.openBetDetails(payload))
+    openBetDetails() {
+        this.playSoundClick();
+        return {
+            roundId: this.betHistoryLog.roundId,
+            mode: "dark",
+            language: gc.Translator.getLanguageId(),
+            timeZoneOffset: -new Date().getTimezoneOffset() / 60,
+        };
     }
 }
 
