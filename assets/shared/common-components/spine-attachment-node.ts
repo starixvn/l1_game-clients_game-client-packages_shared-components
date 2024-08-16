@@ -1,4 +1,7 @@
-import { _decorator, Component, sp, UIOpacity, UITransform, v3 } from "cc";
+import { _decorator, Component, sp, UITransform, v3 } from "cc";
+
+import { AnimationUtils } from "../utils";
+
 const { ccclass, property } = _decorator;
 
 @ccclass("SpineAttachmentNode")
@@ -29,7 +32,7 @@ export class SpineAttachmentNode extends Component {
         const wPos = this.skeleton.node.getComponent(UITransform).convertToWorldSpaceAR(v3(this.bone.worldX, this.bone.worldY));
         const localPos = this.node.parent.getComponent(UITransform).convertToNodeSpaceAR(wPos);
         this.node.position = localPos;
-        this.node.getComponent(UIOpacity).opacity = this.slot.color.a * 255;
+        AnimationUtils.setOpacityNode(this.node, this.slot.color.a * 255);
         this.node.setScale(this.bone.scaleX, this.bone.scaleY);
     }
 }
