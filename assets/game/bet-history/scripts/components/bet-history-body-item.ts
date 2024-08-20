@@ -91,17 +91,6 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         this.playSoundClick();
         return this.betHistoryLog.roundId;
     }
-
-    @handle(gc.BetDetailsNew.BetDetailsHandler, (handler, payload: any) => handler.openBetDetails(payload))
-    openBetDetails() {
-        this.playSoundClick();
-        return {
-            roundId: this.betHistoryLog.roundId,
-            mode: "dark",
-            language: gc.Translator.getLanguageId(),
-            timeZoneOffset: -new Date().getTimezoneOffset() / 60,
-        };
-    }
 }
 
 export class BaseResultBodyItem extends Component {

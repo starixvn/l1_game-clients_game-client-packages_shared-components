@@ -7,7 +7,7 @@ import BetHistoryBodyItem, { BetHistoryBodyItemType } from "../../../game/bet-hi
 const { ccclass, property } = _decorator;
 const { handle } = Observer;
 
-const { GameBaccaratX, FormatUtils, BetDetailsNew, DateTimeUtils } = gc;
+const { GameBaccaratX, DateTimeUtils } = gc;
 
 @ccclass
 export class BaccaratXBetHistorybodyItem extends BetHistoryBodyItem {
