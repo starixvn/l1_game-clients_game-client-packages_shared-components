@@ -1,7 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import Observer from "observer";
-import BetHistoryBodyItem, { BetHistoryBodyItemType } from "./bet-history-body-item";
+import BetHistoryBodyItem, { BetHistoryBodyItemType } from "../../bet-history/scripts/components/bet-history-body-item";
 const { ccclass, property } = _decorator;
 const { DateTimeUtils } = gc;
 const { handle } = Observer;
