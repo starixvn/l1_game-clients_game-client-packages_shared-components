@@ -63,7 +63,7 @@ export default class MD5Component extends ObserverComponent {
         this.nodeContentContainer?.on(Node.EventType.TOUCH_START, this.showTooltip, this);
     }
 
-    private showTooltip() {
+    protected showTooltip() {
         if (this.tipString && this.md5Tip) {
             this.md5Tip.setData(this.tipString);
             this.md5Tip.show(true);
