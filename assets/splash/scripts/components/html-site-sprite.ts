@@ -78,6 +78,11 @@ export class HtmlSiteSprite extends Component {
 
     @render(Auth.AuthStore, (store) => store.ssoErrorMessage)
     renderMessage(message: string) {
-        !this.alwaysShow && (this.node.active = message === "");
+        console.log("alwayss-----", message === "");
+        console.log("message string", message);
+        if (!this.alwaysShow) {
+            console.log("++++++++++++++++");
+            this.node.active = message === "";
+        }
     }
 }
