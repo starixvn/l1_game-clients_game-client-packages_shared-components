@@ -1,4 +1,4 @@
-import { Animation, Component, math, Node, sp, Tween, tween, TweenEasing, UIOpacity, UITransform, v3, Vec3 } from "cc";
+import { Animation, Component, math, Node, sp, sys, Tween, tween, TweenEasing, UIOpacity, UITransform, v3, Vec3 } from "cc";
 
 export namespace AnimationUtils {
     export const FadeTag = 1001;
@@ -200,4 +200,8 @@ export namespace AnimationUtils {
 }
 export const isValidNode = (comp: Component) => {
     return comp.node && comp.node.isValid;
+};
+
+export const isIOS = () => {
+    return sys.os === sys.OS.IOS;
 };
