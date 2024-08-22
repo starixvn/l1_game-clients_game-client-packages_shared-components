@@ -1,9 +1,11 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Component, ImageAsset, JsonAsset, Sprite, SpriteFrame, Texture2D } from "cc";
+import Observer from "observer";
 import { FunctionUtils } from "../../../shared/utils";
 import { isValidNode } from "../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
-const { Translator } = gc;
+const { render } = Observer;
+const { Translator, Auth } = gc;
 @ccclass
 export class HtmlSiteSprite extends Component {
     @property
@@ -17,6 +19,9 @@ export class HtmlSiteSprite extends Component {
 
     @property
     localization = false;
+
+    @property
+    alwaysShow = true;
 
     sprite: Sprite = null;
 
@@ -69,5 +74,10 @@ export class HtmlSiteSprite extends Component {
     getUrl(fileName: string, versionId: number): string {
         const { origin, pathname } = window.location;
         return `${origin}${pathname}${this.folder}/${fileName}.${this.extension}?v=${versionId}`;
+    }
+
+    @render(Auth.AuthStore, (store) => store.ssoErrorMessage)
+    renderMessage(message: string) {
+        !this.alwaysShow && (this.node.active = message === "");
     }
 }
