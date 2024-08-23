@@ -20,9 +20,6 @@ export class HtmlSiteSprite extends Component {
     @property
     localization = false;
 
-    @property
-    alwaysShow = true;
-
     sprite: Sprite = null;
 
     async onLoad() {
@@ -74,15 +71,5 @@ export class HtmlSiteSprite extends Component {
     getUrl(fileName: string, versionId: number): string {
         const { origin, pathname } = window.location;
         return `${origin}${pathname}${this.folder}/${fileName}.${this.extension}?v=${versionId}`;
-    }
-
-    @render(Auth.AuthStore, (store) => store.ssoErrorMessage)
-    renderMessage(message: string) {
-        console.log("alwayss-----", message === "");
-        console.log("message string", message);
-        if (!this.alwaysShow) {
-            console.log("++++++++++++++++");
-            this.node.active = message === "";
-        }
     }
 }
