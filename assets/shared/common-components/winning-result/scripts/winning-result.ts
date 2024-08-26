@@ -46,6 +46,10 @@ export class WinningResult extends Component {
         this.node.active = false;
     }
 
+    showQuickly() {
+        this.node.active = true;
+    }
+
     setResult(data: gc.GameServiceMessage.TResult) {}
 
     setSettlementResult(data: gc.GameServiceMessage.TSettlementResult) {
