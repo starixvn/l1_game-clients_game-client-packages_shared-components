@@ -13,15 +13,4 @@ export class BetHistoryNewBodyItem extends BetHistoryBodyItem {
         const { time } = data.betHistoryLog;
         this.lblTime.string = `${DateTimeUtils.getStringDate1(time)} ${DateTimeUtils.getString12HourByTime(time)}`;
     }
-
-    @handle(gc.BetDetailsNew.BetDetailsHandler, (handler, payload: any) => handler.openBetDetails(payload))
-    openBetDetails() {
-        this.playSoundClick();
-        return {
-            roundId: this.betHistoryLog.roundId,
-            mode: "dark",
-            language: gc.Translator.getLanguageId(),
-            timeZoneOffset: -new Date().getTimezoneOffset() / 60,
-        };
-    }
 }
