@@ -1,11 +1,9 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Component, ImageAsset, JsonAsset, Sprite, SpriteFrame, Texture2D } from "cc";
-import Observer from "observer";
 import { FunctionUtils } from "../../../shared/utils";
 import { isValidNode } from "../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
-const { render } = Observer;
-const { Translator, Auth } = gc;
+const { Translator } = gc;
 @ccclass
 export class HtmlSiteSprite extends Component {
     @property
