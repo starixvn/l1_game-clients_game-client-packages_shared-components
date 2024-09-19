@@ -8,7 +8,7 @@ import { ObserverComponent } from "../../shared/common-components/observer-compo
 import { ComponentUtils } from "../../shared/utils";
 import { AnimationUtils } from "../../shared/utils/utils";
 import { MultiplierPayoutEvent } from "../multiplier-payout";
-import { TimePoints } from "../time-point";
+import { getTimePointBurnCards, getTimePointCutCards } from "../time-point";
 import { BaccaratXCards } from "./baccarat-x-cards";
 import { LuckyCardEffect } from "./lucky-card-effect";
 const { ccclass, property } = _decorator;
@@ -102,6 +102,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
     private burnCardsNodes: Node[] = [];
     private durations: gc.GameConfigs.DurationSetting;
     luckyCardEffect: LuckyCardEffect;
+    private timePointCutCards = 0;
+    private timePointBurnCards = 0;
+
     async onLoad() {
         this.luckyCardEffect = this.nodeLuckyCardsEffect.getComponent(LuckyCardEffect);
         this.nodeBgNewShoe.active = false;
@@ -126,6 +129,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
     @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.durations)
     storeSettingDurations(durations: gc.GameConfigs.DurationSetting) {
         this.durations = durations;
+
+        this.timePointCutCards = getTimePointCutCards(durations.wholeShoe);
+        this.timePointBurnCards = getTimePointBurnCards(durations.wholeShoe);
     }
 
     async initSpineCutCard() {
@@ -503,6 +509,9 @@ export class BaccaratXCardsUI extends ObserverComponent {
         }, 0.1);
     }
 
+    @render(gc.GameConfigs.GameSetting, (store) => store.durations)
+    storeCutCardsTimePoint(duration: gc.GameConfigs.DurationSetting) {}
+
     @render(GameBaccaratX.Shoe.ShoeStore, (store) => store.shoeInfo)
     async startNewShoe(shoeInfo: gc.GameServiceMessage.ShoeInfo) {
         if (!shoeInfo || !shoeInfo.animated) {
@@ -512,12 +521,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
         this.cutCardIndex = cutCardIndex;
 
         this.nodeBgNewShoe.active = true;
-        if (roundTime >= TimePoints.CutCards) {
+        if (roundTime >= this.timePointCutCards) {
             await this.playAnimationCutCard(cutCardIndex);
         }
 
         if (roundTime > this.beforeStartRound) {
-            await this.playAnimationBurnCards(firstCard, burnedCards, roundTime >= TimePoints.BurnCards);
+            await this.playAnimationBurnCards(firstCard, burnedCards, roundTime >= this.timePointBurnCards);
         }
 
         this.currentCardIndex = burnedCards;

@@ -2,7 +2,7 @@ import gc from "@sg/game-client-base";
 import { Color, Label, Node, Prefab, Toggle, _decorator, instantiate } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
-import { TimePoints } from "../../time-point";
+import { getTimePointCutCards } from "../../time-point";
 import { ClientSeedManualBaccaratPopup } from "./client-seed-manual-baccarat-popup";
 const { ccclass, property } = _decorator;
 const { GameBaccaratX, Rounds, Translator } = gc;
@@ -45,6 +45,8 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     private dontShowAgain = false;
 
+    private timePointCutCards = 0;
+
     onLoad() {
         super.onLoad();
         this.updateMaxCS();
@@ -52,6 +54,11 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         this.lblRangeClientSeed.string = `(${this.minCSNumber} - ${this.maxCSNumber})`;
         this.generateRandomCS();
         this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopupManual, this);
+    }
+
+    @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.durations)
+    storeSettingDurations(durations: gc.GameConfigs.DurationSetting) {
+        this.timePointCutCards = getTimePointCutCards(durations.wholeShoe);
     }
 
     start() {
@@ -122,7 +129,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @render(Rounds.RoundTimeStore, (store) => store.roundTime)
     renderCountDownTime(roundTime: number) {
-        this.lblCountDown && (this.lblCountDown.string = (roundTime - TimePoints.CutCards).toString());
+        this.lblCountDown && (this.lblCountDown.string = (roundTime - this.timePointCutCards).toString());
     }
 
     @handle(GameBaccaratX.CutCardPF.FairnessHandler, (handler, min: number) => handler.setMinClientSeed(min))
