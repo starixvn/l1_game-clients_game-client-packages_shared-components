@@ -116,9 +116,9 @@ export class PokerCard extends Component {
         return AnimationUtils.playAnimation(this.animation, AnimationName.Drop_Card, duration);
     }
 
-    async openCard(animated = true) {
+    async openCard(animated = true, duration?: number) {
         if (this.animation && animated) {
-            await AnimationUtils.playAnimation(this.animation, AnimationName.Open_Card);
+            await AnimationUtils.playAnimation(this.animation, AnimationName.Open_Card, duration);
         } else {
             this.faceUp();
         }

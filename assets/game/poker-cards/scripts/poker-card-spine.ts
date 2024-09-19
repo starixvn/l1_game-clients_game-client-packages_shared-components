@@ -37,10 +37,10 @@ export class PokerCardSpine extends PokerCard {
         return AnimationUtils.playSpine(this?.skeletonCard, AnimationName.CloseCard, false, duration);
     }
 
-    async openCard(animated = true) {
+    async openCard(animated = true, duration?: number) {
         this.changeCardFace(true);
         if (animated) {
-            await AnimationUtils.playSpine(this?.skeletonCard, AnimationName.OpenCard, false);
+            await AnimationUtils.playSpine(this?.skeletonCard, AnimationName.OpenCard, false, duration);
         } else {
             this.faceUp();
         }

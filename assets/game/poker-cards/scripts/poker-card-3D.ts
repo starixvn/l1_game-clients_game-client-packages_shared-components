@@ -33,10 +33,10 @@ export class PokerCard3D extends PokerCard {
         return AnimationUtils.playAnimation(this.animation, AnimationName.Close_Card, duration);
     }
 
-    async openCard(animated = true) {
+    async openCard(animated = true, duration?: number) {
         this.changeCardFace(true);
         if (animated) {
-            await AnimationUtils.playAnimation(this.animation, AnimationName.Open_Card);
+            await AnimationUtils.playAnimation(this.animation, AnimationName.Open_Card, duration);
         } else {
             this.faceUp();
         }

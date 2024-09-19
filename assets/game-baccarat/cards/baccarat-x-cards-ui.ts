@@ -84,8 +84,17 @@ export class BaccaratXCardsUI extends ObserverComponent {
     @property
     spineCutCardPath = "";
 
+    @property
+    modeSpeed = false;
+
     private _cardHands: BaccaratXCards[] = [];
-    private readonly movingCardDuration = 0.5;
+    private get movingCardDuration() {
+        return this.modeSpeed ? 0.4 : 0.5;
+    }
+
+    private get openCardDuration() {
+        return this.modeSpeed ? 0.5 : 0.8;
+    }
     private maximizeStackCards = 6;
     private isNewShoe = false;
 
@@ -397,7 +406,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
                 }
                 if (animated) {
                     this.playSoundOpeningCard();
-                    await card.openCard(animated);
+                    await card.openCard(animated, this.openCardDuration);
                 } else {
                     card.openCard(animated);
                 }

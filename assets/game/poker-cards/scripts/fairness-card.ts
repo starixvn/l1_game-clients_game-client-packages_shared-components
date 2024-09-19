@@ -53,8 +53,8 @@ export class FairnessCard extends Component {
         this.card.setServiceCard(card);
     }
 
-    openCard(animated = true) {
-        return this.card.openCard(animated);
+    openCard(animated = true, duration?: number) {
+        return this.card.openCard(animated, duration);
     }
 
     closeCard(duration = 0) {
