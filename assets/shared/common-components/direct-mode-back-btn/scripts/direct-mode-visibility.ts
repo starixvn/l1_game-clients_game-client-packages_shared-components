@@ -8,7 +8,6 @@ export enum NodeType {
 }
 
 const { render, observer } = Observer;
-
 const { App } = gc;
 
 const { ccclass, property } = _decorator;
@@ -18,12 +17,24 @@ export default class DirectModeVisibility extends Component {
     @property({ type: Enum(NodeType) })
     type: NodeType = NodeType.Lobby;
 
-    @render(App.AppStore, (store) => ({ isDirectMode: store.isDirectMode, returnUrl: store.urlInfo.returnUrl }))
-    onVisibility({ isDirectMode, returnUrl }: { isDirectMode: boolean; returnUrl?: string }) {
+    @render(App.AppStore, (store) => ({
+        isDirectMode: store.isDirectMode,
+        isPortraitDirectMode: store.isPortraitDirectMode,
+        returnUrl: store.urlInfo.returnUrl,
+    }))
+    onVisibility({
+        isDirectMode,
+        isPortraitDirectMode,
+        returnUrl,
+    }: {
+        isDirectMode: boolean;
+        isPortraitDirectMode: boolean;
+        returnUrl?: string;
+    }) {
         let visible = false;
         switch (this.type) {
             case NodeType.Lobby:
-                visible = !isDirectMode || !!returnUrl;
+                visible = (!isDirectMode || !!returnUrl) && !isPortraitDirectMode;
                 break;
             case NodeType.Back:
                 visible = isDirectMode && !!returnUrl;
