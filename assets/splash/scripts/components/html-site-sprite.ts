@@ -18,6 +18,9 @@ export class HtmlSiteSprite extends Component {
     @property
     localization = false;
 
+    @property
+    originalSize = true;
+
     sprite: Sprite = null;
 
     async onLoad() {
@@ -40,7 +43,9 @@ export class HtmlSiteSprite extends Component {
             texture.image = imageAsset;
             spriteFrameTmp.texture = texture;
             this.sprite.spriteFrame = spriteFrameTmp;
-            this.sprite.sizeMode = Sprite.SizeMode.RAW;
+            if (this.originalSize) {
+                this.sprite.sizeMode = Sprite.SizeMode.RAW;
+            }
         } catch (e) {}
     }
 
