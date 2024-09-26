@@ -139,8 +139,8 @@ export class BaccaratXCardsUI extends ObserverComponent {
     storeSettingDurations(durations: gc.GameConfigs.DurationSetting) {
         this.durations = durations;
 
-        this.timePointCutCards = getTimePointCutCards(durations.wholeShoe);
-        this.timePointBurnCards = getTimePointBurnCards(durations.wholeShoe);
+        this.timePointCutCards = getTimePointCutCards(durations);
+        this.timePointBurnCards = getTimePointBurnCards(durations);
     }
 
     async initSpineCutCard() {

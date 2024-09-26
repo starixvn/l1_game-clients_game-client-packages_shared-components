@@ -19,7 +19,7 @@ export class WaitingScreen extends ObserverComponent {
 
     @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.durations)
     storeSettingDurations(durations: gc.GameConfigs.DurationSetting) {
-        this.timePointCutCards = getTimePointCutCards(durations.wholeShoe);
+        this.timePointCutCards = getTimePointCutCards(durations);
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(gc.Audios.AudioIds.CLICK))

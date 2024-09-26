@@ -1,11 +1,11 @@
-export const getTimePointCutCards = (wholeShoe: number) => {
-    const NewShoeDuration = 20;
-    const OffsetNewShoeDuration = 2;
-
-    return wholeShoe - NewShoeDuration - OffsetNewShoeDuration;
+import gc from "@sg/game-client-base";
+export const getTimePointCutCards = (durations: gc.GameConfigs.DurationSetting) => {
+    const { wholeShoe, generatingResult, showingResult } = durations;
+    const DurationShowCutCardsSetting = 10;
+    return wholeShoe - generatingResult - showingResult - DurationShowCutCardsSetting;
 };
 
-export const getTimePointBurnCards = (wholeShoe: number) => {
+export const getTimePointBurnCards = (durations: gc.GameConfigs.DurationSetting) => {
     const CutCardAnimationDuration = 5;
-    return getTimePointCutCards(wholeShoe) - CutCardAnimationDuration;
+    return getTimePointCutCards(durations) - CutCardAnimationDuration;
 };

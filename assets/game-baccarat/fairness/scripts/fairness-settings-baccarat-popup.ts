@@ -58,7 +58,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
 
     @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.durations)
     storeSettingDurations(durations: gc.GameConfigs.DurationSetting) {
-        this.timePointCutCards = getTimePointCutCards(durations.wholeShoe);
+        this.timePointCutCards = getTimePointCutCards(durations);
     }
 
     start() {
