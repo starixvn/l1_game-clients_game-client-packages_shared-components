@@ -2118,7 +2118,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -2.133,
-      "y": -37.262,
+      "y": -45,
       "z": 0
     },
     "_lrot": {
@@ -2615,7 +2615,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 446.01800000000003,
+      "x": 402.606,
       "y": 0,
       "z": 0
     },
@@ -2664,7 +2664,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "165",
+    "_string": "",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -2672,7 +2672,7 @@
     "_fontFamily": "Arial",
     "_lineHeight": 44,
     "_overflow": 0,
-    "_enableWrapText": true,
+    "_enableWrapText": false,
     "_font": {
       "__uuid__": "ef8509f0-8c17-4d46-8ca0-a31d72a99153",
       "__expectedType__": "cc.BitmapFont"
@@ -2723,12 +2723,12 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 59.63,
+      "width": 0,
       "height": 44
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 0,
       "y": 0.5
     },
     "_id": ""
@@ -3415,6 +3415,8 @@
     "body": {
       "__id__": 100
     },
+    "refundChoices": "",
+    "refundRatio": 0.5,
     "cpnReachMaxWin": {
       "__id__": 145
     },
