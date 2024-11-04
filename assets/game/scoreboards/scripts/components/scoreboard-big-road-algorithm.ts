@@ -8,7 +8,17 @@ import { ScoreboardAlgorithm } from "./scoreboard-algorithm";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
 
 const { ccclass, property, requireComponent } = _decorator;
-const { Converter, BigRoadScoreboard: BigRoad } = SCScoreboard;
+const {
+    Converter,
+    BigRoadScoreboard: BigRoad,
+    ADJACENT_TWO_COLUMNS,
+    CHASE,
+    GoodRoadColumnLengthDetectorDetector,
+    LONG_ROAD,
+    ONE_HOME_TWO_ROOMS,
+    PBHOP,
+    SEPARATED,
+} = SCScoreboard;
 
 type ConverterOptions = {
     keyOfA: string;
@@ -40,11 +50,14 @@ export class ScoreboardBigRoadAlgorithm extends ScoreboardAlgorithm {
 
     private _bigRoad: BigRoadScoreboard<unknown>;
 
+    goodRoadPatterns = [SEPARATED, LONG_ROAD, ADJACENT_TWO_COLUMNS, CHASE, ONE_HOME_TWO_ROOMS, PBHOP];
+
     private get bigRoad() {
         if (!this._bigRoad) {
             this._bigRoad = new BigRoad({
                 converter: new BigRoadConverter(this.converter),
                 height: this.grid.settings.row,
+                goodRoadDetectors: [new GoodRoadColumnLengthDetectorDetector({ patterns: this.goodRoadPatterns })],
             });
         }
 
@@ -60,6 +73,14 @@ export class ScoreboardBigRoadAlgorithm extends ScoreboardAlgorithm {
         addEmptyPoints(points, maximumPoints);
 
         return points;
+    }
+
+    getGoodRoad() {
+        const goodRoad = this.bigRoad.getGoodRoad();
+        if (goodRoad) {
+            console.log(`====== goodRoad from x ${goodRoad.x} to x ${goodRoad.x + goodRoad.width} ======`);
+        }
+        return goodRoad;
     }
 
     onFocusInEditor(): void {
