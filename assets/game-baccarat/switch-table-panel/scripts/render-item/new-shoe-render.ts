@@ -16,6 +16,8 @@ export default class NewShoeRender extends RenderItem {
         const store = data.getStore(Store.GameInfo);
         store?.addListener(EmitterEvents.StartRound, this.onStartRound);
         store?.addListener(EmitterEvents.ActiveNewShoe, this.onActiveNewShoe);
+
+        store?.wakeUp();
     }
 
     onDestroy() {

@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { ResultPercentage } from "../../../result-percentage/scripts/result-percentage";
 import { Scoreboard } from "./scoreboard";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
 import { ScoreboardDerived } from "./scoreboard-derived";
@@ -14,11 +15,14 @@ export class ScoreboardDataReceiver extends ObserverComponent {
     @property({ type: Scoreboard })
     scoreboards: Scoreboard[] = [];
 
+    @property(ResultPercentage)
+    resultPercentage: ResultPercentage = null;
+
     protected lastRound: unknown = {};
-    protected rounds: unknown[] = [];
+    protected rounds: gc.RoundHistories.RoundHistory[] = [];
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
-    public render<T>(rounds: T[]) {
+    public render(rounds: gc.RoundHistories.RoundHistory[]) {
         if (!rounds) {
             return;
         }
@@ -28,6 +32,8 @@ export class ScoreboardDataReceiver extends ObserverComponent {
         this.scoreboards.forEach((scoreboard) => {
             scoreboard.render([...reversedRounds]);
         });
+
+        this.resultPercentage?.render(this.rounds);
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.getLastRound())

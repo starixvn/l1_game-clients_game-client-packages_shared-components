@@ -8,6 +8,7 @@ import { EmitterEvents, Store } from "./models/definitions";
 import { DisableGameStore } from "./models/disable-game-store";
 import { Durations } from "./models/durations-interface";
 import { GameData } from "./models/game-data";
+import { GameDataBase } from "./models/game-data-base";
 import { GameInfoStore } from "./models/game-info-store";
 import { RoundHistoryStore } from "./models/round-history-store";
 import RenderItem from "./render-item/render-item";
@@ -22,26 +23,27 @@ export default class GatewayGameItem extends Component {
 
     renderItems: RenderItem[] = [];
     gameId = 0;
+    gameName = "";
+
+    gameData: GameData = null;
+
     serviceName = "";
     socket: Socket;
-    gameData: GameData = null;
     receivedEvents: string[];
-    gameName = "";
 
     initRenderItems() {
         this.renderItems = this.getComponentsInChildren(RenderItem);
         this.renderItems.forEach((item) => item.init(this.gameData));
     }
 
-    init(settings: { gameId: number; gameName: string; serviceName: string; socket: Socket; durations: Durations }) {
-        const { gameId, gameName, serviceName, socket, durations } = settings;
+    init(settings: { gameId: number; gameName: string; gameData: GameDataBase }) {
+        const { gameId, gameName, gameData } = settings;
         this.gameId = gameId;
         this.gameName = gameName;
-        this.serviceName = serviceName;
-        this.socket = socket;
+        this.gameData = gameData;
         this.updateGameName(this.gameId);
-        this.initGameData(durations);
         this.initUIListeners();
+        this.initRenderItems();
     }
 
     initUIListeners() {
@@ -63,11 +65,11 @@ export default class GatewayGameItem extends Component {
     }
 
     removeSocketListeners() {
-        if (!this.socket) {
-            return;
-        }
-        this.socket.removeAllListeners();
-        this.socket = null;
+        // if (!this.socket) {
+        //     return;
+        // }
+        // this.socket.removeAllListeners();
+        // this.socket = null;
     }
 
     getDisplayName() {
@@ -84,8 +86,8 @@ export default class GatewayGameItem extends Component {
     }
 
     setReceiveEvents(receivedEvents: string[]) {
-        this.receivedEvents = receivedEvents;
-        this.sendSignIn();
+        // this.receivedEvents = receivedEvents;
+        // this.sendSignIn();
     }
 
     resetGameData() {
@@ -113,15 +115,14 @@ export default class GatewayGameItem extends Component {
         const disableGameStore = new DisableGameStore();
         disableGameStore.addListener(EmitterEvents.GetLobbyData, this.sendSignIn.bind(this));
         this.gameData.addStores([new RoundHistoryStore(), infoStore, disableGameStore]);
-        this.initRenderItems();
     }
 
     filterDataGame = (event: string, data: any) => {
-        const eventLowerCase = event.toLocaleLowerCase();
-        const gameName = this.gameName.toLocaleLowerCase();
-        if (eventLowerCase === gameName || (eventLowerCase === "message" && data.gameName?.toLocaleLowerCase() === gameName)) {
-            this.onData(data);
-        }
+        // const eventLowerCase = event.toLocaleLowerCase();
+        // const gameName = this.gameName.toLocaleLowerCase();
+        // if (eventLowerCase === gameName || (eventLowerCase === "message" && data.gameName?.toLocaleLowerCase() === gameName)) {
+        //     this.onData(data);
+        // }
     };
 
     onReconnectGame() {
@@ -129,7 +130,7 @@ export default class GatewayGameItem extends Component {
     }
 
     getLobbyData() {
-        this.socket.emit("getLobbyData", { gameName: this.gameName });
+        // this.socket.emit("getLobbyData", { gameName: this.gameName });
     }
 
     onData(data: any) {

@@ -1,12 +1,9 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label, Node } from "cc";
-import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
-import Observer from "observer";
+import { _decorator, Component, Label, Node } from "cc";
 import { ComponentUtils } from "../../../shared/utils";
 const { ccclass, property } = _decorator;
-const { render } = Observer;
 @ccclass
-export class ResultPercentage extends ObserverComponent {
+export class ResultPercentage extends Component {
     @property
     autoFindLabels = false;
 
@@ -37,7 +34,6 @@ export class ResultPercentage extends ObserverComponent {
 
     originalChoices: string[] = [];
     onLoad() {
-        super.onLoad();
         this.generateOriginalChoices();
         if (this.autoFindLabels && this.labelContainer) {
             this.labelContainer.children.forEach((child) => {
@@ -54,7 +50,7 @@ export class ResultPercentage extends ObserverComponent {
         this.originalChoices = this.supportChoices.split(",");
     }
 
-    @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
+    // @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     render(histories: gc.RoundHistories.RoundHistory[]) {
         if (histories.length === 0) {
             this.clearAllLabels();

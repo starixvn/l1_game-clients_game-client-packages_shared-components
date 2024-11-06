@@ -1,10 +1,6 @@
-import { EventEmitter } from "events";
+// import { EventEmitter } from "events";
+import { EventEmitter } from "eventemitter3";
 
 export default class EventEmitterBase extends EventEmitter {
-    constructor() {
-        super();
-        this.setMaxListeners(0);
-    }
-
     updateUI() {}
 }

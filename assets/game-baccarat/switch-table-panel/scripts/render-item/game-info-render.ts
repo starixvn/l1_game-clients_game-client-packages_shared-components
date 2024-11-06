@@ -14,10 +14,7 @@ export default class GameInfoRender extends RenderItem {
     labelTotalOnlineUsers: Label = null;
 
     @property(Label)
-    labelMinBet: Label = null;
-
-    @property(Label)
-    labelMaxBet: Label = null;
+    labelLimitBet: Label = null;
 
     private _gameData: GameData = null;
     init(data: GameData) {
@@ -26,6 +23,8 @@ export default class GameInfoRender extends RenderItem {
         store?.addListener(EmitterEvents.RtpChange, this.onChangeRTP);
         store?.addListener(EmitterEvents.TotalOnlineChange, this.onChangeTotalOnlineUser);
         store?.addListener(EmitterEvents.BetLimitChange, this.onChangeBetLimit);
+
+        store?.wakeUp();
     }
 
     onDestroy() {
@@ -39,11 +38,8 @@ export default class GameInfoRender extends RenderItem {
         if (!data) {
             return;
         }
-        if (this.labelMinBet) {
-            this.labelMinBet.string = gc.FormatUtils.numberWithCommas(data.minBet);
-        }
-        if (this.labelMaxBet) {
-            this.labelMaxBet.string = gc.FormatUtils.numberWithCommas(data.maxBet);
+        if (this.labelLimitBet) {
+            this.labelLimitBet.string = `${gc.FormatUtils.numberWithCommas(data.minBet)} - ${gc.FormatUtils.numberWithCommas(data.maxBet)}`;
         }
     };
     onChangeTotalOnlineUser = (data: number) => {

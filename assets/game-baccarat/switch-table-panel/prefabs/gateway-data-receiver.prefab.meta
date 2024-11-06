@@ -2,12 +2,12 @@
   "ver": "1.1.45",
   "importer": "prefab",
   "imported": true,
-  "uuid": "a0cb3afa-639b-4944-8c30-2c95ae053daf",
+  "uuid": "92beffc2-110c-4383-b985-e13f9cad4eb6",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "switch-table-panel"
+    "syncNodeName": "gateway-data-receiver"
   }
 }
