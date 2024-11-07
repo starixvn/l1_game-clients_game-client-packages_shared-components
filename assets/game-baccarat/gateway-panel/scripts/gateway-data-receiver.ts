@@ -101,6 +101,11 @@ export class GatewayDataReceiver extends ObserverComponent {
         this.gameId = gameId;
     }
 
+    @render(gc.App.AppStore, (store) => store.offerGames)
+    renderOfferGames(offerGames: number[]) {
+        console.log("offerGames:", offerGames);
+    }
+
     getFilterGames() {
         const games = Object.keys(this.gatewayConfig?.games)
             .map((gameId) => +gameId)
