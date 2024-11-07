@@ -255,7 +255,7 @@ export class GatewayDataReceiver extends Component {
         this.socket.emit("getLobbyData", { gameName: gameName });
     }
 
-    onOpenPanel() {
+    onOpenSidePanel() {
         const node = instantiate(this.panelPrefab);
         this.node.addChild(node);
 
