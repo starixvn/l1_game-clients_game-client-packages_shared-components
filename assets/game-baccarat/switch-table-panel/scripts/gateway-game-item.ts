@@ -1,6 +1,8 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, Label, Node } from "cc";
+import { _decorator, Label, Node } from "cc";
+import Observer from "observer";
 import { Socket } from "socket.io-client";
+import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { DisableGameHandler } from "./handlers/disable-game-handler";
 import { GameInfoHandler } from "./handlers/game-info-handler";
 import { RoundHistoryHandler } from "./handlers/round-history-handler";
@@ -13,8 +15,9 @@ import { GameInfoStore } from "./models/game-info-store";
 import { RoundHistoryStore } from "./models/round-history-store";
 import RenderItem from "./render-item/render-item";
 const { ccclass, property } = _decorator;
+const { handle } = Observer;
 @ccclass
-export default class GatewayGameItem extends Component {
+export default class GatewayGameItem extends ObserverComponent {
     @property(Label)
     labelGameName: Label = null;
 
@@ -145,7 +148,8 @@ export default class GatewayGameItem extends Component {
         this.getLobbyData();
     }
 
+    @handle(gc.App.AppHandlers.BackToOperatorLobby, (handler, gameId: number) => handler.handleOpenGame(gameId))
     onClickOpenGame() {
-        // uiManager.emitter.emit(InternalEvents.GATEWAY_OPEN_GAME, this.gameId);
+        return this.gameId;
     }
 }
