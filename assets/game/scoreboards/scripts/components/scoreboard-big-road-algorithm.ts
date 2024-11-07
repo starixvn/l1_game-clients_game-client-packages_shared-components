@@ -1,9 +1,10 @@
 import type { BigRoadScoreboard } from "sc-scoreboards";
 
-import { _decorator } from "cc";
+import { _decorator, log } from "cc";
 import SCScoreboard from "sc-scoreboards";
 import { GridLayout } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
 import { addEmptyPoints, getColumns } from "../helpers/scoreboard-big-road-helper";
+import { DEFAULT_PATTERNS } from "./baccarat/big-road/baccarat-big-road-good-road-patterns";
 import { ScoreboardAlgorithm } from "./scoreboard-algorithm";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
 
@@ -50,7 +51,7 @@ export class ScoreboardBigRoadAlgorithm extends ScoreboardAlgorithm {
 
     private _bigRoad: BigRoadScoreboard<unknown>;
 
-    goodRoadPatterns = [SEPARATED, LONG_ROAD, ADJACENT_TWO_COLUMNS, CHASE, ONE_HOME_TWO_ROOMS, PBHOP];
+    goodRoadPatterns = DEFAULT_PATTERNS;
 
     private get bigRoad() {
         if (!this._bigRoad) {
@@ -77,9 +78,10 @@ export class ScoreboardBigRoadAlgorithm extends ScoreboardAlgorithm {
 
     getGoodRoad() {
         const goodRoad = this.bigRoad.getGoodRoad();
-        if (goodRoad) {
-            console.log(`====== goodRoad from x ${goodRoad.x} to x ${goodRoad.x + goodRoad.width} ======`);
+        if (goodRoad?.x === -1 && goodRoad?.width === -1) {
+            return null;
         }
+        log(`====== goodRoad from x ${goodRoad.x} to x ${goodRoad.x + goodRoad.width} ======`);
         return goodRoad;
     }
 

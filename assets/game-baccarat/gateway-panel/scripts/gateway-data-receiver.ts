@@ -1,7 +1,9 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, instantiate, Prefab } from "cc";
+import { _decorator, instantiate, Prefab } from "cc";
+import Observer from "observer";
 import { Socket } from "socket.io-client/dist/socket.io.js";
 import { siteConfigs } from "../../../../../../assets/scripts/site-configs";
+import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { GatewayPanel } from "./gateway-panel";
 import { DisableGameHandler } from "./handlers/disable-game-handler";
 import { GameInfoHandler } from "./handlers/game-info-handler";
@@ -12,9 +14,10 @@ import { GameData } from "./models/game-data";
 import { GameInfoStore } from "./models/game-info-store";
 import { RoundHistoryStore } from "./models/round-history-store";
 const { ccclass, property } = _decorator;
+const { render } = Observer;
 
 @ccclass("GatewayDataReceiver")
-export class GatewayDataReceiver extends Component {
+export class GatewayDataReceiver extends ObserverComponent {
     @property(Prefab)
     panelPrefab: Prefab = null;
 
@@ -31,7 +34,7 @@ export class GatewayDataReceiver extends Component {
             "83": ["lucky"],
             "88": ["lucky"],
             "89": ["lucky"],
-            // "84": ["classic"],
+            "84": ["classic"],
             "85": ["classic"],
             "86": ["classic"],
             "87": ["classic"],
@@ -113,8 +116,10 @@ export class GatewayDataReceiver extends Component {
 
     rtps = [];
     dataGames = {};
+    gameId = -1;
 
     onLoad() {
+        super.onLoad();
         this.createGameDatas();
 
         const socketUri = gc.UrlUtils.buildUrlFromSubDomain(siteConfigs, siteConfigs?.gatewaySubDomain);
@@ -126,8 +131,15 @@ export class GatewayDataReceiver extends Component {
         });
     }
 
+    @render(gc.GameConfigs.GameSetting, (store) => store.id)
+    renderGameId(gameId: number) {
+        this.gameId = gameId;
+    }
+
     getFilterGames() {
-        const games = Object.keys(this.gatewayConfig.games).map((gameId) => +gameId);
+        const games = Object.keys(this.gatewayConfig.games)
+            .map((gameId) => +gameId)
+            .filter((gameId) => gameId !== this.gameId);
         return games;
     }
 
