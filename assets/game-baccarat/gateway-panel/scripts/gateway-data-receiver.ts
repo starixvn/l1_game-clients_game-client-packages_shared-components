@@ -174,6 +174,7 @@ export class GatewayDataReceiver extends ObserverComponent {
 
     sendSignInAllGames() {
         const games = this.getFilterGames();
+        console.log("sendSignInAllGames:", games);
         games.forEach((gameId) => {
             this.sendSignInEachGame(+gameId);
         });
