@@ -17,7 +17,7 @@ import { RoundHistoryStore } from "./models/round-history-store";
 const { ccclass, property } = _decorator;
 const { render } = Observer;
 
-interface IGameConfigs {
+interface IGatewayConfigs {
     gameId: number;
     games: Record<number, string[]>;
     durations: {
@@ -67,7 +67,7 @@ export class GatewayDataReceiver extends ObserverComponent {
 
     socket: Socket = null;
 
-    gatewayConfig: IGameConfigs = null;
+    gatewayConfig: IGatewayConfigs = null;
 
     rtps = [];
     dataGames = {};
@@ -90,7 +90,7 @@ export class GatewayDataReceiver extends ObserverComponent {
         try {
             const configUrl = `${gc.UrlUtils.buildShareResource(siteConfigs)}${DEFAULT_PATH_CONFIG_GATEWAY}?v=${Date.now()}`;
             const jsonAsset = (await FunctionUtils.loadRemote(configUrl)) as JsonAsset;
-            this.gatewayConfig = (jsonAsset?.json as IGameConfigs) ?? null;
+            this.gatewayConfig = (jsonAsset?.json as IGatewayConfigs) ?? null;
         } catch (error) {
             log("Get Gateway config failed!");
         }
