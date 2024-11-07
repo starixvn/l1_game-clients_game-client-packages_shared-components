@@ -1,6 +1,11 @@
-// import { EventEmitter } from "events";
-import { EventEmitter } from "eventemitter3";
+import { EventTarget } from "cc";
+export default class EventEmitterBase extends EventTarget {
+    addListener<TFunction extends (...any: any[]) => void>(event: string, listener: TFunction) {
+        this.on(event, listener);
+    }
 
-export default class EventEmitterBase extends EventEmitter {
+    removeListener<TFunction extends (...any: any[]) => void>(event: string, listener: TFunction) {
+        this.off(event, listener);
+    }
     updateUI() {}
 }
