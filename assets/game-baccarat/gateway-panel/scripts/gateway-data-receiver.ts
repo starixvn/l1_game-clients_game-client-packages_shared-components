@@ -1,9 +1,10 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Prefab } from "cc";
+import { _decorator, instantiate, JsonAsset, log, Prefab } from "cc";
 import Observer from "observer";
 import { Socket } from "socket.io-client/dist/socket.io.js";
 import { siteConfigs } from "../../../../../../assets/scripts/site-configs";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { FunctionUtils } from "../../../shared/utils";
 import { GatewayPanel } from "./gateway-panel";
 import { DisableGameHandler } from "./handlers/disable-game-handler";
 import { GameInfoHandler } from "./handlers/game-info-handler";
@@ -16,6 +17,49 @@ import { RoundHistoryStore } from "./models/round-history-store";
 const { ccclass, property } = _decorator;
 const { render } = Observer;
 
+interface IGameConfigs {
+    gameId: number;
+    games: Record<number, string[]>;
+    durations: {
+        default: IDurationDetails;
+        speed: IDurationDetailsWithIds;
+        blockchain: IDurationDetailsWithIds;
+    };
+    serviceName: {
+        default: IServiceNameDetails;
+        old: IServiceNameDetailsWithIds;
+        blockchain: IServiceNameDetailsWithIds;
+    };
+    receivedEvents: string[];
+}
+
+interface IDurationDetails {
+    value: IDurationValues;
+}
+
+interface IDurationDetailsWithIds extends IDurationDetails {
+    ids: number[];
+}
+
+interface IDurationValues {
+    wholeRound: number;
+    wholeShoe: number;
+    lockingBet: number;
+    placingBet: number;
+    generatingResult: number;
+    showingResult: number;
+    startRound: number;
+}
+
+interface IServiceNameDetails {
+    value: string;
+}
+
+interface IServiceNameDetailsWithIds extends IServiceNameDetails {
+    ids: number[];
+}
+
+const DEFAULT_PATH_CONFIG_GATEWAY = "/gateway/102/info.json";
 @ccclass("GatewayDataReceiver")
 export class GatewayDataReceiver extends ObserverComponent {
     @property(Prefab)
@@ -23,103 +67,14 @@ export class GatewayDataReceiver extends ObserverComponent {
 
     socket: Socket = null;
 
-    gatewayConfig = {
-        gameId: 102,
-        games: {
-            // "10": ["classic"],
-            "27": ["classic"],
-            "48": ["classic"],
-            "81": ["lucky"],
-            "82": ["lucky"],
-            "83": ["lucky"],
-            "88": ["lucky"],
-            "89": ["lucky"],
-            "84": ["classic"],
-            "85": ["classic"],
-            "86": ["classic"],
-            "87": ["classic"],
-            "90": ["classic"],
-            "91": ["classic"],
-            "92": ["classic"],
-            "97": ["classic"],
-            "98": ["speed"],
-            "100": ["speed"],
-            "101": ["speed"],
-        },
-        durations: {
-            default: {
-                value: {
-                    wholeRound: 47,
-                    wholeShoe: 65,
-                    lockingBet: 3,
-                    placingBet: 30,
-                    generatingResult: 7,
-                    showingResult: 5,
-                    startRound: 4,
-                },
-            },
-            speed: {
-                ids: [98, 100, 101],
-                value: {
-                    wholeRound: 33,
-                    wholeShoe: 51,
-                    lockingBet: 3,
-                    placingBet: 20,
-                    generatingResult: 4,
-                    showingResult: 5,
-                    startRound: 3,
-                },
-            },
-            blockchain: {
-                ids: [48],
-                value: {
-                    wholeRound: 58,
-                    wholeShoe: 48,
-                    lockingBet: 3,
-                    placingBet: 30,
-                    generatingResult: 4,
-                    showingResult: 5,
-                    startRound: 3,
-                },
-            },
-        },
-        serviceName: {
-            default: {
-                value: "baccaratx",
-            },
-            old: {
-                value: "",
-                ids: [10, 27],
-            },
-            blockchain: {
-                value: "blockchain-baccarat",
-                ids: [48],
-            },
-        },
-        receivedEvents: [
-            "roundHistory",
-            "remainingTime",
-            "rtp",
-            "betLimit",
-            "finish",
-            "totalOnlineUsers",
-            "player",
-            "outgame",
-            "newShoePhase",
-            "newShoeHash",
-            "um",
-            "um_message",
-            "errorCode",
-            "newBlockchain",
-        ],
-    };
+    gatewayConfig: IGameConfigs = null;
 
     rtps = [];
     dataGames = {};
     gameId = -1;
 
-    onLoad() {
-        super.onLoad();
+    async onLoad() {
+        await this.getGatewayConfig();
         this.createGameDatas();
 
         const socketUri = gc.UrlUtils.buildUrlFromSubDomain(siteConfigs, siteConfigs?.gatewaySubDomain);
@@ -131,13 +86,23 @@ export class GatewayDataReceiver extends ObserverComponent {
         });
     }
 
+    async getGatewayConfig() {
+        try {
+            const configUrl = `${gc.UrlUtils.buildShareResource(siteConfigs)}${DEFAULT_PATH_CONFIG_GATEWAY}?v=${Date.now()}`;
+            const jsonAsset = (await FunctionUtils.loadRemote(configUrl)) as JsonAsset;
+            this.gatewayConfig = (jsonAsset?.json as IGameConfigs) ?? null;
+        } catch (error) {
+            log("Get Gateway config failed!");
+        }
+    }
+
     @render(gc.GameConfigs.GameSetting, (store) => store.id)
     renderGameId(gameId: number) {
         this.gameId = gameId;
     }
 
     getFilterGames() {
-        const games = Object.keys(this.gatewayConfig.games)
+        const games = Object.keys(this.gatewayConfig?.games)
             .map((gameId) => +gameId)
             .filter((gameId) => gameId !== this.gameId);
         return games;
@@ -231,25 +196,25 @@ export class GatewayDataReceiver extends ObserverComponent {
     }
 
     getServiceName(gameId: number) {
-        const info = this.gatewayConfig.serviceName;
+        const info = this.gatewayConfig?.serviceName;
         const type = Object.keys(info).find((key) => info[key].ids?.includes(gameId)) ?? "default";
         return info[type].value;
     }
 
     getDurations(gameId: number) {
-        const info = this.gatewayConfig.durations;
+        const info = this.gatewayConfig?.durations;
         const type = Object.keys(info).find((key) => info[key].ids?.includes(gameId)) ?? "default";
         return info[type].value;
     }
 
     getCategory(gameId: number) {
-        return this.gatewayConfig.games[gameId];
+        return this.gatewayConfig?.games[gameId];
     }
 
     sendSignInEachGame(gameId: number) {
         const data = {
             gameName: this.getGameName(gameId),
-            receivedEvents: this.gatewayConfig.receivedEvents,
+            receivedEvents: this.gatewayConfig?.receivedEvents,
             session: this.getSession(),
         };
         const serviceName = this.getServiceName(gameId);
@@ -275,7 +240,7 @@ export class GatewayDataReceiver extends ObserverComponent {
 
         const games = this.getFilterGames();
         const info = {};
-        games.forEach((gameId) => {
+        games?.forEach((gameId) => {
             const gameName = this.getGameName(gameId);
             info[gameId] = {
                 gameName,
