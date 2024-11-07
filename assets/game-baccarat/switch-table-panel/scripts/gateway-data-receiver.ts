@@ -31,7 +31,7 @@ export class GatewayDataReceiver extends Component {
             "83": ["lucky"],
             "88": ["lucky"],
             "89": ["lucky"],
-            "84": ["classic"],
+            // "84": ["classic"],
             "85": ["classic"],
             "86": ["classic"],
             "87": ["classic"],
