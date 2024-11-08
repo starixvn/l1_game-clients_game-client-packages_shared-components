@@ -30,6 +30,9 @@ export class GatewayPanel extends Component {
     @property(Node)
     nodeEmptyList: Node = null;
 
+    @property(Prefab)
+    settingPrefab: Prefab = null;
+
     onTabChanged(toggle: Toggle) {
         log("onTabChanged ", toggle.node.name);
         log("onTabChanged ", toggle.isChecked);
@@ -40,7 +43,10 @@ export class GatewayPanel extends Component {
         log("onCategoryChanged ", toggle.isChecked);
     }
 
-    onClickSetting() {}
+    onClickSetting() {
+        const node = instantiate(this.settingPrefab);
+        this.node.addChild(node);
+    }
 
     updateVisibility(existData: boolean) {
         this.nodeScrollView.active = existData;

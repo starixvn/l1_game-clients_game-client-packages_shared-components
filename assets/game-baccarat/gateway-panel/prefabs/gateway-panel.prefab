@@ -7180,6 +7180,10 @@
     "nodeEmptyList": {
       "__id__": 283
     },
+    "settingPrefab": {
+      "__uuid__": "20732ee1-7f75-4925-8ae5-cb7d1357c7e1",
+      "__expectedType__": "cc.Prefab"
+    },
     "_id": ""
   },
   {

@@ -1,25 +1,14 @@
 import SCScoreboard from "sc-scoreboards";
 
-const {
-    Converter,
-    BigRoadScoreboard: BigRoad,
-    ADJACENT_TWO_COLUMNS,
-    CHASE,
-    GoodRoadColumnLengthDetectorDetector,
-    LONG_ROAD,
-    ONE_HOME_TWO_ROOMS,
-    PBHOP,
-    SEPARATED,
-    buildPattern,
-} = SCScoreboard;
+const { CHASE, LONG_ROAD, buildPattern } = SCScoreboard;
 
 const PositiveBanker = true;
 const PositivePlayer = false;
 
-export const STREAK_BANKER = buildPattern(LONG_ROAD, PositiveBanker);
-export const PING_PONG_BANKER = buildPattern(CHASE, PositiveBanker);
-export const STREAK_PLAYER = buildPattern(LONG_ROAD, PositivePlayer);
-export const PING_PONG_PLAYER = buildPattern(CHASE, PositivePlayer);
+export const STREAK_BANKER = { ...buildPattern(LONG_ROAD, PositiveBanker), name: "Streak Banker" };
+export const PING_PONG_BANKER = { ...buildPattern(CHASE, PositiveBanker), name: "Pingpong Banker" };
+export const STREAK_PLAYER = { ...buildPattern(LONG_ROAD, PositivePlayer), name: "Streak Player" };
+export const PING_PONG_PLAYER = { ...buildPattern(CHASE, PositivePlayer), name: "Pingpong Banker" };
 
 export const PATTED_EAT_BANKER = {
     name: "Patted Eat Banker",
@@ -55,6 +44,13 @@ export const ONE_LOUNGE_2_ROOMS_PLAYER = {
     ...ONE_LOUNGE_2_ROOMS_BANKER,
     name: "One Lounge 2 Bedroom Player",
     positive: PositivePlayer,
+};
+
+export const TEST_PATTERN = {
+    name: "Test Pattern",
+    columns: [{ exact: false, length: 1 }],
+    repeat: 0,
+    positive: PositiveBanker,
 };
 
 export const DEFAULT_PATTERNS = [

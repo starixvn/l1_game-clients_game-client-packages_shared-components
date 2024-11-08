@@ -51,18 +51,30 @@ export class ScoreboardBigRoadAlgorithm extends ScoreboardAlgorithm {
 
     private _bigRoad: BigRoadScoreboard<unknown>;
 
-    goodRoadPatterns = DEFAULT_PATTERNS;
+    goodRoadPatterns: SCScoreboard.ColumnLengthPattern[] = DEFAULT_PATTERNS;
+
+    private readonly optionDetector = { patterns: this.goodRoadPatterns };
+
+    private columnLengthDetectorDetector = new GoodRoadColumnLengthDetectorDetector(this.optionDetector);
 
     private get bigRoad() {
         if (!this._bigRoad) {
-            this._bigRoad = new BigRoad({
-                converter: new BigRoadConverter(this.converter),
-                height: this.grid.settings.row,
-                goodRoadDetectors: [new GoodRoadColumnLengthDetectorDetector({ patterns: this.goodRoadPatterns })],
-            });
+            this.createBigRoad();
         }
 
         return this._bigRoad;
+    }
+
+    private createBigRoad() {
+        this._bigRoad = new BigRoad({
+            converter: new BigRoadConverter(this.converter),
+            height: this.grid.settings.row,
+            goodRoadDetectors: [this.columnLengthDetectorDetector],
+        });
+    }
+
+    updatePatterns(patterns: SCScoreboard.ColumnLengthPattern[]) {
+        this.optionDetector.patterns = patterns;
     }
 
     apply(data: unknown[]) {
