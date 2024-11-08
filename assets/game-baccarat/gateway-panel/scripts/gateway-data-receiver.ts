@@ -101,7 +101,7 @@ export class GatewayDataReceiver extends ObserverComponent {
         this.gameId = gameId;
     }
 
-    @render(gc.App.AppStore, (store) => store.offerGames)
+    @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
     renderOfferGames(offerGames: number[]) {
         console.log("offerGames:", offerGames);
     }
