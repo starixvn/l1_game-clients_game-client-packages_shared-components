@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, JsonAsset, log, Prefab } from "cc";
+import { _decorator, instantiate, JsonAsset, log, Prefab, warn } from "cc";
 import Observer from "observer";
 import { Socket } from "socket.io-client/dist/socket.io.js";
 import { siteConfigs } from "../../../../../../assets/scripts/site-configs";
@@ -72,6 +72,7 @@ export class GatewayDataReceiver extends ObserverComponent {
     rtps = [];
     dataGames = {};
     gameId = -1;
+    offerGames = [];
 
     onLoad() {
         super.onLoad();
@@ -105,13 +106,19 @@ export class GatewayDataReceiver extends ObserverComponent {
 
     @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
     renderOfferGames(offerGames: number[]) {
-        console.log("offerGames:", offerGames);
+        if (offerGames) {
+            this.offerGames = Object.keys(offerGames).map((id) => +id);
+        }
     }
 
     getFilterGames() {
+        if (this.offerGames.length === 0) {
+            warn("offerGames is empty!");
+            return [];
+        }
         const games = Object.keys(this.gatewayConfig?.games)
             .map((gameId) => +gameId)
-            .filter((gameId) => gameId !== this.gameId);
+            .filter((gameId) => gameId !== this.gameId && this.offerGames.includes(gameId));
         return games;
     }
 
