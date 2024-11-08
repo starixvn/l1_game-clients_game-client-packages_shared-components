@@ -73,16 +73,18 @@ export class GatewayDataReceiver extends ObserverComponent {
     dataGames = {};
     gameId = -1;
 
-    async onLoad() {
-        await this.getGatewayConfig();
-        this.createGameDatas();
+    onLoad() {
+        super.onLoad();
+        this.getGatewayConfig().then(() => {
+            this.createGameDatas();
 
-        const socketUri = gc.UrlUtils.buildUrlFromSubDomain(siteConfigs, siteConfigs?.gatewaySubDomain);
-        this.socket = gc.SocketUtils.createSocket(socketUri, siteConfigs);
-        this.socket.on("connect", () => {
-            console.log("gateway socket connected");
-            this.socket.onAny(this.filterDataGame);
-            this.sendSignInAllGames();
+            const socketUri = gc.UrlUtils.buildUrlFromSubDomain(siteConfigs, siteConfigs?.gatewaySubDomain);
+            this.socket = gc.SocketUtils.createSocket(socketUri, siteConfigs);
+            this.socket.on("connect", () => {
+                console.log("gateway socket connected");
+                this.socket.onAny(this.filterDataGame);
+                this.sendSignInAllGames();
+            });
         });
     }
 
