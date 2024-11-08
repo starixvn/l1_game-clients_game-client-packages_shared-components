@@ -6,9 +6,9 @@ const PositiveBanker = true;
 const PositivePlayer = false;
 
 export const STREAK_BANKER = { ...buildPattern(LONG_ROAD, PositiveBanker), name: "Streak Banker" };
-export const PING_PONG_BANKER = { ...buildPattern(CHASE, PositiveBanker), name: "Pingpong Banker" };
+export const PING_PONG_BANKER = { ...buildPattern(CHASE, PositiveBanker), name: "Pingpong Banker", repeat: 10 };
 export const STREAK_PLAYER = { ...buildPattern(LONG_ROAD, PositivePlayer), name: "Streak Player" };
-export const PING_PONG_PLAYER = { ...buildPattern(CHASE, PositivePlayer), name: "Pingpong Banker" };
+export const PING_PONG_PLAYER = { ...buildPattern(CHASE, PositivePlayer), name: "Pingpong Banker", repeat: 10 };
 
 export const PATTED_EAT_BANKER = {
     name: "Patted Eat Banker",
@@ -18,7 +18,7 @@ export const PATTED_EAT_BANKER = {
         { exact: true, length: 2 },
         { exact: true, length: 2 },
     ],
-    repeat: 0,
+    repeat: 10,
     positive: PositiveBanker,
 };
 
@@ -36,7 +36,7 @@ export const ONE_LOUNGE_2_ROOMS_BANKER = {
         { exact: true, length: 1 },
         { exact: true, length: 2 },
     ],
-    repeat: 0,
+    repeat: 10,
     positive: PositiveBanker,
 };
 
