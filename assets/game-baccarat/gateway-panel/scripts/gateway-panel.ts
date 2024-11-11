@@ -1,28 +1,24 @@
-import { _decorator, Component, instantiate, log, Node, Prefab, Toggle } from "cc";
+import { _decorator, instantiate, Node, Prefab, Toggle } from "cc";
+import Observer from "observer";
+import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import CategoryController from "./category/category-controller";
 import CategoryItem from "./category/category-item";
 import GatewayGameItem from "./gateway-game-item";
 import { GameDataBase } from "./models/game-data-base";
+import { GoodRoadStore } from "./settings/good-road-store";
 const { ccclass, property } = _decorator;
-
-enum TabName {
-    All = "all",
-    GoodRoad = "good-road",
-}
-
-enum CategoryName {
-    Classic = "classic",
-    Speed = "speed",
-    Lucky = "lucky",
-}
+const { render, handle } = Observer;
 
 @ccclass("GatewayPanel")
-export class GatewayPanel extends Component {
+export class GatewayPanel extends ObserverComponent {
     @property(Prefab)
     protected gamePrefab: Prefab = null;
 
     @property(Node)
     protected container: Node = null;
+
+    @property(CategoryController)
+    categoryController: CategoryController = null;
 
     @property(Node)
     nodeScrollView: Node = null;
@@ -33,16 +29,26 @@ export class GatewayPanel extends Component {
     @property(Prefab)
     settingPrefab: Prefab = null;
 
+    goodRoads: number[] = [];
+
     onTabChanged(toggle: Toggle) {
-        log("onTabChanged ", toggle.node.name);
-        log("onTabChanged ", toggle.isChecked);
+        const isAll = toggle.node.name === "all";
+        if (isAll) {
+            this.categoryController.changeExtraFilter(null);
+        } else {
+            const goodRoadFilter = (item: Node) => {
+                const gameId = +item.name;
+                return this.goodRoads.includes(gameId);
+            };
+            this.categoryController.changeExtraFilter(goodRoadFilter);
+        }
     }
 
-    onCategoryChanged(toggle: Toggle) {
-        log("onCategoryChanged ", toggle.node.name);
-        log("onCategoryChanged ", toggle.isChecked);
+    @render(GoodRoadStore, (store) => store.goodRoads)
+    renderGoodRoadIds(goodRoads: number[]) {
+        this.goodRoads = goodRoads;
+        this.categoryController.updateVisibility();
     }
-
     onClickSetting() {
         const node = instantiate(this.settingPrefab);
         this.node.addChild(node);
@@ -58,6 +64,7 @@ export class GatewayPanel extends Component {
         Object.keys(info).forEach((gameId) => {
             const node = instantiate(this.gamePrefab);
             this.container.addChild(node);
+            node.name = `${gameId}`;
 
             const item = node.getComponent(GatewayGameItem);
             const { gameName, gameData, categories } = info[gameId];

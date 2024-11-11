@@ -72,6 +72,6 @@ export default class ScoreboardRender extends RenderItem {
             scoreboard.render([...reversedRounds]);
         });
 
-        this.resultPercentage.render(this.rounds);
+        this.resultPercentage?.render(this.rounds);
     };
 }

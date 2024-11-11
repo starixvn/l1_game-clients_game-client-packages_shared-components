@@ -1,4 +1,3 @@
-import { log } from "cc";
 import inversify from "inversify";
 import mobx from "mobx";
 import SCScoreboard from "sc-scoreboards";
@@ -16,12 +15,15 @@ const {} = SCScoreboard;
 const { injectable, inject } = inversify;
 
 @injectable()
-export class GoodRoadSettingStore {
+export class GoodRoadStore {
     constructor() {
         mobx.makeAutoObservable(this);
     }
 
     patterns: SCScoreboard.ColumnLengthPattern[] = [];
+
+    counter = 0;
+    goodRoads = [];
 
     private readonly config = [
         { key: "streak_banker", pattern: STREAK_BANKER },
@@ -49,10 +51,18 @@ export class GoodRoadSettingStore {
             .filter((key) => this.selectedFlag[key])
             .map((key) => this.config.find((c) => key === c.key)?.pattern)
             .filter((pattern) => !!pattern);
+    }
 
-        log(
-            "---- ",
-            this.patterns.map((p) => p.name)
-        );
+    setCounter(counter: number) {
+        if (counter !== this.counter) {
+            this.counter = counter;
+        }
+    }
+
+    updateGoodRoadGames(goodRoads: number[]) {
+        if (this.goodRoads.length !== goodRoads.length || goodRoads.some((id) => !this.goodRoads.includes(id))) {
+            this.goodRoads = goodRoads;
+            this.setCounter(this.goodRoads.length);
+        }
     }
 }

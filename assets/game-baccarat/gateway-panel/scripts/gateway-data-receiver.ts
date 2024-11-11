@@ -14,6 +14,7 @@ import { DisableGameStore } from "./models/disable-game-store";
 import { GameData } from "./models/game-data";
 import { GameInfoStore } from "./models/game-info-store";
 import { RoundHistoryStore } from "./models/round-history-store";
+import { GoodRoadCounterHandler } from "./settings/good-road-counter-handler";
 const { ccclass, property } = _decorator;
 const { render } = Observer;
 
@@ -65,12 +66,15 @@ export class GatewayDataReceiver extends ObserverComponent {
     @property(Prefab)
     panelPrefab: Prefab = null;
 
+    @property(GoodRoadCounterHandler)
+    goodRoadCounterHandler: GoodRoadCounterHandler = null;
+
     socket: Socket = null;
 
     gatewayConfig: IGatewayConfigs = null;
 
     rtps = [];
-    dataGames = {};
+    dataGames = {}; //gameId : gameData
     gameId = -1;
     offerGames = [];
 
@@ -78,14 +82,18 @@ export class GatewayDataReceiver extends ObserverComponent {
         super.onLoad();
         this.getGatewayConfig().then(() => {
             this.createGameDatas();
+            this.initGoodRoadCounterHandler();
+            this.initSocket();
+        });
+    }
 
-            const socketUri = gc.UrlUtils.buildUrlFromSubDomain(siteConfigs, siteConfigs?.gatewaySubDomain);
-            this.socket = gc.SocketUtils.createSocket(socketUri, siteConfigs);
-            this.socket.on("connect", () => {
-                console.log("gateway socket connected");
-                this.socket.onAny(this.filterDataGame);
-                this.sendSignInAllGames();
-            });
+    private initSocket() {
+        const socketUri = gc.UrlUtils.buildUrlFromSubDomain(siteConfigs, siteConfigs?.gatewaySubDomain);
+        this.socket = gc.SocketUtils.createSocket(socketUri, siteConfigs);
+        this.socket.on("connect", () => {
+            console.log("gateway socket connected");
+            this.socket.onAny(this.filterDataGame);
+            this.sendSignInAllGames();
         });
     }
 
@@ -125,9 +133,12 @@ export class GatewayDataReceiver extends ObserverComponent {
     createGameDatas() {
         const games = this.getFilterGames();
         games.forEach((gameId) => {
-            const gameName = this.getGameName(gameId).toLowerCase();
-            this.dataGames[gameName] = this.createGameData(gameId);
+            this.dataGames[gameId] = this.createGameData(gameId);
         });
+    }
+
+    initGoodRoadCounterHandler() {
+        this.goodRoadCounterHandler.init(this.dataGames);
     }
 
     createGameData(gameId: number) {
@@ -160,11 +171,18 @@ export class GatewayDataReceiver extends ObserverComponent {
             return;
         }
         this.handleDataRtp(data, gameName);
-        this.publisDataEachGame(data, gameName);
+
+        const gameId = this.convertGameNameToId(gameName);
+        this.publishDataEachGame(data, gameId);
     }
 
-    publisDataEachGame(data: any, gameName: string) {
-        const gameData = this.dataGames[gameName];
+    convertGameNameToId(gameName: string) {
+        const games = this.getFilterGames();
+        return games.find((gameId) => this.getGameName(gameId).toLowerCase() === gameName);
+    }
+
+    publishDataEachGame(data: any, gameId: number) {
+        const gameData = this.dataGames[gameId];
         if (gameData) {
             gameData.receiveData(data);
         }
@@ -259,7 +277,7 @@ export class GatewayDataReceiver extends ObserverComponent {
             const gameName = this.getGameName(gameId);
             info[gameId] = {
                 gameName,
-                gameData: this.dataGames[gameName.toLowerCase()],
+                gameData: this.dataGames[gameId],
                 categories: this.getCategory(gameId),
             };
         });

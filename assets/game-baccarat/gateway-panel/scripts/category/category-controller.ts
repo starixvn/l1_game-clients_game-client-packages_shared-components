@@ -30,6 +30,8 @@ export default class CategoryController extends Component {
         return this._toggles;
     }
 
+    extraFilter = (item: Node) => true;
+
     onToggleCategoryChanged(toggle: Toggle) {
         const categoryItem = toggle.getComponent(CategoryItem);
         const isChecked = toggle.isChecked;
@@ -61,8 +63,21 @@ export default class CategoryController extends Component {
         }
 
         this.node.emit(CategoryEvent.Changed, this.categories);
+        this.updateVisibility();
+    }
+
+    updateVisibility() {
         this.updateItemVisibility();
         this.updateSortOrder();
+    }
+
+    changeExtraFilter(filter: (item: Node) => boolean) {
+        if (filter) {
+            this.extraFilter = filter;
+        } else {
+            this.extraFilter = () => true;
+        }
+        this.updateVisibility();
     }
 
     private removeDuplicateCategory() {
@@ -76,7 +91,7 @@ export default class CategoryController extends Component {
         log("updateItemVisibility  ---- category: ", categories);
         this.items.forEach((item) => {
             const comps = item.getComponents(CategoryItem);
-            item.active = comps.some((comp) => categories.includes(comp.category));
+            item.active = comps.some((comp) => categories.includes(comp.category) && this.extraFilter(item));
         });
     }
 

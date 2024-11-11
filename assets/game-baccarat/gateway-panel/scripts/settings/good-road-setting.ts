@@ -12,7 +12,7 @@ import {
     STREAK_PLAYER,
 } from "../../../../game/scoreboards/scripts/components/baccarat/big-road/baccarat-big-road-good-road-patterns";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { GoodRoadSettingStore } from "./good-road-setting-store";
+import { GoodRoadStore } from "./good-road-store";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 @ccclass("GoodRoadSetting")
@@ -66,7 +66,7 @@ export class GoodRoadSetting extends ObserverComponent {
         this.updateSelectedPatterns(toggle.node.name, toggle.isChecked);
     }
 
-    @handle(GoodRoadSettingStore, (store, selectedFlag: { [key: string]: boolean }) => store.updateSelectedPatterns(selectedFlag))
+    @handle(GoodRoadStore, (store, selectedFlag: { [key: string]: boolean }) => store.updateSelectedPatterns(selectedFlag))
     updateSelectedPatterns(key: string, checked: boolean) {
         if (!checked) {
             this.toggleAll.isChecked = false;

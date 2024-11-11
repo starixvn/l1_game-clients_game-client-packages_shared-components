@@ -4,6 +4,7 @@ import { GridLayout } from "../../../../../../shared/common-components/grid-layo
 import { Scoreboard } from "../../scoreboard";
 import { ScoreboardBigRoadAlgorithm } from "../../scoreboard-big-road-algorithm";
 import { ScoreboardGoodRoad } from "../../scoreboard-good-road";
+import { ScoreboardGridItem } from "../../scoreboard-grid-item";
 import { ScoreboardKeepDetailConverter } from "../../scoreboard-keep-detail-converter";
 
 const { ccclass, property, requireComponent } = _decorator;
@@ -13,6 +14,11 @@ const { ccclass, property, requireComponent } = _decorator;
 export class BaccaratBigRoad extends Scoreboard {
     @property(ScoreboardGoodRoad)
     goodRoad: ScoreboardGoodRoad = null;
+
+    @property
+    noRender = false;
+
+    existGoodRoad = false;
 
     private cached = null;
     updateGoodRoadPatterns(patterns: SCScoreboard.ColumnLengthPattern[]) {
@@ -25,11 +31,21 @@ export class BaccaratBigRoad extends Scoreboard {
 
     public render<T>(rounds: T[]) {
         this.cached = rounds;
-        super.render(rounds);
 
+        const converted = this.converter.convert(rounds);
+        const data = this.algorithm.apply(converted);
+
+        let goodRoad;
         if (this.goodRoad) {
-            const goodRoad = (this.algorithm as ScoreboardBigRoadAlgorithm).getGoodRoad();
-            this.goodRoad.render(goodRoad);
+            goodRoad = (this.algorithm as ScoreboardBigRoadAlgorithm).getGoodRoad();
         }
+        this.existGoodRoad = !!goodRoad;
+
+        if (this.noRender) {
+            return;
+        }
+
+        this.grid.render(ScoreboardGridItem, data);
+        this.goodRoad?.render(goodRoad);
     }
 }

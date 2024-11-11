@@ -67,12 +67,18 @@ export class GridLayout extends Component {
     }
 
     protected updateLayout() {
+        if (!this.layout) {
+            return;
+        }
         this.layout.enabled = true;
         this.layout.updateLayout();
         this.layout.enabled = false;
     }
 
     protected scrollToEnd() {
+        if (!this.scrollView) {
+            return;
+        }
         const maxOffset = this.scrollView.getMaxScrollOffset();
         const currentOffset = this.scrollView.getScrollOffset();
         const zero = v2(0, 0);

@@ -1,6 +1,6 @@
 import type { BigRoadScoreboard } from "sc-scoreboards";
 
-import { _decorator, log } from "cc";
+import { _decorator } from "cc";
 import SCScoreboard from "sc-scoreboards";
 import { GridLayout } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
 import { addEmptyPoints, getColumns } from "../helpers/scoreboard-big-road-helper";
@@ -9,17 +9,7 @@ import { ScoreboardAlgorithm } from "./scoreboard-algorithm";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
 
 const { ccclass, property, requireComponent } = _decorator;
-const {
-    Converter,
-    BigRoadScoreboard: BigRoad,
-    ADJACENT_TWO_COLUMNS,
-    CHASE,
-    GoodRoadColumnLengthDetectorDetector,
-    LONG_ROAD,
-    ONE_HOME_TWO_ROOMS,
-    PBHOP,
-    SEPARATED,
-} = SCScoreboard;
+const { Converter, BigRoadScoreboard: BigRoad, GoodRoadColumnLengthDetectorDetector } = SCScoreboard;
 
 type ConverterOptions = {
     keyOfA: string;
@@ -93,7 +83,7 @@ export class ScoreboardBigRoadAlgorithm extends ScoreboardAlgorithm {
         if (goodRoad?.x === -1 && goodRoad?.width === 0) {
             return null;
         }
-        log(`====== goodRoad from x ${goodRoad.x} to x ${goodRoad.x + goodRoad.width} ======`);
+        // log(`====== goodRoad from x ${goodRoad.x} to x ${goodRoad.x + goodRoad.width} ======`);
         return goodRoad;
     }
 
