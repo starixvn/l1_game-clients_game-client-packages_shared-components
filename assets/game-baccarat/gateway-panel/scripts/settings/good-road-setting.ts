@@ -90,7 +90,7 @@ export class GoodRoadSetting extends ObserverComponent {
     @handle(GoodRoadStore, (store, selectedFlag: { [key: string]: boolean }) => store.updateSelectedPatterns(selectedFlag))
     updateSelectedPatterns(key: string, checked: boolean) {
         if (!checked) {
-            this.toggleAll.isChecked = false;
+            this.toggleAll.setIsCheckedWithoutNotify(false);
         }
         this.selectedFlag[key] = checked;
         return this.selectedFlag;
