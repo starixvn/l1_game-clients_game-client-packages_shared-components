@@ -31,8 +31,11 @@ export class GatewayPanel extends ObserverComponent {
 
     goodRoads: number[] = [];
 
+    isShowAll = true;
+
     onTabChanged(toggle: Toggle) {
         const isAll = toggle.node.name === "all";
+        this.isShowAll = isAll;
         if (isAll) {
             this.categoryController.changeExtraFilter(null);
         } else {
@@ -42,19 +45,25 @@ export class GatewayPanel extends ObserverComponent {
             };
             this.categoryController.changeExtraFilter(goodRoadFilter);
         }
+
+        this.checkEmptyListVisibility();
     }
 
     @render(GoodRoadStore, (store) => store.goodRoads)
     renderGoodRoadIds(goodRoads: number[]) {
         this.goodRoads = goodRoads;
         this.categoryController.updateVisibility();
+
+        this.checkEmptyListVisibility();
     }
     onClickSetting() {
         const node = instantiate(this.settingPrefab);
         this.node.addChild(node);
     }
 
-    updateVisibility(existData: boolean) {
+    checkEmptyListVisibility() {
+        const existData = this.isShowAll || this.goodRoads.length > 0;
+
         this.nodeScrollView.active = existData;
         this.nodeEmptyList.active = !existData;
     }

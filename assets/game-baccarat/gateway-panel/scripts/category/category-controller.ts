@@ -1,5 +1,4 @@
 import { _decorator, Component, log, Node, Toggle } from "cc";
-import GatewayGameItem from "../gateway-game-item";
 import { CategoryEvent } from "./category-events";
 import CategoryItem from "./category-item";
 
@@ -96,12 +95,11 @@ export default class CategoryController extends Component {
     }
 
     updateSortOrder() {
-        this.items.forEach((item) => {
-            const gameItem = item.getComponent(GatewayGameItem);
-
-            if (gameItem) {
-                gameItem.node.setSiblingIndex(gameItem.gameId);
-            }
-        });
+        // this.items.forEach((item) => {
+        //     const gameItem = item.getComponent(GatewayGameItem);
+        //     if (gameItem) {
+        //         gameItem.node.setSiblingIndex(gameItem.gameId);
+        //     }
+        // });
     }
 }
