@@ -2,6 +2,7 @@ import inversify from "inversify";
 import mobx from "mobx";
 import SCScoreboard from "sc-scoreboards";
 import {
+    DEFAULT_PATTERNS,
     ONE_LOUNGE_2_ROOMS_BANKER,
     ONE_LOUNGE_2_ROOMS_PLAYER,
     PATTED_EAT_BANKER,
@@ -19,12 +20,6 @@ export class GoodRoadStore {
     constructor() {
         mobx.makeAutoObservable(this);
     }
-
-    patterns: SCScoreboard.ColumnLengthPattern[] = [];
-
-    counter = 0;
-    goodRoads = [];
-
     private readonly config = [
         { key: "streak_banker", pattern: STREAK_BANKER },
         { key: "streak_player", pattern: STREAK_PLAYER },
@@ -38,8 +33,20 @@ export class GoodRoadStore {
         { key: "one_lounge_two_bedrooms_banker", pattern: ONE_LOUNGE_2_ROOMS_BANKER },
         { key: "one_lounge_two_bedrooms_player", pattern: ONE_LOUNGE_2_ROOMS_PLAYER },
     ];
+    patterns: SCScoreboard.ColumnLengthPattern[] = DEFAULT_PATTERNS;
+    selectedFlag = this.generateDefaultSelectedFlag();
 
-    selectedFlag = {};
+    counter = 0;
+    goodRoads = [];
+
+    generateDefaultSelectedFlag() {
+        const flag = {};
+        this.config.forEach((item) => {
+            flag[item.key] = true;
+        });
+
+        return flag;
+    }
 
     updateSelectedPatterns(selectedFlag: { [key: string]: boolean }) {
         this.selectedFlag = selectedFlag;

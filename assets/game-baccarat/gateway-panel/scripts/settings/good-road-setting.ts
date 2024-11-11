@@ -42,7 +42,6 @@ export class GoodRoadSetting extends ObserverComponent {
     ];
 
     onLoad() {
-        super.onLoad();
         this.patternToggles = this.patternToggleContainer.getComponentsInChildren(Toggle);
 
         try {
@@ -55,6 +54,7 @@ export class GoodRoadSetting extends ObserverComponent {
         } catch (e) {
             log(e);
         }
+        super.onLoad();
     }
 
     onToggleAll(toggle: Toggle) {
@@ -64,6 +64,27 @@ export class GoodRoadSetting extends ObserverComponent {
 
     onSinglePatternToggle(toggle: Toggle) {
         this.updateSelectedPatterns(toggle.node.name, toggle.isChecked);
+    }
+
+    @render(GoodRoadStore, (store) => store.selectedFlag)
+    renderPatterns(selectedFlag) {
+        this.selectedFlag = selectedFlag;
+
+        this.updateCheckedToggles();
+    }
+
+    updateCheckedToggles() {
+        let isAllCheck = true;
+        this.patternToggles.forEach((toggle) => {
+            const isCheck = this.selectedFlag[toggle.node.name];
+            toggle.isChecked = isCheck;
+
+            if (!isCheck) {
+                isAllCheck = false;
+            }
+        });
+
+        this.toggleAll.isChecked = isAllCheck;
     }
 
     @handle(GoodRoadStore, (store, selectedFlag: { [key: string]: boolean }) => store.updateSelectedPatterns(selectedFlag))

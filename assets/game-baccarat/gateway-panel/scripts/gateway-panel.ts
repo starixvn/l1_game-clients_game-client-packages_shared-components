@@ -56,6 +56,7 @@ export class GatewayPanel extends ObserverComponent {
 
         this.checkEmptyListVisibility();
     }
+
     onClickSetting() {
         const node = instantiate(this.settingPrefab);
         this.node.addChild(node);
