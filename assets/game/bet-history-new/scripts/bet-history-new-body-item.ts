@@ -11,6 +11,6 @@ export class BetHistoryNewBodyItem extends BetHistoryBodyItem {
     setData(data: BetHistoryBodyItemType) {
         super.setData(data);
         const { time } = data.betHistoryLog;
-        this.lblTime.string = `${DateTimeUtils.getStringDate1(time)} ${DateTimeUtils.getString12HourByTime(time)}`;
+        this.lblTime && (this.lblTime.string = `${DateTimeUtils.getStringDate1(time)} ${DateTimeUtils.getString12HourByTime(time)}`);
     }
 }
