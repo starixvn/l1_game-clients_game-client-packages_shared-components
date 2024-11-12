@@ -111,7 +111,8 @@ export class GoodRoadStore {
             goodRoadFilter: this.allGamesFilter,
             categoryFilter: this.categoryFilter,
         };
-        gc.CrossStorageUtils.set(this.storageKey, data, true);
+        const convertData = mobx.toJS(data);
+        gc.CrossStorageUtils.set(this.storageKey, convertData, true);
     }
 
     updatePatterns() {
