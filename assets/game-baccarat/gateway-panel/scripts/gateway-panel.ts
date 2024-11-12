@@ -101,7 +101,7 @@ export class GatewayPanel extends ObserverComponent {
 
         const comp = this.getComponentInChildren(CategoryController);
         if (comp) {
-            comp.node.on(CategoryEvent.Changed, this.saveCategoryFilter, this);
+            comp.node.on(CategoryEvent.Changed, this.saveCategoryFilter.bind(this), this);
             log("setAllCategories ---- ", allCatogories);
             comp.setAllCategories(allCatogories);
         }
@@ -123,7 +123,11 @@ export class GatewayPanel extends ObserverComponent {
     }
 
     @handle(GoodRoadStore, (store, categories: string[]) => store.saveCategoryFilter(categories))
-    saveCategoryFilter(categories: string[]) {
+    saveCategoryFilterToStore(categories: string[]) {
         return categories;
+    }
+
+    saveCategoryFilter(categories: string[]) {
+        this.saveCategoryFilterToStore([...categories]);
     }
 }

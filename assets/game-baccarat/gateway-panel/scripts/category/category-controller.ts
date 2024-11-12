@@ -48,7 +48,7 @@ export default class CategoryController extends Component {
         this.toggles.forEach((toggle) => {
             const item = toggle.getComponent(CategoryItem);
             if (this.categories.includes(item.category)) {
-                toggle.isChecked = true;
+                toggle.setIsCheckedWithoutNotify(true);
             }
         });
         this.updateItemVisibility();
