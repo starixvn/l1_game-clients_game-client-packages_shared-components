@@ -1,3 +1,4 @@
+import gc from "@sg/game-client-base";
 import inversify from "inversify";
 import mobx from "mobx";
 import SCScoreboard from "sc-scoreboards";
@@ -15,10 +16,20 @@ import {
 const {} = SCScoreboard;
 const { injectable, inject } = inversify;
 
+interface GoodRoadSettingStorage {
+    selectedPatternFlag: { [key: string]: boolean };
+}
+
 @injectable()
 export class GoodRoadStore {
+    @inject(gc.GameConfigs.GameSetting) private readonly gameSetting: gc.GameConfigs.GameSetting;
     constructor() {
         mobx.makeAutoObservable(this);
+
+        setTimeout(() => {
+            this.initStore();
+            this.syncStorage();
+        }, 0);
     }
     private readonly config = [
         { key: "streak_banker", pattern: STREAK_BANKER },
@@ -34,10 +45,36 @@ export class GoodRoadStore {
         { key: "one_lounge_two_bedrooms_player", pattern: ONE_LOUNGE_2_ROOMS_PLAYER },
     ];
     patterns: SCScoreboard.ColumnLengthPattern[] = DEFAULT_PATTERNS;
-    selectedFlag = this.generateDefaultSelectedFlag();
+    selectedPatternFlag = this.generateDefaultSelectedFlag();
 
     counter = 0;
     goodRoads = [];
+
+    private get storageKey() {
+        return `good-road-setting-${this.gameSetting.lobbyId}`;
+    }
+
+    async syncStorage() {
+        try {
+            const storage = await gc.CrossStorageUtils.get(this.storageKey, true);
+            if (storage) {
+                this.initStore();
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    initStore() {
+        const storage = gc.StorageManager.get(this.storageKey, true) as GoodRoadSettingStorage;
+        if (!storage) {
+            return;
+        }
+        const { selectedPatternFlag } = storage;
+        if (selectedPatternFlag) {
+            this.updateSelectedPatterns(selectedPatternFlag, false);
+        }
+    }
 
     generateDefaultSelectedFlag() {
         const flag = {};
@@ -48,14 +85,25 @@ export class GoodRoadStore {
         return flag;
     }
 
-    updateSelectedPatterns(selectedFlag: { [key: string]: boolean }) {
-        this.selectedFlag = selectedFlag;
+    onChangePatterns(selectedFlag: { [key: string]: boolean }) {
+        this.updateSelectedPatterns(selectedFlag, true);
+    }
+
+    updateSelectedPatterns(selectedFlag: { [key: string]: boolean }, saveStorage = true) {
+        this.selectedPatternFlag = selectedFlag;
         this.updatePatterns();
+        if (saveStorage) {
+            this.saveStorage();
+        }
+    }
+
+    saveStorage() {
+        gc.CrossStorageUtils.set(this.storageKey, { selectedPatternFlag: this.selectedPatternFlag }, true);
     }
 
     updatePatterns() {
-        this.patterns = Object.keys(this.selectedFlag)
-            .filter((key) => this.selectedFlag[key])
+        this.patterns = Object.keys(this.selectedPatternFlag)
+            .filter((key) => this.selectedPatternFlag[key])
             .map((key) => this.config.find((c) => key === c.key)?.pattern)
             .filter((pattern) => !!pattern);
     }

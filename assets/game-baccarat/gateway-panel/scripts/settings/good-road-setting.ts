@@ -66,7 +66,7 @@ export class GoodRoadSetting extends ObserverComponent {
         this.updateSelectedPatterns(toggle.node.name, toggle.isChecked);
     }
 
-    @render(GoodRoadStore, (store) => store.selectedFlag)
+    @render(GoodRoadStore, (store) => store.selectedPatternFlag)
     renderPatterns(selectedFlag) {
         this.selectedFlag = selectedFlag;
 
@@ -77,17 +77,17 @@ export class GoodRoadSetting extends ObserverComponent {
         let isAllCheck = true;
         this.patternToggles.forEach((toggle) => {
             const isCheck = this.selectedFlag[toggle.node.name];
-            toggle.isChecked = isCheck;
+            toggle.setIsCheckedWithoutNotify(isCheck);
 
             if (!isCheck) {
                 isAllCheck = false;
             }
         });
 
-        this.toggleAll.isChecked = isAllCheck;
+        this.toggleAll.setIsCheckedWithoutNotify(isAllCheck);
     }
 
-    @handle(GoodRoadStore, (store, selectedFlag: { [key: string]: boolean }) => store.updateSelectedPatterns(selectedFlag))
+    @handle(GoodRoadStore, (store, selectedFlag: { [key: string]: boolean }) => store.onChangePatterns(selectedFlag))
     updateSelectedPatterns(key: string, checked: boolean) {
         if (!checked) {
             this.toggleAll.setIsCheckedWithoutNotify(false);
