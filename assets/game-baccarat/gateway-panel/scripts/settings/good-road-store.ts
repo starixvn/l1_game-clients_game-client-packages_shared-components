@@ -107,12 +107,11 @@ export class GoodRoadStore {
 
     saveStorage() {
         const data = {
-            selectedPatternFlag: this.selectedPatternFlag,
+            selectedPatternFlag: mobx.toJS(this.selectedPatternFlag),
             goodRoadFilter: this.allGamesFilter,
-            categoryFilter: this.categoryFilter,
+            categoryFilter: mobx.toJS(this.categoryFilter),
         };
-        const convertData = mobx.toJS(data);
-        gc.CrossStorageUtils.set(this.storageKey, convertData, true);
+        gc.CrossStorageUtils.set(this.storageKey, data, true);
     }
 
     updatePatterns() {
