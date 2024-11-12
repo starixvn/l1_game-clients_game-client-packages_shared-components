@@ -267,7 +267,6 @@ export class GatewayDataReceiver extends ObserverComponent {
 
     onOpenSidePanel() {
         const node = instantiate(this.panelPrefab);
-        this.node.addChild(node);
 
         const panel = node.getComponent(GatewayPanel);
 
@@ -283,5 +282,6 @@ export class GatewayDataReceiver extends ObserverComponent {
         });
 
         panel.initItems(info);
+        this.node.addChild(node);
     }
 }

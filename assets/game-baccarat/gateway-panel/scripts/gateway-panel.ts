@@ -1,7 +1,8 @@
-import { _decorator, instantiate, Node, Prefab, Toggle } from "cc";
+import { _decorator, instantiate, log, Node, Prefab, Toggle } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import CategoryController from "./category/category-controller";
+import { CategoryEvent } from "./category/category-events";
 import CategoryItem from "./category/category-item";
 import GatewayGameItem from "./gateway-game-item";
 import { GameDataBase } from "./models/game-data-base";
@@ -16,6 +17,9 @@ export class GatewayPanel extends ObserverComponent {
 
     @property(Node)
     protected container: Node = null;
+
+    @property(Toggle)
+    toggleAll: Toggle = null;
 
     @property(CategoryController)
     categoryController: CategoryController = null;
@@ -33,7 +37,9 @@ export class GatewayPanel extends ObserverComponent {
 
     isShowAll = true;
 
+    @handle(GoodRoadStore, (store, enable: boolean) => store.saveAllGamesFilter(enable))
     onTabChanged(toggle: Toggle) {
+        log("onTabChanged  ", toggle.node.name);
         const isAll = toggle.node.name === "all";
         this.isShowAll = isAll;
         if (isAll) {
@@ -47,6 +53,8 @@ export class GatewayPanel extends ObserverComponent {
         }
 
         this.checkEmptyListVisibility();
+
+        return this.isShowAll;
     }
 
     @render(GoodRoadStore, (store) => store.goodRoads)
@@ -93,11 +101,29 @@ export class GatewayPanel extends ObserverComponent {
 
         const comp = this.getComponentInChildren(CategoryController);
         if (comp) {
-            // const data = GameUtils.getSpecificGameSetting(this.GatewayGameSetting);
-            // const savedFilter = data[this.CategoryFilter] ?? [];
-            // comp.node.on(CategoryEvent.Changed, this.saveCategoryFilter, this);
-            const savedFilter = [];
-            comp.initCategories(allCatogories, savedFilter);
+            comp.node.on(CategoryEvent.Changed, this.saveCategoryFilter, this);
+            log("setAllCategories ---- ", allCatogories);
+            comp.setAllCategories(allCatogories);
         }
+    }
+
+    @render(GoodRoadStore, (store) => store.categoryFilter)
+    renderCategoryFilter(categoryFilter: string[]) {
+        log("renderCategoryFilter ---- ", categoryFilter);
+        const comp = this.getComponentInChildren(CategoryController);
+        if (comp) {
+            comp.initCategories(categoryFilter);
+        }
+    }
+
+    @render(GoodRoadStore, (store) => store.allGamesFilter)
+    renderAllGamesFilter(allGamesFilter: boolean) {
+        log("renderGoodRoadFilter ---- ", allGamesFilter);
+        this.toggleAll.isChecked = allGamesFilter;
+    }
+
+    @handle(GoodRoadStore, (store, categories: string[]) => store.saveCategoryFilter(categories))
+    saveCategoryFilter(categories: string[]) {
+        return categories;
     }
 }

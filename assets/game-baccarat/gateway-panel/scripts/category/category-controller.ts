@@ -38,8 +38,11 @@ export default class CategoryController extends Component {
         this.changeCategory(categoryItem.category, isChecked);
     }
 
-    initCategories(categories: string[], storageCategories: string[]) {
+    setAllCategories(categories: string[]) {
         this.allCategories = categories;
+    }
+
+    initCategories(storageCategories: string[]) {
         this.categories = storageCategories;
 
         this.toggles.forEach((toggle) => {

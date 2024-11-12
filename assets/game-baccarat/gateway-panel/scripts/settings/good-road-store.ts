@@ -18,6 +18,8 @@ const { injectable, inject } = inversify;
 
 interface GoodRoadSettingStorage {
     selectedPatternFlag: { [key: string]: boolean };
+    categoryFilter: string[];
+    goodRoadFilter: boolean;
 }
 
 @injectable()
@@ -46,7 +48,8 @@ export class GoodRoadStore {
     ];
     patterns: SCScoreboard.ColumnLengthPattern[] = DEFAULT_PATTERNS;
     selectedPatternFlag = this.generateDefaultSelectedFlag();
-
+    categoryFilter = [];
+    allGamesFilter = false;
     counter = 0;
     goodRoads = [];
 
@@ -70,9 +73,14 @@ export class GoodRoadStore {
         if (!storage) {
             return;
         }
-        const { selectedPatternFlag } = storage;
+        const { selectedPatternFlag, goodRoadFilter, categoryFilter } = storage;
         if (selectedPatternFlag) {
             this.updateSelectedPatterns(selectedPatternFlag, false);
+        }
+
+        this.allGamesFilter = goodRoadFilter ?? true;
+        if (categoryFilter) {
+            this.categoryFilter = categoryFilter;
         }
     }
 
@@ -98,7 +106,12 @@ export class GoodRoadStore {
     }
 
     saveStorage() {
-        gc.CrossStorageUtils.set(this.storageKey, { selectedPatternFlag: this.selectedPatternFlag }, true);
+        const data = {
+            selectedPatternFlag: this.selectedPatternFlag,
+            goodRoadFilter: this.allGamesFilter,
+            categoryFilter: this.categoryFilter,
+        };
+        gc.CrossStorageUtils.set(this.storageKey, data, true);
     }
 
     updatePatterns() {
@@ -119,5 +132,15 @@ export class GoodRoadStore {
             this.goodRoads = goodRoads;
             this.setCounter(this.goodRoads.length);
         }
+    }
+
+    saveCategoryFilter(categoryFilter: string[]) {
+        this.categoryFilter = categoryFilter;
+        this.saveStorage();
+    }
+
+    saveAllGamesFilter(allGamesFilter: boolean) {
+        this.allGamesFilter = allGamesFilter;
+        this.saveStorage();
     }
 }

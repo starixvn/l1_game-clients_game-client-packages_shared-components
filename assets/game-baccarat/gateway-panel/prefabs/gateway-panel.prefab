@@ -7237,6 +7237,9 @@
     "container": {
       "__id__": 244
     },
+    "toggleAll": {
+      "__id__": 47
+    },
     "categoryController": {
       "__id__": 242
     },
