@@ -1,12 +1,9 @@
-import { CCBoolean, Component, Label, RichText, _decorator, v3 } from "cc";
+import { Component, Label, RichText, _decorator, v3 } from "cc";
 
 const { ccclass, property } = _decorator;
 
 @ccclass("SharpnessLabel")
 export class SharpnessLabel extends Component {
-    @property(CCBoolean)
-    isBitmapCacheMode = false;
-
     private readonly fontSizeWeight = 2;
     private get weightScale() {
         return 1 / this.fontSizeWeight;
