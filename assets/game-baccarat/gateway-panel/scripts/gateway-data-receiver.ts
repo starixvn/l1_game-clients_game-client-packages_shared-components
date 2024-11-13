@@ -113,9 +113,9 @@ export class GatewayDataReceiver extends ObserverComponent {
     }
 
     @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
-    renderOfferGames(offerGames: number[]) {
+    renderOfferGames(offerGames: any[]) {
         if (offerGames) {
-            this.offerGames = Object.keys(offerGames).map((id) => +id);
+            this.offerGames = offerGames.map((item) => item.gameId);
         }
     }
 
