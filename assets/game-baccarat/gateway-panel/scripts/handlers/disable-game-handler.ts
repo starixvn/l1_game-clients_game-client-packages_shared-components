@@ -1,4 +1,5 @@
 // import NoticeUtil from "../../../common/utils/NoticeUtil";
+import { AppUtils } from "../../../../shared/utils";
 import { Store } from "../models/definitions";
 import { DisableGameStore } from "../models/disable-game-store";
 import { BaseEventHandler } from "./base-event-handler";
@@ -21,8 +22,10 @@ export class DisableGameHandler extends BaseEventHandler<any> {
             store.setConnectionError(false);
             store.setDisabledGame(data.um);
             if (data.um_message) {
-                // const message = NoticeUtil.getMessageByLocale(data.um_message);
-                // store.setUmMessage(message);
+                const dataText = data.um_message;
+                const locale = AppUtils.getLocale();
+                const message = dataText[locale] ?? dataText[AppUtils.DEFAULT_LOCALE];
+                store.setUmMessage(message);
             }
         }
 

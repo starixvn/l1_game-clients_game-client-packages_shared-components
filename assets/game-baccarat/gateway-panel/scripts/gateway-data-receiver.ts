@@ -4,7 +4,7 @@ import Observer from "observer";
 import { Socket } from "socket.io-client/dist/socket.io.js";
 import { siteConfigs } from "../../../../../../assets/scripts/site-configs";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
-import { FunctionUtils } from "../../../shared/utils";
+import { AppUtils, FunctionUtils } from "../../../shared/utils";
 import { GatewayPanel } from "./gateway-panel";
 import { DisableGameHandler } from "./handlers/disable-game-handler";
 import { GameInfoHandler } from "./handlers/game-info-handler";
@@ -218,7 +218,7 @@ export class GatewayDataReceiver extends ObserverComponent {
     }
 
     getSession() {
-        const sessionStorage = gc.StorageManager.get(gc.localStorageKeys.session) as any;
+        const sessionStorage = AppUtils.getSession() as any;
         return sessionStorage
             ? {
                   ss: sessionStorage.session,
