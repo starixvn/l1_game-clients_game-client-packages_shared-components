@@ -477,7 +477,7 @@
     "_overflow": 0,
     "_enableWrapText": false,
     "_font": {
-      "__uuid__": "fa412543-3087-43e8-9fa9-485b0aa9ca59",
+      "__uuid__": "a8537839-a202-488b-8bb5-fdc265f2048a",
       "__expectedType__": "cc.BitmapFont"
     },
     "_isSystemFontUsed": false,
@@ -515,7 +515,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -26.421,
+      "x": -22.877,
       "y": 62.495,
       "z": 0
     },
@@ -556,7 +556,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 30,
+      "width": 28.75,
       "height": 20
     },
     "_anchorPoint": {
@@ -637,7 +637,7 @@
     "_overflow": 0,
     "_enableWrapText": false,
     "_font": {
-      "__uuid__": "fa412543-3087-43e8-9fa9-485b0aa9ca59",
+      "__uuid__": "a8537839-a202-488b-8bb5-fdc265f2048a",
       "__expectedType__": "cc.BitmapFont"
     },
     "_isSystemFontUsed": false,
@@ -675,7 +675,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 45.211,
+      "x": 48.755,
       "y": 62.495,
       "z": 0
     },
@@ -716,7 +716,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 7.81,
+      "width": 7.19,
       "height": 20
     },
     "_anchorPoint": {
@@ -787,7 +787,7 @@
       "b": 73,
       "a": 255
     },
-    "_string": "... - ...",
+    "_string": "... -  ...",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 15,
@@ -797,7 +797,7 @@
     "_overflow": 0,
     "_enableWrapText": false,
     "_font": {
-      "__uuid__": "fa412543-3087-43e8-9fa9-485b0aa9ca59",
+      "__uuid__": "a8537839-a202-488b-8bb5-fdc265f2048a",
       "__expectedType__": "cc.BitmapFont"
     },
     "_isSystemFontUsed": false,
@@ -876,7 +876,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 37.19,
+      "width": 37.81,
       "height": 20
     },
     "_anchorPoint": {
@@ -961,8 +961,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -59,
-      "y": 63.003,
+      "x": -55.456,
+      "y": 63.327,
       "z": 0
     },
     "_lrot": {
@@ -1100,7 +1100,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 36.801,
+      "x": 40.345,
       "y": 62.769,
       "z": 0
     },
@@ -7517,6 +7517,8 @@
       "__id__": 0
     },
     "fileId": "f7qCqMVA1NCYP6Pg/6BZBG",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -7674,6 +7676,8 @@
       "__id__": 0
     },
     "fileId": "beslp4IQtKYa3tnhWlLgxn",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {

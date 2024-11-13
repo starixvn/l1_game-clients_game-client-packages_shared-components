@@ -39,7 +39,7 @@ export default class GameInfoRender extends RenderItem {
             return;
         }
         if (this.labelLimitBet) {
-            this.labelLimitBet.string = `${gc.FormatUtils.numberWithCommas(data.minBet)} - ${gc.FormatUtils.numberWithCommas(data.maxBet)}`;
+            this.labelLimitBet.string = `${gc.FormatUtils.nFormatter(data.minBet, 2)} - ${gc.FormatUtils.nFormatter(data.maxBet, 2)}`;
         }
     };
     onChangeTotalOnlineUser = (data: number) => {
@@ -52,6 +52,6 @@ export default class GameInfoRender extends RenderItem {
         if (!this.labelRTP) {
             return;
         }
-        this.labelRTP.string = `${gc.FormatUtils.numberWithCommas(data, 2)}%`;
+        this.labelRTP.string = `${gc.FormatUtils.numberWithCommas(data, 0, true)}%`;
     };
 }
