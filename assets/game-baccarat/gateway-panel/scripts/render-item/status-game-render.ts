@@ -26,7 +26,7 @@ export default class StatusGameRender extends RenderItem {
 
     onDestroy() {
         const store = this._gameData?.getStore(Store.GameInfo);
-        store?.removeListener(EmitterEvents.ActiveNewShoe, this.onLockingBet);
+        store?.removeListener(EmitterEvents.LockingBet, this.onLockingBet);
         store?.removeListener(EmitterEvents.Settling, this.onSettling);
 
         const disableStore = this._gameData?.getStore(Store.DisableGame);

@@ -9,6 +9,7 @@ export const EmitterEvents = {
     LockingBet: "LockingBet",
     PlacingBet: "PlacingBet",
     Settling: "Settling",
+    TimeStateChange: "TimeStateChange",
 
     BetLimitChange: "BetLimitChange",
     ActiveNewShoe: "ActiveNewShoe",
