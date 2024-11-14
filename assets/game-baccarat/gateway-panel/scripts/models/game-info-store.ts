@@ -21,6 +21,8 @@ export class GameInfoStore extends StoreBase {
 
     durations: Durations;
 
+    timeState = "";
+
     reset() {
         this.totalOnlineUsers = 0;
         this.rtp = 0;
@@ -67,12 +69,28 @@ export class GameInfoStore extends StoreBase {
         this.remainingTime = time;
         this.emit(EmitterEvents.TimeChange, this.remainingTime);
 
-        if (time === this.durations.placingBet + this.durations.startRound) {
-            this.emit(EmitterEvents.StartRound);
+        const startRoundTimePoint = this.durations.placingBet + this.durations.startRound;
+        if (time === startRoundTimePoint) {
+            this.changeTimeState(EmitterEvents.StartRound);
         }
 
-        if (time === this.durations.lockingBet) {
-            this.emit(EmitterEvents.LockingBet);
+        if (time <= this.durations.placingBet && time > this.durations.lockingBet) {
+            this.changeTimeState(EmitterEvents.PlacingBet);
+        }
+
+        if (time <= this.durations.lockingBet) {
+            this.changeTimeState(EmitterEvents.LockingBet);
+        }
+
+        if (time > startRoundTimePoint || time === 0) {
+            this.changeTimeState(EmitterEvents.Settling);
+        }
+    }
+
+    changeTimeState(state: string) {
+        if (this.timeState !== state) {
+            this.timeState = state;
+            this.emit(state);
         }
     }
 
