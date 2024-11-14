@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label, log } from "cc";
+import { _decorator, Label } from "cc";
 
 import { EmitterEvents, Store } from "../models/definitions";
 import { GameData } from "../models/game-data";
@@ -26,7 +26,6 @@ export default class ConnectionErrorRender extends RenderItem {
     }
 
     onChangeConnectionFailed = (isFailed: boolean) => {
-        log("onChangeConnectionFailed", isFailed);
         this.node.active = isFailed;
 
         const label = this.getComponentInChildren(Label);

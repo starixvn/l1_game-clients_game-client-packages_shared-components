@@ -9,4 +9,5 @@ export abstract class GameDataBase extends EventEmitterBase {
     abstract addStores(stores: StoreBase[]): void;
     abstract receiveData(data: unknown): void;
     abstract reset(): void;
+    abstract clearStoreListeners(): void;
 }

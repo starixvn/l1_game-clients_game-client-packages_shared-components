@@ -1,4 +1,4 @@
-import { _decorator, log, sp } from "cc";
+import { _decorator, sp } from "cc";
 import { AnimationUtils } from "../../../../shared/utils/utils";
 import { EmitterEvents, Store } from "../models/definitions";
 import { GameData } from "../models/game-data";
@@ -27,13 +27,11 @@ export default class NewShoeRender extends RenderItem {
     }
 
     onActiveNewShoe = async (show: boolean) => {
-        log("onActiveNewShoe", show);
         this.node.active = show;
         if (!show) {
             return;
         }
         try {
-            log("show shoe animation ");
             const spine = this.getComponentInChildren(sp.Skeleton);
             await AnimationUtils.playSpine(spine, "in", false);
             spine.setAnimation(0, "shuffling", true);
@@ -46,7 +44,6 @@ export default class NewShoeRender extends RenderItem {
                 await AnimationUtils.playSpine(spine, "out", false);
             } catch (e) {}
             this.node.active = false;
-            log("hide shoe animation ");
         }
     };
 }

@@ -91,7 +91,6 @@ export class GatewayDataReceiver extends ObserverComponent {
         const socketUri = gc.UrlUtils.buildUrlFromSubDomain(siteConfigs, siteConfigs?.gatewaySubDomain);
         this.socket = gc.SocketUtils.createSocket(socketUri, siteConfigs);
         this.socket.on("connect", () => {
-            console.log("gateway socket connected");
             this.socket.onAny(this.filterDataGame);
             this.sendSignInAllGames();
         });
@@ -149,7 +148,7 @@ export class GatewayDataReceiver extends ObserverComponent {
         const infoStore = new GameInfoStore();
         infoStore.durations = durations;
         const disableGameStore = new DisableGameStore();
-        disableGameStore.addListener(EmitterEvents.GetLobbyData, () => this.sendSignInEachGame(gameId));
+        disableGameStore.addListener(EmitterEvents.GetLobbyData, () => this.sendSignInEachGame(gameId), false);
         gameData.addStores([new RoundHistoryStore(), infoStore, disableGameStore]);
         return gameData;
     }
@@ -201,7 +200,6 @@ export class GatewayDataReceiver extends ObserverComponent {
 
     sendSignInAllGames() {
         const games = this.getFilterGames();
-        console.log("sendSignInAllGames:", games);
         games.forEach((gameId) => {
             this.sendSignInEachGame(+gameId);
         });
@@ -276,12 +274,11 @@ export class GatewayDataReceiver extends ObserverComponent {
             const gameName = this.getGameName(gameId);
             info[gameId] = {
                 gameName,
-                gameData: this.dataGames[gameId],
                 categories: this.getCategory(gameId),
             };
         });
 
-        panel.initItems(info);
+        panel.initItems(this.dataGames, info);
         this.node.addChild(node);
     }
 }

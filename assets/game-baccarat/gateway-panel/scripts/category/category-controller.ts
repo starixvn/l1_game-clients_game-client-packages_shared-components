@@ -1,4 +1,4 @@
-import { _decorator, Component, log, Node, Toggle } from "cc";
+import { _decorator, Component, Node, Toggle } from "cc";
 import { CategoryEvent } from "./category-events";
 import CategoryItem from "./category-item";
 
@@ -55,7 +55,6 @@ export default class CategoryController extends Component {
     }
 
     changeCategory(category: string, checked: boolean) {
-        log(`changeCategory ${category} `, checked);
         if (checked) {
             this.categories.push(category);
             this.removeDuplicateCategory();
@@ -90,7 +89,6 @@ export default class CategoryController extends Component {
 
     updateItemVisibility() {
         const categories = this.categories.length > 0 ? this.categories : this.allCategories;
-        log("updateItemVisibility  ---- category: ", categories);
         this.items.forEach((item) => {
             const comps = item.getComponents(CategoryItem);
             item.active = comps.some((comp) => categories.includes(comp.category) && this.extraFilter(item));

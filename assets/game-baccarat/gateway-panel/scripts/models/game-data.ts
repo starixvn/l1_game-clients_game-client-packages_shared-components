@@ -24,4 +24,8 @@ export class GameData extends GameDataBase {
     reset() {
         this.stores.forEach((store) => store.reset());
     }
+
+    clearStoreListeners(): void {
+        this.stores.forEach((store) => store.clearAllListeners());
+    }
 }

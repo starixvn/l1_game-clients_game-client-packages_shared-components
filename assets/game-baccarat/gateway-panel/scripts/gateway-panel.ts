@@ -1,4 +1,4 @@
-import { _decorator, instantiate, log, Node, Prefab, Toggle } from "cc";
+import { _decorator, instantiate, Node, Prefab, Toggle } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import CategoryController from "./category/category-controller";
@@ -34,12 +34,12 @@ export class GatewayPanel extends ObserverComponent {
     settingPrefab: Prefab = null;
 
     goodRoads: number[] = [];
+    dataGames = {};
 
     isShowAll = true;
 
     @handle(GoodRoadStore, (store, enable: boolean) => store.saveAllGamesFilter(enable))
     onTabChanged(toggle: Toggle) {
-        log("onTabChanged  ", toggle.node.name);
         const isAll = toggle.node.name === "all";
         this.isShowAll = isAll;
         if (isAll) {
@@ -77,7 +77,17 @@ export class GatewayPanel extends ObserverComponent {
         this.nodeEmptyList.active = !existData;
     }
 
-    initItems(info: { [gameId: number]: { gameName: string; gameData: GameDataBase; categories: string[] } }) {
+    onDestroy(): void {
+        Object.keys(this.dataGames).forEach((gameId) => {
+            const gameData: GameDataBase = this.dataGames[gameId];
+            gameData.clearStoreListeners();
+        });
+        this.dataGames = {};
+        super.onDestroy();
+    }
+
+    initItems(dataGames, info: { [gameId: number]: { gameName: string; categories: string[] } }) {
+        this.dataGames = dataGames;
         let allCatogories = [];
         Object.keys(info).forEach((gameId) => {
             const node = instantiate(this.gamePrefab);
@@ -85,7 +95,8 @@ export class GatewayPanel extends ObserverComponent {
             node.name = `${gameId}`;
 
             const item = node.getComponent(GatewayGameItem);
-            const { gameName, gameData, categories } = info[gameId];
+            const { gameName, categories } = info[gameId];
+            const gameData: GameDataBase = this.dataGames[gameId];
             item.init({ gameId: +gameId, gameName, gameData });
 
             allCatogories.push(...categories);
@@ -102,14 +113,12 @@ export class GatewayPanel extends ObserverComponent {
         const comp = this.getComponentInChildren(CategoryController);
         if (comp) {
             comp.node.on(CategoryEvent.Changed, this.saveCategoryFilter.bind(this), this);
-            log("setAllCategories ---- ", allCatogories);
             comp.setAllCategories(allCatogories);
         }
     }
 
     @render(GoodRoadStore, (store) => store.categoryFilter)
     renderCategoryFilter(categoryFilter: string[]) {
-        log("renderCategoryFilter ---- ", categoryFilter);
         const comp = this.getComponentInChildren(CategoryController);
         if (comp) {
             comp.initCategories(categoryFilter);
@@ -118,7 +127,6 @@ export class GatewayPanel extends ObserverComponent {
 
     @render(GoodRoadStore, (store) => store.allGamesFilter)
     renderAllGamesFilter(allGamesFilter: boolean) {
-        log("renderGoodRoadFilter ---- ", allGamesFilter);
         this.toggleAll.isChecked = allGamesFilter;
     }
 

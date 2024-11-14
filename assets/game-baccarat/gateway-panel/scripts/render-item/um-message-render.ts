@@ -1,4 +1,4 @@
-import { _decorator, Label, log } from "cc";
+import { _decorator, Label } from "cc";
 import { EmitterEvents, Store } from "../models/definitions";
 import { GameData } from "../models/game-data";
 import RenderItem from "./render-item";
@@ -26,7 +26,6 @@ export default class UmMessageRender extends RenderItem {
     }
 
     onChangeDisabledGame = (data: boolean) => {
-        log("onChangeDisabledGame", data);
         this.node.active = data;
     };
 
