@@ -76,10 +76,12 @@ export class GatewayDataReceiver extends ObserverComponent {
     rtps = [];
     dataGames = {}; //gameId : gameData
     gameId = -1;
+    lobbyId = -1;
     offerGames = [];
 
-    onLoad() {
-        super.onLoad();
+    @render(gc.GameConfigs.GameSetting, (store) => store.lobbyId)
+    renderLobbyId(lobbyId: number) {
+        this.lobbyId = lobbyId;
         this.getGatewayConfig().then(() => {
             this.createGameDatas();
             this.initGoodRoadCounterHandler();
@@ -98,7 +100,7 @@ export class GatewayDataReceiver extends ObserverComponent {
 
     async getGatewayConfig() {
         try {
-            const configUrl = `${gc.UrlUtils.buildShareResource(siteConfigs)}${DEFAULT_PATH_CONFIG_GATEWAY}?v=${Date.now()}`;
+            const configUrl = `${gc.UrlUtils.buildShareResource(siteConfigs)}/gateway/${this.lobbyId}/info.json?v=${Date.now()}`;
             const jsonAsset = (await FunctionUtils.loadRemote(configUrl)) as JsonAsset;
             this.gatewayConfig = (jsonAsset?.json as IGatewayConfigs) ?? null;
         } catch (error) {
