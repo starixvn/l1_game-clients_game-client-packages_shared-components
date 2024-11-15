@@ -6,6 +6,7 @@ import { siteConfigs } from "../../../../../../assets/scripts/site-configs";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { AppUtils, FunctionUtils } from "../../../shared/utils";
 import { GatewayPanel } from "./gateway-panel";
+import { GatewayPanelStore } from "./gateway-panel-store";
 import { DisableGameHandler } from "./handlers/disable-game-handler";
 import { GameInfoHandler } from "./handlers/game-info-handler";
 import { RoundHistoryHandler } from "./handlers/round-history-handler";
@@ -281,5 +282,12 @@ export class GatewayDataReceiver extends ObserverComponent {
 
         panel.initItems(this.dataGames, info);
         this.node.addChild(node);
+    }
+
+    @render(GatewayPanelStore, (store) => store.eventGameSignIn, { fireImmediately: false })
+    renderEventGameSignIn(event: { gameId: number }) {
+        if (event.gameId) {
+            this.sendSignInEachGame(event.gameId);
+        }
     }
 }

@@ -5,8 +5,8 @@ import CategoryController from "./category/category-controller";
 import { CategoryEvent } from "./category/category-events";
 import CategoryItem from "./category/category-item";
 import GatewayGameItem from "./gateway-game-item";
+import { GatewayPanelStore } from "./gateway-panel-store";
 import { GameDataBase } from "./models/game-data-base";
-import { GoodRoadStore } from "./settings/good-road-store";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -38,7 +38,7 @@ export class GatewayPanel extends ObserverComponent {
 
     isShowAll = true;
 
-    @handle(GoodRoadStore, (store, enable: boolean) => store.saveAllGamesFilter(enable))
+    @handle(GatewayPanelStore, (store, enable: boolean) => store.saveAllGamesFilter(enable))
     onTabChanged(toggle: Toggle) {
         const isAll = toggle.node.name === "all";
         this.isShowAll = isAll;
@@ -57,7 +57,7 @@ export class GatewayPanel extends ObserverComponent {
         return this.isShowAll;
     }
 
-    @render(GoodRoadStore, (store) => store.goodRoads)
+    @render(GatewayPanelStore, (store) => store.goodRoads)
     renderGoodRoadIds(goodRoads: number[]) {
         this.goodRoads = goodRoads;
         this.categoryController.updateVisibility();
@@ -117,7 +117,7 @@ export class GatewayPanel extends ObserverComponent {
         }
     }
 
-    @render(GoodRoadStore, (store) => store.categoryFilter)
+    @render(GatewayPanelStore, (store) => store.categoryFilter)
     renderCategoryFilter(categoryFilter: string[]) {
         const comp = this.getComponentInChildren(CategoryController);
         if (comp) {
@@ -125,12 +125,12 @@ export class GatewayPanel extends ObserverComponent {
         }
     }
 
-    @render(GoodRoadStore, (store) => store.allGamesFilter)
+    @render(GatewayPanelStore, (store) => store.allGamesFilter)
     renderAllGamesFilter(allGamesFilter: boolean) {
         this.toggleAll.isChecked = allGamesFilter;
     }
 
-    @handle(GoodRoadStore, (store, categories: string[]) => store.saveCategoryFilter(categories))
+    @handle(GatewayPanelStore, (store, categories: string[]) => store.saveCategoryFilter(categories))
     saveCategoryFilterToStore(categories: string[]) {
         return categories;
     }

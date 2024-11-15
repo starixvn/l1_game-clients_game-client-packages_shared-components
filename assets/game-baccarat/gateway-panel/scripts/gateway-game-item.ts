@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { GatewayPanelStore } from "./gateway-panel-store";
 import { GameData } from "./models/game-data";
 import { GameDataBase } from "./models/game-data-base";
 import RenderItem from "./render-item/render-item";
@@ -53,10 +54,13 @@ export default class GatewayGameItem extends ObserverComponent {
         } catch (e) {}
     }
 
-    sendSignIn() {}
+    @handle(GatewayPanelStore, (store, gameId: number) => store.callGameSignIn(gameId))
+    callGameSignIn() {
+        return this.gameId;
+    }
 
     onReconnectGame() {
-        this.sendSignIn();
+        this.callGameSignIn();
     }
 
     @handle(gc.App.AppHandlers.BackToOperatorLobby, (handler, gameId: number) => handler.handleOpenGame(gameId))

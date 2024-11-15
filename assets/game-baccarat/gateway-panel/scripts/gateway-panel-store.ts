@@ -12,7 +12,7 @@ import {
     PING_PONG_PLAYER,
     STREAK_BANKER,
     STREAK_PLAYER,
-} from "../../../../game/scoreboards/scripts/components/baccarat/big-road/baccarat-big-road-good-road-patterns";
+} from "../../../game/scoreboards/scripts/components/baccarat/big-road/baccarat-big-road-good-road-patterns";
 const {} = SCScoreboard;
 const { injectable, inject } = inversify;
 
@@ -23,7 +23,7 @@ interface GoodRoadSettingStorage {
 }
 
 @injectable()
-export class GoodRoadStore {
+export class GatewayPanelStore {
     @inject(gc.GameConfigs.GameSetting) private readonly gameSetting: gc.GameConfigs.GameSetting;
     constructor() {
         mobx.makeAutoObservable(this);
@@ -52,6 +52,7 @@ export class GoodRoadStore {
     allGamesFilter = false;
     counter = 0;
     goodRoads = [];
+    eventGameSignIn = {};
 
     private get storageKey() {
         return `good-road-setting-${this.gameSetting.lobbyId}`;
@@ -142,5 +143,11 @@ export class GoodRoadStore {
     saveAllGamesFilter(allGamesFilter: boolean) {
         this.allGamesFilter = allGamesFilter;
         this.saveStorage();
+    }
+
+    callGameSignIn(gameId: number) {
+        this.eventGameSignIn = {
+            gameId,
+        };
     }
 }

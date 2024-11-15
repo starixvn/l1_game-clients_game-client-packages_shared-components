@@ -12,7 +12,7 @@ import {
     STREAK_PLAYER,
 } from "../../../../game/scoreboards/scripts/components/baccarat/big-road/baccarat-big-road-good-road-patterns";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { GoodRoadStore } from "./good-road-store";
+import { GatewayPanelStore } from "../gateway-panel-store";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 @ccclass("GoodRoadSetting")
@@ -66,7 +66,7 @@ export class GoodRoadSetting extends ObserverComponent {
         this.updateSelectedPatterns(toggle.node.name, toggle.isChecked);
     }
 
-    @render(GoodRoadStore, (store) => store.selectedPatternFlag)
+    @render(GatewayPanelStore, (store) => store.selectedPatternFlag)
     renderPatterns(selectedFlag) {
         this.selectedFlag = selectedFlag;
 
@@ -87,7 +87,7 @@ export class GoodRoadSetting extends ObserverComponent {
         this.toggleAll.setIsCheckedWithoutNotify(isAllCheck);
     }
 
-    @handle(GoodRoadStore, (store, selectedFlag: { [key: string]: boolean }) => store.onChangePatterns(selectedFlag))
+    @handle(GatewayPanelStore, (store, selectedFlag: { [key: string]: boolean }) => store.onChangePatterns(selectedFlag))
     updateSelectedPatterns(key: string, checked: boolean) {
         if (!checked) {
             this.toggleAll.setIsCheckedWithoutNotify(false);

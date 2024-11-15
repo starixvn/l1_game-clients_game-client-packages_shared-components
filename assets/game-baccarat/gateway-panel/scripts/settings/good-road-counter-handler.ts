@@ -2,8 +2,8 @@ import { _decorator, instantiate, macro, Node } from "cc";
 import Observer from "observer";
 import { BaccaratBigRoad } from "../../../../game/scoreboards/scripts/components/baccarat/big-road/baccarat-big-road";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import { GatewayPanelStore } from "../gateway-panel-store";
 import RenderItem from "../render-item/render-item";
-import { GoodRoadStore } from "./good-road-store";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -35,7 +35,7 @@ export class GoodRoadCounterHandler extends ObserverComponent {
         this.schedule(this.checkGoodRoad, 1 / 30, macro.REPEAT_FOREVER);
     }
 
-    @handle(GoodRoadStore, (store, goodRoadGameIds: number[]) => store.updateGoodRoadGames(goodRoadGameIds))
+    @handle(GatewayPanelStore, (store, goodRoadGameIds: number[]) => store.updateGoodRoadGames(goodRoadGameIds))
     checkGoodRoad() {
         const goodRoadGameIds = Object.keys(this.bigRoads)
             .filter((id) => {
