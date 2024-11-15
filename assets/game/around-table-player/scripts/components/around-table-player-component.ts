@@ -1,10 +1,10 @@
 import gc from "@sg/game-client-base";
 import { CacheMode, Label, Sprite, SpriteFrame, UIOpacity, _decorator } from "cc";
 import Observer from "observer";
+import { bundleManager } from "../../../../shared/common-components/bundle-manager/bundle-manager";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../../../shared/utils";
 import { IAroundTablePlayers } from "../stores/around-table-players-chip-store";
-import { bundleManager } from "./../../../../shared/common-components/bundle-magager/bundle-manager";
 import { AnimationUtils } from "./../../../../shared/utils/utils";
 
 const { ccclass, property } = _decorator;

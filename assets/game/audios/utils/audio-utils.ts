@@ -1,5 +1,5 @@
 import { AudioClip } from "cc";
-import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
+import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
 import AudioManager from "../scripts/audio-manager";
 import { TAudioValue } from "../scripts/component/audio-container";
 
