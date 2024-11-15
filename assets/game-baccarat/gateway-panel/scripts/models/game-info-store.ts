@@ -8,24 +8,20 @@ export interface RoundHistory {
 }
 
 export class GameInfoStore extends StoreBase {
+    readonly DEFAULT_RTP = 98;
     storeName = Store.GameInfo;
     totalOnlineUsers = 0;
-    rtp = 0;
+    rtp = this.DEFAULT_RTP;
     remainingTime = 0;
-
     newShoePhase = false;
-
     betLimit: { minBet: number; maxBet: number } = null;
-
     timer: any;
-
     durations: Durations;
-
     timeState = "";
 
     reset() {
         this.totalOnlineUsers = 0;
-        this.rtp = 0;
+        this.rtp = this.DEFAULT_RTP;
         this.remainingTime = 0;
         this.newShoePhase = false;
         this.betLimit = null;
