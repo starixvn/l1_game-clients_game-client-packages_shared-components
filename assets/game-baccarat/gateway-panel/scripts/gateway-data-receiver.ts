@@ -60,7 +60,6 @@ interface IServiceNameDetailsWithIds extends IServiceNameDetails {
     ids: number[];
 }
 
-const DEFAULT_PATH_CONFIG_GATEWAY = "/gateway/102/info.json";
 @ccclass("GatewayDataReceiver")
 export class GatewayDataReceiver extends ObserverComponent {
     @property(Prefab)
