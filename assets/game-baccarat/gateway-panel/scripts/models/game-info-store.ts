@@ -74,6 +74,10 @@ export class GameInfoStore extends StoreBase {
             this.changeTimeState(EmitterEvents.StartRound);
         }
 
+        if (time <= startRoundTimePoint) {
+            this.setNewShoe(false);
+        }
+
         if (time <= this.durations.placingBet && time > this.durations.lockingBet) {
             this.changeTimeState(EmitterEvents.PlacingBet);
         }
