@@ -2,7 +2,7 @@ import gc from "@sg/game-client-base";
 import { Label, Node, Sprite, SpriteFrame, _decorator } from "cc";
 import Observer from "observer";
 
-import { bundleManager } from "db://shared-components/shared/common-components/bundle-magager/bundle-manager";
+import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";

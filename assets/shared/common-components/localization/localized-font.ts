@@ -1,6 +1,6 @@
 import gc from "@sg/game-client-base";
 import { CCBoolean, Component, Font, Label, _decorator } from "cc";
-import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
+import { bundleManager } from "../bundle-manager/bundle-manager";
 const { Translator } = gc;
 
 const { ccclass, property } = _decorator;

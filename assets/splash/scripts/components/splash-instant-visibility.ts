@@ -1,5 +1,5 @@
 import { Component, Node, Prefab, _decorator, instantiate } from "cc";
-import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
+import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
 import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import Splash from "./splash";
 const { ccclass } = _decorator;

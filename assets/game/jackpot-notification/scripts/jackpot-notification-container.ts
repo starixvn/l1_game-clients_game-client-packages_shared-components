@@ -1,7 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator, instantiate, Prefab } from "cc";
 import Observer from "observer";
-import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
+import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
 import { JackpotNotification } from "./jackpot-notification";
 

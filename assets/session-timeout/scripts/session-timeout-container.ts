@@ -1,6 +1,6 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Component, instantiate, Node, Prefab } from "cc";
-import { bundleManager } from "../../shared/common-components/bundle-magager/bundle-manager";
+import { bundleManager } from "../../shared/common-components/bundle-manager/bundle-manager";
 
 const { Shared } = gc;
 

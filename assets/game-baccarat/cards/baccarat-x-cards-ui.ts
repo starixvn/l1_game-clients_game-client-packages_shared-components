@@ -3,7 +3,7 @@ import { Label, Node, Prefab, UITransform, Vec3, _decorator, director, instantia
 import Observer from "observer";
 import { FairnessCard } from "../../game/poker-cards/scripts/fairness-card";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
-import { bundleManager } from "../../shared/common-components/bundle-magager/bundle-manager";
+import { bundleManager } from "../../shared/common-components/bundle-manager/bundle-manager";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../shared/utils";
 import { AnimationUtils } from "../../shared/utils/utils";

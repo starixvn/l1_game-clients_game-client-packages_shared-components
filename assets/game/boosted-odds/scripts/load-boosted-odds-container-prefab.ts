@@ -1,8 +1,8 @@
+import gc from "@sg/game-client-base";
 import { _decorator, instantiate, Prefab } from "cc";
 import Observer from "observer";
-import gc from "@sg/game-client-base";
+import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
-import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
 import { FunctionUtils } from "../../../shared/utils";
 
 const { ccclass } = _decorator;
