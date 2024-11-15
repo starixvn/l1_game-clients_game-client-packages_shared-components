@@ -1,18 +1,9 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
-import { Socket } from "socket.io-client";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
-import { DisableGameHandler } from "./handlers/disable-game-handler";
-import { GameInfoHandler } from "./handlers/game-info-handler";
-import { RoundHistoryHandler } from "./handlers/round-history-handler";
-import { EmitterEvents, Store } from "./models/definitions";
-import { DisableGameStore } from "./models/disable-game-store";
-import { Durations } from "./models/durations-interface";
 import { GameData } from "./models/game-data";
 import { GameDataBase } from "./models/game-data-base";
-import { GameInfoStore } from "./models/game-info-store";
-import { RoundHistoryStore } from "./models/round-history-store";
 import RenderItem from "./render-item/render-item";
 const { ccclass, property } = _decorator;
 const { handle } = Observer;
@@ -30,10 +21,6 @@ export default class GatewayGameItem extends ObserverComponent {
 
     gameData: GameData = null;
 
-    serviceName = "";
-    socket: Socket;
-    receivedEvents: string[];
-
     initRenderItems() {
         this.renderItems = this.getComponentsInChildren(RenderItem);
         this.renderItems.forEach((item) => item.init(this.gameData));
@@ -45,34 +32,12 @@ export default class GatewayGameItem extends ObserverComponent {
         this.gameName = gameName;
         this.gameData = gameData;
         this.updateGameName(this.gameId);
-        this.initUIListeners();
         this.initRenderItems();
     }
 
-    initUIListeners() {
-        // uiManager.emitterListener(
-        //     InternalEvents.GATEWAY_OPEN_GAME,
-        //     (gameId) => {
-        //         this.loading.active = gameId === this.gameId;
-        //     },
-        //     this
-        // );
-    }
-
     onDestroy() {
-        // uiManager.removeListenersWithTarget(this);
-        const disableGameStore = this.gameData.getStore(Store.DisableGame) as DisableGameStore;
-        disableGameStore.clearIntervalGetLobbyData();
-        this.removeSocketListeners();
         this.gameData = null;
-    }
-
-    removeSocketListeners() {
-        // if (!this.socket) {
-        //     return;
-        // }
-        // this.socket.removeAllListeners();
-        // this.socket = null;
+        super.onDestroy();
     }
 
     getDisplayName() {
@@ -88,64 +53,10 @@ export default class GatewayGameItem extends ObserverComponent {
         } catch (e) {}
     }
 
-    setReceiveEvents(receivedEvents: string[]) {
-        // this.receivedEvents = receivedEvents;
-        // this.sendSignIn();
-    }
-
-    resetGameData() {
-        this.gameData.reset();
-    }
-
-    sendSignIn() {
-        // const data = {
-        //     gameName: this.gameName,
-        //     receivedEvents: this.receivedEvents,
-        //     session: getSession(),
-        // };
-        // if (this.serviceName !== "") {
-        //     data["serviceName"] = this.serviceName;
-        // }
-        // this.socket.emit("signIn", data);
-    }
-
-    initGameData(durations: Durations) {
-        this.gameData = new GameData();
-        this.gameData.initHandlers([RoundHistoryHandler, GameInfoHandler, DisableGameHandler]);
-
-        const infoStore = new GameInfoStore();
-        infoStore.durations = durations;
-        const disableGameStore = new DisableGameStore();
-        disableGameStore.addListener(EmitterEvents.GetLobbyData, this.sendSignIn.bind(this));
-        this.gameData.addStores([new RoundHistoryStore(), infoStore, disableGameStore]);
-    }
-
-    filterDataGame = (event: string, data: any) => {
-        // const eventLowerCase = event.toLocaleLowerCase();
-        // const gameName = this.gameName.toLocaleLowerCase();
-        // if (eventLowerCase === gameName || (eventLowerCase === "message" && data.gameName?.toLocaleLowerCase() === gameName)) {
-        //     this.onData(data);
-        // }
-    };
+    sendSignIn() {}
 
     onReconnectGame() {
         this.sendSignIn();
-    }
-
-    getLobbyData() {
-        // this.socket.emit("getLobbyData", { gameName: this.gameName });
-    }
-
-    onData(data: any) {
-        if (data.signedIn) {
-            this.onSignedIn();
-            return;
-        }
-        this.gameData.receiveData(data);
-    }
-
-    onSignedIn() {
-        this.getLobbyData();
     }
 
     @handle(gc.App.AppHandlers.BackToOperatorLobby, (handler, gameId: number) => handler.handleOpenGame(gameId))
