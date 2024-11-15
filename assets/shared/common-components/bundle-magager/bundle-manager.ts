@@ -88,6 +88,14 @@ export class BundleManager {
     ) {
         return this.loadAssetsFromBundle<AssetType>("resources", assetPath, assetType, onProgress);
     }
+
+    loadPortraitDirectSharedAsset<AssetType extends Asset>(
+        assetPath: string,
+        assetType: any,
+        onProgress: ((finished: number, total: number) => void) | null = null
+    ) {
+        return this.loadAssetsFromBundle<AssetType>("shared-portrait-direct-bundle", assetPath, assetType, onProgress);
+    }
 }
 
 export const bundleManager = BundleManager.getInstance();

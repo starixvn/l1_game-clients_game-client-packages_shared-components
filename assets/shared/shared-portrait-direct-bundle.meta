@@ -2,11 +2,11 @@
   "ver": "1.2.0",
   "importer": "directory",
   "imported": true,
-  "uuid": "f1c4d02f-48ae-41e1-bfdd-e3a118e0cb72",
+  "uuid": "06af0552-964f-4da9-92fd-9f23cd7cc342",
   "files": [],
   "subMetas": {},
   "userData": {
-    "compressionType": {},
-    "isRemoteBundle": {}
+    "isBundle": true,
+    "bundleName": "shared-portrait-direct-bundle"
   }
 }
