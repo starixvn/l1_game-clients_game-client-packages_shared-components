@@ -7,7 +7,7 @@ import { ObserverComponent } from "db://shared-components/shared/common-componen
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
 
-const { Player, Bet, FormatUtils } = gc;
+const { Player, Bet, FormatUtils, GameConfigs } = gc;
 
 const { MainPlayerStore } = Player;
 
@@ -27,6 +27,12 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     @property(Node)
     containerEffect: Node = null;
+
+    @property(Node)
+    userScoinWallet: Node = null;
+
+    @property(Label)
+    lblScoin: Label = null;
 
     onLoad() {
         super.onLoad();
@@ -74,5 +80,15 @@ export default class MainPlayerProfile extends ObserverComponent {
     @handle(BalanceEffectHandlers.MainPlayerDecreaseBalance)
     mainPlayerDecreaseBalance(balance: number) {
         return balance;
+    }
+
+    @render(GameConfigs.GameConfigStore, (store) => store.enableFreeBet)
+    activeUserScoinWallet(enableFreeBet: boolean) {
+        this.userScoinWallet && (this.userScoinWallet.active = enableFreeBet);
+    }
+
+    @render(MainPlayerStore, (store) => store.scoin)
+    setScoin(scoin: number) {
+        this.lblScoin && (this.lblScoin.string = scoin.toString());
     }
 }
