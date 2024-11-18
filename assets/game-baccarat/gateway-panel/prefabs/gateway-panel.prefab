@@ -7715,6 +7715,9 @@
     "toggleAll": {
       "__id__": 48
     },
+    "toggleGoodRoad": {
+      "__id__": 93
+    },
     "categoryController": {
       "__id__": 258
     },

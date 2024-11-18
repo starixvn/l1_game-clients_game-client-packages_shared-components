@@ -133,6 +133,9 @@ export class GatewayPanelStore {
         if (this.goodRoads.length !== goodRoads.length || goodRoads.some((id) => !this.goodRoads.includes(id))) {
             this.goodRoads = goodRoads;
             this.setCounter(this.goodRoads.length);
+
+            const existGoodRoad = this.goodRoads.length > 0;
+            this.saveAllGamesFilter(!existGoodRoad);
         }
     }
 

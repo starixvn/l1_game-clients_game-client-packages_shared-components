@@ -21,6 +21,9 @@ export class GatewayPanel extends ObserverComponent {
     @property(Toggle)
     toggleAll: Toggle = null;
 
+    @property(Toggle)
+    toggleGoodRoad: Toggle = null;
+
     @property(CategoryController)
     categoryController: CategoryController = null;
 
@@ -43,6 +46,12 @@ export class GatewayPanel extends ObserverComponent {
     @handle(GatewayPanelStore, (store, enable: boolean) => store.saveAllGamesFilter(enable))
     onTabChanged(toggle: Toggle) {
         const isAll = toggle.node.name === "all";
+        this.updateTabChanged(isAll);
+
+        return this.isShowAll;
+    }
+
+    private updateTabChanged(isAll: boolean) {
         this.isShowAll = isAll;
         if (isAll) {
             this.categoryController.changeExtraFilter(null);
@@ -55,8 +64,6 @@ export class GatewayPanel extends ObserverComponent {
         }
 
         this.checkEmptyListVisibility();
-
-        return this.isShowAll;
     }
 
     @render(GatewayPanelStore, (store) => store.orderGameIds)
@@ -152,7 +159,12 @@ export class GatewayPanel extends ObserverComponent {
 
     @render(GatewayPanelStore, (store) => store.allGamesFilter)
     renderAllGamesFilter(allGamesFilter: boolean) {
-        this.toggleAll.isChecked = allGamesFilter;
+        if (allGamesFilter) {
+            this.toggleAll.setIsCheckedWithoutNotify(true);
+        } else {
+            this.toggleGoodRoad.setIsCheckedWithoutNotify(true);
+        }
+        this.updateTabChanged(allGamesFilter);
     }
 
     @handle(GatewayPanelStore, (store, categories: string[]) => store.saveCategoryFilter(categories))
