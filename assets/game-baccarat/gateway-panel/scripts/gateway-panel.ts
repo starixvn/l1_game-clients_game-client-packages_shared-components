@@ -1,6 +1,7 @@
-import { _decorator, instantiate, log, Node, Prefab, Toggle } from "cc";
+import { _decorator, instantiate, Node, Prefab, Toggle } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { AnimationUtils } from "../../../shared/utils";
 import CategoryController from "./category/category-controller";
 import { CategoryEvent } from "./category/category-events";
 import CategoryItem from "./category/category-item";
@@ -38,10 +39,10 @@ export class GatewayPanel extends ObserverComponent {
 
     goodRoads: number[] = [];
     dataGames = {};
+    gameInfo = {};
 
     isShowAll = true;
     orderGameIds: number[] = [];
-    itemPools: { [gameId: number]: Node } = {};
 
     @handle(GatewayPanelStore, (store, enable: boolean) => store.saveAllGamesFilter(enable))
     onTabChanged(toggle: Toggle) {
@@ -67,25 +68,16 @@ export class GatewayPanel extends ObserverComponent {
     }
 
     @render(GatewayPanelStore, (store) => store.orderGameIds)
-    renderOrderGameIds(orderGameIds: number[]) {
+    async renderOrderGameIds(orderGameIds: number[]) {
         this.orderGameIds = orderGameIds;
-
-        this.orderGameIds.forEach((gameId) => {
-            const item = this.itemPools[gameId];
-            if (item) {
-                this.container.addChild(item);
+        try {
+            this.container.destroyAllChildren();
+            for (const gameId of this.orderGameIds) {
+                const node = this.createItemForGameId(+gameId);
+                this.container.addChild(node);
+                await AnimationUtils.delayTime(0.1);
             }
-        });
-    }
-
-    private setItemOrder(item: GatewayGameItem, orderGameIds: number[]) {
-        const gameId = item.gameId;
-        const index = orderGameIds.indexOf(gameId);
-        if (index !== -1) {
-            item.node.setSiblingIndex(index);
-        } else {
-            log("not found gameId ------------------", gameId);
-        }
+        } catch (e) {}
     }
 
     @render(GatewayPanelStore, (store) => store.goodRoads)
@@ -117,25 +109,39 @@ export class GatewayPanel extends ObserverComponent {
         super.onDestroy();
     }
 
+    addItems() {
+        const info = this.gameInfo;
+        Object.keys(info).forEach((gameId) => {
+            this.createItemForGameId(+gameId);
+        });
+    }
+
+    private createItemForGameId(gameId: number) {
+        const info = this.gameInfo;
+        const node = instantiate(this.gamePrefab);
+
+        node.name = `${gameId}`;
+
+        const item = node.getComponent(GatewayGameItem);
+        const { gameName, categories } = info[gameId];
+        const gameData: GameDataBase = this.dataGames[gameId];
+        item.init({ gameId: +gameId, gameName, gameData });
+
+        categories.forEach((category) => {
+            const comp = item.addComponent(CategoryItem);
+            comp.category = category;
+        });
+
+        return node;
+    }
+
     initItems(dataGames, info: { [gameId: number]: { gameName: string; categories: string[] } }) {
         this.dataGames = dataGames;
+        this.gameInfo = info;
         let allCatogories = [];
         Object.keys(info).forEach((gameId) => {
-            const node = instantiate(this.gamePrefab);
-            this.itemPools[gameId] = node;
-
-            node.name = `${gameId}`;
-
-            const item = node.getComponent(GatewayGameItem);
-            const { gameName, categories } = info[gameId];
-            const gameData: GameDataBase = this.dataGames[gameId];
-            item.init({ gameId: +gameId, gameName, gameData });
-
+            const { categories } = info[gameId];
             allCatogories.push(...categories);
-            categories.forEach((category) => {
-                const comp = item.addComponent(CategoryItem);
-                comp.category = category;
-            });
         });
 
         allCatogories = allCatogories.filter(
