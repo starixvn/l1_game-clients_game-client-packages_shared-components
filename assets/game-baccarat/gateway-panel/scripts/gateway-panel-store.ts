@@ -53,6 +53,7 @@ export class GatewayPanelStore {
     counter = 0;
     goodRoads = [];
     eventGameSignIn = {};
+    orderGameIds = [];
 
     private get storageKey() {
         return `good-road-setting-${this.gameSetting.lobbyId}`;
@@ -149,5 +150,9 @@ export class GatewayPanelStore {
         this.eventGameSignIn = {
             gameId,
         };
+    }
+
+    updateOrderGameIds(orderGameIds: number[]) {
+        this.orderGameIds = orderGameIds;
     }
 }

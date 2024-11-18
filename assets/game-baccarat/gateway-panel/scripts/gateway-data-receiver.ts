@@ -17,7 +17,7 @@ import { GameInfoStore } from "./models/game-info-store";
 import { RoundHistoryStore } from "./models/round-history-store";
 import { GoodRoadCounterHandler } from "./settings/good-road-counter-handler";
 const { ccclass, property } = _decorator;
-const { render } = Observer;
+const { render, handle } = Observer;
 
 interface IGatewayConfigs {
     gameId: number;
@@ -171,9 +171,8 @@ export class GatewayDataReceiver extends ObserverComponent {
             this.onSignedIn(gameName);
             return;
         }
-        this.handleDataRtp(data, gameName);
-
         const gameId = this.convertGameNameToId(gameName);
+        this.handleDataRtp(data, gameId);
         this.publishDataEachGame(data, gameId);
     }
 
@@ -189,15 +188,22 @@ export class GatewayDataReceiver extends ObserverComponent {
         }
     }
 
-    handleDataRtp(data: any, gameName: string) {
+    handleDataRtp(data: any, gameId: number) {
         if (data.rtp) {
             this.rtps.push({
-                gameName: gameName,
+                gameId,
                 rtp: data.rtp,
             });
 
             this.rtps.sort((a, b) => b.rtp - a.rtp);
+            this.updateRTPOrderGameIds();
         }
+    }
+
+    @handle(GatewayPanelStore, (store, gameIds: number[]) => store.updateOrderGameIds(gameIds))
+    updateRTPOrderGameIds() {
+        const gameIds = this.rtps.map((item) => item.gameId);
+        return gameIds;
     }
 
     sendSignInAllGames() {

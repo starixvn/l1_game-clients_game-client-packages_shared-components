@@ -1,4 +1,4 @@
-import { _decorator, instantiate, Node, Prefab, Toggle } from "cc";
+import { _decorator, instantiate, log, Node, Prefab, Toggle } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import CategoryController from "./category/category-controller";
@@ -37,6 +37,8 @@ export class GatewayPanel extends ObserverComponent {
     dataGames = {};
 
     isShowAll = true;
+    orderGameIds: number[] = [];
+    itemPools: { [gameId: number]: Node } = {};
 
     @handle(GatewayPanelStore, (store, enable: boolean) => store.saveAllGamesFilter(enable))
     onTabChanged(toggle: Toggle) {
@@ -55,6 +57,28 @@ export class GatewayPanel extends ObserverComponent {
         this.checkEmptyListVisibility();
 
         return this.isShowAll;
+    }
+
+    @render(GatewayPanelStore, (store) => store.orderGameIds)
+    renderOrderGameIds(orderGameIds: number[]) {
+        this.orderGameIds = orderGameIds;
+
+        this.orderGameIds.forEach((gameId) => {
+            const item = this.itemPools[gameId];
+            if (item) {
+                this.container.addChild(item);
+            }
+        });
+    }
+
+    private setItemOrder(item: GatewayGameItem, orderGameIds: number[]) {
+        const gameId = item.gameId;
+        const index = orderGameIds.indexOf(gameId);
+        if (index !== -1) {
+            item.node.setSiblingIndex(index);
+        } else {
+            log("not found gameId ------------------", gameId);
+        }
     }
 
     @render(GatewayPanelStore, (store) => store.goodRoads)
@@ -91,7 +115,8 @@ export class GatewayPanel extends ObserverComponent {
         let allCatogories = [];
         Object.keys(info).forEach((gameId) => {
             const node = instantiate(this.gamePrefab);
-            this.container.addChild(node);
+            this.itemPools[gameId] = node;
+
             node.name = `${gameId}`;
 
             const item = node.getComponent(GatewayGameItem);
