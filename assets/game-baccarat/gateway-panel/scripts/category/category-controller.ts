@@ -69,7 +69,6 @@ export default class CategoryController extends Component {
 
     updateVisibility() {
         this.updateItemVisibility();
-        this.updateSortOrder();
     }
 
     changeExtraFilter(filter: (item: Node) => boolean) {
@@ -93,14 +92,5 @@ export default class CategoryController extends Component {
             const comps = item.getComponents(CategoryItem);
             item.active = comps.some((comp) => categories.includes(comp.category) && this.extraFilter(item));
         });
-    }
-
-    updateSortOrder() {
-        // this.items.forEach((item) => {
-        //     const gameItem = item.getComponent(GatewayGameItem);
-        //     if (gameItem) {
-        //         gameItem.node.setSiblingIndex(gameItem.gameId);
-        //     }
-        // });
     }
 }
