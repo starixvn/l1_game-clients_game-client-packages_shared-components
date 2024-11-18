@@ -73,20 +73,35 @@ export class GatewayDataReceiver extends ObserverComponent {
 
     gatewayConfig: IGatewayConfigs = null;
 
-    rtps = [];
+    rtps: { [gameId: number]: number } = {};
     dataGames = {}; //gameId : gameData
     gameId = -1;
     lobbyId = -1;
     offerGames = [];
 
+    @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
+    renderOfferGames(offerGames: any[]) {
+        if (offerGames) {
+            this.offerGames = offerGames.map((item) => item.gameId);
+        }
+    }
+
     @render(gc.GameConfigs.GameSetting, (store) => store.lobbyId)
     renderLobbyId(lobbyId: number) {
         this.lobbyId = lobbyId;
         this.getGatewayConfig().then(() => {
+            this.createDefaultRTP();
             this.createGameDatas();
             this.initGoodRoadCounterHandler();
             this.initSocket();
         });
+    }
+
+    createDefaultRTP() {
+        const games = this.getFilterGames();
+        for (const gameId of games) {
+            this.rtps[gameId] = 98;
+        }
     }
 
     private initSocket() {
@@ -111,13 +126,6 @@ export class GatewayDataReceiver extends ObserverComponent {
     @render(gc.GameConfigs.GameSetting, (store) => store.id)
     renderGameId(gameId: number) {
         this.gameId = gameId;
-    }
-
-    @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
-    renderOfferGames(offerGames: any[]) {
-        if (offerGames) {
-            this.offerGames = offerGames.map((item) => item.gameId);
-        }
     }
 
     getFilterGames() {
@@ -190,19 +198,16 @@ export class GatewayDataReceiver extends ObserverComponent {
 
     handleDataRtp(data: any, gameId: number) {
         if (data.rtp) {
-            this.rtps.push({
-                gameId,
-                rtp: data.rtp,
-            });
+            this.rtps[gameId] = data.rtp;
 
-            this.rtps.sort((a, b) => b.rtp - a.rtp);
             this.updateRTPOrderGameIds();
         }
     }
 
     @handle(GatewayPanelStore, (store, gameIds: number[]) => store.updateOrderGameIds(gameIds))
     updateRTPOrderGameIds() {
-        const gameIds = this.rtps.map((item) => item.gameId);
+        const gameIds = this.getFilterGames();
+        gameIds.sort((a, b) => this.rtps[b] - this.rtps[a]);
         return gameIds;
     }
 
