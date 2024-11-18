@@ -33,7 +33,16 @@ export class ResultPercentage extends Component {
     showSignPercentage = true;
 
     originalChoices: string[] = [];
+
+    private initialized = false;
     onLoad() {
+        if (!this.initialized) {
+            this.initSomeStuffs();
+        }
+    }
+
+    private initSomeStuffs() {
+        this.initialized = true;
         this.generateOriginalChoices();
         if (this.autoFindLabels && this.labelContainer) {
             this.labelContainer.children.forEach((child) => {
@@ -50,8 +59,10 @@ export class ResultPercentage extends Component {
         this.originalChoices = this.supportChoices.split(",");
     }
 
-    // @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     render(histories: gc.RoundHistories.RoundHistory[]) {
+        if (!this.initialized) {
+            this.initSomeStuffs();
+        }
         if (histories.length === 0) {
             this.clearAllLabels();
             return;
