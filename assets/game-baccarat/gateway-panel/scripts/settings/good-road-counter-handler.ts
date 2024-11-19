@@ -42,7 +42,8 @@ export class GoodRoadCounterHandler extends ObserverComponent {
                 const bigRoad: BaccaratBigRoad = this.bigRoads[id];
                 return bigRoad?.existGoodRoad;
             })
-            .map((id) => +id);
+            .map((id) => +id)
+            .sort((a, b) => b - a);
         return goodRoadGameIds;
     }
 }

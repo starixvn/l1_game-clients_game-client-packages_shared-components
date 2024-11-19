@@ -134,10 +134,22 @@ export class GatewayPanelStore {
     }
 
     updateGoodRoadGames(goodRoads: number[]) {
-        if (this.goodRoads.length !== goodRoads.length || goodRoads.some((id) => !this.goodRoads.includes(id))) {
+        if (!this.compareArray(goodRoads, this.goodRoads)) {
             this.goodRoads = goodRoads;
             this.setCounter(this.goodRoads.length);
         }
+    }
+
+    compareArray(arr1: any[], arr2: any[]) {
+        if (arr1.length !== arr2.length) {
+            return false;
+        }
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     saveCategoryFilter(categoryFilter: string[]) {
