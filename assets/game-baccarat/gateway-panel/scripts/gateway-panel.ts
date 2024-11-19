@@ -42,6 +42,7 @@ export class GatewayPanel extends ObserverComponent {
     gameInfo = {};
 
     isShowAll = true;
+    didRenderAllGamesFilter = false;
     orderGameIds: number[] = [];
 
     @handle(GatewayPanelStore, (store, enable: boolean) => store.saveAllGamesFilter(enable))
@@ -164,8 +165,12 @@ export class GatewayPanel extends ObserverComponent {
         }
     }
 
-    @render(GatewayPanelStore, (store) => store.allGamesFilter)
+    @render(GatewayPanelStore, (store) => store.defaultOpenAllGameFilter)
     renderAllGamesFilter(allGamesFilter: boolean) {
+        if (this.didRenderAllGamesFilter) {
+            return;
+        }
+        this.didRenderAllGamesFilter = true;
         if (allGamesFilter) {
             this.toggleAll.setIsCheckedWithoutNotify(true);
         } else {

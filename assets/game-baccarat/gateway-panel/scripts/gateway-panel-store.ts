@@ -55,6 +55,10 @@ export class GatewayPanelStore {
     eventGameSignIn = {};
     orderGameIds = [];
 
+    get defaultOpenAllGameFilter() {
+        return this.goodRoads.length === 0;
+    }
+
     private get storageKey() {
         return `good-road-setting-${this.gameSetting.lobbyId}`;
     }
@@ -133,9 +137,6 @@ export class GatewayPanelStore {
         if (this.goodRoads.length !== goodRoads.length || goodRoads.some((id) => !this.goodRoads.includes(id))) {
             this.goodRoads = goodRoads;
             this.setCounter(this.goodRoads.length);
-
-            const existGoodRoad = this.goodRoads.length > 0;
-            this.saveAllGamesFilter(!existGoodRoad);
         }
     }
 
