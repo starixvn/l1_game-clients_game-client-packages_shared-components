@@ -75,6 +75,7 @@ export class GatewayPanel extends ObserverComponent {
             for (const gameId of this.orderGameIds) {
                 const node = this.createItemForGameId(+gameId);
                 this.container.addChild(node);
+                this.categoryController.updateVisibility();
                 await AnimationUtils.delayTime(0.1);
             }
         } catch (e) {}
