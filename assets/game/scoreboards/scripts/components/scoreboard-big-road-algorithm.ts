@@ -81,7 +81,6 @@ export class ScoreboardBigRoadAlgorithm extends ScoreboardAlgorithm {
         if (goodRoad?.x === -1 && goodRoad?.width === 0) {
             return null;
         }
-        // log(`====== goodRoad from x ${goodRoad.x} to x ${goodRoad.x + goodRoad.width} ======`);
         return goodRoad;
     }
 

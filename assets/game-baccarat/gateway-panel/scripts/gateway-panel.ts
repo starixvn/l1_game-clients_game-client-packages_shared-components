@@ -1,7 +1,7 @@
 import { _decorator, instantiate, Node, Prefab, Toggle } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
-import { AnimationUtils } from "../../../shared/utils";
+import { AnimationUtils } from "../../../shared/utils/utils";
 import CategoryController from "./category/category-controller";
 import { CategoryEvent } from "./category/category-events";
 import CategoryItem from "./category/category-item";
@@ -43,43 +43,26 @@ export class GatewayPanel extends ObserverComponent {
 
     isShowAll = true;
     didRenderAllGamesFilter = false;
+    didInitItems = false;
     orderGameIds: number[] = [];
 
-    @handle(GatewayPanelStore, (store, enable: boolean) => store.saveAllGamesFilter(enable))
-    onTabChanged(toggle: Toggle) {
-        const isAll = toggle.node.name === "all";
-        this.updateTabChanged(isAll);
-
-        return this.isShowAll;
-    }
-
-    private updateTabChanged(isAll: boolean) {
-        this.isShowAll = isAll;
-        if (isAll) {
-            this.categoryController.changeExtraFilter(null);
-        } else {
-            const goodRoadFilter = (item: Node) => {
-                const gameId = +item.name;
-                return this.goodRoads.includes(gameId);
-            };
-            this.categoryController.changeExtraFilter(goodRoadFilter);
+    @render(GatewayPanelStore, (store) => store.defaultOpenAllGameFilter)
+    renderAllGamesFilter(allGamesFilter: boolean) {
+        if (this.didRenderAllGamesFilter) {
+            return;
         }
-
-        this.checkEmptyListVisibility();
+        this.didRenderAllGamesFilter = true;
+        if (allGamesFilter) {
+            this.toggleAll.setIsCheckedWithoutNotify(true);
+        } else {
+            this.toggleGoodRoad.setIsCheckedWithoutNotify(true);
+        }
+        this.updateTabChanged(allGamesFilter);
     }
 
     @render(GatewayPanelStore, (store) => store.orderGameIds)
     async renderOrderGameIds(orderGameIds: number[]) {
         this.orderGameIds = orderGameIds;
-        try {
-            this.container.destroyAllChildren();
-            for (const gameId of this.orderGameIds) {
-                const node = this.createItemForGameId(+gameId);
-                this.container.addChild(node);
-                this.categoryController.updateVisibility();
-                await AnimationUtils.delayTime(0.1);
-            }
-        } catch (e) {}
     }
 
     @render(GatewayPanelStore, (store) => store.goodRoads)
@@ -88,6 +71,65 @@ export class GatewayPanel extends ObserverComponent {
         this.categoryController.updateVisibility();
 
         this.checkEmptyListVisibility();
+    }
+
+    @render(GatewayPanelStore, (store) => store.categoryFilter)
+    renderCategoryFilter(categoryFilter: string[]) {
+        const comp = this.getComponentInChildren(CategoryController);
+        if (comp) {
+            comp.initCategories(categoryFilter);
+        }
+
+        this.initItemsWithCategory(categoryFilter);
+        this.updateSiblingIndex();
+    }
+
+    async initItemsWithCategory(categoryFilter: string[]) {
+        if (this.didInitItems) {
+            return;
+        }
+        this.didInitItems = true;
+        try {
+            this.container.destroyAllChildren();
+            const info = this.gameInfo;
+
+            const firstGameIds =
+                this.goodRoads.length > 0
+                    ? this.orderGameIds.filter((gameId) => this.goodRoads.includes(gameId))
+                    : this.orderGameIds.filter((gameId) => {
+                          const { categories } = info[gameId];
+                          return categories.some((category) => categoryFilter.includes(category));
+                      });
+
+            const otherGameIds =
+                this.goodRoads.length > 0
+                    ? this.orderGameIds.filter((gameId) => !this.goodRoads.includes(gameId))
+                    : this.orderGameIds.filter((gameId) => {
+                          const { categories } = info[gameId];
+                          return !categories.some((category) => categoryFilter.includes(category));
+                      });
+
+            for (const gameId of firstGameIds) {
+                const node = this.createItemForGameId(+gameId);
+                this.container.addChild(node);
+                this.categoryController.updateVisibility();
+                await AnimationUtils.delayTime(0.1);
+            }
+
+            for (const gameId of otherGameIds) {
+                const node = this.createItemForGameId(+gameId);
+                this.container.addChild(node);
+                this.categoryController.updateVisibility();
+                await AnimationUtils.delayTime(0.1);
+            }
+        } catch (e) {}
+    }
+
+    updateSiblingIndex() {
+        this.container.children.forEach((child) => {
+            const gameId = +child.name;
+            child.setSiblingIndex(this.orderGameIds.indexOf(gameId));
+        });
     }
 
     onClickSetting() {
@@ -111,16 +153,10 @@ export class GatewayPanel extends ObserverComponent {
         super.onDestroy();
     }
 
-    addItems() {
-        const info = this.gameInfo;
-        Object.keys(info).forEach((gameId) => {
-            this.createItemForGameId(+gameId);
-        });
-    }
-
     private createItemForGameId(gameId: number) {
         const info = this.gameInfo;
         const node = instantiate(this.gamePrefab);
+        node.setSiblingIndex(this.orderGameIds.indexOf(gameId));
 
         node.name = `${gameId}`;
 
@@ -157,31 +193,32 @@ export class GatewayPanel extends ObserverComponent {
         }
     }
 
-    @render(GatewayPanelStore, (store) => store.categoryFilter)
-    renderCategoryFilter(categoryFilter: string[]) {
-        const comp = this.getComponentInChildren(CategoryController);
-        if (comp) {
-            comp.initCategories(categoryFilter);
-        }
-    }
-
-    @render(GatewayPanelStore, (store) => store.defaultOpenAllGameFilter)
-    renderAllGamesFilter(allGamesFilter: boolean) {
-        if (this.didRenderAllGamesFilter) {
-            return;
-        }
-        this.didRenderAllGamesFilter = true;
-        if (allGamesFilter) {
-            this.toggleAll.setIsCheckedWithoutNotify(true);
-        } else {
-            this.toggleGoodRoad.setIsCheckedWithoutNotify(true);
-        }
-        this.updateTabChanged(allGamesFilter);
-    }
-
     @handle(GatewayPanelStore, (store, categories: string[]) => store.saveCategoryFilter(categories))
     saveCategoryFilterToStore(categories: string[]) {
         return categories;
+    }
+
+    @handle(GatewayPanelStore, (store, enable: boolean) => store.saveAllGamesFilter(enable))
+    onTabChanged(toggle: Toggle) {
+        const isAll = toggle.node.name === "all";
+        this.updateTabChanged(isAll);
+        return this.isShowAll;
+    }
+
+    private updateTabChanged(isAll: boolean) {
+        this.isShowAll = isAll;
+        if (isAll) {
+            this.categoryController.changeExtraFilter(null);
+        } else {
+            const goodRoadFilter = (item: Node) => {
+                const gameId = +item.name;
+                return this.goodRoads.includes(gameId);
+            };
+            this.categoryController.changeExtraFilter(goodRoadFilter);
+        }
+
+        this.checkEmptyListVisibility();
+        this.updateSiblingIndex();
     }
 
     saveCategoryFilter(categories: string[]) {
