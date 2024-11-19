@@ -65,6 +65,7 @@ export default class GatewayGameItem extends ObserverComponent {
 
     @handle(gc.App.AppHandlers.BackToOperatorLobby, (handler, gameId: number) => handler.handleOpenGame(gameId))
     onClickOpenGame() {
+        this.gameData.clearStoreListeners();
         return this.gameId;
     }
 }
