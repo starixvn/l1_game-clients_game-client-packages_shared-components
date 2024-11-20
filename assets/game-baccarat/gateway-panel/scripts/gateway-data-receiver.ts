@@ -102,6 +102,7 @@ export class GatewayDataReceiver extends ObserverComponent {
         for (const gameId of games) {
             this.rtps[gameId] = 98;
         }
+        this.updateRTPOrderGameIds();
     }
 
     private initSocket() {
