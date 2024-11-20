@@ -78,7 +78,11 @@ export class ScoreboardBigRoadAlgorithm extends ScoreboardAlgorithm {
 
     getGoodRoad() {
         const goodRoad = this.bigRoad.getGoodRoad();
-        if (goodRoad?.x === -1 && goodRoad?.width === 0) {
+        if (Object.keys(goodRoad).length === 0) {
+            return null;
+        }
+
+        if (goodRoad?.x === -1 || goodRoad?.width === 0) {
             return null;
         }
         return goodRoad;

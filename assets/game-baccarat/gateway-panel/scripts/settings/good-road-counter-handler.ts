@@ -43,7 +43,7 @@ export class GoodRoadCounterHandler extends ObserverComponent {
                 return bigRoad?.existGoodRoad;
             })
             .map((id) => +id)
-            .sort((a, b) => b - a);
+            .sort((a, b) => a - b);
         return goodRoadGameIds;
     }
 }
