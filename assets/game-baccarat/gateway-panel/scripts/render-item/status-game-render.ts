@@ -11,12 +11,15 @@ export default class StatusGameRender extends RenderItem {
 
     private _gameData: GameData = null;
 
+    private _isNewShoe = false;
+
     init(data: GameData) {
         this._gameData = data;
         const store = data.getStore(Store.GameInfo);
         store?.addListener(EmitterEvents.PlacingBet, this.onPlacingBet);
         store?.addListener(EmitterEvents.LockingBet, this.onLockingBet);
         store?.addListener(EmitterEvents.Settling, this.onSettling);
+        store?.addListener(EmitterEvents.ActiveNewShoe, this.onActiveNewShoe);
 
         const disableStore = data.getStore(Store.DisableGame);
         disableStore?.addListener(EmitterEvents.DisabledGame, this.onChangeDisabledGame);
@@ -26,8 +29,10 @@ export default class StatusGameRender extends RenderItem {
 
     onDestroy() {
         const store = this._gameData?.getStore(Store.GameInfo);
+        store?.removeListener(EmitterEvents.PlacingBet, this.onPlacingBet);
         store?.removeListener(EmitterEvents.LockingBet, this.onLockingBet);
         store?.removeListener(EmitterEvents.Settling, this.onSettling);
+        store?.removeListener(EmitterEvents.ActiveNewShoe, this.onActiveNewShoe);
 
         const disableStore = this._gameData?.getStore(Store.DisableGame);
         disableStore?.removeListener(EmitterEvents.DisabledGame, this.onChangeDisabledGame);
@@ -40,6 +45,13 @@ export default class StatusGameRender extends RenderItem {
             });
             return;
         }
+    };
+
+    onActiveNewShoe = (show: boolean) => {
+        this._isNewShoe = show;
+        this.nodes.forEach((node) => {
+            node.active = false;
+        });
     };
 
     onPlacingBet = () => {
@@ -56,7 +68,7 @@ export default class StatusGameRender extends RenderItem {
 
     updateVisibility(name: string) {
         this.nodes.forEach((node) => {
-            node.active = node.name === name;
+            node.active = node.name === name && !this._isNewShoe;
         });
     }
 }
