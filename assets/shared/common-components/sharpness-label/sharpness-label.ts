@@ -1,4 +1,4 @@
-import { Component, Label, RichText, _decorator, v3 } from "cc";
+import { Component, Label, RichText, UITransform, _decorator, v3 } from "cc";
 
 const { ccclass, property } = _decorator;
 
@@ -24,11 +24,16 @@ export class SharpnessLabel extends Component {
                 component.fontSize *= this.fontSizeWeight;
                 component.lineHeight *= this.fontSizeWeight;
             }
-
-            if (component instanceof RichText) {
-                this.richText.maxWidth *= this.fontSizeWeight;
-            }
         });
+
+        if (this.label && this.label.overflow !== Label.Overflow.NONE) {
+            const transform = this.label.getComponent(UITransform);
+            transform.width *= this.fontSizeWeight;
+        }
+
+        if (this.richText) {
+            this.richText.maxWidth *= this.fontSizeWeight;
+        }
 
         this.node.scale = v3(this.weightScale, this.weightScale, this.weightScale);
     }
