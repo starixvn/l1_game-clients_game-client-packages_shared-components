@@ -1,7 +1,6 @@
 import gc from "@sg/game-client-base";
 import { Label, _decorator } from "cc";
 import { EmitterEvents, Store } from "../models/definitions";
-import { GameData } from "../models/game-data";
 import RenderItem from "./render-item";
 const { ccclass, property } = _decorator;
 
@@ -16,9 +15,8 @@ export default class GameInfoRender extends RenderItem {
     @property(Label)
     labelLimitBet: Label = null;
 
-    private _gameData: GameData = null;
-    init(data: GameData) {
-        this._gameData = data;
+    onLoad() {
+        const data = this._gameData;
         const store = data.getStore(Store.GameInfo);
         store?.addListener(EmitterEvents.RtpChange, this.onChangeRTP, this);
         store?.addListener(EmitterEvents.TotalOnlineChange, this.onChangeTotalOnlineUser, this);

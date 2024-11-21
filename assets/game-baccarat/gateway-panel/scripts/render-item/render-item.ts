@@ -4,6 +4,13 @@ const { ccclass, property } = _decorator;
 
 @ccclass
 export default class RenderItem extends Component {
-    init(data: GameData) {}
+    protected _gameData: GameData = null;
+    init(data: GameData) {
+        this._gameData = data;
+    }
     protected onData: (data: any) => void;
+    clearRenderListeners() {}
+    onDestroy() {
+        this.clearRenderListeners();
+    }
 }

@@ -22,15 +22,16 @@ export class GoodRoadCounterHandler extends ObserverComponent {
             const gameData = dataGames[id];
 
             const node = instantiate(this.itemPrefab);
-            this.container.addChild(node);
-            node.active = true;
-            node.name = id;
 
             const renderItem = node.getComponent(RenderItem);
             renderItem.init(gameData);
 
             const bigRoad = node.getComponent(BaccaratBigRoad);
             this.bigRoads[id] = bigRoad;
+
+            this.container.addChild(node);
+            node.active = true;
+            node.name = id;
         });
 
         this.schedule(this.checkGoodRoad, 1 / 30, macro.REPEAT_FOREVER);

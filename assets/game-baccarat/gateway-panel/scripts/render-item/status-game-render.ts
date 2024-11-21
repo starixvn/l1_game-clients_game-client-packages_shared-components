@@ -13,8 +13,8 @@ export default class StatusGameRender extends RenderItem {
 
     private _isNewShoe = false;
 
-    init(data: GameData) {
-        this._gameData = data;
+    onLoad() {
+        const data = this._gameData;
         const store = data.getStore(Store.GameInfo);
         store?.addListener(EmitterEvents.PlacingBet, this.onPlacingBet, this);
         store?.addListener(EmitterEvents.LockingBet, this.onLockingBet, this);

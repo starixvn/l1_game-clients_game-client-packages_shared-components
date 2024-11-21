@@ -1,7 +1,6 @@
 import { _decorator } from "cc";
 import RawTwoDigitsTimer from "../../../../game/game-timer/scripts/raw-two-digits-timer";
 import { EmitterEvents, Store } from "../models/definitions";
-import { GameData } from "../models/game-data";
 import RenderItem from "./render-item";
 const { ccclass, property } = _decorator;
 
@@ -10,12 +9,10 @@ export default class TimerRender extends RenderItem {
     @property(RawTwoDigitsTimer)
     timer: RawTwoDigitsTimer = null;
 
-    private _gameData: GameData = null;
-
-    init(data: GameData) {
+    onLoad() {
         this.node.active = false;
 
-        this._gameData = data;
+        const data = this._gameData;
         const store = data.getStore(Store.GameInfo);
         store?.addListener(EmitterEvents.TimeChange, this.onTimeChange, this);
         store?.addListener(EmitterEvents.PlacingBet, this.onPlacingBet, this);
