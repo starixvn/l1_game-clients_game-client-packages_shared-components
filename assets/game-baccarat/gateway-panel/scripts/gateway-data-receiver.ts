@@ -159,7 +159,7 @@ export class GatewayDataReceiver extends ObserverComponent {
         const infoStore = new GameInfoStore();
         infoStore.durations = durations;
         const disableGameStore = new DisableGameStore();
-        disableGameStore.addListener(EmitterEvents.GetLobbyData, () => this.sendSignInEachGame(gameId), false);
+        disableGameStore.addListener(EmitterEvents.GetLobbyData, () => this.sendSignInEachGame(gameId), this);
         gameData.addStores([new RoundHistoryStore(), infoStore, disableGameStore]);
         return gameData;
     }

@@ -17,20 +17,17 @@ export default class TimerRender extends RenderItem {
 
         this._gameData = data;
         const store = data.getStore(Store.GameInfo);
-        store?.addListener(EmitterEvents.TimeChange, this.onTimeChange);
-        store?.addListener(EmitterEvents.PlacingBet, this.onPlacingBet);
-        store?.addListener(EmitterEvents.LockingBet, this.onLockingBet);
-        store?.addListener(EmitterEvents.TimeStateChange, this.onTimeStateChange);
+        store?.addListener(EmitterEvents.TimeChange, this.onTimeChange, this);
+        store?.addListener(EmitterEvents.PlacingBet, this.onPlacingBet, this);
+        store?.addListener(EmitterEvents.LockingBet, this.onLockingBet, this);
+        store?.addListener(EmitterEvents.TimeStateChange, this.onTimeStateChange, this);
 
         store?.wakeUp();
     }
 
-    onDestroy() {
+    clearRenderListeners() {
         const store = this._gameData?.getStore(Store.GameInfo);
-        store?.removeListener(EmitterEvents.TimeChange, this.onTimeChange);
-        store?.removeListener(EmitterEvents.PlacingBet, this.onPlacingBet);
-        store?.removeListener(EmitterEvents.LockingBet, this.onLockingBet);
-        store?.removeListener(EmitterEvents.TimeStateChange, this.onTimeStateChange);
+        store.removeAll(this);
     }
 
     onTimeStateChange = (state: string) => {

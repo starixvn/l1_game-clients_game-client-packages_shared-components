@@ -19,7 +19,7 @@ export default class UmMessageRender extends RenderItem {
         store?.wakeUp();
     }
 
-    onDestroy() {
+    clearRenderListeners() {
         const store = this._gameData?.getStore(Store.DisableGame);
         store?.removeListener(EmitterEvents.UmMessage, this.onChangeUmMessage);
         store?.removeListener(EmitterEvents.DisabledGame, this.onChangeDisabledGame);

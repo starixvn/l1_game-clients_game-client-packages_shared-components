@@ -2,8 +2,8 @@ import { EventTarget } from "cc";
 export default class EventEmitterBase extends EventTarget {
     private _eventStorages: { event; listener }[] = [];
 
-    addListener<TFunction extends (...any: any[]) => void>(event: string, listener: TFunction, managed = true) {
-        this.on(event, listener);
+    addListener<TFunction extends (...any: any[]) => void>(event: string, listener: TFunction, target, managed = true) {
+        this.on(event, listener, target);
         managed && this._eventStorages.push({ event, listener });
     }
 

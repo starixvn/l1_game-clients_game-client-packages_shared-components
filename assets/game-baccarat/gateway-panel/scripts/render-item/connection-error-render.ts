@@ -15,14 +15,14 @@ export default class ConnectionErrorRender extends RenderItem {
 
         this._gameData = data;
         const store = data.getStore(Store.DisableGame);
-        store?.addListener(EmitterEvents.ConnectionFailed, this.onChangeConnectionFailed);
+        store?.addListener(EmitterEvents.ConnectionFailed, this.onChangeConnectionFailed, this);
 
         store?.wakeUp();
     }
 
-    onDestroy() {
+    clearRenderListeners() {
         const store = this._gameData?.getStore(Store.DisableGame);
-        store?.removeListener(EmitterEvents.ConnectionFailed, this.onChangeConnectionFailed);
+        store?.removeAll(this);
     }
 
     onChangeConnectionFailed = (isFailed: boolean) => {

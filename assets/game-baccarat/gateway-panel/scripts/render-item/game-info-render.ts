@@ -20,18 +20,16 @@ export default class GameInfoRender extends RenderItem {
     init(data: GameData) {
         this._gameData = data;
         const store = data.getStore(Store.GameInfo);
-        store?.addListener(EmitterEvents.RtpChange, this.onChangeRTP);
-        store?.addListener(EmitterEvents.TotalOnlineChange, this.onChangeTotalOnlineUser);
-        store?.addListener(EmitterEvents.BetLimitChange, this.onChangeBetLimit);
+        store?.addListener(EmitterEvents.RtpChange, this.onChangeRTP, this);
+        store?.addListener(EmitterEvents.TotalOnlineChange, this.onChangeTotalOnlineUser, this);
+        store?.addListener(EmitterEvents.BetLimitChange, this.onChangeBetLimit, this);
 
         store?.wakeUp();
     }
 
-    onDestroy() {
+    clearRenderListeners() {
         const store = this._gameData?.getStore(Store.GameInfo);
-        store?.removeListener(EmitterEvents.RtpChange, this.onChangeRTP);
-        store?.removeListener(EmitterEvents.TotalOnlineChange, this.onChangeTotalOnlineUser);
-        store?.removeListener(EmitterEvents.BetLimitChange, this.onChangeBetLimit);
+        store?.removeAll(this);
     }
 
     onChangeBetLimit = (data: { minBet: number; maxBet: number }) => {

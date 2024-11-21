@@ -16,26 +16,22 @@ export default class StatusGameRender extends RenderItem {
     init(data: GameData) {
         this._gameData = data;
         const store = data.getStore(Store.GameInfo);
-        store?.addListener(EmitterEvents.PlacingBet, this.onPlacingBet);
-        store?.addListener(EmitterEvents.LockingBet, this.onLockingBet);
-        store?.addListener(EmitterEvents.Settling, this.onSettling);
-        store?.addListener(EmitterEvents.ActiveNewShoe, this.onActiveNewShoe);
+        store?.addListener(EmitterEvents.PlacingBet, this.onPlacingBet, this);
+        store?.addListener(EmitterEvents.LockingBet, this.onLockingBet, this);
+        store?.addListener(EmitterEvents.Settling, this.onSettling, this);
+        store?.addListener(EmitterEvents.ActiveNewShoe, this.onActiveNewShoe, this);
 
         const disableStore = data.getStore(Store.DisableGame);
-        disableStore?.addListener(EmitterEvents.DisabledGame, this.onChangeDisabledGame);
+        disableStore?.addListener(EmitterEvents.DisabledGame, this.onChangeDisabledGame, this);
 
         store?.wakeUp();
     }
 
-    onDestroy() {
+    clearRenderListeners() {
         const store = this._gameData?.getStore(Store.GameInfo);
-        store?.removeListener(EmitterEvents.PlacingBet, this.onPlacingBet);
-        store?.removeListener(EmitterEvents.LockingBet, this.onLockingBet);
-        store?.removeListener(EmitterEvents.Settling, this.onSettling);
-        store?.removeListener(EmitterEvents.ActiveNewShoe, this.onActiveNewShoe);
-
+        store?.removeAll(this);
         const disableStore = this._gameData?.getStore(Store.DisableGame);
-        disableStore?.removeListener(EmitterEvents.DisabledGame, this.onChangeDisabledGame);
+        disableStore?.removeAll(this);
     }
 
     onChangeDisabledGame = (data: boolean) => {

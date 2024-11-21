@@ -22,20 +22,20 @@ export default class ScoreboardRender extends RenderItem {
     init(data: GameData) {
         this._gameData = data;
         const store = data.getStore(Store.RoundHistory);
-        store?.addListener(EmitterEvents.RoundHistoryChange, this.onData);
+        store?.addListener(EmitterEvents.RoundHistoryChange, this.onData, this);
 
         const infoStore = data.getStore(Store.GameInfo);
-        infoStore?.addListener(EmitterEvents.LockingBet, this.showNextNode);
+        infoStore?.addListener(EmitterEvents.LockingBet, this.showNextNode, this);
 
         store?.wakeUp();
     }
 
-    onDestroy() {
+    clearRenderListeners() {
         const store = this._gameData?.getStore(Store.RoundHistory);
-        store?.removeListener(EmitterEvents.RoundHistoryChange, this.onData);
+        store?.removeAll(this);
 
         const infoStore = this._gameData?.getStore(Store.GameInfo);
-        infoStore?.removeListener(EmitterEvents.LockingBet, this.showNextNode);
+        infoStore?.removeAll(this);
     }
 
     showNextNode = () => {
