@@ -15,13 +15,6 @@ export default class CategoryController extends Component {
     categories: string[] = [];
     allCategories: string[] = [];
 
-    get items(): Node[] {
-        if (this._items.length === 0) {
-            this._items = this.container.children;
-        }
-        return this._items;
-    }
-
     get toggles(): Toggle[] {
         if (this._toggles.length === 0) {
             this._toggles = this.getComponentsInChildren(Toggle);
@@ -88,7 +81,8 @@ export default class CategoryController extends Component {
 
     updateItemVisibility() {
         const categories = this.categories.length > 0 ? this.categories : this.allCategories;
-        this.items.forEach((item) => {
+        const items = this.container.children;
+        items.forEach((item) => {
             const comps = item.getComponents(CategoryItem);
             item.active = comps.some((comp) => categories.includes(comp.category) && this.extraFilter(item));
         });
