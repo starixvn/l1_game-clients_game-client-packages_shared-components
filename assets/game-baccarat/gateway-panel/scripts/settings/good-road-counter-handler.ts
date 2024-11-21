@@ -1,4 +1,4 @@
-import { _decorator, instantiate, macro, Node } from "cc";
+import { _decorator, instantiate, macro, Node, Prefab } from "cc";
 import Observer from "observer";
 import { BaccaratBigRoad } from "../../../../game/scoreboards/scripts/components/baccarat/big-road/baccarat-big-road";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -9,8 +9,8 @@ const { render, handle } = Observer;
 
 @ccclass("GoodRoadCounterHandler")
 export class GoodRoadCounterHandler extends ObserverComponent {
-    @property(Node)
-    nodeSample: Node = null;
+    @property(Prefab)
+    itemPrefab: Prefab = null;
 
     @property(Node)
     container: Node = null;
@@ -21,9 +21,10 @@ export class GoodRoadCounterHandler extends ObserverComponent {
         Object.keys(dataGames).forEach((id) => {
             const gameData = dataGames[id];
 
-            const node = instantiate(this.nodeSample);
+            const node = instantiate(this.itemPrefab);
             this.container.addChild(node);
             node.active = true;
+            node.name = id;
 
             const renderItem = node.getComponent(RenderItem);
             renderItem.init(gameData);

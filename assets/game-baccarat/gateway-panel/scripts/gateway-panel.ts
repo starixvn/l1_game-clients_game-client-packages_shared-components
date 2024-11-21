@@ -138,10 +138,6 @@ export class GatewayPanel extends ObserverComponent {
     }
 
     onDestroy(): void {
-        Object.keys(this.dataGames).forEach((gameId) => {
-            const gameData: GameDataBase = this.dataGames[gameId];
-            gameData.clearStoreListeners();
-        });
         this.dataGames = {};
         super.onDestroy();
     }
