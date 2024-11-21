@@ -109,14 +109,7 @@ export class GatewayPanel extends ObserverComponent {
                           return !categories.some((category) => categoryFilter.includes(category));
                       });
 
-            for (const gameId of firstGameIds) {
-                const node = this.createItemForGameId(+gameId);
-                this.container.addChild(node);
-                this.categoryController.updateVisibility();
-                await AnimationUtils.delayTime(0.1);
-            }
-
-            for (const gameId of otherGameIds) {
+            for (const gameId of [...firstGameIds, ...otherGameIds]) {
                 const node = this.createItemForGameId(+gameId);
                 this.container.addChild(node);
                 this.categoryController.updateVisibility();
