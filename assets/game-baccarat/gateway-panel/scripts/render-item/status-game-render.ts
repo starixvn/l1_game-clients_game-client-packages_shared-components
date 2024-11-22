@@ -1,6 +1,5 @@
 import { _decorator, Node } from "cc";
 import { EmitterEvents, Store } from "../models/definitions";
-import { GameData } from "../models/game-data";
 import RenderItem from "./render-item";
 const { ccclass, property } = _decorator;
 
@@ -8,8 +7,6 @@ const { ccclass, property } = _decorator;
 export default class StatusGameRender extends RenderItem {
     @property({ type: Node })
     nodes: Node[] = [];
-
-    private _gameData: GameData = null;
 
     private _isNewShoe = false;
 

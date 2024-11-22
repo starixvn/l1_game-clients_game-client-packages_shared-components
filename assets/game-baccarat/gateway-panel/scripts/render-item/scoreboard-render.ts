@@ -4,7 +4,6 @@ import { Scoreboard } from "../../../../game/scoreboards/scripts/components/scor
 import { ScoreboardDataConverter } from "../../../../game/scoreboards/scripts/components/scoreboard-converter";
 import { ScoreboardDerived } from "../../../../game/scoreboards/scripts/components/scoreboard-derived";
 import { EmitterEvents, Store } from "../models/definitions";
-import { GameData } from "../models/game-data";
 import RenderItem from "./render-item";
 const { ccclass, property } = _decorator;
 
@@ -16,11 +15,9 @@ export default class ScoreboardRender extends RenderItem {
     @property(ResultPercentage)
     resultPercentage: ResultPercentage = null;
 
-    private _gameData: GameData = null;
-
     private rounds = [];
-    init(data: GameData) {
-        this._gameData = data;
+    onLoad() {
+        const data = this._gameData;
         const store = data.getStore(Store.RoundHistory);
         store?.addListener(EmitterEvents.RoundHistoryChange, this.onData, this);
 
