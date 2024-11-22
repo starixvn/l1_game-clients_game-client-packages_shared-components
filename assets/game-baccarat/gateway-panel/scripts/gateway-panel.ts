@@ -101,14 +101,7 @@ export class GatewayPanel extends ObserverComponent {
                           return categories.some((category) => categoryFilter.includes(category));
                       });
 
-            const otherGameIds =
-                this.goodRoads.length > 0
-                    ? this.orderGameIds.filter((gameId) => !this.goodRoads.includes(gameId))
-                    : this.orderGameIds.filter((gameId) => {
-                          const { categories } = info[gameId];
-                          return !categories.some((category) => categoryFilter.includes(category));
-                      });
-
+            const otherGameIds = this.orderGameIds.filter((gameId) => !firstGameIds.includes(gameId));
             for (const gameId of [...firstGameIds, ...otherGameIds]) {
                 const node = this.createItemForGameId(+gameId);
                 this.container.addChild(node);
