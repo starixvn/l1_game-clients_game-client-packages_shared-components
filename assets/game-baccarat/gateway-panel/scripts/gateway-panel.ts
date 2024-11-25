@@ -114,11 +114,15 @@ export class GatewayPanel extends ObserverComponent {
 
     updateSiblingIndex() {
         const orderIds = this.isShowAll || this.goodRoads.length === 0 ? this.orderGameIds : this.goodRoads;
-
-        this.container.children.forEach((child) => {
-            const gameId = +child.name;
-            child.setSiblingIndex(orderIds.indexOf(gameId));
+        // const layout = this.container.getComponent(Layout);
+        // layout.enabled = false;
+        orderIds.forEach((gameId, index) => {
+            const gameItem = this.container.getChildByName(`${gameId}`);
+            if (gameItem) {
+                gameItem.setSiblingIndex(index);
+            }
         });
+        // layout.enabled = true;
     }
 
     onClickSetting() {

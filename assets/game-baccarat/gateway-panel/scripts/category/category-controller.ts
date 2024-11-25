@@ -79,7 +79,7 @@ export default class CategoryController extends Component {
         );
     }
 
-    updateItemVisibility() {
+    private updateItemVisibility() {
         const categories = this.categories.length > 0 ? this.categories : this.allCategories;
         const items = this.container.children;
         items.forEach((item) => {
