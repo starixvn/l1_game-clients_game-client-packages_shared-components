@@ -144,8 +144,11 @@ export class GatewayPanelStore {
         });
 
         const goodRoads = goodRoadGames.map((game) => game.id);
-        this.goodRoads = goodRoads;
-        this.setCounter(this.goodRoads.length);
+
+        if (JSON.stringify(mobx.toJS(this.goodRoads)) !== JSON.stringify(goodRoads)) {
+            this.goodRoads = goodRoads;
+            this.setCounter(this.goodRoads.length);
+        }
     }
 
     saveCategoryFilter(categoryFilter: string[]) {

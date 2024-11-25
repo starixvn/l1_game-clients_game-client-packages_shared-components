@@ -113,7 +113,7 @@ export class GatewayPanel extends ObserverComponent {
     }
 
     updateSiblingIndex() {
-        const orderIds = this.isShowAll ? this.orderGameIds : this.goodRoads;
+        const orderIds = this.isShowAll || this.goodRoads.length === 0 ? this.orderGameIds : this.goodRoads;
 
         this.container.children.forEach((child) => {
             const gameId = +child.name;
