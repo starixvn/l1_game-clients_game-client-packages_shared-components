@@ -37,15 +37,20 @@ export class GoodRoadCounterHandler extends ObserverComponent {
         this.schedule(this.checkGoodRoad, 1 / 30, macro.REPEAT_FOREVER);
     }
 
-    @handle(GatewayPanelStore, (store, goodRoadGameIds: number[]) => store.updateGoodRoadGames(goodRoadGameIds))
+    @handle(GatewayPanelStore, (store, goodRoadGames: { id; goodRoad }[]) => store.updateGoodRoadGames(goodRoadGames))
     checkGoodRoad() {
-        const goodRoadGameIds = Object.keys(this.bigRoads)
-            .filter((id) => {
+        const goodRoadGames = Object.keys(this.bigRoads)
+            .map((id) => {
                 const bigRoad: BaccaratBigRoad = this.bigRoads[id];
-                return bigRoad?.existGoodRoad;
+                return bigRoad?.currentGoodRoad
+                    ? {
+                          id: +id,
+                          goodRoad: bigRoad.currentGoodRoad,
+                      }
+                    : null;
             })
-            .map((id) => +id)
-            .sort((a, b) => a - b);
-        return goodRoadGameIds;
+            .filter((item) => item);
+
+        return goodRoadGames;
     }
 }

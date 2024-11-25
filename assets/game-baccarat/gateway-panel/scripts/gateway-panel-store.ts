@@ -133,7 +133,17 @@ export class GatewayPanelStore {
         }
     }
 
-    updateGoodRoadGames(goodRoads: number[]) {
+    updateGoodRoadGames(goodRoadGames: { id: number; goodRoad: SCScoreboard.GoodRoad }[]) {
+        goodRoadGames.sort((a, b) => {
+            const getIndex = (goodRoad: SCScoreboard.GoodRoad) => {
+                const index = this.config.findIndex((config) => goodRoad.name === config.pattern.name);
+                return index;
+            };
+
+            return getIndex(a.goodRoad) - getIndex(b.goodRoad);
+        });
+
+        const goodRoads = goodRoadGames.map((game) => game.id);
         this.goodRoads = goodRoads;
         this.setCounter(this.goodRoads.length);
     }

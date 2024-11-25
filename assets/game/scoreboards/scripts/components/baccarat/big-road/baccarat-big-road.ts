@@ -18,7 +18,7 @@ export class BaccaratBigRoad extends Scoreboard {
     @property
     noRender = false;
 
-    existGoodRoad = false;
+    currentGoodRoad: SCScoreboard.GoodRoad = null;
 
     private cached = null;
     updateGoodRoadPatterns(patterns: SCScoreboard.ColumnLengthPattern[]) {
@@ -35,11 +35,11 @@ export class BaccaratBigRoad extends Scoreboard {
         const converted = this.converter.convert(rounds);
         const data = this.algorithm.apply(converted);
 
-        let goodRoad;
+        let goodRoad = null;
         if (this.goodRoad) {
             goodRoad = (this.algorithm as ScoreboardBigRoadAlgorithm).getGoodRoad();
         }
-        this.existGoodRoad = !!goodRoad;
+        this.currentGoodRoad = goodRoad;
 
         if (this.noRender) {
             return;

@@ -71,6 +71,7 @@ export class GatewayPanel extends ObserverComponent {
         this.categoryController.updateVisibility();
 
         this.checkEmptyListVisibility();
+        this.updateSiblingIndex();
     }
 
     @render(GatewayPanelStore, (store) => store.categoryFilter)
@@ -112,9 +113,11 @@ export class GatewayPanel extends ObserverComponent {
     }
 
     updateSiblingIndex() {
+        const orderIds = this.isShowAll ? this.orderGameIds : this.goodRoads;
+
         this.container.children.forEach((child) => {
             const gameId = +child.name;
-            child.setSiblingIndex(this.orderGameIds.indexOf(gameId));
+            child.setSiblingIndex(orderIds.indexOf(gameId));
         });
     }
 
