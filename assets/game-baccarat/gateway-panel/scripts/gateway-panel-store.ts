@@ -33,7 +33,7 @@ export class GatewayPanelStore {
             this.syncStorage();
         }, 0);
     }
-    private readonly config = [
+    readonly config = [
         { key: "streak_banker", pattern: STREAK_BANKER },
         { key: "streak_player", pattern: STREAK_PLAYER },
 

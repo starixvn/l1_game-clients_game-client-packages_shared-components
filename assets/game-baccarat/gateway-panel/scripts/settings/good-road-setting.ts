@@ -1,16 +1,6 @@
 import { _decorator, log, Node, Toggle } from "cc";
 import Observer from "observer";
 import LocalizedLabelWithFormat from "../../../../../../i18n/assets/LocalizedLabelWithFormat";
-import {
-    ONE_LOUNGE_2_ROOMS_BANKER,
-    ONE_LOUNGE_2_ROOMS_PLAYER,
-    PATTED_EAT_BANKER,
-    PATTED_EAT_PLAYER,
-    PING_PONG_BANKER,
-    PING_PONG_PLAYER,
-    STREAK_BANKER,
-    STREAK_PLAYER,
-} from "../../../../game/scoreboards/scripts/components/baccarat/big-road/baccarat-big-road-good-road-patterns";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { GatewayPanelStore } from "../gateway-panel-store";
 const { ccclass, property } = _decorator;
@@ -27,22 +17,17 @@ export class GoodRoadSetting extends ObserverComponent {
 
     selectedFlag = {};
 
-    private readonly configToggles = [
-        { key: "streak_banker", pattern: STREAK_BANKER },
-        { key: "streak_player", pattern: STREAK_PLAYER },
-
-        { key: "ping_pong_banker", pattern: PING_PONG_BANKER },
-        { key: "ping_pong_player", pattern: PING_PONG_PLAYER },
-
-        { key: "patted_eat_banker", pattern: PATTED_EAT_BANKER },
-        { key: "patted_eat_player", pattern: PATTED_EAT_PLAYER },
-
-        { key: "one_lounge_two_bedrooms_banker", pattern: ONE_LOUNGE_2_ROOMS_BANKER },
-        { key: "one_lounge_two_bedrooms_player", pattern: ONE_LOUNGE_2_ROOMS_PLAYER },
-    ];
+    private configToggles = [];
 
     onLoad() {
         this.patternToggles = this.patternToggleContainer.getComponentsInChildren(Toggle);
+
+        super.onLoad();
+    }
+
+    @render(GatewayPanelStore, (store) => store.config)
+    renderConfig(config) {
+        this.configToggles = config;
 
         try {
             this.patternToggles.forEach((toggle, index) => {
@@ -54,7 +39,6 @@ export class GoodRoadSetting extends ObserverComponent {
         } catch (e) {
             log(e);
         }
-        super.onLoad();
     }
 
     onToggleAll(toggle: Toggle) {
