@@ -29,6 +29,10 @@ export class SharpnessLabel extends Component {
         if (this.label && this.label.overflow !== Label.Overflow.NONE) {
             const transform = this.label.getComponent(UITransform);
             transform.width *= this.fontSizeWeight;
+
+            if (this.label.overflow !== Label.Overflow.RESIZE_HEIGHT) {
+                transform.height *= this.fontSizeWeight;
+            }
         }
 
         if (this.richText) {
