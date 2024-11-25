@@ -446,8 +446,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.5,
-      "y": 0.5,
+      "x": 1,
+      "y": 1,
       "z": 1
     },
     "_mobility": 0,
@@ -474,7 +474,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 230,
+      "width": 120,
       "height": 38.124
     },
     "_anchorPoint": {
@@ -513,12 +513,12 @@
     "_string": "Hellooo",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 33,
-    "_fontSize": 32,
+    "_actualFontSize": 16,
+    "_fontSize": 16,
     "_fontFamily": "Arial",
     "_lineHeight": 32,
     "_overflow": 2,
-    "_enableWrapText": true,
+    "_enableWrapText": false,
     "_font": {
       "__uuid__": "41a12541-a4db-4259-b803-4c477054c858",
       "__expectedType__": "cc.TTFFont"
@@ -615,7 +615,6 @@
     "__prefab": {
       "__id__": 25
     },
-    "isBitmapCacheMode": false,
     "_id": ""
   },
   {
@@ -649,7 +648,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 125,
+      "width": 130,
       "height": 19
     },
     "_anchorPoint": {
@@ -739,7 +738,7 @@
     "_constraint": 0,
     "_constraintNum": 2,
     "_affectedByScale": true,
-    "_isAlign": false,
+    "_isAlign": true,
     "_id": ""
   },
   {
@@ -957,7 +956,6 @@
     "__prefab": {
       "__id__": 41
     },
-    "isBitmapCacheMode": false,
     "_id": ""
   },
   {
