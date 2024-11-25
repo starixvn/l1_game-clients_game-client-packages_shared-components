@@ -42,9 +42,11 @@ export default class StatusGameRender extends RenderItem {
 
     onActiveNewShoe = (show: boolean) => {
         this._isNewShoe = show;
-        this.nodes.forEach((node) => {
-            node.active = false;
-        });
+        if (show) {
+            this.nodes.forEach((node) => {
+                node.active = false;
+            });
+        }
     };
 
     onPlacingBet = () => {
