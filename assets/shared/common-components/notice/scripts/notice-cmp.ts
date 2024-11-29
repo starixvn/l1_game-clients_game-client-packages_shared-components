@@ -4,7 +4,7 @@ const { ccclass, property } = _decorator;
 
 import gc from "@sg/game-client-base";
 
-enum NoticeType {
+export enum NoticeType {
     Info = 0,
     Error = 1,
 }
