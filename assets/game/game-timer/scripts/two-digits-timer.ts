@@ -19,8 +19,10 @@ export default class TwoDigitsTimer extends ObserverComponent {
     @property
     animated = true;
 
-    protected readonly lockingColor: Color = Color.RED;
-    protected readonly normalColor: Color = Color.WHITE;
+    @property
+    lockingColor = "#bf0000";
+
+    protected normalColor: Color = Color.WHITE;
 
     setTime(time: number) {
         const text = `${time}`.padStart(2, "0");
@@ -62,7 +64,7 @@ export default class TwoDigitsTimer extends ObserverComponent {
     }
 
     setState(state: string) {
-        const color = state === Rounds.ROUND_STATE.LOCKING_BET ? this.lockingColor : this.normalColor;
+        const color = state === Rounds.ROUND_STATE.LOCKING_BET ? new Color(this.lockingColor) : this.normalColor;
         this.setColor(color);
     }
 }
