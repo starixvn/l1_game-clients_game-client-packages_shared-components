@@ -455,6 +455,7 @@ export class ChipFlying extends ObserverComponent {
     protected placeAroundTablePlayerChip(visiblePlayerPlaceChip: IAroundTablePlayerPlaceChip) {
         const { chipValues, chipBox, startNode, isHiddenPlayer, betChoice } = visiblePlayerPlaceChip ?? {};
         if (chipValues) {
+            this.playSoundSingleChip();
             Object.keys(chipValues).forEach((chipValue) => {
                 let count = chipValues[chipValue];
                 for (; count > 0; count--) {
