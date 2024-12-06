@@ -19,8 +19,8 @@ export default class TwoDigitsTimer extends ObserverComponent {
     @property
     animated = true;
 
-    @property
-    lockingColor = "#bf0000";
+    @property(Color)
+    lockingColor: Color = new Color(255, 0, 0, 255);
 
     protected normalColor: Color = Color.WHITE;
 
