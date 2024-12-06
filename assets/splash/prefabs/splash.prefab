@@ -1386,7 +1386,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "c8vs8wAFdOhYUyJoatkTj+"
+    "fileId": "98/w8QbZBDUaFjwViA04fv"
   },
   {
     "__type__": "5d5a9FKzElMhqBiTAZ/NYc6",
@@ -1401,15 +1401,15 @@
       "__id__": 64
     },
     "folder": "splash-resources",
-    "key": "game_name",
+    "key": "game-name",
     "extension": "png",
-    "localization": true,
+    "localization": false,
     "originalSize": true,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "56xYY+bLZOKpHMT0T3rhiY"
+    "fileId": "c1pf5rD25BP7KOdj4y758F"
   },
   {
     "__type__": "cc.PrefabInfo",
