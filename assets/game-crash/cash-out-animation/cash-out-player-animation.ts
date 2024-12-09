@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { CCString, Color, Label, Node, UITransform, _decorator, sp, tween, v3 } from "cc";
+import { CCString, Color, Label, Node, UITransform, _decorator, math, sp, tween, v3 } from "cc";
 import { random } from "lodash-es";
 import Observer from "observer";
 import { NodeContainer } from "../../shared/common-components/node-container/node-container";
@@ -49,35 +49,49 @@ export class CashOutPlayerAnimation extends NodeContainer {
         this.createCashOutPlayer(cashOut?.win || 0, true);
     }
 
-    private createCashOutPlayer(winValue: number, isMainPlayer = false) {
+    protected createCashOutPlayer(winValue: number, isMainPlayer = false) {
         const node = this.createNode();
-        const currentPosition = this.containerSpaceman
-            .getComponent(UITransform)
-            .convertToNodeSpaceAR(node.getComponent(UITransform).convertToWorldSpaceAR(v3(0, 0, 0)));
-        const randomPosition = v3(currentPosition.x + random(-200, 100), -random(20, 50));
+        const randomPosition = this.getRandomPosition(node);
         ComponentUtils.moveToOtherNode(node, this.containerSpaceman);
         if (node?.children[0]) {
             const animationName = isMainPlayer ? CashOutAnim.MainPlayer : CashOutAnim.OtherPlayer;
             const spine = node?.getComponentInChildren(sp.Skeleton);
             spine.sockets[0].path = isMainPlayer ? this.pathBones[PathBonesIndex.Main] : this.pathBones[PathBonesIndex.Player];
-            const animationDuration = spine?.findAnimation(animationName).duration;
-            const lblWin = spine.node?.getComponentInChildren(Label);
-            if (lblWin) {
-                lblWin.string = FormatUtils.numberWithCommas(winValue, 2);
-                lblWin.color = new Color().fromHEX(isMainPlayer ? ColorWinValue.MainPlayer : ColorWinValue.OtherPlayer);
-            }
+            this.handleWinnings(spine, winValue, isMainPlayer);
+            this.handleAnimation(node, spine, animationName, randomPosition);
+        }
+    }
+
+    handleWinnings(spine: sp.Skeleton, winValue: number, isMainPlayer: boolean) {
+        const lblWin = spine.node?.getComponentInChildren(Label);
+        if (lblWin) {
+            lblWin.string = FormatUtils.numberWithCommas(winValue, 2);
+            lblWin.color = new Color().fromHEX(isMainPlayer ? ColorWinValue.MainPlayer : ColorWinValue.OtherPlayer);
+        }
+    }
+
+    getRandomPosition(node: Node) {
+        const currentPosition = this.containerSpaceman
+            .getComponent(UITransform)
+            .convertToNodeSpaceAR(node.getComponent(UITransform).convertToWorldSpaceAR(v3(0, 0, 0)));
+        return v3(currentPosition.x + random(-200, 100), -random(20, 50));
+    }
+
+    handleAnimation(node: Node, spine: sp.Skeleton, animationName: string, randomPosition: math.Vec3) {
+        const animationDuration = spine?.findAnimation(animationName).duration;
+        node &&
             tween(node)
                 .parallel(
                     tween(node).call(() => {
                         spine && AnimationUtils.playSpine(spine, animationName);
                     }),
-                    tween(node).to(animationDuration, {
-                        position: randomPosition,
-                        scale: v3(1, 1, 1).multiplyScalar(0.5),
-                    }),
+                    randomPosition &&
+                        tween(node).to(animationDuration, {
+                            position: randomPosition,
+                            scale: v3(1, 1, 1).multiplyScalar(0.5),
+                        }),
                     tween(node).delay(animationDuration).destroySelf()
                 )
                 .start();
-        }
     }
 }
