@@ -31,6 +31,20 @@ export class CashOutPlayerAnimation extends NodeContainer {
     @property(CCString)
     pathBones = [];
 
+    protected currentPosition: math.Vec3 = null;
+
+    protected getScalar() {
+        return 0.5;
+    }
+
+    protected getRandomPositionX() {
+        return random(-200, 100);
+    }
+
+    protected getRandomPositionY() {
+        return -random(20, 50);
+    }
+
     @render(GameCrash.CrashOtherPlayer.OtherPlayerStore, (store) => store.otherPlayer, { fireImmediately: false })
     renderOtherPlayerCashOut(otherPlayer: gc.GameCrash.GameCrashServiceMessage.CrashOtherPlayer) {
         if (otherPlayer) {
@@ -71,10 +85,10 @@ export class CashOutPlayerAnimation extends NodeContainer {
     }
 
     getRandomPosition(node: Node) {
-        const currentPosition = this.containerSpaceman
+        this.currentPosition = this.containerSpaceman
             .getComponent(UITransform)
             .convertToNodeSpaceAR(node.getComponent(UITransform).convertToWorldSpaceAR(v3(0, 0, 0)));
-        return v3(currentPosition.x + random(-200, 100), -random(20, 50));
+        return v3(this.currentPosition.x + this.getRandomPositionX(), this.getRandomPositionY());
     }
 
     handleAnimation(node: Node, spine: sp.Skeleton, animationName: string, randomPosition: math.Vec3) {
@@ -87,17 +101,19 @@ export class CashOutPlayerAnimation extends NodeContainer {
         ];
 
         if (randomPosition) {
-            actions.push(
-                tween(node).to(animationDuration, {
-                    position: randomPosition,
-                    scale: v3(1, 1, 1).multiplyScalar(0.5),
-                })
-            );
+            actions.push(this.handleAnimRandomPosition(node, randomPosition, animationDuration));
         }
 
         node &&
             tween(node)
                 .parallel(...actions)
                 .start();
+    }
+
+    handleAnimRandomPosition(node: Node, randomPosition: math.Vec3, animationDuration: number) {
+        return tween(node).to(animationDuration, {
+            position: randomPosition,
+            scale: v3(1, 1, 1).multiplyScalar(this.getScalar()),
+        });
     }
 }
