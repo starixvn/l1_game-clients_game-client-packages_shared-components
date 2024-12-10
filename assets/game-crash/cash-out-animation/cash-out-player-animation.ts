@@ -79,19 +79,25 @@ export class CashOutPlayerAnimation extends NodeContainer {
 
     handleAnimation(node: Node, spine: sp.Skeleton, animationName: string, randomPosition: math.Vec3) {
         const animationDuration = spine?.findAnimation(animationName).duration;
+        const actions = [
+            tween(node).call(() => {
+                spine && AnimationUtils.playSpine(spine, animationName);
+            }),
+            tween(node).delay(animationDuration).destroySelf(),
+        ];
+
+        if (randomPosition) {
+            actions.push(
+                tween(node).to(animationDuration, {
+                    position: randomPosition,
+                    scale: v3(1, 1, 1).multiplyScalar(0.5),
+                })
+            );
+        }
+
         node &&
             tween(node)
-                .parallel(
-                    tween(node).call(() => {
-                        spine && AnimationUtils.playSpine(spine, animationName);
-                    }),
-                    randomPosition &&
-                        tween(node).to(animationDuration, {
-                            position: randomPosition,
-                            scale: v3(1, 1, 1).multiplyScalar(0.5),
-                        }),
-                    tween(node).delay(animationDuration).destroySelf()
-                )
+                .parallel(...actions)
                 .start();
     }
 }
