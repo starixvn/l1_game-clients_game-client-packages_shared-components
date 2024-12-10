@@ -34,7 +34,7 @@ export class CustomizeLogoSplash extends Component {
         }
 
         const logoName = `logo_${operator.toLowerCase()}`;
-        const logoPath = `${this.href}${logoName}.png?v=${this.versionImg}`;
+        const logoPath = `${this.href}images/${logoName}.png?v=${this.versionImg}`;
         assetManager.loadRemote<ImageAsset>(logoPath, (err, imageAsset) => {
             if (!isValidNode(this)) {
                 return;
@@ -50,7 +50,7 @@ export class CustomizeLogoSplash extends Component {
 
     renderTagLine() {
         const lang = i18n._language;
-        const taglinePath = `${this.href}splash_text_${lang}.png?v=${this.versionImg}`;
+        const taglinePath = `${this.href}images/splash_text_${lang}.png?v=${this.versionImg}`;
         assetManager.loadRemote<ImageAsset>(taglinePath, (err, imageAsset) => {
             if (!isValidNode(this)) {
                 return;
