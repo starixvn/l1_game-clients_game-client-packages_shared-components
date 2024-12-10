@@ -1,5 +1,5 @@
-import { Button, Label, Node, Sprite, SpriteFrame, _decorator } from "cc";
-const { ccclass, property } = _decorator;
+import { Button, _decorator } from "cc";
+const { ccclass } = _decorator;
 
 import gc from "@sg/game-client-base";
 import { NoticeCmp, NoticeType } from "../../../shared/common-components/notice/scripts/notice-cmp";
@@ -14,12 +14,12 @@ export class NoticeDirectCmp extends NoticeCmp {
         showBtnConfirmButton?: boolean;
         noticeInfo?: gc.Notices.NoticeInfo;
     }) {
-        const isHoldPopup =
+        const notToHidePopup =
             data.noticeInfo === gc.Notices.NoticeInfo.DisabledGame || data.noticeInfo === gc.Notices.NoticeInfo.LostGameConnection;
-        if (isHoldPopup) {
-            this.btnConfirm.active = false;
+        if (notToHidePopup) {
             const bgCpm = this.nodeFadeBackground?.getComponent(Button);
-            bgCpm && (bgCpm.clickEvents = null);
+            bgCpm && (bgCpm.clickEvents = []);
+            data.showBtnConfirmButton = false;
         }
 
         super.setData(data);
