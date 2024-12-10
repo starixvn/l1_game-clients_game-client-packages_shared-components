@@ -32,6 +32,6 @@ export class CustomizeBackground extends Component {
     getAbsolutePath(isLocaleImage: boolean, versionImg: number): string {
         const { origin, pathname } = window.location;
         const languageId = isLocaleImage ? `_${Translator.getCurrentLanguageId()}` : "";
-        return `${origin}${pathname}splash-resources/game_background${languageId}.png?v=${versionImg}`;
+        return `${origin}${pathname}splash-resources/game_background${languageId}.webp?v=${versionImg}`;
     }
 }

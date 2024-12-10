@@ -13,7 +13,7 @@ export class HtmlSiteSprite extends Component {
     key = "game_background";
 
     @property
-    extension = "png";
+    extension = "webp";
 
     @property
     localization = false;

@@ -200,7 +200,7 @@
     },
     "folder": "splash-resources",
     "key": "game_background",
-    "extension": "png",
+    "extension": "webp",
     "localization": false,
     "originalSize": true,
     "_id": ""
