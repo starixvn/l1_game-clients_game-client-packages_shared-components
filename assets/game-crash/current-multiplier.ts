@@ -19,7 +19,7 @@ export class CurrentMultiplier extends ObserverComponent {
     nodeCrashText: Node = null;
 
     private readonly crashSound = "plane_explose";
-    private readonly rocketFlySound = "rocket_fly";
+    private readonly planeFlySound = "plane_flying";
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.multiplier, { fireImmediately: false })
     private setCurrentMultiplier(multiplier: number) {
@@ -37,8 +37,8 @@ export class CurrentMultiplier extends ObserverComponent {
     }
 
     @render(GameCrash.CrashMultiplier.MultiplierStore, (store) => store.playSoundRocketFly)
-    setSoundRocketFly(playSoundRocketFly: string) {
-        playSoundRocketFly ? this.playSoundRocketFly() : this.stopSoundRocketFly();
+    setSoundPlaneFly(playSoundRocketFly: string) {
+        playSoundRocketFly ? this.playSoundPlaneFly() : this.stopSoundPlaneFly();
     }
 
     setVisibility(status: boolean) {
@@ -60,12 +60,12 @@ export class CurrentMultiplier extends ObserverComponent {
     }
 
     @handle(gc.Audios.AudioHandler, (handle, { audioId, extra }) => handle.playStoppableSFX(audioId))
-    playSoundRocketFly() {
-        return { audioId: this.rocketFlySound, extra: true };
+    playSoundPlaneFly() {
+        return { audioId: this.planeFlySound, extra: true };
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.stopStoppableSFX(id))
-    stopSoundRocketFly() {
-        return this.rocketFlySound;
+    stopSoundPlaneFly() {
+        return this.planeFlySound;
     }
 }
