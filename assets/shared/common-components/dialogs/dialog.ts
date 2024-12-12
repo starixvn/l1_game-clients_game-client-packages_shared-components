@@ -1,5 +1,6 @@
-import { _decorator, Component, Node, v3 } from "cc";
+import { _decorator, Component, Node } from "cc";
 import { AnimationUtils } from "../../utils/utils";
+import { DialogTransition } from "./transition/dialog-transition";
 
 const { bounceIn, bounceOut, fadeIn, fadeOut, stopFade } = AnimationUtils;
 const { ccclass, property } = _decorator;
@@ -32,12 +33,16 @@ export class Dialog extends Component {
         }
 
         if (this.nodeBody) {
-            stopFade(this.nodeBody);
-            promises.push([fadeIn(this.nodeBody, 0.3), bounceIn(this.nodeBody, this.nodeBody.scale, this.appearDuration)]);
+            const transition = this.getBodyTransition();
+            promises.push(transition.show(true));
         }
 
         await Promise.all(promises);
         this.callBackFn?.();
+    }
+
+    getBodyTransition() {
+        return this.nodeBody.getComponent(DialogTransition) ?? this.nodeBody.addComponent(DialogTransition);
     }
 
     showQuickly() {
@@ -47,8 +52,7 @@ export class Dialog extends Component {
         }
 
         if (this.nodeBody) {
-            AnimationUtils.setOpacityNode(this.nodeBody, 255);
-            this.nodeBody.scale = v3(1, 1, 1);
+            this.getBodyTransition().show(false);
         }
 
         this.callBackFn?.();
@@ -60,7 +64,6 @@ export class Dialog extends Component {
             this.nodeFadeBackground.active = false;
         }
         if (this.nodeBody) {
-            stopFade(this.nodeBody);
             this.node?.destroy();
         }
     }
@@ -73,11 +76,11 @@ export class Dialog extends Component {
             );
         }
         if (this.nodeBody) {
-            stopFade(this.nodeBody);
-            fadeOut(this.nodeBody, this.appearDuration);
-            bounceOut(this.nodeBody, this.appearDuration).then(() => {
-                this.node?.destroy();
-            });
+            this.getBodyTransition()
+                .hide(true)
+                .then(() => {
+                    this.node?.destroy();
+                });
         }
     }
 }
