@@ -5,6 +5,8 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { AudioUtils } from "../../utils";
 import AudioManager from "../audio-manager";
+import { siteConfigs } from "../../../../../../../assets/scripts/site-configs";
+import { FunctionUtils } from "../../../../shared/utils";
 
 const { Audios, UserSettings, App, BrowserDomUtils, AppTypes, Auth } = gc;
 const { ccclass, property } = _decorator;
@@ -15,11 +17,21 @@ export type TAudioConfigs = {
 };
 
 export type TAudioValue = {
-    bundle: string;
+    bundle?: string;
     path: string;
     type: string;
     isMusicGame?: boolean;
     isLazyLoad?: boolean;
+    isRemote?: boolean;
+};
+
+export type IRemoteSoundConfigs = {
+    version: number;
+    defaultTheme: string;
+    backgroundMusic: {
+        version: number;
+    };
+    themes: string[];
 };
 
 @ccclass
@@ -46,6 +58,8 @@ export class AudioContainer extends ObserverComponent {
     protected isPlayMusic = false;
     protected isPlaySFX = false;
     protected currentPlayTime = {};
+    protected remoteSoundConfigs: IRemoteSoundConfigs = null;
+    protected remoteAudioConfigs: TAudioConfigs = null;
 
     setIsUserGesture(isUserGesture: boolean) {
         this.isUserGesture = isUserGesture;
@@ -53,13 +67,16 @@ export class AudioContainer extends ObserverComponent {
 
     onLoad() {
         super.onLoad();
-        this.loadAudios().catch((error) => log(error));
         this.musicSource.node.on(AudioSource.EventType.STARTED, () => this.updateMusicState(Audios.MusicState.STARTED));
         this.musicSource.node.on(AudioSource.EventType.ENDED, () => this.updateMusicState(Audios.MusicState.ENDED));
 
         // The AudioContext was not allowed to start.
         // It must be resumed (or created) after a user gesture on the page
         this.initTouchBind();
+
+        this.getRemoteSoundConfigs().finally(() => {
+            this.loadAudios().catch((error) => log(error));
+        });
     }
 
     onDestroy(): void {
@@ -68,32 +85,35 @@ export class AudioContainer extends ObserverComponent {
     }
 
     async loadAudios() {
-        const audioConfigs: TAudioConfigs = {
-            ...this.sharedAudioConfig?.json,
-            ...this.audioConfig?.json,
-        };
+        this.getRemoteAudioConfig().finally(() => {
+            const audioConfigs: TAudioConfigs = {
+                ...this.sharedAudioConfig?.json,
+                ...this.remoteAudioConfigs,
+                ...this.audioConfig?.json,
+            };
 
-        AudioManager.audioConfigs(audioConfigs);
-        const keys = Object.keys(audioConfigs);
-        for (const key of keys) {
-            const value = audioConfigs[key];
-            if (Object.keys(value).length === 0) {
-                continue;
-            }
-            if (value.type === "music") {
-                if (value?.isMusicGame) {
-                    this.musicGameIds.push(key);
-                } else {
-                    this.musicIds.push(key);
+            AudioManager.audioConfigs(audioConfigs);
+            const keys = Object.keys(audioConfigs);
+            for (const key of keys) {
+                const value = audioConfigs[key];
+                if (Object.keys(value).length === 0) {
+                    continue;
                 }
-            } else {
-                this.audios.push(key);
+                if (value.type === "music") {
+                    if (value?.isMusicGame) {
+                        this.musicGameIds.push(key);
+                    } else {
+                        this.musicIds.push(key);
+                    }
+                } else {
+                    this.audios.push(key);
+                }
             }
-        }
 
-        this.registerMusicIds();
-        this.registerMusicGameIds();
-        this.audiosLoaded();
+            this.registerMusicIds();
+            this.registerMusicGameIds();
+            this.audiosLoaded();
+        });
     }
 
     protected initTouchBind() {
@@ -274,6 +294,15 @@ export class AudioContainer extends ObserverComponent {
         currentLoadAssetTime: number,
         isPlay: boolean
     ): Promise<{ audioClip: AudioClip | null; currentLoadAssetTime: number; isPlay: boolean }> => {
+        if (audioValue?.isRemote) {
+            const url = `${this.getRemoteSoundPath()}/${this.remoteSoundConfigs.defaultTheme}/${
+                this.remoteAudioConfigs[soundId].path
+            }.mp3?v=${this.remoteSoundConfigs.version}`;
+            const audioClip = await AudioUtils.getRemoteAudioClip(url);
+
+            return { audioClip, currentLoadAssetTime, isPlay };
+        }
+
         const { bundle, path } = AudioUtils.getAudioInfo(audioValue, soundId);
 
         if (!bundle || !path) {
@@ -284,4 +313,28 @@ export class AudioContainer extends ObserverComponent {
 
         return { audioClip, currentLoadAssetTime, isPlay };
     };
+
+    async getRemoteSoundConfigs() {
+        try {
+            const configUrl = `${this.getRemoteSoundPath()}/info.json?v=${Date.now()}`;
+            const jsonAsset = (await FunctionUtils.loadRemote(configUrl)) as JsonAsset;
+            this.remoteSoundConfigs = (jsonAsset?.json as IRemoteSoundConfigs) ?? null;
+        } catch (error) {
+            log("Get config remote sounds failed!");
+        }
+    }
+
+    async getRemoteAudioConfig() {
+        try {
+            const configUrl = `${this.getRemoteSoundPath()}/${this.remoteSoundConfigs.defaultTheme}/info.json?v=${Date.now()}`;
+            const jsonAsset = (await FunctionUtils.loadRemote(configUrl)) as JsonAsset;
+            this.remoteAudioConfigs = (jsonAsset?.json as TAudioConfigs) ?? null;
+        } catch (error) {
+            log("Get remote audio config failed!");
+        }
+    }
+
+    getRemoteSoundPath() {
+        return `${gc.UrlUtils.buildShareResource(siteConfigs)}/sounds/themes`;
+    }
 }

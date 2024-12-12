@@ -93,47 +93,5 @@
         "bundle": "shared-bundle",
         "path": "betting/stop-betting_zh_tw",
         "isLazyLoad": true
-    },
-    "bgm-song1": {
-        "bundle": "shared-bundle",
-        "path": "background-music/bgm-song1",
-        "type": "music",
-        "isLazyLoad": true
-    },
-    "bgm-song2": {
-        "bundle": "shared-bundle",
-        "path": "background-music/bgm-song2",
-        "type": "music",
-        "isLazyLoad": true
-    },
-    "bgm-song3": {
-        "bundle": "shared-bundle",
-        "path": "background-music/bgm-song3",
-        "type": "music",
-        "isLazyLoad": true
-    },
-    "bgm-song4": {
-        "bundle": "shared-bundle",
-        "path": "background-music/bgm-song4",
-        "type": "music",
-        "isLazyLoad": true
-    },
-    "bgm-song5": {
-        "bundle": "shared-bundle",
-        "path": "background-music/bgm-song5",
-        "type": "music",
-        "isLazyLoad": true
-    },
-    "bgm-song6": {
-        "bundle": "shared-bundle",
-        "path": "background-music/bgm-song6",
-        "type": "music",
-        "isLazyLoad": true
-    },
-    "bgm-song7": {
-        "bundle": "shared-bundle",
-        "path": "background-music/bgm-song7",
-        "type": "music",
-        "isLazyLoad": true
     }
 }

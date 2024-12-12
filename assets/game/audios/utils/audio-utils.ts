@@ -24,6 +24,16 @@ export const getAudioClip = async (bundle: string, path: string): Promise<AudioC
     }
 };
 
+export const getRemoteAudioClip = async (url: string): Promise<AudioClip | null> => {
+    try {
+        const loadedClip = await bundleManager.getRemoteAsset<AudioClip>(url);
+        return loadedClip as AudioClip;
+    } catch (error) {
+        console.error(`Failed to load audio clip from bundle: ${error}`);
+        return null;
+    }
+};
+
 export const getDurationClip = async (soundId: string, maxWaitingTime = 1000): Promise<number> => {
     let duration = 0;
     let isCancel = false;
