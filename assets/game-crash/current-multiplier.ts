@@ -59,9 +59,9 @@ export class CurrentMultiplier extends ObserverComponent {
         return this.crashSound;
     }
 
-    @handle(gc.Audios.AudioHandler, (handle, { audioId, extra }) => handle.playStoppableSFX(audioId))
+    @handle(gc.Audios.AudioHandler, (handle, audioId: string) => handle.playStoppableSFX(audioId))
     playSoundPlaneFly() {
-        return { audioId: this.planeFlySound, extra: true };
+        return this.planeFlySound;
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.stopStoppableSFX(id))
