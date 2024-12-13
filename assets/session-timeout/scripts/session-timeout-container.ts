@@ -15,6 +15,11 @@ export default class SessionTimeOutContainer extends Component {
         const isPortraitDirectMode = sessionInfo?.isPortraitDirectMode ?? false;
 
         this.loadPrefab(isPortraitDirectMode);
+
+        localStorage.setItem("loading", "1");
+        setTimeout(() => {
+            document.getElementById("GameDiv").style.opacity = "1";
+        }, 100);
     }
 
     protected async loadPrefab(isPortraitDirectMode: boolean) {
