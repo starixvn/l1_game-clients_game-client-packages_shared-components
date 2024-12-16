@@ -6,18 +6,32 @@ import PromptMessageComponent from "./prompt-message-component";
 
 const { Rounds, Translator } = gc;
 const { render, handle } = Observer;
-const { ccclass } = _decorator;
+const { ccclass, property } = _decorator;
 
 @ccclass("PromptMessageContainer")
 export class PromptMessageContainer extends NodeContainer {
+    @property
+    shortLockingDuration = true;
+
     promptMessageComponent: PromptMessageComponent = null;
 
-    @render(Rounds.RoundTimeStore, (store) => ({ roundState: store.roundState }))
-    showStopBetMessage({ roundState }) {
-        if (roundState === Rounds.ROUND_STATE.LOCKING_BET) {
-            this.getComponent()?.showStopBetMessage();
-            this.playSound(this.getAudioKeyForLanguage("stop-betting"));
+    @render(Rounds.RoundTimeStore, (store) => store.isLocking)
+    renderIsLocking(isLocking: boolean) {
+        if (this.shortLockingDuration && isLocking) {
+            this.showStopBetMessage();
         }
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => store.isStartLocking)
+    renderIsStartLocking(isStartLocking: boolean) {
+        if (!this.shortLockingDuration && isStartLocking) {
+            this.showStopBetMessage();
+        }
+    }
+
+    private showStopBetMessage() {
+        this.getComponent()?.showStopBetMessage();
+        this.playSound(this.getAudioKeyForLanguage("stop-betting"));
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.isShowStartBetMessage)
