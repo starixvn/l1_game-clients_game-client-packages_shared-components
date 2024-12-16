@@ -11,7 +11,7 @@ const { Auth, AppTypes } = gc;
 @ccclass
 export default class GameConnection extends ObserverComponent {
     protected system: number = AppTypes.Club;
-
+    protected isMiniGame: boolean = false;
     openGameCallback = () => {};
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
@@ -32,5 +32,17 @@ export default class GameConnection extends ObserverComponent {
     @render(Auth.AuthStore, (store) => store.system)
     openGame(system: number) {
         this.system = system;
+    }
+ 
+    @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.isMiniGame)
+    setMiniGame(isMiniGame: boolean) {
+        this.isMiniGame = isMiniGame;
+    }
+
+    @render(gc.JoinGame.JoinGameStore, (store) => store.signedIn, { fireImmediately: false })
+    requestOpenMiniGame() {
+        if (this.isMiniGame) {
+            this.openGameCallback();
+        }
     }
 }
