@@ -29,8 +29,7 @@ export class NoticeContainer extends NodeContainer {
             this.noticeCmp?.hide();
             return;
         }
-
-        if (!this.noticeCmp) {
+        if (!this.noticeCmp?.node) {
             const node = this.createNode();
             this.noticeCmp = node.getComponent<NoticeCmp>(NoticeCmp);
             this.noticeCmp.setData(noticeDisable);
