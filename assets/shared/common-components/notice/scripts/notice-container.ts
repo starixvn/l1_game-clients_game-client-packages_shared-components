@@ -23,10 +23,17 @@ export class NoticeContainer extends NodeContainer {
         }
     }
 
-    @render(DisabledGame.DisabledGameStore, (store) => store.showPopup, { fireImmediately: false })
-    hideNotice(showPopup: boolean) {
-        if (!showPopup && this.noticeCmp) {
-            this.noticeCmp.hide();
+    @render(DisabledGame.DisabledGameStore, (store) => store.noticeDisable)
+    renderUMNotice(noticeDisable: gc.Notices.Notice) {
+        if (!noticeDisable) {
+            this.noticeCmp?.hide();
+            return;
+        }
+
+        if (!this.noticeCmp) {
+            const node = this.createNode();
+            this.noticeCmp = node.getComponent<NoticeCmp>(NoticeCmp);
+            this.noticeCmp.setData(noticeDisable);
         }
     }
 }
