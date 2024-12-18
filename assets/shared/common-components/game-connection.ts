@@ -22,18 +22,11 @@ export default class GameConnection extends ObserverComponent {
         this.openGameCallback();
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.startNewRound, { fireImmediately: false })
-    requestOpenGameWhenStartNewRound() {
-        if (this.system === AppTypes.Instant) {
-            this.openGameCallback();
-        }
-    }
-
     @render(Auth.AuthStore, (store) => store.system)
     openGame(system: number) {
         this.system = system;
     }
- 
+
     @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.isMiniGame)
     setMiniGame(isMiniGame: boolean) {
         this.isMiniGame = isMiniGame;
