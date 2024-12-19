@@ -45,7 +45,7 @@ export class ResultStatistic extends ObserverComponent {
         }, {});
     }
 
-    private setData(statistic: Object) {
+    protected setData(statistic: Object) {
         this.statisticItems?.forEach((item) => {
             item.label && (item.label.string = (statistic[item.value] || 0).toString());
         });
