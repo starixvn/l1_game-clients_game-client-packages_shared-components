@@ -40,7 +40,7 @@ export class PromptMessageContainer extends NodeContainer {
             this.scheduleOnce(() => {
                 this.getComponent()?.showStartBetMessage();
                 this.playSound(this.getAudioKeyForLanguage("start-betting"));
-            }, 1);
+            }, 0.7);
         }
     }
 
