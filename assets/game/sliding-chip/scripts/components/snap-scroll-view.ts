@@ -34,7 +34,7 @@ export class SnapScrollView extends Component {
     @property
     isHorizontalLayout = true;
 
-    private readonly _calculatedPercent: number[] = [];
+    private _calculatedPercent: number[] = [];
     private _minDisplay = 0;
     private _scrollView: ChipScrollView;
 
@@ -46,6 +46,7 @@ export class SnapScrollView extends Component {
     }
 
     public initCalculatedPercent() {
+        this._calculatedPercent = [];
         const count = this.contentItemCount();
         const contentWidth = this.scrollContentWidth();
         const maxOffset = contentWidth - this.scrollView?.node?.getComponent(UITransform)?.width;
