@@ -160,7 +160,7 @@ export default class GameComponent extends GameComponentBase {
     ) {}
 
     isValidResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {
-        return result && settlementResult;
+        return !!result && !!settlementResult;
     }
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
