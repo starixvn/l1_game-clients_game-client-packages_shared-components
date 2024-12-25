@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, RichText, UITransform, Vec3, Widget } from "cc";
+import { _decorator, Component, Node, RichText, UIRenderer, UITransform, Vec3, Widget } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("AutoResizeNode")
@@ -76,6 +76,7 @@ export class AutoResizeNode extends Component {
         if (richText) {
             richText.maxWidth = this.node.getComponent(UITransform).width;
         }
+        this.getComponent(UIRenderer)?.markForUpdateRenderData();
 
         this.node.children.forEach((child) => {
             const widget = child.getComponent(Widget);
@@ -94,7 +95,8 @@ export class AutoResizeNode extends Component {
 
     setHeight() {
         if (this.syncHeight) {
-            this.node.getComponent(UITransform).height = this.target.getComponent(UITransform).height * this.ratioHeight;
+            this.node.getComponent(UITransform).height =
+                this.target.getComponent(UITransform).height * this.ratioHeight + 2 * this.heightPadding;
         }
     }
 }
