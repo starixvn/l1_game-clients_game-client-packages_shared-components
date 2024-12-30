@@ -1,1 +1,13 @@
-{"ver":"1.1.45","importer":"prefab","imported":true,"uuid":"8d14e88f-2586-47d2-a65f-d256386a6891","files":[".json"],"subMetas":{},"userData":{"syncNodeName":"session-timeout"}}
+{
+  "ver": "1.1.50",
+  "importer": "prefab",
+  "imported": true,
+  "uuid": "8d14e88f-2586-47d2-a65f-d256386a6891",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {},
+  "userData": {
+    "syncNodeName": "session-timeout"
+  }
+}
