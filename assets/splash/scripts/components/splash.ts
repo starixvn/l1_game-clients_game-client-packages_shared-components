@@ -19,26 +19,8 @@ export default class Splash extends Component {
     @property(ErrorMessage)
     cpnMessage: ErrorMessage = null;
 
-    @property(Node)
-    signNameContainer: Node = null;
-
     @property(Label)
     percentResourceLoad: Label = null;
-
-    @property(Node)
-    containerCustomize: Node = null;
-
-    @property(Prefab)
-    prefabCustomize: Prefab = null;
-
-    @property(Node)
-    nodeLogoContainer: Node = null;
-
-    @property(Prefab)
-    prefabLogo: Prefab = null;
-
-    @property(Node)
-    gameName: Node = null;
 
     gameConnection: GameConnection = null;
 
@@ -49,13 +31,7 @@ export default class Splash extends Component {
         this.initGameConnectionComponent();
         this.updateProgressBar(0);
         this.sso();
-        ComponentUtils.addChildFromPrefab(this?.prefabCustomize, this?.containerCustomize);
         window.addEventListener("message", this.registerEvents);
-    }
-
-    start() {
-        const logo = instantiate(this?.prefabLogo);
-        this.nodeLogoContainer?.addChild(logo);
     }
 
     onDestroy(): void {
@@ -120,14 +96,12 @@ export default class Splash extends Component {
     renderMessage(message: string) {
         this.cpnMessage.reset();
         this.cpnMessage.setMessage(message);
-        this.gameName && (this.gameName.active = false);
     }
 
     updateProgressBar(progress: number) {
         console.log("progress", progress);
         localStorage.setItem("loading", progress.toString());
         if (this.progressBar) {
-            this.gameName && (this.gameName.active = true);
             this.percentResourceLoad && (this.percentResourceLoad.string = `${Math.round(progress * 100)}%`);
             this.progressBar.progress = progress;
         }
@@ -151,10 +125,6 @@ export default class Splash extends Component {
     }
 
     get sceneName() {
-        if (this.system === AppTypes.Instant) {
-            return FunctionUtils.isPortraitMode() ? "game-instant-portrait" : "game-instant-landscape";
-        }
-
         return "game";
     }
 
@@ -166,12 +136,7 @@ export default class Splash extends Component {
 
     @render(Auth.AuthStore, (store) => store.isShowSignName, { fireImmediately: false })
     handleShowSignName(isShowSignName: boolean) {
-        this.toggleSignNameContainer(isShowSignName);
         this.updateContentUnderBackground(!isShowSignName);
-    }
-
-    private toggleSignNameContainer(isActive: boolean) {
-        this.signNameContainer && (this.signNameContainer.active = isActive);
     }
 
     private updateContentUnderBackground(status: boolean) {
