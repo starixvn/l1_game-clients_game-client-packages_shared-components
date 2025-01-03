@@ -1,6 +1,6 @@
+import gc from "@sg/game-client-base";
 import { CCBoolean, Component, Font, Label, _decorator } from "cc";
 import { bundleManager } from "../../../shared/common-components/bundle-magager/bundle-manager";
-import gc from "@sg/game-client-base";
 const { Translator } = gc;
 
 const { ccclass, property } = _decorator;
@@ -9,6 +9,10 @@ class LanguageFont {
     language = "";
     name: "";
 }
+
+export type FontMapping = {
+    [key in "vi" | "id" | "en" | "th" | "zh_cn" | "zh_tw"]: string;
+};
 
 @ccclass("LocalizedFont")
 export class LocalizedFont extends Component {
@@ -36,7 +40,7 @@ export class LocalizedFont extends Component {
             th: "noto-serif-regular-thai",
             zh_cn: "noto-serif-regular-zhcn",
             zh_tw: "noto-serif-regular-zhtw",
-        };
+        } as FontMapping;
     }
 
     updateFont() {
