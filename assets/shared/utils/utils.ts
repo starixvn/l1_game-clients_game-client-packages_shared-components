@@ -197,6 +197,21 @@ export namespace AnimationUtils {
                 .start();
         });
     };
+
+    export const isAnimationPlaying = (spine: sp.Skeleton, animName: string): boolean => {
+        const trackCount = spine?.getState()?.tracks?.length;
+
+        for (let trackIndex = 0; trackIndex < trackCount; trackIndex++) {
+            const trackEntry = spine.getCurrent(trackIndex);
+            if (!trackEntry) continue;
+
+            if (trackEntry.animation.name === animName) {
+                return trackEntry.trackTime < trackEntry.animationEnd;
+            }
+        }
+
+        return false;
+    };
 }
 export const isValidNode = (comp: Component) => {
     return comp.node && comp.node.isValid;
