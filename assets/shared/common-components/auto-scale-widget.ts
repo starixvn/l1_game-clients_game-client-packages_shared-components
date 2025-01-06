@@ -20,7 +20,7 @@ export enum AutoScalePolicy {
 @executeInEditMode
 export class AutoScaleWidget extends Component {
     @property({ type: Enum(AutoScalePolicy) })
-    private _policy = AutoScalePolicy.FitContent;
+    protected _policy = AutoScalePolicy.FitContent;
 
     @property({ type: Enum(AutoScalePolicy) })
     public get policy(): AutoScalePolicy {
