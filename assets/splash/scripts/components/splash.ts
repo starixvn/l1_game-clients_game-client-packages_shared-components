@@ -124,8 +124,6 @@ export default class Splash extends Component {
     }
 
     updateProgressBar(progress: number) {
-        console.log("progress", progress);
-        localStorage.setItem("loading", progress.toString());
         if (this.progressBar) {
             this.gameName && (this.gameName.active = true);
             this.percentResourceLoad && (this.percentResourceLoad.string = `${Math.round(progress * 100)}%`);

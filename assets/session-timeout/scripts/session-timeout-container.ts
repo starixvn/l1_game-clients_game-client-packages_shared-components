@@ -16,7 +16,6 @@ export default class SessionTimeOutContainer extends Component {
 
         this.loadPrefab(isPortraitDirectMode);
 
-        localStorage.setItem("loading", "1");
         setTimeout(() => {
             document.getElementById("GameDiv").style.opacity = "1";
         }, 100);
