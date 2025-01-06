@@ -344,13 +344,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>money.png</string>
+            <string>money.webp</string>
             <key>size</key>
             <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:107b0c52b0f1935e71b0ffd06ebf163d:0fc26926d4569416504ceef891a9b2df:3c02825eb380eb1e5a25f88264fb2632$</string>
+            <string>$TexturePacker:SmartUpdate:89246fed911b21abf23f47a8458de5c9:0fc26926d4569416504ceef891a9b2df:a81b11a49f4baad5ce7a812b9355162a$</string>
             <key>textureFileName</key>
-            <string>money.png</string>
+            <string>money.webp</string>
         </dict>
     </dict>
 </plist>
