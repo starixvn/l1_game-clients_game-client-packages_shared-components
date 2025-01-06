@@ -104,13 +104,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>new-md5.png</string>
+            <string>new-md5.webp</string>
             <key>size</key>
             <string>{512,128}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e63e3ebda79b71e170a681b509ee74af:7ffec19dd3e04bc86622a071fbc2629a:be501e95963d7f62ebece21f13b4e715$</string>
+            <string>$TexturePacker:SmartUpdate:7340fa1d21b5f8804870d4fade03457d:7ffec19dd3e04bc86622a071fbc2629a:65345ceff335c0f714251045cb2705e0$</string>
             <key>textureFileName</key>
-            <string>new-md5.png</string>
+            <string>new-md5.webp</string>
         </dict>
     </dict>
 </plist>
