@@ -26,13 +26,26 @@ export default class GameComponent extends GameComponentBase {
     containerOptions: gc.IContainerOptions;
     protected isReceiveFinishBeforeRoundHistory = true;
     protected enableFixHandleFinish = false;
+    protected enableEventShowHideGame = true;
 
     onLoad() {
-        game.on(Game.EVENT_HIDE, this.onHideGame, this);
-        game.on(Game.EVENT_SHOW, this.onShowGame, this);
+        this.registerEventShowHideGame();
         this.initUserSettings();
         this.initPlayerSelections();
         this.handleStaticNodeAndSetEmptyLabels();
+    }
+
+    private registerEventShowHideGame() {
+        if (!this.enableEventShowHideGame) {
+            return;
+        }
+        game.on(Game.EVENT_HIDE, this.onHideGame, this);
+        game.on(Game.EVENT_SHOW, this.onShowGame, this);
+    }
+
+    private clearEventShowHideGame() {
+        game.off(Game.EVENT_HIDE, this.onHideGame, this);
+        game.off(Game.EVENT_SHOW, this.onShowGame, this);
     }
 
     protected handleStaticNodeAndSetEmptyLabels() {
@@ -66,8 +79,7 @@ export default class GameComponent extends GameComponentBase {
     initPlayerSelections() {}
 
     protected onDestroy(): void {
-        game.off(Game.EVENT_HIDE, this.onHideGame, this);
-        game.off(Game.EVENT_SHOW, this.onShowGame, this);
+        this.clearEventShowHideGame();
     }
 
     @handle(HideGame.HideGameHandler)
