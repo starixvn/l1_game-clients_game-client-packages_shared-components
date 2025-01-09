@@ -7,6 +7,9 @@ const { render } = Observer;
 
 @ccclass
 export class GameName extends ObserverComponent {
+    @property
+    upperCaseName = false;
+
     private label: Label = null;
 
     onLoad() {
@@ -19,6 +22,7 @@ export class GameName extends ObserverComponent {
         if (!this.label) {
             return;
         }
-        this.label.string = gc.Translator.translate(`${name}.game_name`);
+        const gameName = gc.Translator.translate(`${name}.game_name`);
+        this.label.string = this.upperCaseName ? gameName.toUpperCase() : gameName;
     }
 }
