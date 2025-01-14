@@ -2,7 +2,7 @@ import { _decorator, Component, Node, v3, Widget } from "cc";
 
 const { ccclass, property } = _decorator;
 
-@ccclass("auto_scale")
+@ccclass("AutoScaleNode")
 export class AutoScaleNode extends Component {
     @property(Node)
     target: Node = null;
