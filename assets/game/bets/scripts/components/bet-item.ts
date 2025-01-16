@@ -1,11 +1,12 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label, Node } from "cc";
+import { _decorator, Color, Label, Node, UIOpacity } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../../../shared/utils";
 
-const { handle } = Observer;
+const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
+const { GameConfigs } = gc;
 
 @ccclass
 export default class BetItem extends ObserverComponent {
@@ -32,6 +33,28 @@ export default class BetItem extends ObserverComponent {
 
     @property(Label)
     lblBetPercentage: Label = null;
+
+    @property()
+    opacityOdds = 255;
+
+    @property
+    enableBoostedOdds = false;
+
+    @property({
+        visible: function () {
+            return this.enableBoostedOdds;
+        },
+        type: Node,
+    })
+    highlightOdds: Node = null;
+
+    @property({
+        visible: function () {
+            return this.enableBoostedOdds;
+        },
+        type: Color,
+    })
+    boostedOddsColor = new Color(250, 58, 53, 255);
 
     private _initialized = false;
 
@@ -93,5 +116,32 @@ export default class BetItem extends ObserverComponent {
 
     renderbetPercentage(betPercentage: number) {
         this.lblBetPercentage && (this.lblBetPercentage.string = `${betPercentage}%`);
+    }
+
+    @render(GameConfigs.GameConfigStore, (store) => store.boostedChoices)
+    handleBoostedChoices(boostedChoices: string[]) {
+        let isBoostedOdd = false;
+        if (this.enableBoostedOdds && boostedChoices?.length > 0 && boostedChoices.includes(this.betChoice)) {
+            isBoostedOdd = true;
+        }
+        this.enableHighLightOdds(isBoostedOdd);
+        this.changeOpacityOdds(isBoostedOdd);
+        this.changeOddsColor(isBoostedOdd);
+    }
+
+    private enableHighLightOdds(enabled = false) {
+        this.highlightOdds !== null && (this.highlightOdds.active = enabled);
+    }
+
+    private changeOddsColor(isBoostedOdd = false) {
+        if (isBoostedOdd) {
+            this.lblOdds.color = new Color(this.boostedOddsColor);
+        } else {
+            this.lblOdds.color = new Color(255, 255, 255, 255);
+        }
+    }
+
+    changeOpacityOdds(enabled = false) {
+        this.lblOdds.node.getComponent(UIOpacity).opacity = enabled ? 255 : this.opacityOdds;
     }
 }
