@@ -1,4 +1,4 @@
-import gc from "@sg/game-client-base";
+import gc, { AppTypes, Auth } from "@sg/game-client-base";
 import { _decorator, instantiate, Prefab } from "cc";
 import Observer from "observer";
 import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
@@ -8,23 +8,29 @@ import { FunctionUtils } from "../../../shared/utils";
 const { ccclass } = _decorator;
 const { handle, render } = Observer;
 
-const BoostedOddsBundleConstants = {
-    shareBundle: "shared-bundle",
-    shareInstantBundle: "shared-instant-bundle",
-    rootFolder: "boosted-odds",
-    subPath: {
-        portrait: "/portrait",
-        landscape: "/landscape",
-    },
-    prefabs: {
-        icon: "boosted-odds",
-        container: "boosted-odds-container",
-    },
-    delayTimeForLoadContainer: 1000,
-};
-
 @ccclass("LoadBoostedOddsContainerPrefab")
 export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
+    protected static readonly BundleConstants = {
+        shareBundle: "shared-bundle",
+        shareInstantBundle: "shared-instant-bundle",
+        rootFolder: "boosted-odds",
+        subPath: {
+            portrait: "/portrait",
+            landscape: "/landscape",
+        },
+        prefabs: {
+            icon: "boosted-odds",
+            container: "boosted-odds-container",
+        },
+        delayTimeForLoadContainer: 1000,
+    };
+
+    system: number = AppTypes.Club;
+    @render(Auth.AuthStore, (store) => store.system)
+    openGame(system: number) {
+        this.system = system;
+    }
+
     @render(
         gc.Notification.BoostedOddsStore,
         (store) => {
@@ -42,10 +48,10 @@ export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
         shouldAddBoostedOddPrefab: boolean;
     }) {
         if (model.shouldAddBoostedOddPrefab) {
-            const { prefabs, delayTimeForLoadContainer } = BoostedOddsBundleConstants;
+            const { prefabs, delayTimeForLoadContainer } = LoadBoostedOddsContainerPrefab.BundleConstants;
 
-            const prfBoostedOddContainer = await this.getPrefabs(model.isInstantVersion, prefabs.container);
-            const prfBoostedOddIcon = await this.getPrefabs(model.isInstantVersion, prefabs.icon);
+            const prfBoostedOddContainer = await this.getPrefabs(prefabs.container);
+            const prfBoostedOddIcon = await this.getPrefabs(prefabs.icon);
 
             this.node.addChild(instantiate(prfBoostedOddIcon));
             this.node.addChild(instantiate(prfBoostedOddContainer));
@@ -56,14 +62,15 @@ export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
         }
     }
 
-    async getPrefabs(isInstantVersion: boolean, prefabName: string) {
-        const { shareInstantBundle, shareBundle, subPath, rootFolder } = BoostedOddsBundleConstants;
-        const prefabPath = isInstantVersion ? shareInstantBundle : shareBundle;
-        let subpath = "";
+    async getPrefabs(prefabName: string) {
+        const { shareInstantBundle, shareBundle, subPath, rootFolder } = LoadBoostedOddsContainerPrefab.BundleConstants;
 
-        if (isInstantVersion) {
-            subpath += FunctionUtils.isPortraitMode() ? subPath.portrait : subPath.landscape;
-        }
+        const prefabPathMap = {
+            [AppTypes.Instant]: shareInstantBundle,
+        };
+
+        const prefabPath = prefabPathMap[this.system] || shareBundle;
+        const subpath = this.system === AppTypes.Instant ? (FunctionUtils.isPortraitMode() ? subPath.portrait : subPath.landscape) : "";
 
         return bundleManager.loadAssetsFromBundle<Prefab>(prefabPath, `${rootFolder}${subpath}/${prefabName}`, Prefab, null);
     }
