@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Color, Label, Node, UIOpacity } from "cc";
+import { _decorator, Color, Label, Node } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../../../shared/utils";
@@ -33,9 +33,6 @@ export default class BetItem extends ObserverComponent {
 
     @property(Label)
     lblBetPercentage: Label = null;
-
-    @property()
-    opacityOdds = 255;
 
     @property
     enableBoostedOdds = false;
@@ -125,7 +122,6 @@ export default class BetItem extends ObserverComponent {
             isBoostedOdd = true;
         }
         this.enableHighLightOdds(isBoostedOdd);
-        this.changeOpacityOdds(isBoostedOdd);
         this.changeOddsColor(isBoostedOdd);
     }
 
@@ -139,9 +135,5 @@ export default class BetItem extends ObserverComponent {
         } else {
             this.lblOdds.color = new Color(255, 255, 255, 255);
         }
-    }
-
-    changeOpacityOdds(enabled = false) {
-        this.lblOdds.node.getComponent(UIOpacity).opacity = enabled ? 255 : this.opacityOdds;
     }
 }
