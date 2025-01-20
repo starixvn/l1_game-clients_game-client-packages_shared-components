@@ -54,13 +54,17 @@ export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
             const prfBoostedOddContainer = await this.getPrefabs(prefabs.container);
             const prfBoostedOddIcon = await this.getPrefabs(prefabs.icon);
 
-            this.node.addChild(instantiate(prfBoostedOddIcon));
+            this.addBoostedOddIcon(prfBoostedOddIcon);
             this.node.addChild(instantiate(prfBoostedOddContainer));
 
             setTimeout(() => {
                 this.handleSetBoostedOddsLoadedPrefab();
             }, delayTimeForLoadContainer);
         }
+    }
+
+    protected addBoostedOddIcon(prfBoostedOddIcon: Prefab) {
+        this.node.addChild(instantiate(prfBoostedOddIcon));
     }
 
     async getPrefabs(prefabName: string) {
