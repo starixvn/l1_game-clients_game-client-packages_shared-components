@@ -1,4 +1,4 @@
-import gc, { AppTypes, Auth } from "@sg/game-client-base";
+import gc from "@sg/game-client-base";
 import { _decorator, instantiate, Prefab } from "cc";
 import Observer from "observer";
 import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
@@ -7,6 +7,7 @@ import { FunctionUtils } from "../../../shared/utils";
 
 const { ccclass } = _decorator;
 const { handle, render } = Observer;
+const { Auth, AppTypes } = gc;
 
 @ccclass("LoadBoostedOddsContainerPrefab")
 export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
