@@ -130,6 +130,9 @@ export default class BetItem extends ObserverComponent {
     }
 
     private changeOddsColor(isBoostedOdd = false) {
+        if (!this.lblOdds) {
+            return;
+        }
         if (isBoostedOdd) {
             this.lblOdds.color = new Color(this.boostedOddsColor);
         } else {
