@@ -32,7 +32,8 @@ export class SpineAttachmentNode extends Component {
         const wPos = this.skeleton.node.getComponent(UITransform).convertToWorldSpaceAR(v3(this.bone.worldX, this.bone.worldY));
         const localPos = this.node.parent.getComponent(UITransform).convertToNodeSpaceAR(wPos);
         this.node.position = localPos;
-        AnimationUtils.setOpacityNode(this.node, this.slot.color.a * 255);
+        this.slot?.color && AnimationUtils.setOpacityNode(this.node, this.slot.color.a * 255);
         this.node.setScale(this.bone.scaleX, this.bone.scaleY);
+        this.node.angle = this.bone.rotation;
     }
 }
