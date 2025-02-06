@@ -40,7 +40,7 @@ export class BaseBetDetailLogItem extends Component {
         const { time } = betDetailsLog as GameRoundBetDetailsLog & gc.BetHistory.DynamicObject<object>;
 
         this.nodeBackground.active = index % 2 > 0;
-        this.lblTime.string = time ? DateTimeUtils.formatDateTime(time) : "";
+        this.lblTime && (this.lblTime.string = time ? DateTimeUtils.formatDateTime(time) : "");
     }
 }
 
