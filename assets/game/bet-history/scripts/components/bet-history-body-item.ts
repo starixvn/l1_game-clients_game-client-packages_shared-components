@@ -56,6 +56,13 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         this.nodeBackground.active = index % 2 > 0;
         const { time, betwin, roundId, totalAmount } = betHistoryLog;
 
+        if (time) {
+            const date = DateTimeUtils.getStringDate(time);
+            const hour = DateTimeUtils.getStringHourByTime(time);
+            this.lblDate && (this.lblDate.string = date);
+            this.lblHour && (this.lblHour.string = hour);
+        }
+
         this.lblTime && (this.lblTime.string = DateTimeUtils.getStringDateByTime(time));
         this.lblRound.string = roundId.toString();
 
