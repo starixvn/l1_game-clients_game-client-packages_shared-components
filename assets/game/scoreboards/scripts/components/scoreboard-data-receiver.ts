@@ -6,6 +6,7 @@ import { ResultPercentage } from "../../../result-percentage/scripts/result-perc
 import { Scoreboard } from "./scoreboard";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
 import { ScoreboardDerived } from "./scoreboard-derived";
+import { ScoreboardBeadRoad } from "./scoreboard-bead-road";
 
 const { ccclass, property } = _decorator;
 const { render } = Observer;
@@ -20,6 +21,7 @@ export class ScoreboardDataReceiver extends ObserverComponent {
 
     protected lastRound: unknown = {};
     protected rounds: gc.RoundHistories.RoundHistory[] = [];
+    protected numberOfRoundHistory = 0;
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     public render(rounds: gc.RoundHistories.RoundHistory[]) {
@@ -41,6 +43,11 @@ export class ScoreboardDataReceiver extends ObserverComponent {
         this.lastRound = round;
     }
 
+    @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.numberOfRoundHistory)
+    setNumberOfRoundHistory(numberOfRoundHistory: number) {
+        this.numberOfRoundHistory = numberOfRoundHistory;
+    }
+
     @render(gc.Rounds.RoundTimeStore, (store) => store.isLocking)
     public toggleBlinkNode(active: boolean) {
         if (!active) {
@@ -58,11 +65,18 @@ export class ScoreboardDataReceiver extends ObserverComponent {
 
         round[converter.resultKey][converter.blinkKey] = true;
         const rounds = [...this.rounds, round];
-
         this.scoreboards.forEach((scoreboard) => {
             const derivedScoreboard = scoreboard.getComponent(ScoreboardDerived);
+            const beadRoadScoreboard = scoreboard.getComponent(ScoreboardBeadRoad);
             if (derivedScoreboard) {
                 derivedScoreboard.render(this.rounds, true);
+            } else if (beadRoadScoreboard) {
+                const beadRoadRounds =
+                    this.numberOfRoundHistory !== 0 && rounds.length > this.numberOfRoundHistory
+                        ? rounds.slice(-this.numberOfRoundHistory)
+                        : rounds;
+
+                beadRoadScoreboard.render(beadRoadRounds);
             } else {
                 scoreboard.render(rounds);
             }
