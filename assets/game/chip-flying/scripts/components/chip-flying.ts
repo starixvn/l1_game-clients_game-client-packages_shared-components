@@ -121,6 +121,9 @@ export class ChipFlying extends ObserverComponent {
         }
 
         const betItem = this.betItems?.betItemComponents.find((item) => betChoice === item.betChoice);
+        if (!betItem) {
+            return;
+        }
         const mainPlayerChip: IMainPlayerChip = {
             chipBox: betItem?.chipBox,
             chipValue: amount,
@@ -364,18 +367,20 @@ export class ChipFlying extends ObserverComponent {
         collectChipsReBet.forEach((chipReBet) => {
             const { betChoice, amount } = chipReBet;
             const betItem = this.betItems?.betItemComponents.find((item) => betChoice === item.betChoice);
-            this.placeChipToChipBox(
-                betChoice,
-                this.chipContainer,
-                this.slidingChip,
-                {
-                    chipBox: betItem?.chipBox,
-                    chipValue: amount,
-                },
-                null,
-                null
-            );
-            this.playSoundSingleChip();
+            if (betItem) {
+                this.placeChipToChipBox(
+                    betChoice,
+                    this.chipContainer,
+                    this.slidingChip,
+                    {
+                        chipBox: betItem?.chipBox,
+                        chipValue: amount,
+                    },
+                    null,
+                    null
+                );
+                this.playSoundSingleChip();
+            }
         });
     }
 
@@ -392,7 +397,9 @@ export class ChipFlying extends ObserverComponent {
 
         const { betChoice, playerId } = playerChip;
         const betItem: BetItem = AroundTablePlayerUtils.getBetItem(this.betItems.betItemComponents, betChoice);
-
+        if (!betItem) {
+            return;
+        }
         let startNode: Node;
         let isHiddenPlayer = false;
         const aroundTablePlayer = AroundTablePlayerUtils.getAroundTablePlayerSlot(
