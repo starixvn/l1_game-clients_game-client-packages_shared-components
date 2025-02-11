@@ -49,7 +49,6 @@ export default class BetItem extends ObserverComponent {
         visible: function () {
             return this.enableBoostedOdds;
         },
-        type: Color,
     })
     boostedOddsColor = new Color(250, 58, 53, 255);
 
