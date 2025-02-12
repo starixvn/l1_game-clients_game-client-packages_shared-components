@@ -221,6 +221,14 @@ export namespace AnimationUtils {
 
         return false;
     };
+
+    export const pauseSpineAnimation = (spineAnimation: sp.Skeleton, startProgress: number, animationName: string) => {
+        spineAnimation.node.active = true;
+        spineAnimation.timeScale = 0;
+        spineAnimation.setAnimation(0, animationName, false);
+        const trackEntry = spineAnimation.getCurrent(0);
+        trackEntry.animationStart = trackEntry.animationEnd * startProgress;
+    };
 }
 export const isValidNode = (comp: Component) => {
     return comp.node && comp.node.isValid;
