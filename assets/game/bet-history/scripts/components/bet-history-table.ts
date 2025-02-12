@@ -23,12 +23,19 @@ export class BetHistoryTable extends Component {
         return node.getComponent(BetHistoryBodyItem);
     }
 
-    buildBodyRow(bodyItemPrefab: Prefab, betHistoryLog: gc.BetHistory.BetHistoryLog, index: number, resultPrefab: Prefab): Node {
+    buildBodyRow(
+        bodyItemPrefab: Prefab,
+        betHistoryLog: gc.BetHistory.BetHistoryLog,
+        index: number,
+        resultPrefab: Prefab,
+        fractionalOddsFormat?: boolean
+    ): Node {
         const bodyItem = instantiate(bodyItemPrefab);
         this.getHistoryItemComponent(bodyItem)?.setData({
             betHistoryLog,
             index,
             resultPrefab,
+            fractionalOddsFormat,
         });
         return bodyItem;
     }
@@ -36,10 +43,10 @@ export class BetHistoryTable extends Component {
     showBetHistory(model: BetHistoryTableType) {
         const { data, headerPrefab, bodyItemPrefab, resultPrefab } = model;
         this.clearOldTable();
-
+        const fractionalOddsFormat = data?.fractionalOddsFormat ?? false;
         this.header.addChild(instantiate(headerPrefab));
         data.betLogs.forEach((betLogItem, index) => {
-            this.body.addChild(this.buildBodyRow(bodyItemPrefab, betLogItem, index, resultPrefab));
+            this.body.addChild(this.buildBodyRow(bodyItemPrefab, betLogItem, index, resultPrefab, fractionalOddsFormat));
         });
     }
 

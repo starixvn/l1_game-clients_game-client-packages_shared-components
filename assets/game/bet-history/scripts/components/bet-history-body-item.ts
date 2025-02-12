@@ -13,6 +13,7 @@ export type BetHistoryBodyItemType = {
     betHistoryLog: gc.BetHistory.BetHistoryLog;
     index: number;
     resultPrefab: Prefab | null;
+    fractionalOddsFormat?: boolean;
 };
 
 @ccclass
