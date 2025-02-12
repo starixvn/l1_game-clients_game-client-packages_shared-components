@@ -1,9 +1,10 @@
 import gc from "@sg/game-client-base";
-import { Node, Prefab, UIOpacity, UITransform, _decorator, instantiate, v3 } from "cc";
+import { _decorator, instantiate, Node, Prefab, UIOpacity, UITransform, v3 } from "cc";
 import Observer from "observer";
+
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { LedLightItem } from "./led-light-item";
-import { LedLightTooltip } from "./led-light-tooltip";
+import { LedLightTooltip, TipAlignment } from "./led-light-tooltip";
 
 const { ccclass, property } = _decorator;
 const { render } = Observer;
@@ -27,6 +28,17 @@ export class LedLight extends ObserverComponent {
 
     @property
     maxItems = 33;
+
+    @property
+    needAlignment = false;
+
+    @property({
+        type: Number,
+        visible: function (this: LedLight) {
+            return this.needAlignment;
+        },
+    })
+    offsetBorderCount = 2;
 
     protected ledLightItems: LedLightItem[] = [];
     protected selectedLedLight: Node = null;
@@ -71,6 +83,10 @@ export class LedLight extends ObserverComponent {
                 this.toolTipCompt.node.position = v3(pos.x, this.toolTipCompt.node.position.y, 0);
                 this.toolTipCompt.setTooltipInfo(ledLightInfo);
                 this.toolTipCompt.showTooltip();
+
+                if (this.needAlignment) {
+                    this.alignTooltip(node);
+                }
             }
         },
         onLeave: () => {
@@ -78,6 +94,18 @@ export class LedLight extends ObserverComponent {
             this.toolTipCompt?.showTooltip(false);
         },
     };
+
+    private alignTooltip(node: Node) {
+        const childIndex = node.parent.children.findIndex((child) => child === node);
+        let tipAlignment = TipAlignment.Cennter;
+        if (childIndex <= this.offsetBorderCount) {
+            tipAlignment = TipAlignment.Left;
+        }
+        if (childIndex >= node.parent.children.length - 1 - this.offsetBorderCount) {
+            tipAlignment = TipAlignment.Right;
+        }
+        this.toolTipCompt.setAlignment(tipAlignment);
+    }
 
     protected onUpdateTooltipInfo(node: Node) {
         const itemInfo = node?.getComponent(LedLightItem).ledLightItemInfo;

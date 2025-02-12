@@ -1,8 +1,15 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Component, Label } from "cc";
+
 import { ComponentUtils } from "../../../../shared/utils";
+
 const { ccclass, property } = _decorator;
 
+export enum TipAlignment {
+    Left,
+    Cennter,
+    Right,
+}
 @ccclass("LedLightTooltip")
 export class LedLightTooltip extends Component {
     @property(Label)
@@ -22,4 +29,6 @@ export class LedLightTooltip extends Component {
     public showTooltip(show = true) {
         this.node.active = show;
     }
+
+    public setAlignment(alignment: TipAlignment) {}
 }
