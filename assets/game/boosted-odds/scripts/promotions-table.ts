@@ -4,6 +4,7 @@ import Observer from "observer";
 import { Dialog } from "../../../shared/common-components/dialogs/dialog";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import PromotionItem from "./promotion-item";
+import { BoostedOddsUtils } from "./utils/boosted-odds-utils";
 
 const { ccclass, property } = _decorator;
 const { render } = Observer;
@@ -46,6 +47,12 @@ export class PromotionsTable extends ObserverComponent {
 
     onTermClick() {
         this.onPromotionTab(false);
+    }
+
+    protected onEnable(): void {
+        this.dialog.callBackFnHide = () => {
+            BoostedOddsUtils.moveWebViewGuide(true);
+        };
     }
 
     onPromotionTab(enabled: boolean) {

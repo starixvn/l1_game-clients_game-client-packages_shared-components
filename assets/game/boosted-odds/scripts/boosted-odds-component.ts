@@ -1,7 +1,8 @@
+import gc from "@sg/game-client-base";
 import { _decorator, Node, tween } from "cc";
 import Observer from "observer";
-import gc from "@sg/game-client-base";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { BoostedOddsUtils } from "./utils/boosted-odds-utils";
 
 const { ccclass, property } = _decorator;
 const { handle, render } = Observer;
@@ -12,7 +13,9 @@ export default class BoostedOddsComponent extends ObserverComponent {
     icon: Node | null = null;
 
     @handle(gc.Notification.BoostedOddsStore, (store) => store.increasePopupCounter())
-    openPromotions() {}
+    openPromotions() {
+        BoostedOddsUtils.moveWebViewGuide(false);
+    }
 
     @render(
         gc.Notification.BoostedOddsStore,
