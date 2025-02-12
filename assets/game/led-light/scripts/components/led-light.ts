@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Node, Prefab, UIOpacity, UITransform, v3 } from "cc";
+import { _decorator, CCInteger, instantiate, Node, Prefab, UIOpacity, UITransform, v3 } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -33,7 +33,7 @@ export class LedLight extends ObserverComponent {
     needAlignment = false;
 
     @property({
-        type: Number,
+        type: CCInteger,
         visible: function (this: LedLight) {
             return this.needAlignment;
         },
