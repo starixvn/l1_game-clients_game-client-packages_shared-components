@@ -19,6 +19,7 @@ export class Dialog extends Component {
     protected readonly appearDuration = 0.4;
 
     callBackFn = () => {};
+    callBackFnHide = () => {};
 
     onEnable() {
         this.autoShowWhenEnable && this.show();
@@ -66,6 +67,7 @@ export class Dialog extends Component {
         if (this.nodeBody) {
             this.node?.destroy();
         }
+        this.callBackFnHide?.();
     }
 
     hide() {
@@ -82,5 +84,7 @@ export class Dialog extends Component {
                     this.node?.destroy();
                 });
         }
+
+        this.callBackFnHide?.();
     }
 }
