@@ -1,4 +1,4 @@
-import { _decorator, Component, Enum, Node, UITransform } from "cc";
+import { _decorator, Component, Enum, Node, UITransform, Widget } from "cc";
 import { EDITOR } from "cc/env";
 
 const { ccclass, disallowMultiple, executeInEditMode, property } = _decorator;
@@ -35,6 +35,13 @@ export class AutoScaleWidget extends Component {
     public onEnable(): void {
         this.node.parent.on(Node.EventType.SIZE_CHANGED, this.updateDisplay, this);
         this.node.on(Node.EventType.SIZE_CHANGED, this.updateDisplay, this);
+
+        // Trigger Widget update if exists
+        const widget = this.node?.getComponent(Widget);
+        if (widget) {
+            widget.updateAlignment();
+        }
+
         this.updateDisplay();
     }
 
