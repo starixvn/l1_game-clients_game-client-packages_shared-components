@@ -1,4 +1,4 @@
-import { _decorator, Component, Enum, Node, UITransform, Widget } from "cc";
+import { _decorator, Component, Enum, Node, UIRenderer, UITransform, Widget } from "cc";
 import { EDITOR } from "cc/env";
 
 const { ccclass, disallowMultiple, executeInEditMode, property } = _decorator;
@@ -27,6 +27,8 @@ export class AutoScaleWidget extends Component {
         return this._policy;
     }
 
+    protected widget: Widget = null;
+
     public set policy(value: AutoScalePolicy) {
         this._policy = value;
         this.updateDisplay();
@@ -39,7 +41,7 @@ export class AutoScaleWidget extends Component {
         // Trigger Widget update if exists
         const widget = this.node?.getComponent(Widget);
         if (widget) {
-            widget.updateAlignment();
+            this.widget = widget;
         }
 
         this.updateDisplay();
@@ -57,6 +59,10 @@ export class AutoScaleWidget extends Component {
     }
 
     protected updateDisplay(): void {
+        if (this.widget) {
+            this.widget.updateAlignment();
+        }
+
         const nodeParentUITransform = this.node.parent.getComponent(UITransform);
         const nodeUITransform = this.node.getComponent(UITransform);
         let scale = 1;
@@ -71,5 +77,6 @@ export class AutoScaleWidget extends Component {
             scale = Math.min(scaleX, scaleY);
         }
         this.node.setScale(scale, scale);
+        this.getComponent(UIRenderer)?.markForUpdateRenderData();
     }
 }
