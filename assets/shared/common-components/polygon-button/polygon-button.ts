@@ -1,9 +1,10 @@
-import { _decorator, Button, EventTouch, Intersection2D, math, PolygonCollider2D } from "cc";
+import { _decorator, EventTouch, Intersection2D, math, PolygonCollider2D } from "cc";
+import { CustomButton } from "../button/custom-button";
 
 const { ccclass, property } = _decorator;
 
 @ccclass
-export class PolygonButton extends Button {
+export class PolygonButton extends CustomButton {
     @property(PolygonCollider2D)
     polygonCollider2D: PolygonCollider2D = null;
 
