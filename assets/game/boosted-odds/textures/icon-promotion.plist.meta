@@ -900,12 +900,12 @@
       ],
       "subMetas": {}
     },
-    "34ce2": {
+    "ec3bd": {
       "importer": "sprite-frame",
-      "uuid": "c965825b-9336-4227-9d91-f62394464db9@34ce2",
+      "uuid": "c965825b-9336-4227-9d91-f62394464db9@ec3bd",
       "displayName": "",
-      "id": "34ce2",
-      "name": "text_EN",
+      "id": "ec3bd",
+      "name": "text_en",
       "userData": {
         "trimType": "auto",
         "trimThreshold": 1,
@@ -1089,7 +1089,7 @@
     }
   },
   "userData": {
-    "atlasTextureName": "icon-promotion.png",
+    "atlasTextureName": "icon-promotion.webp",
     "format": 3,
     "textureUuid": "07184630-0d9f-4165-b219-77cf6047a5a7@6c48a",
     "uuid": "c965825b-9336-4227-9d91-f62394464db9"
