@@ -200,4 +200,18 @@ export class GameStatisticBoard extends ObserverComponent {
             this.setData(statsData);
         }
     }
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.isLocking)
+    showNextMark(isLocking: boolean) {
+        isLocking && (this.checkShowNext = () => true);
+        this.scoreboard.getComponent(ScrollView).scrollToRight();
+    }
+
+    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
+    public hideBlinkNode(isFinishedShowResult: boolean) {
+        if (isFinishedShowResult) {
+            this.checkShowNext = () => false;
+            this.scoreboard.getComponent(ScrollView).scrollToRight();
+        }
+    }
 }
