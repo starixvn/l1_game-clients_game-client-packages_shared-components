@@ -1,8 +1,9 @@
-import { Node, _decorator } from "cc";
 import gc from "@sg/game-client-base";
+import { Node, _decorator } from "cc";
 import Observer from "observer";
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
 import { PromotionsTable } from "./promotions-table";
+import { BoostedOddsUtils } from "./utils/boosted-odds-utils";
 
 const { ccclass } = _decorator;
 const { render } = Observer;
@@ -23,10 +24,11 @@ export class PromotionsContainer extends NodeContainer {
         },
         { fireImmediately: false }
     )
-    showPromotionsPopup(data: { popupCounter: number; promotions: Array<gc.Notification.PromotionModel> }) {
+    async showPromotionsPopup(data: { popupCounter: number; promotions: Array<gc.Notification.PromotionModel> }) {
         if (data.popupCounter === this.popupCounter) {
             return;
         }
+        await BoostedOddsUtils.moveWebViewGuide(true);
 
         this.popupCounter = data.popupCounter;
         if (!this.wrapperNode?.active) {

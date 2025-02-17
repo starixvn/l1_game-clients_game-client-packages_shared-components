@@ -50,12 +50,8 @@ export class PromotionsTable extends ObserverComponent {
     }
 
     protected onEnable(): void {
-        this.dialog.callBackFn = () => {
-            BoostedOddsUtils.moveWebViewGuide(true);
-        };
-
         this.dialog.callBackFnHide = () => {
-            BoostedOddsUtils.moveWebViewGuide(false);
+            BoostedOddsUtils.moveWebViewGuide(false, 0.2);
         };
     }
 

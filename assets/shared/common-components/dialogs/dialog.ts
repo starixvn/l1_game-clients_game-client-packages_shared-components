@@ -70,21 +70,29 @@ export class Dialog extends Component {
         this.callBackFnHide?.();
     }
 
-    hide() {
+    async hide() {
+        const promises = [];
+
         if (this.nodeFadeBackground) {
             stopFade(this.nodeFadeBackground);
-            fadeOut(this.nodeFadeBackground, this.appearDuration).then(
-                () => this.nodeFadeBackground && (this.nodeFadeBackground.active = false)
+            promises.push(
+                fadeOut(this.nodeFadeBackground, this.appearDuration).then(
+                    () => this.nodeFadeBackground && (this.nodeFadeBackground.active = false)
+                )
             );
         }
+
         if (this.nodeBody) {
-            this.getBodyTransition()
-                .hide(true)
-                .then(() => {
-                    this.node?.destroy();
-                });
+            promises.push(
+                this.getBodyTransition()
+                    .hide(true)
+                    .then(() => {
+                        this.node?.destroy();
+                    })
+            );
         }
 
+        await Promise.all(promises);
         this.callBackFnHide?.();
     }
 }
