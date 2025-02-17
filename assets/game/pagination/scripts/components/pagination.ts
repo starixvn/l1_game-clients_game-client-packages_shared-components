@@ -1,8 +1,8 @@
-import { _decorator, Node, Label, Layout } from "cc";
-import Observer from "observer";
-import PaginationItem from "./pagination-item";
 import gc from "@sg/game-client-base";
+import { _decorator, Label, Layout, Node } from "cc";
+import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
+import PaginationItem from "./pagination-item";
 
 const { ccclass, property } = _decorator;
 const { handle, render } = Observer;
@@ -74,6 +74,10 @@ export default class Pagination extends ObserverComponent {
 
     @render(BetHistory.BetHistoryStore, (store) => store.betHistoryModel)
     setData(model: gc.BetHistory.BetHistoryModel) {
+        if (!model) {
+            return;
+        }
+
         this.currentPage = model.page;
         this.totalPages = Math.ceil(model.total / model.pageSize);
 
