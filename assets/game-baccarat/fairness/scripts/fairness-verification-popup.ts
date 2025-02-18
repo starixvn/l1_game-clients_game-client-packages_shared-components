@@ -62,9 +62,9 @@ export class FairnessVerificationPopup extends ObserverComponent {
         super.onLoad();
         this.initCalculatePercent();
         this.dialog &&
-            (this.dialog.callBackFn = () => {
+            (this.dialog.onShowComplete = () => {
                 if (!this.pfData?.cards) {
-                    this.scheduleOnce(this.dialog.callBackFn, this.DURATION_DELAY_RENDER_DATA);
+                    this.scheduleOnce(this.dialog.onShowComplete, this.DURATION_DELAY_RENDER_DATA);
                     return;
                 }
                 this.renderCards(this?.pfData);

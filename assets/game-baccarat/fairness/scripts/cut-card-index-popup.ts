@@ -46,9 +46,9 @@ export class CutCardIndexPopup extends ObserverComponent {
     onLoad(): void {
         super.onLoad();
         this.dialog &&
-            (this.dialog.callBackFn = () => {
+            (this.dialog.onShowComplete = () => {
                 if (!this?.dataPF?.cards) {
-                    this.scheduleOnce(this.dialog.callBackFn, this.DURATION_DELAY_RENDER_DATA);
+                    this.scheduleOnce(this.dialog.onShowComplete, this.DURATION_DELAY_RENDER_DATA);
                     return;
                 }
 

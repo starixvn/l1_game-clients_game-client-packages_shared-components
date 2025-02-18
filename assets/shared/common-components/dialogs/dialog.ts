@@ -18,8 +18,8 @@ export class Dialog extends Component {
 
     protected readonly appearDuration = 0.4;
 
-    callBackFn = () => {};
-    callBackFnHide = () => {};
+    onShowComplete = () => {};
+    onHideComplete = () => {};
 
     onEnable() {
         this.autoShowWhenEnable && this.show();
@@ -39,7 +39,7 @@ export class Dialog extends Component {
         }
 
         await Promise.all(promises);
-        this.callBackFn?.();
+        this.onShowComplete?.();
     }
 
     getBodyTransition() {
@@ -56,7 +56,7 @@ export class Dialog extends Component {
             this.getBodyTransition().show(false);
         }
 
-        this.callBackFn?.();
+        this.onShowComplete?.();
     }
 
     hideQuickly() {
@@ -67,7 +67,7 @@ export class Dialog extends Component {
         if (this.nodeBody) {
             this.node?.destroy();
         }
-        this.callBackFnHide?.();
+        this.onHideComplete?.();
     }
 
     async hide() {
@@ -93,6 +93,6 @@ export class Dialog extends Component {
         }
 
         await Promise.all(promises);
-        this.callBackFnHide?.();
+        this.onHideComplete?.();
     }
 }
