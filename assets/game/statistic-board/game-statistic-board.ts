@@ -135,7 +135,7 @@ export class GameStatisticBoard extends ObserverComponent {
     protected updateContentPosition(maxX: number) {
         maxX = Math.max(maxX, this.nextMark.position.x);
         const uiContent = this.content.getComponent(UITransform);
-        uiContent.width = Math.max(maxX + this.itemSize.width / 2, uiContent.width) + 2 * this.padding.width;
+        uiContent.width = maxX + this.itemSize.width / 2 + 2 * this.padding.width;
 
         this.content.position = v3(-uiContent.width, this.content.position.y, this.content.position.z);
     }
