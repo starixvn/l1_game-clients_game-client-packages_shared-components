@@ -3,8 +3,8 @@ import { _decorator, Color, instantiate, Label, LabelShadow, Node, Prefab } from
 import Observer from "observer";
 import { Dialog } from "../../../shared/common-components/dialogs/dialog";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { GameGuideUtils } from "../../game-guide/scripts/utils/game-guide-utils";
 import PromotionItem from "./promotion-item";
-import { BoostedOddsUtils } from "./utils/boosted-odds-utils";
 
 const { ccclass, property } = _decorator;
 const { render } = Observer;
@@ -51,7 +51,7 @@ export class PromotionsTable extends ObserverComponent {
 
     protected onEnable(): void {
         this.dialog.onHideComplete = () => {
-            BoostedOddsUtils.moveWebViewGuide(false, 0.2);
+            GameGuideUtils.showWebViewGuide();
         };
     }
 

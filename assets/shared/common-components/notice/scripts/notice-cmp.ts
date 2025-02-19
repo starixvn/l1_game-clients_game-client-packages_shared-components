@@ -3,6 +3,7 @@ import { Dialog } from "../../dialogs/dialog";
 const { ccclass, property } = _decorator;
 
 import gc from "@sg/game-client-base";
+import { GameGuideUtils } from "db://shared-components/game/game-guide/scripts/utils/game-guide-utils";
 
 export enum NoticeType {
     Info = 0,
@@ -32,6 +33,10 @@ export class NoticeCmp extends Dialog {
     noticeInfo: gc.Notices.NoticeInfo;
 
     onClose: () => void;
+
+    onHideComplete = () => {
+        GameGuideUtils.showWebViewGuide();
+    };
 
     setData(data: {
         title: string;
