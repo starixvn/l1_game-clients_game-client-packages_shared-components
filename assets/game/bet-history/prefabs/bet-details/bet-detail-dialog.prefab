@@ -205,8 +205,8 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "005bc0+TtJHraxrdPo4rGru",
-    "handler": "hide",
+    "_componentId": "4b826Pa+R1ACLuTNHjbamxD",
+    "handler": "onClickClose",
     "customEventData": ""
   },
   {
@@ -1702,6 +1702,29 @@
     "_isUnderline": false,
     "_underlineHeight": 0,
     "_cacheMode": 1,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -1769,6 +1792,7 @@
     },
     "key": "Common.bet_detail",
     "format": 1,
+    "prefix": "",
     "suffix": "",
     "_id": ""
   },
@@ -1808,7 +1832,6 @@
     "__prefab": {
       "__id__": 83
     },
-    "isBitmapCacheMode": true,
     "_id": ""
   },
   {
@@ -2473,8 +2496,8 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "005bc0+TtJHraxrdPo4rGru",
-    "handler": "hide",
+    "_componentId": "4b826Pa+R1ACLuTNHjbamxD",
+    "handler": "onClickClose",
     "customEventData": ""
   },
   {
@@ -2794,6 +2817,7 @@
     "nodeBody": {
       "__id__": 16
     },
+    "autoShowWhenEnable": true,
     "_id": ""
   },
   {
