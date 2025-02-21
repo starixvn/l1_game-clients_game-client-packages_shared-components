@@ -1,4 +1,4 @@
-import { find, tween, TweenEasing, v3, view } from "cc";
+import { error, find, math, tween, TweenEasing, v3, view } from "cc";
 import WebViewGuide from "../web-view-guide";
 
 export class GameGuideUtils {
@@ -8,12 +8,12 @@ export class GameGuideUtils {
         HIDE: {
             duration: 0.1,
             easing: "sineOut" as TweenEasing,
-            position: () => -view.getVisibleSize().width,
+            position: () => v3(-view.getVisibleSize().width, 0, 0),
         },
         SHOW: {
             duration: 0.2,
             easing: "sineIn" as TweenEasing,
-            position: () => 0,
+            position: () => v3(0, 0, 0),
         },
     } as const;
 
@@ -31,31 +31,30 @@ export class GameGuideUtils {
     }
 
     static hideWebViewGuide(): Promise<void> {
-        return GameGuideUtils.animateWebViewGuide(this.ANIMATION_CONFIG.HIDE);
+        try {
+            return GameGuideUtils.animateWebViewGuide(this.ANIMATION_CONFIG.HIDE);
+        } catch (errorMessage) {
+            error("[GameGuideUtils] Failed to hide web view guide:", errorMessage);
+        }
     }
 
     static showWebViewGuide(): Promise<void> {
-        return GameGuideUtils.animateWebViewGuide(this.ANIMATION_CONFIG.SHOW);
+        try {
+            return GameGuideUtils.animateWebViewGuide(this.ANIMATION_CONFIG.SHOW);
+        } catch (errorMessage) {
+            error("[GameGuideUtils] Failed to show web view guide:", errorMessage);
+        }
     }
 
-    private static animateWebViewGuide(config: { duration: number; easing: TweenEasing; position: () => number }): Promise<void> {
-        return new Promise((resolve) => {
-            const webViewGuide = GameGuideUtils.getWebViewGuide();
-            if (!webViewGuide?.node) {
-                resolve();
-                return;
-            }
+    private static animateWebViewGuide(config: { duration: number; easing: TweenEasing; position: () => math.Vec3 }): Promise<void> {
+        const webViewGuide = GameGuideUtils.getWebViewGuide();
+        if (!webViewGuide?.node) {
+            return Promise.resolve();
+        }
 
+        return new Promise<void>((resolve) => {
             tween(webViewGuide.node)
-                .to(
-                    config.duration,
-                    {
-                        position: v3(config.position(), 0, 0),
-                    },
-                    {
-                        easing: config.easing,
-                    }
-                )
+                .to(config.duration, { position: config.position() }, { easing: config.easing })
                 .call(() => {
                     resolve();
                 })
