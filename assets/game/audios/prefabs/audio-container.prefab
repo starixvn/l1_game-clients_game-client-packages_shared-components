@@ -332,7 +332,7 @@
     "sfxSource": {
       "__id__": 3
     },
-    "sfxExtraSource": {
+    "stoppableSFXSource": {
       "__id__": 11
     },
     "_id": ""
