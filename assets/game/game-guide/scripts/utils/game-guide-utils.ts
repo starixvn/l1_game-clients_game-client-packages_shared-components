@@ -1,8 +1,8 @@
 import { error, find, math, tween, TweenEasing, v3, view } from "cc";
-import WebViewGuide from "../web-view-guide";
+import LoadWebView from "db://shared-components/shared/common-components/web-view/load-web-view";
 
 export class GameGuideUtils {
-    private static webViewGuideInstance: WebViewGuide | null = null;
+    private static LoadWebViewInstance: LoadWebView | null = null;
 
     private static readonly ANIMATION_CONFIG = {
         HIDE: {
@@ -17,22 +17,22 @@ export class GameGuideUtils {
         },
     } as const;
 
-    private static getWebViewGuide(): WebViewGuide | null {
-        if (!GameGuideUtils.webViewGuideInstance) {
+    private static getLoadWebView(): LoadWebView | null {
+        if (!GameGuideUtils.LoadWebViewInstance) {
             const canvas = find("Canvas");
             if (!canvas) {
                 return null;
             }
 
-            GameGuideUtils.webViewGuideInstance = canvas.getComponentInChildren(WebViewGuide) || null;
+            GameGuideUtils.LoadWebViewInstance = canvas.getComponentInChildren(LoadWebView) || null;
         }
 
-        return GameGuideUtils.webViewGuideInstance;
+        return GameGuideUtils.LoadWebViewInstance;
     }
 
     static hideWebViewGuide(): Promise<void> {
         try {
-            return GameGuideUtils.animateWebViewGuide(this.ANIMATION_CONFIG.HIDE);
+            return GameGuideUtils.animateLoadWebView(this.ANIMATION_CONFIG.HIDE);
         } catch (errorMessage) {
             error("[GameGuideUtils] Failed to hide web view guide:", errorMessage);
         }
@@ -40,20 +40,20 @@ export class GameGuideUtils {
 
     static showWebViewGuide(): Promise<void> {
         try {
-            return GameGuideUtils.animateWebViewGuide(this.ANIMATION_CONFIG.SHOW);
+            return GameGuideUtils.animateLoadWebView(this.ANIMATION_CONFIG.SHOW);
         } catch (errorMessage) {
             error("[GameGuideUtils] Failed to show web view guide:", errorMessage);
         }
     }
 
-    private static animateWebViewGuide(config: { duration: number; easing: TweenEasing; position: () => math.Vec3 }): Promise<void> {
-        const webViewGuide = GameGuideUtils.getWebViewGuide();
-        if (!webViewGuide?.node) {
+    private static animateLoadWebView(config: { duration: number; easing: TweenEasing; position: () => math.Vec3 }): Promise<void> {
+        const LoadWebView = GameGuideUtils.getLoadWebView();
+        if (!LoadWebView?.node) {
             return Promise.resolve();
         }
 
         return new Promise<void>((resolve) => {
-            tween(webViewGuide.node)
+            tween(LoadWebView.node)
                 .to(config.duration, { position: config.position() }, { easing: config.easing })
                 .call(() => {
                     resolve();
