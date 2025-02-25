@@ -23,6 +23,10 @@ export class CustomizeLogoSplash extends Component {
     private readonly href = `${window.location.origin}${window.location.pathname}`;
 
     onLoad() {
+        const { origin } = window.location;
+        if (origin.includes("localhost")) {
+            return;
+        }
         this.renderLogo();
         this.renderTagLine();
     }
