@@ -103,6 +103,15 @@ export namespace AnimationUtils {
         });
     };
 
+    export const playSpineAtProgress = (spine: sp.Skeleton, animationName: string, progress: number) => {
+        const animation = spine.findAnimation(animationName);
+        if (animation) {
+            spine.setAnimation(0, animationName, false);
+            const trackEntry = spine.getCurrent(0);
+            trackEntry.trackTime = trackEntry.animationEnd * progress;
+        }
+    };
+
     export const playAnimation = (animation: Animation, animationName: string, duration?: number) => {
         return new Promise<void>((resolve, reject) => {
             const onFinished = () => {
