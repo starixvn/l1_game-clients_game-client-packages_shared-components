@@ -1,4 +1,4 @@
-import { error, find, math, tween, TweenEasing, v3, view } from "cc";
+import { error, find, math, tween, TweenEasing, v3 } from "cc";
 import LoadWebView from "db://shared-components/shared/common-components/web-view/load-web-view";
 
 export class GameGuideUtils {
@@ -8,7 +8,7 @@ export class GameGuideUtils {
         HIDE: {
             duration: 0.1,
             easing: "sineOut" as TweenEasing,
-            position: () => v3(-view.getVisibleSize().width, 0, 0),
+            position: () => v3(-10000, 0, 0),
         },
         SHOW: {
             duration: 0.2,
