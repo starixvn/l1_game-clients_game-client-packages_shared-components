@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import { remove, values } from "lodash-es";
 import Observer from "observer";
+
 import { IAroundTablePlayers, IHiddenPlayers } from "../stores/around-table-players-chip-store";
 import { AroundTablePlayerUtils } from "../utils";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -87,8 +88,12 @@ export class AroundTablePlayers extends ObserverComponent {
         }
     }
 
-    updateHiddenPlayerStorage(playerChip: gc.GameServiceMessage.PlayerChip) {
-        const player = this.hiddenPlayers?.[playerChip?.playerId];
+    updateHiddenPlayerStorage(playerChip?: gc.GameServiceMessage.PlayerChip) {
+        if (!playerChip) {
+            return;
+        }
+
+        const player = this.hiddenPlayers?.[playerChip.playerId];
 
         if (player) {
             player.idleCount = 0;
