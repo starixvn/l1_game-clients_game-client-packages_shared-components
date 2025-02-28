@@ -229,3 +229,16 @@ export const isValidNode = (comp: Component) => {
 export const isIOS = () => {
     return sys.os === sys.OS.IOS;
 };
+
+export const truncatedNickname = (nickname: string) => {
+    let truncatedNickname = "";
+    if (nickname) {
+        if (nickname.length > 8) {
+            truncatedNickname = `${nickname.substring(0, 7)}...`;
+        } else {
+            truncatedNickname = nickname;
+        }
+    }
+
+    return truncatedNickname;
+};

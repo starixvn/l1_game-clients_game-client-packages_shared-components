@@ -5,7 +5,7 @@ import { bundleManager } from "../../../../shared/common-components/bundle-manag
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../../../shared/utils";
 import { IAroundTablePlayers } from "../stores/around-table-players-chip-store";
-import { AnimationUtils } from "./../../../../shared/utils/utils";
+import { AnimationUtils, truncatedNickname } from "./../../../../shared/utils/utils";
 
 const { ccclass, property } = _decorator;
 const { fadeIn, fadeOut } = AnimationUtils;
@@ -81,20 +81,7 @@ export class AroundTablePlayerComponent extends ObserverComponent {
     }
 
     private setNickname(nickname: string | null) {
-        this.updateNicknameLabel(this.truncatedNickname(nickname));
-    }
-
-    private truncatedNickname(nickname: string) {
-        let truncatedNickname = "";
-        if (nickname) {
-            if (nickname.length > 8) {
-                truncatedNickname = `${nickname.substring(0, 7)}...`;
-            } else {
-                truncatedNickname = nickname;
-            }
-        }
-
-        return truncatedNickname;
+        this.updateNicknameLabel(truncatedNickname(nickname));
     }
 
     private updateNicknameLabel(nickname: string) {
