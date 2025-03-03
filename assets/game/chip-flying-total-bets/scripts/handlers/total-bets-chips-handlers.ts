@@ -3,6 +3,8 @@ import { _decorator } from "cc";
 import inversify from "inversify";
 import Observer from "observer";
 
+import { getChipQuantity } from "../../../chip-flying/scripts/components/actions/fly-chip-to-box";
+
 const { injectable, inject } = inversify;
 const { ccclass, property } = _decorator;
 
@@ -19,6 +21,7 @@ export class TotalBetsChipsHandler {
     @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
     @inject(gc.RoundHistories.RoundHistoryStore) private readonly roundHistoryStore: gc.RoundHistories.RoundHistoryStore;
     @inject(gc.Player.MainPlayerStore) protected readonly mainPlayerStore: gc.Player.MainPlayerStore;
+    @inject(gc.Chips.ChipHandlers) protected readonly chipHandlers: gc.Chips.ChipHandlers;
 
     private prevTotalBets: IBetChoice = {};
     private isFirstTotalBets = true;
@@ -31,10 +34,11 @@ export class TotalBetsChipsHandler {
         if (this.isFirstTotalBets && this.roundHistoryStore.firstJoinGameHistory) {
             this.prevTotalBets = totalBets;
             const chips = this.parseChipsFromTotalBets(totalBets);
+
             console.log("-------chips", chips);
-            this.chipStore.chips = chips;
-            this.chipStore.convertChips();
-            // this.setChips(chips);
+            this.chipHandlers.handleChips(chips);
+            // this.chipStore.chips = chips;
+            // this.chipStore.convertChips();
             this.isFirstTotalBets = false;
             return;
         }
@@ -43,20 +47,15 @@ export class TotalBetsChipsHandler {
 
         Object.keys(offsetTotalBets).forEach((choice) => {
             const playerChip = {
-                playerId: "",
+                playerId: `${Math.random()}`,
                 betChoice: choice,
                 amount: offsetTotalBets[choice],
-                red: 7376.4800000000105,
+                red: 1000,
             };
             this.chipStore.playerChip = playerChip;
         });
         this.prevTotalBets = totalBets;
     }
-
-    // @handle(gc.Chips.ChipHandlers, (handler, chips: gc.GameServiceMessage.Chips) => handler.handleChips(chips))
-    // setChips(chips: gc.GameServiceMessage.Chips) {
-    //     return chips;
-    // }
 
     private calculateOffsetTotalBets(totalBets: IBetChoice): IBetChoice {
         const offsetTotalBets: IBetChoice = {};
@@ -85,22 +84,14 @@ export class TotalBetsChipsHandler {
         }
         let chips = {};
         Object.keys(totalBets).forEach((choice) => {
-            const betChoiceData = {};
-            const totalBetChoice = totalBets[choice];
-            let totalBetChoiceTmp = totalBetChoice;
-            const chipsByStake = this.chipStore.chipValuesByStakeLevel.filter((item) => item <= totalBetChoice);
-            for (let i = chipsByStake.length - 1; i >= 0; i--) {
-                const chip = chipsByStake[i];
-                const count = Math.floor(totalBetChoiceTmp / chip);
-                if (count > 0) {
-                    betChoiceData[chip] = count;
-                }
-                totalBetChoiceTmp -= count * chip;
-                if (totalBetChoiceTmp === 0) {
-                    break;
-                }
-            }
-            chips[choice] = betChoiceData;
+            const chipValues = getChipQuantity(totalBets[choice], this.chipStore.chipValuesByStakeLevel);
+            const tempLowerChip = chipValues[0] ? { 0.5: chipValues[0] } : {};
+            const newChipsWithLowerChips = Object.assign(
+                tempLowerChip,
+                Object.fromEntries(Object.entries(chipValues).filter(([key]) => key !== "0"))
+            );
+
+            chips[choice] = newChipsWithLowerChips;
         });
 
         return { [this.mainPlayerStore.rate]: chips };
