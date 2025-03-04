@@ -1,24 +1,21 @@
 import gc from "@sg/game-client-base";
-import { CCFloat, Layers, Node, UITransform, _decorator, instantiate, tween, v3 } from "cc";
-import Observer from "observer";
-import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
-import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
-import { BetItems } from "../../../bets/scripts/components/bet-items";
-import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
-
+import { _decorator, CCFloat, instantiate, Layers, Node, tween, UITransform, v3 } from "cc";
 import { random, round } from "lodash-es";
+import Observer from "observer";
+
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { FunctionUtils } from "../../../../shared/utils";
 import { AroundTablePlayers } from "../../../around-table-player/scripts/components/around-table-players";
-import {
-    AroundTablePlayersChipStore,
-    IAroundTablePlayerChip,
-    IAroundTablePlayerPlaceChip,
-} from "../../../around-table-player/scripts/stores/around-table-players-chip-store";
+import { AroundTablePlayersChipStore, IAroundTablePlayerChip, IAroundTablePlayerPlaceChip } from "../../../around-table-player/scripts/stores/around-table-players-chip-store";
 import { AroundTablePlayerUtils } from "../../../around-table-player/scripts/utils";
+import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
+import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
 import BetItem from "../../../bets/scripts/components/bet-item";
+import { BetItems } from "../../../bets/scripts/components/bet-items";
+import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 import { FlyChipUtils } from "../../../sliding-chip/scripts/utils/fly-chip-utils";
 import { ActionChipFlying, addChipsToChipBoxWhenJoinRoom, placeChipToChipBox } from "./actions";
+
 const { Auth, Chips, Settlements, Rounds } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
@@ -78,6 +75,7 @@ export class ChipFlying extends ObserverComponent {
     slidingChip: SlidingChip = null;
     aroundTablePlayers: AroundTablePlayers = null;
     betItems: BetItems = null;
+    isTotalBets = false;
 
     protected enablePlaceChips = true;
     protected payChipsDuration = 1.2;
@@ -395,7 +393,7 @@ export class ChipFlying extends ObserverComponent {
         if (!this.aroundTablePlayers) {
             return;
         }
-        const { playerChip, chipValues } = aroundTablePlayerPlaceChip ?? {};
+        const { playerChip, chipValues, clientRoundId } = aroundTablePlayerPlaceChip ?? {};
         if (!playerChip) {
             return;
         }
@@ -433,12 +431,37 @@ export class ChipFlying extends ObserverComponent {
             isHiddenPlayer,
         };
 
+        this.isTotalBets && this.storeTotalBetsChips(betChoice, chipValues, clientRoundId);
+
         if (!this.node.activeInHierarchy) {
             this.placeAroundTablePlayerChip(aroundTablePlayerInfo);
         } else {
             const delayTime = this.calculateDelayTime();
             this.delayedPlaceChip(aroundTablePlayerInfo, delayTime);
         }
+    }
+
+    private storeTotalBetsChips(betChoice: string, chipValues: any, clientRoundId: number) {
+        let chipsData = {};
+        const chipsRoundFromStorage = gc.Shared.utils.StorageManager.get("TotalBetsChips")?.[clientRoundId];
+
+        if (!chipsRoundFromStorage) {
+            gc.Shared.utils.StorageManager.remove("TotalBetsChips");
+            chipsData = { [betChoice]: chipValues };
+        } else {
+            const betChoiceChips = chipsRoundFromStorage[betChoice];
+            if (betChoiceChips) {
+                const combined = Object.keys(betChoiceChips).reduce((acc, key) => {
+                    acc[key] = (betChoiceChips[key] || 0) + (chipValues[key] || 0);
+                    return acc;
+                }, {});
+                chipsData = Object.assign({}, chipsRoundFromStorage, { [betChoice]: combined });
+            } else {
+                chipsData = Object.assign({}, chipsRoundFromStorage, { [betChoice]: chipValues });
+            }
+        }
+
+        gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: chipsData });
     }
 
     @render(Rounds.RoundTimeStore, (store) => ({ roundTime: store.roundTime, lockingBet: store.lockingBet }))

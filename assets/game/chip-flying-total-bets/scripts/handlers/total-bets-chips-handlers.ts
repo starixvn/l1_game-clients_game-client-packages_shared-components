@@ -33,12 +33,96 @@ export class TotalBetsChipsHandler {
 
         if (this.isFirstTotalBets && this.roundHistoryStore.firstJoinGameHistory) {
             this.prevTotalBets = totalBets;
-            const chips = this.parseChipsFromTotalBets(totalBets);
+            let chips = {};
 
-            console.log("-------chips", chips);
-            this.chipHandlers.handleChips(chips);
-            // this.chipStore.chips = chips;
-            // this.chipStore.convertChips();
+            const clientRoundId = this.roundStore.clientRoundId;
+            // const fakeData = {
+            //     big: {
+            //         "0": 1,
+            //         "10": 1,
+            //         "20": 0,
+            //         "50": 0,
+            //         "100": 0,
+            //         "200": 0,
+            //         "250": 0,
+            //         "500": 0,
+            //     },
+            //     specific6: {
+            //         "0": 1,
+            //         "10": 0,
+            //         "20": 1,
+            //         "50": 0,
+            //         "100": 0,
+            //         "200": 0,
+            //         "250": 0,
+            //         "500": 0,
+            //     },
+            //     small: {
+            //         "0": 1,
+            //         "10": 0,
+            //         "20": 0,
+            //         "50": 1,
+            //         "100": 1,
+            //         "200": 0,
+            //         "250": 0,
+            //         "500": 1,
+            //     },
+            //     anyTriple: {
+            //         "0": 1,
+            //         "10": 1,
+            //         "20": 1,
+            //         "50": 1,
+            //         "100": 0,
+            //         "200": 0,
+            //         "250": 0,
+            //         "500": 0,
+            //     },
+            // };
+            // console.log("------before join game -TotalBetsChips", fakeData);
+            // gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: fakeData });
+
+            const chipsDataStorage = gc.Shared.utils.StorageManager.get("TotalBetsChips")?.[clientRoundId];
+            console.log("------chipsDataStorage", chipsDataStorage);
+
+            if (!chipsDataStorage) {
+                gc.Shared.utils.StorageManager.remove("TotalBetsChips");
+                chips = this.parseChipsFromTotalBets(totalBets);
+                this.chipHandlers.handleChips({ [this.mainPlayerStore.rate]: chips });
+            } else {
+                // totalBets = {
+                //     big: 1030,
+                //     total15: 91.6,
+                //     small: 533.74,
+                //     total12: 85,
+                //     anyTriple: 37.79,
+                //     specific4: 14,
+                //     specific6: 601.13,
+                //     total11: 163,
+                // };
+                console.log("------join game -TotalBets", totalBets);
+                Object.keys(totalBets).forEach((choice) => {
+                    totalBets[choice] =
+                        totalBets[choice] - (chipsDataStorage[choice] ? this.calculateTotalAmount(chipsDataStorage[choice]) : 0);
+                });
+
+                chips = this.parseChipsFromTotalBets(totalBets);
+
+                Object.keys(totalBets).forEach((choice) => {
+                    const betChoiceChips = chipsDataStorage[choice];
+                    if (betChoiceChips) {
+                        const combined = Object.keys(betChoiceChips).reduce((acc, key) => {
+                            acc[key] = (betChoiceChips[key] || 0) + (chips[choice]?.[key] || 0);
+                            return acc;
+                        }, {});
+                        chipsDataStorage[choice] = combined;
+                    }
+                });
+
+                console.log("------TotalBetsChips", chipsDataStorage);
+                gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: chipsDataStorage });
+                this.chipHandlers.handleChips({ [this.mainPlayerStore.rate]: chipsDataStorage });
+            }
+
             this.isFirstTotalBets = false;
             return;
         }
@@ -55,6 +139,12 @@ export class TotalBetsChipsHandler {
             this.chipStore.playerChip = playerChip;
         });
         this.prevTotalBets = totalBets;
+    }
+
+    private calculateTotalAmount(chips: Record<string, number>): number {
+        return Object.entries(chips).reduce((sum, [denomination, quantity]) => {
+            return sum + parseFloat(denomination) * quantity;
+        }, 0);
     }
 
     private calculateOffsetTotalBets(totalBets: IBetChoice): IBetChoice {
@@ -94,6 +184,6 @@ export class TotalBetsChipsHandler {
             chips[choice] = newChipsWithLowerChips;
         });
 
-        return { [this.mainPlayerStore.rate]: chips };
+        return chips;
     }
 }

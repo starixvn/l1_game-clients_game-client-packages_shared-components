@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { Node } from "cc";
 import inversify from "inversify";
 import mobx from "mobx";
+
 import { getChipQuantity } from "../../../chip-flying/scripts/components/actions";
 import { AroundTablePlayerComponent } from "../components/around-table-player-component";
 
@@ -25,6 +26,7 @@ export interface IAroundTablePlayerChip {
     chipValues: {
         [value: number]: number;
     };
+    clientRoundId: number;
 }
 
 export interface IAroundTablePlayerPlaceChip {
@@ -40,6 +42,7 @@ export interface IAroundTablePlayerPlaceChip {
 @injectable()
 export class AroundTablePlayersChipStore {
     @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
+    @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
 
     constructor() {
         mobx.makeAutoObservable(this);
@@ -47,12 +50,16 @@ export class AroundTablePlayersChipStore {
 
     get aroundTablePlayerChip(): IAroundTablePlayerChip {
         const playerChip = this.chipStore.playerChip;
+
         if (playerChip) {
             const chipValues = getChipQuantity(playerChip?.amount, this.chipStore.chipValuesByStakeLevel);
+
+            // gc.Shared.utils.StorageManager.set("TotalBetsChips", dataChips);
 
             return {
                 chipValues,
                 playerChip,
+                clientRoundId: this.roundStore.clientRoundId,
             };
         }
 

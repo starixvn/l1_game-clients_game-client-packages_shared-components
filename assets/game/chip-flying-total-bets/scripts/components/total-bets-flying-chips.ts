@@ -10,6 +10,8 @@ const { render, handle } = Observer;
 
 @ccclass("TotalBetsFlyingChips")
 export class TotalBetsFlyingChips extends ChipFlying {
+    isTotalBets = true;
+
     @render(gc.Rounds.RoundStore, (store) => store.totalBets, { fireImmediately: false })
     handleTotalBets(totalBets: IBetChoice) {
         this.handleTotalBetsChips(totalBets);
