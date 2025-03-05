@@ -48,7 +48,7 @@ export class LocalizedFont extends Component {
         if (this.label) {
             this.loadFont(name)
                 .then((font) => {
-                    if (this.label.isValid) {
+                    if (this.label?.isValid) {
                         this.label.font = font;
                         this.enableCacheMode && this.handleCacheMode();
                     }
