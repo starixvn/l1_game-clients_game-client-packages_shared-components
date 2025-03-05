@@ -230,11 +230,11 @@ export const isIOS = () => {
     return sys.os === sys.OS.IOS;
 };
 
-export const truncatedNickname = (nickname: string) => {
+export const truncatedNickname = (nickname: string, maxLength = 8) => {
     let truncatedNickname = "";
     if (nickname) {
-        if (nickname.length > 8) {
-            truncatedNickname = `${nickname.substring(0, 7)}...`;
+        if (nickname.length > maxLength) {
+            truncatedNickname = `${nickname.substring(0, maxLength - 1)}...`;
         } else {
             truncatedNickname = nickname;
         }
