@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "./observer-component/scripts/observer-component";
+import { siteConfigs } from "../../../../../assets/scripts/site-configs";
 
 const { ccclass } = _decorator;
 const { handle, render } = Observer;
@@ -15,7 +16,9 @@ export default class GameConnection extends ObserverComponent {
     openGameCallback = () => {};
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
-    connectToService() {}
+    connectToService() {
+        return { ...siteConfigs?.websocketOptions };
+    }
 
     @render(gc.JoinGame.JoinGameStore, (store) => store.toGame, { fireImmediately: false })
     requestOpenGame() {
