@@ -23,6 +23,11 @@ export interface ServiceCard {
     suit: number;
 }
 
+export interface ServiceOldCard {
+    card: number;
+    type: number;
+}
+
 enum AnimationName {
     Open_Card = "open-card",
     Close_Card = "close-card",
@@ -31,6 +36,13 @@ enum AnimationName {
     Draw_Card = "draw-card",
     Pull_Card = "pull-card",
 }
+
+export const convertOldCardToServiceCard = (oldCard: ServiceOldCard): ServiceCard => {
+    return {
+        rank: oldCard.card,
+        suit: oldCard.type
+    };
+};
 
 @ccclass
 export class PokerCard extends Component {

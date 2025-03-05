@@ -75,7 +75,7 @@ export class GridLayout extends Component {
         this.layout.enabled = false;
     }
 
-    protected scrollToEnd() {
+    public scrollToEnd() {
         if (!this.scrollView) {
             return;
         }
