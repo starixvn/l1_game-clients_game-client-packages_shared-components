@@ -21,7 +21,8 @@ export class TotalBetsFlyingChips extends ChipFlying {
 
     @render(gc.Rounds.RoundStore, (store) => store.totalBets, { fireImmediately: false })
     handleTotalBets(totalBets: IBetChoice) {
-        const filterTotalBets = Object.fromEntries(Object.entries(totalBets).filter(([choice]) => this.choices.includes(choice)));
+        const filterEntries = Object.entries(totalBets).filter(([choice]) => this.choices.includes(choice));
+        const filterTotalBets = Object.fromEntries(filterEntries);
         this.handleTotalBetsChips(filterTotalBets);
     }
 

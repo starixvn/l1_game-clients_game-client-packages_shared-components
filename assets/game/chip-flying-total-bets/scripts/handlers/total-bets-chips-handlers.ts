@@ -26,7 +26,6 @@ export class TotalBetsChipsHandler {
     @inject(gc.GameConfigs.GameConfigStore) protected readonly gameConfigStore: gc.GameConfigs.GameConfigStore;
 
     private prevTotalBets: IBetChoice = {};
-    private timeoutIds: NodeJS.Timeout[] = [];
 
     constructor() {
         setTimeout(() => {
@@ -42,69 +41,96 @@ export class TotalBetsChipsHandler {
     }
 
     async handle(totalBets: IBetChoice) {
-        this.clearAllTimeouts();
-
         if (!totalBets || this.isSameTotalBets(totalBets) || !this.gameConfigStore.initialized) {
             return;
         }
 
         if (!this.prevTotalBets) {
-            this.prevTotalBets = totalBets;
-            let chips = {};
-
-            const clientRoundId = this.roundStore.clientRoundId;
-            const chipsDataStorage = gc.Shared.utils.StorageManager.get("TotalBetsChips")?.[clientRoundId];
-
-            if (!chipsDataStorage) {
-                gc.Shared.utils.StorageManager.remove("TotalBetsChips");
-                chips = this.parseChipsFromTotalBets(totalBets);
-                this.chipHandlers.handleChips({ [this.mainPlayerStore.rate]: chips });
-            } else {
-                Object.keys(totalBets).forEach((choice) => {
-                    totalBets[choice] =
-                        totalBets[choice] - (chipsDataStorage[choice] ? this.calculateTotalAmount(chipsDataStorage[choice]) : 0);
-                });
-
-                chips = this.parseChipsFromTotalBets(totalBets);
-
-                Object.keys(totalBets).forEach((choice) => {
-                    const betChoiceChips = chipsDataStorage[choice];
-                    if (betChoiceChips) {
-                        const combined = Object.keys(betChoiceChips).reduce((acc, key) => {
-                            acc[key] = (betChoiceChips[key] || 0) + (chips[choice]?.[key] || 0);
-                            return acc;
-                        }, {});
-                        chipsDataStorage[choice] = combined;
-                    }
-                });
-
-                gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: chipsDataStorage });
-                this.chipHandlers.handleChips({ [this.mainPlayerStore.rate]: chipsDataStorage });
-            }
-
+            this.handleInitialBets(totalBets);
             return;
         }
 
-        const offsetTotalBets = this.calculateOffsetTotalBets(totalBets);
-        Object.keys(offsetTotalBets).forEach((choice) => {
-            const playerChip = {
-                playerId: "123",
-                betChoice: choice,
-                amount: offsetTotalBets[choice],
-                red: 1000,
-            };
-            const timeoutId = setTimeout(() => {
-                this.chipStore.playerChip = playerChip;
-            }, 0);
-
-            this.timeoutIds.push(timeoutId);
-        });
+        await this.handleSubsequentBets(totalBets);
         this.prevTotalBets = totalBets;
     }
 
-    private clearAllTimeouts() {
-        this.timeoutIds.forEach((timeoutId) => clearTimeout(timeoutId));
-        this.timeoutIds = [];
+    private handleInitialBets(totalBets: IBetChoice) {
+        this.prevTotalBets = totalBets;
+        const clientRoundId = this.roundStore.clientRoundId;
+        const chipsDataStorage = gc.Shared.utils.StorageManager.get("TotalBetsChips")?.[clientRoundId];
+
+        if (!chipsDataStorage) {
+            this.handleNewRoundBets(totalBets);
+        } else {
+            this.handleExistingRoundBets(totalBets, chipsDataStorage);
+        }
+    }
+
+    private handleNewRoundBets(totalBets: IBetChoice) {
+        gc.Shared.utils.StorageManager.remove("TotalBetsChips");
+        const chips = this.parseChipsFromTotalBets(totalBets);
+        this.chipHandlers.handleChips({ [this.mainPlayerStore.rate]: chips });
+    }
+
+    private handleExistingRoundBets(totalBets: IBetChoice, chipsDataStorage: Record<string, any>) {
+        const adjustedTotalBets = this.calculateAdjustedTotalBets(totalBets, chipsDataStorage);
+        const chips = this.parseChipsFromTotalBets(adjustedTotalBets);
+
+        const updatedChipsStorage = this.updateChipsStorage(chipsDataStorage, totalBets, chips);
+        const clientRoundId = this.roundStore.clientRoundId;
+
+        gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: updatedChipsStorage });
+        this.chipHandlers.handleChips({ [this.mainPlayerStore.rate]: updatedChipsStorage });
+    }
+
+    private calculateAdjustedTotalBets(totalBets: IBetChoice, chipsDataStorage: Record<string, any>): IBetChoice {
+        const adjustedBets = { ...totalBets };
+        Object.keys(totalBets).forEach((choice) => {
+            adjustedBets[choice] = totalBets[choice] - (chipsDataStorage[choice] ? this.calculateTotalAmount(chipsDataStorage[choice]) : 0);
+        });
+        return adjustedBets;
+    }
+
+    private updateChipsStorage(
+        chipsDataStorage: Record<string, any>,
+        totalBets: IBetChoice,
+        newChips: Record<string, any>
+    ): Record<string, any> {
+        const updatedStorage = { ...chipsDataStorage };
+        Object.keys(totalBets).forEach((choice) => {
+            const betChoiceChips = chipsDataStorage[choice];
+            if (betChoiceChips) {
+                updatedStorage[choice] = this.combineChips(betChoiceChips, newChips[choice] || {});
+            }
+        });
+        return updatedStorage;
+    }
+
+    private combineChips(existing: Record<string, number>, new_: Record<string, number>): Record<string, number> {
+        return Object.keys(existing).reduce((acc, key) => {
+            acc[key] = (existing[key] || 0) + (new_[key] || 0);
+            return acc;
+        }, {});
+    }
+
+    private async handleSubsequentBets(totalBets: IBetChoice) {
+        const offsetTotalBets = this.calculateOffsetTotalBets(totalBets);
+        await Promise.all(Object.entries(offsetTotalBets).map(([choice, amount]) => this.queueChipUpdate(choice, amount)));
+    }
+
+    private queueChipUpdate(choice: string, amount: number) {
+        const playerChip = {
+            playerId: "123",
+            betChoice: choice,
+            amount,
+            red: 1000,
+        };
+        return new Promise<void>((resolve) => {
+            setTimeout(() => {
+                this.chipStore.playerChip = playerChip;
+                resolve();
+            }, 0);
+        });
     }
 
     private calculateTotalAmount(chips: Record<string, number>): number {
