@@ -1,22 +1,16 @@
 import gc from "@sg/game-client-base";
-import { _decorator } from "cc";
 import inversify from "inversify";
 import mobx from "mobx";
-import Observer from "observer";
 
 import { getChipQuantity } from "../../../chip-flying/scripts/components/actions/fly-chip-to-box";
 
 const { injectable, inject } = inversify;
-const { ccclass, property } = _decorator;
 
 export interface IBetChoice {
     [betChoice: string]: number;
 }
 
-const { render, handle } = Observer;
-
 @injectable()
-@ccclass("TotalBetsChipsHandler")
 export class TotalBetsChipsHandler {
     @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
     @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
@@ -25,7 +19,7 @@ export class TotalBetsChipsHandler {
     @inject(gc.Chips.ChipHandlers) protected readonly chipHandlers: gc.Chips.ChipHandlers;
     @inject(gc.GameConfigs.GameConfigStore) protected readonly gameConfigStore: gc.GameConfigs.GameConfigStore;
 
-    private prevTotalBets: IBetChoice = {};
+    private prevTotalBets: IBetChoice = null;
 
     constructor() {
         setTimeout(() => {
