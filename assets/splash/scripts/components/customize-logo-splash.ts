@@ -20,7 +20,7 @@ export class CustomizeLogoSplash extends Component {
     @property
     versionImg = 1;
 
-    private readonly href = `${window.location.origin}${window.location.pathname}`;
+    protected readonly href = `${window.location.origin}${window.location.pathname}`;
 
     onLoad() {
         const { origin } = window.location;
@@ -53,8 +53,7 @@ export class CustomizeLogoSplash extends Component {
     }
 
     renderTagLine() {
-        const lang = i18n._language;
-        const taglinePath = `${this.href}images/splash_text_${lang}.webp?v=${this.versionImg}`;
+        const taglinePath = this.createTagLinePath();
         assetManager.loadRemote<ImageAsset>(taglinePath, (err, imageAsset) => {
             if (!isValidNode(this)) {
                 return;
@@ -66,5 +65,11 @@ export class CustomizeLogoSplash extends Component {
             this.sprTagline.spriteFrame = spriteFrameTmp;
             this.sprTagline.sizeMode = Sprite.SizeMode.RAW;
         });
+    }
+
+    protected createTagLinePath() {
+        const lang = i18n._language;
+        const taglinePath = `${this.href}images/splash_text_${lang}.webp?v=${this.versionImg}`;
+        return taglinePath;
     }
 }
