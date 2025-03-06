@@ -53,8 +53,14 @@ export class CustomizeLogoSplash extends Component {
     }
 
     renderTagLine() {
+        const operator = OperatorUtils.getOperatorAlias();
+        if (operator === "OTHER") {
+            return;
+        }
+        
         const lang = i18n._language;
-        const taglinePath = `${this.href}images/splash_text_${lang}.webp?v=${this.versionImg}`;
+        const tagName = `splash_${operator.toLowerCase()}_text_${lang}`;
+        const taglinePath = `${this.href}images/${tagName}.webp?v=${this.versionImg}`;
         assetManager.loadRemote<ImageAsset>(taglinePath, (err, imageAsset) => {
             if (!isValidNode(this)) {
                 return;
