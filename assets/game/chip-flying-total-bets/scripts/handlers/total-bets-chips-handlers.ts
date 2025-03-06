@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import inversify from "inversify";
+import mobx from "mobx";
 import Observer from "observer";
 
 import { getChipQuantity } from "../../../chip-flying/scripts/components/actions/fly-chip-to-box";
@@ -19,87 +20,46 @@ const { render, handle } = Observer;
 export class TotalBetsChipsHandler {
     @inject(gc.Chips.ChipStore) private readonly chipStore: gc.Chips.ChipStore;
     @inject(gc.Rounds.RoundStore) private readonly roundStore: gc.Rounds.RoundStore;
-    @inject(gc.RoundHistories.RoundHistoryStore) private readonly roundHistoryStore: gc.RoundHistories.RoundHistoryStore;
+    @inject(gc.Settlements.SettlementStore) private readonly settlementStore: gc.Settlements.SettlementStore;
     @inject(gc.Player.MainPlayerStore) protected readonly mainPlayerStore: gc.Player.MainPlayerStore;
     @inject(gc.Chips.ChipHandlers) protected readonly chipHandlers: gc.Chips.ChipHandlers;
+    @inject(gc.GameConfigs.GameConfigStore) protected readonly gameConfigStore: gc.GameConfigs.GameConfigStore;
 
     private prevTotalBets: IBetChoice = {};
-    private isFirstTotalBets = true;
+    private timeoutIds: NodeJS.Timeout[] = [];
+
+    constructor() {
+        setTimeout(() => {
+            mobx.reaction(
+                () => this.settlementStore.currentFinish,
+                (currentFinish) => {
+                    if (currentFinish) {
+                        this.prevTotalBets = {};
+                    }
+                }
+            );
+        }, 0);
+    }
 
     async handle(totalBets: IBetChoice) {
-        if (!totalBets || this.isSameTotalBets(totalBets) || !this.roundHistoryStore.firstJoinGameHistory) {
+        this.clearAllTimeouts();
+
+        if (!totalBets || this.isSameTotalBets(totalBets) || !this.gameConfigStore.initialized) {
             return;
         }
 
-        if (this.isFirstTotalBets && this.roundHistoryStore.firstJoinGameHistory) {
+        if (!this.prevTotalBets) {
             this.prevTotalBets = totalBets;
             let chips = {};
 
             const clientRoundId = this.roundStore.clientRoundId;
-            // const fakeData = {
-            //     big: {
-            //         "0": 1,
-            //         "10": 1,
-            //         "20": 0,
-            //         "50": 0,
-            //         "100": 0,
-            //         "200": 0,
-            //         "250": 0,
-            //         "500": 0,
-            //     },
-            //     specific6: {
-            //         "0": 1,
-            //         "10": 0,
-            //         "20": 1,
-            //         "50": 0,
-            //         "100": 0,
-            //         "200": 0,
-            //         "250": 0,
-            //         "500": 0,
-            //     },
-            //     small: {
-            //         "0": 1,
-            //         "10": 0,
-            //         "20": 0,
-            //         "50": 1,
-            //         "100": 1,
-            //         "200": 0,
-            //         "250": 0,
-            //         "500": 1,
-            //     },
-            //     anyTriple: {
-            //         "0": 1,
-            //         "10": 1,
-            //         "20": 1,
-            //         "50": 1,
-            //         "100": 0,
-            //         "200": 0,
-            //         "250": 0,
-            //         "500": 0,
-            //     },
-            // };
-            // console.log("------before join game -TotalBetsChips", fakeData);
-            // gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: fakeData });
-
             const chipsDataStorage = gc.Shared.utils.StorageManager.get("TotalBetsChips")?.[clientRoundId];
-            console.log("------chipsDataStorage", chipsDataStorage);
 
             if (!chipsDataStorage) {
                 gc.Shared.utils.StorageManager.remove("TotalBetsChips");
                 chips = this.parseChipsFromTotalBets(totalBets);
                 this.chipHandlers.handleChips({ [this.mainPlayerStore.rate]: chips });
             } else {
-                // totalBets = {
-                //     big: 1030,
-                //     total15: 91.6,
-                //     small: 533.74,
-                //     total12: 85,
-                //     anyTriple: 37.79,
-                //     specific4: 14,
-                //     specific6: 601.13,
-                //     total11: 163,
-                // };
-                console.log("------join game -TotalBets", totalBets);
                 Object.keys(totalBets).forEach((choice) => {
                     totalBets[choice] =
                         totalBets[choice] - (chipsDataStorage[choice] ? this.calculateTotalAmount(chipsDataStorage[choice]) : 0);
@@ -118,27 +78,33 @@ export class TotalBetsChipsHandler {
                     }
                 });
 
-                console.log("------TotalBetsChips", chipsDataStorage);
                 gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: chipsDataStorage });
                 this.chipHandlers.handleChips({ [this.mainPlayerStore.rate]: chipsDataStorage });
             }
 
-            this.isFirstTotalBets = false;
             return;
         }
 
         const offsetTotalBets = this.calculateOffsetTotalBets(totalBets);
-
         Object.keys(offsetTotalBets).forEach((choice) => {
             const playerChip = {
-                playerId: `${Math.random()}`,
+                playerId: "123",
                 betChoice: choice,
                 amount: offsetTotalBets[choice],
                 red: 1000,
             };
-            this.chipStore.playerChip = playerChip;
+            const timeoutId = setTimeout(() => {
+                this.chipStore.playerChip = playerChip;
+            }, 0);
+
+            this.timeoutIds.push(timeoutId);
         });
         this.prevTotalBets = totalBets;
+    }
+
+    private clearAllTimeouts() {
+        this.timeoutIds.forEach((timeoutId) => clearTimeout(timeoutId));
+        this.timeoutIds = [];
     }
 
     private calculateTotalAmount(chips: Record<string, number>): number {

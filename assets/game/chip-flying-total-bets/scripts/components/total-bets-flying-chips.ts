@@ -10,11 +10,19 @@ const { render, handle } = Observer;
 
 @ccclass("TotalBetsFlyingChips")
 export class TotalBetsFlyingChips extends ChipFlying {
-    isTotalBets = true;
+    @property
+    supportChoices = "";
+
+    useTotalBets = true;
+
+    private get choices() {
+        return this.supportChoices.split(",");
+    }
 
     @render(gc.Rounds.RoundStore, (store) => store.totalBets, { fireImmediately: false })
     handleTotalBets(totalBets: IBetChoice) {
-        this.handleTotalBetsChips(totalBets);
+        const filterTotalBets = Object.fromEntries(Object.entries(totalBets).filter(([choice]) => this.choices.includes(choice)));
+        this.handleTotalBetsChips(filterTotalBets);
     }
 
     @handle(TotalBetsChipsHandler)
