@@ -6,11 +6,7 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { FunctionUtils } from "../../../../shared/utils";
 import { AroundTablePlayers } from "../../../around-table-player/scripts/components/around-table-players";
-import {
-    AroundTablePlayersChipStore,
-    IAroundTablePlayerChip,
-    IAroundTablePlayerPlaceChip,
-} from "../../../around-table-player/scripts/stores/around-table-players-chip-store";
+import { AroundTablePlayersChipStore, IAroundTablePlayerChip, IAroundTablePlayerPlaceChip } from "../../../around-table-player/scripts/stores/around-table-players-chip-store";
 import { AroundTablePlayerUtils } from "../../../around-table-player/scripts/utils";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
@@ -79,7 +75,7 @@ export class ChipFlying extends ObserverComponent {
     slidingChip: SlidingChip = null;
     aroundTablePlayers: AroundTablePlayers = null;
     betItems: BetItems = null;
-    useTotalBets = false;
+    useFakeChip = false;
 
     protected enablePlaceChips = true;
     protected payChipsDuration = 1.2;
@@ -435,7 +431,7 @@ export class ChipFlying extends ObserverComponent {
             isHiddenPlayer,
         };
 
-        this.useTotalBets && this.storeTotalBetsChips(betChoice, chipValues, clientRoundId);
+        this.useFakeChip && this.storeTotalBetsChips(betChoice, chipValues, clientRoundId);
 
         if (!this.node.activeInHierarchy) {
             this.placeAroundTablePlayerChip(aroundTablePlayerInfo);

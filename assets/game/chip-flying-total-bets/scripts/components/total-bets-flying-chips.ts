@@ -13,7 +13,7 @@ export class TotalBetsFlyingChips extends ChipFlying {
     @property
     supportChoices = "";
 
-    useTotalBets = true;
+    useFakeChip = true;
 
     private get choices() {
         return this.supportChoices.split(",");
