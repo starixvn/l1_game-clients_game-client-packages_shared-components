@@ -18,6 +18,7 @@ export class TotalBetsChipsHandler {
     @inject(gc.Player.MainPlayerStore) protected readonly mainPlayerStore: gc.Player.MainPlayerStore;
     @inject(gc.Chips.ChipHandlers) protected readonly chipHandlers: gc.Chips.ChipHandlers;
     @inject(gc.GameConfigs.GameConfigStore) protected readonly gameConfigStore: gc.GameConfigs.GameConfigStore;
+    @inject(gc.Rounds.RoundTimeStore) protected readonly roundTimeStore: gc.Rounds.RoundTimeStore;
 
     private prevTotalBets: IBetChoice = null;
 
@@ -28,7 +29,6 @@ export class TotalBetsChipsHandler {
                 (currentFinish) => {
                     if (currentFinish) {
                         this.prevTotalBets = {};
-                        gc.Shared.utils.StorageManager.remove("TotalBetsChips");
                     }
                 }
             );
@@ -54,7 +54,7 @@ export class TotalBetsChipsHandler {
         const clientRoundId = this.roundStore.clientRoundId;
         const chipsDataStorage = gc.Shared.utils.StorageManager.get("TotalBetsChips")?.[clientRoundId];
 
-        if (!chipsDataStorage) {
+        if (!chipsDataStorage || Object.keys(chipsDataStorage).length === 0) {
             this.handleNewRoundBets(totalBets);
         } else {
             this.handleExistingRoundBets(totalBets, chipsDataStorage);

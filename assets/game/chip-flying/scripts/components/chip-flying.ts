@@ -6,7 +6,11 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { FunctionUtils } from "../../../../shared/utils";
 import { AroundTablePlayers } from "../../../around-table-player/scripts/components/around-table-players";
-import { AroundTablePlayersChipStore, IAroundTablePlayerChip, IAroundTablePlayerPlaceChip } from "../../../around-table-player/scripts/stores/around-table-players-chip-store";
+import {
+    AroundTablePlayersChipStore,
+    IAroundTablePlayerChip,
+    IAroundTablePlayerPlaceChip,
+} from "../../../around-table-player/scripts/stores/around-table-players-chip-store";
 import { AroundTablePlayerUtils } from "../../../around-table-player/scripts/utils";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { TBalanceEffect, TWinningEffect } from "../../../balance-effect/scripts/stores/balance-effect-store";
@@ -441,27 +445,31 @@ export class ChipFlying extends ObserverComponent {
         }
     }
 
-    private storeTotalBetsChips(betChoice: string, chipValues: any, clientRoundId: number) {
-        let chipsData = {};
-        const chipsRoundFromStorage = gc.Shared.utils.StorageManager.get("TotalBetsChips")?.[clientRoundId];
+    private storeTotalBetsChips(betChoice: string, chipValues: Record<string, number>, clientRoundId: number) {
+        const existingStorage = gc.Shared.utils.StorageManager.get("TotalBetsChips")?.[clientRoundId] || {};
 
-        if (!chipsRoundFromStorage) {
+        const updatedChips = this.mergeChipValues(existingStorage[betChoice] || {}, chipValues);
+
+        const newStorage = {
+            ...existingStorage,
+            [betChoice]: updatedChips,
+        };
+
+        if (Object.keys(existingStorage).length === 0) {
             gc.Shared.utils.StorageManager.remove("TotalBetsChips");
-            chipsData = { [betChoice]: chipValues };
-        } else {
-            const betChoiceChips = chipsRoundFromStorage[betChoice];
-            if (betChoiceChips) {
-                const combined = Object.keys(betChoiceChips).reduce((acc, key) => {
-                    acc[key] = (betChoiceChips[key] || 0) + (chipValues[key] || 0);
-                    return acc;
-                }, {});
-                chipsData = Object.assign({}, chipsRoundFromStorage, { [betChoice]: combined });
-            } else {
-                chipsData = Object.assign({}, chipsRoundFromStorage, { [betChoice]: chipValues });
-            }
         }
 
-        gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: chipsData });
+        gc.Shared.utils.StorageManager.set("TotalBetsChips", {
+            [clientRoundId]: newStorage,
+        });
+    }
+
+    private mergeChipValues(existing: Record<string, number>, chipValues: Record<string, number>): Record<string, number> {
+        const merged = { ...existing };
+        Object.entries(chipValues).forEach(([key, value]) => {
+            merged[key] = (merged[key] || 0) + value;
+        });
+        return merged;
     }
 
     @render(Rounds.RoundTimeStore, (store) => ({ roundTime: store.roundTime, lockingBet: store.lockingBet }))
