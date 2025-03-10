@@ -81,7 +81,8 @@ export class TotalBetsChipsHandler {
     private calculateAdjustedTotalBets(totalBets: IBetChoice, chipsDataStorage: Record<string, any>): IBetChoice {
         const adjustedBets = { ...totalBets };
         Object.keys(totalBets).forEach((choice) => {
-            adjustedBets[choice] = totalBets[choice] - (chipsDataStorage[choice] ? this.calculateTotalAmount(chipsDataStorage[choice]) : 0);
+            const betValue = totalBets[choice] - (chipsDataStorage[choice] ? this.calculateTotalAmount(chipsDataStorage[choice]) : 0);
+            adjustedBets[choice] = betValue > 0 ? betValue : 0;
         });
         return adjustedBets;
     }
