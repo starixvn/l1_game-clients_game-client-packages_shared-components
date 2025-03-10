@@ -72,7 +72,7 @@ export class ChipFlying extends ObserverComponent {
 
     @property
     supportChoices = "";
-    private get validChoices() {
+    protected get validChoices() {
         return this.supportChoices.split(",");
     }
 
