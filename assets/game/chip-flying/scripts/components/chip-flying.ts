@@ -71,7 +71,7 @@ export class ChipFlying extends ObserverComponent {
 
     @property
     supportChoices = "";
-    private get choices() {
+    private get validChoices() {
         return this.supportChoices.split(",");
     }
 
@@ -400,7 +400,7 @@ export class ChipFlying extends ObserverComponent {
             return;
         }
         const { betChoice, playerId } = playerChip;
-        if (this.choices.length > 0 && !this.choices.includes(betChoice)) {
+        if (this.supportChoices !== "" && !this.validChoices.includes(betChoice)) {
             return;
         }
         this.aroundTablePlayerChips.push(aroundTablePlayerPlaceChip);
@@ -452,6 +452,7 @@ export class ChipFlying extends ObserverComponent {
 
     protected calculateDelayTime() {
         let delayTime = this.aroundTablePlayerChips.length * 0.01;
+
         if (this.isFlyChipSlow) {
             delayTime = this.aroundTablePlayerChips.length * 0.07;
         }
