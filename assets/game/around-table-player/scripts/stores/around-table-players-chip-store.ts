@@ -54,8 +54,6 @@ export class AroundTablePlayersChipStore {
         if (playerChip) {
             const chipValues = getChipQuantity(playerChip?.amount, this.chipStore.chipValuesByStakeLevel);
 
-            // gc.Shared.utils.StorageManager.set("TotalBetsChips", dataChips);
-
             return {
                 chipValues,
                 playerChip,

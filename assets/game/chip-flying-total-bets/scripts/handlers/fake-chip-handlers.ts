@@ -6,10 +6,6 @@ const { injectable } = inversify;
 @injectable()
 export class FakeChipHandlers extends gc.Chips.ChipHandlers {
     eventHandleList = [
-        // {
-        //     name: GameServiceMessage.Chips.eventName,
-        //     handle: this.handleChips,
-        // },
         {
             name: gc.GameServiceMessage.PlayerChip.eventName,
             handle: this.handlePlayerChip,
