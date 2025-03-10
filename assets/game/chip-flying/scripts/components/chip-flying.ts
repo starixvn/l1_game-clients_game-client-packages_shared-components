@@ -69,6 +69,12 @@ export class ChipFlying extends ObserverComponent {
     })
     delayAnimPayChips = 1.25;
 
+    @property
+    supportChoices = "";
+    private get choices() {
+        return this.supportChoices.split(",");
+    }
+
     slidingChip: SlidingChip = null;
     aroundTablePlayers: AroundTablePlayers = null;
     betItems: BetItems = null;
@@ -393,9 +399,12 @@ export class ChipFlying extends ObserverComponent {
         if (!playerChip) {
             return;
         }
+        const { betChoice, playerId } = playerChip;
+        if (this.choices.length > 0 && !this.choices.includes(betChoice)) {
+            return;
+        }
         this.aroundTablePlayerChips.push(aroundTablePlayerPlaceChip);
 
-        const { betChoice, playerId } = playerChip;
         const betItem: BetItem = AroundTablePlayerUtils.getBetItem(this.betItems.betItemComponents, betChoice);
         if (!betItem) {
             return;
