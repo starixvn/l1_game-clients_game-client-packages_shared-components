@@ -141,7 +141,7 @@ export class TotalBetsChipsHandler {
             const ownBetChoice = this.roundStore.ownBets?.[betChoice] ?? 0;
             const prevBet = this.prevTotalBets[betChoice] ?? 0;
 
-            offsetTotalBets[betChoice] = totalBets[betChoice] - prevBet - ownBetChoice;
+            offsetTotalBets[betChoice] = totalBets[betChoice] > prevBet + ownBetChoice ? totalBets[betChoice] - prevBet - ownBetChoice : 0;
         });
 
         return offsetTotalBets;
