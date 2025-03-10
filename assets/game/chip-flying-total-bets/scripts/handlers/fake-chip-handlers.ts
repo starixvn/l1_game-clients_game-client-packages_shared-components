@@ -1,5 +1,7 @@
 import gc from "@sg/game-client-base";
-import { injectable } from "inversify";
+import inversify from "inversify";
+
+const { injectable } = inversify;
 
 @injectable()
 export class FakeChipHandlers extends gc.Chips.ChipHandlers {
