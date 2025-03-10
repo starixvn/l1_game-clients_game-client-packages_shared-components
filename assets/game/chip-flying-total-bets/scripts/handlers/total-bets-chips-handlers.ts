@@ -28,6 +28,7 @@ export class TotalBetsChipsHandler {
                 (currentFinish) => {
                     if (currentFinish) {
                         this.prevTotalBets = {};
+                        gc.Shared.utils.StorageManager.remove("TotalBetsChips");
                     }
                 }
             );
