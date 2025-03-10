@@ -71,7 +71,7 @@ export class TotalBetsChipsHandler {
         const adjustedTotalBets = this.calculateAdjustedTotalBets(totalBets, chipsDataStorage);
         const chips = this.parseChipsFromTotalBets(adjustedTotalBets);
 
-        const updatedChipsStorage = this.updateChipsStorage(chipsDataStorage, totalBets, chips);
+        const updatedChipsStorage = this.updateChipsStorage(chipsDataStorage, chips);
         const clientRoundId = this.roundStore.clientRoundId;
 
         gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: updatedChipsStorage });
@@ -87,24 +87,18 @@ export class TotalBetsChipsHandler {
         return adjustedBets;
     }
 
-    private updateChipsStorage(
-        chipsDataStorage: Record<string, any>,
-        totalBets: IBetChoice,
-        newChips: Record<string, any>
-    ): Record<string, any> {
+    private updateChipsStorage(chipsDataStorage: Record<string, any>, chips: Record<string, any>): Record<string, any> {
         const updatedStorage = { ...chipsDataStorage };
-        Object.keys(totalBets).forEach((choice) => {
+        Object.keys(chips).forEach((choice) => {
             const betChoiceChips = chipsDataStorage[choice];
-            if (betChoiceChips) {
-                updatedStorage[choice] = this.combineChips(betChoiceChips, newChips[choice] || {});
-            }
+            updatedStorage[choice] = betChoiceChips ? this.combineChips(betChoiceChips, chips[choice] || {}) : chips[choice] || {};
         });
         return updatedStorage;
     }
 
-    private combineChips(existing: Record<string, number>, new_: Record<string, number>): Record<string, number> {
+    private combineChips(existing: Record<string, number>, newValue: Record<string, number>): Record<string, number> {
         return Object.keys(existing).reduce((acc, key) => {
-            acc[key] = (existing[key] || 0) + (new_[key] || 0);
+            acc[key] = (existing[key] || 0) + (newValue[key] || 0);
             return acc;
         }, {});
     }
