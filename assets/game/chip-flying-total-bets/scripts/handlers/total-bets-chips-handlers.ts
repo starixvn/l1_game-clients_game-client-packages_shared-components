@@ -53,8 +53,6 @@ export class TotalBetsChipsHandler {
         this.prevTotalBets = totalBets;
         const clientRoundId = this.roundStore.clientRoundId;
         const chipsDataStorage = gc.Shared.utils.StorageManager.get("TotalBetsChips")?.[clientRoundId];
-        console.log("+++++++handleInitialBets--totalBets", totalBets);
-        console.log("-----handleInitialBets--chipsDataStorage", chipsDataStorage);
 
         if (!chipsDataStorage || Object.keys(chipsDataStorage).length === 0) {
             this.handleNewRoundBets(totalBets);
@@ -71,12 +69,9 @@ export class TotalBetsChipsHandler {
 
     private handleExistingRoundBets(totalBets: IBetChoice, chipsDataStorage: Record<string, any>) {
         const adjustedTotalBets = this.calculateAdjustedTotalBets(totalBets, chipsDataStorage);
-        console.log("+++++++handleExistingRoundBets--adjustedTotalBets", adjustedTotalBets);
         const chips = this.parseChipsFromTotalBets(adjustedTotalBets);
-        console.log("=======handleExistingRoundBets--chips", chips);
 
         const updatedChipsStorage = this.updateChipsStorage(chipsDataStorage, chips);
-        console.log("=======handleExistingRoundBets--updatedChipsStorage", updatedChipsStorage);
         const clientRoundId = this.roundStore.clientRoundId;
 
         gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: updatedChipsStorage });
