@@ -112,7 +112,7 @@ export class TotalBetsChipsHandler {
         const playerChip = {
             playerId: "123",
             betChoice: choice,
-            amount,
+            amount: amount * this.mainPlayerStore.rate,
             red: 1000,
         };
         return new Promise<void>((resolve) => {
