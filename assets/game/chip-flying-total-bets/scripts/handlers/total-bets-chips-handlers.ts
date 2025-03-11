@@ -21,6 +21,7 @@ export class TotalBetsChipsHandler {
     @inject(gc.Rounds.RoundTimeStore) protected readonly roundTimeStore: gc.Rounds.RoundTimeStore;
 
     private prevTotalBets: IBetChoice = null;
+    private readonly BASE_CURRENCY_RATE = 1;
 
     constructor() {
         setTimeout(() => {
@@ -64,7 +65,7 @@ export class TotalBetsChipsHandler {
     private handleNewRoundBets(totalBets: IBetChoice) {
         gc.Shared.utils.StorageManager.remove("TotalBetsChips");
         const chips = this.parseChipsFromTotalBets(totalBets);
-        this.chipHandlers.handleChips({ [this.mainPlayerStore.rate]: chips });
+        this.chipHandlers.handleChips({ [this.BASE_CURRENCY_RATE]: chips });
     }
 
     private handleExistingRoundBets(totalBets: IBetChoice, chipsDataStorage: Record<string, any>) {
@@ -75,7 +76,7 @@ export class TotalBetsChipsHandler {
         const clientRoundId = this.roundStore.clientRoundId;
 
         gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: updatedChipsStorage });
-        this.chipHandlers.handleChips({ [this.mainPlayerStore.rate]: updatedChipsStorage });
+        this.chipHandlers.handleChips({ [this.BASE_CURRENCY_RATE]: updatedChipsStorage });
     }
 
     private calculateAdjustedTotalBets(totalBets: IBetChoice, chipsDataStorage: Record<string, any>): IBetChoice {
