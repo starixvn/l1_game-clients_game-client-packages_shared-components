@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label, Node, Sprite, SpriteAtlas } from "cc";
+import { _decorator, Color, Label, Node, Sprite, SpriteAtlas } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
@@ -27,6 +27,18 @@ export class RoundHistoryItem extends ObserverComponent {
 
     @property(SpriteAtlas)
     mainAtlas: SpriteAtlas = null;
+
+    @property
+    changeMultiplierLabelColor = false;
+
+    @property({
+        type: Color,
+        visible: function () {
+            return this.changeMultiplierLabelColor;
+        },
+    })
+    labelColors: Color[] = [];
+
     prefixFrameBg = "";
 
     public isLastRound = false;
@@ -70,7 +82,7 @@ export class RoundHistoryItem extends ObserverComponent {
     updateMultiplierValue(value: number) {
         this.displayMultiplier(true);
         this.lblMultiplier.string = `${FormatUtils.numberWithCommas(value, 2, false)}x`;
-        this.updateFrameBg(value);
+        this.updateMultiplierDisplay(value);
     }
 
     isCrashed() {
@@ -92,15 +104,21 @@ export class RoundHistoryItem extends ObserverComponent {
         this.prefixFrameBg = name;
     }
 
-    private updateFrameBg(multiplier: number) {
-        let sufix = "";
-        if (multiplier <= 5) {
-            sufix = "blue";
-        } else if (multiplier <= 10) {
-            sufix = "yellow";
+    protected updateMultiplierDisplay(multiplier: number) {
+        const suffixes = ["blue", "yellow", "red"];
+
+        let index = 0;
+        if (multiplier > 10) {
+            index = 2;
+        } else if (multiplier > 5) {
+            index = 1;
         } else {
-            sufix = "red";
+            index = 0;
         }
-        this.nodeMultiplier.spriteFrame = this.mainAtlas.getSpriteFrame(`${this.prefixFrameBg}-${sufix}`);
+
+        this.nodeMultiplier.spriteFrame = this.mainAtlas.getSpriteFrame(`${this.prefixFrameBg}-${suffixes[index]}`);
+        if (this.changeMultiplierLabelColor) {
+            this.lblMultiplier.color = this.labelColors[index];
+        }
     }
 }

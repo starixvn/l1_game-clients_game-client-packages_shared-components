@@ -16,6 +16,9 @@ export class StatisticsBar extends ObserverComponent {
     @property(Node)
     content: Node = null;
 
+    @property
+    prefixName = "statistics-bar";
+
     @render(gc.GameCrash.RoundHistory.CrashRoundHistoryStore, (store) => store.roundHistories, { fireImmediately: false })
     setRoundsInfo(rounds: gc.RoundHistories.RoundHistory[]) {
         this.updateStatisticsBarInfo(rounds);
@@ -31,7 +34,7 @@ export class StatisticsBar extends ObserverComponent {
             const control = node.getComponent(RoundHistoryItem);
             control.roundInfo = round;
             control.hideAllNodes();
-            control.setPrefixFrame("statistics-bar");
+            control.setPrefixFrame(this.prefixName);
             if (control.isCrashed()) {
                 control.updateMultiplierValue(+round.result);
             }
