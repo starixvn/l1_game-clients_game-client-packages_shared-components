@@ -134,14 +134,18 @@ export class TotalBetsChipsHandler {
     private calculateOffsetTotalBets(totalBets: IBetChoice): IBetChoice {
         const offsetTotalBets: IBetChoice = {};
         const currentOwnBets: IBetChoice = {};
+
         Object.keys(totalBets).forEach((betChoice) => {
-            const ownBetChoice =
-                this.prevOwnBet?.[betChoice] !== this.roundStore.ownBets?.[betChoice] ? this.roundStore.ownBets?.[betChoice] : 0;
-            const prevBet = this.prevTotalBets?.[betChoice] ?? 0;
+            const prevBet = this.prevTotalBets?.[betChoice] || 0;
 
-            currentOwnBets[betChoice] = this.roundStore.ownBets?.[betChoice] ?? 0;
+            const ownBet = this.roundStore.ownBets?.[betChoice] || 0;
+            const prevOwnBet = this.prevOwnBet?.[betChoice] || 0;
+            const deltaOwnBetChoice = ownBet - prevOwnBet;
 
-            offsetTotalBets[betChoice] = prevBet === totalBets[betChoice] ? 0 : totalBets[betChoice] - prevBet - ownBetChoice;
+            currentOwnBets[betChoice] = ownBet;
+
+            offsetTotalBets[betChoice] =
+                totalBets[betChoice] > prevBet + deltaOwnBetChoice ? totalBets[betChoice] - prevBet - deltaOwnBetChoice : 0;
         });
 
         this.prevOwnBet = currentOwnBets;
