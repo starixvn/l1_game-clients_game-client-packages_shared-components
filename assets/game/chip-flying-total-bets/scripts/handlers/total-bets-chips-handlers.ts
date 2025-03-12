@@ -21,6 +21,7 @@ export class TotalBetsChipsHandler {
     @inject(gc.Rounds.RoundTimeStore) protected readonly roundTimeStore: gc.Rounds.RoundTimeStore;
 
     private prevTotalBets: IBetChoice = null;
+    private prevOwnBet: IBetChoice = null;
 
     constructor() {
         setTimeout(() => {
@@ -29,6 +30,7 @@ export class TotalBetsChipsHandler {
                 (currentFinish) => {
                     if (currentFinish) {
                         this.prevTotalBets = {};
+                        this.prevOwnBet = {};
                     }
                 }
             );
@@ -131,13 +133,18 @@ export class TotalBetsChipsHandler {
 
     private calculateOffsetTotalBets(totalBets: IBetChoice): IBetChoice {
         const offsetTotalBets: IBetChoice = {};
-
+        const currentOwnBets: IBetChoice = {};
         Object.keys(totalBets).forEach((betChoice) => {
-            const ownBetChoice = this.roundStore.ownBets?.[betChoice] ?? 0;
-            const prevBet = this.prevTotalBets[betChoice] ?? 0;
+            const ownBetChoice =
+                this.prevOwnBet?.[betChoice] !== this.roundStore.ownBets?.[betChoice] ? this.roundStore.ownBets?.[betChoice] : 0;
+            const prevBet = this.prevTotalBets?.[betChoice] ?? 0;
 
-            offsetTotalBets[betChoice] = totalBets[betChoice] > prevBet + ownBetChoice ? totalBets[betChoice] - prevBet - ownBetChoice : 0;
+            currentOwnBets[betChoice] = this.roundStore.ownBets?.[betChoice] ?? 0;
+
+            offsetTotalBets[betChoice] = prevBet === totalBets[betChoice] ? 0 : totalBets[betChoice] - prevBet - ownBetChoice;
         });
+
+        this.prevOwnBet = currentOwnBets;
 
         return offsetTotalBets;
     }
