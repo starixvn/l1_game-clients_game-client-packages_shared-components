@@ -21,7 +21,7 @@ export class TotalBetsChipsHandler {
     @inject(gc.Rounds.RoundTimeStore) protected readonly roundTimeStore: gc.Rounds.RoundTimeStore;
 
     private prevTotalBets: IBetChoice = null;
-    private prevOwnBet: IBetChoice = null;
+    private prevOffsetTotalBets: IBetChoice = null;
 
     constructor() {
         setTimeout(() => {
@@ -30,7 +30,7 @@ export class TotalBetsChipsHandler {
                 (currentFinish) => {
                     if (currentFinish) {
                         this.prevTotalBets = {};
-                        this.prevOwnBet = {};
+                        this.prevOffsetTotalBets = {};
                     }
                 }
             );
@@ -43,12 +43,23 @@ export class TotalBetsChipsHandler {
         }
 
         if (!this.prevTotalBets) {
+            this.restorePrevOffsetTotalBets();
             this.handleInitialBets(totalBets);
             return;
         }
 
         await this.handleSubsequentBets(totalBets);
         this.prevTotalBets = totalBets;
+    }
+
+    private restorePrevOffsetTotalBets() {
+        const existingOffsetTotalBetsStorage =
+            gc.Shared.utils.StorageManager.get("OffsetTotalBetsChips")?.[this.roundStore.clientRoundId] || {};
+
+        if (Object.keys(existingOffsetTotalBetsStorage).length > 0) {
+            this.prevOffsetTotalBets = existingOffsetTotalBetsStorage;
+        }
+        gc.Shared.utils.StorageManager.remove("OffsetTotalBetsChips");
     }
 
     private handleInitialBets(totalBets: IBetChoice) {
@@ -76,7 +87,7 @@ export class TotalBetsChipsHandler {
         const updatedChipsStorage = this.updateChipsStorage(chipsDataStorage, chips);
         const clientRoundId = this.roundStore.clientRoundId;
 
-        gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: updatedChipsStorage });
+        gc.Shared.utils.StorageManager.set("TotalBetsChips", { [clientRoundId]: { chips: updatedChipsStorage } });
         this.chipHandlers.handleChips({ [this.mainPlayerStore.rate]: updatedChipsStorage });
     }
 
@@ -132,25 +143,24 @@ export class TotalBetsChipsHandler {
     }
 
     private calculateOffsetTotalBets(totalBets: IBetChoice): IBetChoice {
-        const offsetTotalBets: IBetChoice = {};
-        const currentOwnBets: IBetChoice = {};
+        const offset: IBetChoice = {};
+        const latestOffsetStorage: IBetChoice = {};
+        const clientRoundId = this.roundStore.clientRoundId;
 
         Object.keys(totalBets).forEach((betChoice) => {
-            const prevBet = this.prevTotalBets?.[betChoice] || 0;
-
             const ownBet = this.roundStore.ownBets?.[betChoice] || 0;
-            const prevOwnBet = this.prevOwnBet?.[betChoice] || 0;
-            const deltaOwnBetChoice = ownBet - prevOwnBet;
+            const prevOffsetTotalBetsChoice = this.prevOffsetTotalBets?.[betChoice] || 0;
+            const offsetTotalBets = totalBets[betChoice] - ownBet;
 
-            currentOwnBets[betChoice] = ownBet;
-
-            offsetTotalBets[betChoice] =
-                totalBets[betChoice] > prevBet + deltaOwnBetChoice ? totalBets[betChoice] - prevBet - deltaOwnBetChoice : 0;
+            latestOffsetStorage[betChoice] = offsetTotalBets;
+            offset[betChoice] = offsetTotalBets > prevOffsetTotalBetsChoice ? offsetTotalBets - prevOffsetTotalBetsChoice : 0;
         });
 
-        this.prevOwnBet = currentOwnBets;
+        this.prevOffsetTotalBets = latestOffsetStorage;
 
-        return offsetTotalBets;
+        gc.Shared.utils.StorageManager.set("OffsetTotalBetsChips", { [clientRoundId]: latestOffsetStorage });
+
+        return offset;
     }
 
     private isSameTotalBets(totalBets: IBetChoice): boolean {
