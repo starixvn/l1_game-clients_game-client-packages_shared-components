@@ -122,10 +122,13 @@ export default class MD5Component extends ObserverComponent {
         this.tipString = data.rawValue || data.hashValue;
     }
 
-    onClickCopyButton() {
+    async onClickCopyButton() {
         this.md5CopyButton.isCopying = true;
         this.md5Tip.show(false);
-        gc.GameUtils.copyToClipboard(this.md5CopyString);
+        const isSuccessful = await gc.GameUtils.copyToClipboard(this.md5CopyString);
+        if (isSuccessful) {
+            this.md5CopyButton?.showHint(true);
+        }
     }
 
     private updateTextCaption(isMD5Key: boolean) {

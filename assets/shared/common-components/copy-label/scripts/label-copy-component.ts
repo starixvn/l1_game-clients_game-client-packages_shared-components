@@ -47,8 +47,11 @@ export class LabelCopyComponent extends ObserverComponent {
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(gc.Audios.AudioIds.CLICK))
-    clickCopyButton() {
+    async clickCopyButton() {
         this.cpnCopyButton && (this.cpnCopyButton.isCopying = true);
-        gc.GameUtils.copyToClipboard(this.lblText.string);
+        const isSuccessful = await gc.GameUtils.copyToClipboard(this.lblText.string);
+        if (isSuccessful) {
+            this.cpnCopyButton?.showHint(true);
+        }
     }
 }
