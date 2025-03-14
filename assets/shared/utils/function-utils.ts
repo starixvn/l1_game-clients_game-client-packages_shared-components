@@ -2,6 +2,7 @@ import { Asset, Node, assetManager, find, screen, warn } from "cc";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 
 export namespace FunctionUtils {
+    export const cachedRemoteFile = {};
     export const loadRemote = (url: string) => {
         return new Promise((resolve, reject) => {
             assetManager.loadRemote(url, (err, data: Asset) => {

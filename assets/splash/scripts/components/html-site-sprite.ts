@@ -56,6 +56,10 @@ export class HtmlSiteSprite extends Component {
 
     async getVersionInfo() {
         const { origin, pathname } = window.location;
+        const fileName = `${origin}${pathname}${this.folder}/versions.json`;
+        if (FunctionUtils.cachedRemoteFile[fileName]) {
+            return FunctionUtils.cachedRemoteFile[fileName];
+        }
         const url = `${origin}${pathname}${this.folder}/versions.json?v=${Date.now()}`;
 
         try {
@@ -64,6 +68,7 @@ export class HtmlSiteSprite extends Component {
                 return null;
             }
             if (jsonAsset) {
+                FunctionUtils.cachedRemoteFile[fileName] = jsonAsset.json;
                 return jsonAsset.json;
             }
         } catch (e) {
