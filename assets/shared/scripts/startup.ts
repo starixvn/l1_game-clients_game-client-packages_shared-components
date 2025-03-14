@@ -59,6 +59,7 @@ export function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
             gc.Notification.FEATURE_NAME,
             gc.ConnectSite.FEATURE_NAME,
             gc.ChipSetting.FEATURE_NAME,
+            gc.GameConfiguration.FEATURE_NAME,
         ],
     };
 
