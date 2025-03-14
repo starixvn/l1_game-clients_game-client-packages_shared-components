@@ -28,17 +28,17 @@ export class Md5CopyButton extends ObserverComponent {
     }
 
     private readonly registerEventCopyMD5 = (event: MessageEvent) => {
-        const success = event.data.copySuccessfully;
-        if (success !== undefined && this.isCopying) {
+        const isSuccessful = event.data.copySuccessfully;
+        if (isSuccessful !== undefined && this.isCopying) {
             this.isCopying = false;
-            const key = success ? "copy_successfully_md5" : "copy_failed_md5";
-            this.lblHint.string = gc.Translator.commonTranslate(key);
-            this.showHint();
+            this.showHint(isSuccessful);
         }
     };
 
-    private showHint() {
-        if (this.nodeHintCopy) {
+    public showHint(isSuccessful: boolean) {
+        if (this.nodeHintCopy && this.lblHint) {
+            const key = isSuccessful ? "copy_successfully_md5" : "copy_failed_md5";
+            this.lblHint.string = gc.Translator.commonTranslate(key);
             tween(this.nodeHintCopy.getComponent(UIOpacity)).to(0.2, { opacity: 255 }).delay(1.5).to(0.1, { opacity: 1 }).start();
         }
     }
