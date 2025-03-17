@@ -18,6 +18,12 @@ export class StatisticsBar extends ObserverComponent {
 
     @property
     prefixName = "statistics-bar";
+    private numberOfRoundHistory = 0;
+
+    @render(gc.GameConfigs.GameSetting, (setting) => setting.numberOfRoundHistory)
+    renderNumberOfRoundHistory(numberOfRoundHistory: number) {
+        this.numberOfRoundHistory = numberOfRoundHistory;
+    }
 
     @render(gc.GameCrash.RoundHistory.CrashRoundHistoryStore, (store) => store.roundHistories, { fireImmediately: false })
     setRoundsInfo(rounds: gc.RoundHistories.RoundHistory[]) {
@@ -27,7 +33,7 @@ export class StatisticsBar extends ObserverComponent {
     private updateStatisticsBarInfo(rounds: gc.RoundHistories.RoundHistory[]) {
         this.content.destroyAllChildren();
         rounds.forEach((round, index) => {
-            if (index > 10) {
+            if (index > this.numberOfRoundHistory) {
                 return;
             }
             const node = instantiate(this.prbStatisticsItem);
