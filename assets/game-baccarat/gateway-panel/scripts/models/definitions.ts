@@ -25,6 +25,8 @@ export const Store = {
     DisableGame: "DisableGameStore",
 };
 
+export const OpenSidePanelEvent = "open_side_panel";
+
 export class StoreBase extends EventEmitterBase {
     storeName: string;
 

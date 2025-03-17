@@ -1,5 +1,6 @@
 import gc from "@sg/game-client-base";
 import { _decorator, instantiate, JsonAsset, log, Prefab, warn } from "cc";
+import { InGameMenuStore } from "db://shared-components/game/in-game-menu/scripts/stores/in-game-menu-store";
 import Observer from "observer";
 import { Socket } from "socket.io-client/dist/socket.io.js";
 import { siteConfigs } from "../../../../../../assets/scripts/site-configs";
@@ -10,7 +11,7 @@ import { GatewayPanelStore } from "./gateway-panel-store";
 import { DisableGameHandler } from "./handlers/disable-game-handler";
 import { GameInfoHandler } from "./handlers/game-info-handler";
 import { RoundHistoryHandler } from "./handlers/round-history-handler";
-import { EmitterEvents } from "./models/definitions";
+import { EmitterEvents, OpenSidePanelEvent } from "./models/definitions";
 import { DisableGameStore } from "./models/disable-game-store";
 import { GameData } from "./models/game-data";
 import { GameInfoStore } from "./models/game-info-store";
@@ -275,6 +276,13 @@ export class GatewayDataReceiver extends ObserverComponent {
 
     getLobbyData(gameName: string) {
         this.socket.emit("getLobbyData", { gameName: gameName });
+    }
+
+    @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
+    renderInGameMenuStore({ event }: { event: string }) {
+        if (event === OpenSidePanelEvent) {
+            this.onOpenSidePanel();
+        }
     }
 
     onOpenSidePanel() {
