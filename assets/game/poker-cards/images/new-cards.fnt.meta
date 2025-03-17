@@ -11,7 +11,7 @@
     "_fntConfig": {
       "commonHeight": 35,
       "fontSize": 26,
-      "atlasName": "new-cards.png",
+      "atlasName": "new-cards.webp",
       "fontDefDictionary": {
         "32": {
           "rect": {
@@ -138,6 +138,6 @@
       "kerningDict": {}
     },
     "fontSize": 26,
-    "textureUuid": "f6c0921f-0078-423b-b5a6-36902ec7ffe1"
+    "textureUuid": "eb54c231-3653-457d-8e8e-5b6203becb34"
   }
 }
