@@ -1,7 +1,8 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, director, instantiate, Label, Node, Prefab, ProgressBar } from "cc";
+import { _decorator, Component, director, instantiate, Label, log, Node, Prefab, ProgressBar } from "cc";
 import Observer from "observer";
 
+import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
 import GameConnection from "../../../shared/common-components/game-connection";
 import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
@@ -165,6 +166,20 @@ export default class SplashComponentBase extends Component {
     handleShowSignName(isShowSignName: boolean) {
         this.toggleSignNameContainer(isShowSignName);
         this.updateContentUnderBackground(!isShowSignName);
+        if (isShowSignName) {
+            this.createSignName();
+        }
+    }
+
+    async createSignName() {
+        if (this.signNameContainer) {
+            try {
+                const prefab = await bundleManager.loadAssetsFromBundle<Prefab>("shared-bundle", "prefabs/sign-name", Prefab, null);
+                this.signNameContainer.addChild(instantiate(prefab));
+            } catch (error) {
+                log(error);
+            }
+        }
     }
 
     private toggleSignNameContainer(isActive: boolean) {
