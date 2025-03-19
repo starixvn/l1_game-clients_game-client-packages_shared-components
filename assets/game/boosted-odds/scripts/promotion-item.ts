@@ -3,7 +3,7 @@ import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 
-const { handle, observer } = Observer;
+const { handle } = Observer;
 const { Translator } = gc;
 const { property, ccclass } = _decorator;
 
@@ -17,7 +17,6 @@ const dict = {
 };
 
 @ccclass("PromotionItem")
-@observer
 export default class PromotionItem extends ObserverComponent {
     @property(Label)
     title: Label | null = null;
@@ -46,7 +45,7 @@ export default class PromotionItem extends ObserverComponent {
 
         const text = this.joinButton.node.getChildByName("text");
         text.getComponent(Label).color = data.isActive ? color(209, 42, 33) : color(83, 78, 78);
-        this.joinButton.node.on("click", this.onClickJoinGame.bind(this, data.gameId));
+        this.joinButton.node.on("click", () => this.onClickJoinGame(data.gameId));
     }
 
     @handle(gc.App.AppHandlers.BackToOperatorLobby, (handler, gameId: number) => handler.handleOpenGame(gameId))
