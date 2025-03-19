@@ -15,7 +15,7 @@
                 <key>spriteSourceSize</key>
                 <string>{1,788}</string>
                 <key>textureRect</key>
-                <string>{{15,54},{1,788}}</string>
+                <string>{{54,3},{1,788}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -30,7 +30,7 @@
                 <key>spriteSourceSize</key>
                 <string>{788,1}</string>
                 <key>textureRect</key>
-                <string>{{18,54},{788,1}}</string>
+                <string>{{57,3},{788,1}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -41,11 +41,11 @@
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{667,10}</string>
+                <string>{322,14}</string>
                 <key>spriteSourceSize</key>
-                <string>{667,10}</string>
+                <string>{322,14}</string>
                 <key>textureRect</key>
-                <string>{{3,54},{667,10}}</string>
+                <string>{{3,54},{322,14}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -56,11 +56,11 @@
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{662,6}</string>
+                <string>{316,8}</string>
                 <key>spriteSourceSize</key>
-                <string>{662,6}</string>
+                <string>{316,8}</string>
                 <key>textureRect</key>
-                <string>{{54,3},{662,6}}</string>
+                <string>{{19,54},{316,8}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -89,13 +89,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>splash-screen.png</string>
+            <string>splash-screen.webp</string>
             <key>size</key>
             <string>{64,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:27a188d408cce5df9bee306e0e483f5a:5934c4e4401d7b170729eff888a3898d:db57b41b9eb0081dd72d1b2da3eea767$</string>
+            <string>$TexturePacker:SmartUpdate:4079f95996979cd5411907e063d08577:9d0c021fa2ce8c4cbec22ba76699cf1e:42092bd6b0667230ec43dd136836323d$</string>
             <key>textureFileName</key>
-            <string>splash-screen.png</string>
+            <string>splash-screen.webp</string>
         </dict>
     </dict>
 </plist>
