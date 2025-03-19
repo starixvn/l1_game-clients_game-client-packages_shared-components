@@ -2,6 +2,8 @@ import gc from "@sg/game-client-base";
 import { _decorator, Label } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../observer-component/scripts/observer-component";
+
+const { StorageManager, localStorageKeys } = gc;
 const { ccclass, property } = _decorator;
 
 const { render, handle } = Observer;
@@ -10,13 +12,23 @@ const { render, handle } = Observer;
 export class SystemDecoratorLabel extends ObserverComponent {
     label: Label = null;
 
+    private readonly OPERATOR_NAMES = {
+        SG: "SABA.games",
+        VG: "VGaming",
+        SP: "SABA Play",
+        TIP88: "",
+    } as const;
+
     onLoad(): void {
         this.label = this.getComponent(Label);
         super.onLoad();
+        this.renderOperatorName();
     }
 
-    @render(gc.Configs.SiteConfigs, (config) => config.systemType)
-    renderLabel(systemType: string) {
-        this.label.string = systemType === gc.Configs.SystemConfigs.SG.name ? "SABA.games" : "Vgaming";
+    renderOperatorName() {
+        const operator = StorageManager.get(localStorageKeys?.operator);
+        const operatorKey = operator?.toString().toUpperCase();
+        console.log("operator", this.OPERATOR_NAMES[operatorKey]);
+        this.label.string = this.OPERATOR_NAMES[operatorKey] || "";
     }
 }
