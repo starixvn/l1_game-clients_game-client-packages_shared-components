@@ -6,6 +6,7 @@ import { bundleManager } from "db://shared-components/shared/common-components/b
 import GameConnection from "../../../shared/common-components/game-connection";
 import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
+import { PreloadAssets } from "./preload-assets";
 
 const { ccclass, property } = _decorator;
 const { observer, handle, render } = Observer;
@@ -43,8 +44,10 @@ export default class SplashComponentBase extends Component {
     gameConnection: GameConnection = null;
 
     protected system: number = AppTypes.Club;
+    protected preloadAssetsComp: PreloadAssets;
 
     onLoad() {
+        this.preloadAssetsComp = this.getComponent(PreloadAssets);
         gc.initMobxLogger();
         this.initGameConnectionComponent();
         this.updateProgressBar(0);
@@ -131,8 +134,15 @@ export default class SplashComponentBase extends Component {
         }
     }
 
+    async preloadAssets() {
+        if (this.preloadAssetsComp) {
+            await this.preloadAssetsComp.preloadAssets();
+        }
+    }
+
     loadSceneGame() {
         const sceneName = this.sceneName;
+        this.preloadAssets();
         director.preloadScene(
             sceneName,
             (completedCount: number, totalCount: number) => {
