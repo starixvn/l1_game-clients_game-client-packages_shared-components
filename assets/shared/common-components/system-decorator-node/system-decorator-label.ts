@@ -28,7 +28,6 @@ export class SystemDecoratorLabel extends ObserverComponent {
     renderOperatorName() {
         const operator = StorageManager.get(localStorageKeys?.operator);
         const operatorKey = operator?.toString().toUpperCase();
-        console.log("operator", this.OPERATOR_NAMES[operatorKey]);
         this.label.string = this.OPERATOR_NAMES[operatorKey] || "";
     }
 }
