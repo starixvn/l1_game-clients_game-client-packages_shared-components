@@ -14,7 +14,7 @@ export class SystemDecoratorLabel extends ObserverComponent {
 
     private readonly OPERATOR_NAMES = {
         SG: "SABA.games",
-        VG: "VGaming",
+        VG: "Vgaming",
         SP: "SABA Play",
         TIP88: "",
     } as const;
