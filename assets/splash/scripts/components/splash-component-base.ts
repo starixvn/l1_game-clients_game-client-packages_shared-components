@@ -99,7 +99,9 @@ export default class SplashComponentBase extends Component {
 
     @handle(Auth.AuthHandlers.SSO)
     sso() {
-        return new URLSearchParams(window.location.search);
+        const params = new URLSearchParams(window.location.search);
+        console.log("sso params", params);
+        return params;
     }
 
     @render(Auth.AuthStore, (store) => ({
@@ -150,7 +152,7 @@ export default class SplashComponentBase extends Component {
             },
             (error) => {
                 if (error) {
-                    sentryLogger.logError(error);
+                    sentryLogger?.logError(error);
                 } else {
                     director.loadScene(sceneName);
                 }

@@ -1,4 +1,5 @@
 import gc from "@sg/game-client-base";
+import { sys } from "cc";
 import * as i18n from "db://i18n/LanguageData";
 import mobx from "mobx";
 import Observer from "observer";
@@ -40,7 +41,7 @@ export function startGame(
 
     const container = gc.getContainer(containerOptions);
     const observerContainer = gc.buildObserverContainer(container);
-    gc.sentryLogger.start(siteConfigs.sentryUrl, siteConfigs.env, gameName);
+    sys.os !== sys.OS.IOS && gc.sentryLogger.start(siteConfigs.sentryUrl, siteConfigs.env, gameName);
 
     Observer.configure({ [gameName]: { mobx, container: observerContainer } });
 
