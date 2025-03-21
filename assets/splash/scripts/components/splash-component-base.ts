@@ -9,8 +9,8 @@ import { ErrorMessage } from "../error-message";
 import { PreloadAssets } from "./preload-assets";
 
 const { ccclass, property } = _decorator;
-const { observer, handle, render } = Observer;
-const { Auth, ChipSetting, sentryLogger, Configs, Translator, BrowserDomUtils, App, AppTypes } = gc;
+const { handle, render } = Observer;
+const { Auth, ChipSetting, sentryLogger, BrowserDomUtils, App, AppTypes } = gc;
 
 @ccclass
 export default class SplashComponentBase extends Component {
@@ -108,11 +108,21 @@ export default class SplashComponentBase extends Component {
     }))
     openGame({ isAuthorized, system }) {
         if (isAuthorized) {
+            this.initSentry();
             this.system = system;
             this.loadChipSetting();
             this.triggerRecheckIn();
             this.connectToGameService();
         }
+    }
+
+    protected initSentry() {
+        if (!window?.envConfig) {
+            return;
+        }
+        console.log("initSentry--", window.envConfig);
+        const envConfig = window.envConfig;
+        gc.sentryLogger.start(envConfig?.sentryUrl, envConfig?.env, envConfig.mainObserverNamespace);
     }
 
     connectToGameService() {
