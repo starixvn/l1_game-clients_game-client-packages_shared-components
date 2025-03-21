@@ -12,6 +12,12 @@ const { ccclass, property } = _decorator;
 const { handle, render } = Observer;
 const { Auth, ChipSetting, sentryLogger, BrowserDomUtils, App, AppTypes } = gc;
 
+declare global {
+    interface Window {
+        dataLayer: any[];
+        gtag: Function;
+    }
+}
 @ccclass
 export default class SplashComponentBase extends Component {
     @property(ProgressBar)
@@ -55,6 +61,8 @@ export default class SplashComponentBase extends Component {
         this.sso();
         ComponentUtils.addChildFromPrefab(this?.prefabCustomize, this?.containerCustomize);
         window.addEventListener("message", this.registerEvents);
+        this.initGA();
+        this.addGATrackingButton();
     }
 
     start() {
@@ -209,5 +217,59 @@ export default class SplashComponentBase extends Component {
     private updateContentUnderBackground(status: boolean) {
         this.progressBar && (this.progressBar.node.active = status);
         this.cpnMessage && (this.cpnMessage.node.active = status);
+    }
+
+    private initGA() {
+        const gaCode = window.envConfig.systemType === "SG" ? "G-GJDD3FENTH" : "G-JHKMX35LM3";
+
+        this.loadScript(`https://www.googletagmanager.com/gtag/js?id=${gaCode}`).then(
+            () => {
+                console.log("Init GA");
+                window.dataLayer = window.dataLayer || [];
+                function gtag(...args: any[]) {
+                    window.dataLayer.push(args);
+                }
+                gtag("js", new Date());
+                gtag("config", gaCode);
+            },
+            (reason) => {
+                console.log("Init GA failed with" + reason);
+            }
+        );
+    }
+
+    private addGATrackingButton() {
+        if (window.envConfig.env !== "PROD") {
+            return;
+        }
+        const gaCode = "G-W13X2FGNGN";
+        this.loadScript(`https://www.googletagmanager.com/gtag/js?id=${gaCode}`).then(
+            () => {
+                console.log("Init GA");
+                window.dataLayer = window.dataLayer || [];
+                function gtag(...args: any[]) {
+                    window.dataLayer.push(args);
+                }
+                gtag("js", new Date());
+                gtag("config", gaCode);
+                globalThis.gtag = gtag;
+            },
+            (reason) => {
+                console.log("Init GA failed with" + reason);
+            }
+        );
+    }
+
+    private loadScript(src: string) {
+        return new Promise(function (resolve, reject) {
+            let script: HTMLScriptElement;
+            script = document.createElement("script");
+            script.src = src;
+            script.async = true;
+            script.onload = resolve;
+            script.onerror = reject;
+
+            document.head.appendChild(script);
+        });
     }
 }
