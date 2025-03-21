@@ -99,6 +99,7 @@ export default class SplashComponentBase extends Component {
 
     @handle(Auth.AuthHandlers.SSO)
     sso() {
+        this.initSentry();
         return new URLSearchParams(window.location.search);
     }
 
@@ -108,7 +109,7 @@ export default class SplashComponentBase extends Component {
     }))
     openGame({ isAuthorized, system }) {
         if (isAuthorized) {
-            this.initSentry();
+            // this.initSentry();
             this.system = system;
             this.loadChipSetting();
             this.triggerRecheckIn();
