@@ -1,15 +1,15 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label } from "cc";
-import Observer from "observer";
+import { _decorator, Label, Node } from "cc";
 import { ObserverComponent } from "../observer-component/scripts/observer-component";
 
 const { StorageManager, localStorageKeys } = gc;
 const { ccclass, property } = _decorator;
 
-const { render, handle } = Observer;
-
 @ccclass("SystemDecoratorLabel")
 export class SystemDecoratorLabel extends ObserverComponent {
+    @property(Node)
+    bgNode: Node = null;
+
     label: Label = null;
 
     private readonly OPERATOR_NAMES = {
@@ -26,8 +26,15 @@ export class SystemDecoratorLabel extends ObserverComponent {
     }
 
     renderOperatorName() {
-        const operator = StorageManager.get(localStorageKeys?.operator);
-        const operatorKey = operator?.toString().toUpperCase();
-        this.label.string = this.OPERATOR_NAMES[operatorKey] || "";
+        const operatorKey = StorageManager.get(localStorageKeys?.operator)?.toString().toUpperCase();
+        const operatorName = this.OPERATOR_NAMES[operatorKey] || "";
+
+        if (this.label) {
+            this.label.string = operatorName;
+        }
+
+        if (this.bgNode) {
+            this.bgNode.active = !!operatorName;
+        }
     }
 }
