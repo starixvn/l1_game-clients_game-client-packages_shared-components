@@ -99,9 +99,7 @@ export default class SplashComponentBase extends Component {
 
     @handle(Auth.AuthHandlers.SSO)
     sso() {
-        const params = new URLSearchParams(window.location.search);
-        console.log("sso params", params);
-        return params;
+        return new URLSearchParams(window.location.search);
     }
 
     @render(Auth.AuthStore, (store) => ({
