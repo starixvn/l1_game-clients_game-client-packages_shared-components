@@ -120,7 +120,7 @@ export default class SplashComponentBase extends Component {
         if (!window?.envConfig) {
             return;
         }
-        console.log("initSentry--", window.envConfig);
+
         const envConfig = window.envConfig;
         gc.sentryLogger.start(envConfig?.sentryUrl, envConfig?.env, envConfig.mainObserverNamespace);
     }
