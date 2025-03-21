@@ -20,15 +20,12 @@ export default class PlaceBetButton extends ObserverComponent {
     bgDisable: Sprite = null;
 
     @property(Node)
-    placeBetNotice: Node = null;
+    nodePlaceBetNotice: Node = null;
 
     private isBetAccepted = false;
 
-    private isClickPlaceBet = false;
-
     private readonly placeBetSound = "place_bet";
     onLoad(): void {
-        this.placeBetNotice.active = false;
         super.onLoad();
     }
 
@@ -46,15 +43,10 @@ export default class PlaceBetButton extends ObserverComponent {
         }
 
         this.isBetAccepted = true;
-        this.isClickPlaceBet && (this.placeBetNotice.active = true);
         this.checkStatusLatestRound();
         this.hideAutoPlayPopup();
         this.hideMD5Popup();
         this.hideAutoCashOutPopup();
-        setTimeout(() => {
-            this.placeBetNotice.active = false;
-            this.isClickPlaceBet = false;
-        }, 3000);
     }
 
     @handle(GameCrash.AutoPlay.AutoPlayHandler, (handle) => handle.closeAutoPlayPopup())
@@ -74,7 +66,6 @@ export default class PlaceBetButton extends ObserverComponent {
     onClickPlaceBet() {
         this.playSoundPlaceBet();
         this.closeAllPopups();
-        this.isClickPlaceBet = true;
         if (!this.isBetAccepted) {
             this.sendBetRequest();
         }

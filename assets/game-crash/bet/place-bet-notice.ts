@@ -17,6 +17,9 @@ export class PlaceBetNotice extends ObserverComponent {
     showNotice(isShow: boolean) {
         if (isShow) {
             this.node.active = true;
+            this.scheduleOnce(() => {
+                this.node.active = false;
+            }, 3);
         } else {
             this.node.active = false;
         }
