@@ -1,5 +1,5 @@
-import { _decorator, Asset, Component, JsonAsset, log, SpriteFrame } from "cc";
-import { getSpritePath } from "db://i18n/localized-utils";
+import { _decorator, Asset, Component, JsonAsset, log, SpriteAtlas, SpriteFrame } from "cc";
+import { getLocalizedPath, getSpritePath } from "db://i18n/localized-utils";
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
 const { ccclass, property } = _decorator;
 
@@ -40,9 +40,16 @@ export class PreloadAssets extends Component {
             for (const pathType of Object.keys(data)) {
                 const sprites = data[pathType];
                 for (const spriteName of sprites) {
-                    const spritePath = getSpritePath(pathType, "i18n-images", spriteName);
-                    log(`preload asset ${bundleName} --- ${spritePath}`);
-                    await bundleManager.loadAssetsFromBundle(bundleName, spritePath, SpriteFrame, null);
+                    const isAtlas = spriteName.includes("atlas");
+                    if (isAtlas) {
+                        const path = getLocalizedPath(pathType, "i18n-images", spriteName);
+                        log(`preload asset ${bundleName} --- ${path}`);
+                        await bundleManager.loadAssetsFromBundle(bundleName, path, SpriteAtlas, null);
+                    } else {
+                        const spritePath = getSpritePath(pathType, "i18n-images", spriteName);
+                        log(`preload asset ${bundleName} --- ${spritePath}`);
+                        await bundleManager.loadAssetsFromBundle(bundleName, spritePath, SpriteFrame, null);
+                    }
                 }
             }
         }
