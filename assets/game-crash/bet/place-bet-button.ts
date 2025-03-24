@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Node, Sprite } from "cc";
+import { _decorator, Sprite } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
@@ -18,9 +18,6 @@ export default class PlaceBetButton extends ObserverComponent {
 
     @property(Sprite)
     bgDisable: Sprite = null;
-
-    @property(Node)
-    nodePlaceBetNotice: Node = null;
 
     private isBetAccepted = false;
 
