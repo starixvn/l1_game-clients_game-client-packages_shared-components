@@ -15,11 +15,7 @@ export class ReBetButton extends StatusButton {
         this._enabledColor = color;
     }
 
-    protected onLoad(): void {
-        this.interactable = false;
-    }
-
-    _applyTransition(state: string) {
+    _applyTransition(state: any) {
         super._applyTransition(state);
         if (state === ButtonState.NORMAL || state === ButtonState.HOVER || state === ButtonState.PRESSED) {
             this.setStatusButton(true);

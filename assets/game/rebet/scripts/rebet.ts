@@ -50,8 +50,4 @@ export class ReBet extends ObserverComponent {
         return gc.Audios.AudioIds.CLICK;
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.isVisibleReBet)
-    visibleReBetBtn(isVisibleReBet: boolean) {
-        isVisibleReBet && this.reBetButton.changeInteractable(false);
-    }
 }
