@@ -1,3 +1,4 @@
+import gc from "@sg/game-client-base";
 import { Label, Node, Prefab, UIOpacity, UITransform, instantiate, math, tween, v3 } from "cc";
 
 export namespace ComponentUtils {
@@ -63,5 +64,52 @@ export namespace ComponentUtils {
         const transformContainer = getTransform(container);
         const transformTarget = getTransform(target);
         return transformContainer.convertToNodeSpaceAR(transformTarget.convertToWorldSpaceAR(offset));
+    };
+
+    export const floatToNumber = (opt: {
+        label: Label;
+        amount: number;
+        duration: number;
+        start?: number;
+        noZeroSuffix?: boolean;
+        prefixStr?: string;
+    }) => {
+        const { label, amount: end, start, duration } = opt;
+        const noZeroSuffix = opt.noZeroSuffix ?? true;
+        const prefixStr = opt.prefixStr ?? "";
+        const startStr = label.string.replace(prefixStr, "");
+        const startValue = start || parseFloat(startStr.replace(/,/g, "")) || 0;
+        const range = Math.abs(end - startValue);
+        if (!range) {
+            return;
+        }
+
+        let stepTime, repeatCount, stepValue;
+        if (duration !== undefined) {
+            stepTime = Math.max(duration / range, 0.05);
+            repeatCount = Math.floor(duration / stepTime);
+            stepValue = +(range / repeatCount).toFixed(2);
+        } else {
+            stepValue = 0.01;
+            stepTime = 0.1;
+            repeatCount = Math.floor(range / stepValue);
+        }
+
+        let value = startValue;
+        //label.node.stopAllActions();
+        tween(label.node)
+            .repeat(
+                repeatCount,
+                tween(label.node)
+                    .call(() => {
+                        label.string = prefixStr + gc.FormatUtils.numberWithCommas(value, 2, noZeroSuffix);
+                        value += stepValue;
+                    })
+                    .delay(stepTime)
+            )
+            .call(() => {
+                label.string = prefixStr + gc.FormatUtils.numberWithCommas(end, 2, noZeroSuffix);
+            })
+            .start();
     };
 }
