@@ -11,22 +11,21 @@ export class FadeAppearanceNode extends ObserverComponent {
     isShowing = false;
 
     private appearanceTween: Tween<UIOpacity>;
-    private opacityNode;
 
     showViewQuickly(show: boolean) {
         this.isShowing = show;
-        this.opacityNode = this.node.getComponent(UIOpacity);
-        this.opacityNode.opacity = show ? 255 : 0;
+        this.node.getComponent(UIOpacity).opacity = show ? 255 : 0;
     }
 
     showView(show: boolean, force = false) {
         return new Promise<void>((resolve) => {
             const duration = this.appearanceDuration;
+            const opacityNode = this.node.getComponent(UIOpacity);
             if (show) {
                 if (!this.isShowing || force) {
                     this.isShowing = true;
                     this.appearanceTween && this.appearanceTween.stop();
-                    this.appearanceTween = tween(this.opacityNode)
+                    this.appearanceTween = tween(opacityNode)
                         .to(duration, { opacity: 255 })
                         .call(() => resolve())
                         .start();
@@ -37,7 +36,7 @@ export class FadeAppearanceNode extends ObserverComponent {
                 if (this.isShowing || force) {
                     this.isShowing = false;
                     this.appearanceTween && this.appearanceTween.stop();
-                    this.appearanceTween = tween(this.opacityNode)
+                    this.appearanceTween = tween(opacityNode)
                         .to(duration, { opacity: 0 })
                         .call(() => this.onHidden())
                         .call(() => resolve())
