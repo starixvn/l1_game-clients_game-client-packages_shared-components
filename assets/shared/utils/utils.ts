@@ -229,6 +229,11 @@ export namespace AnimationUtils {
         const trackEntry = spineAnimation.getCurrent(0);
         trackEntry.animationStart = trackEntry.animationEnd * startProgress;
     };
+
+    export const updateSpineDuration = (spine: sp.Skeleton, animationName: string, duration: number) => {
+        const original = spine.findAnimation(`${animationName}`).duration;
+        spine.timeScale = original / duration;
+    };
 }
 export const isValidNode = (comp: Component) => {
     return comp.node && comp.node.isValid;
