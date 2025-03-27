@@ -51,7 +51,7 @@ export class CurrentMultiplier extends ObserverComponent {
 
     setDisplayBottomText(isCrashed: boolean) {
         this.nodeCrashText.active = isCrashed;
-        this.nodeMultiplierText.active = !isCrashed;
+        this.nodeMultiplierText && (this.nodeMultiplierText.active = !isCrashed);
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))
