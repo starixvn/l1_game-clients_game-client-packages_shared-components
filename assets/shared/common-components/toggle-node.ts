@@ -5,7 +5,7 @@ const { ccclass, property, executeInEditMode, requireComponent } = _decorator;
 @executeInEditMode
 @requireComponent(Toggle)
 export class ToggleNode extends Component {
-    toggle: Toggle = null;
+    private _toggle: Toggle = null;
 
     @property({ type: Node })
     checkedNodes: Node[] = [];
@@ -13,8 +13,14 @@ export class ToggleNode extends Component {
     @property({ type: Node })
     unCheckedNodes: Node[] = [];
 
+    get toggle() {
+        if (!this._toggle) {
+            this._toggle = this.getComponent(Toggle);
+        }
+        return this._toggle;
+    }
+
     onLoad() {
-        this.toggle = this.getComponent(Toggle);
         this.toggle.node.on(Toggle.EventType.TOGGLE, this.updateDisplay, this);
         this.updateDisplay();
     }
