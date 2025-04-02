@@ -80,6 +80,7 @@ export class ChipFlying extends ObserverComponent {
     aroundTablePlayers: AroundTablePlayers = null;
     betItems: BetItems = null;
     useFakeChip = false;
+    currentChipContainer: Node = null;
 
     protected enablePlaceChips = true;
     protected payChipsDuration = 1.2;
@@ -92,6 +93,7 @@ export class ChipFlying extends ObserverComponent {
     protected winningPlayers: gc.GameServiceMessage.TWinningPlayers = {};
 
     onLoad(): void {
+        this.currentChipContainer = this.chipContainer;
         this.fetchComponents();
         super.onLoad();
     }
@@ -115,7 +117,7 @@ export class ChipFlying extends ObserverComponent {
         for (const betItem of this.betItems.betItemComponents) {
             const chipGroup = chipsByMainPlayerRate.chips[betItem.betChoice];
             if (chipGroup) {
-                const nodes = addChipsToChipBoxWhenJoinRoom(this.chipContainer, betItem.chipBox, chipGroup, this.slidingChip);
+                const nodes = addChipsToChipBoxWhenJoinRoom(this.currentChipContainer, betItem.chipBox, chipGroup, this.slidingChip);
                 this.addChipsToBoxWithChoice(nodes, betItem.betChoice);
             }
         }
@@ -136,7 +138,7 @@ export class ChipFlying extends ObserverComponent {
             chipBox: betItem?.chipBox,
             chipValue: amount,
         };
-        this.placeChipToChipBox(betChoice, this.chipContainer, this.slidingChip, mainPlayerChip, null, null);
+        this.placeChipToChipBox(betChoice, this.currentChipContainer, this.slidingChip, mainPlayerChip, null, null);
         this.playSoundSingleChip();
     }
 
@@ -320,7 +322,7 @@ export class ChipFlying extends ObserverComponent {
         const cloneChipsBox = new Node();
         cloneChipsBox.layer = Layers.Enum.UI_2D;
         const chipBoxTransform = cloneChipsBox.addComponent(UITransform);
-        this.chipContainer.addChild(cloneChipsBox);
+        this.currentChipContainer.addChild(cloneChipsBox);
         const destPosition = chipBoxTransform.convertToNodeSpaceAR(destWorldPosition);
         const chipsCount = round(random(1, randomAmount));
         for (let i = 0; i < chipsCount; i++) {
@@ -378,7 +380,7 @@ export class ChipFlying extends ObserverComponent {
             if (betItem) {
                 this.placeChipToChipBox(
                     betChoice,
-                    this.chipContainer,
+                    this.currentChipContainer,
                     this.slidingChip,
                     {
                         chipBox: betItem?.chipBox,
@@ -511,7 +513,15 @@ export class ChipFlying extends ObserverComponent {
                         chipBox,
                         chipValue: +chipValue,
                     };
-                    this.placeChipToChipBox(betChoice, this.chipContainer, this.slidingChip, ownerChip, startNode, null, isHiddenPlayer);
+                    this.placeChipToChipBox(
+                        betChoice,
+                        this.currentChipContainer,
+                        this.slidingChip,
+                        ownerChip,
+                        startNode,
+                        null,
+                        isHiddenPlayer
+                    );
                 }
             });
             this.aroundTablePlayerChips.pop();
@@ -521,7 +531,7 @@ export class ChipFlying extends ObserverComponent {
     @render(Chips.ChipStore, (store) => store.clearAllChips, { fireImmediately: false })
     clearChipsForAllBetItems() {
         this.chipStorage = {};
-        this.chipContainer.destroyAllChildren();
+        this.currentChipContainer.destroyAllChildren();
     }
 
     getChipsByChoice(choice: string): Node[] {

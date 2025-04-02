@@ -28,7 +28,12 @@ export default class ChipFlyingInstant extends ChipFlying {
                 if (+ownBets[betItem.betChoice] > 0) {
                     const chipGroup = getChipQuantity(+ownBets[betItem.betChoice], this.slidingChip.chipValues);
                     if (chipGroup) {
-                        const nodes = addChipsToChipBoxWhenJoinRoom(this.chipContainer, betItem.chipBox, chipGroup, this.slidingChip);
+                        const nodes = addChipsToChipBoxWhenJoinRoom(
+                            this.currentChipContainer,
+                            betItem.chipBox,
+                            chipGroup,
+                            this.slidingChip
+                        );
                         this.addChipsToBoxWithChoice(nodes, betItem.betChoice);
                     }
                 }

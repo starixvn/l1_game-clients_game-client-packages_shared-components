@@ -9,7 +9,7 @@ export namespace ActionChipFlying {
     export const dealerGetChips = (dealerChipBox: Node, lostBetItems: BetItem[], chipFlying: ChipFlying) => {
         lostBetItems.forEach((item: BetItem) => {
             const chipNodes = chipFlying.getChipsByChoice(item.betChoice);
-            moveChips(chipFlying.chipContainer, chipNodes, dealerChipBox);
+            moveChips(chipFlying.currentChipContainer, chipNodes, dealerChipBox);
         });
     };
 
@@ -24,7 +24,7 @@ export namespace ActionChipFlying {
     };
 
     export const dealerPayChips = (dealerChipBox: Node, winBetItems: BetItem[], chipFlying: ChipFlying) => {
-        const chipContainer = chipFlying.chipContainer.getComponent(UITransform);
+        const chipContainer = chipFlying.currentChipContainer.getComponent(UITransform);
         winBetItems?.forEach((item: BetItem) => {
             const chipNodes = chipFlying.getChipsByChoice(item.betChoice);
             const payChips = payChipsToWinningBetItem(item.chipBox, dealerChipBox, chipContainer, chipNodes);
@@ -105,7 +105,7 @@ export namespace ActionChipFlying {
         winBetItems?.forEach((item: BetItem) => {
             if (settleStatus?.winningByChoices[item.betChoice]) {
                 const chipNodes = chipFlying.getChipsByChoice(item.betChoice);
-                moveChips(chipFlying.chipContainer, chipNodes, mainPlayerAvatarNode);
+                moveChips(chipFlying.currentChipContainer, chipNodes, mainPlayerAvatarNode);
             }
         });
     };
@@ -117,7 +117,7 @@ export namespace ActionChipFlying {
 
         winBetItems?.forEach((item: BetItem) => {
             const chipNodes = chipFlying.getChipsByChoice(item.betChoice);
-            moveChips(chipFlying.chipContainer, chipNodes, hiddenPlayersNode);
+            moveChips(chipFlying.currentChipContainer, chipNodes, hiddenPlayersNode);
         });
     };
 }
