@@ -28,9 +28,7 @@ export class BetAmountPopup extends ObserverComponent {
 
     private readonly chipsLimit = 8;
 
-    @render(GameCrash.BetInput.BetInputStore, (store) => ({ chips: store.chips, minBet: store.minBet, maxBet: store.maxBet }), {
-        fireImmediately: false,
-    })
+    @render(GameCrash.BetInput.BetInputStore, (store) => ({ chips: store.chips, minBet: store.minBet, maxBet: store.maxBet }))
     private initBetAmount({ chips, minBet, maxBet }) {
         this.nodeBetContainer.destroyAllChildren();
         let count = 1;
