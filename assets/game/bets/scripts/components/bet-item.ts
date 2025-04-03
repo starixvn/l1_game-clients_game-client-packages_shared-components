@@ -69,8 +69,8 @@ export default class BetItem extends ObserverComponent {
     }
 
     hideSomeNodes() {
-        this.highlightStatic.active = false;
-        this.highlightAnim.active = false;
+        this.highlightStatic && (this.highlightStatic.active = false);
+        this.highlightAnim && (this.highlightAnim.active = false);
     }
 
     get betChoice() {
@@ -87,23 +87,23 @@ export default class BetItem extends ObserverComponent {
     }
 
     renderOdd(odds: number, fractional: boolean) {
-        this.lblOdds.string = gc.FormatUtils.formatOdds(odds, fractional);
+        this.lblOdds && (this.lblOdds.string = gc.FormatUtils.formatOdds(odds, fractional));
     }
 
     renderOwnBet(ownBet: string) {
-        this.lblOwnBet.string = ownBet;
+        this.lblOwnBet && (this.lblOwnBet.string = ownBet);
     }
 
     renderTotalBet(totalBet: string) {
-        this.lblTotalBet.string = totalBet;
+        this.lblTotalBet && (this.lblTotalBet.string = totalBet);
     }
 
     public handleHighlightAnim(isActive: boolean) {
-        this.highlightAnim.active = isActive;
+        this.highlightAnim && (this.highlightAnim.active = isActive);
     }
 
     public handleHighlightStatic(isActive: boolean) {
-        this.highlightStatic.active = isActive;
+        this.highlightStatic && (this.highlightStatic.active = isActive);
     }
 
     renderUserBetPercentage(userBetPercentage: number) {
