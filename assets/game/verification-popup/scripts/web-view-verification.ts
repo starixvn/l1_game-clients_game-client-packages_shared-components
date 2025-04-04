@@ -27,7 +27,7 @@ export default class WebViewVerification extends LoadWebView {
     @render(gc.RoundPF.RoundPFStore, (store) => store.pf)
     setProvablyFair(pf: gc.GameServiceMessage.RoundPFResult) {
         this.provablyFair = pf;
-        this.lblRound.string = pf.roundId.toString();
+        this.lblRound && (this.lblRound.string = pf.roundId.toString());
     }
 
     sendDataToIframe(provablyFair: gc.GameServiceMessage.ProvablyFair) {
