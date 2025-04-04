@@ -4,12 +4,12 @@ import { ObserverComponent } from "../../../shared/common-components/observer-co
 import gc from "@sg/game-client-base";
 import Observer from "observer";
 import { LabelCopyComponent } from "../../../shared/common-components/copy-label/scripts/label-copy-component";
-import { FunctionUtils } from "../../../shared/utils";
 import { ClientSeedInfo } from "../../../shared/common-components/provably-fair/client-seed-info";
+import { FunctionUtils } from "../../../shared/utils";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
-const { Shared } = gc;
+const { Shared, FormatUtils } = gc;
 const { utils } = Shared;
 
 @ccclass()
@@ -65,7 +65,7 @@ export class ProvablyFairPopup extends ObserverComponent {
 
         const { serverSeed, serverSeedHash, mergeClientSeed, finalHash, clientSeeds, result, roundId } = verification;
         this.lblRoundId.string = roundId.toString();
-        result && (this.lblResult.string = `${result}x`);
+        result && (this.lblResult.string = `${FormatUtils.numberWithCommas(result, 2, false)}x`);
 
         serverSeed && this.lblServerSeed.setString(serverSeed);
         this.lblServerSeed.setActive(!!serverSeed);
