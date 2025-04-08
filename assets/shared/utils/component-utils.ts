@@ -112,4 +112,51 @@ export namespace ComponentUtils {
             })
             .start();
     };
+
+    export const floatToNumber2 = (opt: {
+        label: Label;
+        amount: number;
+        start?: number;
+        prefixStr?: string;
+        formatNumber?: (value) => string;
+        stepValue?: number;
+        stepTime?: number;
+    }) => {
+        return new Promise<void>((resolve) => {
+            const { label, amount: end, start } = opt;
+            const prefixStr = opt.prefixStr ?? "";
+            const defaultFormater = (v) => gc.FormatUtils.numberWithCommas(v, 2, false);
+            const formatNumber = opt.formatNumber ?? defaultFormater;
+            const stepValue = opt.stepValue ?? 0.01;
+            const stepTime = opt.stepTime ?? 0.02;
+            const startStr = label.string.replace(prefixStr, "");
+            const startValue = start || parseFloat(startStr.replace(/,/g, "")) || 0;
+            const range = Math.abs(end - startValue);
+            if (!range) {
+                resolve();
+                return;
+            }
+
+            const repeatCount = Math.floor(range / stepValue);
+
+            let value = startValue;
+            //label.node.stopAllActions();
+            const formatText = (value) => prefixStr + formatNumber(value);
+            tween(label.node)
+                .repeat(
+                    repeatCount,
+                    tween(label.node)
+                        .call(() => {
+                            label.string = formatText(value);
+                            value += stepValue;
+                        })
+                        .delay(stepTime)
+                )
+                .call(() => {
+                    label.string = formatText(end);
+                    resolve();
+                })
+                .start();
+        });
+    };
 }
