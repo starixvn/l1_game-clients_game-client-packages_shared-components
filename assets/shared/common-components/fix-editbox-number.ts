@@ -10,7 +10,7 @@ export class FixEditBoxNumber extends Component {
         this.editBox = this.getComponent(EditBox);
         if (this.editBox) {
             if (sys.isMobile) {
-                this.editBox.inputMode = EditBox.InputMode.NUMERIC;
+                this.editBox.inputMode = EditBox.InputMode.PHONE_NUMBER;
             } else {
                 this.editBox.inputMode = EditBox.InputMode.DECIMAL;
             }
