@@ -189,7 +189,7 @@ export class BetItems extends ObserverComponent {
 
     @render(Rounds.RoundStore, (store) => store.userBetPercentage)
     handleUserBetPercentage(userBetPercentage: gc.GameServiceMessage.UserBetPercentage) {
-        if (!userBetPercentage || isEmpty(userBetPercentage)) {
+        if (!userBetPercentage) {
             return;
         }
 
@@ -201,7 +201,7 @@ export class BetItems extends ObserverComponent {
 
     @render(Rounds.RoundStore, (store) => store.betPercentage)
     handleBetPercentage(betPercentage: gc.GameServiceMessage.BetPercentage) {
-        if (!betPercentage || isEmpty(betPercentage)) {
+        if (!betPercentage) {
             return;
         }
 
