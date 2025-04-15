@@ -1,5 +1,6 @@
 import { Asset, Node, assetManager, find, screen, warn } from "cc";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
+import { AudioObserver } from "../common-components/audio-observer";
 
 export namespace FunctionUtils {
     export const cachedRemoteFile = {};
@@ -12,6 +13,17 @@ export namespace FunctionUtils {
             });
         });
     };
+
+    export const getAudioObserver = () => {
+        const audioObserver = find("Canvas").getComponentsInChildren(AudioObserver);
+        return audioObserver[0];
+    };
+
+    export const playClick = () => {
+        const audioObserver = getAudioObserver();
+        audioObserver?.playClick();
+    };
+
     export const getNamespace = () => {
         const namespace = find("Canvas").getComponentInChildren(GameComponentBase)?.namespace;
 

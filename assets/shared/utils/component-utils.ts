@@ -64,4 +64,21 @@ export namespace ComponentUtils {
         const transformTarget = getTransform(target);
         return transformContainer.convertToNodeSpaceAR(transformTarget.convertToWorldSpaceAR(offset));
     };
+
+    type TransformData = {
+        width?: number;
+        height?: number;
+        contentSize?: math.Size;
+        anchorPoint?: math.Vec2;
+        anchorX?: number;
+        anchorY?: number;
+    };
+    export const setNodeTransform = (node: Node, tranformData: TransformData) => {
+        const uiTransform = node.getComponent(UITransform);
+        if (uiTransform) {
+            Object.keys(tranformData).forEach((key) => {
+                uiTransform[key] = tranformData[key];
+            });
+        }
+    };
 }
