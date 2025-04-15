@@ -189,9 +189,10 @@ export class BetItems extends ObserverComponent {
 
     @render(Rounds.RoundStore, (store) => store.userBetPercentage)
     handleUserBetPercentage(userBetPercentage: gc.GameServiceMessage.UserBetPercentage) {
-        if (!userBetPercentage) {
+        if (!userBetPercentage || isEmpty(userBetPercentage)) {
             return;
         }
+
         this.betItemComponents.forEach((betItem) => {
             const choice = betItem.node.name;
             betItem.renderUserBetPercentage(userBetPercentage ? userBetPercentage[choice] : 0);
@@ -200,9 +201,10 @@ export class BetItems extends ObserverComponent {
 
     @render(Rounds.RoundStore, (store) => store.betPercentage)
     handleBetPercentage(betPercentage: gc.GameServiceMessage.BetPercentage) {
-        if (!betPercentage) {
+        if (!betPercentage || isEmpty(betPercentage)) {
             return;
         }
+
         this.betItemComponents.forEach((betItem) => {
             const choice = betItem.node.name;
             betItem.renderUserBetPercentage(betPercentage[choice] ? betPercentage[choice] : 0);
