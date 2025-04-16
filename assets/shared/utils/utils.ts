@@ -329,6 +329,12 @@ export namespace AnimationUtils {
                 .start();
         });
     };
+
+    export const easeInOut = (rate: number) => (dt: number) => {
+        dt *= 2;
+        if (dt < 1) return 0.5 * Math.pow(dt, rate);
+        else return 1.0 - 0.5 * Math.pow(2 - dt, rate);
+    };
 }
 export const isValidNode = (comp: Component) => {
     return comp.node && comp.node.isValid;
