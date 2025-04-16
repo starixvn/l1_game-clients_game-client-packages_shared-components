@@ -1,4 +1,4 @@
-import { Label, Node, Prefab, UIOpacity, UITransform, instantiate, math, tween, v3 } from "cc";
+import { Color, Label, Node, Prefab, UIOpacity, UIRenderer, UITransform, instantiate, math, tween, v3 } from "cc";
 
 export namespace ComponentUtils {
     export const getTransform = (node: Node): UITransform => {
@@ -79,6 +79,13 @@ export namespace ComponentUtils {
             Object.keys(tranformData).forEach((key) => {
                 uiTransform[key] = tranformData[key];
             });
+        }
+    };
+
+    export const setNodeColor = (node: Node, color: string) => {
+        const renderer = node.getComponent(UIRenderer);
+        if (renderer) {
+            renderer.color = new Color(color);
         }
     };
 }
