@@ -1,4 +1,5 @@
-import { Animation, Component, math, Node, sp, sys, Tween, tween, TweenEasing, UIOpacity, UITransform, v3, Vec3 } from "cc";
+import gc from "@sg/game-client-base";
+import { Animation, Component, Label, math, Node, sp, sys, Tween, tween, TweenEasing, UIOpacity, UITransform, v3, Vec3 } from "cc";
 
 export namespace AnimationUtils {
     export const FadeTag = 1001;
@@ -233,6 +234,100 @@ export namespace AnimationUtils {
     export const updateSpineDuration = (spine: sp.Skeleton, animationName: string, duration: number) => {
         const original = spine.findAnimation(`${animationName}`).duration;
         spine.timeScale = original / duration;
+    };
+
+    export const floatToNumber = (opt: {
+        label: Label;
+        amount: number;
+        duration: number;
+        start?: number;
+        noZeroSuffix?: boolean;
+        prefixStr?: string;
+    }) => {
+        const { label, amount: end, start, duration } = opt;
+        const noZeroSuffix = opt.noZeroSuffix ?? true;
+        const prefixStr = opt.prefixStr ?? "";
+        const startStr = label.string.replace(prefixStr, "");
+        const startValue = start || parseFloat(startStr.replace(/,/g, "")) || 0;
+        const range = Math.abs(end - startValue);
+        if (!range) {
+            return;
+        }
+
+        let stepTime, repeatCount, stepValue;
+        if (duration !== undefined) {
+            stepTime = Math.max(duration / range, 0.05);
+            repeatCount = Math.floor(duration / stepTime);
+            stepValue = +(range / repeatCount).toFixed(2);
+        } else {
+            stepValue = 0.01;
+            stepTime = 0.1;
+            repeatCount = Math.floor(range / stepValue);
+        }
+
+        let value = startValue;
+        //label.node.stopAllActions();
+        tween(label.node)
+            .repeat(
+                repeatCount,
+                tween(label.node)
+                    .call(() => {
+                        label.string = prefixStr + gc.FormatUtils.numberWithCommas(value, 2, noZeroSuffix);
+                        value += stepValue;
+                    })
+                    .delay(stepTime)
+            )
+            .call(() => {
+                label.string = prefixStr + gc.FormatUtils.numberWithCommas(end, 2, noZeroSuffix);
+            })
+            .start();
+    };
+
+    export const floatToNumber2 = (opt: {
+        label: Label;
+        amount: number;
+        start?: number;
+        prefixStr?: string;
+        formatNumber?: (value) => string;
+        stepValue?: number;
+        stepTime?: number;
+    }) => {
+        return new Promise<void>((resolve) => {
+            const { label, amount: end, start } = opt;
+            const prefixStr = opt.prefixStr ?? "";
+            const defaultFormater = (v) => gc.FormatUtils.numberWithCommas(v, 2, false);
+            const formatNumber = opt.formatNumber ?? defaultFormater;
+            const stepValue = opt.stepValue ?? 0.01;
+            const stepTime = opt.stepTime ?? 0.02;
+            const startStr = label.string.replace(prefixStr, "");
+            const startValue = start || parseFloat(startStr.replace(/,/g, "")) || 0;
+            const range = Math.abs(end - startValue);
+            if (!range) {
+                resolve();
+                return;
+            }
+
+            const repeatCount = Math.floor(range / stepValue);
+
+            let value = startValue;
+            //label.node.stopAllActions();
+            const formatText = (value) => prefixStr + formatNumber(value);
+            tween(label.node)
+                .repeat(
+                    repeatCount,
+                    tween(label.node)
+                        .call(() => {
+                            label.string = formatText(value);
+                            value += stepValue;
+                        })
+                        .delay(stepTime)
+                )
+                .call(() => {
+                    label.string = formatText(end);
+                    resolve();
+                })
+                .start();
+        });
     };
 }
 export const isValidNode = (comp: Component) => {
