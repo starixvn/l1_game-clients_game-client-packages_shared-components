@@ -24,8 +24,7 @@ export class HtmlSiteSprite extends Component {
     sprite: Sprite = null;
 
     async onLoad() {
-        const { origin } = window.location;
-        if (origin.includes("localhost")) {
+        if (FunctionUtils.isLocalhost()) {
             return;
         }
 

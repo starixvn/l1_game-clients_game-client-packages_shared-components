@@ -103,4 +103,9 @@ export namespace FunctionUtils {
             }
         });
     };
+
+    export const isLocalhost = (): boolean => {
+        const { origin } = window.location;
+        return origin.includes("localhost");
+    };
 }

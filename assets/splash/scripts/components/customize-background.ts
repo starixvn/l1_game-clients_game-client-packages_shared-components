@@ -1,6 +1,7 @@
 import { _decorator, assetManager, Component, ImageAsset, Sprite, SpriteFrame, Texture2D } from "cc";
 import { isValidNode } from "../../../shared/utils/utils";
 import gc from "@sg/game-client-base";
+import { FunctionUtils } from "db://shared-components/shared/utils";
 const { ccclass, property } = _decorator;
 const { Translator } = gc;
 @ccclass
@@ -15,6 +16,10 @@ export class CustomizeBackground extends Component {
     isLocaleImage = false;
 
     onLoad() {
+        if (FunctionUtils.isLocalhost()) {
+            return;
+        }
+
         const absolutePath = this.getAbsolutePath(this.isLocaleImage, this.versionImg);
         assetManager.loadRemote<ImageAsset>(absolutePath, (err, imageAsset) => {
             if (!isValidNode(this)) {

@@ -3,6 +3,7 @@ import { _decorator, assetManager, Component, ImageAsset, Sprite, SpriteFrame, T
 import * as i18n from "db://i18n/LanguageData";
 import Observer from "observer";
 import { OperatorUtils } from "../../../shared/utils/operator-utils";
+import { FunctionUtils } from "../../../shared/utils/function-utils";
 import { isValidNode } from "./../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
 
@@ -23,8 +24,7 @@ export class CustomizeLogoSplash extends Component {
     protected readonly href = `${window.location.origin}${window.location.pathname}`;
 
     onLoad() {
-        const { origin } = window.location;
-        if (origin.includes("localhost")) {
+        if (FunctionUtils.isLocalhost()) {
             return;
         }
         this.renderLogo();
