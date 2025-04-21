@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { CCBoolean, Component, Font, Label, _decorator } from "cc";
+import { CCBoolean, Component, Font, Label, RichText, TTFFont, _decorator } from "cc";
 import { bundleManager } from "../bundle-manager/bundle-manager";
 const { Translator } = gc;
 
@@ -23,11 +23,13 @@ export class LocalizedFont extends Component {
     enableCacheMode = false;
 
     label: Label = null;
+    richText: RichText = null;
     fontBases = {};
 
     onLoad() {
         this.initData();
         this.label = this.node.getComponent(Label);
+        this.richText = this.node.getComponent(RichText);
         this.updateFont();
     }
 
@@ -51,6 +53,17 @@ export class LocalizedFont extends Component {
                     if (this.label?.isValid) {
                         this.label.font = font;
                         this.enableCacheMode && this.handleCacheMode();
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+        if (this.richText) {
+            this.loadFont(name)
+                .then((font) => {
+                    if (this.richText?.isValid) {
+                        this.richText.font = font as TTFFont;
                     }
                 })
                 .catch((error) => {
