@@ -14,15 +14,17 @@ export namespace FunctionUtils {
         });
     };
 
-    export const getAudioObserver = () => {
-        const audioObserver = find("Canvas").getComponentsInChildren(AudioObserver);
-        return audioObserver[0];
-    };
+    // Temporarily skip check later
 
-    export const playClick = () => {
-        const audioObserver = getAudioObserver();
-        audioObserver?.playClick();
-    };
+    // export const getAudioObserver = () => {
+    //     const audioObserver = find("Canvas").getComponentsInChildren(AudioObserver);
+    //     return audioObserver[0];
+    // };
+
+    // export const playClick = () => {
+    //     const audioObserver = getAudioObserver();
+    //     audioObserver?.playClick();
+    // };
 
     export const getNamespace = () => {
         const namespace = find("Canvas").getComponentInChildren(GameComponentBase)?.namespace;
