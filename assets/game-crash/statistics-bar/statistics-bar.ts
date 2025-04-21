@@ -33,7 +33,7 @@ export class StatisticsBar extends ObserverComponent {
     private updateStatisticsBarInfo(rounds: gc.RoundHistories.RoundHistory[]) {
         this.content.destroyAllChildren();
         rounds.forEach((round, index) => {
-            if (index > this.numberOfRoundHistory) {
+            if (index >= this.numberOfRoundHistory) {
                 return;
             }
             const node = instantiate(this.prbStatisticsItem);
