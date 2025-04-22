@@ -11,8 +11,8 @@ const { Configs } = gc;
 const { observer, handle, render } = Observer;
 
 const POWEREDBY = {
-    [OperatorAlias.SG]: "bong88",
-    [OperatorAlias.TIP88]: "vg",
+    [OperatorAlias.SG]: "",
+    [OperatorAlias.TIP88]: "Vgaming",
 };
 
 @ccclass
@@ -103,7 +103,7 @@ export class CustomizeLogoSplash extends Component {
 
     createPoweredByPath(system: string) {
         if (system === POWEREDBY[OperatorAlias.SG]) {
-            return `${this.href}images/powered_by_${system}.webp?v=${this.versionImg}`;
+            return `${this.href}images/powered_by${system}.webp?v=${this.versionImg}`;
         }
         const lang = i18n._language;
         return `${this.href}images/powered_by_${system}_${lang}.webp?v=${this.versionImg}`;
