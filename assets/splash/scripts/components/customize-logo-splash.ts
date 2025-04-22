@@ -11,7 +11,7 @@ const { Configs } = gc;
 const { observer, handle, render } = Observer;
 
 const POWEREDBY = {
-    [OperatorAlias.SG]: "",
+    [OperatorAlias.SG]: "bong88",
     [OperatorAlias.TIP88]: "Vgaming",
 };
 
@@ -85,6 +85,7 @@ export class CustomizeLogoSplash extends Component {
     renderPoweredBy() {
         const operator = OperatorUtils.getOperatorAlias();
         const system = POWEREDBY[operator];
+       
         if (system) {
             const poweredByPath = this.createPoweredByPath(system);
             assetManager.loadRemote<ImageAsset>(poweredByPath, (err, imageAsset) => {
@@ -96,7 +97,7 @@ export class CustomizeLogoSplash extends Component {
                 texture.image = imageAsset;
                 spriteFrameTmp.texture = texture;
                 this.sprPoweredBy.spriteFrame = spriteFrameTmp;
-                this.sprTagline.sizeMode = Sprite.SizeMode.RAW;
+                this.sprPoweredBy.sizeMode = Sprite.SizeMode.RAW;
             });
         }
     }
