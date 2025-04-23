@@ -1,16 +1,19 @@
 import gc from "@sg/game-client-base";
-import { _decorator, instantiate, Prefab } from "cc";
+import { _decorator, instantiate, Node, Prefab } from "cc";
 import Observer from "observer";
 import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
 import { FunctionUtils } from "../../../shared/utils";
 
-const { ccclass } = _decorator;
+const { ccclass, property } = _decorator;
 const { handle, render } = Observer;
 const { Auth, AppTypes } = gc;
 
 @ccclass("LoadBoostedOddsContainerPrefab")
 export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
+    @property(Node)
+    iconContainer: Node = null;
+
     protected static readonly BundleConstants = {
         shareBundle: "shared-bundle",
         shareInstantBundle: "shared-instant-bundle",
@@ -64,7 +67,13 @@ export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
     }
 
     protected addBoostedOddIcon(prfBoostedOddIcon: Prefab) {
-        this.node.addChild(instantiate(prfBoostedOddIcon));
+        const node = instantiate(prfBoostedOddIcon);
+
+        if (this.iconContainer) {
+            this.iconContainer.addChild(node);
+        } else {
+            this.node.addChild(node);
+        }
     }
 
     async getPrefabs(prefabName: string) {
@@ -75,8 +84,8 @@ export default class LoadBoostedOddsContainerPrefab extends ObserverComponent {
         };
 
         const prefabPath = prefabPathMap[this.system] || shareBundle;
-        const subpath = this.system === AppTypes.Instant ? (FunctionUtils.isPortraitMode() ? subPath.portrait : subPath.landscape) : "";
 
+        const subpath = this.system === AppTypes.Instant ? (FunctionUtils.isPortraitMode() ? subPath.portrait : subPath.landscape) : "";
         return bundleManager.loadAssetsFromBundle<Prefab>(prefabPath, `${rootFolder}${subpath}/${prefabName}`, Prefab, null);
     }
 
