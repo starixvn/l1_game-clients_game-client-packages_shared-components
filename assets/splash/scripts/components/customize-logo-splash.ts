@@ -104,7 +104,7 @@ export class CustomizeLogoSplash extends Component {
 
     createPoweredByPath(system: string) {
         if (system === POWEREDBY[OperatorAlias.SG]) {
-            return `${this.href}images/powered_by${system}.webp?v=${this.versionImg}`;
+            return `${this.href}images/powered_by.webp?v=${this.versionImg}`;
         }
         const lang = i18n._language;
         return `${this.href}images/powered_by_${system}_${lang}.webp?v=${this.versionImg}`;
