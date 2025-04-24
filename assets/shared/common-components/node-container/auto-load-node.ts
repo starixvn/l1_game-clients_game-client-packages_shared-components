@@ -7,8 +7,12 @@ const { ccclass, property, requireComponent } = _decorator;
 @requireComponent(LazyloadAsset)
 export class AutoLoadNode extends LazyloadNodeContainer {
     async onLoad() {
-        await this.createNodeAsync();
-        super.onLoad();
+        try {
+            await this.createNodeAsync();
+            super.onLoad();
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     createNode() {

@@ -10,10 +10,15 @@ export class LazyloadNodeContainer extends NodeContainer {
     prefab: Prefab = null;
 
     async createNodeAsync() {
-        if (!this.prefab) {
-            await this.loadPrefab();
+        try {
+            if (!this.prefab) {
+                await this.loadPrefab();
+            }
+            return this.createNode();
+        } catch (err) {
+            console.log(err);
+            return null;
         }
-        return this.createNode();
     }
 
     async loadPrefab() {
