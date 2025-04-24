@@ -2038,10 +2038,14 @@
       {
         "__uuid__": "e7c6ae03-010f-4fbe-ad41-586f4b28f9fb",
         "__expectedType__": "cc.AnimationClip"
+      },
+      {
+        "__uuid__": "f1014340-bf3e-40ce-8d7f-59c1f92f924b",
+        "__expectedType__": "cc.AnimationClip"
       }
     ],
     "_defaultClip": {
-      "__uuid__": "e7c6ae03-010f-4fbe-ad41-586f4b28f9fb",
+      "__uuid__": "f1014340-bf3e-40ce-8d7f-59c1f92f924b",
       "__expectedType__": "cc.AnimationClip"
     },
     "_id": ""
@@ -2117,7 +2121,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 99
