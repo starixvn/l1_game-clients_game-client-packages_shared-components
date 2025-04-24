@@ -18,7 +18,7 @@ export class GameGuideUtils {
     } as const;
 
     private static getLoadWebView(): LoadWebView | null {
-        if (!GameGuideUtils.LoadWebViewInstance) {
+        if (!GameGuideUtils.LoadWebViewInstance?.node?.isValid) {
             const canvas = find("Canvas");
             if (!canvas) {
                 return null;
