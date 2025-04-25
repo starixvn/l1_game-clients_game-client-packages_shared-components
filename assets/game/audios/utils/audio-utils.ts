@@ -2,6 +2,7 @@ import { AudioClip } from "cc";
 import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
 import AudioManager from "../scripts/audio-manager";
 import { TAudioValue } from "../scripts/component/audio-container";
+import gc from "@sg/game-client-base";
 
 interface AudioInfo {
     bundle: string;
@@ -10,7 +11,14 @@ interface AudioInfo {
 
 export const getAudioInfo = (audioValue: TAudioValue, key: string): AudioInfo => {
     const bundle = audioValue.bundle;
-    const path = `audios/${audioValue.path ?? key}`;
+    let path = `audios/${audioValue.path ?? key}`;
+    const currentLang = gc.Translator.getLanguageId();
+
+    if (audioValue.supportedLanguages?.length && currentLang) {
+        const langPath = audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? "en";
+        path = `audios/${langPath}/${audioValue.path ?? key}`;
+    }
+
     return { bundle, path };
 };
 

@@ -8,7 +8,7 @@ import AudioManager from "../audio-manager";
 import { siteConfigs } from "../../../../../../../assets/scripts/site-configs";
 import { FunctionUtils } from "../../../../shared/utils";
 
-const { Audios, UserSettings, App, BrowserDomUtils, AppTypes, Auth } = gc;
+const { Audios, UserSettings, App, BrowserDomUtils } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -23,6 +23,7 @@ export type TAudioValue = {
     isMusicGame?: boolean;
     isLazyLoad?: boolean;
     isRemote?: boolean;
+    supportedLanguages?: string[];
 };
 
 export type IRemoteSoundConfigs = {
@@ -74,7 +75,7 @@ export class AudioContainer extends ObserverComponent {
         // It must be resumed (or created) after a user gesture on the page
         this.initTouchBind();
 
-        this.getRemoteSoundConfigs().finally(() => {
+        this.getRemoteThemeConfigs().finally(() => {
             this.loadAudios().catch((error) => log(error));
         });
     }
@@ -84,14 +85,17 @@ export class AudioContainer extends ObserverComponent {
         window.removeEventListener("message", this.handleSoundEventFromParent);
     }
 
-    async loadAudios() {
-        this.getRemoteAudioConfig().finally(() => {
-            const audioConfigs: TAudioConfigs = {
-                ...this.sharedAudioConfig?.json,
-                ...this.remoteAudioConfigs,
-                ...this.audioConfig?.json,
-            };
+    getAudioConfigs(): TAudioConfigs {
+        return {
+            ...this.sharedAudioConfig?.json,
+            ...this.remoteAudioConfigs,
+            ...this.audioConfig?.json,
+        };
+    }
 
+    async loadAudios() {
+        this.getRemoteAudioThemeConfig().finally(() => {
+            const audioConfigs = this.getAudioConfigs();
             AudioManager.audioConfigs(audioConfigs);
             const keys = Object.keys(audioConfigs);
             for (const key of keys) {
@@ -295,7 +299,7 @@ export class AudioContainer extends ObserverComponent {
         isPlay: boolean
     ): Promise<{ audioClip: AudioClip | null; currentLoadAssetTime: number; isPlay: boolean }> => {
         if (audioValue?.isRemote) {
-            const url = `${this.getRemoteSoundPath()}/${this.remoteSoundConfigs.defaultTheme}/${
+            const url = `${this.getRemoteThemeBasePath()}/${this.remoteSoundConfigs.defaultTheme}/${
                 this.remoteAudioConfigs[soundId].path
             }.mp3?v=${this.remoteSoundConfigs.version}`;
             const audioClip = await AudioUtils.getRemoteAudioClip(url);
@@ -314,9 +318,9 @@ export class AudioContainer extends ObserverComponent {
         return { audioClip, currentLoadAssetTime, isPlay };
     };
 
-    async getRemoteSoundConfigs() {
+    async getRemoteThemeConfigs() {
         try {
-            const configUrl = `${this.getRemoteSoundPath()}/info.json?v=${Date.now()}`;
+            const configUrl = `${this.getRemoteThemeBasePath()}/info.json?v=${Date.now()}`;
             const jsonAsset = (await FunctionUtils.loadRemote(configUrl)) as JsonAsset;
             this.remoteSoundConfigs = (jsonAsset?.json as IRemoteSoundConfigs) ?? null;
         } catch (error) {
@@ -324,9 +328,9 @@ export class AudioContainer extends ObserverComponent {
         }
     }
 
-    async getRemoteAudioConfig() {
+    async getRemoteAudioThemeConfig() {
         try {
-            const configUrl = `${this.getRemoteSoundPath()}/${this.remoteSoundConfigs.defaultTheme}/info.json?v=${Date.now()}`;
+            const configUrl = `${this.getRemoteThemeBasePath()}/${this.remoteSoundConfigs.defaultTheme}/info.json?v=${Date.now()}`;
             const jsonAsset = (await FunctionUtils.loadRemote(configUrl)) as JsonAsset;
             this.remoteAudioConfigs = (jsonAsset?.json as TAudioConfigs) ?? null;
         } catch (error) {
@@ -334,7 +338,7 @@ export class AudioContainer extends ObserverComponent {
         }
     }
 
-    getRemoteSoundPath() {
+    getRemoteThemeBasePath() {
         return `${gc.UrlUtils.buildShareResource(siteConfigs)}/sounds/themes`;
     }
 }
