@@ -24,15 +24,19 @@ export type TAudioValue = {
     isLazyLoad?: boolean;
     isRemote?: boolean;
     supportedLanguages?: string[];
+    gameId?: number;
 };
 
-export type IRemoteSoundConfigs = {
+export type IRemoteThemeSoundConfigs = {
     version: number;
     defaultTheme: string;
     backgroundMusic: {
         version: number;
     };
     themes: string[];
+    sounds?: {
+        version: number;
+    };
 };
 
 @ccclass
@@ -59,11 +63,36 @@ export class AudioContainer extends ObserverComponent {
     protected isPlayMusic = false;
     protected isPlaySFX = false;
     protected currentPlayTime = {};
-    protected remoteSoundConfigs: IRemoteSoundConfigs = null;
-    protected remoteAudioConfigs: TAudioConfigs = null;
+    protected remoteThemeSoundConfigs: IRemoteThemeSoundConfigs | null = null;
+    protected remoteThemeAudioConfigs: TAudioConfigs = null;
+    protected remoteGameAudioConfigs: TAudioConfigs = null;
+
+    get gameId() {
+        return 0;
+    }
+
+    get defaultLang() {
+        return "en";
+    }
 
     setIsUserGesture(isUserGesture: boolean) {
         this.isUserGesture = isUserGesture;
+    }
+
+    initRemoteConfigs() {
+        const promises = [this.getRemoteThemeConfigs()];
+
+        if (this.gameId > 0) {
+            promises.push(this.getRemoteGameConfigs());
+        }
+
+        Promise.all(promises)
+            .then(() => {
+                this.loadAudios().catch((error) => log(error));
+            })
+            .catch((error) => {
+                log("Failed to load remote configs:", error);
+            });
     }
 
     onLoad() {
@@ -75,9 +104,7 @@ export class AudioContainer extends ObserverComponent {
         // It must be resumed (or created) after a user gesture on the page
         this.initTouchBind();
 
-        this.getRemoteThemeConfigs().finally(() => {
-            this.loadAudios().catch((error) => log(error));
-        });
+        this.initRemoteConfigs();
     }
 
     onDestroy(): void {
@@ -86,9 +113,12 @@ export class AudioContainer extends ObserverComponent {
     }
 
     getAudioConfigs(): TAudioConfigs {
+        const remoteGameConfigs = this.remoteGameAudioConfigs ?? {};
+
         return {
             ...this.sharedAudioConfig?.json,
-            ...this.remoteAudioConfigs,
+            ...remoteGameConfigs,
+            ...this.remoteThemeAudioConfigs,
             ...this.audioConfig?.json,
         };
     }
@@ -299,9 +329,12 @@ export class AudioContainer extends ObserverComponent {
         isPlay: boolean
     ): Promise<{ audioClip: AudioClip | null; currentLoadAssetTime: number; isPlay: boolean }> => {
         if (audioValue?.isRemote) {
-            const url = `${this.getRemoteThemeBasePath()}/${this.remoteSoundConfigs.defaultTheme}/${
-                this.remoteAudioConfigs[soundId].path
-            }.mp3?v=${this.remoteSoundConfigs.version}`;
+            let url: string;
+            if (audioValue?.gameId > 0) {
+                url = this.getGameAudioUrl(audioValue, soundId);
+            } else {
+                url = this.getRemoteThemeAudioUrl(audioValue, soundId);
+            }
             const audioClip = await AudioUtils.getRemoteAudioClip(url);
 
             return { audioClip, currentLoadAssetTime, isPlay };
@@ -318,27 +351,78 @@ export class AudioContainer extends ObserverComponent {
         return { audioClip, currentLoadAssetTime, isPlay };
     };
 
-    async getRemoteThemeConfigs() {
+    private getGameAudioUrl(audioValue: TAudioValue, soundId: string): string {
+        const currentLang = gc.Translator.getLanguageId();
+        const basePath = this.getRemoteGameBasePath();
+        const { path } = this.remoteThemeAudioConfigs[soundId];
+        const version = this.remoteThemeSoundConfigs?.sounds?.version ?? Date.now();
+
+        const langPath =
+            audioValue.supportedLanguages?.length && currentLang
+                ? audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? this.defaultLang
+                : undefined;
+
+        return `${basePath}${langPath ? `/${langPath}` : ""}/${path}.mp3?v=${version}`;
+    }
+
+    private getRemoteThemeAudioUrl(audioValue: TAudioValue, soundId: string): string {
+        const currentLang = gc.Translator.getLanguageId();
+        const { defaultTheme, version } = this.remoteThemeSoundConfigs;
+        const basePath = this.getRemoteThemeBasePath();
+        const soundPath = this.remoteThemeAudioConfigs[soundId].path;
+
+        const langPath =
+            audioValue.supportedLanguages?.length && currentLang
+                ? audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? this.defaultLang
+                : null;
+
+        return langPath
+            ? `${basePath}/${defaultTheme}/${langPath}/${soundPath}.mp3?v=${version}`
+            : `${basePath}/${defaultTheme}/${soundPath}.mp3?v=${version}`;
+    }
+
+    getRemoteThemeBasePath() {
+        return `${gc.UrlUtils.buildShareResource(siteConfigs)}/sounds/themes`;
+    }
+
+    getRemoteGameBasePath() {
+        return `${gc.UrlUtils.buildShareResource(siteConfigs)}/sounds/games`;
+    }
+
+    protected async getRemoteThemeConfigs() {
         try {
             const configUrl = `${this.getRemoteThemeBasePath()}/info.json?v=${Date.now()}`;
             const jsonAsset = (await FunctionUtils.loadRemote(configUrl)) as JsonAsset;
-            this.remoteSoundConfigs = (jsonAsset?.json as IRemoteSoundConfigs) ?? null;
+            this.remoteThemeSoundConfigs = (jsonAsset?.json as IRemoteThemeSoundConfigs) ?? null;
         } catch (error) {
             log("Get config remote sounds failed!");
         }
     }
 
-    async getRemoteAudioThemeConfig() {
+    protected async getRemoteAudioThemeConfig() {
         try {
-            const configUrl = `${this.getRemoteThemeBasePath()}/${this.remoteSoundConfigs.defaultTheme}/info.json?v=${Date.now()}`;
+            const configUrl = `${this.getRemoteThemeBasePath()}/${this.remoteThemeSoundConfigs.defaultTheme}/info.json?v=${Date.now()}`;
             const jsonAsset = (await FunctionUtils.loadRemote(configUrl)) as JsonAsset;
-            this.remoteAudioConfigs = (jsonAsset?.json as TAudioConfigs) ?? null;
+            this.remoteThemeAudioConfigs = (jsonAsset?.json as TAudioConfigs) ?? null;
         } catch (error) {
             log("Get remote audio config failed!");
         }
     }
 
-    getRemoteThemeBasePath() {
-        return `${gc.UrlUtils.buildShareResource(siteConfigs)}/sounds/themes`;
+    protected async getRemoteGameConfigs() {
+        if (this.gameId <= 0) {
+            return;
+        }
+
+        try {
+            const jsonAsset = (await FunctionUtils.loadRemote(this.remoteGameConfigUrl)) as JsonAsset;
+            this.remoteGameAudioConfigs = (jsonAsset?.json as TAudioConfigs) ?? null;
+        } catch (error) {
+            log("Get config remote sounds failed!");
+        }
+    }
+
+    get remoteGameConfigUrl() {
+        return `${this.getRemoteGameBasePath()}/${this.gameId}/info.json?v=${Date.now()}`;
     }
 }
