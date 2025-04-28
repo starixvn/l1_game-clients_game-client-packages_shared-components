@@ -44,9 +44,6 @@ export default class SplashComponentBase extends Component {
     @property(Prefab)
     prefabLogo: Prefab = null;
 
-    @property(Node)
-    gameName: Node = null;
-
     gameConnection: GameConnection = null;
 
     protected system: number = AppTypes.Club;
@@ -141,12 +138,10 @@ export default class SplashComponentBase extends Component {
     renderMessage(message: string) {
         this.cpnMessage.reset();
         this.cpnMessage.setMessage(message);
-        //this.gameName && (this.gameName.active = false);
     }
 
     updateProgressBar(progress: number) {
         if (this.progressBar) {
-            //this.gameName && (this.gameName.active = true);
             this.percentResourceLoad && (this.percentResourceLoad.string = `${Math.round(progress * 100)}%`);
             this.progressBar.progress = progress;
         }
