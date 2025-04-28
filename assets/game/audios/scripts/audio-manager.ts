@@ -1,4 +1,4 @@
-import { TAudioConfigs } from "./component/audio-container";
+import { IRemoteThemeSoundConfigs, TAudioConfigs } from "./component/audio-container";
 
 export default class AudioManager {
     public static getInstance(): AudioManager {
@@ -11,6 +11,13 @@ export default class AudioManager {
 
     private static instance: AudioManager;
     audioConfigs: TAudioConfigs = {};
+    gamePath: string = "";
+    themePath: string = "";
+    remoteThemeSoundConfigs: IRemoteThemeSoundConfigs = null;
+    remoteThemeAudioConfigs: TAudioConfigs = null;
+    remoteGameAudioConfigs: TAudioConfigs = null;
+    defaultLang = "en";
+    gameId = 0;
 
     static audioConfigs(configs?: TAudioConfigs) {
         const instance = AudioManager.getInstance();
@@ -56,3 +63,5 @@ export default class AudioManager {
         return info?.path || null;
     }
 }
+
+export const audioManager = AudioManager.getInstance();

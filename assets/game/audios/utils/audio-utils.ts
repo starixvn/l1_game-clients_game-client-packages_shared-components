@@ -1,6 +1,6 @@
 import { AudioClip } from "cc";
 import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
-import AudioManager from "../scripts/audio-manager";
+import { audioManager } from "../scripts/audio-manager";
 import { TAudioValue } from "../scripts/component/audio-container";
 import gc from "@sg/game-client-base";
 
@@ -10,6 +10,23 @@ interface AudioInfo {
 }
 
 export const getAudioInfo = (audioValue: TAudioValue, key: string): AudioInfo => {
+    const bundle = audioValue.bundle;
+    let path = `audios/${audioValue.path ?? key}`;
+    const currentLang = gc.Translator.getLanguageId();
+
+    if (audioValue.supportedLanguages?.length && currentLang) {
+        const langPath = audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? "en";
+        path = `audios/${langPath}/${audioValue.path ?? key}`;
+    }
+
+    return { bundle, path };
+};
+
+export const getRemoteAudioInfo = (audioValue: TAudioValue, key: string): AudioInfo => {
+    if (audioValue.gameId > 0) {
+    } else {
+    }
+
     const bundle = audioValue.bundle;
     let path = `audios/${audioValue.path ?? key}`;
     const currentLang = gc.Translator.getLanguageId();
@@ -42,6 +59,34 @@ export const getRemoteAudioClip = async (url: string): Promise<AudioClip | null>
     }
 };
 
+export const getGameAudioUrl = (audioValue: TAudioValue, soundId: string): string => {
+    const currentLang = gc.Translator.getLanguageId();
+    const { path } = audioManager.remoteThemeAudioConfigs[soundId];
+    const version = audioManager.remoteThemeSoundConfigs?.sounds?.version ?? Date.now();
+
+    const langPath =
+        audioValue.supportedLanguages?.length && currentLang
+            ? audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? audioManager.defaultLang
+            : undefined;
+
+    return `${audioManager.gamePath}${langPath ? `/${langPath}` : ""}/${path}.mp3?v=${version}`;
+};
+
+export const getRemoteThemeAudioUrl = (audioValue: TAudioValue, soundId: string): string => {
+    const currentLang = gc.Translator.getLanguageId();
+    const { version } = audioManager.remoteThemeSoundConfigs;
+    const soundPath = audioManager.remoteThemeAudioConfigs[soundId].path;
+
+    const langPath =
+        audioValue.supportedLanguages?.length && currentLang
+            ? audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? audioManager.defaultLang
+            : null;
+
+    return langPath
+        ? `${audioManager.themePath}/${langPath}/${soundPath}.mp3?v=${version}`
+        : `${audioManager.themePath}/${soundPath}.mp3?v=${version}`;
+};
+
 export const getDurationClip = async (soundId: string, maxWaitingTime = 1000): Promise<number> => {
     let duration = 0;
     let isCancel = false;
@@ -51,7 +96,7 @@ export const getDurationClip = async (soundId: string, maxWaitingTime = 1000): P
     };
 
     const timeoutCancel = setTimeout(cancelTimeout, maxWaitingTime);
-    const audioValue = AudioManager.getInstance()?.audioConfigs?.[soundId];
+    const audioValue = audioManager?.audioConfigs?.[soundId];
     if (!audioValue) {
         return duration;
     }
