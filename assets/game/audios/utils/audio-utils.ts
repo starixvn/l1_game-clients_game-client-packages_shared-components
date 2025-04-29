@@ -22,23 +22,6 @@ export const getAudioInfo = (audioValue: TAudioValue, key: string): AudioInfo =>
     return { bundle, path };
 };
 
-export const getRemoteAudioInfo = (audioValue: TAudioValue, key: string): AudioInfo => {
-    if (audioValue.gameId > 0) {
-    } else {
-    }
-
-    const bundle = audioValue.bundle;
-    let path = `audios/${audioValue.path ?? key}`;
-    const currentLang = gc.Translator.getLanguageId();
-
-    if (audioValue.supportedLanguages?.length && currentLang) {
-        const langPath = audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? "en";
-        path = `audios/${langPath}/${audioValue.path ?? key}`;
-    }
-
-    return { bundle, path };
-};
-
 export const getAudioClip = async (bundle: string, path: string): Promise<AudioClip | null> => {
     try {
         const loadedClip = await bundleManager.loadAssetsFromBundle(bundle, path, AudioClip, null);
@@ -61,15 +44,15 @@ export const getRemoteAudioClip = async (url: string): Promise<AudioClip | null>
 
 export const getGameAudioUrl = (audioValue: TAudioValue, soundId: string): string => {
     const currentLang = gc.Translator.getLanguageId();
-    const { path } = audioManager.remoteThemeAudioConfigs[soundId];
-    const version = audioManager.remoteThemeSoundConfigs?.sounds?.version ?? Date.now();
+    const { sounds, version } = audioManager.remoteGameAudioConfigs;
+    const { path } = sounds[soundId];
 
     const langPath =
         audioValue.supportedLanguages?.length && currentLang
             ? audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? audioManager.defaultLang
             : undefined;
 
-    return `${audioManager.gamePath}${langPath ? `/${langPath}` : ""}/${path}.mp3?v=${version}`;
+    return `${audioManager.getRemoteGameBasePath()}/${audioManager.remoteName}/${langPath ? `${langPath}/` : ""}${path}.mp3?v=${version}`;
 };
 
 export const getRemoteThemeAudioUrl = (audioValue: TAudioValue, soundId: string): string => {
@@ -82,38 +65,56 @@ export const getRemoteThemeAudioUrl = (audioValue: TAudioValue, soundId: string)
             ? audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? audioManager.defaultLang
             : null;
 
-    return langPath
-        ? `${audioManager.themePath}/${langPath}/${soundPath}.mp3?v=${version}`
-        : `${audioManager.themePath}/${soundPath}.mp3?v=${version}`;
+    const themePath = `${audioManager.themePath}`;
+    return langPath ? `${themePath}/${langPath}/${soundPath}.mp3?v=${version}` : `${themePath}/${soundPath}.mp3?v=${version}`;
 };
 
 export const getDurationClip = async (soundId: string, maxWaitingTime = 1000): Promise<number> => {
     let duration = 0;
-    let isCancel = false;
+    let isCancelled = false;
 
-    const cancelTimeout = () => {
-        isCancel = true;
-    };
+    const timeoutId = setTimeout(() => {
+        isCancelled = true;
+    }, maxWaitingTime);
 
-    const timeoutCancel = setTimeout(cancelTimeout, maxWaitingTime);
-    const audioValue = audioManager?.audioConfigs?.[soundId];
-    if (!audioValue) {
-        return duration;
+    try {
+        const audioValue = getAudioValue(soundId);
+        if (!audioValue) {
+            return duration;
+        }
+
+        const audioClip = await loadAudioClip(soundId, audioValue);
+        if (audioClip && !isCancelled) {
+            duration = audioClip.getDuration();
+        }
+    } catch (error) {
+        console.error(`Failed to get duration for sound ${soundId}:`, error);
+    } finally {
+        clearTimeout(timeoutId);
+    }
+
+    return duration;
+};
+
+const getAudioValue = (soundId: string) => {
+    return audioManager.audioConfigs?.[soundId];
+};
+
+const loadAudioClip = async (soundId: string, audioValue: any): Promise<AudioClip | null> => {
+    if (audioManager.remoteGameAudioConfigs?.sounds?.[soundId]) {
+        const url = getGameAudioUrl(audioValue, soundId);
+        return await getRemoteAudioClip(url);
+    }
+
+    if (audioManager.remoteThemeAudioConfigs?.[soundId]) {
+        const url = getRemoteThemeAudioUrl(audioValue, soundId);
+        return await getRemoteAudioClip(url);
     }
 
     const { bundle, path } = getAudioInfo(audioValue, soundId);
-    if (!bundle || !path) {
-        return duration;
+    if (bundle && path) {
+        return await getAudioClip(bundle, path);
     }
 
-    const audioClip = await getAudioClip(bundle, path);
-    if (!audioClip || isCancel) {
-        return duration;
-    }
-
-    duration = audioClip.getDuration();
-
-    clearTimeout(timeoutCancel);
-
-    return duration;
+    return null;
 };

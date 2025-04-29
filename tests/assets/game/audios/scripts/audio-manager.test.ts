@@ -1,4 +1,4 @@
-import AudioManager from "db://shared-components/game/audios/scripts/audio-manager";
+import AudioManager, { audioManager } from "db://shared-components/game/audios/scripts/audio-manager";
 
 describe("AudioManager", () => {
     it("should return the singleton instance", () => {
@@ -17,9 +17,9 @@ describe("AudioManager", () => {
             },
         };
 
-        AudioManager.audioConfigs(configs);
+        audioManager.setAudioConfigs(configs);
 
-        const fetchedConfigs = AudioManager.audioConfigs();
+        const fetchedConfigs = audioManager.audioConfigs;
 
         expect(fetchedConfigs).toEqual(configs);
     });
@@ -35,9 +35,9 @@ describe("AudioManager", () => {
                 },
             };
 
-            AudioManager.audioConfigs(configs);
+            audioManager.setAudioConfigs(configs);
 
-            const fetchedConfigs = AudioManager.audioConfigs();
+            const fetchedConfigs = audioManager.audioConfigs;
             expect(fetchedConfigs.voice.supportedLanguages).toEqual(["en", "es", "fr"]);
         });
 
@@ -51,10 +51,10 @@ describe("AudioManager", () => {
                 },
             };
 
-            AudioManager.audioConfigs(configs);
+            audioManager.setAudioConfigs(configs);
 
             // Test with supported language
-            const infoEn = AudioManager.getAudioInfo("voice", "en");
+            const infoEn = audioManager.getAudioInfo("voice", "en");
             expect(infoEn).toEqual({
                 bundle: "game.bundle",
                 path: "voices/en/greeting.mp3",
@@ -62,7 +62,7 @@ describe("AudioManager", () => {
             });
 
             // Test with unsupported language (should fallback to default)
-            const infoDe = AudioManager.getAudioInfo("voice", "de");
+            const infoDe = audioManager.getAudioInfo("voice", "de");
             expect(infoDe).toEqual({
                 bundle: "game.bundle",
                 path: "voices/en/greeting.mp3",
@@ -80,14 +80,14 @@ describe("AudioManager", () => {
                 },
             };
 
-            AudioManager.audioConfigs(configs);
+            audioManager.setAudioConfigs(configs);
 
             // Test with supported language
-            const pathEn = AudioManager.getAudioPath("voice", "en");
+            const pathEn = audioManager.getAudioPath("voice", "en");
             expect(pathEn).toBe("voices/en/greeting.mp3");
 
             // Test with unsupported language (should fallback to default)
-            const pathDe = AudioManager.getAudioPath("voice", "de");
+            const pathDe = audioManager.getAudioPath("voice", "de");
             expect(pathDe).toBe("voices/en/greeting.mp3");
         });
 
@@ -100,10 +100,10 @@ describe("AudioManager", () => {
                 },
             };
 
-            AudioManager.audioConfigs(configs);
+            audioManager.setAudioConfigs(configs);
 
             // Should work normally without language parameter
-            const info = AudioManager.getAudioInfo("music");
+            const info = audioManager.getAudioInfo("music");
             expect(info).toEqual({
                 bundle: "game.bundle",
                 path: "music/theme.mp3",
@@ -111,7 +111,7 @@ describe("AudioManager", () => {
             });
 
             // Should ignore language parameter if not supported
-            const infoWithLang = AudioManager.getAudioInfo("music", "en");
+            const infoWithLang = audioManager.getAudioInfo("music", "en");
             expect(infoWithLang).toEqual({
                 bundle: "game.bundle",
                 path: "music/theme.mp3",
