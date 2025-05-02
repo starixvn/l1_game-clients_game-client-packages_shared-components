@@ -150,7 +150,7 @@ export default class SplashComponentBase extends Component {
             this.progressBar.progress = progress;
             this.percentTween = tween(percentNode)
                 .parallel(
-                    tween(this.percentUIOpacity).to(0.5, { opacity: 255 }, { easing: "sineIn" })
+                    tween(this.percentUIOpacity).to(0.2, { opacity: 255 }, { easing: "sineIn" })
                 )
                 .start();
         }
