@@ -49,7 +49,8 @@ export default class SplashComponentBase extends Component {
     protected system: number = AppTypes.Club;
     protected preloadAssetsComp: PreloadAssets;
     private percentUIOpacity: UIOpacity;
-    percentTween: Tween;
+    private containerCustomizeUIOpacity: UIOpacity;
+    opacityTween: Tween;
 
     onLoad() {
         this.preloadAssetsComp = this.getComponent(PreloadAssets);
@@ -57,6 +58,7 @@ export default class SplashComponentBase extends Component {
         gc.initMobxLogger();
         this.initGameConnectionComponent();
         this.percentUIOpacity = this.percentResourceLoad.node.getComponent(UIOpacity) || this.percentResourceLoad.node.addComponent(UIOpacity);
+        this.containerCustomizeUIOpacity = this.containerCustomize.getComponent(UIOpacity) || this.containerCustomize.addComponent(UIOpacity);
         this.updateProgressBar(0);
         this.sso();
         ComponentUtils.addChildFromPrefab(this?.prefabCustomize, this?.containerCustomize);
@@ -148,9 +150,10 @@ export default class SplashComponentBase extends Component {
             const percentNode = this.percentResourceLoad.node;
             this.percentResourceLoad && (this.percentResourceLoad.string = `${Math.round(progress * 100)}%`);
             this.progressBar.progress = progress;
-            this.percentTween = tween(percentNode)
+            this.opacityTween = tween(percentNode)
                 .parallel(
-                    tween(this.percentUIOpacity).to(0.2, { opacity: 255 }, { easing: "sineIn" })
+                    tween(this.percentUIOpacity).to(0.2, { opacity: 255 }, { easing: "sineIn" }),
+                    tween(this.containerCustomizeUIOpacity).to(0.2, { opacity: 255 }, { easing: "sineIn" })
                 )
                 .start();
         }
