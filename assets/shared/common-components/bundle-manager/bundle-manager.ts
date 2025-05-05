@@ -30,7 +30,7 @@ export class BundleManager {
 
     async getRemoteAsset<T extends Asset>(url: string): Promise<T | null> {
         return new Promise((resolve) => {
-            assetManager.loadRemote<T>(url, (error, asset) => {
+            assetManager.loadRemote(url, (error, asset) => {
                 if (error) {
                     log(`Failed to load asset from ${url}:`, error);
                     resolve(null);
@@ -38,7 +38,7 @@ export class BundleManager {
                 }
 
                 log(`Successfully loaded asset from ${url}`);
-                resolve(asset);
+                resolve(asset as T);
             });
         });
     }
