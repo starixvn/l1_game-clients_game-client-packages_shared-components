@@ -7,6 +7,7 @@ import GameConnection from "../../../shared/common-components/game-connection";
 import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
 import { ErrorMessage } from "../error-message";
 import { PreloadAssets } from "./preload-assets";
+import { AnimationUtils } from "../../../shared/utils/utils";
 
 const { ccclass, property } = _decorator;
 const { handle, render } = Observer;
@@ -20,9 +21,6 @@ declare global {
 }
 @ccclass
 export default class SplashComponentBase extends Component {
-    @property(ProgressBar)
-    progressBar: ProgressBar = null;
-
     @property(ErrorMessage)
     cpnMessage: ErrorMessage = null;
 
@@ -48,8 +46,7 @@ export default class SplashComponentBase extends Component {
 
     protected system: number = AppTypes.Club;
     protected preloadAssetsComp: PreloadAssets;
-    private percentUIOpacity: UIOpacity;
-    private containerCustomizeUIOpacity: UIOpacity;
+
     opacityTween: Tween;
 
     onLoad() {
@@ -57,8 +54,6 @@ export default class SplashComponentBase extends Component {
         this.initSentry();
         gc.initMobxLogger();
         this.initGameConnectionComponent();
-        this.percentUIOpacity = this.percentResourceLoad.node.getComponent(UIOpacity) || this.percentResourceLoad.node.addComponent(UIOpacity);
-        this.containerCustomizeUIOpacity = this.containerCustomize.getComponent(UIOpacity) || this.containerCustomize.addComponent(UIOpacity);
         this.updateProgressBar(0);
         this.sso();
         ComponentUtils.addChildFromPrefab(this?.prefabCustomize, this?.containerCustomize);
@@ -146,16 +141,8 @@ export default class SplashComponentBase extends Component {
     }
 
     updateProgressBar(progress: number) {
-        if (this.progressBar) {
-            const percentNode = this.percentResourceLoad.node;
+        if (this.percentResourceLoad) {
             this.percentResourceLoad && (this.percentResourceLoad.string = `${Math.round(progress * 100)}%`);
-            this.progressBar.progress = progress;
-            this.opacityTween = tween(percentNode)
-                .parallel(
-                    tween(this.percentUIOpacity).to(0.2, { opacity: 255 }, { easing: "sineIn" }),
-                    tween(this.containerCustomizeUIOpacity).to(0.2, { opacity: 255 }, { easing: "sineIn" })
-                )
-                .start();
         }
     }
 
@@ -168,6 +155,8 @@ export default class SplashComponentBase extends Component {
     loadSceneGame() {
         const sceneName = this.sceneName;
         this.preloadAssets();
+        AnimationUtils.fadeTo(this.percentResourceLoad.node, 0.2, 255);
+        AnimationUtils.fadeTo(this.containerCustomize, 0.2, 255);
         director.preloadScene(
             sceneName,
             (completedCount: number, totalCount: number) => {
@@ -222,7 +211,6 @@ export default class SplashComponentBase extends Component {
     }
 
     private updateContentUnderBackground(status: boolean) {
-        this.progressBar && (this.progressBar.node.active = status);
         this.cpnMessage && (this.cpnMessage.node.active = status);
     }
 
