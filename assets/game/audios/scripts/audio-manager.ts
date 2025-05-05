@@ -1,4 +1,4 @@
-import { siteConfigs } from "db://assets/scripts/site-configs";
+import { siteConfigs } from "../../../../../../assets/scripts/site-configs";
 import { IRemoteThemeSoundConfigs, TAudioConfigs } from "./component/audio-container";
 import gc from "@sg/game-client-base";
 import { FunctionUtils } from "db://shared-components/shared/utils";

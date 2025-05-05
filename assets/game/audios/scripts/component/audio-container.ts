@@ -333,9 +333,11 @@ export class AudioContainer extends ObserverComponent {
         isPlay: boolean
     ): Promise<{ audioClip: AudioClip | null; currentLoadAssetTime: number; isPlay: boolean }> => {
         if (audioValue?.isRemote) {
-            let url = AudioUtils.getGameAudioUrl(audioValue, soundId);
+            let url = "";
             if (audioValue?.remoteType === "theme") {
                 url = AudioUtils.getRemoteThemeAudioUrl(audioValue, soundId);
+            } else {
+                url = AudioUtils.getGameAudioUrl(audioValue, soundId);
             }
 
             const audioClip = await AudioUtils.getRemoteAudioClip(url);

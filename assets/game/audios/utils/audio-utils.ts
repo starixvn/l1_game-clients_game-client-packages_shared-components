@@ -45,7 +45,7 @@ export const getRemoteAudioClip = async (url: string): Promise<AudioClip | null>
 export const getGameAudioUrl = (audioValue: TAudioValue, soundId: string): string => {
     const currentLang = gc.Translator.getLanguageId();
     const { sounds, version } = audioManager.remoteGameAudioConfigs;
-    const { path } = sounds[soundId];
+    const { path } = sounds?.[soundId];
 
     const langPath =
         audioValue.supportedLanguages?.length && currentLang
