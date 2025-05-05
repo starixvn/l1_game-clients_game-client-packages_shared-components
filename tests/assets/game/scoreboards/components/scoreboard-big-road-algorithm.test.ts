@@ -9,12 +9,25 @@ jest.mock("sc-scoreboards", () => ({
     Converter: class {},
     BigRoadScoreboard: class {
         initialize = jest.fn();
-
         rows = jest.fn(() => []);
     },
     GoodRoadColumnLengthDetectorDetector: class {
-        constructor() {}
-        updatePatterns = jest.fn();
+        private patterns: any[];
+        private readonly defaultResult: any;
+
+        constructor(options: { patterns: any[] }) {
+            this.patterns = options.patterns;
+            this.defaultResult = {};
+        }
+
+        updatePatterns = jest.fn((patterns: any[]) => {
+            this.patterns = patterns;
+        });
+
+        detect = jest.fn();
+        detectSinglePattern = jest.fn();
+        getColumns = jest.fn();
+        getGoodRoad = jest.fn();
     },
 }));
 

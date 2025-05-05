@@ -1,4 +1,5 @@
 import AudioManager, { audioManager } from "db://shared-components/game/audios/scripts/audio-manager";
+import { TAudioConfigs } from "db://shared-components/game/audios/scripts/component/audio-container";
 
 describe("AudioManager", () => {
     it("should return the singleton instance", () => {
@@ -9,11 +10,11 @@ describe("AudioManager", () => {
     });
 
     it("should allow getting and setting audio configs", () => {
-        const configs = {
+        const configs: TAudioConfigs = {
             music: {
                 bundle: "game.bundle",
                 path: "music/theme.mp3",
-                type: "mp3",
+                type: "music",
             },
         };
 
@@ -26,11 +27,11 @@ describe("AudioManager", () => {
 
     describe("Language Support", () => {
         it("should handle audio configs with supported languages", () => {
-            const configs = {
+            const configs: TAudioConfigs = {
                 voice: {
                     bundle: "game.bundle",
                     path: "voices/{lang}/greeting.mp3",
-                    type: "mp3",
+                    type: "sfx",
                     supportedLanguages: ["en", "es", "fr"],
                 },
             };
@@ -42,11 +43,11 @@ describe("AudioManager", () => {
         });
 
         it("should get audio info with language support", () => {
-            const configs = {
+            const configs: TAudioConfigs = {
                 voice: {
                     bundle: "game.bundle",
                     path: "voices/{lang}/greeting.mp3",
-                    type: "mp3",
+                    type: "sfx",
                     supportedLanguages: ["en", "es", "fr"],
                 },
             };
@@ -58,7 +59,7 @@ describe("AudioManager", () => {
             expect(infoEn).toEqual({
                 bundle: "game.bundle",
                 path: "voices/en/greeting.mp3",
-                type: "mp3",
+                type: "sfx",
             });
 
             // Test with unsupported language (should fallback to default)
@@ -66,16 +67,16 @@ describe("AudioManager", () => {
             expect(infoDe).toEqual({
                 bundle: "game.bundle",
                 path: "voices/en/greeting.mp3",
-                type: "mp3",
+                type: "sfx",
             });
         });
 
         it("should get audio path with language support", () => {
-            const configs = {
+            const configs: TAudioConfigs = {
                 voice: {
                     bundle: "game.bundle",
                     path: "voices/{lang}/greeting.mp3",
-                    type: "mp3",
+                    type: "sfx",
                     supportedLanguages: ["en", "es", "fr"],
                 },
             };
@@ -92,11 +93,11 @@ describe("AudioManager", () => {
         });
 
         it("should handle audio configs without language support", () => {
-            const configs = {
+            const configs: TAudioConfigs = {
                 music: {
                     bundle: "game.bundle",
                     path: "music/theme.mp3",
-                    type: "mp3",
+                    type: "music",
                 },
             };
 
@@ -107,7 +108,7 @@ describe("AudioManager", () => {
             expect(info).toEqual({
                 bundle: "game.bundle",
                 path: "music/theme.mp3",
-                type: "mp3",
+                type: "music",
             });
 
             // Should ignore language parameter if not supported
@@ -115,7 +116,7 @@ describe("AudioManager", () => {
             expect(infoWithLang).toEqual({
                 bundle: "game.bundle",
                 path: "music/theme.mp3",
-                type: "mp3",
+                type: "music",
             });
         });
     });
