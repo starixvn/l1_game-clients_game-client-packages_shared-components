@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, director, instantiate, Label, log, Node, Prefab, ProgressBar, tween, Tween, UIOpacity, v3 } from "cc";
+import { _decorator, Component, director, instantiate, Label, log, Node, Prefab } from "cc";
 import Observer from "observer";
 
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
@@ -46,8 +46,6 @@ export default class SplashComponentBase extends Component {
 
     protected system: number = AppTypes.Club;
     protected preloadAssetsComp: PreloadAssets;
-
-    opacityTween: Tween;
 
     onLoad() {
         this.preloadAssetsComp = this.getComponent(PreloadAssets);
@@ -155,8 +153,8 @@ export default class SplashComponentBase extends Component {
     loadSceneGame() {
         const sceneName = this.sceneName;
         this.preloadAssets();
-        AnimationUtils.fadeTo(this.percentResourceLoad.node, 0.2, 255);
-        AnimationUtils.fadeTo(this.containerCustomize, 0.2, 255);
+        AnimationUtils.fadeIn(this.percentResourceLoad.node, 0.2);
+        AnimationUtils.fadeIn(this.containerCustomize, 0.2);
         director.preloadScene(
             sceneName,
             (completedCount: number, totalCount: number) => {
