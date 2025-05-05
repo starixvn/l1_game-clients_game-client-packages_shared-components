@@ -29,7 +29,7 @@ describe("AudioContainer", () => {
             test: {
                 bundle: "123",
                 path: "test",
-                type: "test",
+                type: "music" as const,
             },
         };
 
@@ -57,7 +57,7 @@ describe("AudioContainer", () => {
             test: {
                 bundle: "123",
                 path: "test",
-                type: "test",
+                type: "music" as const,
             },
         };
 
@@ -166,18 +166,18 @@ describe("AudioContainer", () => {
                 audio1: {
                     bundle: "bundle1",
                     path: "path1",
-                    type: "type1",
+                    type: "music",
                 },
                 audio2: {
                     bundle: "bundle2",
                     path: "path2",
-                    type: "type2",
+                    type: "sfx",
                     isLazyLoad: false,
                 },
                 audio3: {
                     bundle: "bundle3",
                     path: "path3",
-                    type: "type3",
+                    type: "music",
                     isLazyLoad: true,
                 },
             };

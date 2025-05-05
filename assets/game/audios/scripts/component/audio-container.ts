@@ -17,10 +17,11 @@ export type TAudioConfigs = {
 export type TAudioValue = {
     bundle?: string;
     path: string;
-    type: string;
+    type?: "music" | "sfx";
     isMusicGame?: boolean;
     isLazyLoad?: boolean;
     isRemote?: boolean;
+    remoteType?: "game" | "theme";
     supportedLanguages?: string[];
 };
 
@@ -61,7 +62,7 @@ export class AudioContainer extends ObserverComponent {
     protected isPlaySFX = false;
     protected currentPlayTime = {};
 
-    get remoteName() {
+    get remoteGameName() {
         return "";
     }
 
@@ -104,8 +105,8 @@ export class AudioContainer extends ObserverComponent {
     protected async loadAudios() {
         audioManager.defaultLang = this.defaultLang;
         await audioManager.getRemoteAudioThemeConfig();
-        if (!!this.remoteName) {
-            await audioManager.getRemoteGameConfigs(this.remoteName);
+        if (!!this.remoteGameName) {
+            await audioManager.getRemoteGameConfigs(this.remoteGameName);
         }
 
         this.initializeAudioConfigs();
@@ -177,8 +178,16 @@ export class AudioContainer extends ObserverComponent {
         const audioConfigs = audioManager?.audioConfigs || {};
         for (const [audioKey, value] of Object.entries(audioConfigs)) {
             if (value?.isLazyLoad !== true) {
-                const { bundle, path } = AudioUtils.getAudioInfo(value, audioKey);
-                AudioUtils.getAudioClip(bundle, path);
+                if (value?.isRemote) {
+                    let url = AudioUtils.getGameAudioUrl(value, audioKey);
+                    if (value?.remoteType === "theme") {
+                        url = AudioUtils.getRemoteThemeAudioUrl(value, audioKey);
+                    }
+                    AudioUtils.getRemoteAudioClip(url);
+                } else {
+                    const { bundle, path } = AudioUtils.getAudioInfo(value, audioKey);
+                    AudioUtils.getAudioClip(bundle, path);
+                }
             }
         }
     }
@@ -324,25 +333,9 @@ export class AudioContainer extends ObserverComponent {
         isPlay: boolean
     ): Promise<{ audioClip: AudioClip | null; currentLoadAssetTime: number; isPlay: boolean }> => {
         if (audioValue?.isRemote) {
-            let url: string;
-
-            // Check if this is a game-specific sound
-            if (audioManager.remoteGameAudioConfigs?.sounds[soundId]) {
-                url = AudioUtils.getGameAudioUrl(audioValue, soundId);
-            }
-
-            // Check if this is a theme sound
-            else if (audioManager.remoteThemeAudioConfigs[soundId]) {
+            let url = AudioUtils.getGameAudioUrl(audioValue, soundId);
+            if (audioValue?.remoteType === "theme") {
                 url = AudioUtils.getRemoteThemeAudioUrl(audioValue, soundId);
-            }
-            // If neither, it's a local sound
-            else {
-                const { bundle, path } = AudioUtils.getAudioInfo(audioValue, soundId);
-                if (!bundle || !path) {
-                    return { audioClip: null, currentLoadAssetTime: 0, isPlay: false };
-                }
-                const audioClip = await AudioUtils.getAudioClip(bundle, path);
-                return { audioClip, currentLoadAssetTime, isPlay };
             }
 
             const audioClip = await AudioUtils.getRemoteAudioClip(url);
