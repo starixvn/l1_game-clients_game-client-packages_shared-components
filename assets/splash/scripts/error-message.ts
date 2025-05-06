@@ -1,4 +1,5 @@
 import { Component, Label, UIOpacity, Vec3, _decorator } from "cc";
+import { RandomWaitingMessageLandscape } from "../../shared/common-components/random-waiting-message-landscape";
 
 const { ccclass, property } = _decorator;
 
@@ -8,6 +9,7 @@ export class ErrorMessage extends Component {
     lblMessage: Label = null;
 
     reset() {
+        this.getComponent(RandomWaitingMessageLandscape)?.reset();
         this.lblMessage.node.getComponent(UIOpacity).opacity = 255;
         this.lblMessage.node.position = Vec3.ZERO;
     }
