@@ -46,6 +46,7 @@ export default class SplashComponentBase extends Component {
 
     protected system: number = AppTypes.Club;
     protected preloadAssetsComp: PreloadAssets;
+    protected progress = 0;
 
     onLoad() {
         this.preloadAssetsComp = this.getComponent(PreloadAssets);
@@ -140,30 +141,43 @@ export default class SplashComponentBase extends Component {
 
     updateProgressBar(progress: number) {
         if (this.percentResourceLoad) {
-            this.percentResourceLoad && (this.percentResourceLoad.string = `${Math.round(progress * 100)}%`);
+            if (progress >= this.progress) {
+                this.percentResourceLoad.string = `${Math.round(progress * 100)}%`;
+                this.progress = progress;
+            }
         }
     }
 
     async preloadAssets() {
+        const preloadAssetsPercent = 40;
+        const ratio = preloadAssetsPercent / 100;
         if (this.preloadAssetsComp) {
-            await this.preloadAssetsComp.preloadAssets();
+            await this.preloadAssetsComp.preloadAssets((progress) => {
+                this.updateProgressBar(progress * ratio);
+            });
+            return ratio;
         }
+
+        return 0;
     }
 
     async loadSceneGame() {
         const sceneName = this.sceneName;
-        await this.preloadAssets();
         AnimationUtils.fadeIn(this.percentResourceLoad.node, 0.2);
         AnimationUtils.fadeIn(this.containerCustomize, 0.2);
+        const preloadRatio = await this.preloadAssets();
+        const ratio = 1 - preloadRatio;
         director.preloadScene(
             sceneName,
             (completedCount: number, totalCount: number) => {
-                this.updateProgressBar(completedCount / totalCount);
+                const currentLoadScene = ((completedCount - 1) / totalCount) * ratio;
+                this.updateProgressBar(preloadRatio + currentLoadScene);
             },
             (error) => {
                 if (error) {
                     sentryLogger?.logError(error);
                 } else {
+                    this.updateProgressBar(1);
                     director.loadScene(sceneName);
                 }
             }

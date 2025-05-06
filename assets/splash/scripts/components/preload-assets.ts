@@ -19,7 +19,7 @@ export class PreloadAssets extends Component {
     @property(JsonAsset)
     config: JsonAsset = null;
 
-    async preloadAssets() {
+    async preloadAssets(onProgress: (progress: number) => void) {
         if (!this.config) {
             return;
         }
@@ -27,15 +27,16 @@ export class PreloadAssets extends Component {
         const info = this.config.json as PreloadConfig;
         const { others, localized } = info;
         log(`preload asset start ---------------------- `);
+
+        const allAssets = [];
         for (const bundleName of Object.keys(others)) {
             const paths = others[bundleName];
             for (const path of paths) {
-                log(`preload asset ${bundleName} --- ${path}`);
-                if (path.includes("spine")) {
-                    await bundleManager.loadAssetsFromBundle<sp.SkeletonData>(bundleName, path, sp.SkeletonData, null, true);
-                } else {
-                    await bundleManager.loadAssetsFromBundle<Asset>(bundleName, path, Asset, null);
-                }
+                allAssets.push({
+                    type: path.includes("spine") ? sp.SkeletonData : Asset,
+                    bundleName,
+                    path,
+                });
             }
         }
 
@@ -47,17 +48,32 @@ export class PreloadAssets extends Component {
                     const isAtlas = spriteName.includes("atlas");
                     if (isAtlas) {
                         const path = getLocalizedPath(pathType, "i18n-images", spriteName);
-                        log(`preload asset ${bundleName} --- ${path}`);
-                        await bundleManager.loadAssetsFromBundle(bundleName, path, SpriteAtlas, null);
+                        allAssets.push({
+                            type: SpriteAtlas,
+                            bundleName,
+                            path,
+                        });
                     } else {
                         const spritePath = getSpritePath(pathType, "i18n-images", spriteName);
-                        log(`preload asset ${bundleName} --- ${spritePath}`);
-                        await bundleManager.loadAssetsFromBundle(bundleName, spritePath, SpriteFrame, null);
+                        allAssets.push({
+                            type: SpriteFrame,
+                            bundleName,
+                            path: spritePath,
+                        });
                     }
                 }
             }
         }
 
+        const totalAssets = allAssets.length;
+        let loadedAssets = 0;
+        for (const asset of allAssets) {
+            const { type, bundleName, path } = asset;
+            log(`preload asset ${bundleName} --- ${path}`);
+            await bundleManager.loadAssetsFromBundle(bundleName, path, type, null, true);
+            loadedAssets++;
+            onProgress(loadedAssets / totalAssets);
+        }
         log(`preload asset end   ---------------------- `);
     }
 }
