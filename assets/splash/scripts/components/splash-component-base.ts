@@ -5,9 +5,9 @@ import Observer from "observer";
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
 import GameConnection from "../../../shared/common-components/game-connection";
 import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
+import { AnimationUtils } from "../../../shared/utils/utils";
 import { ErrorMessage } from "../error-message";
 import { PreloadAssets } from "./preload-assets";
-import { AnimationUtils } from "../../../shared/utils/utils";
 
 const { ccclass, property } = _decorator;
 const { handle, render } = Observer;
@@ -150,9 +150,9 @@ export default class SplashComponentBase extends Component {
         }
     }
 
-    loadSceneGame() {
+    async loadSceneGame() {
         const sceneName = this.sceneName;
-        this.preloadAssets();
+        await this.preloadAssets();
         AnimationUtils.fadeIn(this.percentResourceLoad.node, 0.2);
         AnimationUtils.fadeIn(this.containerCustomize, 0.2);
         director.preloadScene(
