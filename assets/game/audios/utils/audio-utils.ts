@@ -35,7 +35,7 @@ export const getAudioClip = async (bundle: string, path: string): Promise<AudioC
 export const getRemoteAudioClip = async (url: string): Promise<AudioClip | null> => {
     try {
         const loadedClip = await bundleManager.getRemoteAsset<AudioClip>(url);
-        return loadedClip as AudioClip;
+        return loadedClip;
     } catch (error) {
         console.error(`Failed to load audio clip from bundle: ${error}`);
         return null;
@@ -105,17 +105,17 @@ const getAudioValue = (soundId: string) => {
 const loadAudioClip = async (soundId: string, audioValue: any): Promise<AudioClip | null> => {
     if (audioManager.remoteGameAudioConfigs?.sounds?.[soundId]) {
         const url = getGameAudioUrl(audioValue, soundId);
-        return await getRemoteAudioClip(url);
+        return getRemoteAudioClip(url);
     }
 
     if (audioManager.remoteThemeAudioConfigs?.[soundId]) {
         const url = getRemoteThemeAudioUrl(audioValue, soundId);
-        return await getRemoteAudioClip(url);
+        return getRemoteAudioClip(url);
     }
 
     const { bundle, path } = getAudioInfo(audioValue, soundId);
     if (bundle && path) {
-        return await getAudioClip(bundle, path);
+        return getAudioClip(bundle, path);
     }
 
     return null;
