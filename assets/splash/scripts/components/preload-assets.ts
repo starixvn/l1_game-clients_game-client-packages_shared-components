@@ -1,4 +1,4 @@
-import { _decorator, Asset, Component, JsonAsset, log, SpriteAtlas, SpriteFrame } from "cc";
+import { _decorator, Asset, Component, JsonAsset, log, sp, SpriteAtlas, SpriteFrame } from "cc";
 import { getLocalizedPath, getSpritePath } from "db://i18n/localized-utils";
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
 const { ccclass, property } = _decorator;
@@ -31,7 +31,11 @@ export class PreloadAssets extends Component {
             const paths = others[bundleName];
             for (const path of paths) {
                 log(`preload asset ${bundleName} --- ${path}`);
-                await bundleManager.loadAssetsFromBundle<Asset>(bundleName, path, Asset, null);
+                if (path.includes("spine")) {
+                    await bundleManager.loadAssetsFromBundle<sp.SkeletonData>(bundleName, path, sp.SkeletonData, null, true);
+                } else {
+                    await bundleManager.loadAssetsFromBundle<Asset>(bundleName, path, Asset, null);
+                }
             }
         }
 

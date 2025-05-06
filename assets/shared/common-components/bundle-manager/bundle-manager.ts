@@ -9,6 +9,7 @@ export class BundleManager {
         return this._instance;
     }
     private bundles = {};
+    public cachedAssets = {};
     async loadBundle(name: string): Promise<AssetManager.Bundle> {
         if (this.bundles[name]) {
             return this.bundles[name];
@@ -46,7 +47,8 @@ export class BundleManager {
         bundleName: string,
         assetPath: string,
         assetType: any,
-        onProgress: ((finished: number, total: number) => void) | null
+        onProgress: ((finished: number, total: number) => void) | null,
+        isCached = false
     ) {
         const bundle = await this.loadBundle(bundleName);
         if (bundle) {
@@ -56,6 +58,9 @@ export class BundleManager {
                         log(`Cannot load asset ${assetPath} from bundle ${bundleName}`);
                         resolve(null);
                     } else {
+                        if (isCached) {
+                            this.cachedAssets[assetPath] = asset;
+                        }
                         resolve(asset as AssetType);
                     }
                 });
