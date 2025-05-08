@@ -23,6 +23,9 @@ export class MultiplierCards extends ObserverComponent {
     @property(Label)
     lblExtraFee: Label = null;
 
+    @property
+    luckyCardWidth = 52;
+
     private minBet = 0;
     private maxBet = 0;
 
@@ -120,8 +123,7 @@ export class MultiplierCards extends ObserverComponent {
     }
 
     async cardPosition(node: Node, index: number) {
-        const cardWidth = 52;
-        const origin = index * cardWidth;
+        const origin = index * this.luckyCardWidth;
         node.position = v3(origin, node.position.y, 0);
     }
 

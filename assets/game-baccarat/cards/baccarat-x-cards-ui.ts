@@ -15,6 +15,8 @@ const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 const { Rounds, GameBaccaratX } = gc;
 
+const CARD_SCALE = 0.34;
+
 type ServiceCardHand = {
     card1: ServiceCard;
     card2: ServiceCard;
@@ -80,6 +82,12 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     @property(Node)
     nodeLuckyCardsEffect: Node = null;
+
+    @property
+    cardScale = CARD_SCALE;
+
+    @property
+    cardScaleWaiting = CARD_SCALE;
 
     @property
     spineCutCardPath = "";
@@ -178,7 +186,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     private createNewCardNode() {
         const node = instantiate(this.prfCard);
-        node.setScale(v3(0.34, 0.34));
+        node.setScale(v3(CARD_SCALE, CARD_SCALE));
         return node;
     }
 
@@ -655,18 +663,23 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
             case CardLocation.Player3:
                 eulerAngles = v3(0, 0, -90);
-                scale = v3(1, 1, 1).multiplyScalar(0.34);
+                scale = v3(1, 1, 1).multiplyScalar(this.cardScale);
                 break;
             case CardLocation.Banker3:
                 eulerAngles = v3(0, 0, 90);
-                scale = v3(1, 1, 1).multiplyScalar(0.34);
+                scale = v3(1, 1, 1).multiplyScalar(this.cardScale);
                 break;
-
+            case CardLocation.Waiting1:
+            case CardLocation.Waiting2:
+                eulerAngles = v3(0);
+                scale = v3(1, 1, 1).multiplyScalar(this.cardScaleWaiting);
+                break;
             default:
                 eulerAngles = v3(0);
-                scale = v3(1, 1, 1).multiplyScalar(0.34);
+                scale = v3(1, 1, 1).multiplyScalar(this.cardScale);
                 break;
         }
+
         if (animated) {
             tween(node).to(0.5, { scale, eulerAngles }).start();
         } else {
