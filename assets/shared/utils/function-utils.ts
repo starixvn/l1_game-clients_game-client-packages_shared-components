@@ -1,4 +1,5 @@
 import { Asset, Node, assetManager, find, screen, warn } from "cc";
+import { settings } from "db://assets/game/scripts/game-settings";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 
 export namespace FunctionUtils {
@@ -26,6 +27,9 @@ export namespace FunctionUtils {
     // };
 
     export const getNamespace = () => {
+        if (settings?.observerNamespace) {
+            return settings.observerNamespace;
+        }
         const canvas = find("Canvas");
         const gameComponentBases = canvas?.getComponentsInChildren(GameComponentBase);
         if (!gameComponentBases || gameComponentBases.length === 0) {
