@@ -12,6 +12,10 @@ jest.mock("sc-scoreboards", () => ({
 
         rows = jest.fn(() => []);
     },
+    GoodRoadColumnLengthDetectorDetector: class {
+        constructor() {}
+        updatePatterns = jest.fn();
+    },
 }));
 
 describe("ScoreboardBigRoadAlgorithm", () => {

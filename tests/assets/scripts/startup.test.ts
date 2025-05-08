@@ -10,6 +10,7 @@ import {
     buildObserverContainer,
     getContainer,
     sentryLogger,
+    GameConfiguration,
 } from "@sg/game-client-base";
 import mobx from "mobx";
 import { configure } from "observer";
@@ -34,6 +35,7 @@ describe(startGame.name, () => {
             proxyPath: "",
             route: "",
         },
+        mainObserverNamespace: "",
     };
     describe("when called", () => {
         beforeAll(() => {
@@ -56,14 +58,6 @@ describe(startGame.name, () => {
 
             // Assert
             expect(buildObserverContainer).toBeCalledWith({ container: true });
-        });
-
-        it("should start sentry", () => {
-            // Act
-            startGame("namespace", options, siteConfigs);
-
-            // Assert
-            expect(sentryLogger.start).toHaveBeenCalledWith(siteConfigs.sentryUrl, siteConfigs.env, "namespace");
         });
 
         it("should configure the observer", () => {
@@ -102,6 +96,7 @@ describe(getSharedContainer.name, () => {
         subGuideDomain: "guide",
         systemType: "type",
         websocket: { proxyPath: "/", route: "route" },
+        mainObserverNamespace: "WukongsRevenge"
     };
 
     describe("when called", () => {
@@ -119,6 +114,7 @@ describe(getSharedContainer.name, () => {
                         Notification.FEATURE_NAME,
                         ConnectSite.FEATURE_NAME,
                         ChipSetting.FEATURE_NAME,
+                        GameConfiguration.FEATURE_NAME,
                     ],
                 })
             );
