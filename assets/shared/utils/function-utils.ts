@@ -26,8 +26,12 @@ export namespace FunctionUtils {
     // };
 
     export const getNamespace = () => {
-        const namespace = find("Canvas").getComponentInChildren(GameComponentBase)?.namespace;
-
+        const canvas = find("Canvas");
+        const gameComponentBases = canvas?.getComponentsInChildren(GameComponentBase);
+        if (!gameComponentBases || gameComponentBases.length === 0) {
+            return "default";
+        }
+        const namespace = gameComponentBases[0]?.namespace;
         return namespace || "default";
     };
     export const isIpad = (): boolean => {
