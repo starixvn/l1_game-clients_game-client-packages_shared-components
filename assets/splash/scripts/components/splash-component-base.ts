@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, Component, director, instantiate, Label, log, Node, Prefab } from "cc";
 import Observer from "observer";
 
+import { settings } from "db://assets/game/scripts/game-settings";
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
 import GameConnection from "../../../shared/common-components/game-connection";
 import { ComponentUtils, FunctionUtils } from "../../../shared/utils";
@@ -126,7 +127,7 @@ export default class SplashComponentBase extends Component {
         }
 
         const envConfig = window.envConfig;
-        gc.sentryLogger.start(envConfig?.sentryUrl, envConfig?.env, envConfig.mainObserverNamespace);
+        gc.sentryLogger.start(envConfig?.sentryUrl, envConfig?.env, settings.name);
     }
 
     connectToGameService() {

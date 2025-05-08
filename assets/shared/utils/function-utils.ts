@@ -1,6 +1,5 @@
 import { Asset, Node, assetManager, find, screen, warn } from "cc";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
-import { AudioObserver } from "../common-components/audio-observer";
 
 export namespace FunctionUtils {
     export const cachedRemoteFile = {};
@@ -29,7 +28,7 @@ export namespace FunctionUtils {
     export const getNamespace = () => {
         const namespace = find("Canvas").getComponentInChildren(GameComponentBase)?.namespace;
 
-        return namespace || window?.envConfig?.mainObserverNamespace || "default";
+        return namespace || "default";
     };
     export const isIpad = (): boolean => {
         const userAgent = window.navigator.userAgent.toLowerCase();

@@ -1,15 +1,15 @@
 import {
     App,
     Auth,
+    ChipSetting,
     Configs,
+    ConnectSite,
     IContainerOptions,
+    Notification,
     Player,
     buildObserverContainer,
     getContainer,
     sentryLogger,
-    Notification,
-    ConnectSite,
-    ChipSetting,
 } from "@sg/game-client-base";
 import mobx from "mobx";
 import { configure } from "observer";
@@ -34,7 +34,6 @@ describe(startGame.name, () => {
             proxyPath: "",
             route: "",
         },
-        mainObserverNamespace: "",
     };
     describe("when called", () => {
         beforeAll(() => {
@@ -103,7 +102,6 @@ describe(getSharedContainer.name, () => {
         subGuideDomain: "guide",
         systemType: "type",
         websocket: { proxyPath: "/", route: "route" },
-        mainObserverNamespace: "",
     };
 
     describe("when called", () => {
