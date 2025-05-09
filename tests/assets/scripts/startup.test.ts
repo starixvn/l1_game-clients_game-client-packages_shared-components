@@ -35,7 +35,6 @@ describe(startGame.name, () => {
             proxyPath: "",
             route: "",
         },
-        mainObserverNamespace: "",
     };
     describe("when called", () => {
         beforeAll(() => {
@@ -95,8 +94,7 @@ describe(getSharedContainer.name, () => {
         subDomain: "sub",
         subGuideDomain: "guide",
         systemType: "type",
-        websocket: { proxyPath: "/", route: "route" },
-        mainObserverNamespace: "WukongsRevenge"
+        websocket: { proxyPath: "/", route: "route" }
     };
 
     describe("when called", () => {

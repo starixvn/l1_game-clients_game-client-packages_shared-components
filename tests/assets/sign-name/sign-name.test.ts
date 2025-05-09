@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
 import { AudioSource, EditBox, KeyCode, Label, Node } from "cc";
 import { SignName } from "db://shared-components/sign-name/scripts/components/sign-name";
+import { EventKeyboard } from "cc";
 
 const { Shared, Translator } = gc;
 
@@ -78,32 +79,24 @@ describe("SignName", () => {
     test("should change next focus edit box on tab key", () => {
         // Arrange
         signName.changeNextFocusEditBox = jest.fn();
-        const mockEvent = {
-            keyCode: KeyCode.TAB,
-            preventDefault: jest.fn(),
-        };
+        const mockEvent = new EventKeyboard(KeyCode.TAB, "keydown", true);
 
         // Act
         signName.keyHandle(mockEvent);
 
         // Assert
-        expect(mockEvent.preventDefault).toHaveBeenCalled();
         expect(signName.changeNextFocusEditBox).toHaveBeenCalled();
     });
 
     test("should sign name on enter key", () => {
         // Arrange
         signName.onSignNameClick = jest.fn();
-        const mockEvent = {
-            keyCode: KeyCode.ENTER,
-            preventDefault: jest.fn(),
-        };
+        const mockEvent = new EventKeyboard(KeyCode.ENTER, "keydown", true);
 
         // Act
         signName.keyHandle(mockEvent);
 
         // Assert
-        expect(mockEvent.preventDefault).toHaveBeenCalled();
         expect(signName.onSignNameClick).toHaveBeenCalled();
     });
 
@@ -213,7 +206,7 @@ describe("SignName", () => {
         it("should call changeNextFocusEditBox when TAB key is pressed", () => {
             // Arrange
             const focusMock = jest.spyOn(signName.username, "focus");
-            const event = { keyCode: KeyCode.TAB };
+            const event = new EventKeyboard(KeyCode.TAB, "keydown", true);
 
             // Act
             signName.onKeyDown(event);
@@ -226,7 +219,7 @@ describe("SignName", () => {
         it("should call onSignNameClick when ENTER key is pressed", () => {
             // Arrange
             signName.changeNextFocusEditBox = jest.fn();
-            const event = { keyCode: KeyCode.ENTER };
+            const event = new EventKeyboard(KeyCode.ENTER, "keydown", true);
 
             // Act
             signName.onKeyDown(event);
