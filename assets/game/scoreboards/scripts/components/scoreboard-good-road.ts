@@ -1,7 +1,6 @@
 import { _decorator, Component, UITransform, v3 } from "cc";
 import SCScoreboard from "sc-scoreboards";
 import { GridLayout } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
-const {} = SCScoreboard;
 
 const { ccclass, property, executeInEditMode } = _decorator;
 

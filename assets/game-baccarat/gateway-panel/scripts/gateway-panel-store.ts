@@ -13,7 +13,6 @@ import {
     STREAK_BANKER,
     STREAK_PLAYER,
 } from "../../../game/scoreboards/scripts/components/baccarat/big-road/baccarat-big-road-good-road-patterns";
-const {} = SCScoreboard;
 const { injectable, inject } = inversify;
 
 interface GoodRoadSettingStorage {
