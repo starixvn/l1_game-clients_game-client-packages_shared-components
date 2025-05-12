@@ -38,7 +38,6 @@ export namespace AnimationUtils {
 
     export const fadeInAndActivate = async (node: Node, duration: number, opacity = 255) => {
         await fadeIn(node, duration, opacity);
-        node.active = true;
     };
 
     export const fadeTo = (node: Node, duration: number, opacity: number) => {
