@@ -30,17 +30,17 @@ export class GameGuideUtils {
         return GameGuideUtils.LoadWebViewInstance;
     }
 
-    static hideWebViewGuide(): Promise<void> {
+    static async hideWebViewGuide(): Promise<void> {
         try {
-            return GameGuideUtils.animateLoadWebView(this.ANIMATION_CONFIG.HIDE);
+            await GameGuideUtils.animateLoadWebView(this.ANIMATION_CONFIG.HIDE);
         } catch (errorMessage) {
             error("[GameGuideUtils] Failed to hide web view guide:", errorMessage);
         }
     }
 
-    static showWebViewGuide(): Promise<void> {
+    static async showWebViewGuide(): Promise<void> {
         try {
-            return GameGuideUtils.animateLoadWebView(this.ANIMATION_CONFIG.SHOW);
+            await GameGuideUtils.animateLoadWebView(this.ANIMATION_CONFIG.SHOW);
         } catch (errorMessage) {
             error("[GameGuideUtils] Failed to show web view guide:", errorMessage);
         }
