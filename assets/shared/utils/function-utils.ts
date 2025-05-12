@@ -1,6 +1,6 @@
 import { Asset, Node, assetManager, find, screen, warn } from "cc";
-import { settings } from "db://assets/game/scripts/game-settings";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
+import { settings } from "../../../../../assets/game/scripts/game-settings";
 
 export namespace FunctionUtils {
     export const cachedRemoteFile = {};

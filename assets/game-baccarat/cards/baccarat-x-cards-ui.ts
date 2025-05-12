@@ -254,7 +254,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
 
     async dropCards(cards: PoolItem[], animated = true) {
         if (!animated) {
-            cards.forEach(async (item) => {
+            cards.forEach((item) => {
                 item.card.closeCard(animated ? this.movingCardDuration / 2 : 0);
                 this.moveCard(item.card, CardLocation.Trash, animated);
                 item.card.node.active = false;
