@@ -6,10 +6,11 @@ const { ccclass } = _decorator;
 @ccclass("LocalizedSlotFontBold")
 export default class LocalizedSlotFontBold extends LocalizedFont {
     initData() {
+        const kodchasanBoldFont = "kodchasan-bold";
         this.fontBases = {
-            vi: "kodchasan-bold",
-            id: "kodchasan-bold",
-            en: "kodchasan-bold",
+            vi: kodchasanBoldFont,
+            id: kodchasanBoldFont,
+            en: kodchasanBoldFont,
             th: "noto-serif-bold-thai",
             zh_cn: "noto-serif-bold-zhcn",
             zh_tw: "noto-serif-bold-zhtw",

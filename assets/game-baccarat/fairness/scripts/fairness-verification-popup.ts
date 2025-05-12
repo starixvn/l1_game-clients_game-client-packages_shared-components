@@ -53,10 +53,10 @@ export class FairnessVerificationPopup extends ObserverComponent {
 
     roundId = 0;
     private pfData: GameServiceMessage.ShoeVerification = null;
-    private DURATION_DELAY_RENDER_DATA = 0.4;
-    private DURATION_SHOW_CARDS = 0.1;
+    private readonly DURATION_DELAY_RENDER_DATA = 0.4;
+    private readonly DURATION_SHOW_CARDS = 0.1;
     private readonly calculatedPercent: number[] = [];
-    private scrollViewMaxRow: number = 0;
+    private scrollViewMaxRow = 0;
 
     onLoad() {
         super.onLoad();
@@ -121,7 +121,7 @@ export class FairnessVerificationPopup extends ObserverComponent {
         const opacityCardsContent = getUiOpacity(this.nodeCardsContent);
         opacityCardsContent.opacity = 0;
         cards?.forEach((card, index) => {
-            let cardNode = instantiate(this.prfCard);
+            const cardNode = instantiate(this.prfCard);
             const comp = cardNode.getComponent(FairnessPokerCard);
             comp.cardFairness.setCardData(card);
             comp.cardFairness.card.faceUp();

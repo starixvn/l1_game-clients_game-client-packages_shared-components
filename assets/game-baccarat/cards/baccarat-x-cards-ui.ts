@@ -95,7 +95,7 @@ export class BaccaratXCardsUI extends ObserverComponent {
     private get openCardDuration() {
         return this.modeSpeed ? 0.5 : 0.8;
     }
-    private maximizeStackCards = 6;
+    private readonly maximizeStackCards = 6;
     private isNewShoe = false;
 
     currentCardIndex = -1;

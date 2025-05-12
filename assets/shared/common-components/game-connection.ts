@@ -13,7 +13,7 @@ const { Auth, AppTypes } = gc;
 @observer(settings.name)
 export default class GameConnection extends Component {
     protected system: number = AppTypes.Club;
-    protected isMiniGame: boolean = false;
+    protected isMiniGame = false;
     openGameCallback = () => {};
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)

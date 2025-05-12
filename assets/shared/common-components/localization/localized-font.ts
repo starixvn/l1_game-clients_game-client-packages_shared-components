@@ -10,8 +10,10 @@ class LanguageFont {
     name: "";
 }
 
+export type Language = "vi" | "id" | "en" | "th" | "zh_cn" | "zh_tw";
+
 export type FontMapping = {
-    [key in "vi" | "id" | "en" | "th" | "zh_cn" | "zh_tw"]: string;
+    [key in Language]: string;
 };
 
 @ccclass("LocalizedFont")

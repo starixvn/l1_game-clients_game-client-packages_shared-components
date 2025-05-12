@@ -135,8 +135,7 @@ export class GatewayPanelStore {
     updateGoodRoadGames(goodRoadGames: { id: number; goodRoad: SCScoreboard.GoodRoad }[]) {
         goodRoadGames.sort((a, b) => {
             const getIndex = (goodRoad: SCScoreboard.GoodRoad) => {
-                const index = this.config.findIndex((config) => goodRoad.name === config.pattern.name);
-                return index;
+                return this.config.findIndex((config) => goodRoad.name === config.pattern.name);
             };
 
             return getIndex(a.goodRoad) - getIndex(b.goodRoad);

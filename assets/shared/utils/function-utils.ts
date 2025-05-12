@@ -7,7 +7,9 @@ export namespace FunctionUtils {
     export const loadRemote = (url: string) => {
         return new Promise((resolve, reject) => {
             assetManager.loadRemote(url, (err, data: Asset) => {
-                if (err) return reject(err);
+                if (err) {
+                    return reject(err);
+                }
 
                 resolve(data);
             });

@@ -213,7 +213,9 @@ export namespace AnimationUtils {
 
         for (let trackIndex = 0; trackIndex < trackCount; trackIndex++) {
             const trackEntry = spine.getCurrent(trackIndex);
-            if (!trackEntry) continue;
+            if (!trackEntry) {
+                continue;
+            }
 
             if (trackEntry.animation.name === animName) {
                 return trackEntry.trackTime < trackEntry.animationEnd;
@@ -266,7 +268,6 @@ export namespace AnimationUtils {
         }
 
         let value = startValue;
-        //label.node.stopAllActions();
         tween(label.node)
             .repeat(
                 repeatCount,
@@ -310,7 +311,6 @@ export namespace AnimationUtils {
             const repeatCount = Math.floor(range / stepValue);
 
             let value = startValue;
-            //label.node.stopAllActions();
             const formatText = (value) => prefixStr + formatNumber(value);
             tween(label.node)
                 .repeat(
@@ -332,8 +332,11 @@ export namespace AnimationUtils {
 
     export const easeInOut = (rate: number) => (dt: number) => {
         dt *= 2;
-        if (dt < 1) return 0.5 * Math.pow(dt, rate);
-        else return 1.0 - 0.5 * Math.pow(2 - dt, rate);
+        if (dt < 1) {
+            return 0.5 * Math.pow(dt, rate);
+        } else {
+            return 1.0 - 0.5 * Math.pow(2 - dt, rate);
+        }
     };
 }
 export const isValidNode = (comp: Component) => {

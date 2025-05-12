@@ -2,8 +2,8 @@ import gc from "@sg/game-client-base";
 import { _decorator, assetManager, Component, ImageAsset, Sprite, SpriteFrame, Texture2D } from "cc";
 import * as i18n from "db://i18n/LanguageData";
 import Observer from "observer";
-import { OperatorAlias, OperatorUtils } from "../../../shared/utils/operator-utils";
 import { FunctionUtils } from "../../../shared/utils/function-utils";
+import { OperatorAlias, OperatorUtils } from "../../../shared/utils/operator-utils";
 import { isValidNode } from "./../../../shared/utils/utils";
 const { ccclass, property } = _decorator;
 
@@ -78,14 +78,13 @@ export class CustomizeLogoSplash extends Component {
 
     protected createTagLinePath() {
         const lang = i18n._language;
-        const taglinePath = `${this.href}images/splash_text_${lang}.webp?v=${this.versionImg}`;
-        return taglinePath;
+        return `${this.href}images/splash_text_${lang}.webp?v=${this.versionImg}`;
     }
 
     renderPoweredBy() {
         const operator = OperatorUtils.getOperatorAlias();
         const system = POWEREDBY[operator];
-       
+
         if (system) {
             const poweredByPath = this.createPoweredByPath(system);
             assetManager.loadRemote<ImageAsset>(poweredByPath, (err, imageAsset) => {

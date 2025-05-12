@@ -41,7 +41,7 @@ export class CutCardIndexPopup extends ObserverComponent {
 
     private playerCutCards = [];
     private dataPF = null;
-    private DURATION_DELAY_RENDER_DATA = 0.5;
+    private readonly DURATION_DELAY_RENDER_DATA = 0.5;
 
     onLoad(): void {
         super.onLoad();
