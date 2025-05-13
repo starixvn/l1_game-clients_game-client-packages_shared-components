@@ -173,9 +173,9 @@ export class TotalBetsChipsHandler {
 
     private parseChipsFromTotalBets(totalBets: gc.GameServiceMessage.TotalBets) {
         if (!totalBets) {
-            return null;
+            return;
         }
-        const chips = {};
+        let chips = {};
         Object.keys(totalBets).forEach((choice) => {
             const chipValues = getChipQuantity(totalBets[choice], this.chipStore.chipValuesByStakeLevel);
             const tempLowerChip = chipValues[0] ? { 0.5: chipValues[0] } : {};

@@ -177,13 +177,11 @@ export class GameStatisticBoard extends ObserverComponent {
 
     findWinningChoice(settlementResult: any) {
         this.getSupportChoices();
-
-        for (const choice of this.choices) {
-            if (settlementResult[choice]) {
-                return choice;
+        for (let i = 0; i < this.choices.length; i++) {
+            if (settlementResult[this.choices[i]]) {
+                return this.choices[i];
             }
         }
-        return undefined;
     }
 
     getSupportChoices() {

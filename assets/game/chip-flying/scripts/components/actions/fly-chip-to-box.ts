@@ -19,7 +19,7 @@ export const placeChipToChipBox = (
     isHiddenPlayer = false
 ) => {
     if (!chipContainer || !slidingChip) {
-        return null;
+        return;
     }
 
     const containerTransform = chipContainer.getComponent(UITransform);
