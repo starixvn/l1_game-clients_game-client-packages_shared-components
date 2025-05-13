@@ -36,7 +36,6 @@ export default class StatusGameRender extends RenderItem {
             this.nodes.forEach((node) => {
                 node.active = false;
             });
-            return;
         }
     };
 

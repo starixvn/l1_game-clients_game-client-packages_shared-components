@@ -13,7 +13,7 @@ export class LazyloadAsset extends Component {
     @property
     path = "prefabs/";
 
-    async loadAsset<T extends Asset>(assetType: any) {
-        return await bundleManager.loadAssetsFromBundle<T>(this.bundleName, this.path, assetType, null);
+    loadAsset<T extends Asset>(assetType: any) {
+        return bundleManager.loadAssetsFromBundle<T>(this.bundleName, this.path, assetType, null);
     }
 }

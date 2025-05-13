@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, randomRangeInt, warn } from "cc";
+import { _decorator, Component, randomRangeInt, warn } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass

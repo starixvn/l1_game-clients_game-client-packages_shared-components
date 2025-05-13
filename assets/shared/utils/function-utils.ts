@@ -16,18 +16,6 @@ export namespace FunctionUtils {
         });
     };
 
-    // Temporarily skip check later
-
-    // export const getAudioObserver = () => {
-    //     const audioObserver = find("Canvas").getComponentsInChildren(AudioObserver);
-    //     return audioObserver[0];
-    // };
-
-    // export const playClick = () => {
-    //     const audioObserver = getAudioObserver();
-    //     audioObserver?.playClick();
-    // };
-
     export const getNamespace = () => {
         if (settings?.observerNamespace) {
             return settings.observerNamespace;
@@ -62,7 +50,7 @@ export namespace FunctionUtils {
 
     export const waitUntil = async (condition: Function, interval = 1000, maxWait = 5000): Promise<void> => {
         if (condition()) {
-            return;
+            return null;
         }
         return new Promise<void>((resolve, reject) => {
             const startTime = new Date().getTime();

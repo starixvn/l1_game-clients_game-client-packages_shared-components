@@ -135,10 +135,9 @@ export class GatewayDataReceiver extends ObserverComponent {
             warn("offerGames is empty!");
             return [];
         }
-        const games = Object.keys(this.gatewayConfig?.games)
+        return Object.keys(this.gatewayConfig?.games)
             .map((gameId) => +gameId)
             .filter((gameId) => gameId !== this.gameId && this.offerGames.includes(gameId));
-        return games;
     }
 
     createGameDatas() {
