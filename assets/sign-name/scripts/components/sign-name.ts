@@ -28,6 +28,7 @@ export class SignName extends Component {
     @property(AudioSource)
     soundClick: AudioSource = null;
 
+    private _debounceTimer: NodeJS.Timeout;
     onLoad(): void {
         window.skipFullscreen = true;
     }
@@ -98,6 +99,15 @@ export class SignName extends Component {
 
     changeNextFocusEditBox() {
         this.username.focus();
+    }
+
+    triggerResize() {
+        if (this._debounceTimer) {
+            clearTimeout(this._debounceTimer);
+        }
+        this._debounceTimer = setTimeout(() => {
+            window.dispatchEvent(new Event("resize"));
+        }, 200);
     }
 
     clean() {
