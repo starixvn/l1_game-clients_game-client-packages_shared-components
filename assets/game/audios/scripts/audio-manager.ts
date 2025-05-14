@@ -24,10 +24,10 @@ export default class AudioManager {
     remoteThemeAudioConfigs: TAudioConfigs = null;
     remoteGameAudioConfigs: IRemoteGameSoundConfigs = null;
     defaultLang = "en";
-    remoteGameName = "";
+    remoteGamePath = "";
 
     get remoteGameConfigUrl() {
-        return `${this.getRemoteGameBasePath()}/${this.remoteGameName}/info.json?v=${Date.now()}`;
+        return `${this.getRemoteGameBasePath()}/${this.remoteGamePath}/info.json?v=${Date.now()}`;
     }
 
     setAudioConfigs(configs?: TAudioConfigs) {
@@ -104,9 +104,9 @@ export default class AudioManager {
         }
     }
 
-    async getRemoteGameConfigs(remoteGameName: string) {
+    async getRemoteGameConfigs(remoteGamePath: string) {
         try {
-            this.remoteGameName = remoteGameName;
+            this.remoteGamePath = remoteGamePath;
             const jsonAsset = (await FunctionUtils.loadRemote(this.remoteGameConfigUrl)) as JsonAsset;
             audioManager.remoteGameAudioConfigs = (jsonAsset?.json as IRemoteGameSoundConfigs) ?? null;
         } catch (error) {

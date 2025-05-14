@@ -52,7 +52,7 @@ export const getGameAudioUrl = (audioValue: TAudioValue, soundId: string): strin
             ? audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? audioManager.defaultLang
             : undefined;
 
-    return `${audioManager.getRemoteGameBasePath()}/${audioManager.remoteGameName}/${
+    return `${audioManager.getRemoteGameBasePath()}/${audioManager.remoteGamePath}/${
         langPath ? `${langPath}/` : ""
     }${path}.mp3?v=${version}`;
 };
@@ -103,13 +103,14 @@ const getAudioValue = (soundId: string) => {
 };
 
 const loadAudioClip = async (soundId: string, audioValue: any): Promise<AudioClip | null> => {
-    if (audioManager.remoteGameAudioConfigs?.sounds?.[soundId]) {
-        const url = getGameAudioUrl(audioValue, soundId);
-        return getRemoteAudioClip(url);
-    }
+    if (audioValue?.isRemote) {
+        let url = "";
+        if (audioValue?.remoteType === "game") {
+            url = getGameAudioUrl(audioValue, soundId);
+        } else {
+            url = getRemoteThemeAudioUrl(audioValue, soundId);
+        }
 
-    if (audioManager.remoteThemeAudioConfigs?.[soundId]) {
-        const url = getRemoteThemeAudioUrl(audioValue, soundId);
         return getRemoteAudioClip(url);
     }
 

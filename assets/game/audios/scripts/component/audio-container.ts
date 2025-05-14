@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, AudioClip, AudioSource, game, JsonAsset, log, sys, tween } from "cc";
+import { _decorator, AudioClip, AudioSource, CCString, game, JsonAsset, log, sys, tween } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
@@ -32,9 +32,6 @@ export type IRemoteThemeSoundConfigs = {
         version: number;
     };
     themes: string[];
-    sounds?: {
-        version: number;
-    };
 };
 
 @ccclass
@@ -54,6 +51,16 @@ export class AudioContainer extends ObserverComponent {
     @property(AudioSource)
     stoppableSFXSource: AudioSource = null;
 
+    @property
+    isRemote = false;
+
+    @property({
+        visible: function () {
+            return this.isRemote;
+        },
+    })
+    remotePath = "";
+
     audios = [];
     musicIds = [];
     musicGameIds = [];
@@ -61,10 +68,6 @@ export class AudioContainer extends ObserverComponent {
     protected isPlayMusic = false;
     protected isPlaySFX = false;
     protected currentPlayTime = {};
-
-    get remoteGameName() {
-        return "";
-    }
 
     get defaultLang() {
         return "en";
@@ -105,8 +108,8 @@ export class AudioContainer extends ObserverComponent {
     protected async loadAudios() {
         audioManager.defaultLang = this.defaultLang;
         await audioManager.getRemoteAudioThemeConfig();
-        if (!!this.remoteGameName) {
-            await audioManager.getRemoteGameConfigs(this.remoteGameName);
+        if (!!this.remotePath) {
+            await audioManager.getRemoteGameConfigs(this.remotePath);
         }
 
         this.initializeAudioConfigs();
@@ -115,8 +118,7 @@ export class AudioContainer extends ObserverComponent {
     }
 
     protected initializeAudioConfigs() {
-        const audioConfigs = this.getAudioConfigs();
-        audioManager.setAudioConfigs(audioConfigs);
+        audioManager.setAudioConfigs(this.getAudioConfigs());
     }
 
     protected categorizeAudioIds() {
@@ -179,10 +181,13 @@ export class AudioContainer extends ObserverComponent {
         for (const [audioKey, value] of Object.entries(audioConfigs)) {
             if (value?.isLazyLoad !== true) {
                 if (value?.isRemote) {
-                    let url = AudioUtils.getGameAudioUrl(value, audioKey);
-                    if (value?.remoteType === "theme") {
+                    let url = "";
+                    if (value?.remoteType === "game") {
+                        url = AudioUtils.getGameAudioUrl(value, audioKey);
+                    } else {
                         url = AudioUtils.getRemoteThemeAudioUrl(value, audioKey);
                     }
+
                     AudioUtils.getRemoteAudioClip(url);
                 } else {
                     const { bundle, path } = AudioUtils.getAudioInfo(value, audioKey);
@@ -334,10 +339,10 @@ export class AudioContainer extends ObserverComponent {
     ): Promise<{ audioClip: AudioClip | null; currentLoadAssetTime: number; isPlay: boolean }> => {
         if (audioValue?.isRemote) {
             let url = "";
-            if (audioValue?.remoteType === "theme") {
-                url = AudioUtils.getRemoteThemeAudioUrl(audioValue, soundId);
-            } else {
+            if (audioValue?.remoteType === "game") {
                 url = AudioUtils.getGameAudioUrl(audioValue, soundId);
+            } else {
+                url = AudioUtils.getRemoteThemeAudioUrl(audioValue, soundId);
             }
 
             const audioClip = await AudioUtils.getRemoteAudioClip(url);
