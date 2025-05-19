@@ -14,7 +14,7 @@ const { ccclass } = _decorator;
 export class NoticeContainer extends NodeContainer {
     noticeCmp: NoticeCmp = null;
 
-    private async showNoticeComponent(notice: gc.Notices.Notice) {
+    protected async showNoticeComponent(notice: gc.Notices.Notice) {
         await GameGuideUtils.hideWebViewGuide();
         const node = this.createNode();
         this.noticeCmp = node.getComponent<NoticeCmp>(NoticeCmp);

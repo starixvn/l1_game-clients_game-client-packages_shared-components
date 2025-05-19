@@ -164,8 +164,8 @@ export default class SplashComponentBase extends Component {
 
     async loadSceneGame() {
         const sceneName = this.sceneName;
-        AnimationUtils.fadeIn(this.percentResourceLoad.node, 0.2);
-        AnimationUtils.fadeIn(this.containerCustomize, 0.2);
+        this.percentResourceLoad?.node && AnimationUtils.fadeIn(this.percentResourceLoad.node, 0.2);
+        this.containerCustomize && AnimationUtils.fadeIn(this.containerCustomize, 0.2);
         const preloadRatio = await this.preloadAssets();
         const ratio = 1 - preloadRatio;
         director.preloadScene(
