@@ -163,6 +163,7 @@ export default class SplashComponentBase extends Component {
     }
 
     async loadSceneGame() {
+        console.time("Test SceneGame Load Time");
         const sceneName = this.sceneName;
         this.percentResourceLoad?.node && AnimationUtils.fadeIn(this.percentResourceLoad.node, 0.2);
         this.containerCustomize && AnimationUtils.fadeIn(this.containerCustomize, 0.2);
