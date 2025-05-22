@@ -11,7 +11,7 @@
     "_fntConfig": {
       "commonHeight": 199,
       "fontSize": 150,
-      "atlasName": "font-time.png",
+      "atlasName": "font-time.webp",
       "fontDefDictionary": {
         "32": {
           "rect": {
@@ -149,6 +149,6 @@
       "kerningDict": {}
     },
     "fontSize": 150,
-    "textureUuid": "55b8b898-0253-4b4e-8b00-0fcb945b26ef"
+    "textureUuid": "c7959169-e05f-4853-810c-4662127c686a"
   }
 }
