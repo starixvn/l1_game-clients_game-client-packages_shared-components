@@ -82,10 +82,10 @@ export namespace ComponentUtils {
         }
     };
 
-    export const setNodeColor = (node: Node, color: string) => {
+    export const setNodeColor = (node: Node, color: string | Color) => {
         const renderer = node.getComponent(UIRenderer);
         if (renderer) {
-            renderer.color = new Color(color);
+            renderer.color = color instanceof Color ? color : new Color(color);
         }
     };
 }
