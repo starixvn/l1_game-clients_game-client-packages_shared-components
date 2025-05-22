@@ -1,5 +1,6 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Color, Component, Label, Node } from "cc";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 
 const { ccclass, property } = _decorator;
 const { DateTimeUtils, FormatUtils, Translator } = gc;
@@ -22,7 +23,7 @@ export type BetDetailLogItemType = {
     fractionalOddsFormat: boolean;
 };
 
-export class BaseBetDetailLogItem extends Component {
+export class BaseBetDetailLogItem extends ObserverComponent {
     @property(Label)
     lblTime: Label = null;
 
