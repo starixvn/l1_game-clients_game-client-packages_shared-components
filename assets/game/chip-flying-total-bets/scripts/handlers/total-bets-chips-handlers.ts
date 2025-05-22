@@ -118,7 +118,11 @@ export class TotalBetsChipsHandler {
 
     private async handleSubsequentBets(totalBets: IBetChoice) {
         const offsetTotalBets = this.calculateOffsetTotalBets(totalBets);
-        await Promise.all(Object.entries(offsetTotalBets).map(([choice, amount]) => this.queueChipUpdate(choice, amount)));
+        await Promise.all(Object.entries(offsetTotalBets).map(([choice, amount]) => {
+            if (amount > 0) {
+                this.queueChipUpdate(choice, amount);
+            }
+        }));
     }
 
     private queueChipUpdate(choice: string, amount: number) {
