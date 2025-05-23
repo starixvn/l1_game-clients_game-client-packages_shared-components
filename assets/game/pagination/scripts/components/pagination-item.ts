@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Label, Color } from "cc";
+import { _decorator, Color, Component, Label, Node } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("PaginationItem")
@@ -18,7 +18,11 @@ export default class PaginationItem extends Component {
     @property(Color)
     textNormalColor: Color = new Color();
 
-    updateHighlight(highlight: boolean, pageNumber: number) {
+    page = 0;
+
+    setData(highlight: boolean, pageNumber: number) {
+        this.page = pageNumber;
+
         this.lblNumber.string = pageNumber.toString();
         this.lblNumber.color = highlight ? this.textHighlightColor : this.textNormalColor;
         this.nodeBackground.active = !highlight;

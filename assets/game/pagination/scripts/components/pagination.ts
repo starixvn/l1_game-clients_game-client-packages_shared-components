@@ -102,7 +102,7 @@ export default class Pagination extends ObserverComponent {
 
         this.pages.forEach((page, index) => {
             const pageNumber = startedIndex + index;
-            page.updateHighlight(pageNumber === this.currentPage, pageNumber);
+            page.setData(pageNumber === this.currentPage, pageNumber);
             page.node.active = index < this.totalPages;
         });
 
