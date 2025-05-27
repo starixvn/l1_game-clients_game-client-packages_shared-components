@@ -1,5 +1,6 @@
 import { _decorator, Component, EventTouch, Layout, log, Node } from "cc";
 import Observer from "observer";
+import { AudioUtils } from "../../../audios/utils";
 import PaginationItem from "./pagination-item";
 
 const { ccclass, property } = _decorator;
@@ -82,6 +83,7 @@ export default class RawPagination extends Component {
     }
 
     protected pageChanged() {
+        AudioUtils.playClick();
         this.onPageChanged(this.currentPage);
     }
 

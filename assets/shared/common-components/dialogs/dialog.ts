@@ -1,4 +1,5 @@
 import { _decorator, Component, Node } from "cc";
+import { AudioUtils } from "db://shared-components/game/audios/utils";
 import { AnimationUtils } from "../../utils/utils";
 import { DialogTransition } from "./transition/dialog-transition";
 
@@ -15,6 +16,9 @@ export class Dialog extends Component {
 
     @property
     autoShowWhenEnable = true;
+
+    @property
+    playClickWhenHide = false;
 
     protected readonly appearDuration = 0.4;
 
@@ -71,6 +75,7 @@ export class Dialog extends Component {
     }
 
     async hide() {
+        this.playClickWhenHide && AudioUtils.playClick();
         const promises = [];
 
         if (this.nodeFadeBackground) {
