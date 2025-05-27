@@ -1,8 +1,9 @@
-import { AudioClip } from "cc";
+import gc from "@sg/game-client-base";
+import { AudioClip, find } from "cc";
+import { AudioObserver } from "db://shared-components/shared/common-components/audio-observer";
 import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
 import { audioManager } from "../scripts/audio-manager";
 import { TAudioValue } from "../scripts/component/audio-container";
-import gc from "@sg/game-client-base";
 
 interface AudioInfo {
     bundle: string;
@@ -120,4 +121,19 @@ const loadAudioClip = async (soundId: string, audioValue: any): Promise<AudioCli
     }
 
     return null;
+};
+
+export const getAudioObserver = () => {
+    const audioObserver = find("Canvas").getComponentsInChildren(AudioObserver);
+    return audioObserver[0];
+};
+
+export const playClick = () => {
+    const audioObserver = getAudioObserver();
+    audioObserver?.playClick();
+};
+
+export const playSFX = (soundId: string) => {
+    const audioObserver = getAudioObserver();
+    audioObserver?.playSFX(soundId);
 };
