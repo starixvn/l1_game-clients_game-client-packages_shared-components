@@ -198,7 +198,7 @@ export default class SlidingChip extends ObserverComponent {
         return selectChip;
     }
 
-    private getChipDisplayType(index: number) {
+    protected getChipDisplayType(index: number) {
         return index > this.chipValues.length - 3 ? ChipDisplayType.VIP : ChipDisplayType.Normal;
     }
 
@@ -254,6 +254,10 @@ export default class SlidingChip extends ObserverComponent {
     }
 
     private createChipNode(value: number): Node {
+        return this.createBigChip(value);
+    }
+
+    public createChip3D(value: number) {
         return this.createBigChip(value);
     }
 

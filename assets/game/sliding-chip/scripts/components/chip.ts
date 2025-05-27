@@ -32,7 +32,7 @@ export default class Chip extends Component {
     lblValue: Label = null;
 
     private _color = Color.WHITE;
-    private _type = ChipDisplayType.Normal;
+    protected _type = ChipDisplayType.Normal;
 
     setColor(color: Color) {
         this._color = color;
