@@ -6,7 +6,6 @@ import {
     Player,
     buildObserverContainer,
     getContainer,
-    sentryLogger,
     Notification,
     ConnectSite,
     ChipSetting,
@@ -37,9 +36,6 @@ describe(startGame.name, () => {
         mainObserverNamespace: "",
     };
     describe("when called", () => {
-        beforeAll(() => {
-            sentryLogger.start = jest.fn();
-        });
         it("should get container from game client base", () => {
             // Act
             startGame("namespace", options, siteConfigs);
@@ -57,14 +53,6 @@ describe(startGame.name, () => {
 
             // Assert
             expect(buildObserverContainer).toBeCalledWith({ container: true });
-        });
-
-        it("should start sentry", () => {
-            // Act
-            startGame("namespace", options, siteConfigs);
-
-            // Assert
-            expect(sentryLogger.start).toHaveBeenCalledWith(siteConfigs.sentryUrl, siteConfigs.env, "namespace");
         });
 
         it("should configure the observer", () => {
@@ -106,6 +94,10 @@ describe(getSharedContainer.name, () => {
         mainObserverNamespace: "",
     };
 
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     describe("when called", () => {
         it("should get container from game client base", () => {
             // Act
@@ -121,7 +113,9 @@ describe(getSharedContainer.name, () => {
                         Notification.FEATURE_NAME,
                         ConnectSite.FEATURE_NAME,
                         ChipSetting.FEATURE_NAME,
+                        "game-configuration",
                     ],
+                    onContainerCreated: expect.any(Function),
                 })
             );
         });

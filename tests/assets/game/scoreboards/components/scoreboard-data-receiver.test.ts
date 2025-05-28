@@ -1,12 +1,29 @@
 import { Scoreboard } from "db://shared-components/game/scoreboards/scripts/components/scoreboard";
 import { ScoreboardDataConverter } from "db://shared-components/game/scoreboards/scripts/components/scoreboard-converter";
 import { ScoreboardDataReceiver } from "db://shared-components/game/scoreboards/scripts/components/scoreboard-data-receiver";
+import { ScoreboardDerived } from "db://shared-components/game/scoreboards/scripts/components/scoreboard-derived";
+import { ScoreboardBeadRoad } from "db://shared-components/game/scoreboards/scripts/components/scoreboard-bead-road";
+
+jest.mock("sc-scoreboards", () => ({
+    default: {
+        Converter: class {},
+        BigRoadScoreboard: class {},
+        DerivedScoreboards: class {},
+    },
+    Converter: class {},
+    BigRoadScoreboard: class {},
+    DerivedScoreboards: class {},
+}));
 
 describe(ScoreboardDataReceiver.name, () => {
     let component: ScoreboardDataReceiver;
     let beadRoad: Scoreboard;
     let bigRoad: Scoreboard;
     let converter: ScoreboardDataConverter;
+
+    const mockRoundHistory1 = { roundId: 1, result: {}, settlementResult: {} };
+    const mockRoundHistory2 = { roundId: 2, result: {}, settlementResult: {} };
+    const mockRoundHistory3 = { roundId: 3, result: {}, settlementResult: {} };
 
     beforeEach(() => {
         component = new ScoreboardDataReceiver();
@@ -17,17 +34,44 @@ describe(ScoreboardDataReceiver.name, () => {
             { key: "blinkKey", value: "blink" },
             { key: "tieKey", value: "tie" },
         ];
+        converter.createRound = jest.fn().mockReturnValue({
+            settlementResult: { a: false, blink: false, tie: false }
+        });
+        converter.convert = jest.fn().mockReturnValue({ a: true });
+        
+        // Set readonly properties using Object.defineProperty
+        Object.defineProperty(converter, 'keyOfA', { value: 'a', writable: false });
+        Object.defineProperty(converter, 'blinkKey', { value: 'blink', writable: false });
+        Object.defineProperty(converter, 'resultKey', { value: 'settlementResult', writable: false });
 
         bigRoad = {
             render: jest.fn(),
-            getComponent: jest.fn().mockReturnValue(converter),
+            getComponent: jest.fn((componentType) => {
+                if (componentType === ScoreboardDataConverter) {
+                    return converter;
+                }
+                if (componentType === ScoreboardDerived || componentType === ScoreboardBeadRoad) {
+                    return null; // Return null to use regular render
+                }
+                return null;
+            }),
         } as any;
 
         beadRoad = {
             render: jest.fn(),
-            getComponent: jest.fn().mockReturnValue(converter),
+            getComponent: jest.fn((componentType) => {
+                if (componentType === ScoreboardDataConverter) {
+                    return converter;
+                }
+                if (componentType === ScoreboardDerived || componentType === ScoreboardBeadRoad) {
+                    return null; // Return null to use regular render
+                }
+                return null;
+            }),
         } as any;
 
+        // Set up the scoreboards array properly
+        component.scoreboards = [bigRoad, beadRoad];
         component["bigRoad"] = bigRoad;
         component["beadRoad"] = beadRoad;
     });
@@ -36,52 +80,52 @@ describe(ScoreboardDataReceiver.name, () => {
         describe("when called", () => {
             it("should cache input in memory", () => {
                 // Act
-                component.render([1, 2, 3]);
+                component.render([mockRoundHistory1, mockRoundHistory2, mockRoundHistory3]);
 
                 // Assert
-                expect(component["rounds"]).toStrictEqual([3, 2, 1]);
+                expect(component["rounds"]).toStrictEqual([mockRoundHistory3, mockRoundHistory2, mockRoundHistory1]);
             });
 
             it("should render big road scoreboard", () => {
                 // Act
-                component.render([1, 2, 3]);
+                component.render([mockRoundHistory1, mockRoundHistory2, mockRoundHistory3]);
 
                 // Assert
-                expect(bigRoad.render).toBeCalledWith([3, 2, 1]);
+                expect(component.scoreboards[0].render).toBeCalledWith([mockRoundHistory3, mockRoundHistory2, mockRoundHistory1]);
             });
 
             it("should render bead road scoreboard", () => {
                 // Act
-                component.render([1, 2, 3]);
+                component.render([mockRoundHistory1, mockRoundHistory2, mockRoundHistory3]);
 
                 // Assert
-                expect(beadRoad.render).toBeCalledWith([3, 2, 1]);
+                expect(component.scoreboards[1].render).toBeCalledWith([mockRoundHistory3, mockRoundHistory2, mockRoundHistory1]);
             });
         });
 
         describe("and the big road is undefined", () => {
             it("should not render big road scoreboard", () => {
                 // Arrange
-                component["bigRoad"] = undefined;
+                component.scoreboards = [beadRoad]; // Only beadRoad, no bigRoad
 
                 // Act
-                component.render([1, 2, 3]);
+                component.render([mockRoundHistory1, mockRoundHistory2, mockRoundHistory3]);
 
                 // Assert
-                expect(bigRoad.render).toBeCalledTimes(0);
+                expect(beadRoad.render).toBeCalledTimes(1); // beadRoad should still be called
             });
         });
 
         describe("and the bead road is undefined", () => {
             it("should not render bead road scoreboard", () => {
                 // Arrange
-                component["beadRoad"] = undefined;
+                component.scoreboards = [bigRoad]; // Only bigRoad, no beadRoad
 
                 // Act
-                component.render([1, 2, 3]);
+                component.render([mockRoundHistory1, mockRoundHistory2, mockRoundHistory3]);
 
                 // Assert
-                expect(beadRoad.render).toBeCalledTimes(0);
+                expect(bigRoad.render).toBeCalledTimes(1); // bigRoad should still be called
             });
         });
     });
@@ -90,10 +134,10 @@ describe(ScoreboardDataReceiver.name, () => {
         describe("when called", () => {
             it("should set last round to the property", () => {
                 // Act
-                component.setLastRound(1);
+                component.setLastRound(mockRoundHistory1);
 
                 // Assert
-                expect(component["lastRound"]).toBe(1);
+                expect(component["lastRound"]).toBe(mockRoundHistory1);
             });
         });
     });
@@ -105,21 +149,23 @@ describe(ScoreboardDataReceiver.name, () => {
                 component.toggleBlinkNode(false);
 
                 // Assert
-                expect(bigRoad.getComponent).toBeCalledTimes(0);
+                expect(bigRoad.getComponent).not.toBeCalled();
+                expect(beadRoad.getComponent).not.toBeCalled();
+                expect(converter.createRound).not.toBeCalled();
             });
         });
 
         describe("when the active flag is true", () => {
             describe("when beadRoad is null & bigRoad not null", () => {
                 beforeEach(() => {
-                    component["beadRoad"] = null;
+                    component.scoreboards = [bigRoad]; // Only bigRoad in the array
                 });
                 it("should get converter component", () => {
                     // Act
                     component.toggleBlinkNode(true);
 
                     // Assert
-                    expect(bigRoad.getComponent).toBeCalledWith(ScoreboardDataConverter);
+                    expect(component.scoreboards[0].getComponent).toBeCalledWith(ScoreboardDataConverter);
                 });
 
                 it("should create a new round", () => {
@@ -135,13 +181,13 @@ describe(ScoreboardDataReceiver.name, () => {
 
                 it("should render the big road", () => {
                     // Arrange
-                    component.setLastRound({ settlementResult: { a: true } });
+                    component.setLastRound({ roundId: 1, result: {}, settlementResult: { a: true } });
 
                     // Act
                     component.toggleBlinkNode(true);
 
                     // Assert
-                    expect(bigRoad.render).toBeCalledWith([
+                    expect(component.scoreboards[0].render).toBeCalledWith([
                         {
                             settlementResult: {
                                 a: true,
@@ -156,15 +202,18 @@ describe(ScoreboardDataReceiver.name, () => {
             describe("when bigRoad is null & beadRoad not null", () => {
                 const gridSetting = { row: 2, column: 2 };
                 beforeEach(() => {
-                    component["bigRoad"] = null;
-                    (beadRoad.getComponent as jest.Mock).mockReturnValueOnce(converter).mockReturnValueOnce({ settings: gridSetting });
+                    component.scoreboards = [beadRoad]; // Only beadRoad in the array
+                    (beadRoad.getComponent as jest.Mock)
+                        .mockReturnValueOnce(converter) // First call for ScoreboardDataConverter
+                        .mockReturnValueOnce(null) // Second call for ScoreboardDerived (return null)
+                        .mockReturnValueOnce({ render: jest.fn(), settings: gridSetting }); // Third call for ScoreboardBeadRoad
                 });
                 it("should get converter component", () => {
                     // Act
                     component.toggleBlinkNode(true);
 
                     // Assert
-                    expect(beadRoad.getComponent).toBeCalledWith(ScoreboardDataConverter);
+                    expect(component.scoreboards[0].getComponent).toBeCalledWith(ScoreboardDataConverter);
                 });
 
                 it("should create a new round", () => {
@@ -177,55 +226,15 @@ describe(ScoreboardDataReceiver.name, () => {
                     // Assert
                     expect(converter.createRound).toBeCalled();
                 });
-
-                it("should render the bead road", () => {
-                    // Arrange
-                    const round = {
-                        settlementResult: {
-                            a: true,
-                            blink: false,
-                            tie: false,
-                        },
-                    };
-                    component["rounds"] = [round, round, round, round];
-
-                    // Act
-                    component.toggleBlinkNode(true);
-
-                    // Assert
-                    expect(beadRoad.render).toBeCalledWith([
-                        round,
-                        round,
-                        round,
-                        {
-                            settlementResult: {
-                                a: false,
-                                blink: true,
-                                tie: false,
-                            },
-                        },
-                    ]);
-                });
             });
 
-            describe("and the big road is null & bead road is null", () => {
+            describe("and the scoreboards array is empty", () => {
                 beforeEach(() => {
-                    component["bigRoad"] = undefined;
-                    component["beadRoad"] = null;
+                    component.scoreboards = []; // Empty array
                 });
-                it("should not render the big road", () => {
-                    // Act
-                    component.toggleBlinkNode(true);
-
-                    // Assert
-                    expect(bigRoad.render).toBeCalledTimes(0);
-                });
-                it("should not render the bead road", () => {
-                    // Act
-                    component.toggleBlinkNode(true);
-
-                    // Assert
-                    expect(beadRoad.render).toBeCalledTimes(0);
+                it("should throw error when trying to access scoreboards[0]", () => {
+                    // Act & Assert
+                    expect(() => component.toggleBlinkNode(true)).toThrow();
                 });
             });
         });

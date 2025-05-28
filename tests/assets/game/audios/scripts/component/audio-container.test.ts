@@ -17,9 +17,9 @@ describe("AudioContainer", () => {
         musicSource = new AudioSource();
         sfxSource = new AudioSource();
         component = new AudioContainer();
-        component.musicSource = musicSource;
-        component.sfxSource = sfxSource;
-        component.stoppableSFXSource = stoppableSFXSource;
+        component.musicSource = musicSource as any;
+        component.sfxSource = sfxSource as any;
+        component.stoppableSFXSource = stoppableSFXSource as any;
         const mockDate = new Date(2022, 1, 1);
         mockTime = mockDate.getTime();
         const dateSpy = jest.spyOn(global.Date.prototype, "getTime");
@@ -65,7 +65,7 @@ describe("AudioContainer", () => {
             // Arrange
             component.enableMusic(true);
             jest.spyOn(component, "loadAssets").mockResolvedValue({
-                audioClip: new AudioClip(),
+                audioClip: new AudioClip() as any,
                 currentLoadAssetTime: mockTime,
                 isPlay: true,
             });
@@ -81,7 +81,7 @@ describe("AudioContainer", () => {
             // Arrange
             component.enableMusic(true);
             jest.spyOn(component, "loadAssets").mockResolvedValue({
-                audioClip: new AudioClip(),
+                audioClip: new AudioClip() as any,
                 currentLoadAssetTime: mockTime,
                 isPlay: false,
             });
@@ -97,7 +97,7 @@ describe("AudioContainer", () => {
             // Arrange
             component.enableMusic(false);
             jest.spyOn(component, "loadAssets").mockResolvedValue({
-                audioClip: new AudioClip(),
+                audioClip: new AudioClip() as any,
                 currentLoadAssetTime: mockTime,
                 isPlay: true,
             });
@@ -115,7 +115,7 @@ describe("AudioContainer", () => {
             // Arrange
             component.enableSFX(true);
             jest.spyOn(component, "loadAssets").mockResolvedValue({
-                audioClip: new AudioClip(),
+                audioClip: new AudioClip() as any,
                 currentLoadAssetTime: mockTime,
                 isPlay: true,
             });
@@ -134,7 +134,7 @@ describe("AudioContainer", () => {
             // Arrange
             component.enableSFX(false);
             jest.spyOn(component, "loadAssets").mockResolvedValue({
-                audioClip: new AudioClip(),
+                audioClip: new AudioClip() as any,
                 currentLoadAssetTime: mockTime,
                 isPlay: true,
             });

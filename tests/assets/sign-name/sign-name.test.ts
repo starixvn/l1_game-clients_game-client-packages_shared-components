@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { AudioSource, EditBox, KeyCode, Label, Node } from "cc";
+import { AudioSource, EditBox, EventKeyboard, KeyCode, Label, Node } from "cc";
 import { SignName } from "db://shared-components/sign-name/scripts/components/sign-name";
 
 const { Shared, Translator } = gc;
@@ -213,7 +213,7 @@ describe("SignName", () => {
         it("should call changeNextFocusEditBox when TAB key is pressed", () => {
             // Arrange
             const focusMock = jest.spyOn(signName.username, "focus");
-            const event = { keyCode: KeyCode.TAB };
+            const event = { keyCode: KeyCode.TAB } as EventKeyboard;
 
             // Act
             signName.onKeyDown(event);
@@ -226,7 +226,7 @@ describe("SignName", () => {
         it("should call onSignNameClick when ENTER key is pressed", () => {
             // Arrange
             signName.changeNextFocusEditBox = jest.fn();
-            const event = { keyCode: KeyCode.ENTER };
+            const event = { keyCode: KeyCode.ENTER } as EventKeyboard;
 
             // Act
             signName.onKeyDown(event);

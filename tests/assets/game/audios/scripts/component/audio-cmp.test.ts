@@ -11,7 +11,7 @@ describe("AudioCmp", () => {
     beforeEach(() => {
         toggle = new Toggle();
         component = new AudioCmp();
-        component.toggle = toggle;
+        component.toggle = toggle as any;
         toggle.isChecked = false;
     });
 
