@@ -1,23 +1,26 @@
 import gc from "@sg/game-client-base";
-import { Animation, Component, Label, math, Node, sp, sys, Tween, tween, TweenEasing, UIOpacity, UITransform, v3, Vec3 } from "cc";
-
+import { Animation, Component, Label, math, Node, sp, sys, Tween, tween, TweenEasing, UITransform, v3, Vec3 } from "cc";
+import { ComponentUtils } from "./component-utils";
 export namespace AnimationUtils {
     export const FadeTag = 1001;
     export const ScaleTag = 1002;
+
+    /**
+     * Deprecated: Use ComponentUtils.getUiOpacity instead
+     */
     export const getUiOpacity = (node: Node) => {
-        let uiOpacity = node.getComponent(UIOpacity);
-        if (!uiOpacity) {
-            uiOpacity = node.addComponent(UIOpacity);
-        }
-        return uiOpacity;
+        return ComponentUtils.getUiOpacity(node);
     };
 
+    /**
+     * Deprecated: Use ComponentUtils.setOpacityNode instead
+     */
     export const setOpacityNode = (node: Node, opacity: number) => {
-        getUiOpacity(node).opacity = opacity;
+        ComponentUtils.setOpacityNode(node, opacity);
     };
 
     export const stopFade = (node: Node) => {
-        const uiOpacity = getUiOpacity(node);
+        const uiOpacity = ComponentUtils.getUiOpacity(node);
         if (uiOpacity) {
             Tween.stopAllByTag(FadeTag, uiOpacity);
         }
@@ -41,7 +44,7 @@ export namespace AnimationUtils {
     };
 
     export const fadeTo = (node: Node, duration: number, opacity: number) => {
-        const uiOpacity = getUiOpacity(node);
+        const uiOpacity = ComponentUtils.getUiOpacity(node);
 
         node.active = true;
         return new Promise<void>((resolve) => {

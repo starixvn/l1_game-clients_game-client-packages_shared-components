@@ -88,4 +88,16 @@ export namespace ComponentUtils {
             renderer.color = color instanceof Color ? color : new Color(color);
         }
     };
+
+    export const getUiOpacity = (node: Node) => {
+        let uiOpacity = node.getComponent(UIOpacity);
+        if (!uiOpacity) {
+            uiOpacity = node.addComponent(UIOpacity);
+        }
+        return uiOpacity;
+    };
+
+    export const setOpacityNode = (node: Node, opacity: number) => {
+        getUiOpacity(node).opacity = Math.max(1, opacity);
+    };
 }
