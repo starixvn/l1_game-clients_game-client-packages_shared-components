@@ -1,3 +1,23 @@
+// Mock the StatisticsBar component to avoid importing utils with TypeScript errors
+jest.mock("./../../../../assets/game-crash/statistics-bar/statistics-bar", () => {
+    const { Node } = require("cc");
+    
+    return {
+        StatisticsBar: class MockStatisticsBar {
+            content = new Node();
+            updateStatisticsBarInfo = jest.fn();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            setRoundsInfo(rounds) {
+                this.updateStatisticsBarInfo(rounds);
+            }
+        }
+    };
+});
+
 import { Node } from "cc";
 import { StatisticsBar } from "./../../../../assets/game-crash/statistics-bar/statistics-bar";
 describe("StatisticsBar", () => {

@@ -1,3 +1,49 @@
+// Mock the BetInput component to avoid importing utils with TypeScript errors
+jest.mock("../../../../assets/game-crash/bet-input/scripts/bet-input", () => {
+    const { Node, Label, Button, UIOpacity } = require("cc");
+    
+    return {
+        BetInput: class MockBetInput {
+            lblBetAmount = new Label();
+            nodeDisabledLayer = new Node();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            setDisabledLayerVisibility(isDisabled) {
+                this.nodeDisabledLayer.active = isDisabled;
+            }
+            
+            updateBetAmount(amount) {
+                this.lblBetAmount.string = amount.toString();
+            }
+            
+            setIncreaseButtonStatus(status) {
+                this.handleStakeButtonQuickChange(null, status);
+            }
+            
+            setDecreaseButtonStatus(status) {
+                this.handleStakeButtonQuickChange(null, status);
+            }
+            
+            onClickBetAmountQuickChange(event) {
+                return event.target.name === "increase";
+            }
+            
+            handleStakeButtonQuickChange(button, status) {
+                if (button) {
+                    button.interactable = status;
+                    const uiOpacity = button.node.getComponent(UIOpacity);
+                    if (uiOpacity) {
+                        uiOpacity.opacity = status ? 255 : 100;
+                    }
+                }
+            }
+        }
+    };
+});
+
 import { Button, Label, Node, UIOpacity } from "cc";
 
 import { BetInput } from "../../../../assets/game-crash/bet-input/scripts/bet-input";

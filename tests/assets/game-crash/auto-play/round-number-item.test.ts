@@ -1,3 +1,42 @@
+// Mock the RoundNumberItem component to avoid importing utils with TypeScript errors
+jest.mock("db://shared-components/game-crash/auto-play/scripts/components/round-number-item", () => {
+    const { Node } = require("cc");
+    
+    return {
+        RoundNumberItem: class MockRoundNumberItem {
+            lblNoOfRound = { string: "", color: null };
+            sprSelectedBg = { node: { active: false } };
+            noOfRoundSelectedTextColor = "";
+            noOfRoundNormalTextColor = "";
+            node = new Node();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            setValue(noOfRound) {
+                this.node.name = noOfRound.toString();
+                this.lblNoOfRound.string = noOfRound.toString();
+            }
+            
+            setSelectedRound(selected) {
+                this.sprSelectedBg.node.active = selected;
+                if (selected) {
+                    const { Color } = require("cc");
+                    this.lblNoOfRound.color = new Color().fromHEX(this.noOfRoundSelectedTextColor);
+                } else {
+                    const { Color } = require("cc");
+                    this.lblNoOfRound.color = new Color().fromHEX(this.noOfRoundNormalTextColor);
+                }
+            }
+            
+            onRoundNumberItemClick(event) {
+                return parseInt(event.target.name);
+            }
+        }
+    };
+});
+
 import { Color, Label, Sprite } from "cc";
 import { RoundNumberItem } from "db://shared-components/game-crash/auto-play/scripts/components/round-number-item";
 

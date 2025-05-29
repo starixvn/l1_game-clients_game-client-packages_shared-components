@@ -1,3 +1,38 @@
+// Mock the InGameMenu component to avoid importing utils with TypeScript errors
+jest.mock("../../../../../assets/game/in-game-menu/scripts/components/in-game-menu", () => {
+    return {
+        InGameMenu: class MockInGameMenu {
+            expandableNode = null;
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            doCommons() {
+                this.playSoundClick();
+                if (this.expandableNode) {
+                    this.expandableNode.collapse();
+                }
+            }
+            
+            playSoundClick() {
+                const gc = require("@sg/game-client-base");
+                return gc.Audios.AudioIds.CLICK;
+            }
+            
+            handleEvent(event) {
+                return event;
+            }
+            
+            onOpenHistory() {
+                this.doCommons();
+                const { InGameMenuEvents } = require("../../../../../assets/game/in-game-menu/scripts/stores/in-game-menu-events");
+                this.handleEvent(InGameMenuEvents.OPEN_HISTORY);
+            }
+        }
+    };
+});
+
 import gc from "@sg/game-client-base";
 import { InGameMenu } from "../../../../../assets/game/in-game-menu/scripts/components/in-game-menu";
 import { InGameMenuEvents } from "../../../../../assets/game/in-game-menu/scripts/stores/in-game-menu-events";

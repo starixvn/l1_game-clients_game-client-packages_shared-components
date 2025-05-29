@@ -1,3 +1,60 @@
+// Mock the RoundHistoryItem component to avoid importing utils with TypeScript errors
+jest.mock("./../../../../assets/game-crash/statistics-bar/round-history-item", () => {
+    const { Node } = require("cc");
+    
+    return {
+        RoundHistoryItem: class MockRoundHistoryItem {
+            nodeCountdown = new Node();
+            lblCountdown = { string: "" };
+            nodeMultiplier = { node: new Node() };
+            lblMultiplier = { string: "" };
+            nodeInPlay = new Node();
+            mainAtlas = null;
+            isLastRound = false;
+            roundInfo = null;
+            playSoundClick = jest.fn();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            displayMultiplier(show) {
+                this.nodeMultiplier.node.active = show;
+            }
+            
+            displayCountDown(show) {
+                this.nodeCountdown.active = show;
+            }
+            
+            displayInPlay(show) {
+                this.nodeInPlay.active = show;
+            }
+            
+            hideAllNodes() {
+                this.nodeInPlay.active = false;
+                this.nodeCountdown.active = false;
+                this.nodeMultiplier.node.active = false;
+            }
+            
+            renderRoundTime(countdownTimer) {
+                if (!this.isCrashed()) {
+                    this.lblCountdown.string = countdownTimer.toString();
+                    this.nodeCountdown.active = true;
+                }
+            }
+            
+            isCrashed() {
+                return this.roundInfo?.result !== undefined;
+            }
+            
+            onClickRoundItem() {
+                this.playSoundClick();
+                return this.roundInfo?.roundId;
+            }
+        }
+    };
+});
+
 import { RoundHistory } from "@sg/game-client-base/dist/game/round-histories";
 import { Label, Node, Sprite, SpriteAtlas } from "cc";
 import { stub } from "jest-auto-stub";

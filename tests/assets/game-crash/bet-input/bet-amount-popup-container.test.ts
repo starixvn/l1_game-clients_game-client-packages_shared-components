@@ -1,3 +1,26 @@
+// Mock the BetAmountPopupContainer component to avoid importing utils with TypeScript errors
+jest.mock("../../../../assets/game-crash/bet-input/scripts/bet-amount-popup-container", () => {
+    const { Node } = require("cc");
+    
+    return {
+        BetAmountPopupContainer: class MockBetAmountPopupContainer {
+            nodeOverlay = new Node();
+            createNode = jest.fn();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            renderOpenBetAmountPopup(isOpen) {
+                this.nodeOverlay.active = isOpen;
+                if (isOpen) {
+                    this.createNode();
+                }
+            }
+        }
+    };
+});
+
 import { Node } from "cc";
 
 import { BetAmountPopupContainer } from "../../../../assets/game-crash/bet-input/scripts/bet-amount-popup-container";

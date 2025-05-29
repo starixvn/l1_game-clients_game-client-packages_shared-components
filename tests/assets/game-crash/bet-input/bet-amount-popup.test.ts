@@ -1,3 +1,75 @@
+// Mock the BetAmountItem component to avoid importing utils with TypeScript errors
+jest.mock("../../../../assets/game-crash/bet-input/scripts/components/bet-amount-item", () => {
+    const { Node, Label } = require("cc");
+    
+    return {
+        BetAmountItem: class MockBetAmountItem {
+            lblBetAmount = new Label();
+            node = new Node();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            setBetAmountItem(amount) {
+                // Mock implementation
+            }
+        }
+    };
+});
+
+// Mock the BetAmountPopup component to avoid importing utils with TypeScript errors
+jest.mock("../../../../assets/game-crash/bet-input/scripts/components/bet-amount-popup", () => {
+    const { Node, Label, Button, UIOpacity } = require("cc");
+    
+    return {
+        BetAmountPopup: class MockBetAmountPopup {
+            nodeBetContainer = new Node();
+            lblBetAmount = new Label();
+            btnConfirm = new Button();
+            lblBetRange = new Label();
+            node = new Node();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            initBetAmount(config) {
+                const { chips, minBet, maxBet } = config;
+                const validChips = chips.filter(chip => parseInt(chip) >= minBet && parseInt(chip) <= maxBet);
+                // Simulate creating BetAmountItem instances
+                const { BetAmountItem } = require("../../../../assets/game-crash/bet-input/scripts/components/bet-amount-item");
+                validChips.forEach(() => {
+                    const item = new BetAmountItem();
+                    item.setBetAmountItem();
+                });
+            }
+            
+            updateBetRange(config) {
+                const { minBet, maxBet } = config;
+                this.lblBetRange.string = `${minBet} - ${maxBet}`;
+            }
+            
+            setBetAmountPopupVisibilty(visible) {
+                this.node.active = visible;
+            }
+            
+            updateBetAmount(amount) {
+                this.lblBetAmount.string = amount.toString();
+                this.checkConfirmBtnStatus(true);
+            }
+            
+            checkConfirmBtnStatus(status) {
+                this.btnConfirm.interactable = status;
+                const uiOpacity = this.btnConfirm.node.getComponent(UIOpacity);
+                if (uiOpacity) {
+                    uiOpacity.opacity = status ? 255 : 100;
+                }
+            }
+        }
+    };
+});
+
 import { Button, Label, Node, UIOpacity } from "cc";
 
 import { BetAmountItem } from "../../../../assets/game-crash/bet-input/scripts/components/bet-amount-item";

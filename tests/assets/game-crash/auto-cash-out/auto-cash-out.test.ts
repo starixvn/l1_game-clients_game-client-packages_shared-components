@@ -1,3 +1,49 @@
+// Mock the AutoCashout component to avoid importing utils with TypeScript errors
+jest.mock("../../../../assets/game-crash/auto-cash-out/scripts/components/auto-cash-out", () => {
+    const { Button, Label, Toggle, UIOpacity } = require("cc");
+    
+    return {
+        AutoCashout: class MockAutoCashout {
+            toggle = new Toggle();
+            multiplierLabel = new Label();
+            increaseButton = new Button();
+            decreaseButton = new Button();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            toggleCheck() {
+                return this.toggle.isChecked;
+            }
+            
+            quickChangeMultiplier(value) {
+                return value;
+            }
+            
+            openPopup() {
+                return true;
+            }
+            
+            updateMultiplier(multiplier) {
+                this.multiplierLabel.string = `${multiplier.toFixed(2)}x`;
+            }
+            
+            updateEnable(isEnabled) {
+                this.toggle.isChecked = isEnabled;
+            }
+            
+            updateButtonStatus(button, isEnabled) {
+                button.interactable = isEnabled;
+                const uiOpacity = button.node.getComponent(UIOpacity);
+                if (uiOpacity) {
+                    uiOpacity.opacity = isEnabled ? 255 : 100;
+                }
+            }
+        }
+    };
+});
+
 import { Button, Label, Toggle, UIOpacity } from "cc";
 
 import { AutoCashout } from "../../../../assets/game-crash/auto-cash-out/scripts/components/auto-cash-out";

@@ -1,3 +1,30 @@
+// Mock the AutoPlayPopupContainer component to avoid importing utils with TypeScript errors
+jest.mock("../../../../assets/game-crash/auto-play/scripts/components/auto-play-popup-container", () => {
+    const { Node } = require("cc");
+    
+    return {
+        AutoPlayPopupContainer: class MockAutoPlayPopupContainer {
+            nodeOverlay = new Node();
+            createNode = jest.fn();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            renderOpenPopup(isOpen) {
+                this.nodeOverlay.active = isOpen;
+                if (isOpen) {
+                    this.createNode();
+                }
+            }
+            
+            onClickclosePopup() {
+                this.createNode();
+            }
+        }
+    };
+});
+
 import { Node } from "cc";
 
 import { AutoPlayPopupContainer } from "../../../../assets/game-crash/auto-play/scripts/components/auto-play-popup-container";

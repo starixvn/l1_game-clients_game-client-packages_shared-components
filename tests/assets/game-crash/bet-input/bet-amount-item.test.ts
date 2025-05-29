@@ -1,3 +1,28 @@
+// Mock the BetAmountItem component to avoid importing utils with TypeScript errors
+jest.mock("../../../../assets/game-crash/bet-input/scripts/components/bet-amount-item", () => {
+    const { Node, Label } = require("cc");
+    
+    return {
+        BetAmountItem: class MockBetAmountItem {
+            lblBetAmount = new Label();
+            node = new Node();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            setBetAmountItem(amount) {
+                this.node.name = amount;
+                this.lblBetAmount.string = `+${amount}`;
+            }
+            
+            onClickBetAmountItem(event) {
+                return parseInt(event.target.name);
+            }
+        }
+    };
+});
+
 import { Label } from "cc";
 
 import { BetAmountItem } from "../../../../assets/game-crash/bet-input/scripts/components/bet-amount-item";

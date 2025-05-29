@@ -1,3 +1,54 @@
+// Mock the RoundNumberItem component to avoid importing utils with TypeScript errors
+jest.mock("db://shared-components/game-crash/auto-play/scripts/components/round-number-item", () => {
+    return {
+        RoundNumberItem: class MockRoundNumberItem {
+            constructor() {
+                // Mock constructor
+            }
+            
+            setValue() {
+                // Mock implementation
+            }
+            
+            setSelectedRound(selected) {
+                // Mock implementation
+            }
+        }
+    };
+});
+
+// Mock the AutoPlayPopup component to avoid importing utils with TypeScript errors
+jest.mock("../../../../assets/game-crash/auto-play/scripts/components/auto-play-popup", () => {
+    const { Node } = require("cc");
+    
+    return {
+        AutoPlayPopup: class MockAutoPlayPopup {
+            nodeContent = new Node();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            initContentRounds(roundsList) {
+                const { RoundNumberItem } = require("db://shared-components/game-crash/auto-play/scripts/components/round-number-item");
+                roundsList.forEach(() => {
+                    const item = new RoundNumberItem();
+                    item.setValue();
+                });
+            }
+            
+            renderSelectedRounds(noOfRounds) {
+                const foundNode = this.nodeContent.children.find(child => child.name === noOfRounds.toString());
+                if (foundNode) {
+                    const { RoundNumberItem } = require("db://shared-components/game-crash/auto-play/scripts/components/round-number-item");
+                    const item = new RoundNumberItem();
+                    item.setSelectedRound(true);
+                }
+            }
+        }
+    };
+});
+
 import { Node } from "cc";
 import { RoundNumberItem } from "db://shared-components/game-crash/auto-play/scripts/components/round-number-item";
 

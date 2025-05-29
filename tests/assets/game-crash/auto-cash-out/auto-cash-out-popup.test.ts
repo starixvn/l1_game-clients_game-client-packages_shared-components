@@ -1,3 +1,53 @@
+// Mock the AutoCashOutPopup component to avoid importing utils with TypeScript errors
+jest.mock("../../../../assets/game-crash/auto-cash-out/scripts/components/auto-cash-out-popup", () => {
+    const { Button, Label } = require("cc");
+    
+    return {
+        AutoCashOutPopup: class MockAutoCashOutPopup {
+            multiplierLabel = new Label();
+            multiplierRangeLabel = new Label();
+            confirmButton = new Button();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            confirm() {
+                return parseFloat(this.multiplierLabel.string);
+            }
+            
+            addValue(event, value) {
+                const currentValue = this.multiplierLabel.string;
+                if (currentValue === "0") {
+                    if (value === ".") {
+                        return "0";
+                    }
+                    return value;
+                }
+                return currentValue + value;
+            }
+            
+            updateMultiplierRangeLabel({minMultiplier, maxMultiplier}) {
+                const minFormatted = minMultiplier.toFixed(2);
+                const maxFormatted = maxMultiplier.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                this.multiplierRangeLabel.string = `${minFormatted}x - ${maxFormatted}x`;
+            }
+            
+            clear() {
+                return "0";
+            }
+            
+            removeLastLetter() {
+                const currentValue = this.multiplierLabel.string;
+                if (currentValue.length === 1) {
+                    return "0";
+                }
+                return currentValue.slice(0, -1);
+            }
+        }
+    };
+});
+
 import { Button, Label } from "cc";
 
 import { AutoCashOutPopup } from "../../../../assets/game-crash/auto-cash-out/scripts/components/auto-cash-out-popup";

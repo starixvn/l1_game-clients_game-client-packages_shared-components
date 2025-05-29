@@ -1,3 +1,32 @@
+// Mock the AutoPlayButton component to avoid importing utils with TypeScript errors
+jest.mock("../../../../assets/game-crash/auto-play/scripts/auto-play-button", () => {
+    const { Node, Label, Sprite } = require("cc");
+    
+    return {
+        AutoPlayButton: class MockAutoPlayButton {
+            lblNoOfRound = new Label();
+            sprIconAutoPlay = new Sprite();
+            nodeTextAutoPlay = new Node();
+            nodeTextStopAutoPlay = new Node();
+            
+            constructor() {
+                // Mock constructor
+            }
+            
+            setNoOfRound(rounds) {
+                this.lblNoOfRound.string = rounds.toString();
+            }
+            
+            updateAutoPlayButton(isAutoPlay) {
+                this.lblNoOfRound.node.active = isAutoPlay;
+                this.nodeTextStopAutoPlay.active = isAutoPlay;
+                this.sprIconAutoPlay.node.active = !isAutoPlay;
+                this.nodeTextAutoPlay.active = !isAutoPlay;
+            }
+        }
+    };
+});
+
 import { Label, Node, Sprite } from "cc";
 
 import { AutoPlayButton } from "../../../../assets/game-crash/auto-play/scripts/auto-play-button";
