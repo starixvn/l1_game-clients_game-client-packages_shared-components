@@ -95,7 +95,6 @@ describe(getSharedContainer.name, () => {
         subGuideDomain: "guide",
         systemType: "type",
         websocket: { proxyPath: "/", route: "route" },
-        mainObserverNamespace: "",
     };
 
     describe("when called", () => {

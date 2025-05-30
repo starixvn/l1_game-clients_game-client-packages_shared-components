@@ -1,9 +1,8 @@
+import { AudioClip, AudioSource } from "cc";
 import AudioManager from "db://shared-components/game/audios/scripts/audio-manager";
 import { AudioContainer, TAudioConfigs } from "db://shared-components/game/audios/scripts/component/audio-container";
 
 import { AudioUtils } from "db://shared-components/game/audios/utils";
-import { AudioClip } from "../../../../../../../../tests/cocos-testing/cc/audio-clip";
-import { AudioSource } from "../../../../../../../../tests/cocos-testing/cc/audio-source";
 
 describe("AudioContainer", () => {
     let component: AudioContainer;
