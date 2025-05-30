@@ -24,21 +24,11 @@ export const getAudioInfo = (audioValue: TAudioValue, key: string): AudioInfo =>
 };
 
 export const getAudioClip = (bundle: string, path: string): Promise<AudioClip | null> => {
-    try {
-        return bundleManager.loadAssetsFromBundle<AudioClip>(bundle, path, AudioClip, null);
-    } catch (error) {
-        console.error(`Failed to load audio clip from bundle: ${error}`);
-        return null;
-    }
+    return bundleManager.loadAssetsFromBundle<AudioClip>(bundle, path, AudioClip, null);
 };
 
 export const getRemoteAudioClip = (url: string): Promise<AudioClip | null> => {
-    try {
-        return bundleManager.getRemoteAsset<AudioClip>(url);
-    } catch (error) {
-        console.error(`Failed to load audio clip from bundle: ${error}`);
-        return null;
-    }
+    return bundleManager.getRemoteAsset<AudioClip>(url);
 };
 
 export const getGameAudioUrl = (audioValue: TAudioValue, soundId: string): string => {
