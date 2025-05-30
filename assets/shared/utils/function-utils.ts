@@ -8,7 +8,8 @@ export namespace FunctionUtils {
         return new Promise((resolve, reject) => {
             assetManager.loadRemote(url, (err, data: Asset) => {
                 if (err) {
-                    return reject(err);
+                    reject(err);
+                    return;
                 }
 
                 resolve(data);

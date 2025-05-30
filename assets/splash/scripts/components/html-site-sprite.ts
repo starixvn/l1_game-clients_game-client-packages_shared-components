@@ -70,9 +70,8 @@ export class HtmlSiteSprite extends Component {
                 FunctionUtils.cachedRemoteFile[fileName] = jsonAsset.json;
                 return jsonAsset.json;
             }
-        } catch (e) {
-            return null;
-        }
+        } catch (e) {}
+        return null;
     }
 
     getFileName() {

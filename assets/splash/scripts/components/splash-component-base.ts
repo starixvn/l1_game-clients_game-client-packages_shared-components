@@ -270,8 +270,7 @@ export default class SplashComponentBase extends Component {
 
     private loadScript(src: string) {
         return new Promise(function (resolve, reject) {
-            let script: HTMLScriptElement;
-            script = document.createElement("script");
+            const script: HTMLScriptElement = document.createElement("script");
             script.src = src;
             script.async = true;
             script.onload = resolve;
