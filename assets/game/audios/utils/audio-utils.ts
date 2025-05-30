@@ -23,20 +23,18 @@ export const getAudioInfo = (audioValue: TAudioValue, key: string): AudioInfo =>
     return { bundle, path };
 };
 
-export const getAudioClip = async (bundle: string, path: string): Promise<AudioClip | null> => {
+export const getAudioClip = (bundle: string, path: string): Promise<AudioClip | null> => {
     try {
-        const loadedClip = await bundleManager.loadAssetsFromBundle<AudioClip>(bundle, path, AudioClip, null);
-        return loadedClip;
+        return bundleManager.loadAssetsFromBundle<AudioClip>(bundle, path, AudioClip, null);
     } catch (error) {
         console.error(`Failed to load audio clip from bundle: ${error}`);
         return null;
     }
 };
 
-export const getRemoteAudioClip = async (url: string): Promise<AudioClip | null> => {
+export const getRemoteAudioClip = (url: string): Promise<AudioClip | null> => {
     try {
-        const loadedClip = await bundleManager.getRemoteAsset<AudioClip>(url);
-        return loadedClip;
+        return bundleManager.getRemoteAsset<AudioClip>(url);
     } catch (error) {
         console.error(`Failed to load audio clip from bundle: ${error}`);
         return null;
