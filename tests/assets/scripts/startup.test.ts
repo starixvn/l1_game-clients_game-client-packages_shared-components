@@ -1,16 +1,16 @@
 import {
     App,
     Auth,
+    ChipSetting,
     Configs,
+    ConnectSite,
+    GameConfiguration,
     IContainerOptions,
+    Notification,
     Player,
     buildObserverContainer,
     getContainer,
     sentryLogger,
-    Notification,
-    ConnectSite,
-    ChipSetting,
-    GameConfiguration,
 } from "@sg/game-client-base";
 import mobx from "mobx";
 import { configure } from "observer";
@@ -35,7 +35,6 @@ describe(startGame.name, () => {
             proxyPath: "",
             route: "",
         },
-        mainObserverNamespace: "",
     };
     describe("when called", () => {
         beforeAll(() => {

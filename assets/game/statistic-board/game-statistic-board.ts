@@ -63,6 +63,11 @@ export class GameStatisticBoard extends ObserverComponent {
         }
     }
 
+    public onLoad(): void {
+        this.getSupportChoices();
+        super.onLoad();
+    }
+
     protected onEnable(): void {
         this.scoreboard.getComponent(ScrollView).scrollToRight();
     }
@@ -175,13 +180,8 @@ export class GameStatisticBoard extends ObserverComponent {
         this.renderLogView(dataLogs);
     }
 
-    findWinningChoice(settlementResult: any) {
-        this.getSupportChoices();
-        for (let i = 0; i < this.choices.length; i++) {
-            if (settlementResult[this.choices[i]]) {
-                return this.choices[i];
-            }
-        }
+    findWinningChoice(settlementResult: any): string | undefined {
+        return this.choices.find((choice) => settlementResult[choice]);
     }
 
     getSupportChoices() {

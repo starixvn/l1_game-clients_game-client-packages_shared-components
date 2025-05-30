@@ -43,7 +43,7 @@ export class ScoreboardBigRoadAlgorithm extends ScoreboardAlgorithm {
 
     defaultPatterns: SCScoreboard.ColumnLengthPattern[] = DEFAULT_PATTERNS;
 
-    private columnLengthDetectorDetector = new GoodRoadColumnLengthDetectorDetector({ patterns: this.defaultPatterns });
+    protected readonly columnLengthDetectorDetector = new GoodRoadColumnLengthDetectorDetector({ patterns: this.defaultPatterns });
 
     private get bigRoad() {
         if (!this._bigRoad) {

@@ -29,17 +29,23 @@ export class PreloadAssets extends Component {
         log(`preload asset start ---------------------- `);
 
         const allAssets = [];
-        for (const bundleName of Object.keys(others)) {
-            const paths = others[bundleName];
-            for (const path of paths) {
-                allAssets.push({
-                    type: path.includes("spine") ? sp.SkeletonData : Asset,
-                    bundleName,
-                    path,
-                });
-            }
-        }
+        this.addOthersAssets(others, allAssets);
 
+        this.addLocalizedAssets(localized, allAssets);
+
+        const totalAssets = allAssets.length;
+        let loadedAssets = 0;
+        for (const asset of allAssets) {
+            const { type, bundleName, path } = asset;
+            log(`preload asset ${bundleName} --- ${path}`);
+            await bundleManager.loadAssetsFromBundle(bundleName, path, type, null, true);
+            loadedAssets++;
+            onProgress(loadedAssets / totalAssets);
+        }
+        log(`preload asset end   ---------------------- `);
+    }
+
+    private addLocalizedAssets(localized: { [bundleName: string]: { [pathType: string]: string[] } }, allAssets: any[]) {
         for (const bundleName of Object.keys(localized)) {
             const data = localized[bundleName];
             for (const pathType of Object.keys(data)) {
@@ -64,16 +70,18 @@ export class PreloadAssets extends Component {
                 }
             }
         }
+    }
 
-        const totalAssets = allAssets.length;
-        let loadedAssets = 0;
-        for (const asset of allAssets) {
-            const { type, bundleName, path } = asset;
-            log(`preload asset ${bundleName} --- ${path}`);
-            await bundleManager.loadAssetsFromBundle(bundleName, path, type, null, true);
-            loadedAssets++;
-            onProgress(loadedAssets / totalAssets);
+    private addOthersAssets(others: { [bundleName: string]: string[] }, allAssets: any[]) {
+        for (const bundleName of Object.keys(others)) {
+            const paths = others[bundleName];
+            for (const path of paths) {
+                allAssets.push({
+                    type: path.includes("spine") ? sp.SkeletonData : Asset,
+                    bundleName,
+                    path,
+                });
+            }
         }
-        log(`preload asset end   ---------------------- `);
     }
 }

@@ -25,8 +25,8 @@ export const getAudioInfo = (audioValue: TAudioValue, key: string): AudioInfo =>
 
 export const getAudioClip = async (bundle: string, path: string): Promise<AudioClip | null> => {
     try {
-        const loadedClip = await bundleManager.loadAssetsFromBundle(bundle, path, AudioClip, null);
-        return loadedClip as AudioClip;
+        const loadedClip = await bundleManager.loadAssetsFromBundle<AudioClip>(bundle, path, AudioClip, null);
+        return loadedClip;
     } catch (error) {
         console.error(`Failed to load audio clip from bundle: ${error}`);
         return null;

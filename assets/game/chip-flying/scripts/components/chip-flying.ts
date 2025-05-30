@@ -152,7 +152,7 @@ export class ChipFlying extends ObserverComponent {
         isHiddenPlayer = false
     ) {
         const chipNode = placeChipToChipBox(chipContainer, slidingChip, mainPlayerChip, startNode, onComplete, isHiddenPlayer);
-        this.addChipsToBoxWithChoice([chipNode], betChoice);
+        chipNode && this.addChipsToBoxWithChoice([chipNode], betChoice);
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))

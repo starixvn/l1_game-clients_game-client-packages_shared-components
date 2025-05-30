@@ -118,11 +118,13 @@ export class TotalBetsChipsHandler {
 
     private async handleSubsequentBets(totalBets: IBetChoice) {
         const offsetTotalBets = this.calculateOffsetTotalBets(totalBets);
-        await Promise.all(Object.entries(offsetTotalBets).map(([choice, amount]) => {
-            if (amount > 0) {
-                this.queueChipUpdate(choice, amount);
-            }
-        }));
+        await Promise.all(
+            Object.entries(offsetTotalBets).map(([choice, amount]) => {
+                if (amount > 0) {
+                    this.queueChipUpdate(choice, amount);
+                }
+            })
+        );
     }
 
     private queueChipUpdate(choice: string, amount: number) {
@@ -176,20 +178,19 @@ export class TotalBetsChipsHandler {
     }
 
     private parseChipsFromTotalBets(totalBets: gc.GameServiceMessage.TotalBets) {
-        if (!totalBets) {
-            return;
-        }
-        let chips = {};
-        Object.keys(totalBets).forEach((choice) => {
-            const chipValues = getChipQuantity(totalBets[choice], this.chipStore.chipValuesByStakeLevel);
-            const tempLowerChip = chipValues[0] ? { 0.5: chipValues[0] } : {};
-            const newChipsWithLowerChips = Object.assign(
-                tempLowerChip,
-                Object.fromEntries(Object.entries(chipValues).filter(([key]) => key !== "0"))
-            );
+        const chips = {};
+        if (totalBets) {
+            Object.keys(totalBets).forEach((choice) => {
+                const chipValues = getChipQuantity(totalBets[choice], this.chipStore.chipValuesByStakeLevel);
+                const tempLowerChip = chipValues[0] ? { 0.5: chipValues[0] } : {};
+                const newChipsWithLowerChips = Object.assign(
+                    tempLowerChip,
+                    Object.fromEntries(Object.entries(chipValues).filter(([key]) => key !== "0"))
+                );
 
-            chips[choice] = newChipsWithLowerChips;
-        });
+                chips[choice] = newChipsWithLowerChips;
+            });
+        }
 
         return chips;
     }

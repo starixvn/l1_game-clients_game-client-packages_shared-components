@@ -15,7 +15,7 @@ export class FadeDialogTransition extends DialogTransition {
 
         if (!animated) {
             AnimationUtils.setOpacityNode(this.node, 255);
-            return;
+            return [];
         }
 
         return [fadeIn(this.node, this.appearDuration)];
