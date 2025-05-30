@@ -8,7 +8,7 @@ export class BlinkAnimation extends Component {
     @property
     duration = 0.2;
 
-    runningTween: Tween<unknown> = null;
+    runningTween: Tween = null;
 
     onEnable() {
         const uiOpacity = this.node.getComponent(UIOpacity);
