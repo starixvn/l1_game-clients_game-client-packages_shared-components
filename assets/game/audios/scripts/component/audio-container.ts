@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, AudioClip, AudioSource, CCString, game, JsonAsset, log, sys, tween } from "cc";
+import { _decorator, AudioClip, AudioSource, game, JsonAsset, log, sys, tween } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
