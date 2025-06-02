@@ -1,8 +1,6 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Label } from "cc";
-import moment from "moment";
 import RawTimer from "./raw-timer";
-const { Rounds } = gc;
 const { ccclass, property } = _decorator;
 
 @ccclass()
@@ -12,7 +10,7 @@ export default class RawClockTimer extends RawTimer {
 
     getTimeChars(time: number): string[] {
         const formatTime = this.digits.length === 4 ? "mm:ss" : "HH:mm:ss";
-        const timeText = moment.utc(time * 1000).format(formatTime);
+        const timeText = gc.DateTimeUtils.convertDurationToClockTime(time, formatTime);
         return Array.from(timeText).filter((char) => char !== ":");
     }
 
