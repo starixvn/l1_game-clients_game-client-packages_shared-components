@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { tween } from "cc";
+import { Label, tween } from "cc";
 
 export namespace NumberUtils {
     export const getChipFormatter = (num: number, digits = 0) => {
@@ -25,7 +25,7 @@ export namespace NumberUtils {
         return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
     };
 
-    export const numberTo = (label, end, duration, currency = false) => {
+    export const numberTo = (label: Label, end: number, duration: number, currency = false, hasAnimation = true) => {
         const endString = currency ? gc.FormatUtils.numberWithCommas(end, 1) : end;
         if (label.string === endString) {
             return;
@@ -36,20 +36,24 @@ export namespace NumberUtils {
         const stepTime = duration / stepCount;
         const stepValue = range / stepCount;
         let step = 0;
-        tween(label.node)
-            .repeat(
-                stepCount,
-                tween()
-                    .delay(stepTime)
-                    .call(() => {
-                        const value = start + step * stepValue;
-                        label.string = currency ? gc.FormatUtils.numberWithCommas(value, 1) : value;
-                        step++;
-                    })
-            )
-            .call(() => {
-                label.string = endString;
-            })
-            .start();
+        if (hasAnimation) {
+            tween(label.node)
+                .repeat(
+                    stepCount,
+                    tween()
+                        .delay(stepTime)
+                        .call(() => {
+                            const value = start + step * stepValue;
+                            label.string = currency ? gc.FormatUtils.numberWithCommas(value, 1) : value.toString();
+                            step++;
+                        })
+                )
+                .call(() => {
+                    label.string = endString.toString();
+                })
+                .start();
+        } else {
+            label.string = endString.toString();
+        }
     };
 }
