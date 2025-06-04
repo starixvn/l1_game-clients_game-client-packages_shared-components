@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Color, Component, Label, Node } from "cc";
+import { _decorator, Color, Label, Node } from "cc";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 
 const { ccclass, property } = _decorator;
