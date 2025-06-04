@@ -1,6 +1,3 @@
-import gc from "@sg/game-client-base";
-import { Label, tween } from "cc";
-
 export namespace NumberUtils {
     export const getChipFormatter = (num: number, digits = 0) => {
         const si = [
@@ -23,37 +20,5 @@ export namespace NumberUtils {
             return `${num}`;
         }
         return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
-    };
-
-    export const numberTo = (label: Label, end: number, duration: number, currency = false, hasAnimation = true) => {
-        const endString = currency ? gc.FormatUtils.numberWithCommas(end, 1) : end;
-        if (label.string === endString) {
-            return;
-        }
-        const start = parseFloat(label.string.replace(/,/g, "")) || 0;
-        const range = end - start;
-        const stepCount = 20;
-        const stepTime = duration / stepCount;
-        const stepValue = range / stepCount;
-        let step = 0;
-        if (hasAnimation) {
-            tween(label.node)
-                .repeat(
-                    stepCount,
-                    tween()
-                        .delay(stepTime)
-                        .call(() => {
-                            const value = start + step * stepValue;
-                            label.string = currency ? gc.FormatUtils.numberWithCommas(value, 1) : value.toString();
-                            step++;
-                        })
-                )
-                .call(() => {
-                    label.string = endString.toString();
-                })
-                .start();
-        } else {
-            label.string = endString.toString();
-        }
     };
 }
