@@ -3,11 +3,13 @@ import * as i18n from "db://i18n/LanguageData";
 import mobx from "mobx";
 import Observer from "observer";
 
-const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, namespaces: string[]) => {
+const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, namespaces: string[], supportedLanguages?: string[]) => {
     try {
         const isUseTolgeeRealTime = !!siteConfigs.tolgeeUrl;
-        const languageId = gc.Translator.getLanguageId();
-        const languageCodes = ["en", "id", "th", "vi", "zh_cn", "zh_tw"];
+        let languageId = gc.Translator.getLanguageId();
+        const languageCodes = supportedLanguages ? supportedLanguages : ["en", "id", "th", "vi", "zh_cn", "zh_tw"];
+        !languageCodes.includes(languageId) && (languageId = languageCodes[0]);
+
         const translationOptions: gc.Shared.utils.TranslationOptions = {
             languageId: languageId,
             tolgeeUrl: siteConfigs.tolgeeUrl,
@@ -33,10 +35,11 @@ export function startGame(
     gameName: string,
     containerOptions: gc.IContainerOptions,
     siteConfigs: gc.Configs.SiteConfigs,
-    tolgeeNamespaces?: string[]
+    tolgeeNamespaces?: string[],
+    supportedLanguages?: string[]
 ) {
     gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey);
-    loadI18n(siteConfigs, tolgeeNamespaces ? tolgeeNamespaces : [gameName]);
+    loadI18n(siteConfigs, tolgeeNamespaces ? tolgeeNamespaces : [gameName], supportedLanguages);
 
     const container = gc.getContainer(containerOptions);
     const observerContainer = gc.buildObserverContainer(container);
