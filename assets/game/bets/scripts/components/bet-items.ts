@@ -6,7 +6,7 @@ import { StaticNode } from "../../../../shared/common-components/static-node/scr
 import { StaticGroupId } from "../../../../shared/common-components/static-node/scripts/static-node-info";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
 import BetItem from "./bet-item";
-import { formatValueBaseOnSystemType } from "db://shared-components/utils/format-value/format-value";
+import { formatValueBaseOnSystemType } from "db://shared-components/utils/system-type-behavior/format-value";
 
 const { ccclass } = _decorator;
 const { render, handle } = Observer;
