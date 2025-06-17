@@ -13,6 +13,7 @@ import { PreloadAssets } from "./preload-assets";
 const { ccclass, property } = _decorator;
 const { handle, render } = Observer;
 const { Auth, ChipSetting, sentryLogger, BrowserDomUtils, App, AppTypes } = gc;
+const SPLASH_IFRAME_ID = 'splash-iframe';
 
 declare global {
     interface Window {
@@ -145,6 +146,17 @@ export default class SplashComponentBase extends Component {
             if (progress >= this.progress) {
                 this.percentResourceLoad.string = `${Math.round(progress * 100)}%`;
                 this.progress = progress;
+                
+                const splashIframe = document.getElementById(SPLASH_IFRAME_ID);
+                if (splashIframe) {
+                    const iframeWindow = (splashIframe as HTMLIFrameElement).contentWindow;
+                    if (iframeWindow) {                       
+                        iframeWindow.postMessage({
+                            type: 'progress',
+                            value: Math.round(progress * 100),
+                        }, '*');
+                    }
+                }
             }
         }
     }
@@ -180,6 +192,10 @@ export default class SplashComponentBase extends Component {
                     sentryLogger?.logError(error);
                 } else {
                     this.updateProgressBar(1);
+                    const splashIframe = document.getElementById(SPLASH_IFRAME_ID);
+                    if (splashIframe) {
+                        splashIframe.style.display = 'none';
+                    }
                     director.loadScene(sceneName);
                 }
             }
