@@ -6,6 +6,7 @@ import { bundleManager } from "db://shared-components/shared/common-components/b
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
+import { systemTypes, SystemTypeUtils } from "db://shared-components/utils/system-type-behavior/system-type-behavior";
 
 const { Player, Bet, FormatUtils, GameConfigs, Settlements } = gc;
 
@@ -36,7 +37,7 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     private currentBalance: number = 0;
     private settlementStatus: gc.GameServiceMessage.Status = null;
-    private lastProcessedSettlementId: string = null;
+    private isProcessingSettlement: boolean = false;
 
     onLoad() {
         super.onLoad();
@@ -72,7 +73,10 @@ export default class MainPlayerProfile extends ObserverComponent {
     @render(MainPlayerStore, (store) => store.balance)
     setBalance(value: number) {
         this.currentBalance = value;
-        this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(value, 2).toString());
+        
+        if (!this.isProcessingSettlement) {
+            this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(value, 2).toString());
+        }
     }
 
     @render(Settlements.SettlementStatusStore, (store) => store.settlementStatus, { fireImmediately: false })
@@ -80,22 +84,13 @@ export default class MainPlayerProfile extends ObserverComponent {
         this.settlementStatus = settlementStatus;
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
-    resetSettlementTracking(isStartPlacingBet: boolean) {
-        if (isStartPlacingBet) {
-            // Reset settlement tracking when new round starts
-            this.lastProcessedSettlementId = null;
-        }
-    }
-
     @render(Settlements.SettlementStore, (store) => store.settlementResult, { fireImmediately: false })
     handleSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult) {
-        if (!settlementResult) {
+        if (!settlementResult || !SystemTypeUtils.isSystemType(systemTypes?.HD)) {
             return;
         }
-
-        // Create a unique ID for this settlement to prevent double processing
-        const settlementId = `${settlementResult.roundId || Date.now()}_${settlementResult.timestamp || Date.now()}`;
+        
+        this.isProcessingSettlement = true;
         
         // delayAnimPayChips (1.25s) + payChipsDuration (1.25s) + chipDelayFlyingTime (1.25s) = 3.75s total
         const chipFlyingDelay = 3.75;
@@ -103,31 +98,20 @@ export default class MainPlayerProfile extends ObserverComponent {
         tween(this.node)
             .delay(chipFlyingDelay)
             .call(() => {
-                this.updateBalanceFromSettlement(settlementId);
+                this.updateBalanceUIFromSettlement();
             })
             .start();
     }
 
-    updateBalanceFromSettlement(settlementId: string) {
-        // Only update UI balance for HD systems
-        if (window.envConfig.systemType !== "HD") {
-            return;
-        }
-
-        // Prevent double processing of the same settlement
-        if (this.lastProcessedSettlementId === settlementId) {
-            return;
-        }
-
+    updateBalanceUIFromSettlement() {
         if (this.settlementStatus?.win) {
             const winAmount = this.settlementStatus?.bet;
             this.currentBalance += winAmount;
 
             this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(this.currentBalance, 2).toString());
-            
-            // Mark this settlement as processed
-            this.lastProcessedSettlementId = settlementId;
         }
+        
+        this.isProcessingSettlement = false;
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)

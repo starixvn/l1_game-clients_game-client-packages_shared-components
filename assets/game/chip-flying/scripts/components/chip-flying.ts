@@ -18,6 +18,7 @@ import BetItem from "../../../bets/scripts/components/bet-item";
 import { BetItems } from "../../../bets/scripts/components/bet-items";
 import SlidingChip from "../../../sliding-chip/scripts/components/sliding-chip";
 import { FlyChipUtils } from "../../../sliding-chip/scripts/utils/fly-chip-utils";
+import { systemTypes, SystemTypeUtils } from "../../../../utils/system-type-behavior/system-type-behavior";
 import { ActionChipFlying, addChipsToChipBoxWhenJoinRoom, placeChipToChipBox } from "./actions";
 
 const { Auth, Chips, Settlements, Rounds } = gc;
@@ -248,7 +249,7 @@ export class ChipFlying extends ObserverComponent {
                 this.handleReachMaxWin();
             }
 
-            if (window.envConfig.systemType !== "HD") {
+            if (!SystemTypeUtils.isSystemType(systemTypes?.HD)) {
                 this.getBalance();
             }
 
