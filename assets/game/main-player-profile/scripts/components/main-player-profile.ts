@@ -6,7 +6,6 @@ import { bundleManager } from "db://shared-components/shared/common-components/b
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
-import { getBetAmountBaseOnSystemType } from "db://shared-components/utils/system-type-behavior/bet-amount";
 
 const { Player, Bet, FormatUtils, GameConfigs, Settlements } = gc;
 
@@ -35,7 +34,6 @@ export default class MainPlayerProfile extends ObserverComponent {
     @property(Label)
     lblScoin: Label = null;
 
-    private currentBetAmount: number = 0;
     private currentBalance: number = 0;
     private settlementStatus: gc.GameServiceMessage.Status = null;
     private lastProcessedSettlementId: string = null;
@@ -132,16 +130,13 @@ export default class MainPlayerProfile extends ObserverComponent {
         }
     }
 
-    @render(Bet.BetStore, (store) => store.amount)
-    setBetAmount(amount: number) {
-        this.currentBetAmount = amount;
-    }
-
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
     endBetInfo(lastReceivedBet: gc.Bet.ILastReceivedBet) {
         if (lastReceivedBet && lastReceivedBet.value > 0 && lastReceivedBet.isAnimated) {
-            const betAmount = getBetAmountBaseOnSystemType(this.currentBetAmount, lastReceivedBet.value);
-            this.mainPlayerDecreaseBalance(betAmount);
+            this.currentBalance -= lastReceivedBet.value;
+            this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(this.currentBalance, 2).toString());
+
+            this.mainPlayerDecreaseBalance(lastReceivedBet.value);
         }
     }
 
