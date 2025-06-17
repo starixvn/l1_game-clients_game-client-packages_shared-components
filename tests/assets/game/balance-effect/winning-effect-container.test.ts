@@ -13,16 +13,6 @@ jest.mock("db://shared-components/shared/common-components/node-container/node-c
     };
 });
 
-jest.mock("db://shared-components/shared/common-components/observer-component/scripts/observer-component", () => ({
-    ObserverComponent: class MockObserverComponent {
-        onLoad() {}
-        onDestroy() {}
-        start() {}
-        update() {}
-        node = new Node();
-    },
-}));
-
 let mockCreatedNode;
 
 describe("WinningEffectContainer", () => {
