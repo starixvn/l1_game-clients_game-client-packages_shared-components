@@ -6,7 +6,7 @@ import { BalanceEffectStore, TWinningEffect, TWinningEffects } from "../stores/b
 const { ccclass, property } = _decorator;
 const { render } = Observer;
 
-@ccclass()
+@ccclass
 export class WinningEffectContainer extends NodeContainer {
     @property(CCFloat)
     duration = 3;

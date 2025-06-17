@@ -29,6 +29,9 @@ jest.mock("sc-scoreboards", () => ({
         getColumns = jest.fn();
         getGoodRoad = jest.fn();
     },
+    buildPattern: jest.fn((columns, positive) => ({ columns, positive })),
+    CHASE: "CHASE",
+    LONG_ROAD: "LONG_ROAD",
 }));
 
 describe("ScoreboardBigRoadAlgorithm", () => {
