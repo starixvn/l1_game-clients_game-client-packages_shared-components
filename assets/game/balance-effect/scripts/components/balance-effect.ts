@@ -6,7 +6,7 @@ import { TBalanceEffect } from "../stores/balance-effect-store";
 const { FormatUtils } = gc;
 const { ccclass, property } = _decorator;
 
-@ccclass()
+@ccclass
 export class BalanceContainer extends NodeContainer {
     @property(CCFloat)
     duration = 1;
