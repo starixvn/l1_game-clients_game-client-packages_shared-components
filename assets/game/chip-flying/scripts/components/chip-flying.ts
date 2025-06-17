@@ -248,7 +248,10 @@ export class ChipFlying extends ObserverComponent {
                 this.handleReachMaxWin();
             }
 
-            this.getBalance();
+            if (window.envConfig.systemType !== "HD") {
+                this.getBalance();
+            }
+
             this.resetSettlementStatus();
         }
     }

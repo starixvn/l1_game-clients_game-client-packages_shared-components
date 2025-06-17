@@ -1,13 +1,14 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, Sprite, SpriteFrame, _decorator } from "cc";
+import { Label, Node, Sprite, SpriteFrame, _decorator, tween } from "cc";
 import Observer from "observer";
 
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
+import { getBetAmountBaseOnSystemType } from "db://shared-components/utils/system-type-behavior/bet-amount";
 
-const { Player, Bet, FormatUtils, GameConfigs } = gc;
+const { Player, Bet, FormatUtils, GameConfigs, Settlements } = gc;
 
 const { MainPlayerStore } = Player;
 
@@ -33,6 +34,11 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     @property(Label)
     lblScoin: Label = null;
+
+    private currentBetAmount: number = 0;
+    private currentBalance: number = 0;
+    private settlementStatus: gc.GameServiceMessage.Status = null;
+    private lastProcessedSettlementId: string = null;
 
     onLoad() {
         super.onLoad();
@@ -67,13 +73,75 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     @render(MainPlayerStore, (store) => store.balance)
     setBalance(value: number) {
+        this.currentBalance = value;
         this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(value, 2).toString());
+    }
+
+    @render(Settlements.SettlementStatusStore, (store) => store.settlementStatus, { fireImmediately: false })
+    handleSettlementStatus(settlementStatus: gc.GameServiceMessage.Status) {
+        this.settlementStatus = settlementStatus;
+    }
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.isStartPlacingBet)
+    resetSettlementTracking(isStartPlacingBet: boolean) {
+        if (isStartPlacingBet) {
+            // Reset settlement tracking when new round starts
+            this.lastProcessedSettlementId = null;
+        }
+    }
+
+    @render(Settlements.SettlementStore, (store) => store.settlementResult, { fireImmediately: false })
+    handleSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult) {
+        if (!settlementResult) {
+            return;
+        }
+
+        // Create a unique ID for this settlement to prevent double processing
+        const settlementId = `${settlementResult.roundId || Date.now()}_${settlementResult.timestamp || Date.now()}`;
+        
+        // delayAnimPayChips (1.25s) + payChipsDuration (1.25s) + chipDelayFlyingTime (1.25s) = 3.75s total
+        const chipFlyingDelay = 3.75;
+
+        tween(this.node)
+            .delay(chipFlyingDelay)
+            .call(() => {
+                this.updateBalanceFromSettlement(settlementId);
+            })
+            .start();
+    }
+
+    updateBalanceFromSettlement(settlementId: string) {
+        // Only update UI balance for HD systems
+        if (window.envConfig.systemType !== "HD") {
+            return;
+        }
+
+        // Prevent double processing of the same settlement
+        if (this.lastProcessedSettlementId === settlementId) {
+            return;
+        }
+
+        if (this.settlementStatus?.win) {
+            const winAmount = this.settlementStatus?.bet;
+            this.currentBalance += winAmount;
+
+            this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(this.currentBalance, 2).toString());
+            
+            // Mark this settlement as processed
+            this.lastProcessedSettlementId = settlementId;
+        }
+    }
+
+    @render(Bet.BetStore, (store) => store.amount)
+    setBetAmount(amount: number) {
+        this.currentBetAmount = amount;
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
     endBetInfo(lastReceivedBet: gc.Bet.ILastReceivedBet) {
         if (lastReceivedBet && lastReceivedBet.value > 0 && lastReceivedBet.isAnimated) {
-            this.mainPlayerDecreaseBalance(lastReceivedBet.value);
+            const betAmount = getBetAmountBaseOnSystemType(this.currentBetAmount, lastReceivedBet.value);
+            this.mainPlayerDecreaseBalance(betAmount);
         }
     }
 
