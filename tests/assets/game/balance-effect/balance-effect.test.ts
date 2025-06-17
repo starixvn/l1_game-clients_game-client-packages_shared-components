@@ -3,16 +3,6 @@ import { TBalanceEffect } from "db://shared-components/game/balance-effect/scrip
 import { Container } from "inversify";
 import { BalanceContainer } from "../../../../assets/game/balance-effect/scripts/components/balance-effect";
 
-jest.mock("db://shared-components/shared/common-components/observer-component/scripts/observer-component", () => ({
-    ObserverComponent: class MockObserverComponent {
-        onLoad() {}
-        onDestroy() {}
-        start() {}
-        update() {}
-        node = new Node();
-    },
-}));
-
 // Mock FormatUtils and tween
 jest.mock("@sg/game-client-base", () => ({
     __esModule: true,
