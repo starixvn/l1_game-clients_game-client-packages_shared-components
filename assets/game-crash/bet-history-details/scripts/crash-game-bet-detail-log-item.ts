@@ -1,7 +1,8 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Color, Label } from "cc";
 
-import { BaseBetDetailLogItem, BetDetailLogItemType } from "../../../game/bet-history/scripts/components/bet-detail/bet-detail-log-item";
+import { BaseBetDetailLogItem } from "db://shared-components/game/bet-history/scripts/components/bet-detail/BaseBetDetailLogItem";
+import { BetDetailLogItemType } from "../../../game/bet-history/scripts/components/bet-detail/bet-detail-log-item";
 
 const { ccclass, property } = _decorator;
 const { DateTimeUtils, FormatUtils, Translator } = gc;
