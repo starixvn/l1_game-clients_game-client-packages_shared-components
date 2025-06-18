@@ -175,7 +175,6 @@ export default class SplashComponentBase extends Component {
     }
 
     async loadSceneGame() {
-        console.time("Test SceneGame Load Time");
         const sceneName = this.sceneName;
         this.percentResourceLoad?.node && AnimationUtils.fadeIn(this.percentResourceLoad.node, 0.2);
         this.containerCustomize && AnimationUtils.fadeIn(this.containerCustomize, 0.2);
@@ -192,10 +191,6 @@ export default class SplashComponentBase extends Component {
                     sentryLogger?.logError(error);
                 } else {
                     this.updateProgressBar(1);
-                    const splashIframe = document.getElementById(SPLASH_IFRAME_ID);
-                    if (splashIframe) {
-                        splashIframe.style.display = 'none';
-                    }
                     director.loadScene(sceneName);
                 }
             }
