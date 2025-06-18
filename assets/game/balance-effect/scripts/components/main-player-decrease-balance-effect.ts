@@ -6,7 +6,7 @@ import { BalanceContainer } from "./balance-effect";
 const { ccclass } = _decorator;
 const { render } = Observer;
 
-@ccclass()
+@ccclass
 export class MainPlayerDecreaseBalanceEffect extends BalanceContainer {
     isIncrease = false;
     @render(BalanceEffectStore, (store) => store.decreaseBalanceMainPlayer, { fireImmediately: false })
