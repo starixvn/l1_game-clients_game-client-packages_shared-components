@@ -6,7 +6,7 @@ import { BalanceContainer } from "./balance-effect";
 const { ccclass } = _decorator;
 const { render } = Observer;
 
-@ccclass()
+@ccclass
 export class AroundTablePlayersIncreaseBalanceEffect extends BalanceContainer {
     @render(BalanceEffectStore, (store) => store.increaseBalanceAroundTablePlayers, { fireImmediately: false })
     increaseBalanceAroundTablePlayers(payoutBalanceAroundTablePlayers: TUpdateBalances) {
