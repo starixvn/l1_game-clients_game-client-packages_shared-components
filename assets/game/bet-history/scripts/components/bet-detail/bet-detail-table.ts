@@ -16,7 +16,7 @@ export type BetDetailTableType = {
     logDetailItemPrefab: Prefab;
 };
 
-@ccclass()
+@ccclass
 export class BetDetailTable extends ObserverComponent {
     @property(Node)
     nodeBetDetailSummaryTable: Node = null;
