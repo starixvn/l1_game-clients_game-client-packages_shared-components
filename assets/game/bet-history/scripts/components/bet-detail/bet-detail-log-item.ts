@@ -1,6 +1,6 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Color, Label, Node } from "cc";
-import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
+import { _decorator, Color, Label } from "cc";
+import { BaseBetDetailLogItem } from "./BaseBetDetailLogItem";
 
 const { ccclass, property } = _decorator;
 const { DateTimeUtils, FormatUtils, Translator } = gc;
@@ -22,28 +22,6 @@ export type BetDetailLogItemType = {
     freeBet: boolean;
     fractionalOddsFormat: boolean;
 };
-
-export class BaseBetDetailLogItem extends ObserverComponent {
-    @property(Label)
-    lblTime: Label = null;
-
-    @property(Label)
-    lblWin: Label = null;
-
-    @property(Node)
-    nodeBackground: Node = null;
-
-    refundChoices: string[] = [];
-    refundRatio = 0.5;
-
-    setData(data: BetDetailLogItemType) {
-        const { index, betDetailsLog } = data;
-        const { time } = betDetailsLog as GameRoundBetDetailsLog & gc.BetHistory.DynamicObject<object>;
-
-        this.nodeBackground.active = index % 2 > 0;
-        this.lblTime && (this.lblTime.string = time ? DateTimeUtils.formatDateTime(time) : "");
-    }
-}
 
 @ccclass
 export default class BetDetailLogItem extends BaseBetDetailLogItem {

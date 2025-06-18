@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Component, instantiate, Label, Node, Prefab } from "cc";
-import { BaseBetDetailLogItem, BetDetailLogItemType } from "./bet-detail-log-item";
+import { BaseBetDetailLogItem } from "./BaseBetDetailLogItem";
+import { BetDetailLogItemType } from "./bet-detail-log-item";
 
 const { ccclass, property } = _decorator;
 
