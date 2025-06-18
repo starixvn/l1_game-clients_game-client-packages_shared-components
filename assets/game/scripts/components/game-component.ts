@@ -11,6 +11,7 @@ import { GameComponentBase } from "./game-component-base";
 const { Rounds, Connection, HideGame, Settlements, FormatUtils, RoundHistories } = gc;
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
+const SPLASH_IFRAME_ID = 'splash-iframe';
 
 @ccclass
 export default class GameComponent extends GameComponentBase {
@@ -67,8 +68,11 @@ export default class GameComponent extends GameComponentBase {
     @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.name)
     logLoadScene(gameName: string) {
         console.log(`LoadScene ${gameName}`);
-        console.timeEnd("Test SceneGame Load Time");
         console.timeEnd("Game Load Time");
+        const splashIframe = document.getElementById(SPLASH_IFRAME_ID);
+        if (splashIframe) {
+            splashIframe.style.display = 'none';
+        }
     }
 
     @render(LogStore, (store) => store.message)
