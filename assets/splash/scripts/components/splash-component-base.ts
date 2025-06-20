@@ -142,20 +142,21 @@ export default class SplashComponentBase extends Component {
     }
 
     updateProgressBar(progress: number) {
-        if (this.percentResourceLoad) {
-            if (progress >= this.progress) {
-                this.percentResourceLoad.string = `${Math.round(progress * 100)}%`;
-                this.progress = progress;
-                
-                const splashIframe = document.getElementById(SPLASH_IFRAME_ID);
-                if (splashIframe) {
-                    const iframeWindow = (splashIframe as HTMLIFrameElement).contentWindow;
-                    if (iframeWindow) {                       
-                        iframeWindow.postMessage({
-                            type: 'progress',
+        if (progress >= this.progress) {
+            this.percentResourceLoad && (this.percentResourceLoad.string = `${Math.round(progress * 100)}%`);
+            this.progress = progress;
+
+            const splashIframe = document.getElementById(SPLASH_IFRAME_ID);
+            if (splashIframe) {
+                const iframeWindow = (splashIframe as HTMLIFrameElement).contentWindow;
+                if (iframeWindow) {
+                    iframeWindow.postMessage(
+                        {
+                            type: "progress",
                             value: Math.round(progress * 100),
-                        }, '*');
-                    }
+                        },
+                        "*"
+                    );
                 }
             }
         }
