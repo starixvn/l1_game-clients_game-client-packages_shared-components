@@ -69,10 +69,12 @@ export default class GameComponent extends GameComponentBase {
     logLoadScene(gameName: string) {
         console.log(`LoadScene ${gameName}`);
         console.timeEnd("Game Load Time");
-        const splashIframe = document.getElementById(SPLASH_IFRAME_ID);
-        if (splashIframe) {
-            splashIframe.style.display = 'none';
-        }
+        setTimeout(() => {
+            const splashIframe = document.getElementById(SPLASH_IFRAME_ID);
+            if (splashIframe) {
+                splashIframe.style.display = 'none';
+            }
+        }, 100);
     }
 
     @render(LogStore, (store) => store.message)
