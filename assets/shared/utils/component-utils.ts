@@ -74,8 +74,11 @@ export namespace ComponentUtils {
         anchorY?: number;
     };
     export const setNodeTransform = (node: Node, tranformData: TransformData) => {
+        if (!node || !node.isValid) {
+            return;
+        }
         const uiTransform = node.getComponent(UITransform);
-        if (uiTransform) {
+        if (uiTransform && uiTransform.isValid) {
             Object.keys(tranformData).forEach((key) => {
                 uiTransform[key] = tranformData[key];
             });

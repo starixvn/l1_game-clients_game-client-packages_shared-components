@@ -1,4 +1,5 @@
 import { _decorator, Component, UITransform } from "cc";
+import { ComponentUtils } from "../utils/component-utils";
 const { ccclass, property } = _decorator;
 
 @ccclass
@@ -49,10 +50,17 @@ export class MaxAutoResize extends Component {
         if (this.syncWidth) {
             let maxW = 0;
             this.node.children.forEach((child) => {
-                child.active && (maxW = Math.max(maxW, child.getComponent(UITransform).width));
+                if (!child.active || !child.isValid) {
+                    return;
+                }
+                const uiTransform = child.getComponent(UITransform);
+                if (uiTransform && uiTransform.isValid) {
+                    maxW = Math.max(maxW, uiTransform.width);
+                }
             });
 
-            this.node.getComponent(UITransform).width = maxW * this.ratioWidth + 2 * this.widthPadding;
+            const width = maxW * this.ratioWidth + 2 * this.widthPadding;
+            ComponentUtils.setNodeTransform(this.node, { width });
         }
     }
 
@@ -60,10 +68,17 @@ export class MaxAutoResize extends Component {
         if (this.syncHeight) {
             let maxH = 0;
             this.node.children.forEach((child) => {
-                child.active && (maxH = Math.max(maxH, child.getComponent(UITransform).height));
+                if (!child.active || !child.isValid) {
+                    return;
+                }
+                const uiTransform = child.getComponent(UITransform);
+                if (uiTransform && uiTransform.isValid) {
+                    maxH = Math.max(maxH, uiTransform.height);
+                }
             });
 
-            this.node.getComponent(UITransform).height = maxH * this.ratioHeight + 2 * this.heightPadding;
+            const height = maxH * this.ratioHeight + 2 * this.heightPadding;
+            ComponentUtils.setNodeTransform(this.node, { height });
         }
     }
 }
