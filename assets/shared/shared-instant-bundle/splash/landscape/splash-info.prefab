@@ -483,7 +483,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 40.478515625,
+      "width": 40.47158056872313,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -522,7 +522,7 @@
     "_string": "68%",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 20,
+    "_actualFontSize": 20.763546798029555,
     "_fontSize": 20,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
@@ -539,6 +539,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -557,7 +580,6 @@
     "__prefab": {
       "__id__": 21
     },
-    "isBitmapCacheMode": false,
     "_id": ""
   },
   {
@@ -839,7 +861,7 @@
     "_string": "",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 40,
+    "_actualFontSize": 41,
     "_fontSize": 40,
     "_fontFamily": "Arial",
     "_lineHeight": 45,
@@ -856,6 +878,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -1294,7 +1339,7 @@
   {
     "__type__": "cc.TargetInfo",
     "localID": [
-      "a3dT6FGcpDlq5Qmjn+nmKg"
+      "03F8gCIJBGbL2W5lRmG0qm"
     ]
   },
   {
@@ -1374,14 +1419,10 @@
     "__prefab": {
       "__id__": 71
     },
-    "progressBar": {
-      "__id__": 25
-    },
     "cpnMessage": {
       "__id__": 41
     },
     "signNameContainer": null,
-    "gameName": null,
     "percentResourceLoad": {
       "__id__": 18
     },
