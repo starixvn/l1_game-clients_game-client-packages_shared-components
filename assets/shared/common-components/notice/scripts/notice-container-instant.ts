@@ -11,19 +11,13 @@ const { ccclass } = _decorator;
 
 @ccclass("NoticeContainerInstant")
 export class NoticeContainerInstant extends NoticeContainer {
-    @render(DisabledGame.DisabledGameStore, (store) => store.noticeDisable)
-    override async renderUMNotice(noticeDisable: gc.Notices.Notice) {
-        if (!noticeDisable) {
-            this.noticeCmp?.hide();
-            return;
-        }
-
-        if (!this.noticeCmp?.node) {
-            await this.showNoticeComponent(noticeDisable);
+    override async showNoticeComponent(notice: gc.Notices.Notice) {
+        try {
+            await super.showNoticeComponent(notice);
             const splashComponent = director.getScene()?.getComponentInChildren(Splash);
             if (splashComponent) {
                 splashComponent.loadSceneGame();
             }
-        }
+        } catch {}
     }
 }
