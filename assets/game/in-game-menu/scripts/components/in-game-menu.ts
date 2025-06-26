@@ -18,6 +18,11 @@ export class InGameMenu extends ObserverComponent {
         return gc.Audios.AudioIds.CLICK;
     }
 
+    onClickExpand() {
+        this.playSoundClick();
+        this.expandableNode?.onClickExpand();
+    }
+
     protected doCommons() {
         this.playSoundClick();
         this.expandableNode?.collapse();
