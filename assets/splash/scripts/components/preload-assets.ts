@@ -19,7 +19,16 @@ export class PreloadAssets extends Component {
     @property(JsonAsset)
     config: JsonAsset = null;
 
-    async preloadAssets(onProgress: (progress: number) => void) {
+    @property
+    manualLoad = true;
+
+    onLoad(): void {
+        if (!this.manualLoad) {
+            this.preloadAssets();
+        }
+    }
+
+    async preloadAssets(onProgress?: (progress: number) => void) {
         if (!this.config) {
             return;
         }
@@ -40,7 +49,7 @@ export class PreloadAssets extends Component {
             log(`preload asset ${bundleName} --- ${path}`);
             await bundleManager.loadAssetsFromBundle(bundleName, path, type, null, true);
             loadedAssets++;
-            onProgress(loadedAssets / totalAssets);
+            onProgress && onProgress(loadedAssets / totalAssets);
         }
         log(`preload asset end   ---------------------- `);
     }
