@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, director, game } from "cc";
+import { _decorator, director } from "cc";
 import Observer from "observer";
 import { NoticeContainer } from "./notice-container";
 import Splash from "db://shared-components/splash/scripts/components/splash";
