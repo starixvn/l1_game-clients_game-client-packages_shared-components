@@ -1,11 +1,7 @@
 import gc from "@sg/game-client-base";
 import { Color, Label, Node } from "cc";
-import Observer from "observer";
-import "reflect-metadata";
 import BetItem from "../../../../../assets/game/bets/scripts/components/bet-item";
 import { ComponentUtils } from "../../../../../assets/shared/utils";
-
-const { handle, render } = Observer;
 
 // Mock dependencies
 jest.mock("@sg/game-client-base", () => ({
