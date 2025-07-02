@@ -247,10 +247,7 @@ export default class SplashComponentBase extends Component {
     }
 
     private addGATrackingButton() {
-        if (window.envConfig.env !== "PROD") {
-            return;
-        }
-        const gaCode = "G-W13X2FGNGN";
+        const gaCode = window.envConfig.env !== "PROD" ? "G-D81M6Q367F" : "G-W13X2FGNGN";
         this.loadScript(`https://www.googletagmanager.com/gtag/js?id=${gaCode}`).then(
             () => {
                 console.log("Init GA");
