@@ -77,10 +77,6 @@ export default class BetItem extends ObserverComponent {
         return this.node.name;
     }
 
-    set betChoice(value: string) {
-        this.node.name = value;
-    }
-
     callBet() {
         this.onBet();
     }

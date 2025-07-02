@@ -16,11 +16,6 @@ jest.mock("@sg/game-client-base", () => ({
     },
 }));
 
-jest.mock("observer", () => {
-    const actual = jest.requireActual("../../../../../../../tests/cocos-testing/observer");
-    return actual;
-});
-
 jest.mock("../../../../../assets/shared/utils", () => ({
     ComponentUtils: {
         setEmptyLabels: jest.fn(),

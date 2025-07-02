@@ -37,11 +37,6 @@ jest.mock("@sg/game-client-base", () => ({
     GameServiceMessage: {},
 }));
 
-jest.mock("observer", () => {
-    const actual = jest.requireActual("../../../../../../../tests/cocos-testing/observer");
-    return actual;
-});
-
 jest.mock("lodash-es", () => ({
     isEmpty: jest.fn(),
 }));
@@ -62,30 +57,44 @@ jest.mock("db://shared-components/shared/common-components/static-node/scripts/s
 }));
 
 jest.mock("../../../../../assets/game/bets/scripts/components/bet-item", () => {
-    return jest.fn().mockImplementation(() => ({
-        init: jest.fn(),
-        node: {
-            name: "testChoice",
-        },
-        betChoice: "testChoice",
-        choice: new Node(),
-        lblOdds: {
-            node: new Node(),
-        },
-        chipBox: new Node(),
-        lblOwnBet: {
-            node: new Node(),
-        },
-        lblTotalBet: {
-            node: new Node(),
-        },
-        renderOdd: jest.fn(),
-        renderOwnBet: jest.fn(),
-        renderTotalBet: jest.fn(),
-        handleHighlightAnim: jest.fn(),
-        handleHighlightStatic: jest.fn(),
-        renderUserBetPercentage: jest.fn(),
-    }));
+    const createBetItemMock = () => {
+        const instance = {
+            init: jest.fn(),
+            node: {
+                name: "testChoice",
+            },
+            betChoice: "testChoice",
+            choice: new Node(),
+            lblOdds: {
+                node: new Node(),
+            },
+            chipBox: new Node(),
+            lblOwnBet: {
+                node: new Node(),
+            },
+            lblTotalBet: {
+                node: new Node(),
+            },
+            renderOdd: jest.fn(),
+            renderOwnBet: jest.fn(),
+            renderTotalBet: jest.fn(),
+            handleHighlightAnim: jest.fn(),
+            handleHighlightStatic: jest.fn(),
+            renderUserBetPercentage: jest.fn(),
+            _betChoice: "",
+        };
+
+        Object.defineProperty(instance, "betChoice", {
+            get: () => instance._betChoice,
+            set: (value: string) => {
+                instance._betChoice = value;
+            },
+        });
+
+        return instance;
+    };
+
+    return jest.fn().mockImplementation(createBetItemMock);
 });
 
 describe("BetItems", () => {
@@ -104,8 +113,10 @@ describe("BetItems", () => {
         mockBetItem2 = new (BetItem as any)() as jest.Mocked<BetItem>;
 
         mockBetItem1.node.name = "choice1";
+        //@ts-ignore
         mockBetItem1.betChoice = "choice1";
         mockBetItem2.node.name = "choice2";
+        //@ts-ignore
         mockBetItem2.betChoice = "choice2";
 
         mockNode.getComponentsInChildren = jest.fn().mockReturnValue([mockBetItem1, mockBetItem2]);
