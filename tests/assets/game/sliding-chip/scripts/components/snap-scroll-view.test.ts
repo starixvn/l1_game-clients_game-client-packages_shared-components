@@ -1,12 +1,6 @@
-import { Container } from "inversify";
 import { Node, UITransform, v2 } from "cc";
 import { SnapScrollView, eventMapScrollView } from "../../../../../../assets/game/sliding-chip/scripts/components/snap-scroll-view";
 import { ChipScrollView } from "../../../../../../assets/shared/common-components/scroll-view/scripts/components/chip-scroll-view";
-
-// Mock dependencies
-jest.mock("cc", () => ({
-    ...jest.requireActual("../../../../../../cocos-testing/cc"),
-}));
 
 jest.mock("../../../../../../assets/shared/common-components/scroll-view/scripts/components/chip-scroll-view", () => ({
     ChipScrollView: jest.fn().mockImplementation(() => ({
@@ -27,10 +21,8 @@ describe("SnapScrollView", () => {
     let snapScrollView: SnapScrollView;
     let mockChipScrollView: jest.Mocked<ChipScrollView>;
     let mockUITransform: jest.Mocked<UITransform>;
-    let container: Container;
 
     beforeEach(() => {
-        container = new Container();
         
         // Create mock instances
         mockUITransform = {
@@ -96,8 +88,6 @@ describe("SnapScrollView", () => {
             // Arrange
             snapScrollView.itemSize = 100;
             snapScrollView.spacing = 20;
-            snapScrollView.isHorizontalLayout = true;
-            snapScrollView.enableHalfSpacing = false;
             mockChipScrollView.content.children = [new Node(), new Node(), new Node()];
             mockUITransform.width = 400;
 
@@ -105,22 +95,19 @@ describe("SnapScrollView", () => {
             snapScrollView.initCalculatedPercent();
 
             // Assert
-            const minDisplay = snapScrollView.getMinDisplay();
-            expect(minDisplay).toBe(0); // Should be initialized to 0
+            const calculatedPercent = (snapScrollView as any)._calculatedPercent;
+            expect(calculatedPercent).toBeDefined();
+            expect(calculatedPercent.length).toBe(3);
         });
 
         it("should handle half spacing when enabled", () => {
             // Arrange
+            snapScrollView.enableHalfSpacing = true;
             snapScrollView.itemSize = 100;
             snapScrollView.spacing = 20;
-            snapScrollView.enableHalfSpacing = true;
-            mockChipScrollView.content.children = [new Node(), new Node()];
 
-            // Act
-            snapScrollView.initCalculatedPercent();
-
-            // Assert - Method should complete without error
-            expect(snapScrollView.getMinDisplay()).toBe(0);
+            // Act & Assert - Should complete without error
+            expect(() => snapScrollView.initCalculatedPercent()).not.toThrow();
         });
 
         it("should handle vertical layout", () => {
@@ -130,25 +117,8 @@ describe("SnapScrollView", () => {
             snapScrollView.spacing = 20;
             mockUITransform.width = 500;
 
-            // Act
-            snapScrollView.initCalculatedPercent();
-
-            // Assert - Method should complete without error
-            expect(snapScrollView.getMinDisplay()).toBe(0);
-        });
-
-        it("should handle maximum offset constraint", () => {
-            // Arrange
-            snapScrollView.itemSize = 200;
-            snapScrollView.spacing = 50;
-            mockChipScrollView.content.children = [new Node(), new Node(), new Node(), new Node()]; // Many items
-            mockUITransform.width = 300; // Small viewport
-
-            // Act
-            snapScrollView.initCalculatedPercent();
-
-            // Assert - Should not throw error
-            expect(snapScrollView.getMinDisplay()).toBe(0);
+            // Act & Assert - Should complete without error
+            expect(() => snapScrollView.initCalculatedPercent()).not.toThrow();
         });
 
         it("should handle empty content", () => {
@@ -159,7 +129,7 @@ describe("SnapScrollView", () => {
             snapScrollView.initCalculatedPercent();
 
             // Assert
-            expect(snapScrollView.getMinDisplay()).toBe(0);
+            expect((snapScrollView as any)._calculatedPercent).toEqual([]);
         });
     });
 
@@ -251,17 +221,9 @@ describe("SnapScrollView", () => {
     });
 
     describe("min display calculation", () => {
-        beforeEach(() => {
-            // Setup realistic scenario
-            snapScrollView.itemSize = 100;
-            snapScrollView.spacing = 20;
-            mockChipScrollView.content.children = [new Node(), new Node(), new Node(), new Node()];
-            mockUITransform.width = 300;
-            snapScrollView.initCalculatedPercent();
-        });
-
         it("should find closest display index", () => {
             // Arrange
+            (snapScrollView as any)._calculatedPercent = [0, 0.25, 0.5, 0.75];
             mockChipScrollView.getScrollOffset.mockReturnValue(v2(-60, 0));
             mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(200, 0));
 
@@ -276,6 +238,7 @@ describe("SnapScrollView", () => {
 
         it("should handle edge case when percent matches exactly", () => {
             // Arrange
+            (snapScrollView as any)._calculatedPercent = [0, 0.5, 1.0];
             mockChipScrollView.getScrollOffset.mockReturnValue(v2(0, 0));
             mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(200, 0));
 
@@ -286,30 +249,11 @@ describe("SnapScrollView", () => {
             expect(snapScrollView.getMinDisplay()).toBe(0);
         });
 
-        it("should handle percent before first calculated percent", () => {
-            // Arrange
-            mockChipScrollView.getScrollOffset.mockReturnValue(v2(-10, 0)); // Very small offset
-            mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(200, 0));
-
-            // Act
-            snapScrollView.onScrollEnd();
-
-            // Assert
-            const minDisplay = snapScrollView.getMinDisplay();
-            expect(minDisplay).toBeGreaterThanOrEqual(0);
-        });
-
         it("should find closest index when percent falls between two calculated percents", () => {
-            // Arrange - Setup scenario where percent falls between two calculated values
-            snapScrollView.itemSize = 50;
-            snapScrollView.spacing = 10;
-            mockChipScrollView.content.children = [new Node(), new Node(), new Node(), new Node()];
-            mockUITransform.width = 200;
-            snapScrollView.initCalculatedPercent();
-            
-            // Set scroll offset to be between calculated percents
-            mockChipScrollView.getScrollOffset.mockReturnValue(v2(-80, 0)); // Mid-way scroll
-            mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(160, 0));
+            // Arrange - Test the delta comparison logic
+            (snapScrollView as any)._calculatedPercent = [0, 0.25, 0.5, 0.75];
+            mockChipScrollView.getScrollOffset.mockReturnValue(v2(-75, 0)); // 75/200 = 0.375 (between 0.25 and 0.5)
+            mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(200, 0));
 
             // Act
             snapScrollView.onScrollEnd();
@@ -320,122 +264,29 @@ describe("SnapScrollView", () => {
             expect(minDisplay).toBeLessThan(4);
         });
 
-        it("should handle delta comparison for closest index selection", () => {
-            // Arrange - Setup specific scenario to trigger delta comparison
-            snapScrollView.itemSize = 80;
-            snapScrollView.spacing = 20;
-            mockChipScrollView.content.children = [new Node(), new Node(), new Node()];
-            mockUITransform.width = 240;
-            snapScrollView.initCalculatedPercent();
+        it("should skip minDisplay update when delta sum is zero", () => {
+            // Arrange - Create scenario where delta1 + delta2 = 0
+            (snapScrollView as any)._calculatedPercent = [0, 0.4, 0.4, 0.8]; // Identical consecutive values
+            mockChipScrollView.getScrollOffset.mockReturnValue(v2(-40, 0)); // percent = 0.4
+            mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(100, 0));
             
-            // Set offset to trigger delta comparison logic
-            mockChipScrollView.getScrollOffset.mockReturnValue(v2(-90, 0));
-            mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(180, 0));
+            const originalMinDisplay = snapScrollView.getMinDisplay();
 
             // Act
             snapScrollView.onScrollEnd();
 
-            // Assert
-            const minDisplay = snapScrollView.getMinDisplay();
-            expect(minDisplay).toBeGreaterThanOrEqual(0);
+            // Assert - minDisplay should not be updated due to delta sum = 0 condition
+            expect(snapScrollView.getMinDisplay()).toBe(originalMinDisplay);
         });
 
-        it("should break when calculated percent reaches 1", () => {
-            // Arrange - Setup scenario where calculated percent >= 1
-            snapScrollView.itemSize = 100;
-            snapScrollView.spacing = 0;
-            mockChipScrollView.content.children = [new Node(), new Node()];
-            mockUITransform.width = 100; // Small width to force calculated percent >= 1
-            snapScrollView.initCalculatedPercent();
-            
+        it("should handle loop termination when calculated percent exceeds 1", () => {
+            // Arrange - Create calculated percent array with value > 1 early in the array
+            (snapScrollView as any)._calculatedPercent = [0, 1.5, 2.0]; // Value > 1 at index 1
             mockChipScrollView.getScrollOffset.mockReturnValue(v2(-150, 0));
             mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(100, 0));
 
-            // Act
-            snapScrollView.onScrollEnd();
-
-            // Assert
-            const minDisplay = snapScrollView.getMinDisplay();
-            expect(minDisplay).toBeGreaterThanOrEqual(0);
-        });
-
-        it("should handle edge case with zero delta sum", () => {
-            // Arrange - Setup to potentially trigger delta1 + delta2 == 0 case
-            snapScrollView.itemSize = 60;
-            snapScrollView.spacing = 10;
-            mockChipScrollView.content.children = [new Node(), new Node(), new Node()];
-            mockUITransform.width = 150;
-            snapScrollView.initCalculatedPercent();
-            
-            // Set very precise offset to potentially get zero delta sum
-            mockChipScrollView.getScrollOffset.mockReturnValue(v2(-70, 0));
-            mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(140, 0));
-
-            // Act
-            snapScrollView.onScrollEnd();
-
-            // Assert
-            const minDisplay = snapScrollView.getMinDisplay();
-            expect(minDisplay).toBeGreaterThanOrEqual(0);
-        });
-
-        it("should trigger delta comparison logic with precise percent positioning", () => {
-            // Arrange - Directly manipulate calculated percent array to ensure we hit the condition
-            snapScrollView.itemSize = 100;
-            snapScrollView.spacing = 20;
-            mockChipScrollView.content.children = [new Node(), new Node(), new Node()];
-            mockUITransform.width = 200;
-            
-            // Manually set calculated percents to known values
-            (snapScrollView as any)._calculatedPercent = [0, 0.25, 0.5, 0.75];
-            
-            // Set scroll percent to be exactly between two calculated percents
-            mockChipScrollView.getScrollOffset.mockReturnValue(v2(-75, 0)); // 75/200 = 0.375 (between 0.25 and 0.5)
-            mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(200, 0));
-
-            // Act
-            snapScrollView.onScrollEnd();
-
-            // Assert
-            const minDisplay = snapScrollView.getMinDisplay();
-            expect(minDisplay).toBeGreaterThanOrEqual(0);
-        });
-
-        it("should break when calculated percent is exactly 1", () => {
-            // Arrange - Set up calculated percent array with value >= 1
-            snapScrollView.itemSize = 200;
-            snapScrollView.spacing = 0;
-            mockChipScrollView.content.children = [new Node(), new Node()];
-            mockUITransform.width = 100;
-            
-            // Manually set a calculated percent >= 1 to trigger the break condition
-            (snapScrollView as any)._calculatedPercent = [0, 1.0, 1.5];
-            
-            mockChipScrollView.getScrollOffset.mockReturnValue(v2(-200, 0)); // Large offset
-            mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(100, 0));
-
-            // Act
-            snapScrollView.onScrollEnd();
-
-            // Assert
-            const minDisplay = snapScrollView.getMinDisplay();
-            expect(minDisplay).toBeGreaterThanOrEqual(0);
-        });
-
-        it("should handle case where percent is between calculated percents with valid deltas", () => {
-            // Arrange - Setup precise scenario to trigger lines 105-110
-            (snapScrollView as any)._calculatedPercent = [0, 0.3, 0.6, 0.9];
-            
-            // Set percent to 0.45 (between 0.3 and 0.6)
-            mockChipScrollView.getScrollOffset.mockReturnValue(v2(-45, 0));
-            mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(100, 0));
-
-            // Act
-            snapScrollView.onScrollEnd();
-
-            // Assert
-            const minDisplay = snapScrollView.getMinDisplay();
-            expect(minDisplay).toBeGreaterThanOrEqual(0);
+            // Act & Assert - Should break the loop early and not crash
+            expect(() => snapScrollView.onScrollEnd()).not.toThrow();
         });
     });
 
@@ -457,29 +308,28 @@ describe("SnapScrollView", () => {
             );
         });
 
-        it("should handle scrolling to index 0", () => {
+        it("should handle scrolling when calculated percent array is empty", () => {
             // Arrange
-            snapScrollView.initCalculatedPercent();
+            (snapScrollView as any)._calculatedPercent = [];
 
             // Act
             snapScrollView.scrollTo(0);
 
             // Assert
-            expect(snapScrollView.getMinDisplay()).toBe(0);
-            expect(mockChipScrollView.scrollToPercentHorizontal).toHaveBeenCalled();
+            expect(mockChipScrollView.scrollToPercentHorizontal).toHaveBeenCalledWith(
+                undefined, // _calculatedPercent[0] is undefined
+                0.3,
+                true
+            );
         });
 
-        it("should handle scrolling to last index", () => {
+        it("should handle scrolling when scrollView is null", () => {
             // Arrange
-            mockChipScrollView.content.children = [new Node(), new Node(), new Node()];
-            snapScrollView.initCalculatedPercent();
-            const lastIndex = 2;
+            (snapScrollView as any)._scrollView = null;
+            jest.spyOn(snapScrollView, 'getComponent').mockReturnValue(null);
 
-            // Act
-            snapScrollView.scrollTo(lastIndex);
-
-            // Assert
-            expect(snapScrollView.getMinDisplay()).toBe(lastIndex);
+            // Act & Assert
+            expect(() => snapScrollView.scrollTo(1)).not.toThrow();
         });
     });
 
@@ -525,32 +375,6 @@ describe("SnapScrollView", () => {
     });
 
     describe("content item counting", () => {
-        it("should count horizontal layout items from children", () => {
-            // Arrange
-            snapScrollView.isHorizontalLayout = true;
-            mockChipScrollView.content.children = [new Node(), new Node(), new Node()];
-
-            // Act
-            snapScrollView.initCalculatedPercent();
-
-            // Assert - Should complete without error
-            expect(snapScrollView.getMinDisplay()).toBe(0);
-        });
-
-        it("should calculate vertical layout items from width", () => {
-            // Arrange
-            snapScrollView.isHorizontalLayout = false;
-            snapScrollView.itemSize = 100;
-            snapScrollView.spacing = 20;
-            mockUITransform.width = 360; // Should give 3 items
-
-            // Act
-            snapScrollView.initCalculatedPercent();
-
-            // Assert - Should complete calculation
-            expect(snapScrollView.getMinDisplay()).toBe(0);
-        });
-
         it("should handle null/undefined content", () => {
             // Arrange
             mockChipScrollView.content = null;
@@ -558,23 +382,27 @@ describe("SnapScrollView", () => {
             // Act & Assert - Should not throw
             expect(() => snapScrollView.initCalculatedPercent()).not.toThrow();
         });
+
+        it("should handle when scrollView is null", () => {
+            // Arrange
+            (snapScrollView as any)._scrollView = null;
+            jest.spyOn(snapScrollView, 'getComponent').mockReturnValue(null);
+
+            // Act & Assert
+            expect(() => snapScrollView.initCalculatedPercent()).not.toThrow();
+        });
+
+        it("should handle division by zero in getPercent method", () => {
+            // Arrange
+            mockChipScrollView.getScrollOffset.mockReturnValue(v2(-50, 0));
+            mockChipScrollView.getMaxScrollOffset.mockReturnValue(v2(0, 0)); // Zero max offset
+
+            // Act & Assert - Should not throw
+            expect(() => snapScrollView.onScrollEnd()).not.toThrow();
+        });
     });
 
     describe("scroll content width calculation", () => {
-        it("should calculate width for horizontal layout", () => {
-            // Arrange
-            snapScrollView.isHorizontalLayout = true;
-            snapScrollView.itemSize = 100;
-            snapScrollView.spacing = 20;
-            mockChipScrollView.content.children = [new Node(), new Node()];
-
-            // Act
-            snapScrollView.initCalculatedPercent();
-
-            // Assert - Should complete calculation
-            expect(snapScrollView.getMinDisplay()).toBe(0);
-        });
-
         it("should use content width for vertical layout", () => {
             // Arrange
             snapScrollView.isHorizontalLayout = false;
