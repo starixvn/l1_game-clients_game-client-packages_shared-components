@@ -251,13 +251,11 @@ export default class SplashComponentBase extends Component {
         this.loadScript(`https://www.googletagmanager.com/gtag/js?id=${gaCode}`).then(
             () => {
                 console.log("Init GA");
-                window.dataLayer = window.dataLayer || [];
-                function gtag(...args: any[]) {
-                    window.dataLayer.push(args);
-                }
+
+                globalThis.gtag = window.gtag;
+                const gtag = window.gtag;
                 gtag("js", new Date());
                 gtag("config", gaCode);
-                globalThis.gtag = gtag;
             },
             (reason) => {
                 console.log("Init GA failed with" + reason);
