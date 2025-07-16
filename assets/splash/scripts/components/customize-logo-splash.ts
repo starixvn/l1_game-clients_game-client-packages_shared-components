@@ -63,6 +63,9 @@ export class CustomizeLogoSplash extends Component {
 
     renderTagLine() {
         const taglinePath = this.createTagLinePath();
+        if (!taglinePath) {
+            return;
+        }
         assetManager.loadRemote<ImageAsset>(taglinePath, (err, imageAsset) => {
             if (!isValidNode(this)) {
                 return;
@@ -76,9 +79,14 @@ export class CustomizeLogoSplash extends Component {
         });
     }
 
-    protected createTagLinePath() {
+    protected createTagLinePath(): string | null {
+        const operator = OperatorUtils.getOperatorAlias();
+        if (operator === "OTHER") {
+            return null;
+        }
+        const taglineName = operator === OperatorAlias.SP ? `splash_text_sabaplay` : `splash_text`;
         const lang = i18n._language;
-        return `${this.href}images/splash_text_${lang}.webp?v=${this.versionImg}`;
+        return `${this.href}images/${taglineName}_${lang}.webp?v=${this.versionImg}`;
     }
 
     renderPoweredBy() {
