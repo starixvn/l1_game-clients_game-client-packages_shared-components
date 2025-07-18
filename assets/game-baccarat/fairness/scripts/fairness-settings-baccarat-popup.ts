@@ -53,7 +53,7 @@ export class FairnessSettingsBaccaratPopup extends ObserverComponent {
         this.updateMinCS();
         this.lblRangeClientSeed.string = `(${this.minCSNumber} - ${this.maxCSNumber})`;
         this.generateRandomCS();
-        this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopupManual, this);
+        this.lblClientSeed && this.lblClientSeed.node?.on(Node.EventType.TOUCH_START, this.showPopupManual, this);
     }
 
     @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.durations)
