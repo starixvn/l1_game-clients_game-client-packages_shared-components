@@ -64,10 +64,10 @@ export class ScoreboardDerivedAlgorithm extends ScoreboardAlgorithm {
         return this._bigRoad;
     }
 
-    getDerivedData(key: DerivedScoreboardKey, gridSettings: GridLayoutSettings = null) {
+    getDerivedData(key: DerivedScoreboardKey, gridSettings: GridLayoutSettings) {
         const sbData = this.derivedSB.getScoreboardData(key);
 
-        const maximumPoints = gridSettings ? gridSettings.row * gridSettings.column : this.grid.settings.row * this.grid.settings.column;
+        const maximumPoints = gridSettings.row * gridSettings.column;
         const data = rowToColumns(sbData);
         this.addEmptyPoints(data, maximumPoints);
         return data;
