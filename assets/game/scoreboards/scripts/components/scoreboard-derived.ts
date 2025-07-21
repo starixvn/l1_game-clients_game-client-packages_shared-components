@@ -38,7 +38,7 @@ export class ScoreboardDerived extends Scoreboard {
         this.algorithm.apply(converted, hasBlinkNode);
 
         this.grids.forEach((grid) => {
-            const derivedData = this.algorithm.getDerivedData(grid.node.name as DerivedScoreboardKey);
+            const derivedData = this.algorithm.getDerivedData(grid.node.name as DerivedScoreboardKey, grid.settings);
             grid.render(ScoreboardGridItem, derivedData);
         });
 
