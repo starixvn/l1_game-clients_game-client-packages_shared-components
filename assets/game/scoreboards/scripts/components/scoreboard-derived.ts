@@ -34,6 +34,7 @@ export class ScoreboardDerived extends Scoreboard {
     }
 
     public render<T>(rounds: T[], hasBlinkNode = false) {
+        this.needCache && (this.cached = rounds);
         const converted = this.converter.convert(rounds);
         this.algorithm.apply(converted, hasBlinkNode);
 

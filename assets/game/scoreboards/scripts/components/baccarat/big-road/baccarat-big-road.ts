@@ -20,7 +20,6 @@ export class BaccaratBigRoad extends Scoreboard {
 
     currentGoodRoad: SCScoreboard.GoodRoad = null;
 
-    private cached = null;
     updateGoodRoadPatterns(patterns: SCScoreboard.ColumnLengthPattern[]) {
         (this.algorithm as ScoreboardBigRoadAlgorithm).updatePatterns(patterns);
 

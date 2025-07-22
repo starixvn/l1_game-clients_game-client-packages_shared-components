@@ -1,4 +1,4 @@
-import { _decorator, Component } from "cc";
+import { _decorator, CCBoolean, Component } from "cc";
 import { GridLayout } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
 import { ScoreboardAlgorithm } from "./scoreboard-algorithm";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
@@ -18,6 +18,11 @@ export class Scoreboard extends Component {
     @property(ScoreboardAlgorithm)
     algorithm: ScoreboardAlgorithm = null;
 
+    @property({ type: CCBoolean })
+    needCache = false;
+
+    public cached = null;
+
     onFocusInEditor(): void {
         this.grid = this.node.getComponent(GridLayout);
         this.converter = this.node.getComponent(ScoreboardDataConverter);
@@ -25,6 +30,8 @@ export class Scoreboard extends Component {
     }
 
     public render<T>(rounds: T[]) {
+        this.needCache && (this.cached = rounds);
+
         const converted = this.converter.convert(rounds);
         const data = this.algorithm.apply(converted);
 
