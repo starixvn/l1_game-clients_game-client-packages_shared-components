@@ -7,8 +7,9 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, namespaces: string[], sup
     try {
         const isUseTolgeeRealTime = !!siteConfigs.tolgeeUrl;
         let languageId = gc.Translator.getLanguageId();
-        const languageCodes = supportedLanguages ? supportedLanguages : ["en", "id", "th", "vi", "zh_cn", "zh_tw"];
-        !languageCodes.includes(languageId) && (languageId = languageCodes[0]);
+        const definedlanguageCodes = Object.keys(globalThis?.languages || { en: {}, id: {}, th: {}, vi: {}, zh_cn: {}, zh_tw: {} });
+        const languageCodes = supportedLanguages ? supportedLanguages : definedlanguageCodes;
+        !languageCodes.includes(languageId) && (languageId = "en");
 
         const translationOptions: gc.Shared.utils.TranslationOptions = {
             languageId: languageId,
