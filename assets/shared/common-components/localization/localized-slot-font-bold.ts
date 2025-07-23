@@ -14,6 +14,7 @@ export default class LocalizedSlotFontBold extends LocalizedFont {
             th: "noto-serif-bold-thai",
             zh_cn: "noto-serif-bold-zhcn",
             zh_tw: "noto-serif-bold-zhtw",
+            ...globalThis?.fontBoldSlotMapping,
         } as FontMapping;
     }
 }
