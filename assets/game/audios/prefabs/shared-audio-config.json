@@ -93,5 +93,25 @@
         "bundle": "shared-bundle",
         "path": "betting/stop-betting_zh_tw",
         "isLazyLoad": true
+    },
+    "start-betting_ja": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_ja",
+        "isLazyLoad": true
+    },
+    "stop-betting_ja": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_ja",
+        "isLazyLoad": true
+    },
+    "start-betting_es": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_es",
+        "isLazyLoad": true
+    },
+    "stop-betting_es": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_es",
+        "isLazyLoad": true
     }
 }
