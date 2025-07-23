@@ -8,12 +8,30 @@ export class LocalizedSlotFont extends LocalizedFont {
     initData() {
         const kodchasanRegularFont = "kodchasan-regular";
         this.fontBases = {
-            vi: kodchasanRegularFont,
-            id: kodchasanRegularFont,
-            en: kodchasanRegularFont,
-            th: "noto-serif-regular-thai",
-            zh_cn: "noto-serif-regular-zhcn",
-            zh_tw: "noto-serif-regular-zhtw",
+            vi: {
+                name: kodchasanRegularFont,
+                loadRemote: false,
+            },
+            id: {
+                name: kodchasanRegularFont,
+                loadRemote: false,
+            },
+            en: {
+                name: kodchasanRegularFont,
+                loadRemote: false,
+            },
+            th: {
+                name: "noto-serif-regular-thai",
+                loadRemote: false,
+            },
+            zh_cn: {
+                name: "noto-serif-regular-zhcn",
+                loadRemote: false,
+            },
+            zh_tw: {
+                name: "noto-serif-regular-zhtw",
+                loadRemote: false,
+            },
         } as FontMapping;
     }
 }
