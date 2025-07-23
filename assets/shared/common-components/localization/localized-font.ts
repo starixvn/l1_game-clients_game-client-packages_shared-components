@@ -8,12 +8,14 @@ const { ccclass, property } = _decorator;
 class LanguageFont {
     language = "";
     name: "";
+    loadRemote: false;
 }
 
-export type Language = "vi" | "id" | "en" | "th" | "zh_cn" | "zh_tw";
-
 export type FontMapping = {
-    [key in Language]: string;
+    [key: string]: {
+        name: string;
+        loadRemote: boolean;
+    };
 };
 
 @ccclass("LocalizedFont")
@@ -38,20 +40,38 @@ export class LocalizedFont extends Component {
     initData() {
         const notoRegular = "noto-serif-regular";
         this.fontBases = {
-            vi: notoRegular,
-            id: notoRegular,
-            en: notoRegular,
-            th: "noto-serif-regular-thai",
-            zh_cn: "noto-serif-regular-zhcn",
-            zh_tw: "noto-serif-regular-zhtw",
+            vi: {
+                name: notoRegular,
+                loadRemote: false,
+            },
+            id: {
+                name: notoRegular,
+                loadRemote: false,
+            },
+            en: {
+                name: notoRegular,
+                loadRemote: false,
+            },
+            th: {
+                name: "noto-serif-regular-thai",
+                loadRemote: false,
+            },
+            zh_cn: {
+                name: "noto-serif-regular-zhcn",
+                loadRemote: false,
+            },
+            zh_tw: {
+                name: "noto-serif-regular-zhtw",
+                loadRemote: false,
+            },
             ...globalThis?.fontRegularMapping,
         } as FontMapping;
     }
 
     updateFont() {
-        const name = this.getFontNameByLanguage();
+        const { name, loadRemote } = this.getFontNameByLanguage();
         if (this.label) {
-            this.loadFont(name)
+            this.loadFont(name, loadRemote)
                 .then((font) => {
                     if (this.label?.isValid) {
                         this.label.font = font;
@@ -63,7 +83,7 @@ export class LocalizedFont extends Component {
                 });
         }
         if (this.richText) {
-            this.loadFont(name)
+            this.loadFont(name, loadRemote)
                 .then((font) => {
                     if (this.richText?.isValid) {
                         this.richText.font = font as TTFFont;
@@ -93,10 +113,15 @@ export class LocalizedFont extends Component {
     getFontNameByLanguage(): any {
         const lang = Translator.getCurrentLanguageId();
         const overrideFonts = this.overrideFonts.find((data) => data.language === lang);
-        return overrideFonts?.name || this.fontBases[lang] || this.fontBases["en"];
+        const overrideFont = overrideFonts === undefined ? this.fontBases[lang] : overrideFonts;
+        return overrideFont || this.fontBases["en"];
     }
 
-    loadFont(name: string) {
+    loadFont(name: string, loadRemote: boolean) {
+        if (loadRemote) {
+            const buildRemoteUrl = gc.UrlUtils.buildShareResource(globalThis.envConfig);
+            return bundleManager.getRemoteAsset<Font>(`${buildRemoteUrl}/localization/fonts/${name}`);
+        }
         return bundleManager.loadSharedAsset<Font>(`fonts/${name}`, Font);
     }
 }
