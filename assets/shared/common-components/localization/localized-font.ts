@@ -44,6 +44,7 @@ export class LocalizedFont extends Component {
             th: "noto-serif-regular-thai",
             zh_cn: "noto-serif-regular-zhcn",
             zh_tw: "noto-serif-regular-zhtw",
+            ...globalThis?.fontRegularMapping,
         } as FontMapping;
     }
 
