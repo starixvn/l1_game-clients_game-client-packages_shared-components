@@ -32,7 +32,7 @@ export default class LocalizedSlotFontBold extends LocalizedFont {
                 name: "noto-serif-bold-zhtw",
                 loadRemote: false,
             },
-            ...globalThis?.fontBoldSlotMapping,
+            ...globalThis?.fontMapping?.slotBold,
         } as FontMapping;
     }
 }

@@ -32,7 +32,7 @@ export default class LocalizedFontBold extends LocalizedFont {
                 name: "noto-serif-bold-zhcn",
                 loadRemote: false,
             },
-            ...globalThis?.fontBoldMapping,
+            ...globalThis?.fontMapping?.bold,
         } as FontMapping;
     }
 }
