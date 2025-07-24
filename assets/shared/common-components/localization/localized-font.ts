@@ -64,7 +64,7 @@ export class LocalizedFont extends Component {
                 name: "noto-serif-regular-zhtw",
                 loadRemote: false,
             },
-            ...globalThis?.fontRegularMapping,
+            ...globalThis?.fontMapping?.regular,
         } as FontMapping;
     }
 

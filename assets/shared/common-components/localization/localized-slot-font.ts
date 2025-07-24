@@ -32,6 +32,7 @@ export class LocalizedSlotFont extends LocalizedFont {
                 name: "noto-serif-regular-zhtw",
                 loadRemote: false,
             },
+            ...globalThis?.fontMapping?.slotRegular,
         } as FontMapping;
     }
 }
