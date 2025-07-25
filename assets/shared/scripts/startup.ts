@@ -40,6 +40,7 @@ export function startGame(
     supportedLanguages?: string[]
 ) {
     gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey);
+    saveLocale();
     loadI18n(siteConfigs, tolgeeNamespaces ? tolgeeNamespaces : [gameName], supportedLanguages);
 
     const container = gc.getContainer(containerOptions);
@@ -48,6 +49,31 @@ export function startGame(
     Observer.configure({ [gameName]: { mobx, container: observerContainer } });
 
     return container;
+}
+
+const PARAMS = "params";
+const LANG = "lang";
+const CURRENT_LOCALE = "currentLocale";
+
+export function saveLocale() {
+    const urlParams = new URLSearchParams(globalThis.location.search);
+
+    if (urlParams.has(LANG)) {
+        globalThis.currentLocale = urlParams.get(LANG);
+        gc.StorageManager.set(CURRENT_LOCALE, globalThis.currentLocale);
+        return;
+    }
+
+    if (urlParams.has(PARAMS)) {
+        const decodedParams = new URLSearchParams(atob(urlParams.get(PARAMS)));
+        if (decodedParams.has(LANG) && !decodedParams.get(LANG)) {
+            globalThis.currentLocale = decodedParams.get(LANG);
+            gc.StorageManager.set(CURRENT_LOCALE, globalThis.currentLocale);
+            return;
+        }
+    }
+
+    globalThis.currentLocale = gc.StorageManager.get("currentLocale");
 }
 
 export function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
