@@ -9,10 +9,13 @@ const { ccclass, property, requireComponent } = _decorator;
 @requireComponent([UITransform, GridLayout])
 export class GridLayoutBuilder extends Component {
     @property(GridLayout)
-    protected grid: GridLayout = null;
+    public grid: GridLayout = null;
+
+    @property(Node)
+    protected background: Node = null;
 
     @property({ type: GridLayoutSettings, displayName: "INPUT SETTINGS TO BUILD" })
-    protected settings: GridLayoutSettings = null;
+    public settings: GridLayoutSettings = null;
 
     onFocusInEditor(): void {
         if (!this.isValidProperties()) {
@@ -27,7 +30,7 @@ export class GridLayoutBuilder extends Component {
         this.onFocusInEditor();
     }
 
-    protected applySettings() {
+    public applySettings() {
         const { scrollable } = this.settings;
         const layoutTransform = this.grid.layout.getComponent(UITransform);
 
@@ -70,6 +73,13 @@ export class GridLayoutBuilder extends Component {
         const transform = this.node.getComponent(UITransform);
         const size = this.getContentSize();
 
+        const scrollViewTransform = this.grid.scrollView?.getComponent(UITransform);
+        scrollViewTransform?.setContentSize(size);
+
+        const backgroundTransform = this.background?.getComponent(UITransform);
+        backgroundTransform?.setContentSize(size);
+
+        
         transform?.setContentSize(size);
     }
 

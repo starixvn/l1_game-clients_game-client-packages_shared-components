@@ -37,4 +37,14 @@ export class Scoreboard extends Component {
 
         this.grid.render(ScoreboardGridItem, data);
     }
+
+    public renderAgainWithDefaultSize(isDefaultSize: boolean) {
+        if (!this.cached || !this.needCache) {
+            return;
+        }
+        const converted = this.converter.convert(this.cached);
+        const data = this.algorithm.apply(converted);
+
+        this.grid.renderAgainWithDefaultSize(ScoreboardGridItem, data, isDefaultSize);
+    }
 }

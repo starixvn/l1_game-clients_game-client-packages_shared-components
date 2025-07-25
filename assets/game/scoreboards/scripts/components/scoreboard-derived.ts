@@ -21,7 +21,7 @@ export class ScoreboardDerived extends Scoreboard {
     override algorithm: ScoreboardDerivedAlgorithm = null;
 
     @property({ type: GridLayout })
-    protected grids: GridLayout[] = [];
+    grids: GridLayout[] = [];
 
     @property(ScoreboardPrediction)
     prediction: ScoreboardPrediction = null;
@@ -47,5 +47,18 @@ export class ScoreboardDerived extends Scoreboard {
             const predictions = this.algorithm.getPrediction();
             this.prediction.setData(predictions);
         }
+    }
+
+    public renderAgainWithDefaultSize(isDefaultSize: boolean) {
+        if (!this.cached || !this.needCache) {
+            return;
+        }
+
+        const converted = this.converter.convert(this.cached);
+        this.algorithm.apply(converted);
+        this.grids.forEach((grid, index) => {
+            const derivedData = this.algorithm.getDerivedData(grid.node.name as DerivedScoreboardKey, grid.settings);
+            grid.renderAgainWithDefaultSize(ScoreboardGridItem, derivedData, isDefaultSize);
+        });
     }
 }

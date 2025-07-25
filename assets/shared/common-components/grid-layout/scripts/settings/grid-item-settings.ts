@@ -9,4 +9,8 @@ export class GridItemSettings {
 
     @property(Prefab)
     public prefab: Prefab = null;
+
+    @property(Prefab)
+    public prefabNewSize: Prefab = null;
+
 }

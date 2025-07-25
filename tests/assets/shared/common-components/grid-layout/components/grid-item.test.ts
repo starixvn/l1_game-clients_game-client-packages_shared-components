@@ -7,6 +7,7 @@ describe(GridItem.name, () => {
     let setting: GridItemSettings = {
         prefab: null,
         size: 20,
+        prefabNewSize: null
     };
     let uiTransform: UITransform;
 

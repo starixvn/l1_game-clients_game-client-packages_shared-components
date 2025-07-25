@@ -21,6 +21,7 @@ describe(GridLayout.name, () => {
     const itemSettings: GridItemSettings = {
         prefab: null,
         size: 10,
+        prefabNewSize: null,
     };
 
     beforeEach(() => {

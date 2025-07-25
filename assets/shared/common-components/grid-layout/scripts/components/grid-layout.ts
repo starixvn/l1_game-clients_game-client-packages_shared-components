@@ -47,6 +47,22 @@ export class GridLayout extends Component {
         this.scrollToEnd();
     }
 
+    public renderAgainWithDefaultSize<D, T extends GridItem<D>>(classConstructor: Constructor<T>, items: D[], isDefaultSize: boolean) {
+        this.content.removeAllChildren();
+        items.forEach((item, index) => {
+            const prefab = isDefaultSize ? this.itemSettings.prefab : this.itemSettings.prefabNewSize;
+            const newNode = instantiate(prefab);
+            const component = this.getItemComponent(newNode, classConstructor);
+
+            component.render(this.itemSettings, item, this.node, index);
+
+            this.content.addChild(newNode);
+        });
+
+        this.updateLayout();
+        this.scrollToEnd();
+    }
+
     protected removeUnusedNodes(contentLength: number) {
         if (this.content.children.length > contentLength) {
             for (let index = contentLength; index < this.content.children.length; index++) {

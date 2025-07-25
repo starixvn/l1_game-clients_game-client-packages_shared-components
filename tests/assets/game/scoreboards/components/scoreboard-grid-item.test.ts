@@ -11,6 +11,7 @@ describe("ScoreboardGridItem", () => {
     const settings: GridItemSettings = {
         prefab: null,
         size: 20,
+        prefabNewSize: null,
     };
 
     beforeEach(() => {
