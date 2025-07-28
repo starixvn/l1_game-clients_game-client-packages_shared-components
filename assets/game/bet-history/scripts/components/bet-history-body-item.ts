@@ -106,7 +106,7 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         return {
             roundId: this.betHistoryLog.roundId,
             mode: "dark",
-            language: globalThis.currentLocale,
+            language: gc.Translator.currentLocale,
             timeZoneOffset: -new Date().getTimezoneOffset() / 60,
         };
     }
