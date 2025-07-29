@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, Button, Color, Component, instantiate, Label, Node, Prefab } from "cc";
 import Observer from "observer";
 
+import { AppUtils } from "db://shared-components/shared/utils";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 
 const { property, ccclass } = _decorator;
@@ -106,7 +107,7 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         return {
             roundId: this.betHistoryLog.roundId,
             mode: "dark",
-            language: gc.Translator.currentLocale,
+            language: AppUtils.getLocale() || AppUtils.DEFAULT_LOCALE,
             timeZoneOffset: -new Date().getTimezoneOffset() / 60,
         };
     }
