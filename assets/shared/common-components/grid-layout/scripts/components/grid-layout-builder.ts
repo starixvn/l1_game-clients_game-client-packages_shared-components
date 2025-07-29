@@ -73,14 +73,11 @@ export class GridLayoutBuilder extends Component {
         const transform = this.node.getComponent(UITransform);
         const size = this.getContentSize();
 
-        const scrollViewTransform = this.grid.scrollView?.getComponent(UITransform);
-        scrollViewTransform?.setContentSize(size);
-
-        const backgroundTransform = this.background?.getComponent(UITransform);
-        backgroundTransform?.setContentSize(size);
-
-        
         transform?.setContentSize(size);
+
+        this.node.getComponentsInChildren(Widget).forEach((widget) => {
+            widget.updateAlignment();
+        });
     }
 
     protected getContentSize() {
