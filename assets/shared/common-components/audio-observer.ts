@@ -14,4 +14,14 @@ export class AudioObserver extends ObserverComponent {
     playSFX(id: string) {
         return id;
     }
+
+    @handle(gc.Audios.AudioHandler, (handler, params: { id: string; loop: boolean }) => handler.playStoppableSFX(params.id, params.loop))
+    playStoppableSFX(id: string, loop: boolean) {
+        return { id, loop };
+    }
+
+    @handle(gc.Audios.AudioHandler, (handler, id: string) => handler.stopStoppableSFX(id))
+    stopStoppableSFX(id: string) {
+        return id;
+    }
 }

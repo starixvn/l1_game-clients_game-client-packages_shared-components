@@ -125,3 +125,13 @@ export const playSFX = (soundId: string) => {
     const audioObserver = getAudioObserver();
     audioObserver?.playSFX(soundId);
 };
+
+export const playStoppableSFX = (soundId: string, loop: boolean) => {
+    const audioObserver = getAudioObserver();
+    audioObserver?.playStoppableSFX(soundId, loop);
+};
+
+export const stopStoppableSFX = (soundId: string) => {
+    const audioObserver = getAudioObserver();
+    audioObserver?.stopStoppableSFX(soundId);
+};
