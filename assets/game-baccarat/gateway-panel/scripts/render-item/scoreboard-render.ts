@@ -51,7 +51,7 @@ export default class ScoreboardRender extends RenderItem {
         this.scoreboards.forEach((scoreboard) => {
             const derivedScoreboard = scoreboard.getComponent(ScoreboardDerived);
             if (derivedScoreboard) {
-                derivedScoreboard.render(this.rounds, true);
+                derivedScoreboard.render(this.rounds, { hasBlinkNode: true });
             } else {
                 scoreboard.render(rounds);
             }

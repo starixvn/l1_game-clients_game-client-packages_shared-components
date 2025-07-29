@@ -1,9 +1,9 @@
+import gc from "@sg/game-client-base";
 import { Scoreboard } from "db://shared-components/game/scoreboards/scripts/components/scoreboard";
+import { ScoreboardBeadRoad } from "db://shared-components/game/scoreboards/scripts/components/scoreboard-bead-road";
 import { ScoreboardDataConverter } from "db://shared-components/game/scoreboards/scripts/components/scoreboard-converter";
 import { ScoreboardDataReceiver } from "db://shared-components/game/scoreboards/scripts/components/scoreboard-data-receiver";
 import { ScoreboardDerived } from "db://shared-components/game/scoreboards/scripts/components/scoreboard-derived";
-import { ScoreboardBeadRoad } from "db://shared-components/game/scoreboards/scripts/components/scoreboard-bead-road";
-import gc from "@sg/game-client-base";
 
 jest.mock("sc-scoreboards", () => ({
     __esModule: true,
@@ -226,7 +226,7 @@ describe(ScoreboardDataReceiver.name, () => {
                     component.toggleBlinkNode(true);
 
                     // Assert
-                    expect(mockDerivedScoreboard.render).toBeCalledWith([round], true);
+                    expect(mockDerivedScoreboard.render).toBeCalledWith([round], { hasBlinkNode: true });
                 });
             });
 

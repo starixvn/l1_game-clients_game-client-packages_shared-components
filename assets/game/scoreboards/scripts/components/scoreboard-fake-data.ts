@@ -73,7 +73,7 @@ export class RenderFakeData extends Component {
         this.scoreboards.forEach((scoreboard) => {
             const derivedScoreboard = scoreboard.getComponent(ScoreboardDerived);
             if (derivedScoreboard) {
-                derivedScoreboard.render(this.results, true);
+                derivedScoreboard.render(this.results, { hasBlinkNode: true });
             } else {
                 scoreboard.render(rounds);
             }

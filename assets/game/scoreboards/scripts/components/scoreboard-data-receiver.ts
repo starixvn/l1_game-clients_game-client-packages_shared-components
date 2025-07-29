@@ -4,9 +4,9 @@ import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { ResultPercentage } from "../../../result-percentage/scripts/result-percentage";
 import { Scoreboard } from "./scoreboard";
+import { ScoreboardBeadRoad } from "./scoreboard-bead-road";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
 import { ScoreboardDerived } from "./scoreboard-derived";
-import { ScoreboardBeadRoad } from "./scoreboard-bead-road";
 
 const { ccclass, property } = _decorator;
 const { render } = Observer;
@@ -69,7 +69,7 @@ export class ScoreboardDataReceiver extends ObserverComponent {
             const derivedScoreboard = scoreboard.getComponent(ScoreboardDerived);
             const beadRoadScoreboard = scoreboard.getComponent(ScoreboardBeadRoad);
             if (derivedScoreboard) {
-                derivedScoreboard.render(this.rounds, true);
+                derivedScoreboard.render(this.rounds, { hasBlinkNode: true });
             } else if (beadRoadScoreboard) {
                 const beadRoadRounds =
                     this.numberOfRoundHistory !== 0 && rounds.length > this.numberOfRoundHistory

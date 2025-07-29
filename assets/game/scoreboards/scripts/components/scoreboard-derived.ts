@@ -1,5 +1,5 @@
 import { _decorator } from "cc";
-import { GridLayout } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
+import { GridLayout, RenderOptions } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
 import { ScoreboardPrediction } from "./baccarat/derived/scoreboard-prediction";
 import { Scoreboard } from "./scoreboard";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
@@ -33,32 +33,19 @@ export class ScoreboardDerived extends Scoreboard {
         this.prediction = this.getComponentInChildren(ScoreboardPrediction);
     }
 
-    public render<T>(rounds: T[], hasBlinkNode = false) {
-        this.needCache && (this.cached = rounds);
+    public render<T>(rounds: T[], options: RenderOptions = { isDefaultSize: true, isRenderAgain: false, hasBlinkNode: false }) {
+        this.enableCache && (this.cached = rounds);
         const converted = this.converter.convert(rounds);
-        this.algorithm.apply(converted, hasBlinkNode);
+        this.algorithm.apply(converted, options.hasBlinkNode);
 
         this.grids.forEach((grid) => {
             const derivedData = this.algorithm.getDerivedData(grid.node.name as DerivedScoreboardKey, grid.settings);
-            grid.render(ScoreboardGridItem, derivedData);
+            grid.render(ScoreboardGridItem, derivedData, options);
         });
 
         if (this.prediction) {
             const predictions = this.algorithm.getPrediction();
             this.prediction.setData(predictions);
         }
-    }
-
-    public renderAgainWithDefaultSize(isDefaultSize: boolean) {
-        if (!this.cached || !this.needCache) {
-            return;
-        }
-
-        const converted = this.converter.convert(this.cached);
-        this.algorithm.apply(converted);
-        this.grids.forEach((grid, index) => {
-            const derivedData = this.algorithm.getDerivedData(grid.node.name as DerivedScoreboardKey, grid.settings);
-            grid.renderAgainWithDefaultSize(ScoreboardGridItem, derivedData, isDefaultSize);
-        });
     }
 }

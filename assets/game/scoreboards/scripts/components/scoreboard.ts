@@ -1,5 +1,5 @@
 import { _decorator, CCBoolean, Component } from "cc";
-import { GridLayout } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
+import { GridLayout, RenderOptions } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
 import { ScoreboardAlgorithm } from "./scoreboard-algorithm";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
 import { ScoreboardGridItem } from "./scoreboard-grid-item";
@@ -19,7 +19,7 @@ export class Scoreboard extends Component {
     algorithm: ScoreboardAlgorithm = null;
 
     @property({ type: CCBoolean })
-    needCache = false;
+    enableCache = false;
 
     public cached = null;
 
@@ -29,22 +29,12 @@ export class Scoreboard extends Component {
         this.algorithm = this.node.getComponent(ScoreboardAlgorithm);
     }
 
-    public render<T>(rounds: T[]) {
-        this.needCache && (this.cached = rounds);
+    public render<T>(rounds: T[], options: RenderOptions = { isDefaultSize: true, isRenderAgain: false, hasBlinkNode: false }) {
+        this.enableCache && (this.cached = rounds);
 
         const converted = this.converter.convert(rounds);
         const data = this.algorithm.apply(converted);
 
-        this.grid.render(ScoreboardGridItem, data);
-    }
-
-    public renderAgainWithDefaultSize(isDefaultSize: boolean) {
-        if (!this.cached || !this.needCache) {
-            return;
-        }
-        const converted = this.converter.convert(this.cached);
-        const data = this.algorithm.apply(converted);
-
-        this.grid.renderAgainWithDefaultSize(ScoreboardGridItem, data, isDefaultSize);
+        this.grid.render(ScoreboardGridItem, data, options);
     }
 }

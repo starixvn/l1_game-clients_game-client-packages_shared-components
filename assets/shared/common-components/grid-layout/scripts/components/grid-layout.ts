@@ -5,6 +5,12 @@ import { GridItem } from "./grid-item";
 
 const { ccclass, property } = _decorator;
 
+export type RenderOptions = {
+    isDefaultSize?: boolean;
+    isRenderAgain?: boolean;
+    hasBlinkNode?: boolean;
+};
+
 @ccclass
 export class GridLayout extends Component {
     @property(ScrollView)
@@ -23,14 +29,18 @@ export class GridLayout extends Component {
         return this.layout.node;
     }
 
-    public render<D, T extends GridItem<D>>(classConstructor: Constructor<T>, items: D[]): void {
+    public render<D, T extends GridItem<D>>(classConstructor: Constructor<T>, items: D[], options: RenderOptions = { isDefaultSize: true, isRenderAgain: false, hasBlinkNode: false }): void {
+        if (options?.isRenderAgain) {
+            this.content.removeAllChildren();
+        }
+
         this.removeUnusedNodes(items.length);
 
         items.forEach((item, index) => {
             const node = this.content.children[index];
 
             if (!node) {
-                const newNode = instantiate(this.itemSettings.prefab);
+                const newNode = this.createScoreboardItem(options?.isDefaultSize ?? true);
                 const component = this.getItemComponent(newNode, classConstructor);
 
                 component.render(this.itemSettings, item, this.node, index);
@@ -47,20 +57,9 @@ export class GridLayout extends Component {
         this.scrollToEnd();
     }
 
-    public renderAgainWithDefaultSize<D, T extends GridItem<D>>(classConstructor: Constructor<T>, items: D[], isDefaultSize: boolean) {
-        this.content.removeAllChildren();
-        items.forEach((item, index) => {
-            const prefab = isDefaultSize ? this.itemSettings.prefab : this.itemSettings.prefabNewSize;
-            const newNode = instantiate(prefab);
-            const component = this.getItemComponent(newNode, classConstructor);
-
-            component.render(this.itemSettings, item, this.node, index);
-
-            this.content.addChild(newNode);
-        });
-
-        this.updateLayout();
-        this.scrollToEnd();
+    createScoreboardItem(isDefaultSize: boolean) {
+        const prefab = isDefaultSize ? this.itemSettings.prefab : this.itemSettings.prefabNewSize;
+        return instantiate(prefab);
     }
 
     protected removeUnusedNodes(contentLength: number) {

@@ -11,9 +11,6 @@ export class GridLayoutBuilder extends Component {
     @property(GridLayout)
     public grid: GridLayout = null;
 
-    @property(Node)
-    protected background: Node = null;
-
     @property({ type: GridLayoutSettings, displayName: "INPUT SETTINGS TO BUILD" })
     public settings: GridLayoutSettings = null;
 

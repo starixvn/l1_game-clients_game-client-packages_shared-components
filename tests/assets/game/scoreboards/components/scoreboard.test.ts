@@ -9,6 +9,7 @@ describe("Scoreboard", () => {
     let converter: ScoreboardDataConverter;
     let algorithm: ScoreboardAlgorithm;
     let grid: GridLayout;
+    let enableCache: boolean;
 
     beforeEach(() => {
         component = new Scoreboard();
@@ -17,6 +18,7 @@ describe("Scoreboard", () => {
         algorithm = { apply: jest.fn((x) => x) } as any;
         grid = { render: jest.fn() } as any;
 
+        enableCache = false;
         component.converter = converter;
         component.algorithm = algorithm;
         component["grid"] = grid;
@@ -37,6 +39,7 @@ describe("Scoreboard", () => {
                 expect(component["grid"]).toEqual(grid);
                 expect(component["converter"]).toEqual(converter);
                 expect(component["algorithm"]).toEqual(algorithm);
+                expect(component.enableCache).toEqual(enableCache);
             });
         });
     });
@@ -45,7 +48,7 @@ describe("Scoreboard", () => {
         describe("when called", () => {
             it("should convert input", () => {
                 // Act
-                component.render([1, 2]);
+                component.render([1, 2], { isDefaultSize: true, isRenderAgain: false, hasBlinkNode: false });
 
                 // Assert
                 expect(converter.convert).toBeCalledWith([1, 2]);
@@ -64,7 +67,7 @@ describe("Scoreboard", () => {
                 component.render([1, 2]);
 
                 // Assert
-                expect(grid.render).toBeCalledWith(ScoreboardGridItem, [1, 2]);
+                expect(grid.render).toBeCalledWith(ScoreboardGridItem, [1, 2], { isDefaultSize: true, isRenderAgain: false, hasBlinkNode: false });
             });
         });
     });

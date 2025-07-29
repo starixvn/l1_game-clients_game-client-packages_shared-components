@@ -48,7 +48,7 @@ describe(GridLayout.name, () => {
         describe("when input length is less than current", () => {
             it("should remove unused nodes", () => {
                 // Act
-                grid.render(FakeItem, []);
+                grid.render(FakeItem, [], { isDefaultSize: true, isRenderAgain: false });
 
                 // Assert
                 expect(fakeItem.destroy).toBeCalled();
@@ -65,7 +65,7 @@ describe(GridLayout.name, () => {
 
             it("should create prefab instances", () => {
                 // Act
-                grid.render(FakeItem, [1, 2]);
+                grid.render(FakeItem, [1, 2], { isDefaultSize: true, isRenderAgain: false });
 
                 // Assert
                 expect(instantiate).toBeCalledWith(itemSettings.prefab);
@@ -73,7 +73,7 @@ describe(GridLayout.name, () => {
 
             it("should render items", () => {
                 // Act
-                grid.render(FakeItem, [1, 2]);
+                grid.render(FakeItem, [1, 2], { isDefaultSize: true, isRenderAgain: false });
 
                 // Assert
                 expect(render).toBeCalledWith(itemSettings, 2, grid.node, 1);
@@ -81,7 +81,7 @@ describe(GridLayout.name, () => {
 
             it("should add new node to container", () => {
                 // Act
-                grid.render(FakeItem, [1, 2]);
+                grid.render(FakeItem, [1, 2], { isDefaultSize: true, isRenderAgain: false });
 
                 // Assert
                 expect(render).toBeCalledWith(itemSettings, 2, grid.node, 1);
@@ -89,7 +89,7 @@ describe(GridLayout.name, () => {
 
             it("should re-render the existing nodes", () => {
                 // Act
-                grid.render(FakeItem, [1, 2]);
+                grid.render(FakeItem, [1, 2], { isDefaultSize: true, isRenderAgain: false });
 
                 // Assert
                 expect(render).toBeCalledWith(itemSettings, 1, grid.node, 0);
@@ -98,7 +98,7 @@ describe(GridLayout.name, () => {
 
         it("should update layout", () => {
             // Act
-            grid.render(FakeItem, []);
+            grid.render(FakeItem, [], { isDefaultSize: true, isRenderAgain: false });
 
             // Assert
             expect(grid.layout.updateLayout).toBeCalled();
