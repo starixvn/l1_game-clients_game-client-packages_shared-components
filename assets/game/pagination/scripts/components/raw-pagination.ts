@@ -96,8 +96,9 @@ export default class RawPagination extends Component {
     }
 
     protected updateLayout() {
-        if (this.totalPages === 1) {
-            this.node.active = false;
+        const showPagination = this.totalPages > 1;
+        this.node.active = showPagination;
+        if (!showPagination) {
             return;
         }
 
