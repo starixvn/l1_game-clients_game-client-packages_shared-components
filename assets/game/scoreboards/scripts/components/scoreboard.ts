@@ -1,4 +1,4 @@
-import { _decorator, CCBoolean, Component } from "cc";
+import { _decorator, Component } from "cc";
 import { GridLayout, RenderOptions } from "../../../../shared/common-components/grid-layout/scripts/components/grid-layout";
 import { ScoreboardAlgorithm } from "./scoreboard-algorithm";
 import { ScoreboardDataConverter } from "./scoreboard-converter";
@@ -18,7 +18,7 @@ export class Scoreboard extends Component {
     @property(ScoreboardAlgorithm)
     algorithm: ScoreboardAlgorithm = null;
 
-    @property({ type: CCBoolean })
+    @property
     enableCache = false;
 
     public cached = null;
