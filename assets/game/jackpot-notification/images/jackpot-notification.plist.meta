@@ -145,6 +145,52 @@
       ],
       "subMetas": {}
     },
+    "3b398": {
+      "importer": "sprite-frame",
+      "uuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f@3b398",
+      "displayName": "",
+      "id": "3b398",
+      "name": "txt-jackpot_es",
+      "userData": {
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": -4,
+        "trimX": 3,
+        "trimY": 3,
+        "width": 95,
+        "height": 30,
+        "rawWidth": 95,
+        "rawHeight": 40,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "a83ab598-b5f7-40e1-bbf1-bc22be7997e5@6c48a",
+        "atlasUuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f",
+        "trimType": "auto"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
     "ac63e": {
       "importer": "sprite-frame",
       "uuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f@ac63e",
@@ -377,7 +423,7 @@
     }
   },
   "userData": {
-    "atlasTextureName": "jackpot-notification.png",
+    "atlasTextureName": "jackpot-notification.webp",
     "format": 3,
     "uuid": "a81af944-0b2e-429e-bc8b-7c5f2d62909f",
     "textureUuid": "a83ab598-b5f7-40e1-bbf1-bc22be7997e5@6c48a"
