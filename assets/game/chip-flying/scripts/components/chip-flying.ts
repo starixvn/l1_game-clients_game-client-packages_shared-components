@@ -4,7 +4,7 @@ import { random, round } from "lodash-es";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { FunctionUtils } from "../../../../shared/utils";
+import { AnimationUtils } from "../../../../shared/utils";
 import { AroundTablePlayers } from "../../../around-table-player/scripts/components/around-table-players";
 import {
     AroundTablePlayersChipStore,
@@ -111,7 +111,7 @@ export class ChipFlying extends ObserverComponent {
         }
 
         while (!this.slidingChip.getReady()) {
-            await FunctionUtils.delay(100);
+            await AnimationUtils.delayTime(0.1);
         }
 
         for (const betItem of this.betItems.betItemComponents) {

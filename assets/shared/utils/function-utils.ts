@@ -1,6 +1,6 @@
 import { Asset, Node, assetManager, find, screen, warn } from "cc";
-import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 import { settings } from "../../../../../assets/game/scripts/game-settings";
+import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 
 export namespace FunctionUtils {
     export const cachedRemoteFile = {};
@@ -39,6 +39,9 @@ export namespace FunctionUtils {
         return frameSize.width < frameSize.height;
     };
 
+    /**
+     * @deprecated Use AnimationUtils.delayTime instead
+     */
     export const delay = async (milliseconds: number) => {
         let timeoutId: NodeJS.Timeout;
         return new Promise<void>((resolve) => {

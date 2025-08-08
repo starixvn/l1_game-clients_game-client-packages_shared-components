@@ -2,7 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, Node, Sprite, SpriteAtlas, Tween, tween, UIOpacity, v3 } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { FunctionUtils } from "../../../../shared/utils";
+import { AnimationUtils } from "../../../../shared/utils";
 const { ccclass, property } = _decorator;
 const { Settlements, Rounds } = gc;
 const { render, handle } = Observer;
@@ -56,7 +56,7 @@ export class ScoreboardCollapseExpandContent extends ObserverComponent {
     async renderCollapseScoreboard(hasAnimation: boolean) {
         if (hasAnimation) {
             this.animChangePositon(this.node, this.POSITION_COLLAPSE);
-            await FunctionUtils.delay(500);
+            await AnimationUtils.delayTime(0.5);
         } else {
             this.node.position = v3(this.node.position.x, this.POSITION_COLLAPSE, 0);
         }
