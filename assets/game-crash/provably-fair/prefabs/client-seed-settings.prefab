@@ -268,7 +268,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 601.3359375,
+      "width": 1013.4140625,
       "height": 60.480000000000004
     },
     "_anchorPoint": {
@@ -304,7 +304,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "CÀI ĐẶT PROVABLY FAIR",
+    "_string": "AJUSTES DE JUEGO JUSTO COMPROBABLE",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 48,
@@ -324,6 +324,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -441,7 +464,7 @@
     ],
     "value": {
       "__type__": "cc.Vec3",
-      "x": 154.333984375,
+      "x": 257.353515625,
       "y": 0,
       "z": 0
     }
@@ -491,7 +514,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 340.66796875,
+      "width": 546.70703125,
       "height": 100
     },
     "_anchorPoint": {
@@ -852,7 +875,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "Kết quả cuối cùng được xác định dựa trên sự kết hợp giữa Server Seed và Client Seed của 5 người chơi đặt cược đầu tiên.",
+    "_string": "El resultado final se determina mediante una combinación de la Semilla del Servidor y la Semilla del Cliente de los cinco primeros jugadores que apostaron en la ronda.",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -872,6 +895,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -1016,7 +1062,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "Người chơi có thể thay đổi giá trị Client Seed và kiểm tra tính minh bạch của kết quả trong mục Lịch sử cược.",
+    "_string": "Puedes modificar la Semilla del Cliente y verificar la equidad del resultado de tu partida en el historial de apuestas.",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1036,6 +1082,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -1337,7 +1406,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 242.455078125,
+      "width": 421.734375,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -1373,7 +1442,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "CLIENT SEED",
+    "_string": "SEMILLA DEL CLIENTE",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1393,6 +1462,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -1460,7 +1552,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 125.2275390625,
+      "x": 214.8671875,
       "y": 0,
       "z": 0
     },
@@ -1501,7 +1593,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1038.33984375,
+      "width": 1034.349609375,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -1537,7 +1629,7 @@
       "b": 25,
       "a": 255
     },
-    "_string": "(Không thể thay đổi Client Seed sau khi đặt cược thành công)",
+    "_string": "No se puede cambiar la semilla una vez aceptada la apuesta.",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -1557,6 +1649,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -1612,7 +1727,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 644.3974609375,
+      "width": 732.0419921875,
       "height": 70
     },
     "_anchorPoint": {
@@ -2193,7 +2308,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 312.46875,
+      "width": 158.783203125,
       "height": 45.36
     },
     "_anchorPoint": {
@@ -2229,7 +2344,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "Giá trị ngẫu nhiên",
+    "_string": "Aleatorio",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -2249,6 +2364,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -2827,7 +2965,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 255.181640625,
+      "width": 270.193359375,
       "height": 45.36
     },
     "_anchorPoint": {
@@ -2863,7 +3001,7 @@
       "b": 224,
       "a": 255
     },
-    "_string": "Tự nhập giá trị",
+    "_string": "Ingreso manual",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -2883,6 +3021,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -3509,6 +3670,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -4063,6 +4247,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -4331,7 +4538,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "THAY ĐỔI",
+    "_string": "CAMBIAR",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 36,
@@ -4351,6 +4558,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -5005,8 +5235,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 197.771484375,
-      "height": 50.4
+      "width": 225.3955078125,
+      "height": 49.72
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -5041,13 +5271,13 @@
       "b": 255,
       "a": 255
     },
-    "_string": "SERVER SEED SHA256",
+    "_string": "SHA256 DE LA  \nSEMILLA DEL SERVIDOR",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 18,
     "_fontSize": 18,
     "_fontFamily": "Arial",
-    "_lineHeight": 40,
+    "_lineHeight": 22,
     "_overflow": 0,
     "_enableWrapText": false,
     "_font": {
@@ -5061,6 +5291,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -5101,7 +5354,6 @@
     "__prefab": {
       "__id__": 233
     },
-    "isBitmapCacheMode": false,
     "_id": ""
   },
   {
@@ -6155,6 +6407,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -6193,7 +6468,6 @@
     "__prefab": {
       "__id__": 288
     },
-    "isBitmapCacheMode": false,
     "_id": ""
   },
   {
@@ -6999,6 +7273,29 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
+    "_enableOutline": false,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_outlineWidth": 2,
+    "_enableShadow": false,
+    "_shadowColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    },
+    "_shadowOffset": {
+      "__type__": "cc.Vec2",
+      "x": 2,
+      "y": 2
+    },
+    "_shadowBlur": 2,
     "_id": ""
   },
   {
@@ -7037,7 +7334,6 @@
     "__prefab": {
       "__id__": 333
     },
-    "isBitmapCacheMode": false,
     "_id": ""
   },
   {
@@ -7822,7 +8118,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1398,
-      "height": 786
+      "height": 785.9999999999999
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -7899,7 +8195,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1398,
-      "height": 786
+      "height": 785.9999999999999
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -7978,6 +8274,7 @@
       "__id__": 2
     },
     "autoShowWhenEnable": true,
+    "playClickWhenHide": false,
     "_id": ""
   },
   {
