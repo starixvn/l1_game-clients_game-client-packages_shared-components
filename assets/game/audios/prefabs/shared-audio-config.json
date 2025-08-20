@@ -114,6 +114,36 @@
         "path": "betting/stop-betting_es",
         "isLazyLoad": true
     },
+    "start-betting_ko": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_ko",
+        "isLazyLoad": true
+    },
+    "stop-betting_ko": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_ko",
+        "isLazyLoad": true
+    },
+    "start-betting_tr": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_tr",
+        "isLazyLoad": true
+    },
+    "stop-betting_tr": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_tr",
+        "isLazyLoad": true
+    },
+    "start-betting_fil_ph": {
+        "bundle": "shared-bundle",
+        "path": "betting/start-betting_fil_ph",
+        "isLazyLoad": true
+    },
+    "stop-betting_fil_ph": {
+        "bundle": "shared-bundle",
+        "path": "betting/stop-betting_fil_ph",
+        "isLazyLoad": true
+    },
     "fsb-promotion": {
         "bundle": "shared-bundle",
         "path": "fsb-promotion",
