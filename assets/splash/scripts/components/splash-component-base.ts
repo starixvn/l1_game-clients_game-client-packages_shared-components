@@ -127,7 +127,11 @@ export default class SplashComponentBase extends Component {
         }
 
         const envConfig = window.envConfig;
-        gc.sentryLogger.start(envConfig?.sentryUrl, envConfig?.env, settings.name);
+        gc.sentryLogger.start({
+            ...envConfig.sentry,
+            env: envConfig.env,
+            identifier: settings.name,
+        });
     }
 
     connectToGameService() {
