@@ -113,5 +113,10 @@
         "bundle": "shared-bundle",
         "path": "betting/stop-betting_es",
         "isLazyLoad": true
+    },
+    "fsb-promotion": {
+        "bundle": "shared-bundle",
+        "path": "fsb-promotion",
+        "isLazyLoad": true
     }
 }
