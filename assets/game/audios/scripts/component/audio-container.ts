@@ -78,7 +78,7 @@ export class AudioContainer extends ObserverComponent {
     }
 
     onLoad() {
-        super.onLoad();
+        this.initConfigs();
         this.musicSource.node.on(AudioSource.EventType.STARTED, () => this.updateMusicState(Audios.MusicState.STARTED));
         this.musicSource.node.on(AudioSource.EventType.ENDED, () => this.updateMusicState(Audios.MusicState.ENDED));
 
@@ -87,7 +87,9 @@ export class AudioContainer extends ObserverComponent {
         this.initTouchBind();
 
         audioManager.getRemoteThemeConfigs().finally(() => {
-            this.loadAudios().catch((error) => log(error));
+            this.loadAudios().then(() => {
+                super.onLoad();
+            }).catch((error) => log(error));
         });
     }
 
@@ -176,7 +178,7 @@ export class AudioContainer extends ObserverComponent {
         }
     };
 
-    start() {
+    initConfigs() {
         const audioConfigs = audioManager?.audioConfigs || {};
         for (const [audioKey, value] of Object.entries(audioConfigs)) {
             if (value?.isLazyLoad !== true) {
@@ -229,7 +231,7 @@ export class AudioContainer extends ObserverComponent {
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
-    audiosLoaded() {}
+    audiosLoaded() { }
 
     @render(UserSettings.UserSettingStore, (store) => store.musicEnable, { fireImmediately: false })
     enableMusic(musicEnable: boolean) {
