@@ -274,21 +274,22 @@ export class AudioContainer extends ObserverComponent {
     @render(Audios.AudioStore, (store) => store.music)
     playMusic(data: gc.Audios.AudioData) {
         if (data && data.action === Audios.AudioAction.PLAY) {
-            this.playMusicAudio(data.id);
+            this.playMusicAudio(data);
         }
     }
 
-    async playMusicAudio(id: string) {
+    async playMusicAudio(data: gc.Audios.AudioData) {
+        const { id, loop } = data;
         await this.playAudio(
             id,
             (clip, isPlay) => {
-                this.handlePlayMusic(id, isPlay, clip);
+                this.handlePlayMusic(data, isPlay, clip);
             },
             this.isPlayMusic
         );
     }
 
-    protected handlePlayMusic(id: string, isPlay: boolean, clip: AudioClip) {
+    protected handlePlayMusic(data: gc.Audios.AudioData, isPlay: boolean, clip: AudioClip) {
         isPlay === this.isPlayMusic && this.playSourceClip(this.musicSource, clip);
     }
 

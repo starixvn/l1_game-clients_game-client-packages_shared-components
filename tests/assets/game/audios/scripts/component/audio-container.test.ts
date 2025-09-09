@@ -78,7 +78,7 @@ describe("AudioContainer", () => {
             });
 
             // Act
-            await component.playMusicAudio("test");
+            await component.playMusicAudio({ id: "test", action: 1 });
 
             // Assert
             expect(component.musicSource.play).toHaveBeenCalled();
@@ -94,7 +94,7 @@ describe("AudioContainer", () => {
             });
 
             // Act
-            await component.playMusicAudio("test");
+            await component.playMusicAudio({ id: "test", action: 1 });
 
             // Assert
             expect(component.musicSource.play).not.toHaveBeenCalled();
@@ -110,7 +110,7 @@ describe("AudioContainer", () => {
             });
 
             // Act
-            await component.playMusicAudio("test");
+            await component.playMusicAudio({ id: "test", action: 1 });
 
             // Assert
             expect(component.musicSource.play).not.toHaveBeenCalled();
