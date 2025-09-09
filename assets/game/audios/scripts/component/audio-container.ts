@@ -78,7 +78,6 @@ export class AudioContainer extends ObserverComponent {
     }
 
     onLoad() {
-        this.initConfigs();
         this.musicSource.node.on(AudioSource.EventType.STARTED, () => this.updateMusicState(Audios.MusicState.STARTED));
         this.musicSource.node.on(AudioSource.EventType.ENDED, () => this.updateMusicState(Audios.MusicState.ENDED));
 
@@ -86,10 +85,12 @@ export class AudioContainer extends ObserverComponent {
         // It must be resumed (or created) after a user gesture on the page
         this.initTouchBind();
 
-        audioManager.getRemoteThemeConfigs().finally(() => {
-            this.loadAudios().then(() => {
-                super.onLoad();
-            }).catch((error) => log(error));
+        this.getRemoteConfigs().then(() => {
+            this.initConfigs();
+            super.onLoad();
+            this.registerAudioHandlers();
+            this.callPlayMusic();
+            this.preloadAudio();
         });
     }
 
@@ -107,16 +108,20 @@ export class AudioContainer extends ObserverComponent {
         };
     }
 
-    protected async loadAudios() {
-        audioManager.defaultLang = this.defaultLang;
-        await audioManager.getRemoteAudioThemeConfig();
-        if (!!this.remotePath) {
-            await audioManager.getRemoteGameConfigs(this.remotePath);
-        }
-
+    protected async initConfigs() {
         this.initializeAudioConfigs();
         this.categorizeAudioIds();
-        this.registerAudioHandlers();
+    }
+
+    private async getRemoteConfigs() {
+        try {
+            await audioManager.getRemoteThemeConfigs();
+            audioManager.defaultLang = this.defaultLang;
+            await audioManager.getRemoteAudioThemeConfig();
+            if (!!this.remotePath) {
+                await audioManager.getRemoteGameConfigs(this.remotePath);
+            }
+        } catch (error) { }
     }
 
     protected initializeAudioConfigs() {
@@ -178,7 +183,7 @@ export class AudioContainer extends ObserverComponent {
         }
     };
 
-    initConfigs() {
+    preloadAudio() {
         const audioConfigs = audioManager?.audioConfigs || {};
         for (const [audioKey, value] of Object.entries(audioConfigs)) {
             if (value?.isLazyLoad !== true) {
@@ -233,6 +238,9 @@ export class AudioContainer extends ObserverComponent {
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
     audiosLoaded() { }
 
+    @handle(Audios.AudioHandler, (handle) => handle.playRandomMusic())
+    callPlayMusic() { }
+
     @render(UserSettings.UserSettingStore, (store) => store.musicEnable, { fireImmediately: false })
     enableMusic(musicEnable: boolean) {
         this.isPlayMusic = musicEnable;
@@ -254,9 +262,9 @@ export class AudioContainer extends ObserverComponent {
         this.isPlaySFX = sfxEnable;
     }
 
-    @render(Audios.AudioStore, (store) => store.music, { fireImmediately: false })
+    @render(Audios.AudioStore, (store) => store.music)
     playMusic(data: gc.Audios.AudioData) {
-        if (data.action === Audios.AudioAction.PLAY) {
+        if (data && data.action === Audios.AudioAction.PLAY) {
             this.playMusicAudio(data.id);
         }
     }
@@ -316,6 +324,7 @@ export class AudioContainer extends ObserverComponent {
     async playAudio(id: string, playFunction: (clip: AudioClip, isPlay: boolean) => void, isCurrentPlaying: boolean) {
         const audioValue = audioManager?.audioConfigs?.[id];
         if (!audioValue || (this.currentPlayTime[id] !== undefined && this.currentPlayTime[id] > 0)) {
+            log("playAudio can not play", id);
             return;
         }
 
@@ -325,6 +334,7 @@ export class AudioContainer extends ObserverComponent {
 
         if (audioClip) {
             if (this.currentPlayTime[id] !== currentLoadAssetTime) {
+                log("playAudio can not play, different time ", id);
                 return;
             }
 

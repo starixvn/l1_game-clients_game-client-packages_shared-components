@@ -23,11 +23,6 @@ export default class MusicPlayer extends ObserverComponent {
         }
     }
 
-    @render(Audios.AudioStore, (store) => store.startMusicPlayer, { fireImmediately: false })
-    startMusicPlayer() {
-        this.callPlayMusic();
-    }
-
     @handle(Audios.AudioHandler, (handle) => handle.playRandomMusic())
-    callPlayMusic() {}
+    callPlayMusic() { }
 }

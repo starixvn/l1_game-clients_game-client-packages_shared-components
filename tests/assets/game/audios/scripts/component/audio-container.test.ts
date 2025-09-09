@@ -191,7 +191,7 @@ describe("AudioContainer", () => {
             audioManagerInstance.setAudioConfigs(audioConfigs);
 
             // Act
-            component.initConfigs();
+            component.preloadAudio();
 
             // Assert
             expect(AudioUtils.getAudioInfo).toHaveBeenCalledWith(audioConfigs.audio1, "audio1");

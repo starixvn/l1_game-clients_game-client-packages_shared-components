@@ -38,17 +38,4 @@ describe("MusicPlayer", () => {
         });
     });
 
-    describe("startMusicPlayer", () => {
-        it("calls playMusic", () => {
-            // Arrange
-            const callPlayMusic = jest.fn();
-            component.callPlayMusic = callPlayMusic;
-
-            // Act
-            component.startMusicPlayer();
-
-            // Assert
-            expect(callPlayMusic).toHaveBeenCalled();
-        });
-    });
 });
