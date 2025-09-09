@@ -279,7 +279,7 @@ export class AudioContainer extends ObserverComponent {
     }
 
     async playMusicAudio(data: gc.Audios.AudioData) {
-        const { id, loop } = data;
+        const { id } = data;
         await this.playAudio(
             id,
             (clip, isPlay) => {
