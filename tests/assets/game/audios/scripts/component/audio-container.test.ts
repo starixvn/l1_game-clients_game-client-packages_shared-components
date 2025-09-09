@@ -157,7 +157,7 @@ describe("AudioContainer", () => {
         });
     });
 
-    describe("start...", () => {
+    describe("initConfigs...", () => {
         let audioConfigs: TAudioConfigs;
         beforeEach(() => {
             jest.clearAllMocks();
@@ -191,7 +191,7 @@ describe("AudioContainer", () => {
             audioManagerInstance.setAudioConfigs(audioConfigs);
 
             // Act
-            component.start();
+            component.initConfigs();
 
             // Assert
             expect(AudioUtils.getAudioInfo).toHaveBeenCalledWith(audioConfigs.audio1, "audio1");
