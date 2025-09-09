@@ -245,10 +245,19 @@ export class AudioContainer extends ObserverComponent {
     enableMusic(musicEnable: boolean) {
         this.isPlayMusic = musicEnable;
         if (!musicEnable) {
-            this.stopAudio(this.musicSource);
+            this.stopAllMusic();
         }
     }
 
+    protected stopAllMusic() {
+        this.stopAudio(this.musicSource);
+    }
+
+    /**
+     * Update volume of music source
+     * @param volume 
+     * @param duration 
+     */
     updateVolumeMusicSource(volume: number, duration: number) {
         tween(this.musicSource).to(duration, { volume: volume }).start();
     }
@@ -273,10 +282,14 @@ export class AudioContainer extends ObserverComponent {
         await this.playAudio(
             id,
             (clip, isPlay) => {
-                isPlay === this.isPlayMusic && this.playSourceClip(this.musicSource, clip);
+                this.handlePlayMusic(id, isPlay, clip);
             },
             this.isPlayMusic
         );
+    }
+
+    protected handlePlayMusic(id: string, isPlay: boolean, clip: AudioClip) {
+        isPlay === this.isPlayMusic && this.playSourceClip(this.musicSource, clip);
     }
 
     protected stopAudio(audioSource: AudioSource) {
