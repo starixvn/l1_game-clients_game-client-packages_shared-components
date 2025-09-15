@@ -1,11 +1,12 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, instantiate, Label, Node, Prefab } from "cc";
+import { _decorator, instantiate, Label, Node, Prefab } from "cc";
+import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { BaseBetDetailLogItem, BetDetailLogItemType } from "./bet-detail-log-item";
 
 const { ccclass, property } = _decorator;
 
 @ccclass()
-export class BetDetailLogTable extends Component {
+export class BetDetailLogTable extends ObserverComponent {
     @property(Node)
     body: Node = null;
 
