@@ -105,10 +105,12 @@ export class NestedScrollManager extends Component {
                 && this.childNeedScroll(child)
             ) {
                 if (!child.enabled) {
+                    console.log('enable ScrollView  ', child.node.name);
                     child.enabled = true;
                 }
             } else {
                 if (child.enabled) {
+                    console.log('OFFFFF ScrollView  ', child.node.name);
                     this.disableScrollChild(child);
                 }
             }
