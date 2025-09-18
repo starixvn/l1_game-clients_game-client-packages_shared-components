@@ -112,17 +112,18 @@ export class NestedScrollManager extends Component {
                 }
             } else {
                 if (child.enabled) {
-                    if (!needScroll) {
-                        console.log('OFFFFF ScrollView  ', child.node.name, 'not need scroll');
-                    }
 
-                    if (!isInside) {
-                        console.log('OFFFFF ScrollView  ', child.node.name, 'not inside');
-                        console.log('childBox x = ', childBox.x, 'y = ', childBox.y, 'width = ', childBox.width, 'height = ', childBox.height);
-                        console.log('parentViewport x = ', parentViewport.x, 'y = ', parentViewport.y, 'width = ', parentViewport.width, 'height = ', parentViewport.height);
-                    }
                     this.disableScrollChild(child);
                 }
+            }
+            if (!needScroll) {
+                console.log('OFFFFF ScrollView  ', child.node.name, 'not need scroll');
+            }
+
+            if (!isInside) {
+                console.log('OFFFFF ScrollView  ', child.node.name, 'not inside');
+                console.log('childBox x = ', childBox.x, 'y = ', childBox.y, 'width = ', childBox.width, 'height = ', childBox.height);
+                console.log('parentViewport x = ', parentViewport.x, 'y = ', parentViewport.y, 'width = ', parentViewport.width, 'height = ', parentViewport.height);
             }
         }
     }
