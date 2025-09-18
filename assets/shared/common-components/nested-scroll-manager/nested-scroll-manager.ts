@@ -97,6 +97,7 @@ export class NestedScrollManager extends Component {
         }
 
         const parentViewport = this.getWorldRect(this.parentScrollView.node);
+        console.log('y = ', parentViewport.y, 'height = ', parentViewport.height);
 
         for (const child of this.childScrollViews) {
             const childBox = this.getWorldRect(child.node);
@@ -110,9 +111,7 @@ export class NestedScrollManager extends Component {
                 }
             } else {
                 if (child.enabled) {
-                    console.log('OFFFFF ScrollView  ', child.node.name, needScroll);
-                    console.log('childBox x = ', childBox.x, 'y = ', childBox.y, 'width = ', childBox.width, 'height = ', childBox.height);
-                    console.log('parentViewport x = ', parentViewport.x, 'y = ', parentViewport.y, 'width = ', parentViewport.width, 'height = ', parentViewport.height);
+                    console.log('OFFFFF ScrollView  ', child.node.name, isInside);
                     this.disableScrollChild(child);
                 }
             }
