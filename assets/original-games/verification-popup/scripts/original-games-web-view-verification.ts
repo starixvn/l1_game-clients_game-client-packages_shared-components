@@ -1,12 +1,11 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label } from "cc";
+import { _decorator } from "cc";
 import Observer from "observer";
-import LoadWebView from "../../../shared/common-components/web-view/load-web-view";
 import WebViewVerification from "db://shared-components/game/verification-popup/scripts/web-view-verification";
 
 const { UrlUtils, PFVerification } = gc;
-const { handle, render } = Observer;
-const { ccclass, property } = _decorator;
+const { handle } = Observer;
+const { ccclass } = _decorator;
 
 @ccclass
 export default class OriginalGamesWebViewVerification extends WebViewVerification {
