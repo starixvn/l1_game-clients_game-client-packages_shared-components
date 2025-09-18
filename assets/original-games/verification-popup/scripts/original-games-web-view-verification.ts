@@ -9,6 +9,11 @@ const { ccclass } = _decorator;
 
 @ccclass
 export default class OriginalGamesWebViewVerification extends WebViewVerification {
+    onLoad() {
+        super.onLoad();
+        this.initUrl();
+    }
+
     @handle(PFVerification.WebViewPFVerificationHandlers.GetVerificationURL)
     initUrl(specialDirection = "", scrollToId = "") {
         const theme = "original";
