@@ -88,7 +88,7 @@ export class NestedScrollManager extends Component {
     getWorldRect(node: Node): Rect {
         const transform = node.getComponent(UITransform);
         const pos = node.getWorldPosition();
-        return new Rect(pos.x - transform.width * transform.anchorX, pos.y - transform.width * transform.anchorY, transform.width, transform.height);
+        return new Rect(pos.x - transform.width * transform.anchorX, pos.y - transform.height * transform.anchorY, transform.width, transform.height);
     }
 
     updateParentScrolling() {
