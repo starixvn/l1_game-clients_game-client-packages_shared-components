@@ -103,27 +103,18 @@ export class NestedScrollManager extends Component {
 
             const isInside = this.isFullyInside(childBox, parentViewport);
             const needScroll = this.childNeedScroll(child);
-            if (isInside
-                && needScroll
-            ) {
+            if (isInside && needScroll) {
                 if (!child.enabled) {
                     console.log('enable ScrollView  ', child.node.name);
                     child.enabled = true;
                 }
             } else {
                 if (child.enabled) {
-
+                    console.log('OFFFFF ScrollView  ', child.node.name, needScroll);
+                    console.log('childBox x = ', childBox.x, 'y = ', childBox.y, 'width = ', childBox.width, 'height = ', childBox.height);
+                    console.log('parentViewport x = ', parentViewport.x, 'y = ', parentViewport.y, 'width = ', parentViewport.width, 'height = ', parentViewport.height);
                     this.disableScrollChild(child);
                 }
-            }
-            if (!needScroll) {
-                console.log('OFFFFF ScrollView  ', child.node.name, 'not need scroll');
-            }
-
-            if (!isInside) {
-                console.log('OFFFFF ScrollView  ', child.node.name, 'not inside');
-                console.log('childBox x = ', childBox.x, 'y = ', childBox.y, 'width = ', childBox.width, 'height = ', childBox.height);
-                console.log('parentViewport x = ', parentViewport.x, 'y = ', parentViewport.y, 'width = ', parentViewport.width, 'height = ', parentViewport.height);
             }
         }
     }
