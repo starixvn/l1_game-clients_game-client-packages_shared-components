@@ -211,4 +211,12 @@ export namespace FunctionUtils {
         }
         return gameConfiguration?.name || "";
     }
+
+    export const postMessageToParent = (message: any) => {
+        window.parent?.postMessage(message, "*");
+    };
+
+    export const postMessageToOriginalLobby = (action: string, payload?: any) => {
+        postMessageToParent({ action, payload });
+    };
 }

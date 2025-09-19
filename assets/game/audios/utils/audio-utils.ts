@@ -41,9 +41,8 @@ export const getGameAudioUrl = (audioValue: TAudioValue, soundId: string): strin
             ? audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? audioManager.defaultLang
             : undefined;
 
-    return `${audioManager.getRemoteGameBasePath()}/${audioManager.remoteGamePath}/${
-        langPath ? `${langPath}/` : ""
-    }${path}.mp3?v=${version}`;
+    return `${audioManager.getRemoteGameBasePath()}/${audioManager.remoteGamePath}/${langPath ? `${langPath}/` : ""
+        }${path}.mp3?v=${version}`;
 };
 
 export const getRemoteThemeAudioUrl = (audioValue: TAudioValue, soundId: string): string => {
@@ -112,8 +111,15 @@ const loadAudioClip = async (soundId: string, audioValue: any): Promise<AudioCli
 };
 
 export const getAudioObserver = () => {
-    const audioObserver = find("Canvas").getComponentsInChildren(AudioObserver);
-    return audioObserver[0];
+    const canvas = find("Canvas");
+    const audioObservers = canvas.getComponentsInChildren(AudioObserver);
+    let audioObserver: AudioObserver;
+    if (audioObservers.length === 0) {
+        audioObserver = canvas.addComponent(AudioObserver);
+    } else {
+        audioObserver = audioObservers[0];
+    }
+    return audioObserver;
 };
 
 export const playClick = () => {
