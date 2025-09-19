@@ -111,4 +111,12 @@ export namespace FunctionUtils {
         const { origin } = window.location;
         return origin.includes("localhost");
     };
+
+    export const postMessageToParent = (message: any) => {
+        window.parent?.postMessage(message, "*");
+    };
+
+    export const postMessageToOriginalLobby = (action: string, payload?: any) => {
+        postMessageToParent({ action, payload });
+    };
 }
