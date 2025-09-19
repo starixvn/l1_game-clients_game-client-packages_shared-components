@@ -1,11 +1,12 @@
 import gc from "@sg/game-client-base";
 import { Label, Node, Sprite, SpriteFrame, _decorator } from "cc";
 import Observer from "observer";
-
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
+import { FunctionUtils } from "db://shared-components/shared/utils/function-utils";
+import { siteConfigs } from "db://assets/scripts/site-configs";
 
 const { Player, Bet, FormatUtils, GameConfigs } = gc;
 
@@ -44,23 +45,32 @@ export default class MainPlayerProfile extends ObserverComponent {
         return this.containerEffect;
     }
 
-    @render(MainPlayerStore, (store) => store.name)
+    @render(MainPlayerStore, (store) => store.displayName)
     setName(text: string) {
         this.lblName && (this.lblName.string = text);
     }
 
-    @render(MainPlayerStore, (store) => store.avatarId)
-    async loadAvatar(avatarId: number) {
+    @render(MainPlayerStore, (store) => store.preferredAvatar)
+    async loadAvatar(preferred: { url?: string; id?: number }) {
         if (!this.sprAvatar) {
             return;
         }
-
-        const spriteFrame = await bundleManager.loadSharedAsset<SpriteFrame>(`images/avatars/${avatarId}/spriteFrame`, SpriteFrame);
-        if (spriteFrame) {
-            this.setAvatar(spriteFrame);
+        if (preferred.id) {
+            const spriteFrame = await bundleManager.loadSharedAsset<SpriteFrame>(`images/avatars/${preferred.id}/spriteFrame`, SpriteFrame);
+            if (spriteFrame) {
+                this.setAvatar(spriteFrame);
+            }
+        }
+        if (preferred.url) {
+            const spriteFrame = await FunctionUtils.loadAvatarFromUrl(preferred.url, this.getRemoteAvatarBasePath());
+            if (spriteFrame) {
+                this.setAvatar(spriteFrame);
+            }
         }
     }
-
+    getRemoteAvatarBasePath() {
+        return `${gc.UrlUtils.buildShareResource(siteConfigs)}/avatars/default.png`;
+    }
     setAvatar(frame: SpriteFrame) {
         this.sprAvatar && (this.sprAvatar.spriteFrame = frame);
     }

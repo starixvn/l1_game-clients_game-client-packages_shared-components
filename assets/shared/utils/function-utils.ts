@@ -1,4 +1,4 @@
-import { Asset, Node, assetManager, find, screen, warn } from "cc";
+import { Asset, ImageAsset, Node, assetManager, find, screen, warn, SpriteFrame, Texture2D } from "cc";
 import { settings } from "../../../../../assets/game/scripts/game-settings";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
 
@@ -17,6 +17,50 @@ export namespace FunctionUtils {
         });
     };
 
+    const createSpriteFrameFromImageAsset = (imageAsset: ImageAsset): SpriteFrame => {
+        const spriteFrame = new SpriteFrame();
+        const texture = new Texture2D();
+        texture.image = imageAsset;
+        spriteFrame.texture = texture;
+        return spriteFrame;
+    };
+
+    const loadImageAssetFromUrl = async (url: string, errorMessage: string): Promise<ImageAsset> => {
+        return new Promise<ImageAsset>((resolve, reject) => {
+            assetManager.loadRemote<ImageAsset>(url, (err, asset) => {
+                if (err || !asset) {
+                    reject(err || new Error(errorMessage));
+                } else {
+                    resolve(asset);
+                }
+            });
+        });
+    };
+
+
+    const checkCorsAvailability = async (url: string): Promise<void> => {
+        await fetch(url, { method: "HEAD", mode: "cors" });
+    };
+
+    export const loadAvatarFromUrl = async (playerAvatarUrl: string, defaultAvatarUrl: string): Promise<SpriteFrame | null> => {
+        try {
+            await checkCorsAvailability(playerAvatarUrl);
+            const playerImageAsset = await loadImageAssetFromUrl(playerAvatarUrl, "Invalid player avatar image");
+            return createSpriteFrameFromImageAsset(playerImageAsset);
+
+        } catch (error) {
+            console.warn(`Cannot load player avatar from URL: ${playerAvatarUrl}`, error);
+
+            try {
+                const defaultImageAsset = await loadImageAssetFromUrl(defaultAvatarUrl, "Invalid default avatar image");
+                return createSpriteFrameFromImageAsset(defaultImageAsset);
+
+            } catch (fallbackError) {
+                console.warn("Cannot load default avatar", fallbackError);
+                return null;
+            }
+        }
+    };
     export const getNamespace = () => {
         if (settings?.observerNamespace) {
             return settings.observerNamespace;
