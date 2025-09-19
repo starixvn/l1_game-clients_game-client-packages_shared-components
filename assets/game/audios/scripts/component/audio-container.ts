@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, AudioClip, AudioSource, game, JsonAsset, log, sys, tween } from "cc";
 import Observer from "observer";
 
+import { VolumeHandlers, VolumeStore } from "db://shared-components/shared/common-components/volume/handlers";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { AudioUtils } from "../../utils";
 import { audioManager } from "../audio-manager";
@@ -91,12 +92,27 @@ export class AudioContainer extends ObserverComponent {
             this.registerAudioHandlers();
             this.callPlayMusic();
             this.preloadAudio();
+            this.loadVolume();
         });
     }
 
     onDestroy(): void {
         super.onDestroy();
         window.removeEventListener("message", this.handleSoundEventFromParent);
+    }
+
+    @handle(VolumeHandlers, (handle) => handle.onLoadStorage())
+    loadVolume() {}
+
+    @render(VolumeStore, (store) => store.SFXVolume)
+    renderSFXVolume(volume: number) {
+        this.updateVolumeSFXSource(volume, 0.1);
+        this.updateVolumeStoppableSFXSource(volume, 0.1);
+    }
+
+    @render(VolumeStore, (store) => store.BGMVolume)
+    renderBGMVolume(volume: number) {
+        this.updateVolumeMusicSource(volume, 0.1);
     }
 
     getAudioConfigs(): TAudioConfigs {
@@ -262,8 +278,12 @@ export class AudioContainer extends ObserverComponent {
         tween(this.musicSource).to(duration, { volume: volume }).start();
     }
 
-    updateVoulmeStoppableSFXSource(volume: number, duration: number) {
+    updateVolumeStoppableSFXSource(volume: number, duration: number) {
         tween(this.stoppableSFXSource).to(duration, { volume: volume }).start();
+    }
+
+    updateVolumeSFXSource(volume: number, duration: number) {
+        tween(this.sfxSource).to(duration, { volume: volume }).start();
     }
 
     @render(UserSettings.UserSettingStore, (store) => store.sfxEnable)
