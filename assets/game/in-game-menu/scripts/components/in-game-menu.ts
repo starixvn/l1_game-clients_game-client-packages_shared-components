@@ -89,4 +89,9 @@ export class InGameMenu extends ObserverComponent {
         this.doCommons();
         this.handleEvent(params);
     }
+
+    onOpenVolume() {
+        this.doCommons();
+        this.handleEvent(InGameMenuEvents.OPEN_VOLUME_CONTROL);
+    }
 }
