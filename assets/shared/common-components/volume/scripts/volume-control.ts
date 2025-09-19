@@ -1,10 +1,10 @@
+import gc from "@sg/game-client-base";
 import { Slider, _decorator } from "cc";
 import Observer from "observer";
 
 import AudioCmp from "db://shared-components/game/audios/scripts/component/audio-cmp";
 import { AudioContainer } from "db://shared-components/game/audios/scripts/component/audio-container";
 import { ObserverComponent } from "../../observer-component/scripts/observer-component";
-import { VolumeHandlers, VolumeStore } from "../handlers";
 import { CustomSlider } from "./custom-slider";
 import { VolumeControlContainer } from "./volume-control-container";
 
@@ -31,12 +31,8 @@ export class VolumeControl extends ObserverComponent {
         super.onLoad();
         this.sliderBGM?.node.on("slide", this.handleSlideBGM, this);
         this.sliderSFX?.node.on("slide", this.handleSlideSFX, this);
-        this.loadStorage();
         this.loadAudioContainer();
     }
-
-    @handle(VolumeHandlers, (handle) => handle.onLoadStorage())
-    loadStorage() {}
 
     loadAudioContainer() {
         this.audioContainer = this.node.parent?.getComponent(VolumeControlContainer)?.audioContainer;
@@ -45,26 +41,26 @@ export class VolumeControl extends ObserverComponent {
         }
     }
 
-    @render(VolumeStore, (store) => store.SFXVolume)
+    @render(gc.UserSettings.UserSettingStore, (store) => store.sfxVolume)
     renderSFXValue(value: number) {
         this.sliderSFX.progress = value;
-        this.updateSFXVolume(value);
         this.sliderSFX.updateSliderBar(value);
+        this.SFXAudioCmp.updateDisplay(value > 0);
     }
 
-    @render(VolumeStore, (store) => store.BGMVolume)
+    @render(gc.UserSettings.UserSettingStore, (store) => store.bgmVolume)
     renderBGMValue(value: number) {
         this.sliderBGM.progress = value;
-        this.updateBGMVolume(value);
         this.sliderBGM.updateSliderBar(value);
+        this.BGMAudioCmp.updateDisplay(value > 0);
     }
 
-    @handle(VolumeHandlers, (handle, value: number) => handle.handleSFX(value))
+    @handle(gc.UserSettings.UserSettingHandlers, (handle, value: number) => handle.setSfxVolume(value))
     handleSFX(value: number) {
         return value;
     }
 
-    @handle(VolumeHandlers, (handle, value: number) => handle.handleBGM(value))
+    @handle(gc.UserSettings.UserSettingHandlers, (handle, value: number) => handle.setBGMVolume(value))
     handleBGM(value: number) {
         return value;
     }
@@ -75,16 +71,5 @@ export class VolumeControl extends ObserverComponent {
 
     handleSlideSFX(slider: Slider) {
         this.handleSFX(slider.progress);
-    }
-
-    updateSFXVolume(value: number) {
-        this.audioContainer.updateVolumeStoppableSFXSource(value, 0.1);
-        this.audioContainer.updateVolumeSFXSource(value, 0.1);
-        this.SFXAudioCmp.updateDisplay(value > 0);
-    }
-
-    updateBGMVolume(value: number) {
-        this.audioContainer.updateVolumeMusicSource(value, 0.1);
-        this.BGMAudioCmp.updateDisplay(value > 0);
     }
 }

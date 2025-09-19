@@ -2,7 +2,6 @@ import gc from "@sg/game-client-base";
 import { _decorator, AudioClip, AudioSource, game, JsonAsset, log, sys, tween } from "cc";
 import Observer from "observer";
 
-import { VolumeHandlers, VolumeStore } from "db://shared-components/shared/common-components/volume/handlers";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { AudioUtils } from "../../utils";
 import { audioManager } from "../audio-manager";
@@ -92,7 +91,6 @@ export class AudioContainer extends ObserverComponent {
             this.registerAudioHandlers();
             this.callPlayMusic();
             this.preloadAudio();
-            this.loadVolume();
         });
     }
 
@@ -101,16 +99,13 @@ export class AudioContainer extends ObserverComponent {
         window.removeEventListener("message", this.handleSoundEventFromParent);
     }
 
-    @handle(VolumeHandlers, (handle) => handle.onLoadStorage())
-    loadVolume() {}
-
-    @render(VolumeStore, (store) => store.SFXVolume)
+    @render(gc.UserSettings.UserSettingStore, (store) => store.sfxVolume)
     renderSFXVolume(volume: number) {
         this.updateVolumeSFXSource(volume, 0.1);
         this.updateVolumeStoppableSFXSource(volume, 0.1);
     }
 
-    @render(VolumeStore, (store) => store.BGMVolume)
+    @render(gc.UserSettings.UserSettingStore, (store) => store.bgmVolume)
     renderBGMVolume(volume: number) {
         this.updateVolumeMusicSource(volume, 0.1);
     }
@@ -137,7 +132,7 @@ export class AudioContainer extends ObserverComponent {
             if (!!this.remotePath) {
                 await audioManager.getRemoteGameConfigs(this.remotePath);
             }
-        } catch (error) { }
+        } catch (error) {}
     }
 
     protected initializeAudioConfigs() {
@@ -252,10 +247,10 @@ export class AudioContainer extends ObserverComponent {
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
-    audiosLoaded() { }
+    audiosLoaded() {}
 
     @handle(Audios.AudioHandler, (handle) => handle.playRandomMusic())
-    callPlayMusic() { }
+    callPlayMusic() {}
 
     @render(UserSettings.UserSettingStore, (store) => store.musicEnable, { fireImmediately: false })
     enableMusic(musicEnable: boolean) {
