@@ -106,13 +106,10 @@ export class NestedScrollManager extends Component {
             const needScroll = this.childNeedScroll(child);
             if (isInside && needScroll) {
                 if (!child.enabled) {
-                    console.log('enable ScrollView  ', child.node.name);
                     child.enabled = true;
                 }
             } else {
                 if (child.enabled) {
-                    console.log('OFFFFF ScrollView  ', child.node.name, isInside);
-                    console.log('aaaaaaaaaaaaaaaaaaaaaaa   y = ', childBox.y, 'height = ', childBox.height);
                     this.disableScrollChild(child);
                 }
             }
@@ -122,6 +119,10 @@ export class NestedScrollManager extends Component {
     private isFullyInside(innerRect: Rect, outerRect: Rect, isVertical: boolean): boolean {
         const nearlyEqual = (a, b) => {
             return Math.abs(a - b) < 1;
+        }
+
+        if (innerRect.height > outerRect.height && (innerRect.yMax >= outerRect.yMax || nearlyEqual(innerRect.yMax, outerRect.yMax))) {
+            return true;
         }
 
         const checkInner = (minI, maxI, minO, maxO) => {
