@@ -13,7 +13,7 @@ export class VolumeStore {
     private readonly STORAGE_KEY_SFX_VOLUME = "SFXVolume";
     private readonly STORAGE_KEY_BGM_VOLUME = "BGMVolume";
 
-    private _SFXVolume: number = 0;
+    private _SFXVolume: number;
     public get SFXVolume(): number {
         return this._SFXVolume;
     }
@@ -23,7 +23,7 @@ export class VolumeStore {
         this._SFXVolume = value;
     }
 
-    private _BGMVolume: number = 0;
+    private _BGMVolume: number;
     public get BGMVolume(): number {
         return this._BGMVolume;
     }
