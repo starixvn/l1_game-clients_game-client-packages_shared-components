@@ -41,8 +41,8 @@ export const getGameAudioUrl = (audioValue: TAudioValue, soundId: string): strin
             ? audioValue.supportedLanguages.find((lang) => lang === currentLang) ?? audioManager.defaultLang
             : undefined;
 
-    return `${audioManager.getRemoteGameBasePath()}/${audioManager.remoteGamePath}/${langPath ? `${langPath}/` : ""
-        }${path}.mp3?v=${version}`;
+    const localizationPath = langPath ? `${langPath}/` : "";
+    return `${audioManager.getRemoteGameBasePath()}/${audioManager.remoteGamePath}/${localizationPath}${path}.mp3?v=${version}`;
 };
 
 export const getRemoteThemeAudioUrl = (audioValue: TAudioValue, soundId: string): string => {
