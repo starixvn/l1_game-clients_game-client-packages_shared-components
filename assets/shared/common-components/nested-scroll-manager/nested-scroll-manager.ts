@@ -102,7 +102,7 @@ export class NestedScrollManager extends Component {
         for (const child of this.childScrollViews) {
             const childBox = this.getWorldRect(child.node);
 
-            const isInside = this.isFullyInside(childBox, parentViewport);
+            const isInside = this.isFullyInside(childBox, parentViewport, this.parentScrollView.vertical);
             const needScroll = this.childNeedScroll(child);
             if (isInside && needScroll) {
                 if (!child.enabled) {
@@ -119,8 +119,20 @@ export class NestedScrollManager extends Component {
         }
     }
 
-    private isFullyInside(innerRect: Rect, outerRect: Rect): boolean {
-        return outerRect.containsRect(innerRect);
+    private isFullyInside(innerRect: Rect, outerRect: Rect, isVertical: boolean): boolean {
+        const nearlyEqual = (a, b) => {
+            return Math.abs(a - b) < 1;
+        }
+
+        const checkInner = (minI, maxI, minO, maxO) => {
+            return (minI >= minO || nearlyEqual(minI, minO)) && (maxI <= maxO || nearlyEqual(maxI, maxO));
+        }
+
+        if (isVertical) {
+            return checkInner(innerRect.yMin, innerRect.yMax, outerRect.yMin, outerRect.yMax);
+        } else {
+            return checkInner(innerRect.xMin, innerRect.xMax, outerRect.xMin, outerRect.xMax);
+        }
     }
 
     private childNeedScroll(child: ScrollView): boolean {
