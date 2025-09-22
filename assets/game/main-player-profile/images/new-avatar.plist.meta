@@ -145,6 +145,52 @@
       ],
       "subMetas": {}
     },
+    "bf5a6": {
+      "importer": "sprite-frame",
+      "uuid": "c34444bc-446b-42c2-b0d2-55ecf6684425@bf5a6",
+      "displayName": "",
+      "id": "bf5a6",
+      "name": "avatar_overlay",
+      "userData": {
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": 0,
+        "trimX": 3,
+        "trimY": 157,
+        "width": 120,
+        "height": 120,
+        "rawWidth": 120,
+        "rawHeight": 120,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [],
+          "indexes": [],
+          "uv": [],
+          "nuv": [],
+          "minPos": [],
+          "maxPos": []
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "2cc5ab34-e88a-419a-974a-cc4fa3ab1b80@6c48a",
+        "atlasUuid": "c34444bc-446b-42c2-b0d2-55ecf6684425",
+        "trimType": "auto"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
     "8c352": {
       "importer": "sprite-frame",
       "uuid": "c34444bc-446b-42c2-b0d2-55ecf6684425@8c352",
@@ -331,7 +377,7 @@
     }
   },
   "userData": {
-    "atlasTextureName": "new-avatar.png",
+    "atlasTextureName": "new-avatar.webp",
     "format": 3,
     "uuid": "c34444bc-446b-42c2-b0d2-55ecf6684425",
     "textureUuid": "2cc5ab34-e88a-419a-974a-cc4fa3ab1b80@6c48a"
