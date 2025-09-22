@@ -56,16 +56,16 @@ export default class DraggableItem extends Component {
         this.isTouchStarted = true;
         this.touchCallback.start(this.node);
         this.startPosition = v2(this.target.position.x, this.target.position.y);
-        this.startTouchLocation = e.getLocation();
+        this.startTouchLocation = e.getUILocation();
     }
 
     onTouchMove(e: EventTouch) {
         if (!this.isTouchStarted) {
             return;
         }
-        const delta = v2(e.getLocation()).subtract(this.startTouchLocation);
+        const delta = v2(e.getUILocation()).subtract(this.startTouchLocation);
         this.target.position = v3(delta.x + this.startPosition.x, delta.y + this.startPosition.y);
-        this.touchCallback.move(e.getLocation());
+        this.touchCallback.move(e.getUILocation());
     }
 
     onTouchEnd(e: EventTouch) {
@@ -77,7 +77,7 @@ export default class DraggableItem extends Component {
     }
 
     isClicked(e: EventTouch): boolean {
-        const delta = v2(e.getLocation()).subtract(this.startTouchLocation);
+        const delta = v2(e.getUILocation()).subtract(this.startTouchLocation);
         return Math.abs(delta.x) + Math.abs(delta.y) < 10;
     }
 
