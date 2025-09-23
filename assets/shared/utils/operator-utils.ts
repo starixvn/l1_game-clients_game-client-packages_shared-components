@@ -7,6 +7,7 @@ export const OperatorAlias = {
     VG: "VGaming",
     SG: "Saba",
     TIP88: "Tip88",
+    "12C": "12C",
 };
 
 export namespace OperatorUtils {
