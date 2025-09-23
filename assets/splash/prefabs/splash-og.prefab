@@ -693,8 +693,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_mobility": 0,
@@ -721,8 +721,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 258,
-      "height": 108
+      "width": 512,
+      "height": 213
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -758,7 +758,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "e5d4f8b4-37c8-4373-9523-d587b3660f2e@f9941",
+      "__uuid__": "7641a5bd-5012-43ee-aba5-dad7b85be52b@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -1077,27 +1077,6 @@
     "fileId": "eefdnYIuBDA576DTZdhQPP"
   },
   {
-    "__type__": "af793Um7lJKKYhssZoCIqEA",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 34
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 48
-    },
-    "messageLabel": {
-      "__id__": 38
-    },
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "9e9vl76tJCepRu9JZ8l+Zn"
-  },
-  {
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
@@ -1107,7 +1086,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 50
+      "__id__": 48
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -1135,7 +1114,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 52
+      "__id__": 50
     },
     "_alignFlags": 4,
     "_target": null,
@@ -1160,6 +1139,27 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "3doZJ1gFtPkYJqF6ZY+UAN"
+  },
+  {
+    "__type__": "37dfeuCV6FKSYBvNyS6IJIg",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 34
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 52
+    },
+    "messageLabel": {
+      "__id__": 38
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "fccwsOnt1CcJYi61FVK5bk"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -2117,9 +2117,7 @@
       "__id__": 54
     },
     "prefabCustomize": null,
-    "nodeLogoContainer": {
-      "__id__": 62
-    },
+    "nodeLogoContainer": null,
     "prefabLogo": {
       "__uuid__": "d4886962-38ff-4995-9dee-d952be77a2f0",
       "__expectedType__": "cc.Prefab"
