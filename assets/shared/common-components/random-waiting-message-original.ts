@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, Label, tween, Tween, UIOpacity, v3 } from "cc";
+import { _decorator, tween, v3 } from "cc";
 import { shuffle } from "lodash-es";
 import { RandomWaitingMessageLandscape } from "./random-waiting-message-landscape";
 const { ccclass, property } = _decorator;
