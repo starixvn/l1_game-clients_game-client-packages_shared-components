@@ -8,13 +8,13 @@ export class RandomWaitingMessageLandscape extends Component {
     @property(Label)
     messageLabel: Label = null;
 
-    private readonly animationDuration = 1;
-    private readonly displayMessageTime = 4;
+    public readonly animationDuration = 1;
+    public readonly displayMessageTime = 4;
     private readonly moveY = 35;
     currentIndex = 0;
     messageList = ["message_download_first_visit", "splash_check_downloading"];
     messageTween: Tween;
-    private uiOpacity: UIOpacity;
+    public uiOpacity: UIOpacity;
 
     onLoad() {
         this.uiOpacity = this.messageLabel.node.getComponent(UIOpacity) || this.messageLabel.node.addComponent(UIOpacity);
