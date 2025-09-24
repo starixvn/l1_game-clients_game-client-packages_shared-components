@@ -398,7 +398,7 @@
     "__prefab": {
       "__id__": 12
     },
-    "key": "Spaceflight.player",
+    "key": "Common.player",
     "format": 1,
     "prefix": "",
     "suffix": "",
@@ -695,7 +695,7 @@
     "__prefab": {
       "__id__": 30
     },
-    "key": "Spaceflight.glossary_bet",
+    "key": "Common.glossary_bet",
     "format": 1,
     "prefix": "",
     "suffix": "",
@@ -953,7 +953,7 @@
     "__prefab": {
       "__id__": 46
     },
-    "key": "Spaceflight.multiplier",
+    "key": "Common.title_multiplier",
     "format": 1,
     "prefix": "",
     "suffix": "",
