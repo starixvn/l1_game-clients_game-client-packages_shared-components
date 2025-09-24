@@ -33,7 +33,7 @@ export class LocalizedOriginalFont extends LocalizedFont {
                 loadRemote: false,
             },
             hi_in: {
-                name: "HindSiliguri-Medium",
+                name: "NotoSans-Medium",
                 loadRemote: false,
             },
             bn_bd: {
