@@ -32,7 +32,7 @@ export class CountDownTimer extends ObserverComponent {
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundTime)
     renderRoundTime(roundTime: number) {
-        this.lblCountdown.string = gc.Translator.commonTranslate("start_in", { time: roundTime });
+        this.lblCountdown.string = gc.Translator.commonTranslate("crash_start_in", { time: roundTime });
 
         if (roundTime <= 3 && roundTime > 0) {
             this.lblCountdown.color = new Color().fromHEX("#FF0000");
