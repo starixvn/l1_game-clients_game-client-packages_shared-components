@@ -51,6 +51,7 @@ export class NoticeOriginalGameCmp extends NoticeCmp {
 
     private updateButtonLabel(noticeInfo?: gc.Notices.NoticeInfo): void {
         if (noticeInfo === gc.Notices.NoticeInfo.LostGameConnection) {
+            this.lblTitle && (this.lblTitle.node.active = false);
             const lblButton = this.btnConfirm?.getComponentInChildren(LocalizedLabelWithFormat);
             if (lblButton) {
                 lblButton.key = "Common.reconnect";
