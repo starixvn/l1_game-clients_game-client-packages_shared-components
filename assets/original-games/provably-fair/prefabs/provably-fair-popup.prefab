@@ -9113,6 +9113,8 @@
       "__id__": 0
     },
     "fileId": "f28Y+inItKLKeeBdsKEjPb",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -20679,6 +20681,8 @@
       "__id__": 0
     },
     "fileId": "3eE39rRnhIiLwF3Q8iF4qZ",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -21383,7 +21387,7 @@
     "_overflow": 3,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "e3d36477-6fd0-4ee4-b4cc-ed05fa79994a",
+      "__uuid__": "cce3af30-87e9-4629-9c83-9793fbbe58d4",
       "__expectedType__": "cc.TTFFont"
     },
     "_isSystemFontUsed": false,
@@ -21392,7 +21396,7 @@
     "_isBold": false,
     "_isUnderline": false,
     "_underlineHeight": 2,
-    "_cacheMode": 0,
+    "_cacheMode": 1,
     "_enableOutline": false,
     "_outlineColor": {
       "__type__": "cc.Color",
