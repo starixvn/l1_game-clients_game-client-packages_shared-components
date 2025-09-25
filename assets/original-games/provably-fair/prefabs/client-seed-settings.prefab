@@ -769,7 +769,7 @@
     "_overflow": 3,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "e3d36477-6fd0-4ee4-b4cc-ed05fa79994a",
+      "__uuid__": "cbf6b70e-8a23-4b37-b5a7-aa9a65c55384",
       "__expectedType__": "cc.TTFFont"
     },
     "_isSystemFontUsed": false,
@@ -778,7 +778,7 @@
     "_isBold": false,
     "_isUnderline": false,
     "_underlineHeight": 2,
-    "_cacheMode": 0,
+    "_cacheMode": 1,
     "_enableOutline": false,
     "_outlineColor": {
       "__type__": "cc.Color",
@@ -857,8 +857,6 @@
       "__id__": 0
     },
     "fileId": "34Mef1DpdI9KMipJ+Vyj9g",
-    "instance": null,
-    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -977,7 +975,7 @@
     "_overflow": 3,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "e3d36477-6fd0-4ee4-b4cc-ed05fa79994a",
+      "__uuid__": "cbf6b70e-8a23-4b37-b5a7-aa9a65c55384",
       "__expectedType__": "cc.TTFFont"
     },
     "_isSystemFontUsed": false,
@@ -986,7 +984,7 @@
     "_isBold": false,
     "_isUnderline": false,
     "_underlineHeight": 2,
-    "_cacheMode": 0,
+    "_cacheMode": 1,
     "_enableOutline": false,
     "_outlineColor": {
       "__type__": "cc.Color",
