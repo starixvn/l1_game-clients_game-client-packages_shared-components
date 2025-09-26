@@ -52,7 +52,7 @@ export class ProvablyFairPopup extends ObserverComponent {
         utils.AnalyticsManager.trackEvent(gc.Shared.utils.TrackingEvent.Button, {
             location: FunctionUtils.getNamespace(),
             action: gc.Shared.utils.TrackingAction.Show,
-            object_name: utils.PFObjectName.ViewPFGuide,
+            object_name: utils.PFObjectName.PFUseGuide,
             game_name: FunctionUtils.getNamespace(),
         });
     }
@@ -78,6 +78,11 @@ export class ProvablyFairPopup extends ObserverComponent {
 
         finalHash && this.lblFinalHash.setString(finalHash);
         this.lblFinalHash.setActive(!!finalHash);
+        this.updateClientSeedInfo(clientSeeds);
+        this.nodeDisabledVerification.active = !result;
+    }
+
+    protected updateClientSeedInfo(clientSeeds: gc.GameServiceMessage.SingleClientSeed[]) {
         this.listClientSeedInfo.forEach((clientSeedInfo) => {
             clientSeedInfo.activeDisabledBg(true);
         });
@@ -88,7 +93,6 @@ export class ProvablyFairPopup extends ObserverComponent {
                 info.activeDisabledBg(false);
             });
         }
-        this.nodeDisabledVerification.active = !result;
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
