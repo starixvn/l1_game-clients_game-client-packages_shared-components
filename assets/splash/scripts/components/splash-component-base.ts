@@ -147,10 +147,14 @@ export default class SplashComponentBase extends Component {
     updateProgressBar(progress: number) {
         if (this.percentResourceLoad) {
             if (progress >= this.progress) {
-                this.percentResourceLoad.string = `${Math.round(progress * 100)}%`;
-                this.progress = progress;
+                this.handleProgressIndex(progress);
             }
         }
+    }
+
+    handleProgressIndex(progress: number) {
+        this.percentResourceLoad.string = `${Math.round(progress * 100)}%`;
+        this.progress = progress;
     }
 
     async preloadAssets() {
