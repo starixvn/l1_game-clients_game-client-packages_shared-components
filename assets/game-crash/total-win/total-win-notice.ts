@@ -32,7 +32,7 @@ export class TotalWinNotice extends ObserverComponent {
             this.addSoundWinning();
             ComponentUtils.hideOtherNotices(this.othersNoticeNode);
             this.updateTotalWinAmount(settlementStatus?.bet);
-            this.lblReachMaxWin.string = `(${Translator.gameTranslate("reach_max_win")})`;
+            this.lblReachMaxWin.string = `(${Translator.translate("Common.you_reach_max_win")})`;
             this.lblReachMaxWin.node.active = settlementStatus?.reachMaxWin;
             this.showNotice(true);
             ComponentUtils.autoDisappear(this.node, false);
