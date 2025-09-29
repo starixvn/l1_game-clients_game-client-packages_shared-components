@@ -97,7 +97,6 @@ export class NestedScrollManager extends Component {
         }
 
         const parentViewport = this.getWorldRect(this.parentScrollView.node);
-        console.log('y = ', parentViewport.y, 'height = ', parentViewport.height);
 
         for (const child of this.childScrollViews) {
             const childBox = this.getWorldRect(child.node);
