@@ -689,12 +689,12 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432@52dc0",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@52dc0",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 2,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -705,7 +705,7 @@
     "_isTrimmedMode": false,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""
@@ -1022,7 +1022,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432@e5028",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@e5028",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -1038,7 +1038,7 @@
     "_isTrimmedMode": true,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""
@@ -1817,12 +1817,12 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432@de595",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@de595",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 2,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -1833,7 +1833,7 @@
     "_isTrimmedMode": false,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""
@@ -2150,7 +2150,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432@e5028",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@e5028",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -2166,7 +2166,7 @@
     "_isTrimmedMode": true,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""
@@ -2536,12 +2536,12 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432@2b689",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@2b689",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 2,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -2552,7 +2552,7 @@
     "_isTrimmedMode": false,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""
@@ -2869,7 +2869,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432@e5028",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@e5028",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -2885,7 +2885,7 @@
     "_isTrimmedMode": true,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""
@@ -3280,7 +3280,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432@ef018",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@ef018",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
@@ -3296,7 +3296,7 @@
     "_isTrimmedMode": true,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""

@@ -1650,11 +1650,11 @@
       "__id__": 32
     },
     "errorBackground": {
-      "__uuid__": "633480e4-5419-4fba-8e2d-8d22327e7088@bcc80",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@bcc80",
       "__expectedType__": "cc.SpriteFrame"
     },
     "infoBackground": {
-      "__uuid__": "633480e4-5419-4fba-8e2d-8d22327e7088@bcc80",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@bcc80",
       "__expectedType__": "cc.SpriteFrame"
     },
     "btnConfirm": {
