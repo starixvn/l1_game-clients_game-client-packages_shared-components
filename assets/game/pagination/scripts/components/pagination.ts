@@ -27,8 +27,8 @@ export default class Pagination extends ObserverComponent {
 
     protected pageButtons = 5;
     protected control: any = null;
-    protected totalPages = 0;
-    protected currentPage = 1;
+    public totalPages = 0;
+    public currentPage = 1;
     protected distanceYetChaos = Math.round(this.pageButtons / 2);
     protected distanceNumberCenter = Math.floor(this.pageButtons / 2);
 
