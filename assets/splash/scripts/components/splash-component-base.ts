@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Component, director, instantiate, Label, log, Node, Prefab } from "cc";
+import { _decorator, Button, Component, director, instantiate, Label, log, Node, Prefab } from "cc";
 import Observer from "observer";
 
 import { settings } from "db://assets/game/scripts/game-settings";
@@ -43,6 +43,9 @@ export default class SplashComponentBase extends Component {
     @property(Prefab)
     prefabLogo: Prefab = null;
 
+    @property(Button)
+    btnStartGame: Button = null;
+
     gameConnection: GameConnection = null;
 
     protected system: number = AppTypes.Club;
@@ -50,6 +53,10 @@ export default class SplashComponentBase extends Component {
     protected progress = 0;
 
     onLoad() {
+        if (this.btnStartGame) {
+            this.btnStartGame.node.active = false;
+            this.btnStartGame.node.on("click", this.onClickStartGame, this);
+        }
         this.preloadAssetsComp = this.getComponent(PreloadAssets);
         this.initSentry();
         gc.initMobxLogger();
@@ -187,10 +194,20 @@ export default class SplashComponentBase extends Component {
                     sentryLogger?.logError(error);
                 } else {
                     this.updateProgressBar(1);
-                    director.loadScene(sceneName);
+                    this.showStartGameButton();
                 }
             }
         );
+    }
+
+    showStartGameButton() {
+        if (this.btnStartGame) {
+            this.btnStartGame.node.active = true;
+        }
+    }
+
+    onClickStartGame() {
+        director.loadScene(this.sceneName);
     }
 
     get sceneName(): any {
@@ -202,10 +219,10 @@ export default class SplashComponentBase extends Component {
     }
 
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
-    triggerRecheckIn() {}
+    triggerRecheckIn() { }
 
     @handle(ChipSetting.ChipSettingHandler)
-    loadChipSetting() {}
+    loadChipSetting() { }
 
     @render(Auth.AuthStore, (store) => store.isShowSignName, { fireImmediately: false })
     handleShowSignName(isShowSignName: boolean) {
