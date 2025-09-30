@@ -14723,6 +14723,8 @@
       "__id__": 0
     },
     "fileId": "5eidewiuBOL4Au7KUgkMa3",
+    "instance": null,
+    "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
   },
   {
@@ -21420,7 +21422,7 @@
     "_overflow": 3,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "cce3af30-87e9-4629-9c83-9793fbbe58d4",
+      "__uuid__": "cbf6b70e-8a23-4b37-b5a7-aa9a65c55384",
       "__expectedType__": "cc.TTFFont"
     },
     "_isSystemFontUsed": false,
