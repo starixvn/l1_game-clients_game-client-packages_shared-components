@@ -142,7 +142,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 68.02734375,
+      "width": 177.908203125,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -178,7 +178,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "Crash X",
+    "_string": "Crash X.game_name",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 18,
@@ -848,7 +848,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432@d9517",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@d9517",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
@@ -864,7 +864,7 @@
     "_isTrimmedMode": true,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "92ee9e47-d2b3-4678-a65b-ef38b604a432",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""
