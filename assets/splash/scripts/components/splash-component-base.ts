@@ -46,6 +46,9 @@ export default class SplashComponentBase extends Component {
     @property(Button)
     btnStartGame: Button = null;
 
+    @property(Node)
+    loadingContainer: Node = null;
+
     gameConnection: GameConnection = null;
 
     protected system: number = AppTypes.Club;
@@ -203,6 +206,9 @@ export default class SplashComponentBase extends Component {
     showStartGameButton() {
         if (this.btnStartGame) {
             this.btnStartGame.node.active = true;
+        }
+        if (this.loadingContainer) {
+            this.loadingContainer.active = false;
         }
     }
 
