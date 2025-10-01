@@ -25,9 +25,9 @@ export namespace FunctionUtils {
         return spriteFrame;
     };
 
-    const loadImageAssetFromUrl = async (url: string, errorMessage: string): Promise<ImageAsset> => {
+    const loadImageAssetFromUrl = async (url: string, errorMessage: string, ext?: string): Promise<ImageAsset> => {
         return new Promise<ImageAsset>((resolve, reject) => {
-            assetManager.loadRemote<ImageAsset>(url, (err, asset) => {
+            assetManager.loadRemote<ImageAsset>(url, { ext: `.${ext}` }, (err, asset) => {
                 if (err || !asset) {
                     reject(err || new Error(errorMessage));
                 } else {
@@ -37,24 +37,22 @@ export namespace FunctionUtils {
         });
     };
 
-
-    const checkCorsAvailability = async (url: string): Promise<void> => {
-        await fetch(url, { method: "HEAD", mode: "cors" });
+    const checkCorsAvailability = async (url: string): Promise<Response> => {
+        return fetch(url, { method: "HEAD", mode: "cors" });
     };
 
     export const loadAvatarFromUrl = async (playerAvatarUrl: string, defaultAvatarUrl: string): Promise<SpriteFrame | null> => {
         try {
-            await checkCorsAvailability(playerAvatarUrl);
-            const playerImageAsset = await loadImageAssetFromUrl(playerAvatarUrl, "Invalid player avatar image");
+            const preflight = await checkCorsAvailability(playerAvatarUrl);
+            const ext = preflight.headers.get("content-type")?.split("/")?.[1] ?? "png";
+            const playerImageAsset = await loadImageAssetFromUrl(playerAvatarUrl, "Invalid player avatar image", ext);
             return createSpriteFrameFromImageAsset(playerImageAsset);
-
         } catch (error) {
             console.warn(`Cannot load player avatar from URL: ${playerAvatarUrl}`, error);
 
             try {
                 const defaultImageAsset = await loadImageAssetFromUrl(defaultAvatarUrl, "Invalid default avatar image");
                 return createSpriteFrameFromImageAsset(defaultImageAsset);
-
             } catch (fallbackError) {
                 console.warn("Cannot load default avatar", fallbackError);
                 return null;
