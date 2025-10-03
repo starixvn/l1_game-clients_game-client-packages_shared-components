@@ -30,7 +30,7 @@
                 <key>spriteSourceSize</key>
                 <string>{80,267}</string>
                 <key>textureRect</key>
-                <string>{{817,1065},{80,267}}</string>
+                <string>{{911,1103},{80,267}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -45,7 +45,7 @@
                 <key>spriteSourceSize</key>
                 <string>{60,48}</string>
                 <key>textureRect</key>
-                <string>{{965,1289},{60,48}}</string>
+                <string>{{50,1372},{60,48}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -63,6 +63,36 @@
                 <string>{{949,637},{240,72}}</string>
                 <key>textureRotated</key>
                 <true/>
+            </dict>
+            <key>checkbox-active.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{48,48}</string>
+                <key>spriteSourceSize</key>
+                <string>{48,48}</string>
+                <key>textureRect</key>
+                <string>{{69,1239},{48,48}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>checkbox-normal.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{48,48}</string>
+                <key>spriteSourceSize</key>
+                <string>{48,48}</string>
+                <key>textureRect</key>
+                <string>{{71,1105},{48,48}}</string>
+                <key>textureRotated</key>
+                <false/>
             </dict>
             <key>icon-close-red.png</key>
             <dict>
@@ -120,7 +150,7 @@
                 <key>spriteSourceSize</key>
                 <string>{64,64}</string>
                 <key>textureRect</key>
-                <string>{{899,1133},{64,64}}</string>
+                <string>{{3,1187},{64,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -150,9 +180,9 @@
                 <key>spriteSourceSize</key>
                 <string>{72,88}</string>
                 <key>textureRect</key>
-                <string>{{899,1065},{66,80}}</string>
+                <string>{{3,1105},{66,80}}</string>
                 <key>textureRotated</key>
-                <true/>
+                <false/>
             </dict>
             <key>icon-music-off.png</key>
             <dict>
@@ -165,7 +195,7 @@
                 <key>spriteSourceSize</key>
                 <string>{64,64}</string>
                 <key>textureRect</key>
-                <string>{{899,1199},{64,64}}</string>
+                <string>{{3,1253},{64,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -180,7 +210,7 @@
                 <key>spriteSourceSize</key>
                 <string>{64,64}</string>
                 <key>textureRect</key>
-                <string>{{899,1265},{64,64}}</string>
+                <string>{{3,1743},{64,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -195,7 +225,7 @@
                 <key>spriteSourceSize</key>
                 <string>{64,64}</string>
                 <key>textureRect</key>
-                <string>{{899,1331},{64,64}}</string>
+                <string>{{3,1809},{64,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -225,7 +255,7 @@
                 <key>spriteSourceSize</key>
                 <string>{94,94}</string>
                 <key>textureRect</key>
-                <string>{{919,979},{84,92}}</string>
+                <string>{{817,1019},{84,92}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -240,7 +270,7 @@
                 <key>spriteSourceSize</key>
                 <string>{64,64}</string>
                 <key>textureRect</key>
-                <string>{{3,1722},{64,64}}</string>
+                <string>{{3,1875},{64,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -255,7 +285,7 @@
                 <key>spriteSourceSize</key>
                 <string>{64,64}</string>
                 <key>textureRect</key>
-                <string>{{3,1788},{64,64}}</string>
+                <string>{{3,1941},{64,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -334,6 +364,21 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
+            <key>overlay-text.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{96,76}</string>
+                <key>spriteSourceSize</key>
+                <string>{96,76}</string>
+                <key>textureRect</key>
+                <string>{{919,979},{96,76}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
             <key>popup-block-bg.png</key>
             <dict>
                 <key>aliases</key>
@@ -360,7 +405,7 @@
                 <key>spriteSourceSize</key>
                 <string>{369,45}</string>
                 <key>textureRect</key>
-                <string>{{965,1351},{369,45}}</string>
+                <string>{{3,1372},{369,45}}</string>
                 <key>textureRotated</key>
                 <true/>
             </dict>
@@ -390,7 +435,7 @@
                 <key>spriteSourceSize</key>
                 <string>{87,44}</string>
                 <key>textureRect</key>
-                <string>{{817,1019},{87,44}}</string>
+                <string>{{911,1057},{87,44}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -540,7 +585,7 @@
                 <key>spriteSourceSize</key>
                 <string>{40,40}</string>
                 <key>textureRect</key>
-                <string>{{981,1065},{40,40}}</string>
+                <string>{{50,1434},{40,40}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -585,7 +630,7 @@
                 <key>spriteSourceSize</key>
                 <string>{50,50}</string>
                 <key>textureRect</key>
-                <string>{{965,1133},{50,50}}</string>
+                <string>{{3,1319},{50,50}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -600,7 +645,7 @@
                 <key>spriteSourceSize</key>
                 <string>{50,50}</string>
                 <key>textureRect</key>
-                <string>{{965,1185},{50,50}}</string>
+                <string>{{55,1319},{50,50}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -615,7 +660,7 @@
                 <key>spriteSourceSize</key>
                 <string>{50,50}</string>
                 <key>textureRect</key>
-                <string>{{965,1237},{50,50}}</string>
+                <string>{{69,1187},{50,50}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -633,7 +678,7 @@
             <key>size</key>
             <string>{1024,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:02f820991632903d4aea49a237c0031e:e68876bd10204ad4a17ed1d9a6ae89ec:42d07e03c5ea52b11f8ae91872686067$</string>
+            <string>$TexturePacker:SmartUpdate:aaeb2ba80a36cc402dfed9169b50a3d6:c0220b88008422d215ab5b48dac1b5ac:42d07e03c5ea52b11f8ae91872686067$</string>
             <key>textureFileName</key>
             <string>original-games-popup.webp</string>
         </dict>
