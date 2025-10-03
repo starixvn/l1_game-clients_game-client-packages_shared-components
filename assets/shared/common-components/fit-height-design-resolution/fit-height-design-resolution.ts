@@ -1,11 +1,11 @@
 import { _decorator, Component, screen, Size, sys, view } from "cc";
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 @ccclass("FitHeightDesignResolution")
 export class FitHeightDesignResolution extends Component {
     private designResolutionSize: Size;
 
-    private timeout: any;
+    private timeout: NodeJS.Timeout;
 
     protected onLoad(): void {
         this.designResolutionSize = view.getDesignResolutionSize();
@@ -45,5 +45,4 @@ export class FitHeightDesignResolution extends Component {
     }
 
     private readonly debouncedResizeWindow = this.debounce(this.resizeWindow, 100);
-
 }

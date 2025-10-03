@@ -196,23 +196,35 @@ export default class SplashComponentBase extends Component {
                 if (error) {
                     sentryLogger?.logError(error);
                 } else {
-                    this.updateProgressBar(1);
-                    this.showStartGameButton();
+                    this.onScenePreloadSucceeded();
                 }
             }
         );
+    }
+
+    protected onScenePreloadSucceeded() {
+        this.updateProgressBar(1);
+        if (!this.btnStartGame) {
+            this.handleLoadSceneGame();
+        }
+        this.showStartGameButton();
     }
 
     showStartGameButton() {
         if (this.btnStartGame) {
             this.btnStartGame.node.active = true;
         }
+
         if (this.loadingContainer) {
             this.loadingContainer.active = false;
         }
     }
 
     onClickStartGame() {
+        this.handleLoadSceneGame();
+    }
+
+    protected handleLoadSceneGame() {
         director.loadScene(this.sceneName);
     }
 
@@ -225,10 +237,10 @@ export default class SplashComponentBase extends Component {
     }
 
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
-    triggerRecheckIn() { }
+    triggerRecheckIn() {}
 
     @handle(ChipSetting.ChipSettingHandler)
-    loadChipSetting() { }
+    loadChipSetting() {}
 
     @render(Auth.AuthStore, (store) => store.isShowSignName, { fireImmediately: false })
     handleShowSignName(isShowSignName: boolean) {
