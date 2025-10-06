@@ -30,11 +30,6 @@ export class FitHeightDesignResolution extends Component {
             const dpr = screen.devicePixelRatio || 1;
 
             screen.windowSize = new Size(Math.round(newWidth * dpr), Math.round(window.innerHeight * dpr));
-        } else {
-            const gameDiv = document.getElementById("GameDiv");
-            const splash = document.getElementById("splash");
-
-            splash.style.transform = gameDiv.style.transform;
         }
     }
 
