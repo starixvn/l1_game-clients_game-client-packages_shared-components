@@ -204,10 +204,11 @@ export default class SplashComponentBase extends Component {
 
     protected onScenePreloadSucceeded() {
         this.updateProgressBar(1);
-        if (!this.btnStartGame) {
-            this.handleLoadSceneGame();
+        if (this.btnStartGame) {
+            this.showStartGameButton();
+        } else {
+            this.goToSceneGame();
         }
-        this.showStartGameButton();
     }
 
     showStartGameButton() {
@@ -221,10 +222,10 @@ export default class SplashComponentBase extends Component {
     }
 
     onClickStartGame() {
-        this.handleLoadSceneGame();
+        this.goToSceneGame();
     }
 
-    protected handleLoadSceneGame() {
+    protected goToSceneGame() {
         director.loadScene(this.sceneName);
     }
 
@@ -237,10 +238,10 @@ export default class SplashComponentBase extends Component {
     }
 
     @handle(Auth.AuthHandlers.TriggerRecheckIn)
-    triggerRecheckIn() {}
+    triggerRecheckIn() { }
 
     @handle(ChipSetting.ChipSettingHandler)
-    loadChipSetting() {}
+    loadChipSetting() { }
 
     @render(Auth.AuthStore, (store) => store.isShowSignName, { fireImmediately: false })
     handleShowSignName(isShowSignName: boolean) {
