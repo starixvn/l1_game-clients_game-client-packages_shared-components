@@ -4,8 +4,8 @@ const { ccclass, property } = _decorator;
 
 @ccclass
 export default class TouchSwipeBase extends Component {
-    private readonly MIN_SWIPE_DISTANCE = 250;
-    private readonly MAX_VERTICAL_DISTANCE = 250;
+    private readonly MIN_SWIPE_DISTANCE = 80;
+    private readonly MAX_VERTICAL_DISTANCE = 80;
 
     public swipeCallback = (isLeft: boolean) => { };
 
@@ -25,6 +25,7 @@ export default class TouchSwipeBase extends Component {
         this.node.off(Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
     }
     onTouchMove(event: EventTouch) {
+        // Prevent button click events during swipe
         const startLocation = event.getStartLocation();
         const currentLocation = event.getLocation();
         const touchDiffX = currentLocation.x - startLocation.x;
