@@ -27,6 +27,9 @@ export class CustomizeLogoSplash extends Component {
     sprPoweredBy: Sprite = null;
 
     @property
+    logoFolder = "";
+
+    @property
     versionImg = 1;
 
     protected readonly href = `${window.location.origin}${window.location.pathname}`;
@@ -47,7 +50,7 @@ export class CustomizeLogoSplash extends Component {
         }
 
         const logoName = `logo_${operator.toLowerCase()}`;
-        const logoPath = `${this.href}images/${logoName}.webp?v=${this.versionImg}`;
+        const logoPath = `${this.href}images/${this.logoFolder}/${logoName}.webp?v=${this.versionImg}`;
         assetManager.loadRemote<ImageAsset>(logoPath, (err, imageAsset) => {
             if (!isValidNode(this)) {
                 return;
@@ -62,6 +65,9 @@ export class CustomizeLogoSplash extends Component {
     }
 
     renderTagLine() {
+        if (!this.sprTagline) {
+            return;
+        }
         const taglinePath = this.createTagLinePath();
         if (!taglinePath) {
             return;
@@ -90,6 +96,9 @@ export class CustomizeLogoSplash extends Component {
     }
 
     renderPoweredBy() {
+        if (!this.sprPoweredBy) {
+            return;
+        }
         const operator = OperatorUtils.getOperatorAlias();
         const system = POWEREDBY[operator];
 
