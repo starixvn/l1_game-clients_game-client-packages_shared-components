@@ -38,7 +38,7 @@ export class AutoScrollingContent extends Component {
         const activeScrolling = textWidth > containerWidth;
         if (activeScrolling) {
             const startX = -(containerTransform.anchorX * containerWidth) + (childTransform.anchorX * textWidth);
-            const destX = startX - textWidth + containerWidth;
+            const destX = startX - textWidth;
             const duration = -(destX - startX) / this.scrollingSpeed;
             this.tweenScrolling = tween(childNode)
                 .repeatForever(tween()
