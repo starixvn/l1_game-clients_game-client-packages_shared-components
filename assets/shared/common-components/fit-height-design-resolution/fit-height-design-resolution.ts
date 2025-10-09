@@ -1,4 +1,5 @@
 import { _decorator, Component, screen, Size, sys, view } from "cc";
+import { PREVIEW } from "cc/env";
 const { ccclass } = _decorator;
 
 @ccclass("FitHeightDesignResolution")
@@ -20,7 +21,7 @@ export class FitHeightDesignResolution extends Component {
     adjustResolution() {
         const { width, height } = this.designResolutionSize;
 
-        if (!sys.isMobile) {
+        if (!sys.isMobile && !PREVIEW) {
             const gameContainer = document.getElementById("Cocos3dGameContainer");
             gameContainer.style.position = "relative";
             // For desktop browsers, use FIT_HEIGHT
