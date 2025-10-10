@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, v3 } from "cc";
+import { _decorator, Component, Node, UITransform, v3 } from "cc";
 import { ComponentUtils } from "../utils/component-utils";
 const { ccclass, property } = _decorator;
 
@@ -22,8 +22,9 @@ export class MultiTargetWidget extends Component {
         this.right.on(Node.EventType.TRANSFORM_CHANGED, this.updateAlignment, this);
         this.bottom.on(Node.EventType.TRANSFORM_CHANGED, this.updateAlignment, this);
     }
-
+    
     updateAlignment() {
+        const transform = this.node.getComponent(UITransform);
         const topWP = this.top.worldPosition;
         const leftWP = this.left.worldPosition;
         const rightWP = this.right.worldPosition;
@@ -32,7 +33,7 @@ export class MultiTargetWidget extends Component {
         const width = Math.abs(rightWP.x - leftWP.x);
         const height = Math.abs(topWP.y - bottomWP.y);
 
-        const wPos = v3(leftWP.x, topWP.y, 0);
+        const wPos = v3(leftWP.x + transform.anchorX * width, topWP.y - transform.anchorY * height, 0);
         this.node.worldPosition = wPos;
         ComponentUtils.setNodeTransform(this.node, { width, height });
     }
