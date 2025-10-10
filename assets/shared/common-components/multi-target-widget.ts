@@ -22,7 +22,7 @@ export class MultiTargetWidget extends Component {
         this.right.on(Node.EventType.TRANSFORM_CHANGED, this.updateAlignment, this);
         this.bottom.on(Node.EventType.TRANSFORM_CHANGED, this.updateAlignment, this);
     }
-    
+
     updateAlignment() {
         const transform = this.node.getComponent(UITransform);
         const topWP = this.top.worldPosition;
@@ -33,7 +33,7 @@ export class MultiTargetWidget extends Component {
         const width = Math.abs(rightWP.x - leftWP.x);
         const height = Math.abs(topWP.y - bottomWP.y);
 
-        const wPos = v3(leftWP.x + transform.anchorX * width, topWP.y - transform.anchorY * height, 0);
+        const wPos = v3(leftWP.x + transform.anchorX * width, topWP.y - (1 - transform.anchorY) * height, 0);
         this.node.worldPosition = wPos;
         ComponentUtils.setNodeTransform(this.node, { width, height });
     }
