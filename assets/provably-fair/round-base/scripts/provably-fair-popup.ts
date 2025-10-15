@@ -53,10 +53,16 @@ export class ProvablyFairPopup extends ObserverComponent {
     }
 
     private initClientSeedsList() {
+        if (!this.clientSeedsContainer) {
+            return;
+        }
         this.listClientSeedInfo = this.clientSeedsContainer.getComponentsInChildren(ClientSeedInfo);
     }
 
     initResultNode(customResultPrefab: Prefab) {
+        if (!this.nodeResult || !customResultPrefab) {
+            return;
+        }
         this.nodeResult.addChild(instantiate(customResultPrefab));
     }
 
@@ -70,7 +76,7 @@ export class ProvablyFairPopup extends ObserverComponent {
     }
 
     @render(RoundBasePF.PFVerificationStore, (store) => store.verification)
-    private renderVerification(verification: gc.GameServiceMessage.ProvablyFair) {
+    protected renderVerification(verification: gc.GameServiceMessage.ProvablyFair) {
         if (!verification) {
             return;
         }
