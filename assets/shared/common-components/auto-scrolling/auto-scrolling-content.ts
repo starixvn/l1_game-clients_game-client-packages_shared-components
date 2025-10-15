@@ -19,8 +19,9 @@ export class AutoScrollingContent extends Component {
     private tweenScrolling: Tween;
 
     updateScrolling() {
+        let scrollDuration = 0;
         if (this.node.children.length === 0) {
-            return;
+            return scrollDuration;
         }
 
         if (this.tweenScrolling) {
@@ -51,12 +52,16 @@ export class AutoScrollingContent extends Component {
                     })
                     .delay(this.delayAtEnding))
                 .start();
+
+            scrollDuration = duration + this.delayAtBegining + this.delayAtEnding;
         } else {
             const center = -(containerTransform.anchorX * containerWidth) + 0.5 * containerWidth
                 + (childTransform.anchorX * textWidth) - 0.5 * textWidth;
 
             childNode.position = v3(center, 0, 0);
         }
+
+        return scrollDuration;
     }
 
 }
