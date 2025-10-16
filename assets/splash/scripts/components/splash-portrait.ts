@@ -7,7 +7,6 @@ const { ccclass } = _decorator;
 const { observer } = Observer;
 
 @ccclass
-@observer
 export default class SplashPortrait extends Splash {
     onLoad() {
         super.onLoad();
