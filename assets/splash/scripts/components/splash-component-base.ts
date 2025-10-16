@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, Button, Component, director, instantiate, Label, log, Node, Prefab } from "cc";
 import Observer from "observer";
 
+import { PREVIEW } from "cc/env";
 import { settings } from "db://assets/game/scripts/game-settings";
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
 import GameConnection from "../../../shared/common-components/game-connection";
@@ -272,6 +273,9 @@ export default class SplashComponentBase extends Component {
     }
 
     private initGA() {
+        if (PREVIEW) {
+            return;
+        }
         const gaCode = window.envConfig.systemType === "SG" ? "G-GJDD3FENTH" : "G-JHKMX35LM3";
 
         this.loadScript(`https://www.googletagmanager.com/gtag/js?id=${gaCode}`).then(
@@ -291,7 +295,7 @@ export default class SplashComponentBase extends Component {
     }
 
     private addGATrackingButton() {
-        if (window.envConfig.env !== "PROD") {
+        if (window.envConfig.env !== "PROD" || PREVIEW) {
             return;
         }
         const gaCode = "G-W13X2FGNGN";
