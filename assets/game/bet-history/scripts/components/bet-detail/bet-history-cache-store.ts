@@ -56,41 +56,51 @@ export class BetHistoryCacheStore {
 
         let data = null;
         if (isNext) {
-            if (isNewest) {
-                if (page === 1) {
-                    console.log("isNewest");
-                } else {
-                    const nextPage = page - 1;
-                    if (this.betLogs[nextPage]) {
-                        data = this.betLogs[nextPage][this.betLogs[nextPage].length - 1];
-                    } else {
-                        this.requestPage(nextPage);
-                    }
-                }
-            } else {
-                data = this.betLogs[page][index - 1];
-            }
+            data = this.handleNext(isNewest, page, data, index);
         } else {
-            if (isOldest) {
-                if (page === this.totalPage) {
-                    console.log("isOldest");
-                } else {
-                    const nextPage = page + 1;
-                    if (this.betLogs[nextPage]) {
-                        data = this.betLogs[nextPage][0];
-                    } else {
-                        this.requestPage(nextPage);
-                    }
-                }
-            } else {
-                data = this.betLogs[page][index + 1];
-            }
+            data = this.handlePrevious(isOldest, page, data, index);
         }
 
 
         if (data) {
             this.betDetailHistoryStore.setData(data);
         }
+    }
+
+    private handlePrevious(isOldest: boolean, page: number, data: any, index: number) {
+        if (isOldest) {
+            if (page === this.totalPage) {
+                console.log("isOldest");
+            } else {
+                const nextPage = page + 1;
+                if (this.betLogs[nextPage]) {
+                    data = this.betLogs[nextPage][0];
+                } else {
+                    this.requestPage(nextPage);
+                }
+            }
+        } else {
+            data = this.betLogs[page][index + 1];
+        }
+        return data;
+    }
+
+    private handleNext(isNewest: boolean, page: number, data: any, index: number) {
+        if (isNewest) {
+            if (page === 1) {
+                console.log("isNewest");
+            } else {
+                const nextPage = page - 1;
+                if (this.betLogs[nextPage]) {
+                    data = this.betLogs[nextPage][this.betLogs[nextPage].length - 1];
+                } else {
+                    this.requestPage(nextPage);
+                }
+            }
+        } else {
+            data = this.betLogs[page][index - 1];
+        }
+        return data;
     }
 
     requestPage(page: number) {
