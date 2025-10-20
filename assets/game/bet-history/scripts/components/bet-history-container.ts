@@ -26,7 +26,7 @@ export default class BetHistoryContainer extends NodeContainer {
     resultPrefab: Prefab = null;
 
     @handle(BetHistory.BetHistoryHandlers.BetHistoryCallServiceHandler, (handler) => handler.handle(1))
-    hanldeShowBetHistory() {}
+    hanldeShowBetHistory() { }
 
     @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
     openBetHistory({ event }: { event: InGameMenuEvents }) {
@@ -48,6 +48,10 @@ export default class BetHistoryContainer extends NodeContainer {
             bodyItemPrefab: this.bodyItemPrefab,
             resultPrefab: this.resultPrefab,
         });
+    }
+
+    onClickClose() {
+        this.table?.onClickClose();
     }
 
     @render(gc.Dialogs.DialogsStore, (store) => store.forceClosed, { fireImmediately: false })
