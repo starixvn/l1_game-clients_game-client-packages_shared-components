@@ -8,6 +8,7 @@ export default class TouchSwipeBase extends Component {
     private readonly MAX_VERTICAL_DISTANCE = 80;
 
     public swipeCallback = (isLeft: boolean) => { };
+    protected isTouching = false;
 
     onLoad() {
         this.registerTouchEvents();
@@ -18,13 +19,22 @@ export default class TouchSwipeBase extends Component {
     }
 
     registerTouchEvents() {
+        this.node.on(Node.EventType.TOUCH_START, this.onTouchStart, this);
         this.node.on(Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
     }
 
     clearTouchEvents() {
         this.node.off(Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
     }
+
+    onTouchStart() {
+        this.isTouching = true;
+    }
+
     onTouchMove(event: EventTouch) {
+        if (!this.isTouching) {
+            return;
+        }
         // Prevent button click events during swipe
         const startLocation = event.getStartLocation();
         const currentLocation = event.getLocation();
@@ -46,6 +56,7 @@ export default class TouchSwipeBase extends Component {
         // Only trigger swipe if horizontal movement is dominant and sufficient
         if (absX > this.MIN_SWIPE_DISTANCE && absY <= this.MAX_VERTICAL_DISTANCE) {
             this.swipeCallback(touchDiffX < 0);
+            this.isTouching = false;
         }
     }
 }
