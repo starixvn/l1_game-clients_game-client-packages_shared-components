@@ -25,12 +25,15 @@ export default class BetHistoryContainer extends NodeContainer {
     @property(Prefab)
     resultPrefab: Prefab = null;
 
+    preprocessCallback = () => { };
+
     @handle(BetHistory.BetHistoryHandlers.BetHistoryCallServiceHandler, (handler) => handler.handle(1))
     hanldeShowBetHistory() { }
 
     @render(InGameMenuStore, (store) => store.event, { fireImmediately: false })
     openBetHistory({ event }: { event: InGameMenuEvents }) {
         if (event === InGameMenuEvents.OPEN_HISTORY) {
+            this.preprocessCallback && this.preprocessCallback();
             this.hanldeShowBetHistory();
         }
     }

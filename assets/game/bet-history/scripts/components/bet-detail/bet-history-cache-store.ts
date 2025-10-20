@@ -29,6 +29,12 @@ export class BetHistoryCacheStore {
         return this.betDetailHistoryStore?.model?.betHistoryLog?.id ?? -1;
     }
 
+    clearHistoryCache() {
+        this.currentPage = -1;
+        this.totalPage = -1;
+        this.betLogs = {};
+    }
+
     handleCacheBetHistory(betHistoryModel: gc.BetHistory.BetHistoryModel) {
         this.currentPage = betHistoryModel.page;
         this.totalPage = betHistoryModel.total;
