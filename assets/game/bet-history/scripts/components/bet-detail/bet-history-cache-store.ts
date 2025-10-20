@@ -104,7 +104,20 @@ export class BetHistoryCacheStore {
     }
 
     requestPage(page: number) {
-        console.log("requestPage ", page);
         this.betHistoryCallServiceHandler.handle(page);
+    }
+
+    requestNextPage() {
+        if (this.currentPage === -1 || this.currentPage === this.totalPage) {
+            return;
+        }
+        this.requestPage(this.currentPage + 1);
+    }
+
+    requestPreviousPage() {
+        if (this.currentPage === -1 || this.currentPage === 1) {
+            return;
+        }
+        this.requestPage(this.currentPage - 1);
     }
 }
