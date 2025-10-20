@@ -37,7 +37,7 @@ export class BetHistoryCacheStore {
 
     handleCacheBetHistory(betHistoryModel: gc.BetHistory.BetHistoryModel) {
         this.currentPage = betHistoryModel.page;
-        this.totalPage = betHistoryModel.total;
+        this.totalPage = Math.ceil(betHistoryModel.total / betHistoryModel.pageSize);
         const betLogs = [...this.betLogs[this.currentPage] ?? [], ...betHistoryModel.betLogs];
 
         const filterBetLogs = betLogs.filter((log, index, array) =>
