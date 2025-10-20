@@ -11,8 +11,10 @@ export class SharpnessLabel extends Component {
     label: Label = null;
     richText: RichText = null;
 
+    public enableSharpness = true;
+
     protected onLoad(): void {
-        this.updateLabel();
+        this.enableSharpness && this.updateLabel();
     }
 
     updateLabel() {
