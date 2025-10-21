@@ -1,5 +1,6 @@
 import { _decorator, Component, screen, Size, sys, view } from "cc";
 import { PREVIEW } from "cc/env";
+import { FunctionUtils } from "../../utils/function-utils";
 const { ccclass } = _decorator;
 class FitHeightHandler {
     private designResolutionSize: Size;
@@ -13,8 +14,7 @@ class FitHeightHandler {
 
     private adjustResolution() {
         const { width, height } = this.designResolutionSize;
-
-        if (!sys.isMobile && !PREVIEW) {
+        if ((!sys.isMobile || FunctionUtils.isIpad()) && !PREVIEW) {
             const gameContainer = document.getElementById("Cocos3dGameContainer");
             gameContainer.style.position = "relative";
             // For desktop browsers, use FIT_HEIGHT
@@ -22,8 +22,19 @@ class FitHeightHandler {
             const newWidth = ratioScale * width;
 
             const dpr = screen.devicePixelRatio || 1;
-
             screen.windowSize = new Size(Math.round(newWidth * dpr), Math.round(window.innerHeight * dpr));
+        }
+
+        if (FunctionUtils.isIpad()) {
+            const winWidth = window.innerWidth;
+            const winHeight = window.innerHeight;
+
+            const gameDiv = document.getElementById('GameDiv')
+            gameDiv.style['-webkit-transform'] = 'rotate(0deg)';
+            gameDiv.style.transform = 'rotate(0deg)';
+            gameDiv.style.margin = '0px auto';
+            gameDiv.style.width = `${winWidth}px`;
+            gameDiv.style.height = `${winHeight}px`;
         }
     }
 
