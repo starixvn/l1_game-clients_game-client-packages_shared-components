@@ -1,24 +1,17 @@
 import { _decorator, Component, screen, Size, sys, view } from "cc";
 import { PREVIEW } from "cc/env";
 const { ccclass } = _decorator;
-
-@ccclass("FitHeightDesignResolution")
-export class FitHeightDesignResolution extends Component {
+class FitHeightHandler {
     private designResolutionSize: Size;
-
     private timeout: NodeJS.Timeout;
 
-    protected onLoad(): void {
+    public init(): void {
         this.designResolutionSize = view.getDesignResolutionSize();
         this.adjustResolution();
         window.addEventListener("resize", this.debouncedResizeWindow);
     }
 
-    protected onDestroy(): void {
-        window.removeEventListener("resize", this.debouncedResizeWindow);
-    }
-
-    adjustResolution() {
+    private adjustResolution() {
         const { width, height } = this.designResolutionSize;
 
         if (!sys.isMobile && !PREVIEW) {
@@ -34,7 +27,7 @@ export class FitHeightDesignResolution extends Component {
         }
     }
 
-    debounce(func: any, wait: number) {
+    private debounce(func: any, wait: number) {
         return (...args: any[]) => {
             this.timeout && clearTimeout(this.timeout);
             this.timeout = setTimeout(() => func.apply(this, args), wait);
@@ -46,4 +39,17 @@ export class FitHeightDesignResolution extends Component {
     }
 
     private readonly debouncedResizeWindow = this.debounce(this.resizeWindow, 100);
+}
+
+@ccclass("FitHeightDesignResolution")
+export class FitHeightDesignResolution extends Component {
+    static handler: FitHeightHandler = null;
+
+    onLoad(): void {
+        if (FitHeightDesignResolution.handler) {
+            return;
+        }
+        FitHeightDesignResolution.handler = new FitHeightHandler();
+        FitHeightDesignResolution.handler.init();
+    }
 }
