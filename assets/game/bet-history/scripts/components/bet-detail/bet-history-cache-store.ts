@@ -52,6 +52,10 @@ export class BetHistoryCacheStore {
         return this.currentPage === 1 && this.betLogs[this.currentPage]?.findIndex(log => log.id === this.currentDetailId) === 0;
     }
 
+    isLastDetail() {
+        return this.currentPage === this.totalPage && this.betLogs[this.currentPage]?.findIndex(log => log.id === this.currentDetailId) === this.betLogs[this.currentPage].length - 1;
+    }
+
     requestDetail(isNext: boolean) {
         const currentId = this.currentDetailId;
         const page = +Object.keys(this.betLogs).find(page => this.betLogs[page].find(log => log.id === currentId));
