@@ -66,10 +66,9 @@ export default class BetHistoryBodyItem extends ObserverComponent {
 
         this.lblTime && (this.lblTime.string = DateTimeUtils.getStringDateByTime(time));
         this.lblRound.string = roundId.toString();
-
+        this.node.name = `item-${roundId}`;
         this.lblWin && (this.lblWin.string = FormatUtils.numberWithCommas(betwin, 2));
         this.lblTotalStake && (this.lblTotalStake.string = FormatUtils.numberWithCommas(totalAmount, 2));
-
         if (resultPrefab) {
             const bodyRow = instantiate(resultPrefab);
             const { result, settlementResult } = betHistoryLog;
