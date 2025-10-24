@@ -5,7 +5,7 @@ import Observer from "observer";
 import { NodeContainer } from "../../node-container/node-container";
 import { NoticeCmp } from "./notice-cmp";
 
-const { render } = Observer;
+const { render, handle } = Observer;
 
 const { Notices, DisabledGame } = gc;
 const { ccclass } = _decorator;
@@ -21,12 +21,16 @@ export class NoticeContainer extends NodeContainer {
         this.noticeCmp.setData(notice);
     }
 
-    @render(Notices.NoticeStore, (store) => store.notice, { fireImmediately: false })
+    @render(Notices.NoticeStore, (store) => store.notice)
     async showNotice(notice: gc.Notices.Notice) {
         if (!game.isPaused() && notice) {
+            this.clearNoticeStore();
             await this.showNoticeComponent(notice);
         }
     }
+
+    @handle(Notices.NoticeStore, (store) => store.addNotice(null))
+    clearNoticeStore() { }
 
     @render(DisabledGame.DisabledGameStore, (store) => store.noticeDisable)
     async renderUMNotice(noticeDisable: gc.Notices.Notice) {
