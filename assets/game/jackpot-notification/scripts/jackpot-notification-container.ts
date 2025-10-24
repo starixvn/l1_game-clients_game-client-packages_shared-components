@@ -16,39 +16,28 @@ export class JackpotNotificationContainer extends NodeContainer {
 
     onLoad(): void {
         super.onLoad();
-        window.addEventListener("message", this.registerEventGetGameName.bind(this));
     }
 
     onDestroy(): void {
         super.onDestroy();
-        window.removeEventListener("message", this.registerEventGetGameName.bind(this));
-    }
-
-    async registerEventGetGameName(event: MessageEvent) {
-        const { gameName, gameId } = event.data;
-
-        if (gameName !== undefined && this.jackpotInfo?.gameId === gameId) {
-            const prefab = await bundleManager.loadSharedAsset<Prefab>(`prefabs/jackpot-notification`, Prefab);
-            try {
-                const remoteGameName = await FunctionUtils.getRemoteDisplayGameName(gameId);
-                const displayGameName = remoteGameName || gameName;
-                if (prefab) {
-                    const node = instantiate(prefab);
-                    this.node.addChild(node);
-                    const jackpotNotificationCmp = node.getComponent(JackpotNotification);
-                    jackpotNotificationCmp.setData(this.jackpotInfo.winnerName, this.jackpotInfo.amount, displayGameName);
-                }
-            } catch (e) {
-                console.error("An error occurred in registerEventGetGameName:", e);
-            }
-
-            this.jackpotInfo = null;
-        }
     }
 
     @render(Notification.JackpotWinnerStore, (store) => store.jackpotWinner, { fireImmediately: false })
-    showNotification(jackpotInfo: gc.NotificationServiceMessage.JackpotWinner) {
+    async showNotification(jackpotInfo: gc.NotificationServiceMessage.JackpotWinner) {
         this.jackpotInfo = jackpotInfo;
-        gc.BrowserDomUtils.postMessageToParent({ getGameName: jackpotInfo.gameId, language: Translator.getCurrentLanguageId() });
+        const prefab = await bundleManager.loadSharedAsset<Prefab>(`prefabs/jackpot-notification`, Prefab);
+        try {
+            const remoteGameName = await FunctionUtils.getRemoteDisplayGameName(this.jackpotInfo.gameId);
+            if (prefab) {
+                const node = instantiate(prefab);
+                this.node.addChild(node);
+                const jackpotNotificationCmp = node.getComponent(JackpotNotification);
+                jackpotNotificationCmp.setData(this.jackpotInfo.winnerName, this.jackpotInfo.amount, remoteGameName);
+            }
+        } catch (e) {
+            console.error("An error occurred in registerEventGetGameName:", e);
+        }
+
+        this.jackpotInfo = null;
     }
 }
