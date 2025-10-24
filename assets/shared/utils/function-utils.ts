@@ -176,7 +176,7 @@ export namespace FunctionUtils {
      * @param breakline - Whether to include lobby names in the search
      * @returns The display name of the game, or empty string if not found
      */
-    export const getRemoteDisplayGameName = async (gameId: number, breakline: boolean = false): Promise<string> => {
+    export const getRemoteDisplayGameName = async (gameId: number, breakline = false): Promise<string> => {
         try {
             await loadRemoteLocalization(gameId);
             const list = ["generalGameNames", "gameNames"];
@@ -185,9 +185,9 @@ export namespace FunctionUtils {
             const currentLanguage = gc.Translator.getCurrentLanguageId();
             const key = list.find((key) => getRemoteTranslation(gameId, key, currentLanguage));
             if (!key) {
-                getRemoteTranslation(gameId, "gameNames", "en");
+                return getRemoteTranslation(gameId, "gameNames", "en") || "";
             }
-            return getRemoteTranslation(gameId, key, currentLanguage);
+            return getRemoteTranslation(gameId, key, currentLanguage) || "";
         } catch (error) {
             console.error("An error occurred in getRemoteDisplayGameName:", error);
             return "";
