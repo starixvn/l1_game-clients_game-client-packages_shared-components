@@ -1,6 +1,8 @@
-import { Asset, Node, assetManager, find, screen, warn } from "cc";
+import { Asset, Node, assetManager, find, screen, warn, JsonAsset } from "cc";
+import gc from "@sg/game-client-base";
 import { settings } from "../../../../../assets/game/scripts/game-settings";
 import { GameComponentBase } from "../../game/scripts/components/game-component-base";
+import { siteConfigs } from "../../../../../assets/scripts/site-configs";
 
 export namespace FunctionUtils {
     export const cachedRemoteFile = {};
@@ -110,5 +112,96 @@ export namespace FunctionUtils {
     export const isLocalhost = (): boolean => {
         const { origin } = window.location;
         return origin.includes("localhost");
+    };
+
+    // Remote Game Resource Utilities
+
+    /** Cache for remote localization data indexed by game ID */
+    export const remoteLocalization: Record<number, any> = {};
+
+    /** Cache for remote version data indexed by game ID */
+    export const versionsCache: Record<number, any> = {};
+
+    /**
+     * Builds the URL for remote game resources
+     * @param gameId - The ID of the game
+     * @param pathResource - The path to the resource
+     * @returns The complete URL for the remote resource
+     */
+    export const remoteGameResourceUrl = (gameId: number, pathResource: string): string => {
+        const url = gc.UrlUtils.buildMicrositeGameUrl(siteConfigs, gameId);
+        return `${url}/remote/${pathResource}`;
+    };
+
+
+    /**
+     * Loads a remote game resource for the specified game
+     * @param gameId - The ID of the game
+     * @param pathResource - The path to the resource
+     * @returns Promise that resolves to the loaded asset
+     */
+    export const loadRemoteGameResource = <T>(gameId: number, pathResource: string): Promise<T> => {
+        return loadRemote(remoteGameResourceUrl(gameId, pathResource)) as Promise<T>;
+    };
+
+    /**
+     * Gets the remote version information for a game
+     * @param gameId - The ID of the game
+     * @returns Promise that resolves to the version data
+     */
+    export const getRemoteVersion = async (gameId: number): Promise<any> => {
+        if (!versionsCache[gameId]) {
+            const versionsAsset = await loadRemote(`${remoteGameResourceUrl(gameId, "versions.json")}?v=${Date.now()}`) as JsonAsset;
+            versionsCache[gameId] = versionsAsset?.json || {};
+        }
+        return versionsCache[gameId];
+    };
+
+    /**
+     * Loads remote localization data for a game
+     * @param gameId - The ID of the game
+     */
+    export const loadRemoteLocalization = async (gameId: number): Promise<void> => {
+        if (!remoteLocalization[gameId]) {
+            const versions = await getRemoteVersion(gameId);
+            const localizationVersion = versions?.localization ?? Date.now();
+            const localization = await loadRemoteGameResource<JsonAsset>(gameId, `localization.json?v=${localizationVersion}`);
+            remoteLocalization[gameId] = localization?.json || {};
+        }
+    };
+
+    /**
+     * Gets the display name for a game from remote localization
+     * @param gameId - The ID of the game
+     * @param breakline - Whether to include lobby names in the search
+     * @returns The display name of the game, or empty string if not found
+     */
+    export const getRemoteDisplayGameName = async (gameId: number, breakline: boolean = false): Promise<string> => {
+        try {
+            await loadRemoteLocalization(gameId);
+            const list = ["generalGameNames", "gameNames"];
+            breakline && list.unshift("lobbyNames");
+
+            const currentLanguage = gc.Translator.getCurrentLanguageId();
+            const key = list.find((key) => getRemoteTranslation(gameId, key, currentLanguage));
+            if (!key) {
+                getRemoteTranslation(gameId, "gameNames", "en");
+            }
+            return getRemoteTranslation(gameId, key, currentLanguage);
+        } catch (error) {
+            console.error("An error occurred in getRemoteDisplayGameName:", error);
+            return "";
+        }
+    };
+
+    /**
+     * Gets a translation value from remote localization data
+     * @param gameId - The ID of the game
+     * @param key - The translation key
+     * @param language - The language code
+     * @returns The translated string, or undefined if not found
+     */
+    export const getRemoteTranslation = (gameId: number, key: string, language: string): string | undefined => {
+        return remoteLocalization[gameId]?.[key]?.[language];
     };
 }

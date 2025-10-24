@@ -4,6 +4,7 @@ import Observer from "observer";
 import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
 import { JackpotNotification } from "./jackpot-notification";
+import { FunctionUtils } from "../../../shared/utils/function-utils";
 
 const { render } = Observer;
 const { Notification, Translator } = gc;
@@ -25,16 +26,21 @@ export class JackpotNotificationContainer extends NodeContainer {
 
     async registerEventGetGameName(event: MessageEvent) {
         const { gameName, gameId } = event.data;
+
         if (gameName !== undefined && this.jackpotInfo?.gameId === gameId) {
             const prefab = await bundleManager.loadSharedAsset<Prefab>(`prefabs/jackpot-notification`, Prefab);
             try {
+                const remoteGameName = await FunctionUtils.getRemoteDisplayGameName(gameId);
+                const displayGameName = remoteGameName || gameName;
                 if (prefab) {
                     const node = instantiate(prefab);
                     this.node.addChild(node);
                     const jackpotNotificationCmp = node.getComponent(JackpotNotification);
-                    jackpotNotificationCmp.setData(this.jackpotInfo.winnerName, this.jackpotInfo.amount, gameName);
+                    jackpotNotificationCmp.setData(this.jackpotInfo.winnerName, this.jackpotInfo.amount, displayGameName);
                 }
-            } catch (e) {}
+            } catch (e) {
+                console.error("An error occurred in registerEventGetGameName:", e);
+            }
 
             this.jackpotInfo = null;
         }
