@@ -3,8 +3,8 @@ import { _decorator, instantiate, Prefab } from "cc";
 import Observer from "observer";
 import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
 import { NodeContainer } from "../../../shared/common-components/node-container/node-container";
-import { JackpotNotification } from "./jackpot-notification";
 import { FunctionUtils } from "../../../shared/utils/function-utils";
+import { JackpotNotification } from "./jackpot-notification";
 
 const { render } = Observer;
 const { Notification, Translator, GameConfiguration } = gc;
@@ -30,9 +30,9 @@ export class JackpotNotificationContainer extends NodeContainer {
 
     @render(Notification.JackpotWinnerStore, (store) => store.jackpotWinner, { fireImmediately: false })
     async showNotification(jackpotInfo: gc.NotificationServiceMessage.JackpotWinner) {
-        this.jackpotInfo = jackpotInfo;
-        const prefab = await bundleManager.loadSharedAsset<Prefab>(`prefabs/jackpot-notification`, Prefab);
         try {
+            this.jackpotInfo = jackpotInfo;
+            const prefab = await bundleManager.loadSharedAsset<Prefab>(`prefabs/jackpot-notification`, Prefab);
             const gameConfiguration = this.gameConfigurations.find(config => config.id === this.jackpotInfo.gameId);
             const displayGameName = await FunctionUtils.getDisplayGameName(this.jackpotInfo.gameId, gameConfiguration);
             if (prefab) {
@@ -41,10 +41,7 @@ export class JackpotNotificationContainer extends NodeContainer {
                 const jackpotNotificationCmp = node.getComponent(JackpotNotification);
                 jackpotNotificationCmp.setData(this.jackpotInfo.winnerName, this.jackpotInfo.amount, displayGameName);
             }
-        } catch (e) {
-            console.error("An error occurred in registerEventGetGameName:", e);
-        }
-
-        this.jackpotInfo = null;
+            this.jackpotInfo = null;
+        } catch (e) { }
     }
 }
