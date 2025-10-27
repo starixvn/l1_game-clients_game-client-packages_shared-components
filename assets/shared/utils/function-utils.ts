@@ -204,4 +204,11 @@ export namespace FunctionUtils {
     export const getRemoteTranslation = (gameId: number, key: string, language: string): string | undefined => {
         return remoteLocalization[gameId]?.[key]?.[language];
     };
+
+    export const getDisplayGameName = async (gameId: number, gameConfiguration?: gc.GameConfiguration.TGameConfiguration, breakline = false): Promise<string> => {
+        if (gameConfiguration?.isMicrosite) {
+            return getRemoteDisplayGameName(gameId, breakline);
+        }
+        return gameConfiguration?.name || "";
+    }
 }
