@@ -54,7 +54,7 @@ export default class BetHistoryContainer extends NodeContainer {
     }
 
     onClickClose() {
-        this.table?.onClickClose();
+        this.table?.node?.isValid && this.table?.onClickClose();
     }
 
     @render(gc.Dialogs.DialogsStore, (store) => store.forceClosed, { fireImmediately: false })
