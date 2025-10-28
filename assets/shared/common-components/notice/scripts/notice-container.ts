@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { _decorator, game } from "cc";
+import { _decorator } from "cc";
 import { GameGuideUtils } from "db://shared-components/game/game-guide/scripts/utils/game-guide-utils";
 import Observer from "observer";
 import { NodeContainer } from "../../node-container/node-container";
@@ -23,7 +23,7 @@ export class NoticeContainer extends NodeContainer {
 
     @render(Notices.NoticeStore, (store) => store.notice)
     async showNotice(notice: gc.Notices.Notice) {
-        if (!game.isPaused() && notice) {
+        if (notice) {
             this.clearNoticeStore();
             await this.showNoticeComponent(notice);
         }
