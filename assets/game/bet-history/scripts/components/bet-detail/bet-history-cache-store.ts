@@ -74,6 +74,7 @@ export class BetHistoryCacheStore {
 
         if (data) {
             this.betDetailHistoryStore.setData(data);
+            this.currentPage = page;
         }
     }
 
