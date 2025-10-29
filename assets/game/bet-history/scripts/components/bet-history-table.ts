@@ -7,7 +7,7 @@ import BetHistoryBodyItem from "./bet-history-body-item";
 const { handle } = Observer;
 const { ccclass, property } = _decorator;
 
-type BetHistoryTableType = {
+export type BetHistoryTableType = {
     data: gc.BetHistory.BetHistoryModel;
     headerPrefab: Prefab;
     bodyItemPrefab: Prefab;
