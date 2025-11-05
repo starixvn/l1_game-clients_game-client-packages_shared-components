@@ -41,8 +41,8 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
     @property(Node)
     nodeWarningText: Node = null;
 
-    private readonly OPACITY_DISABLED = 153;
-    private readonly OPACITY_ENABLED = 255;
+    protected readonly OPACITY_DISABLED = 153;
+    protected readonly OPACITY_ENABLED = 255;
     private manualClientSeed = "";
 
     onLoad(): void {
