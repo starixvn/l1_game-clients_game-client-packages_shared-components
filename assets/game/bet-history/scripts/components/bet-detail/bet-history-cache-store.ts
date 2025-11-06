@@ -80,9 +80,7 @@ export class BetHistoryCacheStore {
 
     private handlePrevious(isOldest: boolean, page: number, data: any, index: number) {
         if (isOldest) {
-            if (page === this.totalPage) {
-                console.log("isOldest");
-            } else {
+            if (page < this.totalPage) {
                 const nextPage = page + 1;
                 if (this.betLogs[nextPage]) {
                     data = this.betLogs[nextPage][0];
@@ -98,9 +96,7 @@ export class BetHistoryCacheStore {
 
     private handleNext(isNewest: boolean, page: number, data: any, index: number) {
         if (isNewest) {
-            if (page === 1) {
-                console.log("isNewest");
-            } else {
+            if (page > 1) {
                 const nextPage = page - 1;
                 if (this.betLogs[nextPage]) {
                     data = this.betLogs[nextPage][this.betLogs[nextPage].length - 1];
