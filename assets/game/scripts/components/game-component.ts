@@ -62,7 +62,7 @@ export default class GameComponent extends GameComponentBase {
     }
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
-    connectToService() {}
+    connectToService() { }
 
     @render(gc.GameConfigs.GameSetting, (gameSetting) => gameSetting.name)
     logLoadScene(gameName: string) {
@@ -71,13 +71,13 @@ export default class GameComponent extends GameComponentBase {
     }
 
     @render(LogStore, (store) => store.message)
-    logInfo(message: string) {}
+    logInfo(message: string) { }
 
     @handle(gc.UserSettings.UserSettingHandlers, (handle) => handle.loadStorages())
-    initUserSettings() {}
+    initUserSettings() { }
 
     @handle(gc.PlayerSelections.PlayerSelectionHandlers.InitHandlers)
-    initPlayerSelections() {}
+    initPlayerSelections() { }
 
     protected onDestroy(): void {
         this.clearEventShowHideGame();
@@ -104,7 +104,7 @@ export default class GameComponent extends GameComponentBase {
     }
 
     @handle(Connection.ConnectionHandlers.InGameHandler)
-    inGame() {}
+    inGame() { }
 
     @render(RoundHistories.RoundHistoryStore, (store) => store.joinGameHistory)
     handleJoinGameAndShowResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
@@ -170,17 +170,17 @@ export default class GameComponent extends GameComponentBase {
         result: gc.GameServiceMessage.TResult,
         hasAnimation: boolean,
         settlementResult: gc.GameServiceMessage.TSettlementResult
-    ) {}
+    ) { }
 
     isValidResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {
         return !!result && !!settlementResult;
     }
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
-    finishShowResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {}
+    finishShowResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) { }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
-    handleStartRound(isStartRound: boolean) {}
+    handleStartRound(isStartRound: boolean) { }
 
     @render(Rounds.RoundTimeStore, (store) => store.isStartRound)
     startNewRound(isStartRound: boolean) {
