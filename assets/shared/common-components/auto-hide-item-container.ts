@@ -1,4 +1,4 @@
-import { Component, Node, UITransform, _decorator, macro, rect, v3 } from "cc";
+import { Component, Node, UITransform, _decorator, find, macro, rect, v3 } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass
@@ -11,7 +11,7 @@ export class AutoHideItemContainer extends Component {
 
     maskTransform: UITransform;
     onLoad() {
-        this.maskTransform = this.mask.getComponent(UITransform);
+        this.maskTransform = this.mask ? this.mask.getComponent(UITransform) : find("Canvas").getComponent(UITransform);
         this.schedule(this.checkBorder, 0.1, macro.REPEAT_FOREVER);
     }
 
