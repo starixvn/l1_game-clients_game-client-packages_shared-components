@@ -7,4 +7,9 @@ export class ScrollWithoutWheel extends ScrollView {
         event.preventSwallow = true;
         event.propagationStopped = false;
     }
+
+    protected _stopPropagationIfTargetIsMe(event): void {
+        event.preventSwallow = true;
+        event.propagationStopped = false;
+    }
 }
