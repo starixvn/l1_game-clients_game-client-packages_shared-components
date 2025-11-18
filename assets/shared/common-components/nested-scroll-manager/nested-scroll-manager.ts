@@ -19,15 +19,31 @@ export class NestedScrollManager extends Component {
     updateScrollViewChildren() {
         // Get child scroll views and set up event listeners
         this.childScrollViews = this.parentScrollView.content.getComponentsInChildren(ScrollView).filter((child) => {
-            return (child.vertical === true && child.vertical === this.parentScrollView.vertical) ||
-                (child.horizontal === true && child.horizontal === this.parentScrollView.horizontal)
+            return this.filterScrollView(child);
         });
 
         // Set up event listeners for each child
-        this.childScrollViews.forEach(child => {
+        this.registerHandleChildScrolling(this.childScrollViews);
+    }
+
+    addChildScrollViews(scrollViews: ScrollView[]): void {
+        const newScrollViews = scrollViews.filter((child) => {
+            return this.filterScrollView(child);
+        });
+        this.childScrollViews.push(...newScrollViews);
+        this.registerHandleChildScrolling(newScrollViews);
+    }
+
+    registerHandleChildScrolling(scrollViews: ScrollView[]): void {
+        scrollViews.forEach(child => {
             child.node.on(ScrollView.EventType.SCROLLING, () => this.onChildScrolling(child), this);
             child.node.on(ScrollView.EventType.SCROLL_ENDED, () => this.onChildScrollEnded(child), this);
         });
+    }
+
+    private filterScrollView(scrollView: ScrollView): boolean {
+        return (scrollView.vertical === true && scrollView.vertical === this.parentScrollView.vertical) ||
+            (scrollView.horizontal === true && scrollView.horizontal === this.parentScrollView.horizontal);
     }
 
     private onChildScrolling(child: ScrollView) {
