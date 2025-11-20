@@ -181,10 +181,7 @@
       "b": 124,
       "a": 255
     },
-    "_normalSprite": {
-      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@0e81e",
-      "__expectedType__": "cc.SpriteFrame"
-    },
+    "_normalSprite": null,
     "_hoverSprite": null,
     "_pressedSprite": null,
     "_disabledSprite": null,
@@ -235,7 +232,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc@0e81e",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@10627",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -251,7 +248,7 @@
     "_isTrimmedMode": true,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "2b15ad5e-08d0-4a39-bb98-cf6ff3ece5cc",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""
@@ -329,7 +326,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 785.9999999999999,
+      "width": 786,
       "height": 1344
     },
     "_anchorPoint": {
@@ -579,7 +576,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@f60db",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@1cbb3",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
@@ -1033,7 +1030,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "633480e4-5419-4fba-8e2d-8d22327e7088@7b08b",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f@70117",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -1049,7 +1046,7 @@
     "_isTrimmedMode": false,
     "_useGrayscale": false,
     "_atlas": {
-      "__uuid__": "633480e4-5419-4fba-8e2d-8d22327e7088",
+      "__uuid__": "bd769873-bebd-49ab-81f8-f23dd6c9c61f",
       "__expectedType__": "cc.SpriteAtlas"
     },
     "_id": ""
@@ -4197,7 +4194,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 785.9999999999999,
+      "width": 786,
       "height": 1344
     },
     "_anchorPoint": {
