@@ -38,6 +38,12 @@ export class NoticeCmp extends Dialog {
         GameGuideUtils.showWebViewGuide();
     };
 
+    appType = 0;
+
+    setAppType(appType: number) {
+        this.appType = appType;
+    }
+
     setData(data: {
         title: string;
         message: string;

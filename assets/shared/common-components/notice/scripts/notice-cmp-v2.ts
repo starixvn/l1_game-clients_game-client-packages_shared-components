@@ -1,14 +1,31 @@
 import { Button, _decorator } from "cc";
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 import gc from "@sg/game-client-base";
 import LocalizedLabelWithFormat from "db://i18n/LocalizedLabelWithFormat";
 import { NoticeCmp, NoticeType } from "db://shared-components/shared/common-components/notice/scripts/notice-cmp";
-const { BrowserDomUtils } = gc;
 
-@ccclass("NoticeOriginalGameCmp")
-export class NoticeOriginalGameCmp extends NoticeCmp {
+const { BrowserDomUtils, AppTypes } = gc;
+
+@ccclass()
+export class NoticeCompV2 extends NoticeCmp {
+
     setData(data: {
+        title: string;
+        message: string;
+        type: NoticeType;
+        onClose: () => void;
+        showBtnConfirmButton?: boolean;
+        noticeInfo?: gc.Notices.NoticeInfo;
+    }) {
+        if (this.appType === AppTypes.MobileDirect || this.appType === AppTypes.Original) {
+            this.setDirectData(data);
+        } else {
+            super.setData(data);
+        }
+    }
+
+    protected setDirectData(data: {
         title: string;
         message: string;
         type: NoticeType;
@@ -23,7 +40,7 @@ export class NoticeOriginalGameCmp extends NoticeCmp {
 
         if (data.noticeInfo === gc.Notices.NoticeInfo.DisabledGame) {
             modifiedData.showBtnConfirmButton = false;
-            modifiedData.onClose = () => {};
+            modifiedData.onClose = () => { };
         }
 
         if (data.noticeInfo === gc.Notices.NoticeInfo.ExcludedGame) {
@@ -36,8 +53,11 @@ export class NoticeOriginalGameCmp extends NoticeCmp {
 
         this.updateButtonLabel(modifiedData.noticeInfo);
 
-        super.setData(data);
+        this.updateButtonLabel(modifiedData.noticeInfo);
+
+        super.setData(modifiedData);
     }
+
     private isBlockingNotice(noticeInfo?: gc.Notices.NoticeInfo): boolean {
         return noticeInfo === gc.Notices.NoticeInfo.DisabledGame || noticeInfo === gc.Notices.NoticeInfo.LostGameConnection;
     }
@@ -51,7 +71,6 @@ export class NoticeOriginalGameCmp extends NoticeCmp {
 
     private updateButtonLabel(noticeInfo?: gc.Notices.NoticeInfo): void {
         if (noticeInfo === gc.Notices.NoticeInfo.LostGameConnection) {
-            this.lblTitle && (this.lblTitle.node.active = false);
             const lblButton = this.btnConfirm?.getComponentInChildren(LocalizedLabelWithFormat);
             if (lblButton) {
                 lblButton.key = "Common.reconnect";

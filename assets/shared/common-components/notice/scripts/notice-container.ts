@@ -7,17 +7,24 @@ import { NoticeCmp } from "./notice-cmp";
 
 const { render, handle } = Observer;
 
-const { Notices, DisabledGame } = gc;
+const { Notices, DisabledGame, Auth } = gc;
 const { ccclass } = _decorator;
 
 @ccclass("NoticeContainer")
 export class NoticeContainer extends NodeContainer {
     noticeCmp: NoticeCmp = null;
+    private appType = 0;
+
+    @render(Auth.AuthStore, (store) => store.system)
+    storeAppType(appType: number) {
+        this.appType = appType;
+    }
 
     protected async showNoticeComponent(notice: gc.Notices.Notice) {
         await GameGuideUtils.hideWebViewGuide();
         const node = this.createNode();
-        this.noticeCmp = node.getComponent<NoticeCmp>(NoticeCmp);
+        this.noticeCmp = node.getComponent(NoticeCmp);
+        this.noticeCmp.setAppType(this.appType);
         this.noticeCmp.setData(notice);
     }
 
