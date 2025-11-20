@@ -34,6 +34,7 @@ export default class MainPlayerProfile extends ObserverComponent {
     @property(Label)
     lblScoin: Label = null;
 
+    private xMode = 1;
     onLoad() {
         super.onLoad();
         this.setMainPlayerContainerEffect();
@@ -42,6 +43,11 @@ export default class MainPlayerProfile extends ObserverComponent {
     @handle(MainPlayerProfileHandlers.MainPlayerContainerEffect)
     setMainPlayerContainerEffect() {
         return this.containerEffect;
+    }
+
+    @render(MainPlayerStore, (store) => store.xMode)
+    setXMode(value: number) {
+        this.xMode = value;
     }
 
     @render(MainPlayerStore, (store) => store.name)
@@ -67,7 +73,8 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     @render(MainPlayerStore, (store) => store.balance)
     setBalance(value: number) {
-        this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(value, 2).toString());
+        const balance =  Math.round(value * this.xMode * 100) / 100;
+        this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(balance, 2).toString());
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)

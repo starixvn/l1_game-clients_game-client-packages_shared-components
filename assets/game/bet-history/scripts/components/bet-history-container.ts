@@ -1,4 +1,5 @@
 import gc from "@sg/game-client-base";
+const { MainPlayerStore } = gc.Player;
 import { Node, Prefab, _decorator } from "cc";
 import Observer from "observer";
 import { NodeContainer } from "../../../../shared/common-components/node-container/node-container";
@@ -25,7 +26,13 @@ export default class BetHistoryContainer extends NodeContainer {
     @property(Prefab)
     resultPrefab: Prefab = null;
 
+    private xMode = 1;
     preprocessCallback = () => { };
+
+    @render(MainPlayerStore, (store) => store.xMode)
+    setXMode(value: number) {
+        this.xMode = value;
+    }
 
     @handle(BetHistory.BetHistoryHandlers.BetHistoryCallServiceHandler, (handler) => handler.handle(1))
     hanldeShowBetHistory() { }
@@ -50,6 +57,7 @@ export default class BetHistoryContainer extends NodeContainer {
             headerPrefab: this.headerPrefab,
             bodyItemPrefab: this.bodyItemPrefab,
             resultPrefab: this.resultPrefab,
+            xMode: this.xMode,
         });
     }
 
