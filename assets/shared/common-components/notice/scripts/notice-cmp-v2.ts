@@ -53,8 +53,6 @@ export class NoticeCompV2 extends NoticeCmp {
 
         this.updateButtonLabel(modifiedData.noticeInfo);
 
-        this.updateButtonLabel(modifiedData.noticeInfo);
-
         super.setData(modifiedData);
     }
 
