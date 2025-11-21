@@ -145,12 +145,17 @@ export class ClientSeedSettingsPopup extends ObserverComponent {
             this.tglRandomClientSeed.interactable = false;
             this.nodeWarningText.active = true;
         } else {
-            this.nodeRandomLabelDisabledBg.active = false;
-            this.nodeManualLabelDisabledBg.active = false;
-            this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_ENABLED;
-            this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_ENABLED;
-            this.tglManualClientSeed.interactable = true;
+            if (this.tglRandomClientSeed.isChecked) {
+                this.nodeRandomLabelDisabledBg.active = false;
+                this.tglRandomClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_ENABLED;
+            }
+            if (this.tglManualClientSeed.isChecked) {
+                this.nodeManualLabelDisabledBg.active = false;
+                this.tglManualClientSeed.node.getComponent(UIOpacity).opacity = this.OPACITY_ENABLED;
+            }
+
             this.tglRandomClientSeed.interactable = true;
+            this.tglManualClientSeed.interactable = true;
             this.nodeWarningText.active = false;
         }
     }
