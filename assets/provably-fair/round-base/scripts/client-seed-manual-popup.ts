@@ -19,6 +19,7 @@ export class ClientSeedManualPopup extends ObserverComponent {
 
     clientSeedChar = 4;
     onLoad(): void {
+        this.nodeSaveDisabled.active = false;
         super.onLoad();
         this.handleGATracking();
     }
