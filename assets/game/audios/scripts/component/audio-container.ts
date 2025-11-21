@@ -324,6 +324,7 @@ export class AudioContainer extends ObserverComponent {
         if (data && data.action === Audios.AudioAction.PLAY && this.isUserGesture) {
             this.playSFXAudio(data.id, true);
         } else {
+            this.currentPlayTime[data.id] = 0;
             this.stopAudio(this.stoppableSFXSource);
         }
     }
