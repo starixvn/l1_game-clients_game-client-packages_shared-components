@@ -73,7 +73,7 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     @render(MainPlayerStore, (store) => store.balance)
     setBalance(value: number) {
-        const balance =  Math.round(value * this.xMode * 100) / 100;
+        const balance =  FormatUtils.formatXMode(value, this.xMode);
         this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(balance, 2).toString());
     }
 

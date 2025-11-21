@@ -67,8 +67,8 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         this.lblTime && (this.lblTime.string = DateTimeUtils.getStringDateByTime(time));
         this.lblRound.string = roundId.toString();
         this.node.name = `item-${roundId}`;
-        this.lblWin && (this.lblWin.string = FormatUtils.numberWithCommas(betwin * xMode, 2));
-        this.lblTotalStake && (this.lblTotalStake.string = FormatUtils.numberWithCommas(totalAmount * xMode, 2));
+        this.lblWin && (this.lblWin.string = FormatUtils.numberWithCommas(betwin * xMode, 6));
+        this.lblTotalStake && (this.lblTotalStake.string = FormatUtils.numberWithCommas(totalAmount * xMode, 6));
         if (resultPrefab) {
             const bodyRow = instantiate(resultPrefab);
             const { result, settlementResult } = betHistoryLog;
@@ -78,7 +78,7 @@ export default class BetHistoryBodyItem extends ObserverComponent {
 
         if (this.lblWinLoss) {
             const winloss = betwin - totalAmount;
-            this.lblWinLoss.string = FormatUtils.numberWithCommas(winloss * xMode, 2);
+            this.lblWinLoss.string = FormatUtils.numberWithCommas(winloss * xMode, 6);
             this.lblWinLoss.color = winloss >= 0 ? new Color().fromHEX("F1E344") : new Color().fromHEX("EB3D26");
         }
     }
