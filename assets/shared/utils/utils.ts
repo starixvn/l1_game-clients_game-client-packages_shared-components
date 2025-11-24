@@ -249,7 +249,6 @@ export namespace AnimationUtils {
         prefixStr?: string;
     }) => {
         const { label, amount: end, start, duration } = opt;
-        const noZeroSuffix = opt.noZeroSuffix ?? true;
         const prefixStr = opt.prefixStr ?? "";
         const startStr = label.string.replace(prefixStr, "");
         const startValue = start || parseFloat(startStr.replace(/,/g, "")) || 0;
@@ -275,13 +274,13 @@ export namespace AnimationUtils {
                 repeatCount,
                 tween(label.node)
                     .call(() => {
-                        label.string = prefixStr + gc.FormatUtils.numberWithCommas(value, 2, noZeroSuffix);
+                        label.string = prefixStr + gc.FormatUtils.numberWithCommas(value, 6);
                         value += stepValue;
                     })
                     .delay(stepTime)
             )
             .call(() => {
-                label.string = prefixStr + gc.FormatUtils.numberWithCommas(end, 2, noZeroSuffix);
+                label.string = prefixStr + gc.FormatUtils.numberWithCommas(end, 6);
             })
             .start();
     };
