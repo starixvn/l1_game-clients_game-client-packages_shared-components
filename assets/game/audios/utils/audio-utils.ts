@@ -3,7 +3,7 @@ import { AudioClip, find } from "cc";
 import { AudioObserver } from "db://shared-components/shared/common-components/audio-observer";
 import { bundleManager } from "../../../shared/common-components/bundle-manager/bundle-manager";
 import { audioManager } from "../scripts/audio-manager";
-import { TAudioValue } from "../scripts/component/audio-container";
+import { AudioContainer, TAudioValue } from "../scripts/component/audio-container";
 
 interface AudioInfo {
     bundle: string;
@@ -140,4 +140,19 @@ export const playStoppableSFX = (soundId: string, loop: boolean) => {
 export const stopStoppableSFX = (soundId: string) => {
     const audioObserver = getAudioObserver();
     audioObserver?.stopStoppableSFX(soundId);
+};
+
+export const getAudioContainer = () => {
+    const canvas = find("Canvas");
+    return canvas.getComponent(AudioContainer);
+};
+
+export const setMusicVolumeScale = (scale: number) => {
+    const audioContainer = getAudioContainer();
+    audioContainer?.setMusicVolumeScale(scale);
+};
+
+export const setSfxVolumeScale = (scale: number) => {
+    const audioContainer = getAudioContainer();
+    audioContainer?.setSfxVolumeScale(scale);
 };

@@ -68,6 +68,8 @@ export class AudioContainer extends ObserverComponent {
     protected isPlayMusic = false;
     protected isPlaySFX = false;
     protected currentPlayTime = {};
+    protected musicVolume = 0;
+    protected sfxVolume = 0;
 
     get defaultLang() {
         return "en";
@@ -101,13 +103,29 @@ export class AudioContainer extends ObserverComponent {
 
     @render(gc.UserSettings.UserSettingStore, (store) => store.sfxVolume)
     renderSFXVolume(volume: number) {
+        this.sfxVolume = volume;
+        this.updateVolumeSfx(volume)
+    }
+
+    updateVolumeSfx(volume: number) {
         this.updateVolumeSFXSource(volume, 0.1);
         this.updateVolumeStoppableSFXSource(volume, 0.1);
     }
 
     @render(gc.UserSettings.UserSettingStore, (store) => store.bgmVolume)
     renderBGMVolume(volume: number) {
+        this.musicVolume = volume;
         this.updateVolumeMusicSource(volume, 0.1);
+    }
+
+    setMusicVolumeScale(scale: number) {
+        const volume = this.musicVolume * scale;
+        this.updateVolumeMusicSource(volume, 0.1);
+    }
+
+    setSfxVolumeScale(scale: number) {
+        const volume = this.sfxVolume * scale;
+        this.updateVolumeSfx(volume);
     }
 
     getAudioConfigs(): TAudioConfigs {
@@ -132,7 +150,7 @@ export class AudioContainer extends ObserverComponent {
             if (!!this.remotePath) {
                 await audioManager.getRemoteGameConfigs(this.remotePath);
             }
-        } catch (error) {}
+        } catch (error) { }
     }
 
     protected initializeAudioConfigs() {
@@ -247,10 +265,10 @@ export class AudioContainer extends ObserverComponent {
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
-    audiosLoaded() {}
+    audiosLoaded() { }
 
     @handle(Audios.AudioHandler, (handle) => handle.playRandomMusic())
-    callPlayMusic() {}
+    callPlayMusic() { }
 
     @render(UserSettings.UserSettingStore, (store) => store.musicEnable, { fireImmediately: false })
     enableMusic(musicEnable: boolean) {
@@ -334,6 +352,7 @@ export class AudioContainer extends ObserverComponent {
             id,
             (clip, isPlay) => {
                 if (isPlay === this.isPlaySFX) {
+                    console.log("playSFXAudio  ", id, isStoppableSFX);
                     isStoppableSFX ? this.playSourceClip(this.stoppableSFXSource, clip) : this.sfxSource.playOneShot(clip);
                 }
             },
