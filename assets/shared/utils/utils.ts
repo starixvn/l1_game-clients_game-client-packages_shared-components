@@ -247,12 +247,15 @@ export namespace AnimationUtils {
         start?: number;
         noZeroSuffix?: boolean;
         prefixStr?: string;
+        xMode?: number;
     }) => {
         const { label, amount: end, start, duration } = opt;
+        const noZeroSuffix = opt.noZeroSuffix ?? true;
         const prefixStr = opt.prefixStr ?? "";
         const startStr = label.string.replace(prefixStr, "");
         const startValue = start || parseFloat(startStr.replace(/,/g, "")) || 0;
         const range = Math.abs(end - startValue);
+        const toFormatNumber = opt.xMode ? 6 : 2;
         if (!range) {
             return;
         }
@@ -274,13 +277,13 @@ export namespace AnimationUtils {
                 repeatCount,
                 tween(label.node)
                     .call(() => {
-                        label.string = prefixStr + gc.FormatUtils.numberWithCommas(value, 6);
+                        label.string = prefixStr + gc.FormatUtils.numberWithCommas(value, toFormatNumber, noZeroSuffix);
                         value += stepValue;
                     })
                     .delay(stepTime)
             )
             .call(() => {
-                label.string = prefixStr + gc.FormatUtils.numberWithCommas(end, 6);
+                label.string = prefixStr + gc.FormatUtils.numberWithCommas(end, toFormatNumber, noZeroSuffix);
             })
             .start();
     };
