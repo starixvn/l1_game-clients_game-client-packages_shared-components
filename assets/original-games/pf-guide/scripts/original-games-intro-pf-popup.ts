@@ -7,13 +7,12 @@ const { render, handle } = Observer;
 
 @ccclass
 export class IntroPFPopup extends WebViewGuide {
-   @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
-   @handle(gc.GuidePF.GuidePFHandlers, (handle) => handle.resetUrl())
-   onClosePopup() {}
+    @handle(gc.Audios.AudioHandler, (handle) => handle.playSFX(gc.Audios.AudioIds.CLICK))
+    @handle(gc.GuidePF.GuidePFHandlers, (handle) => handle.resetUrl())
+    onClosePopup() { }
 
-   @render(gc.GuidePF.GuidePFStore, (store) => store.url)
-   openGuidePF(url: string) {
-       console.log("openGuidePF", url);
-       this.loadContent(url);
-   }
+    @render(gc.GuidePF.GuidePFStore, (store) => store.url)
+    openGuidePF(url: string) {
+        this.loadContent(url);
+    }
 }

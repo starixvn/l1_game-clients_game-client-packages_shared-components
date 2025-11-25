@@ -352,7 +352,6 @@ export class AudioContainer extends ObserverComponent {
             id,
             (clip, isPlay) => {
                 if (isPlay === this.isPlaySFX) {
-                    console.log("playSFXAudio  ", id, isStoppableSFX);
                     isStoppableSFX ? this.playSourceClip(this.stoppableSFXSource, clip) : this.sfxSource.playOneShot(clip);
                 }
             },
