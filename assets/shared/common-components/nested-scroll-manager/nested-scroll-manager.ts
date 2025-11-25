@@ -67,8 +67,13 @@ export class NestedScrollManager extends Component {
             this.scrollingChild = null;
         }
         if (!child.enabled) {
-            child.enabled = true;
+            this.setActiveChildScrollView(child, true);
         }
+    }
+
+    setActiveChildScrollView(child: ScrollView, enabled: boolean) {
+        child.enabled = enabled;
+        this.parentScrollView.enabled = !enabled;
     }
 
     private disableScrollChild(child: ScrollView) {
@@ -79,7 +84,7 @@ export class NestedScrollManager extends Component {
         } else if (currentOffset.y > maxOffset.y) {
             child.scrollToOffset(v2(0, maxOffset.y), 0);
         }
-        child.enabled = false;
+        this.setActiveChildScrollView(child, false);
     }
 
     private isAtScrollBoundary(scrollView: ScrollView): { boundary: boolean, offset: number } {
@@ -121,7 +126,7 @@ export class NestedScrollManager extends Component {
             const needScroll = this.childNeedScroll(child);
             if (isInside && needScroll) {
                 if (!child.enabled) {
-                    child.enabled = true;
+                    this.setActiveChildScrollView(child, true);
                 }
             } else {
                 if (child.enabled) {
