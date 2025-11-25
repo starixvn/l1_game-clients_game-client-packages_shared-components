@@ -679,6 +679,21 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
+            <key>slider-off-1x.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{20,20}</string>
+                <key>spriteSourceSize</key>
+                <string>{20,20}</string>
+                <key>textureRect</key>
+                <string>{{923,967},{20,20}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
             <key>slider-off.png</key>
             <dict>
                 <key>aliases</key>
@@ -691,6 +706,21 @@
                 <string>{40,40}</string>
                 <key>textureRect</key>
                 <string>{{497,1367},{40,40}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>slider-on-1x.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{20,20}</string>
+                <key>spriteSourceSize</key>
+                <string>{20,20}</string>
+                <key>textureRect</key>
+                <string>{{923,989},{20,20}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -798,7 +828,7 @@
             <key>size</key>
             <string>{1024,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e9b0d403b3710b71988b685b92136095:8e663882f87760bdf244fdebae5620cb:42d07e03c5ea52b11f8ae91872686067$</string>
+            <string>$TexturePacker:SmartUpdate:03ad369af9510bb29f31fc4bb02b9cf0:7adec90c03a6dda9726468e21935c489:42d07e03c5ea52b11f8ae91872686067$</string>
             <key>textureFileName</key>
             <string>original-games-popup.webp</string>
         </dict>
