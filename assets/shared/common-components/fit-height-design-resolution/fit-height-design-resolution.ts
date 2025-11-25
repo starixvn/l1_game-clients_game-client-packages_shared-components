@@ -14,7 +14,7 @@ class FitHeightHandler {
 
     private adjustResolution() {
         const { width, height } = this.designResolutionSize;
-        if ((!sys.isMobile || FunctionUtils.isIpad()) && !PREVIEW) {
+        if ((!sys.isMobile || FunctionUtils.isIpad())) {
             const gameContainer = document.getElementById("Cocos3dGameContainer");
             gameContainer.style.position = "relative";
             // For desktop browsers, use FIT_HEIGHT
