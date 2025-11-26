@@ -73,7 +73,6 @@ export class NestedScrollManager extends Component {
 
     setActiveChildScrollView(child: ScrollView, enabled: boolean) {
         child.enabled = enabled;
-        this.parentScrollView.enabled = !enabled;
     }
 
     private disableScrollChild(child: ScrollView) {
