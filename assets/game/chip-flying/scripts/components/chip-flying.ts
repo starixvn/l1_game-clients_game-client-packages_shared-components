@@ -91,6 +91,7 @@ export class ChipFlying extends ObserverComponent {
     protected chipStorage = {};
     protected startShowResultAnimation = false;
     protected winningPlayers: gc.GameServiceMessage.TWinningPlayers = {};
+    protected isLockingBet = false;
 
     onLoad(): void {
         this.currentChipContainer = this.chipContainer;
@@ -394,9 +395,18 @@ export class ChipFlying extends ObserverComponent {
         });
     }
 
+    @render(Rounds.RoundTimeStore, (store) => store.roundState)
+    handleRoundState(roundState: string) {
+        if (roundState === Rounds.ROUND_STATE.LOCKING_BET) {
+            this.isLockingBet = true;
+        } else if (roundState === Rounds.ROUND_STATE.STARTING_ROUND) {
+            this.isLockingBet = false;
+        }
+    }
+
     @render(AroundTablePlayersChipStore, (store) => store.aroundTablePlayerChip, { fireImmediately: false })
     handleAroundTablePlayerPlaceChip(aroundTablePlayerPlaceChip: IAroundTablePlayerChip) {
-        if (!this.aroundTablePlayers) {
+        if (!this.aroundTablePlayers || this.isLockingBet) {
             return;
         }
         const { playerChip, chipValues, clientRoundId } = aroundTablePlayerPlaceChip ?? {};
