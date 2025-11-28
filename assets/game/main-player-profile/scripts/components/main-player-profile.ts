@@ -6,6 +6,7 @@ import { bundleManager } from "db://shared-components/shared/common-components/b
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
+import { getXMode } from "db://shared-common-slot/x-mode/scripts/utils/xMode-utils";
 
 const { Player, Bet, FormatUtils, GameConfigs } = gc;
 
@@ -34,7 +35,6 @@ export default class MainPlayerProfile extends ObserverComponent {
     @property(Label)
     lblScoin: Label = null;
 
-    private xMode = 1;
     onLoad() {
         super.onLoad();
         this.setMainPlayerContainerEffect();
@@ -43,11 +43,6 @@ export default class MainPlayerProfile extends ObserverComponent {
     @handle(MainPlayerProfileHandlers.MainPlayerContainerEffect)
     setMainPlayerContainerEffect() {
         return this.containerEffect;
-    }
-
-    @render(MainPlayerStore, (store) => store.xMode)
-    setXMode(value: number) {
-        this.xMode = value;
     }
 
     @render(MainPlayerStore, (store) => store.name)
@@ -73,7 +68,7 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     @render(MainPlayerStore, (store) => store.balance)
     setBalance(value: number) {
-        const balance =  FormatUtils.formatXMode(value, this.xMode);
+        const balance =  FormatUtils.formatXMode(value, getXMode());
         this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(balance, 6).toString());
     }
 

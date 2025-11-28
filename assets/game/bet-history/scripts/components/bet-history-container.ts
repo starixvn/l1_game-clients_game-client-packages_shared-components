@@ -26,13 +26,7 @@ export default class BetHistoryContainer extends NodeContainer {
     @property(Prefab)
     resultPrefab: Prefab = null;
 
-    private xMode = 1;
     preprocessCallback = () => { };
-
-    @render(MainPlayerStore, (store) => store.xMode)
-    setXMode(value: number) {
-        this.xMode = value;
-    }
 
     @handle(BetHistory.BetHistoryHandlers.BetHistoryCallServiceHandler, (handler) => handler.handle(1))
     hanldeShowBetHistory() { }

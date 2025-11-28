@@ -41,7 +41,6 @@ export class BetHistoryTable extends ObserverComponent {
             index,
             resultPrefab,
             fractionalOddsFormat,
-            xMode,
         });
         return bodyItem;
     }
