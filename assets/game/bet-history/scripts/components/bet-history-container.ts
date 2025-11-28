@@ -51,7 +51,6 @@ export default class BetHistoryContainer extends NodeContainer {
             headerPrefab: this.headerPrefab,
             bodyItemPrefab: this.bodyItemPrefab,
             resultPrefab: this.resultPrefab,
-            xMode: this.xMode,
         });
     }
 

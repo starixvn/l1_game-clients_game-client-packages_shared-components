@@ -56,7 +56,7 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         const { betHistoryLog, index, resultPrefab } = data;
         this.betHistoryLog = betHistoryLog;
         this.nodeBackground.active = index % 2 > 0;
-        const { time, betwin, roundId, totalAmount, xMode } = betHistoryLog;
+        const { time, betwin, roundId, totalAmount } = betHistoryLog;
 
         if (time) {
             const date = DateTimeUtils.getStringDate(time);
@@ -68,7 +68,7 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         this.lblTime && (this.lblTime.string = DateTimeUtils.getStringDateByTime(time));
         this.lblRound.string = roundId.toString();
         this.node.name = `item-${roundId}`;
-        this.lblWin && (this.lblWin.string = formatStringXMode(betwin * xMode));
+        this.lblWin && (this.lblWin.string = formatStringXMode(betwin));
         this.lblTotalStake && (this.lblTotalStake.string = formatStringXMode(totalAmount));
         if (resultPrefab) {
             const bodyRow = instantiate(resultPrefab);
