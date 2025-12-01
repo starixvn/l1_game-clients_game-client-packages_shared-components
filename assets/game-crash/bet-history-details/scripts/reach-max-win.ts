@@ -1,5 +1,6 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Component, Label } from "cc";
+import { formatCurrencyWithConfig } from "db://shared-components/shared/utils";
 
 const { ccclass, property } = _decorator;
 const { FormatUtils } = gc;
@@ -17,6 +18,6 @@ export class ReachMaxWin extends Component {
         betLogDetails.forEach((log) => {
             totalWin += log.winAmount;
         });
-        this.lblReachMaxWin.string = FormatUtils.numberWithCommas(totalWin, 2);
+        this.lblReachMaxWin.string = formatCurrencyWithConfig(totalWin);
     }
 }

@@ -1,5 +1,6 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Component, Label } from "cc";
+import { formatCurrencyWithConfig } from "db://shared-components/shared/utils";
 
 const { ccclass, property } = _decorator;
 const { FormatUtils } = gc;
@@ -28,10 +29,10 @@ export class LeaderBoardCashOut extends Component {
     setData(data: ILeaderBoardCashOutData) {
         const { name, multiplier, win, amount } = data;
         this.lblName.string = this.encryptedName(name);
-        this.lblBetAmount.string = FormatUtils.numberWithCommas(amount, 2);
+        this.lblBetAmount.string = formatCurrencyWithConfig(amount);
         const hasCashedOut = multiplier > 0;
         this.lblMultiplier.string = hasCashedOut ? `${FormatUtils.numberWithCommas(multiplier, 2, false)}x` : "-";
-        this.lblWin.string = hasCashedOut ? FormatUtils.numberWithCommas(win, 2) : "-";
+        this.lblWin.string = hasCashedOut ? formatCurrencyWithConfig(win) : "-";
     }
 
     private encryptedName(name: string): string {

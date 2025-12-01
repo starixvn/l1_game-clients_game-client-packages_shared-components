@@ -2,7 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
-import { ComponentUtils } from "../../../../../extensions/shared-components/assets/shared/utils";
+import { ComponentUtils, formatCurrencyWithConfig } from "../../../../../extensions/shared-components/assets/shared/utils";
 const { ccclass, property } = _decorator;
 const { render, handle } = Observer;
 
@@ -44,7 +44,7 @@ export class TotalWinNotice extends ObserverComponent {
     }
 
     updateTotalWinAmount(amount: number) {
-        this.lblWinAmount.string = FormatUtils.numberWithCommas(amount, 2);
+        this.lblWinAmount.string = formatCurrencyWithConfig(amount);
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))

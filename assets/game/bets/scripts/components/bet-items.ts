@@ -6,7 +6,7 @@ import { StaticNode } from "../../../../shared/common-components/static-node/scr
 import { StaticGroupId } from "../../../../shared/common-components/static-node/scripts/static-node-info";
 import { ObserverComponent } from "./../../../../shared/common-components/observer-component/scripts/observer-component";
 import BetItem from "./bet-item";
-import { formatValueBaseOnSystemType } from "db://shared-components/shared/utils";
+import { formatCurrencyWithConfig } from "db://shared-components/shared/utils";
 
 const { ccclass } = _decorator;
 const { render, handle } = Observer;
@@ -84,7 +84,7 @@ export class BetItems extends ObserverComponent {
         this.betItemComponents.forEach((betItem) => {
             const choice = betItem.node.name;
             if (ownBets?.[choice]) {
-                betItem.renderOwnBet(formatValueBaseOnSystemType(ownBets[choice]));
+                betItem.renderOwnBet(formatCurrencyWithConfig(ownBets[choice]));
             } else {
                 betItem.renderOwnBet("");
             }
@@ -96,7 +96,7 @@ export class BetItems extends ObserverComponent {
         this.betItemComponents.forEach((betItem) => {
             const choice = betItem.node.name;
             if (totalBets?.[choice]) {
-                betItem.renderTotalBet(formatValueBaseOnSystemType(totalBets[choice]));
+                betItem.renderTotalBet(formatCurrencyWithConfig(totalBets[choice]));
             } else {
                 betItem.renderTotalBet("");
             }

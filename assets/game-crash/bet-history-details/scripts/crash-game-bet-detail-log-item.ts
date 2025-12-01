@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, Color, Label } from "cc";
 
 import { BaseBetDetailLogItem, BetDetailLogItemType } from "../../../game/bet-history/scripts/components/bet-detail/bet-detail-log-item";
+import { formatCurrencyWithConfig } from "db://shared-components/shared/utils";
 
 const { ccclass, property } = _decorator;
 const { DateTimeUtils, FormatUtils, Translator } = gc;
@@ -73,9 +74,9 @@ export class CrashGameBetDetailLogItem extends BaseBetDetailLogItem {
 
         const lblAction = isShowOtherAction ? this.lblOtherAction : this.lblAction;
         lblAction.string = Translator.gameTranslate(actionName);
-        this.lblBet.string = FormatUtils.numberWithCommas(amount, 2);
+        this.lblBet.string = formatCurrencyWithConfig(amount);
         this.lblMultiplier.string = multiplier ? `${FormatUtils.numberWithCommas(multiplier, 2, false)}x` : "";
-        this.lblWin.string = FormatUtils.numberWithCommas(winAmount, 2);
+        this.lblWin.string = formatCurrencyWithConfig(winAmount);
         this.lblWin.node.active = action !== ActionName.BET;
 
         this.setHighlightTicketDetail(winAmount > 0);

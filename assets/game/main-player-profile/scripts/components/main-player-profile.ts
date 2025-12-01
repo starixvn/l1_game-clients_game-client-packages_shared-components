@@ -6,9 +6,9 @@ import { bundleManager } from "db://shared-components/shared/common-components/b
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
-import { isHDType } from "db://shared-components/shared/utils";
+import { isHDType, truncateFixedDecimalsWithConfig } from "db://shared-components/shared/utils";
 
-const { Player, Bet, FormatUtils, GameConfigs, Settlements } = gc;
+const { Player, Bet,  GameConfigs, Settlements } = gc;
 
 const { MainPlayerStore } = Player;
 
@@ -78,10 +78,10 @@ export default class MainPlayerProfile extends ObserverComponent {
             this.currentBalance = value;
 
             if (!this.isProcessingSettlement) {
-                this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(value, 2).toString());
+                this.lblBalance && (this.lblBalance.string = truncateFixedDecimalsWithConfig(value));
             }
         } else {
-            this.lblBalance && (this.lblBalance.string = FormatUtils.numberWithCommas(value, 2).toString());
+            this.lblBalance && (this.lblBalance.string = truncateFixedDecimalsWithConfig(value));
         }
     }
 
@@ -113,7 +113,7 @@ export default class MainPlayerProfile extends ObserverComponent {
 
             if (isHDType()) {
                 this.currentBalance -= lastReceivedBet.value;
-                this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(this.currentBalance, 2).toString());
+                this.lblBalance && (this.lblBalance.string = truncateFixedDecimalsWithConfig(this.currentBalance));
             }
         }
     }
@@ -136,7 +136,7 @@ export default class MainPlayerProfile extends ObserverComponent {
     private updateBalanceUIFromSettlement() {
         if (this.settlementStatus?.win) {
             this.currentBalance += this.settlementStatus.bet;
-            this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(this.currentBalance, 2).toString());
+            this.lblBalance && (this.lblBalance.string = truncateFixedDecimalsWithConfig(this.currentBalance));
         }
         this.isProcessingSettlement = false;
     }

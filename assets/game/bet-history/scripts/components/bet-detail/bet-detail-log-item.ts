@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator, Color, Label, Node } from "cc";
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
+import { formatCurrencyWithConfig } from "db://shared-components/shared/utils";
 
 const { ccclass, property } = _decorator;
 const { DateTimeUtils, FormatUtils, Translator } = gc;
@@ -63,7 +64,7 @@ export default class BetDetailLogItem extends BaseBetDetailLogItem {
         const { amount, choice } = betDetailsLog as GameRoundBetDetailsLog & gc.BetHistory.DynamicObject<object>;
 
         this.lblChoice.string = Translator.gameTranslate(`glossary_${choice}`);
-        this.lblAmount.string = FormatUtils.numberWithCommas(amount, 2);
+        this.lblAmount.string = formatCurrencyWithConfig(amount);
         this.parseOddByData(data);
         this.calculateWinValue(data);
     }
@@ -76,12 +77,12 @@ export default class BetDetailLogItem extends BaseBetDetailLogItem {
             const rawOdd = odds[choice];
             const effectiveOdds = freeBet ? rawOdd - 1 : rawOdd;
             const winningAmount = amount * effectiveOdds;
-            this.lblWin.string = FormatUtils.numberWithCommas(winningAmount, 2);
+            this.lblWin.string = formatCurrencyWithConfig(winningAmount);
             this.setHighlightTicketDetail(winningAmount > amount);
         } else {
             if (this.needRefund(settlementResult)) {
                 const value = amount * this.refundRatio;
-                this.lblWin.string = FormatUtils.numberWithCommas(value, 2);
+                this.lblWin.string = formatCurrencyWithConfig(value);
             } else {
                 this.lblWin.string = "0";
             }

@@ -4,6 +4,7 @@ import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { BetAmountItem } from "./bet-amount-item";
+import { formatCurrencyWithConfig } from "db://shared-components/shared/utils";
 
 const { FormatUtils, GameCrash } = gc;
 const { ccclass, property } = _decorator;
@@ -53,7 +54,7 @@ export class BetAmountPopup extends ObserverComponent {
 
     @render(GameCrash.BetInput.BetInputStore, (store) => store.betAmountTemp)
     private updateBetAmount(amount: number) {
-        this.lblBetAmount.string = `${FormatUtils.numberWithCommas(amount, 2)}`;
+        this.lblBetAmount.string = `${formatCurrencyWithConfig(amount)}`;
         this.checkConfirmBtnStatus(amount > 0);
     }
 
@@ -81,7 +82,7 @@ export class BetAmountPopup extends ObserverComponent {
     }
 
     private updateBetRange({ minBet, maxBet }) {
-        this.lblBetRange.string = `${FormatUtils.numberWithCommas(minBet, 2)} - ${FormatUtils.numberWithCommas(maxBet, 2)}`;
+        this.lblBetRange.string = `${formatCurrencyWithConfig(minBet)} - ${formatCurrencyWithConfig(maxBet)}`;
     }
 
     @handle(gc.Audios.AudioHandler, (handle, id: string) => handle.playSFX(id))

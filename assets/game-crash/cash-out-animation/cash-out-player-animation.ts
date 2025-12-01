@@ -3,7 +3,7 @@ import { CCString, Color, Label, Node, UITransform, _decorator, math, sp, tween,
 import { random } from "lodash-es";
 import Observer from "observer";
 import { NodeContainer } from "../../shared/common-components/node-container/node-container";
-import { AnimationUtils, ComponentUtils } from "../../shared/utils";
+import { AnimationUtils, ComponentUtils, formatCurrencyWithConfig } from "../../shared/utils";
 const { render } = Observer;
 const { ccclass, property } = _decorator;
 const { GameCrash, FormatUtils } = gc;
@@ -79,7 +79,7 @@ export class CashOutPlayerAnimation extends NodeContainer {
     handleWinnings(spine: sp.Skeleton, winValue: number, isMainPlayer: boolean) {
         const lblWin = spine.node?.getComponentInChildren(Label);
         if (lblWin) {
-            lblWin.string = FormatUtils.numberWithCommas(winValue, 2);
+            lblWin.string = formatCurrencyWithConfig(winValue);
             lblWin.color = new Color().fromHEX(isMainPlayer ? ColorWinValue.MainPlayer : ColorWinValue.OtherPlayer);
         }
     }

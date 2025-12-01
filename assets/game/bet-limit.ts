@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { Label, _decorator } from "cc";
 import Observer from "observer";
 import { ObserverComponent } from "../shared/common-components/observer-component/scripts/observer-component";
+import { formatCurrencyWithConfig } from "../shared/utils";
 const { ccclass, property } = _decorator;
 const { render } = Observer;
 const { Rounds, FormatUtils } = gc;
@@ -27,6 +28,6 @@ export class BetLimit extends ObserverComponent {
     }
 
     renderRangeBetLimit() {
-        this.label.string = `${FormatUtils.numberWithCommas(this.minBet, 2)} - ${FormatUtils.numberWithCommas(this.maxBet, 2)}`;
+        this.label.string = `${formatCurrencyWithConfig(this.minBet)} - ${formatCurrencyWithConfig(this.maxBet)}`;
     }
 }

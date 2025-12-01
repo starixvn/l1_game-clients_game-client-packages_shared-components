@@ -374,6 +374,25 @@ export const isHDType = () => {
     return globalThis.envConfig?.systemType === hdType;
 }
 
-export const formatValueBaseOnSystemType = (value: number) => {
-    return isHDType() ? gc.FormatUtils.numberWithCommas(value, 2) : gc.FormatUtils.numberWithCommas(value);
+/**
+ * Get decimal places from site config, fallback to 2 if not configured
+ */
+export const getDecimalPlaces = (): number => {
+    return globalThis.envConfig?.decimalPlaces ?? 2;
+}
+
+/**
+ * Format currency value with dynamic decimal places from config
+ */
+export const formatCurrencyWithConfig = (value: number, noZeroSuffix = true): string => {
+    const decimalPlaces = getDecimalPlaces();
+    return gc.FormatUtils.numberWithCommas(value, decimalPlaces, noZeroSuffix);
+}
+
+/**
+ * Truncate fixed decimals with dynamic decimal places from config
+ */
+export const truncateFixedDecimalsWithConfig = (value: number): string => {
+    const decimalPlaces = getDecimalPlaces();
+    return gc.FormatUtils.truncateFixedDecimals(value, decimalPlaces);
 }

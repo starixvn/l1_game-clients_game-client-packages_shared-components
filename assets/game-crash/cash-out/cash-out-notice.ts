@@ -3,7 +3,7 @@ import { _decorator, Label, Node } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
-import { ComponentUtils } from "../../../../../extensions/shared-components/assets/shared/utils";
+import { ComponentUtils, formatCurrencyWithConfig } from "../../../../../extensions/shared-components/assets/shared/utils";
 
 const { ccclass, property } = _decorator;
 const { handle, render } = Observer;
@@ -29,7 +29,7 @@ export class CashOutNotice extends ObserverComponent {
     @render(GameCrash.CrashCashOut.CrashCashOutStore, (store) => store.cashOutNotice, { fireImmediately: false })
     updateCashoutNotice(cashOutNotice: gc.GameCrash.GameCrashServiceMessage.CrashCashOut) {
         const win = cashOutNotice?.reachMaxWin ? cashOutNotice.win : cashOutNotice.cashOutWin;
-        this.lblCashOut.string = FormatUtils.numberWithCommas(win, 2);
+        this.lblCashOut.string = formatCurrencyWithConfig(win);
         this.lblReachMaxWin.string = `(${Translator.gameTranslate("total_cashout_amount_reach_max")})`;
         this.lblReachMaxWin.node.active = cashOutNotice?.reachMaxWin;
         this.showNotice(true);

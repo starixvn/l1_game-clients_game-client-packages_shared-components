@@ -3,6 +3,7 @@ import { _decorator, Button, Label, Node, UIOpacity } from "cc";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../shared/common-components/observer-component/scripts/observer-component";
+import { formatCurrencyWithConfig } from "db://shared-components/shared/utils";
 
 const { FormatUtils, GameCrash } = gc;
 const { ccclass, property } = _decorator;
@@ -28,7 +29,7 @@ export class BetInput extends ObserverComponent {
 
     @render(GameCrash.BetInput.BetInputStore, (store) => store.betAmountRatio)
     private updateBetAmount(amount: number) {
-        this.lblBetAmount.string = amount > 0 ? `${FormatUtils.numberWithCommas(amount, 2)}` : "";
+        this.lblBetAmount.string = amount > 0 ? `${formatCurrencyWithConfig(amount)}` : "";
     }
 
     @render(GameCrash.BetInput.BetInputStore, (store) => store.increaseStatus)

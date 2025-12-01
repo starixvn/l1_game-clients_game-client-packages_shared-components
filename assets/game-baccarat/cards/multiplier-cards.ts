@@ -3,7 +3,7 @@ import { Label, Node, Prefab, _decorator, instantiate, v3 } from "cc";
 import Observer from "observer";
 import { ServiceCard } from "../../game/poker-cards/scripts/poker-card";
 import { ObserverComponent } from "../../shared/common-components/observer-component/scripts/observer-component";
-import { AnimationUtils, ComponentUtils, FunctionUtils } from "../../shared/utils";
+import { AnimationUtils, ComponentUtils, formatCurrencyWithConfig, FunctionUtils } from "../../shared/utils";
 import { MultiplierCard } from "./multiplier-card";
 const { ccclass, property } = _decorator;
 const { observer, render, handle } = Observer;
@@ -110,14 +110,14 @@ export class MultiplierCards extends ObserverComponent {
     }
 
     renderRangeBetLimit() {
-        this.lblRangeBetLimit.string = `${FormatUtils.numberWithCommas(this.minBet, 2)} - ${FormatUtils.numberWithCommas(this.maxBet, 2)}`;
+        this.lblRangeBetLimit.string = `${formatCurrencyWithConfig(this.minBet)} - ${formatCurrencyWithConfig(this.maxBet)}`;
     }
 
     @render(GameBaccaratX.ExtraFee.ExtraFeeStore, (store) => store.extraFee)
     renderExtraFee(extraFee: any) {
         if (extraFee) {
             const fee = extraFee.fee;
-            const extraFeeString = extraFee.isRatio ? `${fee * 100}%` : `${FormatUtils.numberWithCommas(fee, 2)}`;
+            const extraFeeString = extraFee.isRatio ? `${fee * 100}%` : `${formatCurrencyWithConfig(fee)}`;
             this.lblExtraFee.string = extraFeeString;
         }
     }

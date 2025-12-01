@@ -1,6 +1,7 @@
 import gc from "@sg/game-client-base";
 import { _decorator } from "cc";
 import BetHistoryBodyItem, { BetHistoryBodyItemType } from "../../bet-history/scripts/components/bet-history-body-item";
+import { formatCurrencyWithConfig } from "db://shared-components/shared/utils";
 const { ccclass } = _decorator;
 const { DateTimeUtils } = gc;
 
@@ -13,6 +14,6 @@ export class BetHistoryNewBodyItem extends BetHistoryBodyItem {
     }
 
     protected getFormatOdd(value: string, isFractional: boolean) {
-        return isFractional ? gc.FormatUtils.numberWithCommas(+value - 1, 2) : value;
+        return isFractional ? formatCurrencyWithConfig(+value - 1) : value;
     }
 }

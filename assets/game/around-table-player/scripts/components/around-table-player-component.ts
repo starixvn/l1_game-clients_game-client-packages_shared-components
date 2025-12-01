@@ -5,7 +5,7 @@ import { bundleManager } from "../../../../shared/common-components/bundle-manag
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 import { ComponentUtils } from "../../../../shared/utils";
 import { IAroundTablePlayers } from "../stores/around-table-players-chip-store";
-import { AnimationUtils, truncatedNickname } from "./../../../../shared/utils/utils";
+import { AnimationUtils, formatCurrencyWithConfig, truncatedNickname } from "./../../../../shared/utils/utils";
 
 const { ccclass, property } = _decorator;
 const { fadeIn, fadeOut } = AnimationUtils;
@@ -96,7 +96,7 @@ export class AroundTablePlayerComponent extends ObserverComponent {
         this.lblBalance.string =
             balance > this.maxBalanceDisplay
                 ? `${FormatUtils.numberWithCommas(this.maxBalanceDisplay)}+`
-                : FormatUtils.numberWithCommas(balance, 2);
+                : formatCurrencyWithConfig(balance);
     }
 
     async setAvatar(avatarId: number) {
