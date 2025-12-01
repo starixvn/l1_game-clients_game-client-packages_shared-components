@@ -4,7 +4,7 @@ import { random, round } from "lodash-es";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { AnimationUtils } from "../../../../shared/utils";
+import { AnimationUtils, isHDType } from "../../../../shared/utils";
 import { AroundTablePlayers } from "../../../around-table-player/scripts/components/around-table-players";
 import {
     AroundTablePlayersChipStore,
@@ -248,7 +248,10 @@ export class ChipFlying extends ObserverComponent {
                 this.handleReachMaxWin();
             }
 
-            this.getBalance();
+            if (!isHDType()) {
+                this.getBalance();
+            }
+
             this.resetSettlementStatus();
         }
     }

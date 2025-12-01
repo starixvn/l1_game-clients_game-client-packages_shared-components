@@ -368,3 +368,12 @@ export const shortenName = (name: string) => {
     const suffix = name.slice(-3);
     return `${prefix}***${suffix}`;
 };
+
+export const isHDType = () => {
+    const hdType = "HD";
+    return globalThis.envConfig?.systemType === hdType;
+}
+
+export const formatValueBaseOnSystemType = (value: number) => {
+    return isHDType() ? gc.FormatUtils.numberWithCommas(value, 2) : gc.FormatUtils.numberWithCommas(value);
+}
