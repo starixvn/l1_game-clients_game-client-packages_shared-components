@@ -104,7 +104,7 @@ export class AudioContainer extends ObserverComponent {
     @render(gc.UserSettings.UserSettingStore, (store) => store.sfxVolume)
     renderSFXVolume(volume: number) {
         this.sfxVolume = volume;
-        this.updateVolumeSfx(volume)
+        this.updateVolumeSfx(volume);
     }
 
     updateVolumeSfx(volume: number) {
@@ -150,7 +150,7 @@ export class AudioContainer extends ObserverComponent {
             if (!!this.remotePath) {
                 await audioManager.getRemoteGameConfigs(this.remotePath);
             }
-        } catch (error) { }
+        } catch (error) {}
     }
 
     protected initializeAudioConfigs() {
@@ -265,10 +265,10 @@ export class AudioContainer extends ObserverComponent {
     }
 
     @handle(gc.Audios.AudioHandler, (handle) => handle.audiosLoaded())
-    audiosLoaded() { }
+    audiosLoaded() {}
 
     @handle(Audios.AudioHandler, (handle) => handle.playRandomMusic())
-    callPlayMusic() { }
+    callPlayMusic() {}
 
     @render(UserSettings.UserSettingStore, (store) => store.musicEnable, { fireImmediately: false })
     enableMusic(musicEnable: boolean) {
@@ -284,8 +284,8 @@ export class AudioContainer extends ObserverComponent {
 
     /**
      * Update volume of music source
-     * @param volume 
-     * @param duration 
+     * @param volume
+     * @param duration
      */
     updateVolumeMusicSource(volume: number, duration: number) {
         tween(this.musicSource).to(duration, { volume: volume }).start();
@@ -339,6 +339,10 @@ export class AudioContainer extends ObserverComponent {
 
     @render(Audios.AudioStore, (store) => store.stoppableSFX)
     handleStoppableSFX(data: gc.Audios.AudioData) {
+        if (!data) {
+            return;
+        }
+
         if (data && data.action === Audios.AudioAction.PLAY && this.isUserGesture) {
             this.playSFXAudio(data.id, true);
         } else {
