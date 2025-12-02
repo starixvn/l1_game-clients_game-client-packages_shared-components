@@ -6370,7 +6370,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 84.181640625,
+      "width": 215,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -6409,11 +6409,11 @@
     "_string": "Save",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 36,
+    "_actualFontSize": 37,
     "_fontSize": 36,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
-    "_overflow": 0,
+    "_overflow": 2,
     "_enableWrapText": true,
     "_font": {
       "__uuid__": "dec89af7-ff77-4a94-b0ad-45eadf290546",
