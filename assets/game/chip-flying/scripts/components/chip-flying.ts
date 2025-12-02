@@ -240,7 +240,7 @@ export class ChipFlying extends ObserverComponent {
         this.startShowResultAnimation = false;
     };
 
-    private showPayoutForMainPlayer() {
+    protected showPayoutForMainPlayer() {
         if (this.settlementStatus?.win) {
             this.mainPlayerIncreaseBalance(this.settlementStatus?.bet);
             this.mainPlayerPlayWinningEffect();
