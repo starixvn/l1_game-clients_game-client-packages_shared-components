@@ -1,5 +1,5 @@
 import gc from "@sg/game-client-base";
-import { Label, Node, Sprite, SpriteFrame, _decorator, tween } from "cc";
+import { Label, Node, Sprite, SpriteFrame, _decorator } from "cc";
 import Observer from "observer";
 
 import { bundleManager } from "db://shared-components/shared/common-components/bundle-manager/bundle-manager";
@@ -8,7 +8,7 @@ import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
 import { isHDType, truncateFixedDecimalsWithConfig } from "db://shared-components/shared/utils";
 
-const { Player, Bet,  GameConfigs, Settlements } = gc;
+const { Player, Bet, GameConfigs } = gc;
 
 const { MainPlayerStore } = Player;
 
@@ -36,10 +36,6 @@ export default class MainPlayerProfile extends ObserverComponent {
     lblScoin: Label = null;
 
     private currentBalance = 0;
-    private settlementStatus: gc.GameServiceMessage.Status = null;
-    private isProcessingSettlement = false;
-
-    private readonly CHIP_FLYING_TOTAL_DELAY = 3.75; // delayAnimPayChips (1.25s) + payChipsDuration (1.25s) + chipDelayFlyingTime (1.25s)
 
     onLoad() {
         super.onLoad();
@@ -76,38 +72,13 @@ export default class MainPlayerProfile extends ObserverComponent {
     setBalance(value: number) {
         if (isHDType()) {
             this.currentBalance = value;
-
-            if (!this.isProcessingSettlement) {
-                this.lblBalance && (this.lblBalance.string = truncateFixedDecimalsWithConfig(value));
-            }
-        } else {
-            this.lblBalance && (this.lblBalance.string = truncateFixedDecimalsWithConfig(value));
         }
-    }
-
-    @render(Settlements.SettlementStatusStore, (store) => store.settlementStatus, { fireImmediately: false })
-    handleSettlementStatus(settlementStatus: gc.GameServiceMessage.Status) {
-        this.settlementStatus = settlementStatus;
-    }
-
-    @render(Settlements.SettlementStore, (store) => store.settlementResult, { fireImmediately: false })
-    handleSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult) {
-        if (!settlementResult || !isHDType()) {
-            return;
-        }
-
-        this.isProcessingSettlement = true;
-
-        tween(this.node)
-            .delay(this.CHIP_FLYING_TOTAL_DELAY)
-            .call(() => {
-                this.updateBalanceUIFromSettlement();
-            })
-            .start();
+        this.lblBalance && (this.lblBalance.string = truncateFixedDecimalsWithConfig(value));
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
     endBetInfo(lastReceivedBet: gc.Bet.ILastReceivedBet) {
+
         if (lastReceivedBet && lastReceivedBet.value > 0 && lastReceivedBet.isAnimated) {
             this.mainPlayerDecreaseBalance(lastReceivedBet.value);
 
@@ -131,13 +102,5 @@ export default class MainPlayerProfile extends ObserverComponent {
     @render(MainPlayerStore, (store) => store.scoin)
     setScoin(scoin: number) {
         this.lblScoin && (this.lblScoin.string = scoin.toString());
-    }
-    
-    private updateBalanceUIFromSettlement() {
-        if (this.settlementStatus?.win) {
-            this.currentBalance += this.settlementStatus.bet;
-            this.lblBalance && (this.lblBalance.string = truncateFixedDecimalsWithConfig(this.currentBalance));
-        }
-        this.isProcessingSettlement = false;
     }
 }
