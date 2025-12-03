@@ -31,7 +31,7 @@ export class BetHistoryTable extends ObserverComponent {
         betHistoryLog: gc.BetHistory.BetHistoryLog,
         index: number,
         resultPrefab: Prefab,
-        fractionalOddsFormat = false,
+        fractionalOddsFormat = false
     ): Node {
         const bodyItem = instantiate(bodyItemPrefab);
         this.getHistoryItemComponent(bodyItem)?.setData({

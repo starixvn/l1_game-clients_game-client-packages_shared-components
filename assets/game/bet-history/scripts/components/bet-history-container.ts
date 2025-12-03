@@ -1,5 +1,4 @@
 import gc from "@sg/game-client-base";
-const { MainPlayerStore } = gc.Player;
 import { Node, Prefab, _decorator } from "cc";
 import Observer from "observer";
 import { NodeContainer } from "../../../../shared/common-components/node-container/node-container";

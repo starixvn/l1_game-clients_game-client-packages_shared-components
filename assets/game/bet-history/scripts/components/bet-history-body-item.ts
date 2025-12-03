@@ -4,7 +4,6 @@ import Observer from "observer";
 
 import { AppUtils } from "db://shared-components/shared/utils";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { formatStringXMode } from "db://shared-common-slot/x-mode/scripts/utils/xMode-utils";
 
 const { property, ccclass } = _decorator;
 const { DateTimeUtils, FormatUtils } = gc;
@@ -68,8 +67,8 @@ export default class BetHistoryBodyItem extends ObserverComponent {
         this.lblTime && (this.lblTime.string = DateTimeUtils.getStringDateByTime(time));
         this.lblRound.string = roundId.toString();
         this.node.name = `item-${roundId}`;
-        this.lblWin && (this.lblWin.string = formatStringXMode(betwin));
-        this.lblTotalStake && (this.lblTotalStake.string = formatStringXMode(totalAmount));
+        this.lblWin && (this.lblWin.string = FormatUtils.numberWithCommas(betwin, 2));
+        this.lblTotalStake && (this.lblTotalStake.string = FormatUtils.numberWithCommas(totalAmount, 2));
         if (resultPrefab) {
             const bodyRow = instantiate(resultPrefab);
             const { result, settlementResult } = betHistoryLog;
@@ -79,7 +78,7 @@ export default class BetHistoryBodyItem extends ObserverComponent {
 
         if (this.lblWinLoss) {
             const winloss = betwin - totalAmount;
-            this.lblWinLoss.string = formatStringXMode(winloss);
+            this.lblWinLoss.string = FormatUtils.numberWithCommas(winloss, 2);
             this.lblWinLoss.color = winloss >= 0 ? new Color().fromHEX("F1E344") : new Color().fromHEX("EB3D26");
         }
     }

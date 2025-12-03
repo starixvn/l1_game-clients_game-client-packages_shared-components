@@ -6,7 +6,6 @@ import { bundleManager } from "db://shared-components/shared/common-components/b
 import { ObserverComponent } from "db://shared-components/shared/common-components/observer-component/scripts/observer-component";
 import { BalanceEffectHandlers } from "../../../balance-effect/scripts/handlers/balance-effect-handlers";
 import { MainPlayerProfileHandlers } from "../handlers/main-player-profile-handler";
-import { getXMode } from "db://shared-common-slot/x-mode/scripts/utils/xMode-utils";
 
 const { Player, Bet, FormatUtils, GameConfigs } = gc;
 
@@ -68,8 +67,7 @@ export default class MainPlayerProfile extends ObserverComponent {
 
     @render(MainPlayerStore, (store) => store.balance)
     setBalance(value: number) {
-        const balance =  FormatUtils.formatXMode(value, getXMode());
-        this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(balance, 6).toString());
+        this.lblBalance && (this.lblBalance.string = FormatUtils.truncateFixedDecimals(value, 2).toString());
     }
 
     @render(Bet.BetStore, (store) => store.lastReceivedBet)
