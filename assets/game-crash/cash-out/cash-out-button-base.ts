@@ -2,12 +2,12 @@ import gc from "@sg/game-client-base";
 import { _decorator, Label, Sprite } from "cc";
 import Observer from "observer";
 
+import { formatCurrencyWithConfig } from "db://shared-components/shared/utils";
 import { ObserverComponent } from "../../../../../extensions/shared-components/assets/shared/common-components/observer-component/scripts/observer-component";
 
 const { handle, render } = Observer;
 const { property, ccclass } = _decorator;
-const { GameCrash, Bet, FormatUtils } = gc;
-
+const { GameCrash } = gc;
 @ccclass
 export class CashOutButtonBase extends ObserverComponent {
     @property(Label)
@@ -29,7 +29,7 @@ export class CashOutButtonBase extends ObserverComponent {
 
     setCashOutValue(value: number) {
         if (value > 0) {
-            this.lblCashOut.string = FormatUtils.numberWithCommas(value, 2);
+            this.lblCashOut.string = formatCurrencyWithConfig(value);
         } else {
             this.emptyCashOutLabel();
         }

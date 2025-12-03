@@ -2,12 +2,12 @@ import gc from "@sg/game-client-base";
 import { _decorator, Label } from "cc";
 import Observer from "observer";
 
+import { formatCurrencyWithConfig } from "db://shared-components/shared/utils";
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
 
 const { ccclass, property } = _decorator;
-const { render, handle } = Observer;
-
-const { GameCrash, FormatUtils } = gc;
+const { render } = Observer;
+const { GameCrash } = gc;
 
 @ccclass
 export class LeaderBoardGeneralInfo extends ObserverComponent {
@@ -32,6 +32,6 @@ export class LeaderBoardGeneralInfo extends ObserverComponent {
 
     @render(GameCrash.CrashBetList.CrashBetListStore, (store) => store.totalCashOut)
     private updateTotalCashOut(totalCashOut: number) {
-        this.lblTotalCashOut.string = FormatUtils.numberWithCommas(totalCashOut, 2, true);
+        this.lblTotalCashOut.string = formatCurrencyWithConfig(totalCashOut);
     }
 }
