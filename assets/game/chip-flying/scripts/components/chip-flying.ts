@@ -4,7 +4,7 @@ import { random, round } from "lodash-es";
 import Observer from "observer";
 
 import { ObserverComponent } from "../../../../shared/common-components/observer-component/scripts/observer-component";
-import { AnimationUtils, isHDType } from "../../../../shared/utils";
+import { AnimationUtils } from "../../../../shared/utils";
 import { AroundTablePlayers } from "../../../around-table-player/scripts/components/around-table-players";
 import {
     AroundTablePlayersChipStore,
@@ -171,6 +171,7 @@ export class ChipFlying extends ObserverComponent {
         } else {
             this.startShowResultAnimation = true;
 
+            console.log('[ZLOG] - payChipsWhenReceivingSettlementResult - called :::');
             if (this.usingDelayPayChips) {
                 tween(this.node)
                     .delay(this.delayAnimPayChips)
@@ -181,6 +182,7 @@ export class ChipFlying extends ObserverComponent {
     }
 
     callActionPayChips() {
+        console.log('[ZLOG] - callActionPayChips - called :::');
         if (this.usingDelayPayChips) {
             return;
         }
@@ -189,6 +191,7 @@ export class ChipFlying extends ObserverComponent {
     }
 
     actionPayChips(animated: boolean) {
+        console.log('[ZLOG] - actionPayChips - called with :::', animated);
         if (!animated) {
             ActionChipFlying.dealerGetChips(this.dealerChipBox, this.betItems?.lostBetItems, this);
             ActionChipFlying.dealerPayChips(this.dealerChipBox, this.betItems?.winBetItems, this);
@@ -222,6 +225,7 @@ export class ChipFlying extends ObserverComponent {
     playPayMoneySound() {}
 
     private readonly payChipToAllPlayers = () => {
+        console.log('[ZLOG] - payChipToAllPlayers - called :::');
         const chipFlyingInfo: IChipFlyingInfo = {
             slidingChip: this.slidingChip,
             hiddenPlayersNode: this.hiddenPlayersNode,
@@ -241,16 +245,15 @@ export class ChipFlying extends ObserverComponent {
     };
 
     private showPayoutForMainPlayer() {
+        console.log('[ZLOG] - showPayoutForMainPlayer - called :::');
         if (this.settlementStatus?.win) {
             this.mainPlayerIncreaseBalance(this.settlementStatus?.bet);
             this.mainPlayerPlayWinningEffect();
             if (this.settlementStatus?.reachMaxWin && this.settlementStatus.reachMaxWin) {
                 this.handleReachMaxWin();
             }
-
-            if (!isHDType()) {
-                this.getBalance();
-            }
+            this.getBalance();
+            console.log('[ZLOG] - showPayoutForMainPlayer - completed :::');
 
             this.resetSettlementStatus();
         }
