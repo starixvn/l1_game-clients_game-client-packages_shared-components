@@ -72,6 +72,13 @@ export class ChipFlying extends ObserverComponent {
 
     @property
     supportChoices = "";
+
+    delayGetBalance = 0;
+
+    setDelayGetBalance(delaySeconds: number) {
+        this.delayGetBalance = delaySeconds;
+    }
+
     protected get validChoices() {
         return this.supportChoices.split(",");
     }
@@ -247,8 +254,14 @@ export class ChipFlying extends ObserverComponent {
             if (this.settlementStatus?.reachMaxWin && this.settlementStatus.reachMaxWin) {
                 this.handleReachMaxWin();
             }
-            this.getBalance();
-            this.resetSettlementStatus();
+
+            tween(this.node)
+                .delay(this.delayGetBalance)
+                .call(() => {
+                    this.getBalance();
+                    this.resetSettlementStatus();
+                })
+                .start();
         }
     }
 
