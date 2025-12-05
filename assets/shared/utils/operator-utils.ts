@@ -8,7 +8,7 @@ export const OperatorAlias = {
     SG: "Saba",
     TIP88: "Tip88",
     NOVA88: "Nova88",
-    "12BET": "12BET"
+    "12BET": "12Bet"
 };
 
 export namespace OperatorUtils {

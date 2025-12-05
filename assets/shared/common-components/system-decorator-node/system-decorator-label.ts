@@ -10,6 +10,12 @@ export class SystemDecoratorLabel extends ObserverComponent {
     @property(Node)
     bgNode: Node = null;
 
+    @property
+    prefix = "";
+
+    @property
+    suffix = "";
+
     label: Label = null;
 
     private readonly OPERATOR_NAMES = {
@@ -17,6 +23,8 @@ export class SystemDecoratorLabel extends ObserverComponent {
         VG: "Vgaming",
         SP: "SABA Play",
         TIP88: "",
+        NOVA88: "Nova88",
+        "12BET": "12Bet"
     } as const;
 
     onLoad(): void {
@@ -30,7 +38,7 @@ export class SystemDecoratorLabel extends ObserverComponent {
         const operatorName = this.OPERATOR_NAMES[operatorKey] || "";
 
         if (this.label) {
-            this.label.string = operatorName;
+            this.label.string = `${this.prefix}${operatorName}${this.suffix}`;
         }
 
         if (this.bgNode) {
