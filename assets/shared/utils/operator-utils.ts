@@ -8,7 +8,7 @@ export const OperatorAlias = {
     SG: "Saba",
     TIP88: "Tip88",
     NOVA88: "Nova88",
-    _12BET: "12BET"
+    "12BET": "12BET"
 };
 
 export namespace OperatorUtils {
@@ -16,6 +16,10 @@ export namespace OperatorUtils {
         const operator = getOperator();
         return OperatorAlias[operator] || "OTHER";
     };
+
+    export const getOperatorLowerCase = () => {
+        return getOperatorAlias().toLowerCase();
+    }
 
     function getOperator(): string {
         const operatorStorage = StorageManager.get(localStorageKeys?.operator);
