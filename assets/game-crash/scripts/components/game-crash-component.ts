@@ -2,6 +2,7 @@ import gc from "@sg/game-client-base";
 import { _decorator, Label, tween } from "cc";
 import Observer from "observer";
 
+import { isHDType } from "db://shared-components/shared/utils";
 import { BalanceEffectHandlers } from "../../../game/balance-effect/scripts/handlers/balance-effect-handlers";
 import GameComponent from "../../../game/scripts/components/game-component";
 
@@ -20,7 +21,7 @@ export default class GameCrashComponent extends GameComponent {
 
     private readonly countDownSound = "count_down";
 
-    delayGetBalance = 1;
+    delayGetBalance = 2.5;
 
     override isValidResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {
         return result;
@@ -44,7 +45,13 @@ export default class GameCrashComponent extends GameComponent {
         if (settlementStatus?.win) {
             this.mainPlayerIncreaseBalance(settlementStatus?.bet);
             this.mainPlayerPlayWinningEffect();
-            this.getBalance();
+
+            tween(this.node)
+                .delay(isHDType() ? this.delayGetBalance : 0)
+                .call(() => {
+                    this.getBalance();
+                })
+                .start();
         }
     }
 
