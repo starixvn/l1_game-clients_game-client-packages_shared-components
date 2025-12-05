@@ -4,7 +4,6 @@ import Observer from "observer";
 
 import { BalanceEffectHandlers } from "../../../game/balance-effect/scripts/handlers/balance-effect-handlers";
 import GameComponent from "../../../game/scripts/components/game-component";
-import { isHDType } from "db://shared-components/shared/utils";
 
 const { Settlements, Auth, Rounds, GameCrash } = gc;
 
@@ -45,17 +44,7 @@ export default class GameCrashComponent extends GameComponent {
         if (settlementStatus?.win) {
             this.mainPlayerIncreaseBalance(settlementStatus?.bet);
             this.mainPlayerPlayWinningEffect();
-            if (isHDType()) {
-                tween(this.node)
-                .delay(this.delayGetBalance)
-                .call(() => {
-                    this.getBalance();
-                })
-                .start();
-            }
-            else {
-                this.getBalance();
-            }
+            this.getBalance();
         }
     }
 
