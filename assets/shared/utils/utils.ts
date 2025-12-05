@@ -240,6 +240,20 @@ export namespace AnimationUtils {
         spine.timeScale = original / duration;
     };
 
+    export const numberTween = (beginValue: number, endValue: number, duration: number, onUpdate: (value: number) => void) => {
+        return new Promise<void>((resolve) => {
+            const value = beginValue;
+            tween({ value })
+                .to(duration, { value: endValue }, {
+                    onUpdate(target) {
+                        onUpdate(target.value);
+                    },
+                })
+                .call(() => resolve())
+                .start();
+        });
+    }
+
     export const floatToNumber = (opt: {
         label: Label;
         amount: number;
