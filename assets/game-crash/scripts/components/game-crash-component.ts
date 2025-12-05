@@ -1,9 +1,10 @@
 import gc from "@sg/game-client-base";
-import { _decorator, Label } from "cc";
+import { _decorator, Label, tween } from "cc";
 import Observer from "observer";
 
 import { BalanceEffectHandlers } from "../../../game/balance-effect/scripts/handlers/balance-effect-handlers";
 import GameComponent from "../../../game/scripts/components/game-component";
+import { isHDType } from "db://shared-components/shared/utils";
 
 const { Settlements, Auth, Rounds, GameCrash } = gc;
 
@@ -19,6 +20,8 @@ export default class GameCrashComponent extends GameComponent {
     lblMaxBet: Label = null;
 
     private readonly countDownSound = "count_down";
+
+    delayGetBalance = 1;
 
     override isValidResult(result: gc.GameServiceMessage.TResult, settlementResult: gc.GameServiceMessage.TSettlementResult) {
         return result;
@@ -42,7 +45,17 @@ export default class GameCrashComponent extends GameComponent {
         if (settlementStatus?.win) {
             this.mainPlayerIncreaseBalance(settlementStatus?.bet);
             this.mainPlayerPlayWinningEffect();
-            this.getBalance();
+            if (isHDType()) {
+                tween(this.node)
+                .delay(this.delayGetBalance)
+                .call(() => {
+                    this.getBalance();
+                })
+                .start();
+            }
+            else {
+                this.getBalance();
+            }
         }
     }
 
